@@ -1,0 +1,16 @@
+*.iml
+.idea/*
+!/.idea/codeStyles
+!/.idea/localizerSettings.xml
+.idea/dictionaries
+.gradle
+.gradle/
+.DS_Store
+/build
+/captures
+bin/
+gen/
+.externalNativeBuild
+.cxx
+local.properties
+secrets.properties

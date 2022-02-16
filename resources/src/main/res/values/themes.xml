@@ -1,0 +1,93 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+	<style name="AppTheme" parent="BaseTheme" />
+
+	<style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+		<item name="colorPrimaryDark">@color/primary</item>
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryVariant">@color/primary_dark</item>
+		<item name="colorOnPrimary">@color/color_on_primary</item>
+		<item name="colorSecondary">@color/secondary</item>
+		<item name="colorSecondaryVariant">@color/secondary_dark</item>
+		<item name="colorOnSecondary">@color/color_on_secondary</item>
+		<item name="android:colorControlHighlight">@color/color_control_highlight</item>
+		<item name="android:textColorPrimary">@color/text_primary</item>
+		<item name="android:textColorSecondary">@color/text_secondary</item>
+		<item name="android:windowBackground">@color/background</item>
+		<item name="colorSurface">@color/surface</item>
+		<item name="statusBarForeground">@color/surface</item>
+		<item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Surface</item>
+
+		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:navigationBarColor">@color/navigation_bar</item>
+		<item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
+		<item name="android:enforceNavigationBarContrast" tools:targetApi="29">false</item>
+		<item name="android:enforceStatusBarContrast" tools:targetApi="29">false</item>
+
+		<item name="textAppearanceHeadline6">@style/TextAppearance.Cleevio.Headline6</item>
+		<item name="textAppearanceHeadline5">@style/TextAppearance.Cleevio.Headline5</item>
+		<item name="textAppearanceHeadline4">@style/TextAppearance.Cleevio.Headline4</item>
+		<item name="textAppearanceHeadline3">@style/TextAppearance.Cleevio.Headline3</item>
+		<item name="textAppearanceSubtitle2">@style/TextAppearance.Cleevio.Subtitle2</item>
+		<item name="textAppearanceSubtitle1">@style/TextAppearance.Cleevio.Subtitle1</item>
+		<item name="textAppearanceBody1">@style/TextAppearance.Cleevio.Body1</item>
+		<item name="textAppearanceBody2">@style/TextAppearance.Cleevio.Body2</item>
+		<item name="textAppearanceButton">@style/TextAppearance.Cleevio.Button</item>
+		<item name="textAppearanceCaption">@style/TextAppearance.Cleevio.Caption</item>
+		<item name="materialButtonOutlinedStyle">@style/Widget.Cleevio.Button.OutlinedButton</item>
+		<item name="textInputStyle">@style/Widget.Cleevio.OutlinedTextInput</item>
+		<item name="android:editTextStyle">@style/Widget.Cleevio.OutlinedTextInput.EditText</item>
+		<item name="android:editTextColor">@color/text_color_text_input_text</item>
+		<item name="snackbarStyle">@style/Widget.Cleevio.Snackbar</item>
+		<item name="snackbarTextViewStyle">@style/Widget.Cleevio.SnackbarText</item>
+		<item name="snackbarButtonStyle">@style/Widget.Cleevio.SnackbarButton</item>
+		<item name="bottomSheetDialogTheme">@style/ThemeOverlay.Cleevio.BottomSheetDialog</item>
+		<item name="materialAlertDialogTheme">@style/ThemeOverlay.Cleevio.MaterialAlertDialog</item>
+		<item name="materialCalendarStyle">@style/Widget.Cleevio.DatePicker</item>
+		<item name="materialCalendarTheme">@style/ThemeOverlay.Cleevio.DatePicker</item>
+		<item name="checkboxStyle">@style/Widget.Cleevio.CheckBox</item>
+	</style>
+
+	<style name="SplashTheme" parent="AppTheme">
+		<item name="android:windowBackground">@drawable/background_splash_screen</item>
+		<item name="android:windowAnimationStyle">@null</item>
+	</style>
+
+	<style name="ThemeOverlay.AppTheme.CollapsingAppBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+		<item name="statusBarForeground">@android:color/transparent</item>
+		<item name="toolbarStyle">@style/Widget.Cleevio.Toolbar.Transparent</item>
+	</style>
+
+	<style name="ThemeOverlay.AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+	<style name="ThemeOverlay.Cleevio.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+		<item name="bottomSheetStyle">@style/Widget.Cleevio.RoundedBottomSheet</item>
+	</style>
+
+	<style name="Theme.Cleevio.SplashTheme" parent="AppTheme">
+		<item name="android:windowBackground">@drawable/background_splash_screen</item>
+	</style>
+
+	<style name="ThemeOverlay.Cleevio.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+		<item name="materialAlertDialogTitleTextStyle">@style/TextAppearance.Cleevio.DialogTitle</item>
+		<item name="buttonBarPositiveButtonStyle">@style/Widget.Cleevio.DialogButton</item>
+		<item name="buttonBarNeutralButtonStyle">@style/Widget.Cleevio.DialogButton</item>
+		<item name="buttonBarNegativeButtonStyle">@style/Widget.Cleevio.DialogButton</item>
+	</style>
+
+	<style name="ThemeOverlay.Cleevio.DatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+		<item name="materialCalendarHeaderLayout">@style/Widget.Cleevio.DatePicker.HeaderLayout</item>
+		<item name="materialCalendarHeaderTitle">@style/Widget.Cleevio.DatePicker.HeaderTitle</item>
+		<item name="materialCalendarHeaderSelection">@style/Widget.Cleevio.DatePicker.HeaderSelection</item>
+		<item name="materialCalendarHeaderToggleButton">@style/Widget.Cleevio.DatePicker.HeaderToggleButton</item>
+	</style>
+
+	<style name="ThemeOverlay.Cleevio.OutlinedTextInput.EditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+		<item name="editTextStyle">@style/Widget.Cleevio.OutlinedTextInput.EditText</item>
+	</style>
+
+	<style name="ThemeOverlay.Cleevio.CheckBox" parent="">
+		<item name="colorOnSurface">@color/primary</item>
+		<item name="colorSecondary">@color/secondary</item>
+	</style>
+</resources>

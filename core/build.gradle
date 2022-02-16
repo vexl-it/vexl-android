@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'koin'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compile_sdk_version
+    buildToolsVersion rootProject.ext.build_tools_version
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions "environment"
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        development {}
+        staging {}
+        production {}
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    api project(':repository')
+
+    api "androidx.appcompat:appcompat:1.3.1"
+    api "androidx.core:core-ktx:1.6.0"
+    api 'androidx.constraintlayout:constraintlayout:2.1.1'
+    api "androidx.fragment:fragment-ktx:$fragment"
+    api "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    api "androidx.lifecycle:lifecycle-common-java8:2.3.1"
+    api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
+    api "androidx.navigation:navigation-fragment-ktx:$navigation"
+    api "androidx.navigation:navigation-ui-ktx:$navigation"
+
+    api "com.google.android.material:material:$material"
+    api "com.jakewharton.timber:timber:$timber"
+
+    api "cz.cleevio.gitlab.lightspeed.lightbase:core:$lightbase"
+    api "cz.cleevio.gitlab.lightspeed.lightbase:pin:$lightbase"
+    api "cz.cleevio.gitlab.lightspeed.lightbase:countryPicker:$lightbase"
+    api "cz.cleevio.gitlab.lightspeed.lightbase:camera:$lightbase"
+    api "cz.cleevio.gitlab.lightspeed.lightbase:onboarding:$lightbase"
+    api "cz.cleevio.gitlab.lightspeed.lightbase:security:$lightbase"
+
+    api "io.insert-koin:koin-core:$koin"
+    api "io.insert-koin:koin-android:$koin"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}

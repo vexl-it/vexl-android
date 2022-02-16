@@ -1,0 +1,8 @@
+include ':onboarding'
+include ':repository'
+include ':cache'
+include ':pin'
+include ':network'
+include ':core'
+include ':app'
+include ':resources'

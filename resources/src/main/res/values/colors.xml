@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="background">@color/white</color>
+	<color name="surface">@color/white</color>
+	<color name="primary">@color/yellow</color>
+	<color name="primary_dark">@color/dark_yellow</color>
+	<color name="secondary">@color/carbon</color>
+	<color name="secondary_dark">@color/dark_carbon</color>
+	<color name="color_on_primary">@color/carbon</color>
+	<color name="color_on_secondary">@color/white</color>
+	<color name="primary_light">@color/purity</color>
+	<color name="text_primary">@color/root_text_color</color>
+	<color name="text_secondary">@color/root_text_color</color>
+	<color name="color_control_highlight">@color/black</color>
+	<color name="root_text_color">@color/carbon</color>
+	<color name="status_bar">@android:color/transparent</color>
+	<color name="navigation_bar">#000000</color>
+
+	<color name="black">#000000</color>
+	<color name="white">#FFFFFF</color>
+	<color name="yellow">#FEC527</color>
+	<color name="dark_yellow">#C1961F</color>
+	<color name="carbon">#1C252B</color>
+	<color name="dark_carbon">#0E1316</color>
+	<color name="rose">#FEA388</color>
+	<color name="purity">#9DCECA</color>
+	<color name="error">#FF3B30</color>
+	<color name="gray">#CFD2D3</color>
+	<color name="grey_dark">#3C3C43</color>
+	<color name="grey_light">#EBEBF5</color>
+
+	<!-- PIN -->
+	<color name="pin_bubble_color">@color/gray_20</color>
+	<color name="pin_filled_color">@color/yellow</color>
+	<color name="pin_filled_semitransparent_color">@color/yellow_20</color>
+	<color name="pin_error_color">@color/error</color>
+
+	<!-- ONBOARDING -->
+	<color name="onboarding_fingerprint_title">@color/carbon</color>
+	<color name="onboarding_fingerprint_subtitle">@color/grey_dark_60</color>
+	<color name="onboarding_fingerprint_button_text_color">@color/white</color>
+	<color name="onboarding_fingerprint_button_background">@color/carbon</color>
+	<color name="onboarding_code_activation_title_color">@color/yellow</color>
+	<color name="onboarding_code_activation_subtitle_color">@color/grey_dark_60</color>
+	<color name="onboarding_code_activation_button_background">@color/carbon</color>
+	<color name="onboarding_code_activation_button_text_color">@color/white</color>
+	<color name="onboarding_code_activation_input_color">@color/carbon</color>
+
+	<color name="background_splash_screen_start_color">@color/dark_yellow</color>
+	<color name="background_splash_screen_end_color">@color/yellow</color>
+	<color name="background_date_picker">@color/background</color>
+	<color name="background_button_contained_disabled">@color/primary_light</color>
+	<color name="background_button_contained">@color/primary</color>
+	<color name="background_input">@color/white</color>
+	<color name="background_snackbar">@color/white</color>
+	<color name="background_switch_thumb_on">@color/primary</color>
+	<color name="background_switch_thumb_off">@color/primary_light</color>
+	<color name="background_switch_track_on">@color/rose</color>
+	<color name="background_switch_track_off">@color/rose</color>
+	<color name="border_color_button_outlined_disabled">#4DFFFFFF</color>
+	<color name="border_color_button_outlined">@color/primary_light</color>
+	<color name="icon_color_bottom_nav_menu_active">@color/primary</color>
+	<color name="icon_color_bottom_nav_menu_inactive">@color/primary_dark</color>
+	<color name="ripple_color_contained_button">#1C8632</color>
+	<color name="ripple_color_outlined_button">@color/primary_light</color>
+	<color name="ripple_color_text_button">@color/primary_light</color>
+	<color name="ripple_color_snackbar_button">@color/primary_light</color>
+	<color name="shadow_color_button_contained">@color/primary</color>
+	<color name="stroke_color_text_input_outlined">@color/primary</color>
+	<color name="stroke_color_text_input_outlined_active">@color/primary_dark</color>
+	<color name="text_color_button_contained_disabled">@color/white</color>
+	<color name="text_color_button_contained">@color/white</color>
+	<color name="text_color_button_outlined_disabled">@color/white</color>
+	<color name="text_color_button_outlined">@color/primary</color>
+	<color name="text_color_button_text_disabled">@color/white</color>
+	<color name="text_color_button_text">@color/secondary</color>
+	<color name="text_color_snackbar">@color/root_text_color</color>
+	<color name="text_color_text_input_text">@color/root_text_color</color>
+	<color name="text_color_text_input_hint">@color/root_text_color</color>
+	<color name="text_color_text_input_placeholder">@color/root_text_color</color>
+	<color name="text_color_date_picker">@color/root_text_color</color>
+</resources>

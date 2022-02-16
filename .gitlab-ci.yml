@@ -1,0 +1,203 @@
+image: circleci/android:api-30
+
+variables:
+  GIT_DEPTH: 10
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+stages:
+  - code_quality
+  - build
+  #  - test
+  - deploy
+
+detekt:
+  stage: code_quality
+  tags: [ docker, android ]
+  script:
+    - ./gradlew detekt
+    - ./gradlew clean
+  allow_failure: false
+
+assemble:
+  stage: build
+  tags: [ docker, android ]
+  interruptible: true
+  script:
+    - |
+      if [[ $CI_COMMIT_TAG =~ ^v.+-devRelease.*$ ]] ; then
+      cat $RELEASE_KEYSTORE | base64 --decode > ./app/production.keystore
+      export VERSION_NAME=${CI_COMMIT_TAG:1}
+      export TASK="assembleDevelopmentRelease"
+      export FROM=app/build/outputs/apk/development/release/
+      echo "\n### Enviroment: development API" >> release_notes.txt
+      echo "TASK_DIST=appDistributionUploadDevelopmentRelease" >> build.env
+      echo "FIREBASE_APP_ID=$FIREBASE_APP_ID_DEV_RELEASE" >> build.env
+      echo "BUILD_TYPE_NAME=release" >> build.env
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-dev.*$ ]] ; then
+      export VERSION_NAME=${CI_COMMIT_TAG:1}
+      export TASK="assembleDevelopmentDebug"
+      export FROM=app/build/outputs/apk/development/debug/
+      echo "\n### Enviroment: development API" >> release_notes.txt
+      echo "TASK_DIST=appDistributionUploadDevelopmentDebug" >> build.env
+      echo "FIREBASE_APP_ID=$FIREBASE_APP_ID_DEV_DEBUG" >> build.env
+      echo "BUILD_TYPE_NAME=debug" >> build.env
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-stageDebug.*$ ]] ; then
+      export VERSION_NAME=${CI_COMMIT_TAG:1}
+      export TASK="assembleStagingDebug"
+      export FROM=app/build/outputs/apk/staging/debug/
+      echo "\n### Enviroment: staging API" >> release_notes.txt
+      echo "TASK_DIST=appDistributionUploadStagingDebug" >> build.env
+      echo "FIREBASE_APP_ID=$FIREBASE_APP_ID_STAGE_DEBUG" >> build.env
+      echo "BUILD_TYPE_NAME=debug" >> build.env
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-stage.*$ ]] ; then
+      cat $RELEASE_KEYSTORE | base64 --decode > ./app/production.keystore
+      export VERSION_NAME=${CI_COMMIT_TAG:1}
+      export TASK="assembleStagingRelease"
+      export FROM=app/build/outputs/apk/staging/release/
+      echo "\n### Enviroment: staging API" >> release_notes.txt
+      echo "TASK_DIST=appDistributionUploadStagingRelease" >> build.env
+      echo "FIREBASE_APP_ID=$FIREBASE_APP_ID_STAGE_RELEASE" >> build.env
+      echo "BUILD_TYPE_NAME=release" >> build.env
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-prodDebug.*$ ]] ; then
+      export VERSION_NAME=${CI_COMMIT_TAG:1}
+      export TASK="assembleProductionDebug"
+      export FROM=app/build/outputs/apk/production/debug/
+      echo "\n### Enviroment: production API" >> release_notes.txt
+      echo "TASK_DIST=appDistributionUploadProductionDebug" >> build.env
+      echo "FIREBASE_APP_ID=$FIREBASE_APP_ID_PROD_DEBUG" >> build.env
+      echo "BUILD_TYPE_NAME=debug" >> build.env
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-prodRelease.*$ ]] ; then
+      cat $RELEASE_KEYSTORE | base64 --decode > ./app/production.keystore
+      export VERSION_NAME=${CI_COMMIT_TAG:1}
+      export TASK="assembleProductionRelease"
+      export FROM=app/build/outputs/apk/production/release/
+      echo "\n### Enviroment: production API" >> release_notes.txt
+      echo "TASK_DIST=appDistributionUploadProductionRelease" >> build.env
+      echo "FIREBASE_APP_ID=$FIREBASE_APP_ID_PROD_RELEASE" >> build.env
+      echo "BUILD_TYPE_NAME=release" >> build.env
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.* ]] ; then
+      cat $RELEASE_KEYSTORE | base64 --decode > ./app/production.keystore
+      export VERSION_NAME=${CI_COMMIT_TAG:1}
+      export TASK="bundleProductionRelease"
+      export FROM=app/build/outputs/bundle/productionRelease/
+      echo "\n### Enviroment: production API" >> release_notes.txt
+
+      else
+      export VERSION_NAME="b$CI_PIPELINE_IID-$CI_COMMIT_REF_NAME"
+      export TASK="assembleDevelopmentDebug"
+      fi
+
+    - export VERSION_CODE=$(($CI_PIPELINE_IID+0))
+    - echo "VERSION_NAME=$VERSION_NAME" >> build.env
+    - echo "VERSION_CODE=$VERSION_CODE" >> build.env
+    - echo "Building $VERSION_NAME/$VERSION_CODE with $TASK; Task Dist $TASK_DIST"
+    - ./gradlew $TASK
+    - mkdir out
+    - |
+      if [[ ! -z "$FROM" ]] ; then
+        cp $FROM/* out/
+      fi
+    - ./gradlew clean
+  allow_failure: false
+  artifacts:
+    reports:
+      dotenv: build.env
+    expire_in: 1 day
+    paths:
+      - out/
+
+lint:
+  stage: build
+  tags: [ docker, android ]
+  interruptible: true
+  script:
+    - |
+      if [[ $CI_COMMIT_TAG =~ ^v.+-devRelease.*$ ]] ; then
+        export TASK_CHECK="lintProductionRelease"
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-dev.*$ ]] ; then
+        export TASK_CHECK="lintDevelopmentDebug"
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-stageDebug.*$ ]] ; then
+        export TASK_CHECK="lintStagingDebug"
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-stage.*$ ]] ; then
+        export TASK_CHECK="lintStagingRelease"
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-prodDebug.*$ ]] ; then
+        export TASK_CHECK="lintProductionDebug"
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.+-prodRelease.*$ ]] ; then
+        export TASK_CHECK="lintProductionRelease"
+
+      elif [[ $CI_COMMIT_TAG =~ ^v.* ]] ; then
+        export TASK_CHECK="lintProductionRelease"
+
+      else
+        export TASK_CHECK="lintDevelopmentDebug"
+
+      fi
+    - ./gradlew $TASK_CHECK
+    - ./gradlew clean
+  allow_failure: false
+
+#test:
+#  stage: test
+#  tags: [docker, android]
+#  interruptible: true
+#  before_script:
+#    - export GRADLE_USER_HOME=`pwd`/.gradle
+#  script:
+#    - |
+#      if [[ $CI_COMMIT_TAG =~ ^v.+-dev-prod.*$ ]] ; then
+#        export TASK_CHECK="testProductionDebugProd"
+#
+#      if [[ $CI_COMMIT_TAG =~ ^v.+-dev.*$ ]] ; then
+#        export TASK_TEST="testDevelopmentDebugUnitTest"
+#
+#      elif [[ $CI_COMMIT_TAG =~ ^v.+-stage-qa$ ]] ; then
+#        export TASK_CHECK="testStageQa"
+#
+#      elif [[ $CI_COMMIT_TAG =~ ^v.+-prod-qa$ ]] ; then
+#       export TASK_CHECK="testProductionQa"
+#
+#      elif [[ $CI_COMMIT_TAG =~ ^v.* ]] ; then
+#        export TASK_TEST="testProductionReleaseUnitTest"
+#
+#      else
+#        export TASK_TEST="testDevelopmentDebug"
+#
+#      fi
+#    - ./gradlew $TASK_TEST
+#    - ./gradlew clean
+#  allow_failure: false
+
+deploy:
+  stage: deploy
+  tags: [ docker, android ]
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - ls out/
+    - echo "Deploying with $TASK_DIST"
+    - |
+      if [[ ! -z "$TASK_DIST" ]] ; then
+        ./gradlew $TASK_DIST
+
+        echo '{"channel": "#vexl-app-dev", "text":"' > payload.json
+        echo ":android: *$VERSION_NAME ($VERSION_CODE)*\n" >> payload.json
+        (sed -z 's/\n/\\n\n/g' < release_notes.txt) >> payload.json
+        echo '"}' >> payload.json
+        curl -X POST -H 'Content-type: application/json' -d @payload.json $SLACK_WEBHOOK
+      fi
+  dependencies:
+    - assemble
+  allow_failure: false

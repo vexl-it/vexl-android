@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+	<style name="Widget.Cleevio.Toolbar.Transparent" parent="Widget.MaterialComponents.Toolbar.Surface">
+		<item name="android:background">@android:color/transparent</item>
+	</style>
+
+	<style name="Widget.Cleevio.RoundedBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+		<item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Cleevio.BottomSheet</item>
+	</style>
+
+	<style name="Widget.Cleevio.BottomNavigationMenu" parent="Widget.MaterialComponents.BottomNavigationView">
+		<item name="backgroundTint">@android:color/white</item>
+		<item name="elevation">@dimen/elevation_bottom_nav_menu</item>
+		<item name="itemTextAppearanceActive">@style/TextAppearance.Cleevio.BottomNavMenu</item>
+		<item name="itemTextAppearanceInactive">@style/TextAppearance.Cleevio.BottomNavMenu</item>
+		<item name="itemIconTint">@color/icon_color_bottom_navigation_menu_states</item>
+		<item name="itemTextColor">@color/icon_color_bottom_navigation_menu_states</item>
+		<item name="labelVisibilityMode">labeled</item>
+	</style>
+
+	<style name="Widget.Cleevio.Button.ContainedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.Button</item>
+		<item name="android:textColor">@color/text_color_button_contained_states</item>
+		<item name="android:backgroundTint">@color/background_button_contained_states</item>
+		<item name="android:insetLeft">0dp</item>
+		<item name="android:insetRight">0dp</item>
+		<item name="android:insetTop">@dimen/inset_button_outlined</item>
+		<item name="android:insetBottom">@dimen/inset_button_outlined</item>
+		<item name="rippleColor">@color/ripple_color_contained_button</item>
+		<item name="android:elevation">@dimen/elevation_button</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Button.Large</item>
+		<item name="android:paddingStart">16dp</item>
+		<item name="android:paddingEnd">16dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:paddingBottom">10dp</item>
+		<item name="android:theme">@style/ContainedButtonOutlineShadowColor</item>
+	</style>
+
+	<style name="Widget.Cleevio.Button.ContainedMiniButton" parent="Widget.Cleevio.Button.ContainedButton">
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Button.Small</item>
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.MiniButton</item>
+		<item name="android:padding">4dp</item>
+		<item name="android:minWidth">64dp</item>
+		<item name="android:minHeight">26dp</item>
+		<item name="android:textAllCaps">true</item>
+	</style>
+
+	<style name="Widget.Cleevio.Button.ContainedButtonTall" parent="Widget.Cleevio.Button.ContainedButton">
+		<item name="android:padding">18dp</item>
+	</style>
+
+	<style name="ContainedButtonOutlineShadowColor">
+		<item name="android:outlineAmbientShadowColor" tools:targetApi="p">@color/shadow_color_button_contained</item>
+		<item name="android:outlineSpotShadowColor" tools:targetApi="p">@color/shadow_color_button_contained</item>
+	</style>
+
+	<style name="Widget.Cleevio.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.Button</item>
+		<item name="android:textColor">@color/text_color_button_outlined_states</item>
+		<item name="strokeColor">@color/stroke_color_button_outlined_states</item>
+		<item name="strokeWidth">@dimen/stroke_width_button</item>
+		<item name="android:backgroundTint">@android:color/white</item>
+		<item name="android:insetLeft">0dp</item>
+		<item name="android:insetRight">0dp</item>
+		<item name="android:insetTop">@dimen/inset_button_contained</item>
+		<item name="android:insetBottom">@dimen/inset_button_contained</item>
+		<item name="rippleColor">@color/ripple_color_outlined_button</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Button.Large</item>
+		<item name="android:paddingEnd">16dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:paddingBottom">10dp</item>
+		<item name="android:paddingStart">16dp</item>
+	</style>
+
+	<style name="Widget.Cleevio.Button.OutlinedButtonTall" parent="Widget.Cleevio.Button.OutlinedButton">
+		<item name="android:padding">18dp</item>
+	</style>
+
+	<style name="Widget.Cleevio.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.TextButton</item>
+		<item name="android:textColor">@color/text_color_button_text_states</item>
+		<item name="rippleColor">@color/ripple_color_text_button</item>
+		<item name="android:insetTop">@dimen/inset_button_text</item>
+		<item name="android:insetBottom">@dimen/inset_button_text</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Button.Large</item>
+		<item name="android:paddingStart">8dp</item>
+		<item name="android:paddingEnd">8dp</item>
+		<item name="android:paddingTop">12dp</item>
+		<item name="android:paddingBottom">12dp</item>
+	</style>
+
+	<style name="Widget.Cleevio.Button.TextMiniButton" parent="Widget.Cleevio.Button.TextButton">
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Button.Small</item>
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.MiniButton</item>
+		<item name="android:textColor">@color/text_color_button_text_mini_states</item>
+		<item name="android:paddingTop">8dp</item>
+		<item name="android:paddingBottom">8dp</item>
+	</style>
+
+	<style name="Widget.Cleevio.OutlinedTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Cleevio.TextInput</item>
+		<item name="boxBackgroundColor">@color/background_input</item>
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.TextInput.Text</item>
+		<item name="hintTextAppearance">@style/TextAppearance.Cleevio.TextInput.Hint</item>
+		<item name="placeholderTextAppearance">@style/TextAppearance.Cleevio.TextInput.Placeholder</item>
+		<item name="android:textColorHint">@color/text_color_text_input_hint</item>
+		<item name="hintTextColor">@color/text_color_text_input_hint</item>
+		<item name="boxStrokeColor">@color/stroke_color_input_states</item>
+		<item name="boxStrokeWidth">@dimen/stroke_width_input</item>
+		<item name="colorControlActivated">@color/stroke_color_text_input_outlined</item>
+	</style>
+
+	<style name="Widget.Cleevio.OutlinedTextInput.EditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+		<item name="android:textColor">@color/text_color_text_input_text</item>
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.TextInput.Text</item>
+		<!-- cursor color -->
+		<item name="colorControlActivated">@color/stroke_color_text_input_outlined_active</item>
+	</style>
+
+	<style name="Widget.Cleevio.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+		<item name="trackTint">@color/track_color_switch_states</item>
+		<item name="thumbTint">@color/thumb_color_switch_states</item>
+	</style>
+
+	<style name="Widget.Cleevio.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+		<item name="actionTextColorAlpha">1</item>
+		<item name="animationMode">fade</item>
+		<item name="backgroundTint">@color/background_snackbar</item>
+		<item name="android:layout_margin">16dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:paddingBottom">10dp</item>
+	</style>
+
+	<style name="Widget.Cleevio.SnackbarText" parent="Widget.MaterialComponents.Snackbar.TextView">
+		<item name="android:textColor">@color/text_color_snackbar</item>
+		<item name="android:textAppearance">@style/TextAppearance.Cleevio.Snackbar.Text</item>
+	</style>
+
+	<style name="Widget.Cleevio.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+		<item name="android:textColor">@color/text_color_button_text</item>
+		<item name="rippleColor">@color/ripple_color_snackbar_button</item>
+		<!--<item name="fontFamily">@font/barlow_regular</item>
+		<item name="android:fontFamily">@font/barlow_regular</item>-->
+	</style>
+
+	<style name="Widget.Cleevio.DialogTitle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Dialog</item>
+	</style>
+
+	<style name="Widget.Cleevio.DialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+		<item name="android:textColor">@color/text_color_button_text</item>
+		<item name="rippleColor">@color/ripple_color_text_button</item>
+		<!--<item name="fontFamily">@font/barlow_medium</item>
+		<item name="android:fontFamily">@font/barlow_medium</item>-->
+	</style>
+
+	<style name="Widget.Cleevio.CircularProgress" parent="Widget.MaterialComponents.CircularProgressIndicator">
+		<item name="indicatorColor">@color/secondary</item>
+		<item name="android:indeterminate">true</item>
+	</style>
+
+	<style name="Widget.Cleevio.DatePicker" parent="Widget.MaterialComponents.MaterialCalendar">
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Dialog</item>
+	</style>
+
+	<style name="Widget.Cleevio.DatePicker.HeaderLayout" parent="android:Widget">
+		<item name="android:background">@color/background_date_picker</item>
+	</style>
+
+	<style name="Widget.Cleevio.DatePicker.HeaderTitle" parent="Widget.MaterialComponents.MaterialCalendar.HeaderTitle">
+		<item name="android:textColor">@color/text_color_date_picker</item>
+	</style>
+
+	<style name="Widget.Cleevio.DatePicker.HeaderSelection" parent="Widget.MaterialComponents.MaterialCalendar.HeaderSelection">
+		<item name="android:textColor">@color/text_color_date_picker</item>
+	</style>
+
+	<style name="Widget.Cleevio.DatePicker.HeaderToggleButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
+		<item name="android:tint">@color/text_color_date_picker</item>
+	</style>
+
+	<style name="Widget.Cleevio.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+		<item name="materialThemeOverlay">@style/ThemeOverlay.Cleevio.CheckBox</item>
+	</style>
+
+	<style name="Widget.Cleevio.Camera.TextView.PhotoOptions.Title" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Camera.TextView.PhotoOptions.Title</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.TextView.CodeActivation.Title" parent="Widget.MaterialComponents.TextView">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.TextView.CodeActivation.Title</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.TextView.CodeActivation.Subtitle" parent="Widget.MaterialComponents.TextView">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.TextView.CodeActivation.Subtitle</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.PinView" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.TextInputEditText.CodeValidation.Item</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.Button.CodeActivation.ResendCode" parent="Widget.MaterialComponents.Button.TextButton">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.TextView.CodeActivation.ResendCode</item>
+		<item name="android:textColor">@color/onboarding_code_activation_subtitle_color</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.Button.CodeActivation.OpenMail" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.Button.CodeActivation.OpenMail</item>
+		<item name="backgroundTint">@color/onboarding_code_activation_button_background</item>
+		<item name="android:textColor">@color/onboarding_code_activation_button_text_color</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.TextView.FingerPrint.Title" parent="">
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:textColor">@null</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.TextView.FingerPrint.Title</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.TextView.FingerPrint.Subtitle" parent="">
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:textColor">@null</item>
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.TextView.FingerPrint.Subtitle</item>
+	</style>
+
+	<style name="Widget.Cleevio.Onboarding.Button.FingerPrint.Activate" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Onboarding.Button.FingerPrint.Activate</item>
+		<item name="backgroundTint">@color/onboarding_fingerprint_button_background</item>
+		<item name="android:textColor">@color/onboarding_fingerprint_button_text_color</item>
+	</style>
+
+	<style name="Widget.LightBase.Pin.TextView.NumberPad" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:padding">8dp</item>
+		<item name="android:gravity">center</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:textColor">@null</item>
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Pin.TextView.NumberPad
+		</item>
+	</style>
+
+	<style name="Widget.LightBase.Pin.TextView.PinTitle" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:textColor">@null</item>
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Pin.TextView.PinTitle
+		</item>
+	</style>
+
+	<style name="Widget.LightBase.Pin.TextView.PinTitle2" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:textColor">@null</item>
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Pin.TextView.PinTitle2
+		</item>
+	</style>
+
+	<style name="Widget.LightBase.Pin.TextView.PinBottomText" parent="TextAppearance.MaterialComponents.Body2">
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:textColor">@null</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:background">?attr/selectableItemBackground</item>
+		<item name="android:textAppearance">
+			@style/TextAppearance.LightBase.Pin.TextView.PinBottomText
+		</item>
+	</style>
+
+</resources>

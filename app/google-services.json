@@ -1,0 +1,185 @@
+{
+  "project_info": {
+    "project_number": "794996677939",
+    "firebase_url": "https://cleevio-lightspeed.firebaseio.com",
+    "project_id": "cleevio-lightspeed",
+    "storage_bucket": "cleevio-lightspeed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794996677939:android:9097c2623245fd2fde3246",
+        "android_client_info": {
+          "package_name": "cz.cleevio.lightspeedskeleton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl6skiYJyOhj0s8iLBOerI4JvLYs9GIYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794996677939:android:78cca24326a64d20de3246",
+        "android_client_info": {
+          "package_name": "cz.cleevio.lightspeedskeleton.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl6skiYJyOhj0s8iLBOerI4JvLYs9GIYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794996677939:android:d30755cf3e0730bdde3246",
+        "android_client_info": {
+          "package_name": "cz.cleevio.lightspeedskeleton.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl6skiYJyOhj0s8iLBOerI4JvLYs9GIYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794996677939:android:7b55b7564fadb8e0de3246",
+        "android_client_info": {
+          "package_name": "cz.cleevio.lightspeedskeleton.dev.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl6skiYJyOhj0s8iLBOerI4JvLYs9GIYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794996677939:android:be7b817a9aa4db01de3246",
+        "android_client_info": {
+          "package_name": "cz.cleevio.lightspeedskeleton.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl6skiYJyOhj0s8iLBOerI4JvLYs9GIYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794996677939:android:c76d66dcedd76d25de3246",
+        "android_client_info": {
+          "package_name": "cz.cleevio.lightspeedskeleton.staging.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl6skiYJyOhj0s8iLBOerI4JvLYs9GIYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794996677939-4nhnkbu7mqrqlc2vplk9o9nug5gbkl41.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

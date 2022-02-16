@@ -1,0 +1,5 @@
+/build
+/production.keystore
+/development/
+/staging/
+/production/

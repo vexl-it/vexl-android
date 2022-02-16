@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_main"
+	app:startDestination="@id/splashFragment">
+
+	<include app:graph="@navigation/nav_photo_bottom_sheet" />
+
+	<include app:graph="@navigation/nav_camera" />
+
+	<include app:graph="@navigation/nav_country_picker" />
+
+	<fragment
+		android:id="@+id/pinFragment"
+		android:name="cz.cleevio.pin.PinFragment"
+		android:label="PinFragment"
+		tools:layout="@layout/fragment_pin" />
+
+	<fragment
+		android:id="@+id/crossroadFragment"
+		android:name="cz.cleevio.lightspeedskeleton.ui.crossroadFragment.CrossroadFragment"
+		android:label="CrossroadFragment"
+		tools:layout="@layout/fragment_crossroad">
+		<action
+			android:id="@+id/action_crossroadFragment_to_pinFragment"
+			app:destination="@id/pinFragment" />
+		<action
+			android:id="@+id/action_crossroadFragment_to_UITemplatesFragment"
+			app:destination="@id/UITemplatesFragment" />
+		<action
+			android:id="@+id/action_crossroadFragment_to_nav_camera"
+			app:destination="@id/nav_camera">
+
+			<argument
+				android:name="projectName"
+				app:argType="string" />
+
+		</action>
+		<action
+			android:id="@+id/action_crossroadFragment_to_nav_photo_bottom_sheet"
+			app:destination="@id/nav_photo_bottom_sheet" />
+		<action
+			android:id="@+id/action_crossroadFragment_to_imageHelperFragment"
+			app:destination="@id/imageHelperFragment" />
+		<action
+			android:id="@+id/action_crossroadFragment_to_listTemplateFragment"
+			app:destination="@id/listTemplateFragment" />
+		<action
+			android:id="@+id/action_crossroadFragment_to_activateFingerprintFragment"
+			app:destination="@id/activateFingerprintFragment" />
+		<action
+			android:id="@+id/action_crossroadFragment_to_codeValidationFragment"
+			app:destination="@id/codeValidationFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/UITemplatesFragment"
+		android:name="cz.cleevio.lightspeedskeleton.ui.uiTemplatesFragment.UITemplatesFragment"
+		android:label="UITemplatesFragment"
+		tools:layout="@layout/fragment_ui_templates" />
+
+	<include app:graph="@navigation/nav_photo_bottom_sheet" />
+
+	<include app:graph="@navigation/nav_camera" />
+
+	<include app:graph="@navigation/nav_barcode_scanner" />
+
+	<fragment
+		android:id="@+id/imageHelperFragment"
+		android:name="cz.cleevio.lightspeedskeleton.ui.imageHelperFragment.ImageHelperFragment"
+		android:label="ImageHelperFragment"
+		tools:layout="@layout/fragment_image_helper" />
+
+	<fragment
+		android:id="@+id/listTemplateFragment"
+		android:name="cz.cleevio.lightspeedskeleton.ui.listTemplateFragment.ListTemplateFragment"
+		android:label="ListTemplateFragment"
+		tools:layout="@layout/fragment_list_template" />
+
+	<fragment
+		android:id="@+id/splashFragment"
+		android:name="cz.cleevio.lightspeedskeleton.ui.splashFragment.SplashFragment"
+		android:label="SplashFragment"
+		tools:layout="@layout/fragment_splash">
+		<action
+			android:id="@+id/action_to_crossroadFragment"
+			app:destination="@id/crossroadFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/activateFingerprintFragment"
+		android:name="cz.cleeevio.onboarding.activateFingerprintFragment.ActivateFingerprintFragment"
+		android:label="ActivateFingerprintFragment"
+		tools:layout="@layout/fragment_activate_fingerprint" />
+
+	<fragment
+		android:id="@+id/codeValidationFragment"
+		android:name="cz.cleeevio.onboarding.codeValidationFragment.CodeValidationFragment"
+		android:label="CodeValidationFragment"
+		tools:layout="@layout/fragment_code_validation" />
+
+</navigation>

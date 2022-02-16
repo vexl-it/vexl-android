@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LocalizerSettings">
+    <option name="projects">
+      <list>
+        <ProjectSettings>
+          <option name="projectName" value="LightSpeed" />
+          <option name="resPath" value="$PROJECT_DIR$/localization.json" />
+        </ProjectSettings>
+      </list>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="16dp">
+
+		<Button
+			android:id="@+id/btn_pin_screen"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_pin_screen" />
+
+		<Button
+			android:id="@+id/btn_ui_templates"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_ui_templates" />
+
+		<Button
+			android:id="@+id/btn_photo_options"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_photo_sheet" />
+
+		<Button
+			android:id="@+id/btn_selfie_camera"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_selfie_camera" />
+
+		<Button
+			android:id="@+id/btn_image_helper"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_image_helper_examples" />
+
+		<Button
+			android:id="@+id/btn_list_template"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_list_template" />
+
+		<Button
+			android:id="@+id/btn_country_picker"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_country_picker" />
+
+		<Button
+			android:id="@+id/btn_fingerprint"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_fingerprint_activation" />
+
+		<Button
+			android:id="@+id/btn_code_validation"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_code_validation" />
+
+		<Button
+			android:id="@+id/btn_code_barcode_analyzer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/crossroad_open_barcode_analyzer" />
+
+	</LinearLayout>
+</ScrollView>

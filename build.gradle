@@ -1,0 +1,95 @@
+buildscript {
+    ext.compile_sdk_version = 31
+    ext.build_tools_version = "31.0.0"
+    ext.min_sdk_version = 23
+    ext.target_sdk_version = 31
+    ext.kotlin_version = "1.5.31"
+
+    ext.corountines = "1.3.9"
+    ext.fragment = "1.4.0-alpha10"
+    ext.koin = "3.0.2"
+    ext.lightbase = "0.0.51"
+    ext.lifecycle = "2.4.0"
+    ext.moshi = "1.12.0"
+    ext.navigation = "2.4.0-alpha10"
+    ext.okhttp = "4.9.0"
+    ext.retrofit = "2.9.0"
+    ext.security_crypto = "1.1.0-alpha03"
+    ext.timber = "5.0.1"
+    ext.material = "1.4.0"
+    ext.detekt_version = "1.19.0"
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath "com.google.gms:google-services:4.3.10"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation"
+        classpath 'com.google.firebase:firebase-appdistribution-gradle:2.2.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+        classpath "com.google.firebase:perf-plugin:1.4.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.insert-koin:koin-gradle-plugin:$koin"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "$detekt_version"
+}
+
+dependencies {
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
+}
+
+detekt {
+    toolVersion = "$detekt_version"
+    autoCorrect = true
+    config = files("config/detekt/detekt.yml")
+    parallel = true
+
+    source = files(
+            "app/src/main/java",
+            "cache/src/main/java",
+            "core/src/main/java",
+            "network/src/main/java",
+            "onboarding/src/main/java",
+            "pin/src/main/java",
+            "repository/src/main/java",
+            "resources/src/main/java"
+    )
+
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        txt.enabled = false
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://gitlab.cleevio.cz/api/v4/projects/466/packages/maven"
+            name "GitLab"
+            credentials(HttpHeaderCredentials) {
+                name = 'Private-Token'
+                value = authToken
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+apply from: file('gradle/projectDependencyGraph.gradle')

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="16dp"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+	<ImageView
+		android:id="@+id/pincode_iv"
+		android:layout_width="0dp"
+		android:layout_height="50dp"
+		android:src="@drawable/ic_cleevio_symbol"
+		android:visibility="gone"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="ContentDescription" />
+
+	<TextView
+		android:id="@+id/pincode_title"
+		style="@style/Widget.LightBase.Pin.TextView.PinTitle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:text="@string/pin_create_password"
+		android:visibility="visible"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/pincode_title2"
+		style="@style/Widget.LightBase.Pin.TextView.PinTitle2"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="48dp"
+		android:visibility="gone"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/pincode_iv"
+		tools:text="Create your passcode" />
+
+	<lightbase.pin.PinIndicator
+		android:id="@+id/pin_indicator"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:minHeight="60dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/pincode_title"
+		app:size="@integer/pin_pincode_size"
+		app:useFilledGraphics="true" />
+
+	<lightbase.pin.NumpadView
+		android:id="@+id/numpad"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginStart="24dp"
+		android:layout_marginTop="40dp"
+		android:layout_marginEnd="24dp"
+		android:layout_marginBottom="32dp"
+		app:layout_constraintBottom_toTopOf="@id/pin_bottom_button"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/pin_indicator"
+		app:showBubbles="true" />
+
+	<com.google.android.material.textview.MaterialTextView
+		android:id="@+id/pin_bottom_button"
+		style="@style/Widget.LightBase.Pin.TextView.PinBottomText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="16dp"
+		android:paddingHorizontal="16dp"
+		android:paddingVertical="8dp"
+		android:text="@string/pin_need_help"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

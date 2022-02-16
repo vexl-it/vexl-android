@@ -1,0 +1,31 @@
+digraph {
+  graph [label="LightSpeed Skeleton\n ",labelloc=t,fontsize=30,ranksep=1.4];
+  node [style=filled, fillcolor="#bbbbbb"];
+  rankdir=TB;
+
+  # Projects
+
+  ":app" [fillcolor="#baffc9"];
+  ":cache" [fillcolor="#baffc9"];
+  ":core" [fillcolor="#baffc9"];
+  ":network" [fillcolor="#baffc9"];
+  ":pin" [fillcolor="#baffc9"];
+  ":repository" [fillcolor="#baffc9"];
+
+  {rank = same;}
+
+  # Dependencies
+
+  ":app" -> ":app"
+  ":app" -> ":core" [style=dotted]
+  ":app" -> ":pin" [style=dotted]
+  ":cache" -> ":cache"
+  ":core" -> ":repository"
+  ":core" -> ":core"
+  ":network" -> ":network"
+  ":pin" -> ":pin"
+  ":pin" -> ":core" [style=dotted]
+  ":repository" -> ":network"
+  ":repository" -> ":cache"
+  ":repository" -> ":repository"
+}

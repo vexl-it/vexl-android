@@ -1,0 +1,148 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
+    id 'com.google.firebase.appdistribution'
+}
+
+def buildVersionCode = Integer.parseInt(System.getenv("VERSION_CODE") ?: "1")
+def buildVersionName = System.getenv("VERSION_NAME") ?: "1.0.0"
+def buildUseCrashlytics = System.getenv("USE_CRASHLYTICS") ?: "false"
+def firebaseAppId = System.getenv("FIREBASE_APP_ID") ?: ""
+def buildTypeName = System.getenv("BUILD_TYPE_NAME") ?: ""
+
+android {
+    compileSdkVersion rootProject.ext.compile_sdk_version
+    buildToolsVersion rootProject.ext.build_tools_version
+
+    defaultConfig {
+        applicationId "cz.cleevio.lightspeedskeleton"
+        //applicationId "cz.vexl.app"
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        versionCode buildVersionCode
+        versionName buildVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        archivesBaseName = "LightSpeed-$buildVersionName"
+        manifestPlaceholders = [enableCrashReporting: buildUseCrashlytics]
+
+        // Add new languages here
+        resConfigs "en", "cs"
+
+        // Room schema
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+        }
+
+        release {
+            def secretsPropertiesFile = rootProject.file("secrets.properties")
+            def secretProperties = new Properties()
+            if (secretsPropertiesFile.exists()) {
+                secretProperties.load(new FileInputStream(secretsPropertiesFile))
+            }
+            def releaseStorePassword = System.getenv("RELEASE_STORE_PASSWORD") ?: "${secretProperties['secretStorePassword']}"
+            def releaseKeyPassword = System.getenv("RELEASE_KEY_PASSWORD") ?: "${secretProperties['secretKeyPassword']}"
+            storeFile file("production.keystore")
+            storePassword releaseStorePassword
+            keyAlias "upload"
+            keyPassword releaseKeyPassword
+        }
+    }
+
+    flavorDimensions "environment"
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+            FirebasePerformance {
+                instrumentationEnabled false
+            }
+        }
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        development {
+            applicationIdSuffix ".dev"
+            firebaseAppDistribution {
+                appId = firebaseAppId
+                groups = "cleevio"
+                releaseNotesFile = "release_notes.txt"
+                apkPath = "out/${archivesBaseName}-development-${buildTypeName}.apk"
+            }
+        }
+        staging {
+            applicationIdSuffix ".staging"
+            firebaseAppDistribution {
+                appId = firebaseAppId
+                groups = "cleevio"
+                releaseNotesFile = "release_notes.txt"
+                apkPath = "out/${archivesBaseName}-staging-${buildTypeName}.apk"
+            }
+        }
+        production {
+            firebaseAppDistribution {
+                appId = firebaseAppId
+                groups = "cleevio"
+                releaseNotesFile = "release_notes.txt"
+                apkPath = "out/${archivesBaseName}-production-${buildTypeName}.apk"
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+        coreLibraryDesugaringEnabled true
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    lintOptions {
+        lintConfig file("lint.xml")
+        abortOnError true
+        warningsAsErrors true
+        showAll true
+        absolutePaths false
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':pin')
+    implementation project(':onboarding')
+
+    implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-perf-ktx'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+}
