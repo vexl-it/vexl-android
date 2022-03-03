@@ -1,12 +1,10 @@
 package cz.cleeevio.onboarding.termsFragment
 
-import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import cz.cleeevio.onboarding.R
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 

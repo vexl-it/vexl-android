@@ -7,7 +7,6 @@ import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 import timber.log.Timber
 
-
 class InitPhoneViewModel constructor(
 	private val userRepository: UserRepository
 ) : BaseViewModel() {

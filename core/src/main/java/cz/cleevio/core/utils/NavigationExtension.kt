@@ -3,7 +3,6 @@ package cz.cleevio.core.utils
 import android.content.Intent
 import android.util.SparseArray
 import androidx.core.util.forEach
-import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,7 +19,6 @@ fun BottomNavigationView.setupWithNavController(
 	intent: Intent,
 	destinationChangedListener: NavController.OnDestinationChangedListener
 ): LiveData<NavController> {
-
 	// Map of tags
 	val graphIdToTagMap = SparseArray<String>()
 	// Result. Mutable live data with the selected controlled

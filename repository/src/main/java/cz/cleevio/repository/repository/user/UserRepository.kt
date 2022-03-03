@@ -10,7 +10,6 @@ interface UserRepository {
 
 	suspend fun authStepOne(phoneNumber: String): Resource<ConfirmPhone>
 
-
 	//----------------------------------
 	fun getUserFlow(): Flow<User?>
 

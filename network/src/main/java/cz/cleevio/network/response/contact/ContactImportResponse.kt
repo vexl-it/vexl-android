@@ -7,4 +7,3 @@ data class ContactImportResponse constructor(
 	val imported: Boolean,
 	val message: String
 )
-

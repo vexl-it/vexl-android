@@ -4,6 +4,7 @@ import com.squareup.moshi.Moshi
 import cz.cleevio.network.*
 import cz.cleevio.network.agent.UserAgent
 import cz.cleevio.network.agent.UserAgentImpl
+import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.cache.NetworkCache
 import cz.cleevio.network.cache.NetworkCacheImpl
@@ -29,6 +30,7 @@ const val HTTP_LOGGING_INTERCEPTOR = "HTTP_LOGGING_INTERCEPTOR"
 const val NETWORK_REQUEST_TIMEOUT = 30L
 
 const val USER_API_BASE_URL = "https://user.vexl.devel.cleevio.io/api/v1/"
+const val CONTACT_API_BASE_URL = "https://contact.vexl.devel.cleevio.io/api/v1/"
 
 val networkModule = module {
 
@@ -87,6 +89,19 @@ val networkModule = module {
 			tokenAuthenticator = get(),
 			baseUrl = USER_API_BASE_URL
 		).create(UserApi::class.java)
+	}
+
+	single {
+		provideRetrofit(
+			scope = this,
+			interceptors = listOf(
+				get(named(AUTH_INTERCEPTOR)),
+				get(named(NETWORK_INTERCEPTOR)),
+				get(named(HTTP_LOGGING_INTERCEPTOR))
+			),
+			tokenAuthenticator = get(),
+			baseUrl = CONTACT_API_BASE_URL
+		).create(ContactApi::class.java)
 	}
 
 	single {
@@ -170,5 +185,9 @@ val networkModule = module {
 			networkCache = get(),
 			tokenRestApi = get()
 		)
+	}
+
+	single {
+		NetworkError()
 	}
 }

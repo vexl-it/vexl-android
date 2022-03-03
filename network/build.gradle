@@ -60,4 +60,7 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "io.insert-koin:koin-core:$koin"
     implementation "io.insert-koin:koin-android:$koin"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$corountines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$corountines"
 }
