@@ -1,6 +1,9 @@
 package cz.cleeevio.onboarding.initPhoneFragment
 
+import androidx.core.view.updatePadding
 import cz.cleeevio.onboarding.R
+import cz.cleeevio.onboarding.databinding.FragmentInitPhoneBinding
+import cz.cleevio.core.utils.viewBinding
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.dpValueToPx
 import lightbase.core.extensions.listenForInsets
@@ -9,7 +12,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 const val BOTTOM_EXTRA_PADDING = 40
 
 class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
-
 	override val viewModel by viewModel<InitPhoneViewModel>()
 	private val binding by viewBinding(FragmentInitPhoneBinding::bind)
 
