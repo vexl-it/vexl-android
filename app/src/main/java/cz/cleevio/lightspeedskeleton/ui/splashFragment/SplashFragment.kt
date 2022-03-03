@@ -6,14 +6,15 @@ import cz.cleevio.lightspeedskeleton.R
 import kotlinx.coroutines.delay
 import lightbase.core.baseClasses.BaseFragment
 
+const val SPLASH_DELAY = 1500L
+
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
 	override fun initView() {
 		lifecycle.coroutineScope.launchWhenCreated {
-			delay(1500)
+			delay(SPLASH_DELAY)
 			findNavController().navigate(SplashFragmentDirections.actionToOnboarding())
 		}
-
 	}
 
 	override fun bindObservers() = Unit

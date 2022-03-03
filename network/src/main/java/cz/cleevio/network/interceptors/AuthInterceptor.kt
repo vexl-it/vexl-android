@@ -4,7 +4,6 @@ import cz.cleevio.network.cache.NetworkCache
 import okhttp3.Interceptor
 import okhttp3.Response
 
-
 class AuthInterceptor constructor(
 	private val networkCache: NetworkCache,
 ) : Interceptor {
@@ -28,15 +27,14 @@ class AuthInterceptor constructor(
 		const val HEADER_AUTHORIZATION = "Authorization"
 		private const val HEADER_AUTHORIZATION_BEARER = "Bearer %s"
 
-		fun createTokenHeader(token: String?): String {
-			return String.format(HEADER_AUTHORIZATION_BEARER, token.orEmpty())
-		}
+		fun createTokenHeader(token: String?): String = String.format(HEADER_AUTHORIZATION_BEARER, token.orEmpty())
 
 		fun createTokenHeaderOptional(token: String?): String? {
-			return if (token.isNullOrEmpty())
+			return if (token.isNullOrEmpty()) {
 				null
-			else
+			} else {
 				String.format(HEADER_AUTHORIZATION_BEARER, token.orEmpty())
+			}
 		}
 	}
 }

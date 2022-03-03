@@ -3,6 +3,7 @@ package cz.cleevio.core.utils
 import android.content.Intent
 import android.util.SparseArray
 import androidx.core.util.forEach
+import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,18 +13,24 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 
 fun BottomNavigationView.setupWithNavController(
+	manuallySelectId: Int? = null,
 	navGraphIds: List<Int>,
 	fragmentManager: FragmentManager,
 	containerId: Int,
 	intent: Intent,
 	destinationChangedListener: NavController.OnDestinationChangedListener
 ): LiveData<NavController> {
+
 	// Map of tags
 	val graphIdToTagMap = SparseArray<String>()
 	// Result. Mutable live data with the selected controlled
 	val selectedNavController = MutableLiveData<NavController>()
 
 	var firstFragmentGraphId = 0
+
+	manuallySelectId?.let {
+		this.selectedItemId = it
+	}
 
 	// First create a NavHostFragment for each NavGraph ID
 	navGraphIds.forEachIndexed { index, navGraphId ->

@@ -63,6 +63,7 @@ val networkModule = module {
 		get<Retrofit>().create(RestApi::class.java)
 	}
 
+	//should be removed OR changed to use User microservice
 	single {
 		provideRetrofit(
 			scope = this,
@@ -71,7 +72,7 @@ val networkModule = module {
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
 			tokenAuthenticator = null,
-			baseUrl = BuildConfig.API_BASE_URL    //todo: fixme
+			baseUrl = BuildConfig.API_BASE_URL
 		).create(TokenRestApi::class.java)
 	}
 
