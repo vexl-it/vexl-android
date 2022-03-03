@@ -11,6 +11,8 @@
 
 	<include app:graph="@navigation/nav_country_picker" />
 
+	<include app:graph="@navigation/nav_onboarding" />
+
 	<fragment
 		android:id="@+id/pinFragment"
 		android:name="cz.cleevio.pin.PinFragment"
@@ -84,8 +86,8 @@
 		android:label="SplashFragment"
 		tools:layout="@layout/fragment_splash">
 		<action
-			android:id="@+id/action_to_crossroadFragment"
-			app:destination="@id/crossroadFragment" />
+			android:id="@+id/action_to_onboarding"
+			app:destination="@+id/nav_onboarding" />
 	</fragment>
 
 	<fragment

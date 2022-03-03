@@ -9,7 +9,8 @@ val repoModule = module {
 	single<UserRepository> {
 		UserRepositoryImpl(
 			userDao = get(),
-			encryptedPreference = get()
+			encryptedPreference = get(),
+			userRestApi = get()
 		)
 	}
 }
