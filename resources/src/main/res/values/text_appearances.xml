@@ -58,10 +58,9 @@
 	</style>
 
 	<style name="TextAppearance.Cleevio.Button" parent="TextAppearance.MaterialComponents.Button">
-		<item name="android:textSize">17sp</item>
-		<item name="android:textColor">@android:color/white</item>
-		<!--<item name="fontFamily">@font/barlow_semibold</item>
-		<item name="android:fontFamily">@font/barlow_semibold</item>-->
+		<item name="android:textSize">24sp</item>
+		<item name="android:textColor">@color/text_primary</item>
+		<item name="lineHeight">29.88dp</item>
 	</style>
 
 	<style name="TextAppearance.Cleevio.MiniButton" parent="TextAppearance.MaterialComponents.Button">
@@ -204,5 +203,21 @@
 	</style>
 
 	<style name="TextAppearance.LightBase.Pin.TextView.PinBottomText" parent="TextAppearance.LightBase.Pin.TextView.BlackYellow" />
+
+	<style name="TextAppearance.Vexl.Terms.Title" parent="TextAppearance.MaterialComponents.Headline2">
+		<item name="android:textSize">42sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">41dp</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.PhoneInit.Title" parent="TextAppearance.Vexl.Terms.Title">
+		<item name="android:textColor">@color/black</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Terms.Switch" parent="TextAppearance.MaterialComponents.Body2">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">26dp</item>
+	</style>
 
 </resources>

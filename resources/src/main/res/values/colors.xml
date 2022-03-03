@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="background">@color/white</color>
-	<color name="surface">@color/white</color>
-	<color name="primary">@color/yellow</color>
+	<color name="background">@color/black</color>
+	<color name="surface">@color/black</color>
+	<color name="primary">@color/blue_light</color>
 	<color name="primary_dark">@color/dark_yellow</color>
 	<color name="secondary">@color/carbon</color>
 	<color name="secondary_dark">@color/dark_carbon</color>
 	<color name="color_on_primary">@color/carbon</color>
 	<color name="color_on_secondary">@color/white</color>
-	<color name="primary_light">@color/purity</color>
-	<color name="text_primary">@color/root_text_color</color>
+	<color name="primary_light">@color/error</color>
+	<color name="text_primary">@color/black</color>
 	<color name="text_secondary">@color/root_text_color</color>
 	<color name="color_control_highlight">@color/black</color>
 	<color name="root_text_color">@color/carbon</color>
 	<color name="status_bar">@android:color/transparent</color>
 	<color name="navigation_bar">#000000</color>
+	<color name="button">@color/blue_light</color>
 
 	<color name="black">#000000</color>
 	<color name="white">#FFFFFF</color>
@@ -28,6 +29,7 @@
 	<color name="gray">#CFD2D3</color>
 	<color name="grey_dark">#3C3C43</color>
 	<color name="grey_light">#EBEBF5</color>
+	<color name="blue_light">#C3C3FF</color>
 
 	<!-- PIN -->
 	<color name="pin_bubble_color">@color/gray_20</color>

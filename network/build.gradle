@@ -26,12 +26,15 @@ android {
     productFlavors {
         development {
             buildConfigField "String", "API_BASE_URL", "\"https://lightspeed.cleevio.io/\""
+            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.devel.cleevio.io/\""
         }
         staging {
             buildConfigField "String", "API_BASE_URL", "\"https://lightspeed.cleevio.io/\""
+            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.devel.cleevio.io/\""
         }
         production {
             buildConfigField "String", "API_BASE_URL", "\"https://lightspeed.cleevio.io/\""
+            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.devel.cleevio.io/\""
         }
     }
 
@@ -57,4 +60,7 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "io.insert-koin:koin-core:$koin"
     implementation "io.insert-koin:koin-android:$koin"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$corountines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$corountines"
 }

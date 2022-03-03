@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
 
 fun BottomNavigationView.setupWithNavController(
+	manuallySelectId: Int? = null,
 	navGraphIds: List<Int>,
 	fragmentManager: FragmentManager,
 	containerId: Int,
@@ -24,6 +25,10 @@ fun BottomNavigationView.setupWithNavController(
 	val selectedNavController = MutableLiveData<NavController>()
 
 	var firstFragmentGraphId = 0
+
+	manuallySelectId?.let {
+		this.selectedItemId = it
+	}
 
 	// First create a NavHostFragment for each NavGraph ID
 	navGraphIds.forEachIndexed { index, navGraphId ->

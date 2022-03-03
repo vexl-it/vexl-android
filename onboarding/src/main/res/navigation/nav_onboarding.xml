@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_onboarding"
+	app:startDestination="@+id/termsFragment">
+
+	<fragment
+		android:id="@+id/termsFragment"
+		android:name="cz.cleeevio.onboarding.termsFragment.TermsFragment"
+		android:label="TermsFragment"
+		tools:layout="@layout/fragment_terms">
+
+		<action
+			android:id="@+id/proceed_to_initPhoneFragment"
+			app:destination="@id/initPhoneFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/initPhoneFragment"
+		android:name="cz.cleeevio.onboarding.initPhoneFragment.InitPhoneFragment"
+		android:label="InitPhoneFragment"
+		tools:layout="@layout/fragment_init_phone">
+
+	</fragment>
+
+</navigation>
