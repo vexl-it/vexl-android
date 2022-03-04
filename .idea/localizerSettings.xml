@@ -7,7 +7,12 @@
           <option name="projectName" value="LightSpeed" />
           <option name="resPath" value="$PROJECT_DIR$/localization.json" />
         </ProjectSettings>
+        <ProjectSettings>
+          <option name="projectName" value="vexl" />
+          <option name="resPath" value="$PROJECT_DIR$/localization.json" />
+        </ProjectSettings>
       </list>
     </option>
+    <option name="selectedProject" value="1" />
   </component>
 </project>
