@@ -72,6 +72,36 @@
 		android:label="PhoneDoneFragment"
 		tools:layout="@layout/fragment_phone_done">
 
+		<action
+			android:id="@+id/proceed_to_usernameFragment"
+			app:destination="@id/usernameFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/usernameFragment"
+		android:name="cz.cleeevio.onboarding.usernameFragment.UsernameFragment"
+		android:label="UsernameFragment"
+		tools:layout="@layout/fragment_username">
+
+		<action
+			android:id="@+id/proceed_to_avatarFragment"
+			app:destination="@id/avatarFragment">
+
+		</action>
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/avatarFragment"
+		android:name="cz.cleeevio.onboarding.avatarFragment.AvatarFragment"
+		android:label="AvatarFragment"
+		tools:layout="@layout/fragment_avatar">
+
+		<argument
+			android:name="username"
+			app:argType="string" />
+
 	</fragment>
 
 </navigation>

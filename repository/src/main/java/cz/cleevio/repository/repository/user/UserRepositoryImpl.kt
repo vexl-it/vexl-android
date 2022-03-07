@@ -9,10 +9,12 @@ import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.ConfirmCodeRequest
 import cz.cleevio.network.request.user.ConfirmPhoneRequest
 import cz.cleevio.network.response.user.ConfirmCodeResponse
+import cz.cleevio.network.request.user.UsernameAvailableRequest
 import cz.cleevio.network.response.user.ConfirmPhoneResponse
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.model.user.ConfirmPhone
+import cz.cleevio.repository.model.user.UsernameAvailable
 import cz.cleevio.repository.model.user.fromNetwork
 import kotlinx.coroutines.flow.Flow
 
@@ -78,6 +80,24 @@ class UserRepositoryImpl constructor(
 		return UserProfile(
 			fullname = user.getFullname(),
 			photoUrl = user.photoUrl
+		)
+	}
+
+	override suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable> {
+		return mapToBusinessObject(
+				tryOnline(
+					request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
+				)
+		) { usernameAvailableResponse ->
+			usernameAvailableResponse?.fromNetwork()
+		}
+	}
+
+	private fun <X, Y> mapToBusinessObject(response: Resource<X>, convertFunction: (X?) -> Y?): Resource<Y> {
+		return Resource(
+			status = response.status,
+			data = convertFunction(response.data),
+			errorIdentification = response.errorIdentification
 		)
 	}
 }
