@@ -2,7 +2,9 @@ package cz.cleeevio.onboarding.di
 
 import cz.cleeevio.onboarding.codeValidationFragment.CodeValidationViewModel
 import cz.cleeevio.onboarding.initPhoneFragment.InitPhoneViewModel
+import cz.cleeevio.onboarding.phoneDoneFragment.PhoneDoneViewModel
 import cz.cleeevio.onboarding.termsFragment.TermsViewModel
+import cz.cleeevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,5 +22,17 @@ val onboardingModule = module {
 		InitPhoneViewModel(
 			userRepository = get()
 		)
+	}
+
+	viewModel { (phoneNumber: String, verificationId: Long) ->
+		VerifyPhoneViewModel(
+			phoneNumber = phoneNumber,
+			verificationId = verificationId,
+			userRepository = get(),
+		)
+	}
+
+	viewModel {
+		PhoneDoneViewModel()
 	}
 }

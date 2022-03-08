@@ -23,6 +23,55 @@
 		android:label="InitPhoneFragment"
 		tools:layout="@layout/fragment_init_phone">
 
+		<action
+			android:id="@+id/proceed_to_verifyPhoneFragment"
+			app:destination="@id/verifyPhoneFragment">
+
+			<argument
+				android:name="phoneNumber"
+				android:defaultValue="null"
+				app:argType="string"
+				app:nullable="true" />
+
+			<argument
+				android:name="verificationId"
+				android:defaultValue="0L"
+				app:argType="long" />
+
+		</action>
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/verifyPhoneFragment"
+		android:name="cz.cleeevio.onboarding.verifyPhoneFragment.VerifyPhoneFragment"
+		android:label="VerifyPhoneFragment"
+		tools:layout="@layout/fragment_verify_phone">
+
+		<argument
+			android:name="phoneNumber"
+			android:defaultValue="null"
+			app:argType="string"
+			app:nullable="true" />
+
+		<argument
+			android:name="verificationId"
+			android:defaultValue="0L"
+			app:argType="long" />
+
+		<action
+			android:id="@+id/proceed_to_phoneDoneFragment"
+			app:destination="@id/phoneDoneFragment" />
+
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/phoneDoneFragment"
+		android:name="cz.cleeevio.onboarding.phoneDoneFragment.PhoneDoneFragment"
+		android:label="PhoneDoneFragment"
+		tools:layout="@layout/fragment_phone_done">
+
 	</fragment>
 
 </navigation>

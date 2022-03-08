@@ -12,7 +12,6 @@ import cz.cleevio.pin.di.pinModule
 import cz.cleevio.repository.di.repoModule
 import lightbase.countrypicker.di.countryPickerModule
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
@@ -26,7 +25,7 @@ class CleevioApp : Application() {
 		}
 
 		startKoin {
-			androidLogger()
+			//androidLogger()
 			androidContext(this@CleevioApp)
 			modules(
 				listOf(

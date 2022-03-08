@@ -1,58 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Vexl</string>
-
-    <!-- Pin -->
-    <string name="pin_passcode_missmatch" translatable="false">Passcode missmatch</string>
-    <string name="pin_too_easy_to_guess" translatable="false">Too easy to guess</string>
-    <string name="pin_repeat_password" translatable="false">Repeat your passcode</string>
-    <string name="pin_create_password" translatable="false">Create your passcode</string>
-    <string name="pin_need_help" translatable="false">Need help?</string>
-
-    <!-- Crossroad -->
-    <string name="crossroad_open_pin_screen" translatable="false">Open Pin screen</string>
-    <string name="crossroad_open_ui_templates" translatable="false">Open UI templates</string>
-    <string name="crossroad_open_photo_sheet" translatable="false">Open photo bottom sheet</string>
-    <string name="crossroad_open_selfie_camera" translatable="false">Open Take a photo</string>
-    <string name="crossroad_open_image_helper_examples" translatable="false">Open image helper examples</string>
-    <string name="crossroad_open_fingerprint_activation" translatable="false">Fingerprint activation</string>
-    <string name="crossroad_open_list_template" translatable="false">Open list template</string>
-    <string name="crossroad_open_code_validation" translatable="false">Open code validation</string>
-    <string name="crossroad_open_country_picker" translatable="false">Open country picker</string>
-    <string name="crossroad_open_barcode_analyzer" translatable="false">Open barcode analyzer</string>
-
-    <!-- Image helper -->
-    <string name="image_helper_camera_intent" translatable="false">Camera intent</string>
-    <string name="image_helper_gallery_intent" translatable="false">Gallery intent</string>
-    <string name="image_helper_share_image" translatable="false">Share image</string>
-
-    <!-- fingerprint -->
-    <string name="fingerprint_activation_title" translatable="false">Get better security</string>
-    <string name="fingerprint_activation_subtitle" translatable="false">Enable location services so we can always show you only relevant content.</string>
-    <string name="fingerprint_activation_button" translatable="false">Enable fingerprint</string>
-    <string name="fingerprint_activation_skip" translatable="false">Skip</string>
-
-    <!-- Code validation -->
-    <string name="code_validation_title" translatable="false">Confirm activation code from email.</string>
-    <string name="code_validation_subtitle" translatable="false">The code has been sent to address filip@cleevio.com. Check your spam.</string>
-    <string name="code_validation_resend_title" translatable="false">Resend code</string>
-    <string name="code_validation_open_mail_app" translatable="false">Open Mail App</string>
-
-    <!-- Login errors -->
-    <string name="app_language_code" translatable="false">en</string>
-    <string name="error_user_is_blocked" translatable="false">User is blocked</string>
-    <string name="error_user_is_not_verified" translatable="false">User is not verified</string>
-    <string name="error_unauthorized" translatable="false">Unauthorized error. You were logged out.</string>
-    <string name="error_user_already_exists" translatable="false">Provided user already exists</string>
-    <string name="error_user_does_not_exist" translatable="false">User does not exist</string>
-    <string name="error_email_confirm_invalid_code" translatable="false">Invalid code</string>
-    <string name="error_wrong_login_credentials" translatable="false">Wrong login credentials</string>
-    <string name="error_unknown_error_occurred" translatable="false">The action could not be completed because an unknown error occurred. Please try again later.</string>
-    <string name="error_unknown_connection_problem" translatable="false">Connection problem. Please try again later.</string>
-    <string name="error_invalid_format" translatable="false">Invalid format</string>
-    <string name="error_invalid_password" translatable="false">Invalid password</string>
-    <string name="error_avatar_has_invalid_format" translatable="false">Avatar has invalid format</string>
-    <string name="error_invalid_data_format" translatable="false">Invalid data format</string>
 
     <!-- General -->
     <string name="general_continue">Continue</string>
@@ -62,6 +9,10 @@
     <string name="general_pause">Pause</string>
     <string name="general_cancel">Cancel</string>
     <string name="general_ok">OK</string>
+    <string name="general_verify">Verifying...</string>
 
     <!-- Onboarding -->
+    <string name="init_phone_title">What’s your phone number?</string>
+    <string name="verify_phone_title">We sent you a code</string>
+    <string name="verify_phone_subtitle">Enter it bellow to verify %1$s</string>
 </resources>
