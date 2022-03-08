@@ -2,7 +2,7 @@ package cz.cleevio.repository.model.user
 
 import cz.cleevio.network.response.user.UsernameAvailableResponse
 
-class UsernameAvailable constructor(
+data class UsernameAvailable constructor(
 	val available: Boolean
 )
 

@@ -10,7 +10,6 @@ import cz.cleevio.network.request.user.ConfirmCodeRequest
 import cz.cleevio.network.request.user.ConfirmPhoneRequest
 import cz.cleevio.network.response.user.ConfirmCodeResponse
 import cz.cleevio.network.request.user.UsernameAvailableRequest
-import cz.cleevio.network.response.user.ConfirmPhoneResponse
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.model.user.ConfirmPhone
@@ -25,12 +24,11 @@ class UserRepositoryImpl constructor(
 ) : UserRepository {
 
 	override suspend fun authStepOne(phoneNumber: String): Resource<ConfirmPhone> {
-		return mapToConfirmPhone(
-			tryOnline(
-				request = {
-					userRestApi.postUserConfirmPhone(ConfirmPhoneRequest(phoneNumber = phoneNumber))
-				}
-			)
+		return tryOnline(
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = { userRestApi.postUserConfirmPhone(ConfirmPhoneRequest(phoneNumber = phoneNumber)) }
 		)
 	}
 
@@ -48,15 +46,6 @@ class UserRepositoryImpl constructor(
 					)
 				}
 			)
-		)
-	}
-
-	private fun mapToConfirmPhone(response: Resource<ConfirmPhoneResponse>): Resource<ConfirmPhone> {
-		return Resource(
-			status = response.status,
-			data = response.data?.fromNetwork(),
-			errorIdentification = response.errorIdentification
-		)
 	}
 
 	private fun mapToConfirmCode(response: Resource<ConfirmCodeResponse>): Resource<ConfirmCode> {
@@ -84,20 +73,11 @@ class UserRepositoryImpl constructor(
 	}
 
 	override suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable> {
-		return mapToBusinessObject(
-				tryOnline(
+		return tryOnline(
+					mapper = {
+						it?.fromNetwork()
+					},
 					request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
 				)
-		) { usernameAvailableResponse ->
-			usernameAvailableResponse?.fromNetwork()
-		}
-	}
-
-	private fun <X, Y> mapToBusinessObject(response: Resource<X>, convertFunction: (X?) -> Y?): Resource<Y> {
-		return Resource(
-			status = response.status,
-			data = convertFunction(response.data),
-			errorIdentification = response.errorIdentification
-		)
 	}
 }

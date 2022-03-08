@@ -16,14 +16,12 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-suspend fun <E> tryOnline(
+suspend fun <E, O> tryOnline(
 	doOnSuccess: suspend ((E?) -> Unit) = {},
 	doOnError: suspend ((Int, Int?) -> ErrorIdentification?) = { _, _ -> null },
-	parseError: suspend ((Response<E>) -> Resource<E>) = { response ->
-		parseResponseToResource(response)
-	},
+	mapper: (E?) -> O?,
 	request: suspend () -> Response<E>
-): Resource<E> {
+): Resource<O> {
 	val networkError = object : KoinComponent {
 		val networkError: NetworkError by inject()
 	}.networkError
@@ -32,9 +30,21 @@ suspend fun <E> tryOnline(
 		val response = request()
 		if (response.isSuccessful) {
 			doOnSuccess(response.body())
-			Resource.success(response.body())
+			mapResource(
+				Resource.success(response.body()),
+				mapper
+			)
 		} else {
-			val resource = parseError(response)
+			val subcode = response.errorBody()
+				?.source()
+				?.let {
+					BaseResponseJsonAdapter(
+						moshi = Moshi.Builder().build()
+					).fromJson(it)
+						?.code
+						?.toIntOrNull()
+			}
+			val resource = Resource.error<O>(code = response.code(), subcode = subcode)
 			error = doOnError(response.code(), resource.errorIdentification.subcode) ?: resource.errorIdentification
 			resource
 		}
@@ -65,19 +75,13 @@ suspend fun <E> tryOnline(
 	}
 }
 
-fun <T> parseResponseToResource(response: Response<T>): Resource<T> {
-	return if (response.isSuccessful) {
-		Resource.success(response.body())
-	} else {
-		val subcode = response.errorBody()
-			?.source()
-			?.let {
-				BaseResponseJsonAdapter(
-					moshi = Moshi.Builder().build()
-				).fromJson(it)
-					?.code
-					?.toIntOrNull()
-			}
-		Resource.error(code = response.code(), subcode = subcode)
-	}
+private fun <E, O> mapResource(
+	originalResource: Resource<E>,
+	mapper: (E?) -> O?
+): Resource<O> {
+	return Resource(
+		status = originalResource.status,
+		data = mapper(originalResource.data),
+		errorIdentification = originalResource.errorIdentification
+	)
 }

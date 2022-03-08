@@ -9,11 +9,8 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 	private val args by navArgs<AvatarFragmentArgs>()
 
 	override fun bindObservers() {
-		TODO("Not yet implemented")
 	}
 
 	override fun initView() {
-		TODO("Not yet implemented")
 	}
-
 }

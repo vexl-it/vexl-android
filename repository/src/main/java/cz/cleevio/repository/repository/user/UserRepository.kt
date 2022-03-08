@@ -27,6 +27,5 @@ interface UserRepository {
 
 	//----------------------------------
 
-
 	suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable>
 }

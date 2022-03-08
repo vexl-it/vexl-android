@@ -19,7 +19,6 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 	private val binding by viewBinding(FragmentUsernameBinding::bind)
 
 	override fun bindObservers() {
-
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.usernameAvailable.collect { usernameAvailable ->
 				if (usernameAvailable) {
@@ -31,12 +30,9 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 				}
 			}
 		}
-
-
 	}
 
 	override fun initView() {
-
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
@@ -48,7 +44,5 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 			val username = binding.nameNameInput.text.toString()
 			viewModel.checkUsernameAvailability(username)
 		}
-
 	}
-
 }

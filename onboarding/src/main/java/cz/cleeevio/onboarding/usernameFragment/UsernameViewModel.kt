@@ -17,13 +17,9 @@ class UsernameViewModel constructor(
 
 	lateinit var lastAvailableUsername: String
 
-
 	fun checkUsernameAvailability(username: String) {
-
 		viewModelScope.launch(Dispatchers.IO) {
-
 			val response = userRepository.isUsernameAvailable(username)
-
 			response.data?.let {
 				if (it.available) {
 					lastAvailableUsername = username
@@ -31,7 +27,5 @@ class UsernameViewModel constructor(
 				_usernameAvailable.emit(it.available)
 			}
 		}
-
 	}
-
 }
