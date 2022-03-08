@@ -8,17 +8,17 @@ import retrofit2.http.*
 
 interface UserApi {
 
-	@POST("user/confirm/phone")
+	@POST("user/confirmation/phone")
 	suspend fun postUserConfirmPhone(
 		@Body confirmPhoneRequest: ConfirmPhoneRequest
 	): Response<ConfirmPhoneResponse>
 
-	@POST("user/confirm/code")
+	@POST("user/confirmation/code")
 	suspend fun postUserConfirmCode(
 		@Body confirmPhoneRequest: ConfirmCodeRequest
 	): Response<ConfirmCodeResponse>
 
-	@POST("user/confirm/challenge")
+	@POST("user/confirmation/challenge")
 	suspend fun postUserConfirmChallenge(
 		@Body confirmChallengeRequest: ConfirmChallengeRequest
 	): Response<SignatureResponse>
