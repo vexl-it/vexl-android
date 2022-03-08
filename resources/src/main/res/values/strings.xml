@@ -15,4 +15,7 @@
     <string name="init_phone_title">What’s your phone number?</string>
     <string name="verify_phone_title">We sent you a code</string>
     <string name="verify_phone_subtitle">Enter it bellow to verify %1$s</string>
+    <string name="avatar_welcome">hey %1$s</string>
+    <string name="avatar_title">What do you look like?</string>
+    <string name="avatar_description">Nobody will see your face until you allow it</string>
 </resources>

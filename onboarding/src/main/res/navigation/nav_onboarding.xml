@@ -3,7 +3,9 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_onboarding"
-	app:startDestination="@+id/termsFragment">
+	app:startDestination="@+id/usernameFragment">
+
+	<include app:graph="@navigation/nav_camera" />
 
 	<fragment
 		android:id="@+id/termsFragment"
@@ -86,9 +88,7 @@
 
 		<action
 			android:id="@+id/proceed_to_avatarFragment"
-			app:destination="@id/avatarFragment">
-
-		</action>
+			app:destination="@id/avatarFragment" />
 
 	</fragment>
 
@@ -101,6 +101,10 @@
 		<argument
 			android:name="username"
 			app:argType="string" />
+
+		<action
+			android:id="@+id/proceed_to_takePhotoFragment"
+			app:destination="@id/nav_camera" />
 
 	</fragment>
 
