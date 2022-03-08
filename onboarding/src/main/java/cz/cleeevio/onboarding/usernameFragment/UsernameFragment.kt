@@ -21,9 +21,9 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 	override fun bindObservers() {
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.usernameAvailable.collect { usernameAvailable ->
-				if (usernameAvailable) {
+				if (usernameAvailable.available) {
 					findNavController().navigate(
-						UsernameFragmentDirections.proceedToAvatarFragment(viewModel.lastAvailableUsername)
+						UsernameFragmentDirections.proceedToAvatarFragment(usernameAvailable.username)
 					)
 				} else {
 					// TODO some error message?

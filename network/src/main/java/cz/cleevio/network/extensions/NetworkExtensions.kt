@@ -17,7 +17,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 suspend fun <E, O> tryOnline(
-	doOnSuccess: suspend ((E?) -> Unit) = {},
+	doOnSuccess: suspend ((O?) -> Unit) = {},
 	doOnError: suspend ((Int, Int?) -> ErrorIdentification?) = { _, _ -> null },
 	mapper: (E?) -> O?,
 	request: suspend () -> Response<E>
@@ -29,11 +29,12 @@ suspend fun <E, O> tryOnline(
 	return try {
 		val response = request()
 		if (response.isSuccessful) {
-			doOnSuccess(response.body())
-			mapResource(
+			val mappedResponse = mapResource(
 				Resource.success(response.body()),
 				mapper
 			)
+			doOnSuccess(mappedResponse.data)
+			mappedResponse
 		} else {
 			val subcode = response.errorBody()
 				?.source()
