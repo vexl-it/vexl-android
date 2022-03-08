@@ -40,7 +40,8 @@ class UserRepositoryImpl constructor(
 						ConfirmCodeRequest(
 							id = verificationId,
 							code = verificationCode,
-							userPublicKey = ""    //fixme: either connect it here via encryption helper class or add new param
+							//fixme: either connect it here via encryption helper class or add new param
+							userPublicKey = ""
 						)
 					)
 				}

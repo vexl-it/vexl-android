@@ -54,7 +54,8 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 		}
 
 		binding.continueBtn.setOnClickListener {
-			val verificationCode = binding.verifyPhoneInput.text.toString()
+			//fixme: debug, uncomment later
+			//val verificationCode = binding.verifyPhoneInput.text.toString()
 			//viewModel.sendVerificationCode(verificationCode)
 
 			//debug
