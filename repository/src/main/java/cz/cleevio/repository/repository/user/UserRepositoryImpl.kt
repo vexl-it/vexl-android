@@ -25,7 +25,9 @@ class UserRepositoryImpl constructor(
 	override suspend fun authStepOne(phoneNumber: String): Resource<ConfirmPhone> {
 		return mapToConfirmPhone(
 			tryOnline(
-				request = { userRestApi.postUserConfirmPhone(ConfirmPhoneRequest(phoneNumber = phoneNumber)) }
+				request = {
+					userRestApi.postUserConfirmPhone(ConfirmPhoneRequest(phoneNumber = phoneNumber))
+				}
 			)
 		)
 	}

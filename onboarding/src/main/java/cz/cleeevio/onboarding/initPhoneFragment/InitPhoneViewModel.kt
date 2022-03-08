@@ -24,15 +24,13 @@ class InitPhoneViewModel constructor(
 			Timber.tag("ASDX").d("${response.data}")
 
 			when (response.status) {
-				is Status.Success -> {
-					response.data?.let { confirmPhone ->
-						_phoneNumberSuccess.send(
-							InitPhoneSuccess(
-								phoneNumber = phoneNumber,
-								confirmPhone = confirmPhone
-							)
+				is Status.Success -> response.data?.let { confirmPhone ->
+					_phoneNumberSuccess.send(
+						InitPhoneSuccess(
+							phoneNumber = phoneNumber,
+							confirmPhone = confirmPhone
 						)
-					}
+					)
 				}
 			}
 		}
