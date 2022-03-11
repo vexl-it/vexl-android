@@ -8,11 +8,11 @@ import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.ConfirmCodeRequest
 import cz.cleevio.network.request.user.ConfirmPhoneRequest
-import cz.cleevio.network.response.user.ConfirmCodeResponse
-import cz.cleevio.network.response.user.ConfirmPhoneResponse
+import cz.cleevio.network.request.user.UsernameAvailableRequest
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.model.user.ConfirmPhone
+import cz.cleevio.repository.model.user.UsernameAvailable
 import cz.cleevio.repository.model.user.fromNetwork
 import kotlinx.coroutines.flow.Flow
 
@@ -23,45 +23,29 @@ class UserRepositoryImpl constructor(
 ) : UserRepository {
 
 	override suspend fun authStepOne(phoneNumber: String): Resource<ConfirmPhone> {
-		return mapToConfirmPhone(
-			tryOnline(
-				request = {
-					userRestApi.postUserConfirmPhone(ConfirmPhoneRequest(phoneNumber = phoneNumber))
-				}
-			)
+		return tryOnline(
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = { userRestApi.postUserConfirmPhone(ConfirmPhoneRequest(phoneNumber = phoneNumber)) }
 		)
 	}
 
 	override suspend fun authStepTwo(verificationCode: String, verificationId: Long): Resource<ConfirmCode> {
-		return mapToConfirmCode(
-			tryOnline(
-				request = {
-					userRestApi.postUserConfirmCode(
-						ConfirmCodeRequest(
-							id = verificationId,
-							code = verificationCode,
-							//fixme: either connect it here via encryption helper class or add new param
-							userPublicKey = ""
-						)
+		return tryOnline(
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = {
+				userRestApi.postUserConfirmCode(
+					ConfirmCodeRequest(
+						id = verificationId,
+						code = verificationCode,
+						//fixme: either connect it here via encryption helper class or add new param
+						userPublicKey = ""
 					)
-				}
-			)
-		)
-	}
-
-	private fun mapToConfirmPhone(response: Resource<ConfirmPhoneResponse>): Resource<ConfirmPhone> {
-		return Resource(
-			status = response.status,
-			data = response.data?.fromNetwork(),
-			errorIdentification = response.errorIdentification
-		)
-	}
-
-	private fun mapToConfirmCode(response: Resource<ConfirmCodeResponse>): Resource<ConfirmCode> {
-		return Resource(
-			status = response.status,
-			data = response.data?.fromNetwork(),
-			errorIdentification = response.errorIdentification
+				)
+			}
 		)
 	}
 
@@ -79,5 +63,14 @@ class UserRepositoryImpl constructor(
 			fullname = user.getFullname(),
 			photoUrl = user.photoUrl
 		)
+	}
+
+	override suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable> {
+		return tryOnline(
+					mapper = {
+						it?.fromNetwork(username)
+					},
+					request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
+				)
 	}
 }

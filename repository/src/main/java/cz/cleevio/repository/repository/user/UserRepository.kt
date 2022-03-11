@@ -5,6 +5,7 @@ import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.model.user.ConfirmPhone
+import cz.cleevio.repository.model.user.UsernameAvailable
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -25,4 +26,6 @@ interface UserRepository {
 	suspend fun getUserFullname(): UserProfile?
 
 	//----------------------------------
+
+	suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable>
 }

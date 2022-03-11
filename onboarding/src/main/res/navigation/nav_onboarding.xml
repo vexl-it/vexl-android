@@ -3,7 +3,9 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_onboarding"
-	app:startDestination="@+id/termsFragment">
+	app:startDestination="@+id/usernameFragment">
+
+	<include app:graph="@navigation/nav_camera" />
 
 	<fragment
 		android:id="@+id/termsFragment"
@@ -71,6 +73,38 @@
 		android:name="cz.cleeevio.onboarding.phoneDoneFragment.PhoneDoneFragment"
 		android:label="PhoneDoneFragment"
 		tools:layout="@layout/fragment_phone_done">
+
+		<action
+			android:id="@+id/proceed_to_usernameFragment"
+			app:destination="@id/usernameFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/usernameFragment"
+		android:name="cz.cleeevio.onboarding.usernameFragment.UsernameFragment"
+		android:label="UsernameFragment"
+		tools:layout="@layout/fragment_username">
+
+		<action
+			android:id="@+id/proceed_to_avatarFragment"
+			app:destination="@id/avatarFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/avatarFragment"
+		android:name="cz.cleeevio.onboarding.avatarFragment.AvatarFragment"
+		android:label="AvatarFragment"
+		tools:layout="@layout/fragment_avatar">
+
+		<argument
+			android:name="username"
+			app:argType="string" />
+
+		<action
+			android:id="@+id/proceed_to_takePhotoFragment"
+			app:destination="@id/nav_camera" />
 
 	</fragment>
 

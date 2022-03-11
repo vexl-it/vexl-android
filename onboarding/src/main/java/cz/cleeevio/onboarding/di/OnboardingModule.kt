@@ -5,6 +5,7 @@ import cz.cleeevio.onboarding.initPhoneFragment.InitPhoneViewModel
 import cz.cleeevio.onboarding.phoneDoneFragment.PhoneDoneViewModel
 import cz.cleeevio.onboarding.termsFragment.TermsViewModel
 import cz.cleeevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
+import cz.cleeevio.onboarding.usernameFragment.UsernameViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -34,5 +35,11 @@ val onboardingModule = module {
 
 	viewModel {
 		PhoneDoneViewModel()
+	}
+
+	viewModel {
+		UsernameViewModel(
+			userRepository = get()
+		)
 	}
 }
