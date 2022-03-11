@@ -8,14 +8,23 @@
     <string name="general_start">Play</string>
     <string name="general_pause">Pause</string>
     <string name="general_cancel">Cancel</string>
-    <string name="general_ok">OK</string>
+    <string name="general_ok">Ok</string>
     <string name="general_verify">Verifying...</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="got_it">Got it!</string>
 
     <!-- Onboarding -->
-    <string name="init_phone_title">What’s your phone number?</string>
+
+    <!-- Welcome -->
+
+    <!-- Register Phone -->
     <string name="verify_phone_title">We sent you a code</string>
-    <string name="verify_phone_subtitle">Enter it bellow to verify %1$s</string>
-    <string name="avatar_welcome">hey %1$s</string>
+    <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
+
+    <!-- Register Name and Avatar -->
     <string name="avatar_title">What do you look like?</string>
     <string name="avatar_description">Nobody will see your face until you allow it</string>
+    <string name="avatar_welcome">Hey %s</string>
+    <string name="finished_onboarding_title">Looking cute, let\'s find you some friends.</string>
 </resources>
