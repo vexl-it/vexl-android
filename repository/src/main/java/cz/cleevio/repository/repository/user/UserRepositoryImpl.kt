@@ -1,19 +1,17 @@
 package cz.cleevio.repository.repository.user
 
 import cz.cleevio.cache.dao.UserDao
-import cz.cleevio.cache.entity.User
+import cz.cleevio.cache.entity.UserEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.ConfirmCodeRequest
 import cz.cleevio.network.request.user.ConfirmPhoneRequest
+import cz.cleevio.network.request.user.UserRequest
 import cz.cleevio.network.request.user.UsernameAvailableRequest
 import cz.cleevio.repository.model.UserProfile
-import cz.cleevio.repository.model.user.ConfirmCode
-import cz.cleevio.repository.model.user.ConfirmPhone
-import cz.cleevio.repository.model.user.UsernameAvailable
-import cz.cleevio.repository.model.user.fromNetwork
+import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
 
 class UserRepositoryImpl constructor(
@@ -49,19 +47,54 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override fun getUserFlow(): Flow<User?> = userDao.getUserFlow()
+	override fun getUserFlow(): Flow<UserEntity?> = userDao.getUserFlow()
 
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified
 
-	override suspend fun getUserId(): String? = userDao.getUser()?.id
+	override suspend fun createUser(extId: Long, username: String, avatar: String) {
+		userDao.insert(
+			UserEntity(
+				extId = extId,
+				username = username,
+				avatar = avatar
+			)
+		)
+	}
 
-	override suspend fun getUser(): User? = userDao.getUser()
+	override suspend fun getUserId(): Long? = userDao.getUser()?.id
+
+	override suspend fun getUser(): UserEntity? = userDao.getUser()
 
 	override suspend fun getUserFullname(): UserProfile? {
 		val user = userDao.getUser() ?: return null
 		return UserProfile(
-			fullname = user.getFullname(),
-			photoUrl = user.photoUrl
+			fullname = user.username,
+			photoUrl = user.avatar
+		)
+	}
+
+	override suspend fun registerUser(username: String, avatar: String): Resource<UserRegistration> {
+		return tryOnline(
+			doOnSuccess = {
+				it?.let {
+					createUser(
+						it.userId,
+						it.username,
+						it.avatar
+					)
+				}
+			},
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = {
+				userRestApi.postUser(
+					UserRequest(
+						username = username,
+						avatar = avatar
+					)
+				)
+			}
 		)
 	}
 
@@ -70,7 +103,7 @@ class UserRepositoryImpl constructor(
 					mapper = {
 						it?.fromNetwork(username)
 					},
-					request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
-				)
+			request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
+		)
 	}
 }

@@ -1,27 +1,44 @@
 package cz.cleeevio.onboarding.avatarFragment
 
-import android.net.Uri
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.onboarding.R
 import cz.cleeevio.onboarding.databinding.FragmentAvatarBinding
 import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.core.utils.viewBinding
+import kotlinx.coroutines.launch
 import lightbase.camera.ui.takePhotoFragment.TakePhotoFragment
 import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.dpValueToPx
 import lightbase.core.extensions.listenForInsets
-import timber.log.Timber
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 
 	private val args by navArgs<AvatarFragmentArgs>()
 	private val binding by viewBinding(FragmentAvatarBinding::bind)
+	override val viewModel by viewModel<AvatarViewModel>()
 
 	override fun bindObservers() {
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel.profileImageUri.collect { profileImageUri ->
+				binding.avatarImage.setImageURI(profileImageUri)
+			}
+		}
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel.userRegistration.collect {
+				it?.let {
+					findNavController().navigate(
+						AvatarFragmentDirections.proceedToFinishedOnboardingFragment()
+					)
+				}
+			}
+		}
 	}
 
 	override fun initView() {
@@ -40,24 +57,16 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 			)
 		}
 
+		binding.continueBtn.setOnClickListener {
+			viewModel.registerUser(args.username, requireContext().contentResolver)
+		}
+
 		setupPhotoListener()
 	}
 
 	private fun setupPhotoListener() {
 		setFragmentResultListener(TakePhotoFragment.RESULT_CAMERA_RESULT) { _, bundle ->
-			val result = TakePhotoResult.fromBundle(bundle)
-			Timber.d("taking photo result $result")
-			when (result) {
-				is TakePhotoResult.Success -> {
-					binding.avatarImage.setImageURI(Uri.parse(result.url))
-				}
-				is TakePhotoResult.Denied -> {
-				}
-				is TakePhotoResult.ManuallyClosed -> {
-				}
-				is TakePhotoResult.PermanentlyDenied -> {
-				}
-			}
+			viewModel.processTakingPhotoResult(TakePhotoResult.fromBundle(bundle))
 		}
 	}
 }
