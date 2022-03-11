@@ -2,13 +2,12 @@
 <resources>
 
     <!-- General -->
-    <string name="general_continue">Pokračovat</string>
-    <string name="general_more">Více</string>
-    <string name="general_close">Zavřít</string>
-    <string name="general_start">Spustit</string>
-    <string name="general_pause">Pauza</string>
-    <string name="general_cancel">Zrušit</string>
-    <string name="general_ok">Ok</string>
 
     <!-- Onboarding -->
+
+    <!-- Welcome -->
+
+    <!-- Register Phone -->
+
+    <!-- Register Name and Avatar -->
 </resources>
