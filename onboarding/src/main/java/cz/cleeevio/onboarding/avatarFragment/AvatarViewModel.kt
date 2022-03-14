@@ -9,7 +9,7 @@ import android.provider.MediaStore
 import android.util.Base64
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.repository.model.user.UserRegistration
+import cz.cleevio.repository.model.user.User
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,8 +25,8 @@ class AvatarViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
-	private val _userRegistration = MutableStateFlow<UserRegistration?>(null)
-	val userRegistration = _userRegistration.asStateFlow()
+	private val _user = MutableStateFlow<User?>(null)
+	val user = _user.asStateFlow()
 
 	private val _profileImageUri = MutableStateFlow<Uri?>(null)
 	val profileImageUri = _profileImageUri.asStateFlow()
@@ -41,7 +41,7 @@ class AvatarViewModel constructor(
 					username,
 					getAvatarData(it, contentResolver)
 				)
-				_userRegistration.emit(response.data)
+				_user.emit(response.data)
 			}
 		}
 	}

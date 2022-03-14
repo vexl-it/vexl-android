@@ -35,7 +35,5 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
 			)
 		}
-
-		viewModel.getUserData()
 	}
 }

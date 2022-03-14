@@ -32,7 +32,7 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		}
 
 		viewLifecycleOwner.lifecycleScope.launch {
-			viewModel.userRegistration.collect {
+			viewModel.user.collect {
 				it?.let {
 					viewModel.navMainGraphModel.navigateToGraph(
 						NavMainGraphModel.NavGraph.Contacts

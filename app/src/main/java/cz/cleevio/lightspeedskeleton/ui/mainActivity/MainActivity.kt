@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity() {
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.navGraphFlow.collect {
-					window.setBackgroundDrawableResource(R.color.background)
-
 					when (it) {
 						NavMainGraphModel.NavGraph.EmptyState -> Unit
 						NavMainGraphModel.NavGraph.Contacts -> navController.safeNavigateWithTransition(

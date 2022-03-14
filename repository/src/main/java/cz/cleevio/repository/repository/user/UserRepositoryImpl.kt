@@ -13,6 +13,7 @@ import cz.cleevio.network.request.user.UsernameAvailableRequest
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class UserRepositoryImpl constructor(
 	private val userRestApi: UserApi,
@@ -47,23 +48,24 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override fun getUserFlow(): Flow<UserEntity?> = userDao.getUserFlow()
+	override fun getUserFlow(): Flow<User?> = userDao.getUserFlow().map { it?.fromDao() }
 
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified
 
-	override suspend fun createUser(extId: Long, username: String, avatar: String) {
+	override suspend fun createUser(user: User) {
 		userDao.insert(
 			UserEntity(
-				extId = extId,
-				username = username,
-				avatar = avatar
+				extId = user.extId,
+				username = user.username,
+				avatar = user.avatar,
+				publicKey = user.publicKey
 			)
 		)
 	}
 
 	override suspend fun getUserId(): Long? = userDao.getUser()?.id
 
-	override suspend fun getUser(): UserEntity? = userDao.getUser()
+	override suspend fun getUser(): User? = userDao.getUser()?.fromDao()
 
 	override suspend fun getUserFullname(): UserProfile? {
 		val user = userDao.getUser() ?: return null
@@ -73,15 +75,11 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun registerUser(username: String, avatar: String): Resource<UserRegistration> {
+	override suspend fun registerUser(username: String, avatar: String): Resource<User> {
 		return tryOnline(
 			doOnSuccess = {
 				it?.let {
-					createUser(
-						it.userId,
-						it.username,
-						it.avatar
-					)
+					createUser(it)
 				}
 			},
 			mapper = {
