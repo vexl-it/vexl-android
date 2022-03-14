@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import cz.cleeevio.onboarding.R
 import cz.cleeevio.onboarding.databinding.FragmentAvatarBinding
 import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.viewBinding
 import kotlinx.coroutines.launch
 import lightbase.camera.ui.takePhotoFragment.TakePhotoFragment
@@ -33,10 +34,9 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.userRegistration.collect {
 				it?.let {
-					//TODO navigation to contacts
-//					findNavController().navigate(
-//						AvatarFragmentDirections.proceedToFinishedOnboardingFragment()
-//					)
+					viewModel.navMainGraphModel.navigateToGraph(
+						NavMainGraphModel.NavGraph.Contacts
+					)
 				}
 			}
 		}

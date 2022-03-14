@@ -46,7 +46,8 @@ val onboardingModule = module {
 
 	viewModel {
 		AvatarViewModel(
-			userRepository = get()
+			userRepository = get(),
+			navMainGraphModel = get()
 		)
 	}
 }
