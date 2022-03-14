@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun bindObservers() {
-
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.navGraphFlow.collect {
