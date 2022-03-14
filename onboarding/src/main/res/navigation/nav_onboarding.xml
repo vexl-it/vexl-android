@@ -106,17 +106,10 @@
 			android:id="@+id/proceed_to_takePhotoFragment"
 			app:destination="@id/nav_camera" />
 
-		<action
-			android:id="@+id/proceed_to_finishedOnboardingFragment"
-			app:destination="@id/finishedOnboardingFragment" />
-
-	</fragment>
-
-	<fragment
-		android:id="@+id/finishedOnboardingFragment"
-		android:name="cz.cleeevio.onboarding.finishedOnboardingFragment.FinishedOnboardingFragment"
-		android:label="finishedOnboardingFragment"
-		tools:layout="@layout/fragment_finished_onboarding">
+		<!-- TODO navigation to contacts -->
+		<!--		<action-->
+		<!--			android:id="@+id/proceed_to_importContactsFragment"-->
+		<!--			app:destination="@id/importContactsFragment" />-->
 
 	</fragment>
 

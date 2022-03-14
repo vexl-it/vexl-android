@@ -13,6 +13,8 @@
 
 	<include app:graph="@navigation/nav_onboarding" />
 
+	<include app:graph="@navigation/nav_contacts" />
+
 	<fragment
 		android:id="@+id/pinFragment"
 		android:name="cz.cleevio.pin.PinFragment"

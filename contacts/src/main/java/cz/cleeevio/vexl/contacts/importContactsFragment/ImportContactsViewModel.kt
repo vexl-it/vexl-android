@@ -1,4 +1,4 @@
-package cz.cleeevio.onboarding.finishedOnboardingFragment
+package cz.cleeevio.vexl.contacts.importContactsFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.entity.UserEntity
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
-class FinishedOnboardingViewModel constructor(
+class ImportContactsViewModel constructor(
 	private val userRepository: UserRepository
 ) : BaseViewModel() {
 

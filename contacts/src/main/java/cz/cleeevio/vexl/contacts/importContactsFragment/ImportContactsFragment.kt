@@ -1,11 +1,10 @@
-package cz.cleeevio.onboarding.finishedOnboardingFragment
+package cz.cleeevio.vexl.contacts.importContactsFragment
 
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import coil.load
-import cz.cleeevio.onboarding.R
-import cz.cleeevio.onboarding.databinding.FragmentFinishedOnboardingBinding
-import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
+import cz.cleeevio.vexl.contacts.R
+import cz.cleeevio.vexl.contacts.databinding.FragmentImportContactsBinding
 import cz.cleevio.core.utils.viewBinding
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseFragment
@@ -13,10 +12,12 @@ import lightbase.core.extensions.dpValueToPx
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FinishedOnboardingFragment : BaseFragment(R.layout.fragment_finished_onboarding) {
+const val BOTTOM_EXTRA_PADDING = 40
 
-	private val binding by viewBinding(FragmentFinishedOnboardingBinding::bind)
-	override val viewModel by viewModel<FinishedOnboardingViewModel>()
+class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
+
+	private val binding by viewBinding(FragmentImportContactsBinding::bind)
+	override val viewModel by viewModel<ImportContactsViewModel>()
 
 	override fun bindObservers() {
 		viewLifecycleOwner.lifecycleScope.launch {

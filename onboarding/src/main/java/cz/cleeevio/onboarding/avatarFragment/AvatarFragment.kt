@@ -33,9 +33,10 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.userRegistration.collect {
 				it?.let {
-					findNavController().navigate(
-						AvatarFragmentDirections.proceedToFinishedOnboardingFragment()
-					)
+					//TODO navigation to contacts
+//					findNavController().navigate(
+//						AvatarFragmentDirections.proceedToFinishedOnboardingFragment()
+//					)
 				}
 			}
 		}
