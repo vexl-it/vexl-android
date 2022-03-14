@@ -19,18 +19,15 @@ class FinishedOnboardingFragment : BaseFragment(R.layout.fragment_finished_onboa
 	override val viewModel by viewModel<FinishedOnboardingViewModel>()
 
 	override fun bindObservers() {
-
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.user.collect { user ->
 				binding.username.text = user?.username
 				binding.avatarImage.load(user?.avatar)
 			}
 		}
-
 	}
 
 	override fun initView() {
-
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
@@ -39,7 +36,5 @@ class FinishedOnboardingFragment : BaseFragment(R.layout.fragment_finished_onboa
 		}
 
 		viewModel.getUserData()
-
 	}
-
 }

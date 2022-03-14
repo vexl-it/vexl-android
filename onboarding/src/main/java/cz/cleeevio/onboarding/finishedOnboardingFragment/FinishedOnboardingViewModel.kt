@@ -21,5 +21,4 @@ class FinishedOnboardingViewModel constructor(
 			_user.emit(userRepository.getUser())
 		}
 	}
-
 }
