@@ -6,6 +6,11 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.lightspeedskeleton.NavMainDirections
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.network.NetworkError
@@ -16,7 +21,10 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
 	private lateinit var binding: ActivityMainBinding
+	private val viewModel by inject<MainViewModel>()
 	private val errorFlow: NetworkError by inject()
+
+	private lateinit var navController: NavController
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -29,9 +37,30 @@ class MainActivity : AppCompatActivity() {
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 
 		bindObservers()
+
+		val navHostFragment = supportFragmentManager.findFragmentById(
+			R.id.navHostFragment
+		) as NavHostFragment
+		navController = navHostFragment.navController
 	}
 
 	private fun bindObservers() {
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.navGraphFlow.collect {
+					when (it) {
+						NavMainGraphModel.NavGraph.EmptyState -> Unit
+						NavMainGraphModel.NavGraph.Contacts -> navController.safeNavigateWithTransition(
+							NavMainDirections.actionGlobalToContacts()
+						)
+						NavMainGraphModel.NavGraph.Onboarding -> navController.safeNavigateWithTransition(
+							NavMainDirections.actionGlobalToOnboarding()
+						)
+					}
+				}
+			}
+		}
+
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				errorFlow.error.collect { error ->

@@ -2,6 +2,7 @@ package cz.cleevio.lightspeedskeleton
 
 import android.app.Application
 import cz.cleeevio.onboarding.di.onboardingModule
+import cz.cleeevio.vexl.contacts.di.contactsModule
 import cz.cleevio.cache.di.cacheModule
 import cz.cleevio.core.di.coreModule
 import cz.cleevio.core.utils.CustomDebugTree
@@ -34,6 +35,7 @@ class CleevioApp : Application() {
 					pinModule,
 					countryPickerModule,
 					onboardingModule,
+					contactsModule,
 					coreModule,
 					cacheModule,
 					networkModule,

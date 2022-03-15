@@ -13,6 +13,8 @@
 
 	<include app:graph="@navigation/nav_onboarding" />
 
+	<include app:graph="@navigation/nav_contacts" />
+
 	<fragment
 		android:id="@+id/pinFragment"
 		android:name="cz.cleevio.pin.PinFragment"
@@ -101,5 +103,16 @@
 		android:name="cz.cleeevio.onboarding.codeValidationFragment.CodeValidationFragment"
 		android:label="CodeValidationFragment"
 		tools:layout="@layout/fragment_code_validation" />
+
+	<action
+		android:id="@+id/action_global_to_contacts"
+		app:destination="@id/nav_contacts"
+		app:popUpTo="@id/nav_contacts"
+		app:popUpToInclusive="true" />
+	<action
+		android:id="@+id/action_global_to_onboarding"
+		app:destination="@id/nav_onboarding"
+		app:popUpTo="@id/nav_onboarding"
+		app:popUpToInclusive="true" />
 
 </navigation>

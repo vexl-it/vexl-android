@@ -1,22 +1,26 @@
 package cz.cleevio.cache.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
-import cz.cleevio.cache.entity.User
+import cz.cleevio.cache.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface UserDao : BaseDao<User> {
+interface UserDao : BaseDao<UserEntity> {
 
-	@Query("SELECT * FROM User")
-	fun listAll(): Flow<List<User>>
+	@Query("SELECT * FROM UserEntity")
+	fun listAll(): Flow<List<UserEntity>>
 
-	@Query("SELECT * FROM User LIMIT 1")
-	fun getUserFlow(): Flow<User?>
+	@Query("SELECT * FROM UserEntity LIMIT 1")
+	fun getUserFlow(): Flow<UserEntity?>
 
-	@Query("SELECT * FROM User LIMIT 1")
-	suspend fun getUser(): User?
+	@Query("SELECT * FROM UserEntity LIMIT 1")
+	suspend fun getUser(): UserEntity?
 
-	@Query("DELETE FROM User")
+	@Insert
+	override fun insert(item: UserEntity)
+
+	@Query("DELETE FROM UserEntity")
 	fun deleteAll()
 }

@@ -1,20 +1,19 @@
 package cz.cleevio.repository.repository.user
 
 import cz.cleevio.cache.dao.UserDao
-import cz.cleevio.cache.entity.User
+import cz.cleevio.cache.entity.UserEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.ConfirmCodeRequest
 import cz.cleevio.network.request.user.ConfirmPhoneRequest
+import cz.cleevio.network.request.user.UserRequest
 import cz.cleevio.network.request.user.UsernameAvailableRequest
 import cz.cleevio.repository.model.UserProfile
-import cz.cleevio.repository.model.user.ConfirmCode
-import cz.cleevio.repository.model.user.ConfirmPhone
-import cz.cleevio.repository.model.user.UsernameAvailable
-import cz.cleevio.repository.model.user.fromNetwork
+import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class UserRepositoryImpl constructor(
 	private val userRestApi: UserApi,
@@ -49,19 +48,51 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override fun getUserFlow(): Flow<User?> = userDao.getUserFlow()
+	override fun getUserFlow(): Flow<User?> = userDao.getUserFlow().map { it?.fromDao() }
 
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified
 
-	override suspend fun getUserId(): String? = userDao.getUser()?.id
+	override suspend fun createUser(user: User) {
+		userDao.insert(
+			UserEntity(
+				extId = user.extId,
+				username = user.username,
+				avatar = user.avatar,
+				publicKey = user.publicKey
+			)
+		)
+	}
 
-	override suspend fun getUser(): User? = userDao.getUser()
+	override suspend fun getUserId(): Long? = userDao.getUser()?.id
+
+	override suspend fun getUser(): User? = userDao.getUser()?.fromDao()
 
 	override suspend fun getUserFullname(): UserProfile? {
 		val user = userDao.getUser() ?: return null
 		return UserProfile(
-			fullname = user.getFullname(),
-			photoUrl = user.photoUrl
+			fullname = user.username,
+			photoUrl = user.avatar
+		)
+	}
+
+	override suspend fun registerUser(username: String, avatar: String): Resource<User> {
+		return tryOnline(
+			doOnSuccess = {
+				it?.let {
+					createUser(it)
+				}
+			},
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = {
+				userRestApi.postUser(
+					UserRequest(
+						username = username,
+						avatar = avatar
+					)
+				)
+			}
 		)
 	}
 
@@ -70,7 +101,7 @@ class UserRepositoryImpl constructor(
 					mapper = {
 						it?.fromNetwork(username)
 					},
-					request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
-				)
+			request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
+		)
 	}
 }
