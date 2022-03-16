@@ -18,7 +18,8 @@ val repoModule = module {
 
 	single<ContactRepository> {
 		ContactRepositoryImpl(
-			contactDao = get()
+			contactDao = get(),
+			contactApi = get()
 		)
 	}
 }
