@@ -44,4 +44,15 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/username" />
 
+	<TextView
+		android:id="@+id/debug_contact_list"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:text="@string/finished_onboarding_title"
+		android:textSize="12sp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/finished_onboarding_title" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

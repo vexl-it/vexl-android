@@ -48,4 +48,13 @@ interface UserApi {
 	suspend fun getUserSignatureFacebook(
 		@Path(value = "facebookId") facebookId: String
 	): Response<SignatureResponse>
+
+	//--------------- TEMP -------------------
+	@GET("temp/key-pairs")
+	suspend fun getTempKeyPairs(): Response<TempKeyPairResponse>
+
+	@GET("temp/signature")
+	suspend fun getTempSignature(
+		@Body confirmChallengeRequest: TempSignatureRequest
+	): Response<TempSignatureResponse>
 }

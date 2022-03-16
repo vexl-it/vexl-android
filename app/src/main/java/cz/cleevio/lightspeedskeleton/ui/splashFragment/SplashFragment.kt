@@ -13,7 +13,8 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	override fun initView() {
 		lifecycle.coroutineScope.launchWhenCreated {
 			delay(SPLASH_DELAY)
-			findNavController().navigate(SplashFragmentDirections.actionToOnboarding())
+			//findNavController().navigate(SplashFragmentDirections.actionToOnboarding())
+			findNavController().navigate(SplashFragmentDirections.actionGlobalToContacts())
 		}
 	}
 

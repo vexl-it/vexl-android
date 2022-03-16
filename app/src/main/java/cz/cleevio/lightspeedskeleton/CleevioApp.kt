@@ -25,6 +25,8 @@ class CleevioApp : Application() {
 			Timber.plant(CustomDebugTree())
 		}
 
+		initKeys()
+
 		startKoin {
 			//androidLogger()
 			androidContext(this@CleevioApp)
@@ -43,5 +45,11 @@ class CleevioApp : Application() {
 				)
 			)
 		}
+	}
+
+	private fun initKeys() {
+		//check if keys already exists
+
+		//if not, generate and save to shared preferences
 	}
 }

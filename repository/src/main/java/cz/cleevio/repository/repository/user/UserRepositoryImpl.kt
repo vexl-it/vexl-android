@@ -98,10 +98,20 @@ class UserRepositoryImpl constructor(
 
 	override suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable> {
 		return tryOnline(
-					mapper = {
-						it?.fromNetwork(username)
-					},
+			mapper = {
+				it?.fromNetwork(username)
+			},
 			request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
 		)
 	}
+
+	override suspend fun getFakeKeyPairFromBE(): Resource<KeyPair> = tryOnline(
+		request = { userRestApi.getTempKeyPairs() },
+		mapper = { it?.fromNetwork() }
+	)
+
+	override suspend fun getFakeSignatureFromBE(signature: Signature): Resource<String> = tryOnline(
+		request = { userRestApi.getTempSignature(signature.toRequest()) },
+		mapper = { it?.signed }
+	)
 }

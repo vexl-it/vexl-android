@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'koin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -41,6 +42,8 @@ dependencies {
     api project(':network')
     api project(':cache')
     api project(':resources')
+
+    implementation "com.jakewharton.timber:timber:$timber"
 
     api "io.insert-koin:koin-core:$koin"
     api "io.insert-koin:koin-android:$koin"

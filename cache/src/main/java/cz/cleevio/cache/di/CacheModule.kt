@@ -23,6 +23,10 @@ val cacheModule = module {
 		get<CleevioDatabase>().userDao()
 	}
 
+	single {
+		get<CleevioDatabase>().contactDao()
+	}
+
 	single<DataStoreRepository> {
 		DataStoreRepositoryImpl(
 			context = androidContext()
