@@ -6,7 +6,6 @@ import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.model.contact.ContactImport
 import kotlinx.coroutines.flow.Flow
 
-
 interface ContactRepository {
 
 	suspend fun checkAllContacts(phoneNumbers: List<String>): Resource<List<String>>
@@ -17,6 +16,5 @@ interface ContactRepository {
 	suspend fun syncContacts(contentResolver: ContentResolver)
 
 	fun getContactsFlow(): Flow<List<Contact>>
-
 
 }

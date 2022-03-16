@@ -9,11 +9,11 @@ import java.util.*
 
 @Parcelize
 data class Contact constructor(
-	var id: String,
-	var name: String,
-	var email: String,
-	var phoneNumber: String,
-	var photoUri: Uri?,
+	val id: String,
+	val name: String,
+	val email: String,
+	val phoneNumber: String,
+	val photoUri: Uri?,
 ) : Parcelable {
 
 	constructor() : this(

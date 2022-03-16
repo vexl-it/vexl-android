@@ -3,7 +3,6 @@ package cz.cleevio.cache.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity
 data class ContactEntity(
 	@PrimaryKey(autoGenerate = true)
