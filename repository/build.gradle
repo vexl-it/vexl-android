@@ -43,6 +43,8 @@ dependencies {
     api project(':cache')
     api project(':resources')
 
+    implementation "com.jakewharton.timber:timber:$timber"
+
     api "io.insert-koin:koin-core:$koin"
     api "io.insert-koin:koin-android:$koin"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$corountines"

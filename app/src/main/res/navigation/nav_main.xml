@@ -90,6 +90,10 @@
 		<action
 			android:id="@+id/action_to_onboarding"
 			app:destination="@+id/nav_onboarding" />
+
+		<action
+			android:id="@+id/action_to_contacts"
+			app:destination="@+id/nav_contacts" />
 	</fragment>
 
 	<fragment

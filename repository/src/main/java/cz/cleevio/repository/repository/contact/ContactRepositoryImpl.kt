@@ -7,17 +7,25 @@ import android.text.TextUtils
 import android.util.Patterns
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.entity.ContactEntity
+import cz.cleevio.network.api.ContactApi
+import cz.cleevio.network.data.Resource
+import cz.cleevio.network.extensions.tryOnline
+import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.repository.model.contact.Contact
+import cz.cleevio.repository.model.contact.ContactImport
 import cz.cleevio.repository.model.contact.fromDao
+import cz.cleevio.repository.model.contact.fromNetwork
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
+	private val contactApi: ContactApi
 ) : ContactRepository {
 
-	override fun getContacts(): Flow<List<Contact>> = contactDao.getAllContacts().map { list -> list.map { it.fromDao() } }
+	override fun getContactsFlow(): Flow<List<Contact>> = contactDao.getAllContacts().map { list -> list.map { it.fromDao() } }
 
 	override suspend fun syncContacts(contentResolver: ContentResolver) {
 		val contactList: ArrayList<Contact> = ArrayList()
@@ -96,7 +104,29 @@ class ContactRepositoryImpl constructor(
 					photoUri = it.photoUri.toString()
 				)
 			})
+
+		//todo: what to do with incomplete numbers? (missing +XXX)
+		val phoneNumberList = contactList
+			.map { it.phoneNumber.toValidPhoneNumber() }
+			.filter { it.isPhoneValid() }
+
+		phoneNumberList.forEach {
+			Timber.tag("ASDX").d("Valid numbers are: $it")
+		}
+
+		//todo: maybe call checkAllContacts(phoneNumberList)
 	}
+
+	override suspend fun checkAllContacts(phoneNumbers: List<String>) = tryOnline(
+		request = { contactApi.postContactNotImported(ContactRequest(phoneNumbers)) },
+		mapper = { it?.newContacts.orEmpty() }
+	)
+
+	override suspend fun uploadAllMissingContacts(phoneNumbers: List<String>): Resource<ContactImport> = tryOnline(
+		request = { contactApi.postContactImport(ContactRequest(phoneNumbers)) },
+		mapper = { it?.fromNetwork() }
+	)
+
 
 	private fun isEmailValid(email: String): Boolean {
 		return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -106,5 +136,9 @@ class ContactRepositoryImpl constructor(
 		return this
 			.replace("\\s".toRegex(), "")
 			.replace("-".toRegex(), "")
+	}
+
+	private fun String.isPhoneValid(): Boolean {
+		return this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
 	}
 }

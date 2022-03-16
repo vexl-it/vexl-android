@@ -3,20 +3,17 @@ package cz.cleevio.network.api
 import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.network.request.contact.ContactUserRequest
 import cz.cleevio.network.request.contact.DeleteContactRequest
-import cz.cleevio.network.response.contact.ContactFacebookResponse
-import cz.cleevio.network.response.contact.ContactImportResponse
-import cz.cleevio.network.response.contact.ContactResponse
-import cz.cleevio.network.response.contact.ContactUserResponse
+import cz.cleevio.network.response.contact.*
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ContactApi {
 
-	@POST("contact/new")
-	suspend fun getContactNew(
+	@POST("contact/not-imported")
+	suspend fun postContactNotImported(
 		@Body contactRequest: ContactRequest
-	): Response<ContactImportResponse>
+	): Response<ContactNotImportResponse>
 
 	@POST("contact/import")
 	suspend fun postContactImport(

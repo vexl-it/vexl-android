@@ -2,10 +2,7 @@ package cz.cleevio.repository.repository.user
 
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.UserProfile
-import cz.cleevio.repository.model.user.ConfirmCode
-import cz.cleevio.repository.model.user.ConfirmPhone
-import cz.cleevio.repository.model.user.User
-import cz.cleevio.repository.model.user.UsernameAvailable
+import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -32,4 +29,8 @@ interface UserRepository {
 	//----------------------------------
 
 	suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable>
+
+	suspend fun getFakeKeyPairFromBE(): Resource<KeyPair>
+
+	suspend fun getFakeSignatureFromBE(signature: Signature): Resource<String>
 }

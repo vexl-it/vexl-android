@@ -8,7 +8,8 @@ val contactsModule = module {
 
 	viewModel {
 		ImportContactsViewModel(
-			userRepository = get()
+			userRepository = get(),
+			contactRepository = get()
 		)
 	}
 
