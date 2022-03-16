@@ -6,7 +6,6 @@ import cz.cleevio.cache.entity.ContactEntity
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
-
 @Parcelize
 data class Contact constructor(
 	val id: String,

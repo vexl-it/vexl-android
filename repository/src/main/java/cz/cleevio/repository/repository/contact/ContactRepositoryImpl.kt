@@ -68,23 +68,27 @@ class ContactRepositoryImpl constructor(
 				val emailOrMobile = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Data.DATA1))
 				val hasPhone = cursor.getInt(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.HAS_PHONE_NUMBER))
 
-				val contact = Contact().apply {
-					this.name = name
-					this.id = id
-					this.photoUri = if (photo == null) {
+				var phoneNumber = ""
+				var email = ""
+				if (hasPhone > 0 && !emailOrMobile.isNullOrEmpty()) {
+					if (!isEmailValid(emailOrMobile)) {
+						phoneNumber = emailOrMobile
+					} else {
+						email = emailOrMobile
+					}
+				}
+
+				val contact = Contact(
+					name = name,
+					id = id,
+					photoUri = if (photo == null) {
 						null
 					} else {
 						Uri.parse(photo)
-					}
-
-					if (hasPhone > 0 && !emailOrMobile.isNullOrEmpty()) {
-						if (!isEmailValid(emailOrMobile)) {
-							this.phoneNumber = emailOrMobile
-						} else {
-							this.email = emailOrMobile
-						}
-					}
-				}
+					},
+					phoneNumber = phoneNumber,
+					email = email
+				)
 
 				if (contact.phoneOrEmail().isNotEmpty()) {
 					contactList.add(contact)
@@ -127,9 +131,8 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	private fun isEmailValid(email: String): Boolean {
-		return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-	}
+	private fun isEmailValid(email: String): Boolean =
+		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
 	private fun String.toValidPhoneNumber(): String {
 		return this
@@ -137,7 +140,6 @@ class ContactRepositoryImpl constructor(
 			.replace("-".toRegex(), "")
 	}
 
-	private fun String.isPhoneValid(): Boolean {
-		return this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
-	}
+	private fun String.isPhoneValid(): Boolean =
+		this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
 }

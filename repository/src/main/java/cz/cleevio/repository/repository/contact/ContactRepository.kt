@@ -16,5 +16,4 @@ interface ContactRepository {
 	suspend fun syncContacts(contentResolver: ContentResolver)
 
 	fun getContactsFlow(): Flow<List<Contact>>
-
 }
