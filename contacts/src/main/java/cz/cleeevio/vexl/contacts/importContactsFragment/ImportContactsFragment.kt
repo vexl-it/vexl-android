@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import coil.load
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentImportContactsBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -95,5 +96,21 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 		} else {
 			viewModel.updateHasReadContactPermissions(false)
 		}
+
+		binding.importContactsBtn.setOnClickListener {
+			processOnImportContactsBtnClick()
+		}
+	}
+
+	private fun processOnImportContactsBtnClick() {
+		MaterialAlertDialogBuilder(requireContext())
+			.setTitle(R.string.import_contacts_request_title)
+			.setMessage(R.string.import_contacts_request_description)
+			.setNegativeButton(R.string.import_contacts_not_allow) { dialog, _ ->
+				dialog.dismiss()
+			}
+			.setPositiveButton(R.string.import_contacts_allow) { _, _ ->
+			}
+			.show()
 	}
 }

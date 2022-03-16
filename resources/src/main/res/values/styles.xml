@@ -292,4 +292,10 @@
 		<item name="android:background">@drawable/edit_border</item>
 	</style>
 
+	<style name="Widget.Vexl.SearchView" parent="Widget.AppCompat.SearchView">
+		<item name="android:textColorPrimary">@color/text_primary</item>
+		<item name="android:textColorHint">@color/text_secondary</item>
+		<item name="android:tint">@color/primary</item>
+	</style>
+
 </resources>

@@ -16,4 +16,5 @@
 	<dimen name="stroke_width_button">2dp</dimen>
 	<dimen name="stroke_width_input">2dp</dimen>
 	<dimen name="snackbar_icon_padding">12dp</dimen>
+	<dimen name="search_view_height">38dp</dimen>
 </resources>
