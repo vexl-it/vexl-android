@@ -26,8 +26,6 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	private val binding by viewBinding(FragmentImportContactsBinding::bind)
 	override val viewModel by viewModel<ImportContactsViewModel>()
 
-	private var alreadyAskedReadContactsPermissions = false
-
 	private val requestContactsPermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
 		PermissionResolver.resolve(requireActivity(), permissions,
 			allGranted = {
@@ -76,14 +74,11 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 			)
 		}
 
-		if (!alreadyAskedReadContactsPermissions) {
-			checkReadContactsPermissions()
-		}
+		checkReadContactsPermissions()
 	}
 
 	private fun checkReadContactsPermissions() {
 		requestContactsPermissions.launch(arrayOf(Manifest.permission.READ_CONTACTS))
-		alreadyAskedReadContactsPermissions = true
 	}
 
 	override fun onResume() {

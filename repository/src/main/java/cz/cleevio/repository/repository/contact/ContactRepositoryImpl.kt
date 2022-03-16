@@ -17,7 +17,6 @@ import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.contact.fromNetwork
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
@@ -108,17 +107,6 @@ class ContactRepositoryImpl constructor(
 					photoUri = it.photoUri.toString()
 				)
 			})
-
-		//todo: what to do with incomplete numbers? (missing +XXX)
-		val phoneNumberList = contactList
-			.map { it.phoneNumber.toValidPhoneNumber() }
-			.filter { it.isPhoneValid() }
-
-		phoneNumberList.forEach {
-			Timber.tag("ASDX").d("Valid numbers are: $it")
-		}
-
-		//todo: maybe call checkAllContacts(phoneNumberList)
 	}
 
 	override suspend fun checkAllContacts(phoneNumbers: List<String>) = tryOnline(
@@ -134,12 +122,12 @@ class ContactRepositoryImpl constructor(
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-	private fun String.toValidPhoneNumber(): String {
+	fun String.toValidPhoneNumber(): String {
 		return this
 			.replace("\\s".toRegex(), "")
 			.replace("-".toRegex(), "")
 	}
 
-	private fun String.isPhoneValid(): Boolean =
+	fun String.isPhoneValid(): Boolean =
 		this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
 }

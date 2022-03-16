@@ -17,6 +17,25 @@ class ImportContactsViewModel constructor(
 	val user = userRepository.getUserFlow()
 	val contacts = contactRepository.getContactsFlow()
 
+	//todo: collect contacts here, use this to filter valid numbers
+	//fixme: what to do with incomplete numbers? (missing +XXX)
+//	val phoneNumberList = contactList
+//		.map { it.phoneNumber.toValidPhoneNumber() }
+//		.filter { it.isPhoneValid() }
+//
+
+	//todo: combine example
+//	val collectedData = combine(
+//		contacts.asStateFlow(),
+//		todo: response data from not-imported
+//	) { contacts, phoneNumbers ->
+//
+//		filtered = conctacs.filter { byPhoneNumber }
+//
+//		return filtered
+//	}
+//		.distinctUntilChanged()
+
 	private val hasPermissionsChannel = Channel<Boolean>(Channel.CONFLATED)
 	val hasPermissionsEvent = hasPermissionsChannel.receiveAsFlow()
 

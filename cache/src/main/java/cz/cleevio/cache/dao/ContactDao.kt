@@ -16,9 +16,6 @@ interface ContactDao {
 	@Query("SELECT * FROM ContactEntity")
 	fun getAllContacts(): Flow<List<ContactEntity>>
 
-	@Delete
-	suspend fun deleteBank(contactEntity: ContactEntity)
-
 	@Query("DELETE FROM ContactEntity")
 	suspend fun clearTable()
 
