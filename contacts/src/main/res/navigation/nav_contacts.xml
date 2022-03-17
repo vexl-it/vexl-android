@@ -11,6 +11,18 @@
 		android:label="contactsWelcomeFragment"
 		tools:layout="@layout/fragment_import_contacts">
 
+		<action
+			android:id="@+id/proceed_to_contactsListFragment"
+			app:destination="@id/contactsListFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/contactsListFragment"
+		android:name="cz.cleeevio.vexl.contacts.contactsListFragment.ContactsListFragment"
+		android:label="contactsListFragment"
+		tools:layout="@layout/fragment_contacts_list">
+
 	</fragment>
 
 </navigation>

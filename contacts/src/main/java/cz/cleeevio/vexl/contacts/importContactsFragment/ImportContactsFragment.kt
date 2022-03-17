@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleeevio.vexl.contacts.R
@@ -53,8 +54,12 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 			viewModel.hasPermissionsEvent.collect { hasPermisson ->
 				if (hasPermisson) {
 					Timber.tag("ASDX").d("Permission granted")
+					findNavController().navigate(
+						ImportContactsFragmentDirections.proceedToContactsListFragment()
+					)
 				} else {
 					Timber.tag("ASDX").d("Permission rejected")
+					showPermissionDeniedDialog()
 				}
 			}
 		}
@@ -98,11 +103,11 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 		}
 
 		binding.importContactsBtn.setOnClickListener {
-			processOnImportContactsBtnClick()
+			showPermissionDeniedDialog()
 		}
 	}
 
-	private fun processOnImportContactsBtnClick() {
+	private fun showPermissionDeniedDialog() {
 		MaterialAlertDialogBuilder(requireContext())
 			.setTitle(R.string.import_contacts_request_title)
 			.setMessage(R.string.import_contacts_request_description)

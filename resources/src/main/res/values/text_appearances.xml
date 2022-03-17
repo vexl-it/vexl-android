@@ -76,6 +76,10 @@
 		<item name="android:fontFamily">@font/barlow_regular</item>-->
 	</style>
 
+	<style name="TextAppearance.Cleevio.BlackTextButton" parent="TextAppearance.Cleevio.TextButton">
+		<item name="android:textColor">@android:color/white</item>
+	</style>
+
 	<style name="TextAppearance.Cleevio.Caption" parent="TextAppearance.MaterialComponents.Caption">
 		<item name="android:textSize">11sp</item>
 		<item name="android:textColor">@color/root_text_color</item>

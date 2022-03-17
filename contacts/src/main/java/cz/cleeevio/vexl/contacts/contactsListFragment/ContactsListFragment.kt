@@ -1,8 +1,10 @@
 package cz.cleeevio.vexl.contacts.contactsListFragment
 
+import androidx.lifecycle.lifecycleScope
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentContactsListBinding
 import cz.cleevio.core.utils.viewBinding
+import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -12,11 +14,14 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 	override val viewModel by viewModel<ContactsListViewModel>()
 
 	override fun bindObservers() {
-		TODO("Not yet implemented")
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel.contacts.collect {
+				binding.contactsListWidget.setupData(it)
+			}
+		}
 	}
 
 	override fun initView() {
-		TODO("Not yet implemented")
 	}
 
 }

@@ -5,6 +5,15 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<cz.cleeevio.vexl.contacts.widgets.contactsList.ContactsListWidget
+		android:id="@+id/contacts_list_widget"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toTopOf="@id/import_contacts_btn"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/import_contacts_btn"
 		style="@style/Widget.Vexl.Button"

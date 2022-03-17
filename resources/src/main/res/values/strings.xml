@@ -9,6 +9,7 @@
     <string name="general_pause">Pause</string>
     <string name="general_cancel">Cancel</string>
     <string name="general_ok">Ok</string>
+    <string name="general_search">Search</string>
     <string name="general_verify">Verifying...</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>

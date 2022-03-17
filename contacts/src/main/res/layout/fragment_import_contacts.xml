@@ -83,6 +83,6 @@
 		android:textSize="12sp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/finished_onboarding_title" />
+		app:layout_constraintTop_toBottomOf="@id/import_contacts_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

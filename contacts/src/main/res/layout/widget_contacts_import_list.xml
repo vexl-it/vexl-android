@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	style="@style/Widget.Vexl.CardView"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
+	xmlns:tools="http://schemas.android.com/tools">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<com.google.android.material.card.MaterialCardView
+		style="@style/Widget.Vexl.CardView"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp">
 
-		<androidx.appcompat.widget.SearchView
-			android:id="@+id/name_name_input"
-			style="@style/Widget.Vexl.SearchView"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/search_view_height"
-			app:layout_constraintBottom_toTopOf="@id/contacts_barrier"
-			app:layout_constraintEnd_toStartOf="@id/deselect_all_btn"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintVertical_weight="1"
-			app:searchIcon="@drawable/ic_magnifyingglass" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/deselect_all_btn"
-			style="@style/Widget.Vexl.Button"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
-			android:text="@string/import_contacts_deselect"
-			app:layout_constraintBottom_toTopOf="@id/contacts_barrier"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@id/name_name_input"
-			app:layout_constraintTop_toTopOf="parent" />
-
-		<androidx.constraintlayout.widget.Barrier
-			android:id="@+id/contacts_barrier"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:barrierDirection="bottom"
-			app:constraint_referenced_ids="name_name_input, deselect_all_btn" />
-
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/contacts_list"
+		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/contacts_barrier"
-			tools:listitem="@layout/item_contact" />
+			android:layout_margin="16dp">
+
+			<androidx.appcompat.widget.SearchView
+				android:id="@+id/name_name_input"
+				style="@style/Widget.Vexl.SearchView"
+				android:layout_width="0dp"
+				android:layout_height="@dimen/search_view_height"
+				app:layout_constraintBottom_toTopOf="@id/contacts_barrier"
+				app:layout_constraintEnd_toStartOf="@id/deselect_all_btn"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintVertical_weight="1"
+				app:searchIcon="@drawable/ic_magnifyingglass" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/deselect_all_btn"
+				style="@style/Widget.Vexl.BlackButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="8dp"
+				android:text="@string/import_contacts_deselect"
+				app:layout_constraintBottom_toTopOf="@id/contacts_barrier"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/name_name_input"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<androidx.constraintlayout.widget.Barrier
+				android:id="@+id/contacts_barrier"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:barrierDirection="bottom"
+				app:constraint_referenced_ids="name_name_input, deselect_all_btn" />
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/contacts_list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/contacts_barrier"
+				tools:listitem="@layout/item_contact" />
 
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
 
+	</com.google.android.material.card.MaterialCardView>
 
-</com.google.android.material.card.MaterialCardView>
+</merge>
