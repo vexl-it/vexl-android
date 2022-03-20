@@ -9,8 +9,9 @@ import coil.load
 import cz.cleeevio.vexl.contacts.databinding.ItemContactBinding
 import cz.cleevio.repository.model.contact.Contact
 
-class ContactsListAdapter
-	: ListAdapter<Contact, ContactsListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Contact>() {
+class ContactsListAdapter(
+	private val onContactImportSwitched: (Contact, Boolean) -> Unit
+) : ListAdapter<Contact, ContactsListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Contact>() {
 
 	override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean = oldItem.id == newItem.id
 
@@ -28,6 +29,7 @@ class ContactsListAdapter
 				contactName.text = item.name
 				contactPhone.text = item.phoneNumber
 
+				contactImportCheckbox.setOnCheckedChangeListener { buttonView, isChecked -> onContactImportSwitched(item, isChecked) }
 			}
 		}
 
