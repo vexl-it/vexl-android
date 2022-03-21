@@ -15,16 +15,14 @@ import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.model.contact.ContactImport
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.contact.fromNetwork
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
 	private val contactApi: ContactApi
 ) : ContactRepository {
 
-	override fun getContactsFlow(): Flow<List<Contact>> = contactDao
-		.getAllContacts().map { list -> list.map { it.fromDao() } }
+	override fun getContacts(): List<Contact> = contactDao
+		.getAllContacts().map { it.fromDao() }
 
 	override suspend fun syncContacts(contentResolver: ContentResolver) {
 		val contactList: ArrayList<Contact> = ArrayList()

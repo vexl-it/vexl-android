@@ -1,6 +1,7 @@
 package cz.cleeevio.vexl.contacts.contactsListFragment
 
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentContactsListBinding
 import cz.cleevio.core.utils.viewBinding
@@ -19,10 +20,13 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 			viewModel.notSyncedContacts.collect {
 				binding.contactsListWidget.setupData(it)
 			}
-			//FIXME only for debugging purposes - prints local contacts
-//			viewModel.localContacts.collect {
-//				binding.contactsListWidget.setupData(it)
-//			}
+		}
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel.uploadSuccessful.collect {
+				findNavController().navigate(
+					ContactsListFragmentDirections.proceedToFacebookContactListFragment()
+				)
+			}
 		}
 	}
 
@@ -35,6 +39,12 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 				viewModel.unselectAll()
 			}
 		)
+
+		binding.importContactsBtn.setOnClickListener {
+			viewModel.uploadAllMissingContacts()
+		}
+
+		viewModel.syncContacts(requireActivity().contentResolver)
 	}
 
 }

@@ -30,7 +30,6 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 		PermissionResolver.resolve(requireActivity(), permissions,
 			allGranted = {
 				viewModel.updateHasReadContactPermissions(true)
-				viewModel.syncContacts(requireActivity().contentResolver)
 			},
 			denied = {
 				viewModel.updateHasReadContactPermissions(false)

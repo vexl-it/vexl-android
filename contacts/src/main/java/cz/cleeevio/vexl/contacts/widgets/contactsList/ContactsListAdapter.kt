@@ -28,8 +28,9 @@ class ContactsListAdapter(
 				contactImage.load(item.photoUri)
 				contactName.text = item.name
 				contactPhone.text = item.phoneNumber
+				contactImportCheckbox.isChecked = item.markedForUpload
 
-				contactImportCheckbox.setOnCheckedChangeListener { buttonView, isChecked -> onContactImportSwitched(item, isChecked) }
+				contactImportCheckbox.setOnCheckedChangeListener { _, isChecked -> onContactImportSwitched(item, isChecked) }
 			}
 		}
 

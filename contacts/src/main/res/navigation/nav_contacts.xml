@@ -23,6 +23,10 @@
 		android:label="contactsListFragment"
 		tools:layout="@layout/fragment_contacts_list">
 
+		<action
+			android:id="@+id/proceed_to_facebookContactListFragment"
+			app:destination="@id/contactsListFragment" /> <!-- TODO navigate to FB contact upload -->
+
 	</fragment>
 
 </navigation>
