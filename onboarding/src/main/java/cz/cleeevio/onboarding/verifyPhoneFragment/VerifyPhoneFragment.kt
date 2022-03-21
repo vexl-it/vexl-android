@@ -54,14 +54,12 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 		}
 
 		binding.continueBtn.setOnClickListener {
-			//fixme: debug, uncomment later
-			//val verificationCode = binding.verifyPhoneInput.text.toString()
-			//viewModel.sendVerificationCode(verificationCode)
-
-			//debug
-			findNavController().navigate(
-				VerifyPhoneFragmentDirections.proceedToPhoneDoneFragment()
-			)
+			val verificationCode = binding.verifyPhoneInput.text.toString()
+			if (verificationCode.isNotBlank()) {
+				viewModel.sendVerificationCode(verificationCode)
+			} else {
+				//todo: show toast or something
+			}
 		}
 
 		binding.verifyPhoneSubtitle.text = getString(R.string.verify_phone_subtitle, args.phoneNumber)

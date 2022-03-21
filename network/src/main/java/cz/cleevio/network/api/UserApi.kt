@@ -23,7 +23,7 @@ interface UserApi {
 		@Body confirmChallengeRequest: ConfirmChallengeRequest
 	): Response<SignatureResponse>
 
-	@POST("user/username/available")
+	@POST("user/username/availability")
 	suspend fun postUserUsernameAvailable(
 		@Body usernameAvailableRequest: UsernameAvailableRequest
 	): Response<UsernameAvailableResponse>

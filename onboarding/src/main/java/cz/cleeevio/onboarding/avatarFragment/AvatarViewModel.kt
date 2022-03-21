@@ -70,7 +70,7 @@ class AvatarViewModel constructor(
 		val bitmap = getBitmap(avatarUri, contentResolver)
 
 		val baos = ByteArrayOutputStream()
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+		bitmap.compress(Bitmap.CompressFormat.JPEG, BITMAP_COMPRESS_QUALITY, baos)
 		return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT or Base64.NO_WRAP)
 	}
 
@@ -84,5 +84,9 @@ class AvatarViewModel constructor(
 			val source = ImageDecoder.createSource(contentResolver, avatarUri)
 			ImageDecoder.decodeBitmap(source)
 		}
+	}
+
+	companion object {
+		const val BITMAP_COMPRESS_QUALITY = 50
 	}
 }
