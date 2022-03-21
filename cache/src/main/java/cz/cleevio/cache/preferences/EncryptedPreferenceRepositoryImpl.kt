@@ -27,6 +27,18 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putBooleanToEP(KEY_IS_USER_VERIFIED, value)
 		}
 
+	override var userPublicKey: String
+		get() = getStringFromEP(KEY_USER_PUBLIC_KEY, "")
+		set(value) {
+			putStringToEP(KEY_USER_PUBLIC_KEY, value)
+		}
+
+	override var userPrivateKey: String
+		get() = getStringFromEP(KEY_USER_PRIVATE_KEY, "")
+		set(value) {
+			putStringToEP(KEY_USER_PRIVATE_KEY, value)
+		}
+
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()
 
@@ -63,5 +75,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 	companion object {
 		private const val ENCRYPTED_FILE = "encrypted-prefs-repository"
 		private const val KEY_IS_USER_VERIFIED = "is_user_verified"
+		private const val KEY_USER_PUBLIC_KEY = "user_public_key"
+		private const val KEY_USER_PRIVATE_KEY = "user_private_key"
 	}
 }
