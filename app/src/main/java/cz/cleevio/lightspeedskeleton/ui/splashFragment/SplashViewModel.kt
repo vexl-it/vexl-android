@@ -31,15 +31,11 @@ class SplashViewModel constructor(
 				//if not, generate and save to shared preferences
 				val response = userRepository.getFakeKeyPairFromBE()
 				when (response.status) {
-					is Status.Success -> {
-						response.data?.let { pair ->
-							saveKeys(pair)
-							_keysLoaded.emit(true)
-						}
+					is Status.Success -> response.data?.let { pair ->
+						saveKeys(pair)
+						_keysLoaded.emit(true)
 					}
-					is Status.Error -> {
-						_keysLoaded.emit(false)
-					}
+					is Status.Error -> _keysLoaded.emit(false)
 				}
 			} else {
 				_keysLoaded.emit(true)
