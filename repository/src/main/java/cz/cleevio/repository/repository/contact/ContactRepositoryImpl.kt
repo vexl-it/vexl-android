@@ -19,11 +19,8 @@ import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.model.contact.ContactImport
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.contact.fromNetwork
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.util.*
-
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
@@ -34,7 +31,7 @@ class ContactRepositoryImpl constructor(
 	override fun getContacts(): List<Contact> = contactDao
 		.getAllContacts().map { it.fromDao() }
 
-	override suspend fun syncContacts(contentResolver: ContentResolver) {
+	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit> {
 		val contactList: ArrayList<Contact> = ArrayList()
 
 		val projection = arrayOf(
@@ -118,6 +115,8 @@ class ContactRepositoryImpl constructor(
 					photoUri = it.photoUri.toString()
 				)
 			})
+
+		return Resource.success(data = Unit)
 	}
 
 	override suspend fun checkAllContacts(phoneNumbers: List<String>) = tryOnline(

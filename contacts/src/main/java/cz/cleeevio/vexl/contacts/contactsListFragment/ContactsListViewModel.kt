@@ -24,7 +24,7 @@ class ContactsListViewModel constructor(
 	private val _uploadSuccessful = MutableSharedFlow<Boolean>()
 	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
 
-	init {
+	fun checkNotSyncedContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val localContacts = contactRepository.getContacts()
 
@@ -46,7 +46,12 @@ class ContactsListViewModel constructor(
 
 	fun syncContacts(contentResolver: ContentResolver) {
 		viewModelScope.launch(Dispatchers.IO) {
-			contactRepository.syncContacts(contentResolver)
+			val response = contactRepository.syncContacts(contentResolver)
+			when (response.status) {
+				is Status.Success -> {
+					checkNotSyncedContacts()
+				}
+			}
 		}
 	}
 

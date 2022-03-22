@@ -12,7 +12,7 @@ interface ContactRepository {
 	suspend fun uploadAllMissingContacts(phoneNumbers: List<String>): Resource<ContactImport>
 
 	//sync contacts between phone and app DB, also uploads to BE
-	suspend fun syncContacts(contentResolver: ContentResolver)
+	suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit>
 
 	fun getContacts(): List<Contact>
 }
