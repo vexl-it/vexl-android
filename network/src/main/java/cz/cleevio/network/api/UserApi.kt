@@ -53,7 +53,7 @@ interface UserApi {
 	@GET("temp/key-pairs")
 	suspend fun getTempKeyPairs(): Response<TempKeyPairResponse>
 
-	@GET("temp/signature")
+	@POST("temp/signature")
 	suspend fun getTempSignature(
 		@Body confirmChallengeRequest: TempSignatureRequest
 	): Response<TempSignatureResponse>
