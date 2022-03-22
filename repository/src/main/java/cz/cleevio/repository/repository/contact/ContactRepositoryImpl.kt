@@ -104,13 +104,16 @@ class ContactRepositoryImpl constructor(
 		val phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
 		contactDao.replaceAll(contactList
 			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
-			.filter { it.phoneNumber.parsePhoneNumber(phoneUtil) != null && phoneUtil.isValidNumber(it.phoneNumber.parsePhoneNumber(phoneUtil)) }
+			.filter {
+				it.phoneNumber.parsePhoneNumber(phoneUtil) != null &&
+					phoneUtil.isValidNumber(it.phoneNumber.parsePhoneNumber(phoneUtil))
+			}
 			.map {
 				val phoneNumber = it.phoneNumber.parsePhoneNumber(phoneUtil)
 				ContactEntity(
 					id = it.id.toLong(),
 					name = it.name,
-					phone = phoneNumber?.countryCode.toString() + phoneNumber?.nationalNumber.toString(),  //.it.phoneNumber,
+					phone = phoneNumber?.countryCode.toString() + phoneNumber?.nationalNumber.toString(), //.it.phoneNumber,
 					email = it.email,
 					photoUri = it.photoUri.toString()
 				)
@@ -140,8 +143,9 @@ class ContactRepositoryImpl constructor(
 
 	fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
 		return try {
-			//phoneUtil.parse(this, telephonyManager.simCountryIso.uppercase(Locale.getDefault())) 	//alternative is telephonyManager.networkCountryIso
-			phoneUtil.parse(this, telephonyManager.networkCountryIso.uppercase(Locale.getDefault()))    //alternative is telephonyManager.simCountryIso
+			//alternative is telephonyManager.networkCountryIso
+			//phoneUtil.parse(this, telephonyManager.simCountryIso.uppercase(Locale.getDefault()))
+			phoneUtil.parse(this, telephonyManager.networkCountryIso.uppercase(Locale.getDefault()))
 		} catch (e: NumberParseException) {
 			Timber.e("NumberParseException was thrown: $e")
 			null
