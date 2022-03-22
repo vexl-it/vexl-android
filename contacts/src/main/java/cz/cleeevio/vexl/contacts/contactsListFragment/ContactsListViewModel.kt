@@ -3,6 +3,7 @@ package cz.cleeevio.vexl.contacts.contactsListFragment
 import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.utils.isPhoneValid
+import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +37,7 @@ class ContactsListViewModel constructor(
 			)
 
 			notSyncedContacts.data?.let { notSyncedPhoneNumbers ->
-				_notSyncedContacts.tryEmit(localContacts.filter { contact ->
+				_notSyncedContacts.emit(localContacts.filter { contact ->
 					notSyncedPhoneNumbers.contains(contact.phoneNumber)
 				})
 			}
@@ -70,15 +71,18 @@ class ContactsListViewModel constructor(
 
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
-			val result = contactRepository.uploadAllMissingContacts(
+			val response = contactRepository.uploadAllMissingContacts(
 				_notSyncedContacts.value.filter {
 					it.markedForUpload
 				}.map {
 					it.phoneNumber
 				}
 			)
-			result.data?.let {
-				_uploadSuccessful.tryEmit(it.imported)
+			when (response.status) {
+				is Status.Success -> response.data?.let { data ->
+					_uploadSuccessful.emit(data.imported)
+				}
+				Status.Error -> _uploadSuccessful.emit(false)
 			}
 		}
 

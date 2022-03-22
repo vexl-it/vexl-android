@@ -13,7 +13,7 @@ data class Contact constructor(
 	val email: String,
 	val phoneNumber: String,
 	val photoUri: Uri?,
-	var markedForUpload: Boolean = false
+	var markedForUpload: Boolean = true
 ) : Parcelable {
 
 	constructor() : this(
