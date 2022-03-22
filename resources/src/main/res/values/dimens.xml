@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<dimen name="default_corner_size">12dp</dimen>
+	<dimen name="black_button_corner_size">13dp</dimen>
 	<dimen name="primary_button_height">64dp</dimen>
 	<dimen name="hypertext_button_height">56dp</dimen>
 	<dimen name="corner_radius_button">6dp</dimen>
@@ -16,4 +17,5 @@
 	<dimen name="stroke_width_button">2dp</dimen>
 	<dimen name="stroke_width_input">2dp</dimen>
 	<dimen name="snackbar_icon_padding">12dp</dimen>
+	<dimen name="search_view_height">38dp</dimen>
 </resources>

@@ -9,6 +9,7 @@
     <string name="general_pause">Pause</string>
     <string name="general_cancel">Cancel</string>
     <string name="general_ok">Ok</string>
+    <string name="general_search">Search</string>
     <string name="general_verify">Verifying...</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
@@ -27,4 +28,16 @@
     <string name="avatar_description">Nobody will see your face until you allow it</string>
     <string name="avatar_welcome">Hey %s</string>
     <string name="finished_onboarding_title">Looking cute, let\'s find you some friends.</string>
+
+    <!-- Register Phone Contacts -->
+    <string name="import_contacts_import">Import contacts</string>
+    <string name="import_contacts_deselect">Deselect All</string>
+    <string name="import_contacts_allow">Allow</string>
+    <string name="import_contacts_not_allow">Don’t allow</string>
+    <string name="import_contacts_title">Looking cute,\nlet’s find you some friends.</string>
+    <string name="import_contacts_subtitle">vexl doesn’t see your contacts</string>
+    <string name="import_contacts_request_title">Allow contacts</string>
+    <string name="import_contacts_request_description">vexl wants to access your contacts in order to work. We won’t ever see them</string>
+    <string name="import_contacts_secondary_request_title">Really?</string>
+    <string name="import_contacts_secondary_request_description">vexl literally only works with your contacts...</string>
 </resources>

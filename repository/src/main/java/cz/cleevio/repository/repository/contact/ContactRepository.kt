@@ -4,7 +4,6 @@ import android.content.ContentResolver
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.model.contact.ContactImport
-import kotlinx.coroutines.flow.Flow
 
 interface ContactRepository {
 
@@ -15,5 +14,5 @@ interface ContactRepository {
 	//sync contacts between phone and app DB, also uploads to BE
 	suspend fun syncContacts(contentResolver: ContentResolver)
 
-	fun getContactsFlow(): Flow<List<Contact>>
+	fun getContacts(): List<Contact>
 }

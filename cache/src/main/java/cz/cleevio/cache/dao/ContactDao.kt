@@ -14,7 +14,10 @@ interface ContactDao {
 	suspend fun getContactPhotoUriByName(name: String): String?
 
 	@Query("SELECT * FROM ContactEntity")
-	fun getAllContacts(): Flow<List<ContactEntity>>
+	fun getAllContactsFlow(): Flow<List<ContactEntity>>
+
+	@Query("SELECT * FROM ContactEntity")
+	fun getAllContacts(): List<ContactEntity>
 
 	@Query("DELETE FROM ContactEntity")
 	suspend fun clearTable()

@@ -1,12 +1,12 @@
 package cz.cleeevio.vexl.contacts.importContactsFragment
 
 import android.Manifest
-import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import coil.load
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentImportContactsBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -30,7 +30,6 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 		PermissionResolver.resolve(requireActivity(), permissions,
 			allGranted = {
 				viewModel.updateHasReadContactPermissions(true)
-				viewModel.syncContacts(requireActivity().contentResolver)
 			},
 			denied = {
 				viewModel.updateHasReadContactPermissions(false)
@@ -52,16 +51,13 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 			viewModel.hasPermissionsEvent.collect { hasPermisson ->
 				if (hasPermisson) {
 					Timber.tag("ASDX").d("Permission granted")
+					findNavController().navigate(
+						ImportContactsFragmentDirections.proceedToContactsListFragment()
+					)
 				} else {
 					Timber.tag("ASDX").d("Permission rejected")
+					showPermissionDeniedDialog()
 				}
-			}
-		}
-
-		//debug test
-		repeatScopeOnStart {
-			viewModel.contacts.collect {
-				binding.debugContactList.text = it.fold("", { acc, item -> acc + item.name + ", " })
 			}
 		}
 	}
@@ -73,8 +69,6 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
 			)
 		}
-
-		checkReadContactsPermissions()
 	}
 
 	private fun checkReadContactsPermissions() {
@@ -84,16 +78,21 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	override fun onResume() {
 		super.onResume()
 
-		val checkReadContactsPermission = ContextCompat.checkSelfPermission(
-			requireContext(),
-			Manifest.permission.READ_CONTACTS
-		)
-
-		if (checkReadContactsPermission == PackageManager.PERMISSION_GRANTED) {
-			viewModel.updateHasReadContactPermissions(true)
-			viewModel.syncContacts(requireActivity().contentResolver)
-		} else {
-			viewModel.updateHasReadContactPermissions(false)
+		binding.importContactsBtn.setOnClickListener {
+			checkReadContactsPermissions()
 		}
+	}
+
+	private fun showPermissionDeniedDialog() {
+		MaterialAlertDialogBuilder(requireContext())
+			.setTitle(R.string.import_contacts_request_title)
+			.setMessage(R.string.import_contacts_request_description)
+			.setNegativeButton(R.string.import_contacts_not_allow) { dialog, _ ->
+				dialog.dismiss()
+			}
+			.setPositiveButton(R.string.import_contacts_allow) { _, _ ->
+				checkReadContactsPermissions()
+			}
+			.show()
 	}
 }
