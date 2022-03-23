@@ -61,6 +61,7 @@
 		<item name="android:textSize">24sp</item>
 		<item name="android:textColor">@color/text_primary</item>
 		<item name="lineHeight">29.88dp</item>
+		<item name="android:textAllCaps">false</item>
 	</style>
 
 	<style name="TextAppearance.Cleevio.MiniButton" parent="TextAppearance.MaterialComponents.Button">
@@ -76,7 +77,7 @@
 		<item name="android:fontFamily">@font/barlow_regular</item>-->
 	</style>
 
-	<style name="TextAppearance.Cleevio.BlackTextButton" parent="TextAppearance.Cleevio.TextButton">
+	<style name="TextAppearance.Cleevio.DarkTextButton" parent="TextAppearance.Cleevio.TextButton">
 		<item name="android:textColor">@android:color/white</item>
 	</style>
 

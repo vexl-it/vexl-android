@@ -17,6 +17,7 @@
 	<color name="navigation_bar">#000000</color>
 	<color name="button">@color/blue_light</color>
 	<color name="black_button">@color/black</color>
+	<color name="gray_button">@color/grey_darker</color>
 	<color name="edit_border">#AFAFAF</color>
 
 	<color name="black">#000000</color>
@@ -29,6 +30,7 @@
 	<color name="purity">#9DCECA</color>
 	<color name="error">#FF3B30</color>
 	<color name="gray">#CFD2D3</color>
+	<color name="grey_darker">#262626</color>
 	<color name="grey_dark">#3C3C43</color>
 	<color name="grey_light">#EBEBF5</color>
 	<color name="blue_light">#C3C3FF</color>
