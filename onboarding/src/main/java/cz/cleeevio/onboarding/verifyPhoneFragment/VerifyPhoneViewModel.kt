@@ -29,11 +29,9 @@ class VerifyPhoneViewModel constructor(
 			_verificationChannel.send(Resource.loading())
 			val response = userRepository.authStepTwo(verificationCode, verificationId)
 			when (response.status) {
-				is Status.Success -> {
-					response.data?.challenge?.let { challenge ->
-						getSignature(challenge) {
-							_verificationChannel.send(response)
-						}
+				is Status.Success -> response.data?.challenge?.let { challenge ->
+					getSignature(challenge) {
+						_verificationChannel.send(response)
 					}
 				}
 			}
@@ -50,10 +48,8 @@ class VerifyPhoneViewModel constructor(
 				)
 			)
 			when (response.status) {
-				is Status.Success -> {
-					response.data?.let { signature ->
-						solveChallenge(signature, onSuccess)
-					}
+				is Status.Success -> response.data?.let { signature ->
+					solveChallenge(signature, onSuccess)
 				}
 			}
 		}
