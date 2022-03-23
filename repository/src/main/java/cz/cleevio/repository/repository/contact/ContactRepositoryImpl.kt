@@ -6,26 +6,23 @@ import android.provider.ContactsContract
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Patterns
-import com.google.i18n.phonenumbers.NumberParseException
-import com.google.i18n.phonenumbers.PhoneNumberUtil
-import com.google.i18n.phonenumbers.Phonenumber
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
+import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.model.contact.ContactImport
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.contact.fromNetwork
-import timber.log.Timber
-import java.util.*
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
 	private val contactApi: ContactApi,
-	private val telephonyManager: TelephonyManager
+	private val telephonyManager: TelephonyManager,
+	private val phoneNumberUtils: PhoneNumberUtils
 ) : ContactRepository {
 
 	override fun getContacts(): List<Contact> = contactDao
@@ -101,19 +98,14 @@ class ContactRepositoryImpl constructor(
 		}
 		cursor?.close()
 
-		val phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
 		contactDao.replaceAll(contactList
 			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
-			.filter {
-				it.phoneNumber.parsePhoneNumber(phoneUtil) != null &&
-					phoneUtil.isValidNumber(it.phoneNumber.parsePhoneNumber(phoneUtil))
-			}
+			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber) }
 			.map {
-				val phoneNumber = it.phoneNumber.parsePhoneNumber(phoneUtil)
 				ContactEntity(
 					id = it.id.toLong(),
 					name = it.name,
-					phone = phoneNumber?.countryCode.toString() + phoneNumber?.nationalNumber.toString(), //.it.phoneNumber,
+					phone = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber),
 					email = it.email,
 					photoUri = it.photoUri.toString()
 				)
@@ -140,18 +132,4 @@ class ContactRepositoryImpl constructor(
 			.replace("\\s".toRegex(), "")
 			.replace("-".toRegex(), "")
 	}
-
-	fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
-		return try {
-			//alternative is telephonyManager.networkCountryIso
-			//phoneUtil.parse(this, telephonyManager.simCountryIso.uppercase(Locale.getDefault()))
-			phoneUtil.parse(this, telephonyManager.networkCountryIso.uppercase(Locale.getDefault()))
-		} catch (e: NumberParseException) {
-			Timber.e("NumberParseException was thrown: $e")
-			null
-		}
-	}
-
-	fun String.isPhoneValid(): Boolean =
-		this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
 }
