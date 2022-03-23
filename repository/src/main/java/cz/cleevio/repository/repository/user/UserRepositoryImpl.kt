@@ -6,10 +6,7 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
-import cz.cleevio.network.request.user.ConfirmCodeRequest
-import cz.cleevio.network.request.user.ConfirmPhoneRequest
-import cz.cleevio.network.request.user.UserRequest
-import cz.cleevio.network.request.user.UsernameAvailableRequest
+import cz.cleevio.network.request.user.*
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
@@ -41,6 +38,22 @@ class UserRepositoryImpl constructor(
 						id = verificationId,
 						code = verificationCode,
 						userPublicKey = encryptedPreference.userPublicKey
+					)
+				)
+			}
+		)
+	}
+
+	override suspend fun authStepThree(signature: String): Resource<Signature> {
+		return tryOnline(
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = {
+				userRestApi.postUserConfirmChallenge(
+					ConfirmChallengeRequest(
+						userPublicKey = encryptedPreference.userPublicKey,
+						signature = signature
 					)
 				)
 			}
@@ -109,7 +122,7 @@ class UserRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun getFakeSignatureFromBE(signature: Signature): Resource<String> = tryOnline(
+	override suspend fun getFakeSignatureFromBE(signature: TempSignature): Resource<String> = tryOnline(
 		request = { userRestApi.getTempSignature(signature.toRequest()) },
 		mapper = { it?.signed }
 	)

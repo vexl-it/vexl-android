@@ -1,15 +1,17 @@
 package cz.cleevio.repository.model.user
 
-import cz.cleevio.network.request.user.TempSignatureRequest
+import cz.cleevio.network.response.user.SignatureResponse
 
 data class Signature constructor(
-	val challenge: String,
-	val privateKey: String
+	val hash: String,
+	val signature: String,
+	val challengeVerified: Boolean
 )
 
-fun Signature.toRequest(): TempSignatureRequest {
-	return TempSignatureRequest(
-		challenge = this.challenge,
-		privateKey = this.privateKey
+fun SignatureResponse.fromNetwork(): Signature {
+	return Signature(
+		hash = this.hash,
+		signature = this.signature,
+		challengeVerified = this.challengeVerified,
 	)
 }

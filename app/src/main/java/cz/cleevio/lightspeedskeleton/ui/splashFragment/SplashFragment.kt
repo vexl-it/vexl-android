@@ -16,6 +16,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	override val viewModel by viewModel<SplashViewModel>()
 
 	override fun initView() {
+		viewModel.resetKeys()    //debug only todo: key management should be moved to init phone or confirm phone fragment
 		viewModel.loadKeys()
 	}
 
@@ -25,8 +26,8 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 				if (success) {
 					lifecycle.coroutineScope.launch {
 						delay(SPLASH_DELAY)
-						//findNavController().navigate(SplashFragmentDirections.actionToOnboarding())
-						findNavController().navigate(SplashFragmentDirections.actionGlobalToContacts())
+						findNavController().navigate(SplashFragmentDirections.actionToOnboarding())
+						//findNavController().navigate(SplashFragmentDirections.actionGlobalToContacts())
 					}
 				} else {
 					//todo: inform user, or try again, or something

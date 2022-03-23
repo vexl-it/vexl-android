@@ -1,6 +1,7 @@
 package cz.cleeevio.onboarding.phoneDoneFragment
 
 import androidx.core.view.updatePadding
+import androidx.navigation.fragment.findNavController
 import cz.cleeevio.onboarding.R
 import cz.cleeevio.onboarding.databinding.FragmentPhoneDoneBinding
 import cz.cleeevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
@@ -22,7 +23,9 @@ class PhoneDoneFragment : BaseFragment(R.layout.fragment_phone_done) {
 		}
 
 		binding.continueBtn.setOnClickListener {
-			//todo: connect to Name Fragment here?
+			findNavController().navigate(
+				PhoneDoneFragmentDirections.proceedToUsernameFragment()
+			)
 		}
 	}
 }
