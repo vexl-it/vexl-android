@@ -3,7 +3,6 @@ package cz.cleevio.repository.repository.contact
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.ContactsContract
-import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Patterns
 import cz.cleevio.cache.dao.ContactDao
@@ -21,7 +20,6 @@ import cz.cleevio.repository.model.contact.fromNetwork
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
 	private val contactApi: ContactApi,
-	private val telephonyManager: TelephonyManager,
 	private val phoneNumberUtils: PhoneNumberUtils
 ) : ContactRepository {
 
@@ -127,7 +125,7 @@ class ContactRepositoryImpl constructor(
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-	fun String.toValidPhoneNumber(): String {
+	private fun String.toValidPhoneNumber(): String {
 		return this
 			.replace("\\s".toRegex(), "")
 			.replace("-".toRegex(), "")

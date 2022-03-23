@@ -7,11 +7,9 @@ import com.google.i18n.phonenumbers.Phonenumber
 import timber.log.Timber
 import java.util.*
 
-
 class PhoneNumberUtils constructor(
 	private val telephonyManager: TelephonyManager
 ) {
-
 	private val phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
 
 	fun isPhoneValid(phoneNumber: String): Boolean {
