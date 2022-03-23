@@ -159,7 +159,7 @@ val networkModule = module {
 
 	single(named(AUTH_INTERCEPTOR)) {
 		AuthInterceptor(
-			networkCache = get()
+			encryptedPreference = get()
 		)
 	} bind Interceptor::class
 

@@ -65,7 +65,6 @@
 			android:id="@+id/proceed_to_phoneDoneFragment"
 			app:destination="@id/phoneDoneFragment" />
 
-
 	</fragment>
 
 	<fragment

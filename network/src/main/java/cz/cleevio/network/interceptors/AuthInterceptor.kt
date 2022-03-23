@@ -1,11 +1,11 @@
 package cz.cleevio.network.interceptors
 
-import cz.cleevio.network.cache.NetworkCache
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import okhttp3.Interceptor
 import okhttp3.Response
 
 class AuthInterceptor constructor(
-	private val networkCache: NetworkCache,
+	private val encryptedPreference: EncryptedPreferenceRepository
 ) : Interceptor {
 
 	override fun intercept(chain: Interceptor.Chain): Response {
@@ -14,27 +14,27 @@ class AuthInterceptor constructor(
 		val requestBuilder = request
 			.newBuilder()
 
-		val token = networkCache.accessTokenGeneral
-		//if we have accessToken and newRequest doesn't have Auth header already set
-		if (request.header(HEADER_AUTHORIZATION).isNullOrEmpty() && token?.isNotEmpty() == true) {
-			requestBuilder.header(HEADER_AUTHORIZATION, createTokenHeader(token))
+		val signature = encryptedPreference.signature
+		if (request.header(HEADER_SIGNATURE).isNullOrEmpty() && signature.isNotEmpty()) {
+			requestBuilder.header(HEADER_SIGNATURE, signature)
+		}
+
+		val hash = encryptedPreference.hash
+		if (request.header(HEADER_HASH).isNullOrEmpty() && hash.isNotEmpty()) {
+			requestBuilder.header(HEADER_HASH, hash)
+		}
+
+		val userPublicKey = encryptedPreference.userPublicKey
+		if (request.header(HEADER_PUBLIC_KEY).isNullOrEmpty() && userPublicKey.isNotEmpty()) {
+			requestBuilder.header(HEADER_PUBLIC_KEY, userPublicKey)
 		}
 
 		return chain.proceed(requestBuilder.build())
 	}
 
 	companion object {
-		const val HEADER_AUTHORIZATION = "Authorization"
-		private const val HEADER_AUTHORIZATION_BEARER = "Bearer %s"
-
-		fun createTokenHeader(token: String?): String = String.format(HEADER_AUTHORIZATION_BEARER, token.orEmpty())
-
-		fun createTokenHeaderOptional(token: String?): String? {
-			return if (token.isNullOrEmpty()) {
-				null
-			} else {
-				String.format(HEADER_AUTHORIZATION_BEARER, token.orEmpty())
-			}
-		}
+		const val HEADER_SIGNATURE = "signature"
+		const val HEADER_HASH = "hash"
+		const val HEADER_PUBLIC_KEY = "public-key"
 	}
 }

@@ -49,6 +49,7 @@ android {
 
 dependencies {
     api project(':resources')
+    api project(':cache')
 
     implementation "androidx.security:security-crypto:$security_crypto"
     implementation "com.jakewharton.timber:timber:$timber"

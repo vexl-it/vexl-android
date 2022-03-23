@@ -11,6 +11,8 @@ interface UserRepository {
 
 	suspend fun authStepTwo(verificationCode: String, verificationId: Long): Resource<ConfirmCode>
 
+	suspend fun authStepThree(signature: String): Resource<Signature>
+
 	//----------------------------------
 	fun getUserFlow(): Flow<User?>
 
@@ -32,5 +34,5 @@ interface UserRepository {
 
 	suspend fun getFakeKeyPairFromBE(): Resource<KeyPair>
 
-	suspend fun getFakeSignatureFromBE(signature: Signature): Resource<String>
+	suspend fun getFakeSignatureFromBE(signature: TempSignature): Resource<String>
 }

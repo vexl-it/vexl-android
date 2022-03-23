@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 data class SignatureResponse constructor(
 	val hash: String,
 	val signature: String,
-	val challengeValid: Boolean
+	val challengeVerified: Boolean
 )
