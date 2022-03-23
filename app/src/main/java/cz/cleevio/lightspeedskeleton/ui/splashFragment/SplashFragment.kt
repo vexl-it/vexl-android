@@ -25,7 +25,8 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 				if (success) {
 					lifecycle.coroutineScope.launch {
 						delay(SPLASH_DELAY)
-						findNavController().navigate(SplashFragmentDirections.actionToOnboarding())
+						//findNavController().navigate(SplashFragmentDirections.actionToOnboarding())
+						findNavController().navigate(SplashFragmentDirections.actionGlobalToContacts())
 					}
 				} else {
 					//todo: inform user, or try again, or something

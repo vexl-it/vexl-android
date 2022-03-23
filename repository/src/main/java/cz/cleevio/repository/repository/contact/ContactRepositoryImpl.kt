@@ -11,6 +11,7 @@ import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
+import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.model.contact.ContactImport
 import cz.cleevio.repository.model.contact.fromDao
@@ -18,13 +19,14 @@ import cz.cleevio.repository.model.contact.fromNetwork
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
-	private val contactApi: ContactApi
+	private val contactApi: ContactApi,
+	private val phoneNumberUtils: PhoneNumberUtils
 ) : ContactRepository {
 
 	override fun getContacts(): List<Contact> = contactDao
 		.getAllContacts().map { it.fromDao() }
 
-	override suspend fun syncContacts(contentResolver: ContentResolver) {
+	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit> {
 		val contactList: ArrayList<Contact> = ArrayList()
 
 		val projection = arrayOf(
@@ -96,15 +98,18 @@ class ContactRepositoryImpl constructor(
 
 		contactDao.replaceAll(contactList
 			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
+			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber) }
 			.map {
 				ContactEntity(
 					id = it.id.toLong(),
 					name = it.name,
-					phone = it.phoneNumber,
+					phone = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber),
 					email = it.email,
 					photoUri = it.photoUri.toString()
 				)
 			})
+
+		return Resource.success(data = Unit)
 	}
 
 	override suspend fun checkAllContacts(phoneNumbers: List<String>) = tryOnline(
@@ -120,12 +125,9 @@ class ContactRepositoryImpl constructor(
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-	fun String.toValidPhoneNumber(): String {
+	private fun String.toValidPhoneNumber(): String {
 		return this
 			.replace("\\s".toRegex(), "")
 			.replace("-".toRegex(), "")
 	}
-
-	fun String.isPhoneValid(): Boolean =
-		this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
 }

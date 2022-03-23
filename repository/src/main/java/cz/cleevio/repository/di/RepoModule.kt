@@ -1,5 +1,6 @@
 package cz.cleevio.repository.di
 
+import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.contact.ContactRepositoryImpl
 import cz.cleevio.repository.repository.user.UserRepository
@@ -19,7 +20,14 @@ val repoModule = module {
 	single<ContactRepository> {
 		ContactRepositoryImpl(
 			contactDao = get(),
-			contactApi = get()
+			contactApi = get(),
+			phoneNumberUtils = get()
+		)
+	}
+
+	single {
+		PhoneNumberUtils(
+			telephonyManager = get()
 		)
 	}
 }
