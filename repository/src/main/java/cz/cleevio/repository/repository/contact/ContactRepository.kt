@@ -2,6 +2,7 @@ package cz.cleevio.repository.repository.contact
 
 import android.content.ContentResolver
 import cz.cleevio.network.data.Resource
+import cz.cleevio.network.response.contact.ContactFacebookResponse
 import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.model.contact.ContactImport
 import cz.cleevio.repository.model.contact.ContactUser
@@ -22,4 +23,6 @@ interface ContactRepository {
 	suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit>
 
 	fun getContacts(): List<Contact>
+
+	suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<ContactFacebookResponse>
 }

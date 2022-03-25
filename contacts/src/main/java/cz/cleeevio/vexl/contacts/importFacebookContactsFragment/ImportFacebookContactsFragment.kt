@@ -2,7 +2,6 @@ package cz.cleeevio.vexl.contacts.importFacebookContactsFragment
 
 import androidx.navigation.fragment.findNavController
 import coil.load
-import com.facebook.login.LoginManager
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentImportFacebookContactsBinding
 import cz.cleeevio.vexl.contacts.importContactsFragment.ImportContactsFragmentDirections
@@ -36,7 +35,7 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 
 	override fun initView() {
 		binding.importContactsBtn.setOnClickListener {
-			LoginManager.getInstance().logInWithReadPermissions(this, listOf("user_friends"))
+			viewModel.syncFacebookContacts(this)
 		}
 		binding.importContactsSkipBtn.setOnClickListener {
 			findNavController().navigate(

@@ -12,6 +12,7 @@ import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
+import cz.cleevio.network.response.contact.ContactFacebookResponse
 import cz.cleevio.network.request.contact.ContactUserRequest
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.model.contact.*
@@ -121,6 +122,15 @@ class ContactRepositoryImpl constructor(
 		request = { contactApi.postContactImport(ContactRequest(phoneNumbers)) },
 		mapper = { it?.fromNetwork() }
 	)
+
+	override suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<ContactFacebookResponse> {
+		return tryOnline(
+			mapper = {
+				it // TODO mapper
+			},
+			request = { contactApi.getFacebookUser(facebookId, accessToken) }
+		)
+	}
 
 	override suspend fun registerUserWithContactService(): Resource<ContactUser> = tryOnline(
 		request = {
