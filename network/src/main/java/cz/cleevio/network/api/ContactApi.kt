@@ -3,6 +3,7 @@ package cz.cleevio.network.api
 import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.network.request.contact.ContactUserRequest
 import cz.cleevio.network.request.contact.DeleteContactRequest
+import cz.cleevio.network.response.BasePagedResponse
 import cz.cleevio.network.response.contact.*
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -10,26 +11,26 @@ import retrofit2.http.*
 
 interface ContactApi {
 
-	@POST("contact/not-imported")
+	@POST("contacts/not-imported")
 	suspend fun postContactNotImported(
 		@Body contactRequest: ContactRequest
 	): Response<ContactNotImportResponse>
 
-	@POST("contact/import")
+	@POST("contacts/import")
 	suspend fun postContactImport(
 		@Body contactImportRequest: ContactRequest
 	): Response<ContactImportResponse>
 
-	@GET("contact")
-	suspend fun getContact(): Response<ContactResponse>
+	@GET("contacts/me")
+	suspend fun getContactsMe(): Response<BasePagedResponse<ContactResponse>>
 
 	@DELETE("contact")
 	suspend fun deleteContact(
 		@Body deleteContactRequest: DeleteContactRequest
 	): Response<ResponseBody>
 
-	@POST("user")
-	suspend fun postUser(
+	@POST("users")
+	suspend fun postUsers(
 		@Body contactUserRequest: ContactUserRequest
 	): Response<ContactUserResponse>
 

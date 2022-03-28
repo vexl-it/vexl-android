@@ -21,7 +21,8 @@ val repoModule = module {
 		ContactRepositoryImpl(
 			contactDao = get(),
 			contactApi = get(),
-			phoneNumberUtils = get()
+			phoneNumberUtils = get(),
+			encryptedPreference = get()
 		)
 	}
 

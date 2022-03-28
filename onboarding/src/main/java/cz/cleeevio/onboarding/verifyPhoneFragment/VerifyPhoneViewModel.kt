@@ -6,6 +6,7 @@ import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.model.user.TempSignature
+import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -18,6 +19,7 @@ class VerifyPhoneViewModel constructor(
 	val phoneNumber: String,
 	val verificationId: Long,
 	private val userRepository: UserRepository,
+	private val contactRepository: ContactRepository,
 	private val encryptedPreference: EncryptedPreferenceRepository,
 ) : BaseViewModel() {
 
@@ -64,6 +66,17 @@ class VerifyPhoneViewModel constructor(
 						encryptedPreference.signature = data.signature
 						encryptedPreference.hash = data.hash
 					}
+					registerWithContactsService(onSuccess)
+				}
+			}
+		}
+	}
+
+	private fun registerWithContactsService(onSuccess: suspend () -> Unit) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val response = contactRepository.registerUserWithContactService()
+			when (response.status) {
+				is Status.Success -> {
 					onSuccess()
 				}
 			}

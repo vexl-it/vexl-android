@@ -16,6 +16,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	override val viewModel by viewModel<SplashViewModel>()
 
 	override fun initView() {
+		viewModel.deletePreviousUser() //debug only todo: remove
 		viewModel.resetKeys()    //debug only todo: key management should be moved to init phone or confirm phone fragment
 		viewModel.loadKeys()
 	}

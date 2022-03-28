@@ -44,5 +44,8 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 			val username = binding.nameNameInput.text.toString()
 			viewModel.checkUsernameAvailability(username)
 		}
+
+		//debug
+		binding.nameNameInput.setText("jakub_test_account")
 	}
 }
