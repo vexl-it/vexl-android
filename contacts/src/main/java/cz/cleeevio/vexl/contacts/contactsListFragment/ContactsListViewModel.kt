@@ -9,9 +9,7 @@ import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 import timber.log.Timber
@@ -20,17 +18,19 @@ class ContactsListViewModel constructor(
 	private val contactRepository: ContactRepository
 ) : BaseViewModel() {
 
-	private val _notSyncedContacts = MutableStateFlow<List<Contact>>(emptyList())
-	val notSyncedContacts = _notSyncedContacts.asStateFlow()
+	private var notSyncedContactsTmp: List<Contact> = emptyList()
 
-	private val _uploadSuccessful = MutableSharedFlow<Boolean>()
+	private val _notSyncedContacts = MutableSharedFlow<List<Contact>>(replay = 1)
+	val notSyncedContacts = _notSyncedContacts.asSharedFlow()
+
+	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
 	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
 
-	fun checkNotSyncedContacts() {
+	private fun checkNotSyncedContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val localContacts = contactRepository.getContacts()
 
-			val notSyncedContacts = contactRepository.checkAllContacts(
+			val notSyncedIdentifiers = contactRepository.checkAllContacts(
 				localContacts.map { contact ->
 					contact.phoneNumber
 				}.filter {
@@ -38,10 +38,11 @@ class ContactsListViewModel constructor(
 				}
 			)
 
-			notSyncedContacts.data?.let { notSyncedPhoneNumbers ->
-				_notSyncedContacts.emit(localContacts.filter { contact ->
+			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
+				notSyncedContactsTmp = localContacts.filter { contact ->
 					notSyncedPhoneNumbers.contains(contact.phoneNumber)
-				})
+				}
+				_notSyncedContacts.emit(notSyncedContactsTmp)
 			}
 		}
 	}
@@ -59,8 +60,7 @@ class ContactsListViewModel constructor(
 
 	fun contactSelected(contact: BaseContact, selected: Boolean) {
 		viewModelScope.launch {
-			val lastValue = _notSyncedContacts.value
-			lastValue.find {
+			notSyncedContactsTmp.find {
 				contact.id == it.id
 			}?.markedForUpload = selected
 		}
@@ -68,18 +68,17 @@ class ContactsListViewModel constructor(
 
 	fun unselectAll() {
 		viewModelScope.launch {
-			val newList = ArrayList<Contact>()
-			_notSyncedContacts.value.forEach { contact ->
-				newList.add(contact.copy().also { it.markedForUpload = false })
+			notSyncedContactsTmp.forEach {
+				it.markedForUpload = false
 			}
-			_notSyncedContacts.emit(newList)
+			_notSyncedContacts.emit(ArrayList(notSyncedContactsTmp))
 		}
 	}
 
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.uploadAllMissingContacts(
-				_notSyncedContacts.value.filter {
+				notSyncedContactsTmp.filter {
 					it.markedForUpload
 				}.map {
 					it.phoneNumber
