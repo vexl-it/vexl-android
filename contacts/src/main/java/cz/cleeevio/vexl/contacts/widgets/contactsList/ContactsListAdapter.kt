@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleeevio.vexl.contacts.databinding.ItemContactBinding
-import cz.cleevio.repository.model.contact.Contact
+import cz.cleevio.repository.model.contact.BaseContact
 
 class ContactsListAdapter(
-	private val onContactImportSwitched: (Contact, Boolean) -> Unit
-) : ListAdapter<Contact, ContactsListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Contact>() {
+	private val onContactImportSwitched: (BaseContact, Boolean) -> Unit
+) : ListAdapter<BaseContact, ContactsListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<BaseContact>() {
 
-	override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean = oldItem.id == newItem.id
+	override fun areItemsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean = oldItem.id == newItem.id
 
-	override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean = oldItem == newItem
+	override fun areContentsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean = oldItem == newItem
 
 }) {
 
@@ -23,11 +23,11 @@ class ContactsListAdapter(
 		private val binding: ItemContactBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: Contact) {
+		fun bind(item: BaseContact) {
 			binding.run {
 				contactImage.load(item.photoUri)
 				contactName.text = item.name
-				contactPhone.text = item.phoneNumber
+				contactIdentifier.text = item.getIdentifier()
 				contactImportCheckbox.isChecked = item.markedForUpload
 
 				contactImportCheckbox.setOnCheckedChangeListener { _, isChecked -> onContactImportSwitched(item, isChecked) }

@@ -11,6 +11,5 @@ data class ContactFacebookResponse constructor(
 data class FacebookUserResponse constructor(
 	val id: String,
 	val name: String,
-	val friends: List<String>,
-	val newFriends: List<String>
+	val friends: List<FacebookUserResponse>
 )

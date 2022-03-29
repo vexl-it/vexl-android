@@ -123,10 +123,12 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<ContactFacebookResponse> {
+	override suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>> {
 		return tryOnline(
 			mapper = {
-				it // TODO mapper
+				it?.facebookUser?.friends?.map { friend ->
+					friend.fromFacebook()
+				}
 			},
 			request = { contactApi.getFacebookUser(facebookId, accessToken) }
 		)

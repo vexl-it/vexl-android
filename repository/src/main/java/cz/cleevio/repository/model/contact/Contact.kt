@@ -8,13 +8,18 @@ import java.util.*
 
 @Parcelize
 data class Contact constructor(
-	val id: String,
-	val name: String,
+	override val id: String,
+	override val name: String,
 	val email: String,
 	val phoneNumber: String,
-	val photoUri: Uri?,
-	var markedForUpload: Boolean = true
-) : Parcelable {
+	override val photoUri: Uri?,
+	override var markedForUpload: Boolean = true
+) : BaseContact(
+	id = id,
+	name = name,
+	photoUri = photoUri,
+	markedForUpload = markedForUpload
+), Parcelable {
 
 	constructor() : this(
 		id = "",
@@ -42,6 +47,8 @@ data class Contact constructor(
 
 		return result.uppercase(Locale.getDefault())
 	}
+
+	override fun getIdentifier(): String = phoneNumber
 }
 
 fun ContactEntity.fromDao(): Contact {

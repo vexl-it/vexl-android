@@ -4,7 +4,6 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentImportFacebookContactsBinding
-import cz.cleeevio.vexl.contacts.importContactsFragment.ImportContactsFragmentDirections
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -28,18 +27,22 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 				}
 			}
 		}
-//		repeatScopeOnStart {
-//			viewModel.loadContacts(getString(R.string.facebook_app_id))
-//		}
+		repeatScopeOnStart {
+			viewModel.facebookPermissionApproved.collect {
+				findNavController().navigate(
+					ImportFacebookContactsFragmentDirections.proceedToFacebookContactsListFragment()
+				)
+			}
+		}
 	}
 
 	override fun initView() {
 		binding.importContactsBtn.setOnClickListener {
-			viewModel.syncFacebookContacts(this)
+			viewModel.checkFacebookLogin(this)
 		}
 		binding.importContactsSkipBtn.setOnClickListener {
 			findNavController().navigate(
-				ImportContactsFragmentDirections.proceedToContactsListFragment()
+				ImportFacebookContactsFragmentDirections.proceedToFacebookContactsListFragment() // TODO skip FB
 			)
 		}
 	}

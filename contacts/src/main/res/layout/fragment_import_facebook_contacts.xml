@@ -64,14 +64,6 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
 
-	<!--	<com.facebook.login.widget.LoginButton-->
-	<!--		android:id="@+id/login_button"-->
-	<!--		android:layout_width="wrap_content"-->
-	<!--		android:layout_height="wrap_content"-->
-	<!--		android:layout_gravity="center_horizontal"-->
-	<!--		android:layout_marginTop="30dp"-->
-	<!--		android:layout_marginBottom="30dp" />-->
-
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/import_contacts_btn"
 		style="@style/Widget.Vexl.Button"

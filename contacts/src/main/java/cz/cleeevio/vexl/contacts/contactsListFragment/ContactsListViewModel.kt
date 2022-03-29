@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.utils.isPhoneValid
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +57,7 @@ class ContactsListViewModel constructor(
 		}
 	}
 
-	fun contactSelected(contact: Contact, selected: Boolean) {
+	fun contactSelected(contact: BaseContact, selected: Boolean) {
 		viewModelScope.launch {
 			val lastValue = _notSyncedContacts.value
 			lastValue.find {
