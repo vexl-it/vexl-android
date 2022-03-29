@@ -76,9 +76,7 @@ class VerifyPhoneViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.registerUserWithContactService()
 			when (response.status) {
-				is Status.Success -> {
-					onSuccess()
-				}
+				is Status.Success -> onSuccess()
 			}
 		}
 	}
