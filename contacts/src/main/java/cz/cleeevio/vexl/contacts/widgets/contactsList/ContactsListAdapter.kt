@@ -14,9 +14,11 @@ class ContactsListAdapter(
 	private val onContactImportSwitched: (BaseContact, Boolean) -> Unit
 ) : ListAdapter<BaseContact, ContactsListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<BaseContact>() {
 
-	override fun areItemsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean = oldItem.id == newItem.id
+	override fun areItemsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean =
+		oldItem.id == newItem.id
 
-	override fun areContentsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean = oldItem == newItem
+	override fun areContentsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean =
+		oldItem.id == newItem.id && oldItem.markedForUpload == newItem.markedForUpload
 
 }) {
 
