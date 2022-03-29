@@ -87,6 +87,7 @@ class ContactsListViewModel constructor(
 			when (response.status) {
 				is Status.Success -> response.data?.let { data ->
 					_uploadSuccessful.emit(data.imported)
+					//todo: this is only debug, should be called on dashboard
 					loadAllContacts()
 				}
 				is Status.Error -> _uploadSuccessful.emit(false)
@@ -104,7 +105,6 @@ class ContactsListViewModel constructor(
 						Timber.tag("ASDX").d(publicKey)
 					}
 				}
-				is Status.Error -> _uploadSuccessful.emit(false)
 			}
 		}
 	}
