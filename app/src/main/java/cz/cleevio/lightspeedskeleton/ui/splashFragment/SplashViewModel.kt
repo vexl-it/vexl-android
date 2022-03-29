@@ -25,6 +25,18 @@ class SplashViewModel constructor(
 	fun deletePreviousUser() {
 		viewModelScope.launch(Dispatchers.IO) {
 			userRepository.deleteMe()
+
+			contactRepository.deleteMe()
+
+			resetKeys()
+			loadKeys()
+		}
+	}
+
+	//debug
+	fun deletePreviousUser() {
+		viewModelScope.launch(Dispatchers.IO) {
+			userRepository.deleteMe()
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {
@@ -36,6 +48,8 @@ class SplashViewModel constructor(
 	fun resetKeys() {
 		encryptedPreferences.userPrivateKey = ""
 		encryptedPreferences.userPublicKey = ""
+		encryptedPreferences.hash = ""
+		encryptedPreferences.signature = ""
 	}
 
 	fun loadKeys() {

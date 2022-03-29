@@ -34,7 +34,7 @@ interface ContactApi {
 		@Body contactUserRequest: ContactUserRequest
 	): Response<ContactUserResponse>
 
-	@DELETE("user/me")
+	@DELETE("users/me")
 	suspend fun deleteUserMe(): Response<ResponseBody>
 
 	@GET("facebook/{facebookId}/token/{accessToken}")
