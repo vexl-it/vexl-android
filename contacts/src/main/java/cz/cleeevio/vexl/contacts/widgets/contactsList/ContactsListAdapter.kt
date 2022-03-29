@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.ItemContactBinding
 import cz.cleevio.repository.model.contact.BaseContact
 
@@ -25,7 +26,12 @@ class ContactsListAdapter(
 
 		fun bind(item: BaseContact) {
 			binding.run {
-				contactImage.load(item.photoUri)
+				contactImage.load(item.photoUri) {
+					crossfade(true)
+					fallback(R.drawable.ic_baseline_person_128)
+					error(R.drawable.ic_baseline_person_128)
+					placeholder(R.drawable.ic_baseline_person_128)
+				}
 				contactName.text = item.name
 				contactIdentifier.text = item.getIdentifier()
 				contactImportCheckbox.isChecked = item.markedForUpload

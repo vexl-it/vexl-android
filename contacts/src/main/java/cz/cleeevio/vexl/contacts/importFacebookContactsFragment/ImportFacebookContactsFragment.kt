@@ -4,6 +4,7 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentImportFacebookContactsBinding
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -41,8 +42,8 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 			viewModel.checkFacebookLogin(this)
 		}
 		binding.importContactsSkipBtn.setOnClickListener {
-			findNavController().navigate(
-				ImportFacebookContactsFragmentDirections.proceedToFacebookContactsListFragment() // TODO skip FB
+			viewModel.navMainGraphModel.navigateToGraph(
+				NavMainGraphModel.NavGraph.Marketplace
 			)
 		}
 	}

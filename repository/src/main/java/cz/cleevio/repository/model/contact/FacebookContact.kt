@@ -21,6 +21,8 @@ fun FacebookUserResponse.fromFacebook(): FacebookContact {
 	return FacebookContact(
 		id = this.id,
 		name = this.name,
-		photoUri = null //TODO
+		photoUri = this.picture?.data?.url?.let {
+			Uri.parse(it)
+		}
 	)
 }

@@ -11,7 +11,7 @@ interface ContactRepository {
 
 	suspend fun checkAllContacts(phoneNumbers: List<String>): Resource<List<String>>
 
-	suspend fun uploadAllMissingContacts(phoneNumbers: List<String>): Resource<ContactImport>
+	suspend fun uploadAllMissingContacts(identifiers: List<String>): Resource<ContactImport>
 
 	suspend fun registerUserWithContactService(): Resource<ContactUser>
 

@@ -7,6 +7,7 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -15,7 +16,8 @@ import timber.log.Timber
 
 
 class ImportFacebookContactsViewModel constructor(
-	private val userRepository: UserRepository
+	private val userRepository: UserRepository,
+	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
 	private val facebookCallbackManager: CallbackManager by lazy {

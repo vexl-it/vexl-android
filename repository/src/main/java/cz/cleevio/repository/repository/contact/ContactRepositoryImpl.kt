@@ -12,7 +12,6 @@ import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
-import cz.cleevio.network.response.contact.ContactFacebookResponse
 import cz.cleevio.network.request.contact.ContactUserRequest
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.model.contact.*
@@ -118,8 +117,8 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.newContacts.orEmpty() }
 	)
 
-	override suspend fun uploadAllMissingContacts(phoneNumbers: List<String>): Resource<ContactImport> = tryOnline(
-		request = { contactApi.postContactImport(ContactRequest(phoneNumbers)) },
+	override suspend fun uploadAllMissingContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
+		request = { contactApi.postContactImport(ContactRequest(identifiers)) },
 		mapper = { it?.fromNetwork() }
 	)
 

@@ -24,12 +24,14 @@ val contactsModule = module {
 
 	viewModel {
 		ImportFacebookContactsViewModel(
+			get(),
 			get()
 		)
 	}
 
 	viewModel {
 		FacebookContactsListViewModel(
+			get(),
 			get()
 		)
 	}

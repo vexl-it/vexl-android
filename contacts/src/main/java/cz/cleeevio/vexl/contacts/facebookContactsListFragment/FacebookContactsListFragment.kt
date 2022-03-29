@@ -2,6 +2,7 @@ package cz.cleeevio.vexl.contacts.facebookContactsListFragment
 
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentFacebookContactsListBinding
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
@@ -19,18 +20,29 @@ class FacebookContactsListFragment : BaseFragment(R.layout.fragment_facebook_con
 				binding.contactsListWidget.setupData(it)
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.uploadSuccessful.collect {
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.Marketplace
+				)
+			}
+		}
 	}
 
 	override fun initView() {
 
 		binding.contactsListWidget.setupListeners(
 			onContactImportSwitched = { contact: BaseContact, selected: Boolean ->
-//				viewModel.contactSelected(contact, selected)
+				viewModel.contactSelected(contact, selected)
 			},
 			onUnselectAllClicked = {
-//				viewModel.unselectAll()
+				viewModel.unselectAll()
 			}
 		)
+
+		binding.importContactsBtn.setOnClickListener {
+			viewModel.uploadAllMissingContacts()
+		}
 
 		viewModel.loadNotSyncedFacebookContacts()
 	}
