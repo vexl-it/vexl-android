@@ -34,17 +34,6 @@ class SplashViewModel constructor(
 	}
 
 	//debug
-	fun deletePreviousUser() {
-		viewModelScope.launch(Dispatchers.IO) {
-			userRepository.deleteMe()
-		}
-
-		viewModelScope.launch(Dispatchers.IO) {
-			contactRepository.deleteMe()
-		}
-	}
-
-	//debug
 	fun resetKeys() {
 		encryptedPreferences.userPrivateKey = ""
 		encryptedPreferences.userPublicKey = ""
