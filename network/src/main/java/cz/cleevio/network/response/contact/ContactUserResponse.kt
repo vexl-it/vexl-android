@@ -5,6 +5,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ContactUserResponse constructor(
 	val id: Long,
-	val publicKey: List<String>,
-	val hash: List<String>
+	val publicKey: String,
+	val hash: String
 )

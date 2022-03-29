@@ -28,21 +28,21 @@ interface UserApi {
 		@Body usernameAvailableRequest: UsernameAvailableRequest
 	): Response<UsernameAvailableResponse>
 
-	@GET("user")
-	suspend fun getUser(): Response<UserResponse>
+	@GET("user/me")
+	suspend fun getUserMe(): Response<UserResponse>
 
 	@POST("user")
 	suspend fun postUser(
 		@Body userRequest: UserRequest
 	): Response<UserResponse>
 
-	@PUT("user")
-	suspend fun putUser(
+	@PUT("user/me")
+	suspend fun putUserMe(
 		@Body userRequest: UserRequest
 	): Response<UserResponse>
 
-	@DELETE("user")
-	suspend fun deleteUser(): Response<ResponseBody>
+	@DELETE("user/me")
+	suspend fun deleteUserMe(): Response<ResponseBody>
 
 	@GET("user/signature/{facebookId}")
 	suspend fun getUserSignatureFacebook(

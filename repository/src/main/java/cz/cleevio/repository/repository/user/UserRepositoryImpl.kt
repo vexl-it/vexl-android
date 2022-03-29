@@ -117,6 +117,11 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun deleteMe(): Resource<Unit> = tryOnline(
+		request = { userRestApi.deleteUserMe() },
+		mapper = { }
+	)
+
 	override suspend fun getFakeKeyPairFromBE(): Resource<KeyPair> = tryOnline(
 		request = { userRestApi.getTempKeyPairs() },
 		mapper = { it?.fromNetwork() }

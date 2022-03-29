@@ -1,6 +1,5 @@
 package cz.cleeevio.vexl.contacts.contactsListFragment
 
-import androidx.navigation.fragment.findNavController
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentContactsListBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -22,9 +21,10 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 		}
 		repeatScopeOnStart {
 			viewModel.uploadSuccessful.collect {
-				findNavController().navigate(
-					ContactsListFragmentDirections.proceedToFacebookContactListFragment()
-				)
+				//todo: uncomment later when FB is done
+//				findNavController().navigate(
+//					ContactsListFragmentDirections.proceedToFacebookContactListFragment()
+//				)
 			}
 		}
 	}

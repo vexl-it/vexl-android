@@ -16,7 +16,8 @@ val viewModelsModule = module {
 	single {
 		SplashViewModel(
 			encryptedPreferences = get(),
-			userRepository = get()
+			userRepository = get(),
+			contactRepository = get()
 		)
 	}
 }

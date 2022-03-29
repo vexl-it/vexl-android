@@ -7,20 +7,20 @@ import android.text.TextUtils
 import android.util.Patterns
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.entity.ContactEntity
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
+import cz.cleevio.network.request.contact.ContactUserRequest
 import cz.cleevio.repository.PhoneNumberUtils
-import cz.cleevio.repository.model.contact.Contact
-import cz.cleevio.repository.model.contact.ContactImport
-import cz.cleevio.repository.model.contact.fromDao
-import cz.cleevio.repository.model.contact.fromNetwork
+import cz.cleevio.repository.model.contact.*
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
 	private val contactApi: ContactApi,
-	private val phoneNumberUtils: PhoneNumberUtils
+	private val phoneNumberUtils: PhoneNumberUtils,
+	private val encryptedPreference: EncryptedPreferenceRepository
 ) : ContactRepository {
 
 	override fun getContacts(): List<Contact> = contactDao
@@ -120,6 +120,28 @@ class ContactRepositoryImpl constructor(
 	override suspend fun uploadAllMissingContacts(phoneNumbers: List<String>): Resource<ContactImport> = tryOnline(
 		request = { contactApi.postContactImport(ContactRequest(phoneNumbers)) },
 		mapper = { it?.fromNetwork() }
+	)
+
+	override suspend fun registerUserWithContactService(): Resource<ContactUser> = tryOnline(
+		request = {
+			contactApi.postUsers(
+				ContactUserRequest(
+					publicKey = encryptedPreference.userPublicKey,
+					hash = encryptedPreference.hash
+				)
+			)
+		},
+		mapper = { it?.fromNetwork() }
+	)
+
+	override suspend fun loadMyContactsKeys(): Resource<List<String>> = tryOnline(
+		request = { contactApi.getContactsMe() },
+		mapper = { it?.items?.map { item -> item.publicKey }.orEmpty() }
+	)
+
+	override suspend fun deleteMe(): Resource<Unit> = tryOnline(
+		request = { contactApi.deleteUserMe() },
+		mapper = { }
 	)
 
 	private fun isEmailValid(email: String): Boolean =
