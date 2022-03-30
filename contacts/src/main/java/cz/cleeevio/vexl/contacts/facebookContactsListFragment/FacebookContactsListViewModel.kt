@@ -1,11 +1,11 @@
-package cz.cleeevio.vexl.contacts.contactsListFragment
+package cz.cleeevio.vexl.contacts.facebookContactsListFragment
 
-import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.core.utils.isPhoneValid
+import com.facebook.AccessToken
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.contact.BaseContact
-import cz.cleevio.repository.model.contact.Contact
+import cz.cleevio.repository.model.contact.FacebookContact
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,45 +14,33 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
-import timber.log.Timber
 
-class ContactsListViewModel constructor(
-	private val contactRepository: ContactRepository
+
+class FacebookContactsListViewModel constructor(
+	private val contactRepository: ContactRepository,
+	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
-	private val _notSyncedContacts = MutableStateFlow<List<Contact>>(emptyList())
+	private val _notSyncedContacts = MutableStateFlow<List<FacebookContact>>(emptyList())
 	val notSyncedContacts = _notSyncedContacts.asStateFlow()
 
 	private val _uploadSuccessful = MutableSharedFlow<Boolean>()
 	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
 
-	fun checkNotSyncedContacts() {
-		viewModelScope.launch(Dispatchers.IO) {
-			val localContacts = contactRepository.getContacts()
-
-			val notSyncedContacts = contactRepository.checkAllContacts(
-				localContacts.map { contact ->
-					contact.phoneNumber
-				}.filter {
-					it.isNotBlank() && it.isPhoneValid()
-				}
+	fun loadNotSyncedFacebookContacts() {
+		AccessToken.getCurrentAccessToken()?.let {
+			loadNotSyncedFacebookContacts(
+				it.userId,
+				it.token
 			)
-
-			notSyncedContacts.data?.let { notSyncedPhoneNumbers ->
-				_notSyncedContacts.emit(localContacts.filter { contact ->
-					notSyncedPhoneNumbers.contains(contact.phoneNumber)
-				})
-			}
 		}
 	}
 
-	fun syncContacts(contentResolver: ContentResolver) {
+	private fun loadNotSyncedFacebookContacts(facebookId: String, accessToken: String) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val response = contactRepository.syncContacts(contentResolver)
-			when (response.status) {
-				is Status.Success -> {
-					checkNotSyncedContacts()
-				}
+			val response = contactRepository.getFacebookContacts(facebookId, accessToken)
+			response.data?.let {
+				_notSyncedContacts.emit(it)
 			}
 		}
 	}
@@ -68,7 +56,7 @@ class ContactsListViewModel constructor(
 
 	fun unselectAll() {
 		viewModelScope.launch {
-			val newList = ArrayList<Contact>()
+			val newList = ArrayList<FacebookContact>()
 			_notSyncedContacts.value.forEach { contact ->
 				newList.add(contact.copy().also { it.markedForUpload = false })
 			}
@@ -82,14 +70,12 @@ class ContactsListViewModel constructor(
 				_notSyncedContacts.value.filter {
 					it.markedForUpload
 				}.map {
-					it.phoneNumber
+					it.id
 				}
 			)
 			when (response.status) {
 				is Status.Success -> response.data?.let { data ->
 					_uploadSuccessful.emit(data.imported)
-					//todo: this is only debug, should be called on dashboard
-					loadAllContacts()
 				}
 				is Status.Error -> _uploadSuccessful.emit(false)
 			}
@@ -97,16 +83,4 @@ class ContactsListViewModel constructor(
 
 	}
 
-	fun loadAllContacts() {
-		viewModelScope.launch(Dispatchers.IO) {
-			val response = contactRepository.loadMyContactsKeys()
-			when (response.status) {
-				is Status.Success -> response.data?.let { data ->
-					data.forEach { publicKey ->
-						Timber.tag("ASDX").d(publicKey)
-					}
-				}
-			}
-		}
-	}
 }

@@ -3,10 +3,10 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_contacts"
-	app:startDestination="@+id/contactsWelcomeFragment">
+	app:startDestination="@+id/importContactsFragment">
 
 	<fragment
-		android:id="@+id/contactsWelcomeFragment"
+		android:id="@+id/importContactsFragment"
 		android:name="cz.cleeevio.vexl.contacts.importContactsFragment.ImportContactsFragment"
 		android:label="contactsWelcomeFragment"
 		tools:layout="@layout/fragment_import_contacts">
@@ -24,8 +24,28 @@
 		tools:layout="@layout/fragment_contacts_list">
 
 		<action
-			android:id="@+id/proceed_to_facebookContactListFragment"
-			app:destination="@id/contactsListFragment" /> <!-- TODO navigate to FB contact upload -->
+			android:id="@+id/proceed_to_importFacebookContactsFragment"
+			app:destination="@id/importFacebookContactsFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/importFacebookContactsFragment"
+		android:name="cz.cleeevio.vexl.contacts.importFacebookContactsFragment.ImportFacebookContactsFragment"
+		android:label="importFacebookContactsFragment"
+		tools:layout="@layout/fragment_import_facebook_contacts">
+
+		<action
+			android:id="@+id/proceed_to_facebookContactsListFragment"
+			app:destination="@id/facebookContactsListFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/facebookContactsListFragment"
+		android:name="cz.cleeevio.vexl.contacts.facebookContactsListFragment.FacebookContactsListFragment"
+		android:label="facebookContactsListFragment"
+		tools:layout="@layout/fragment_facebook_contacts_list">
 
 	</fragment>
 

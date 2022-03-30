@@ -14,12 +14,12 @@
 		android:layout_marginTop="100dp"
 		android:layout_marginBottom="64dp"
 		android:scaleType="fitCenter"
-		tools:src="@drawable/ic_baseline_person_128"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.RoundedComponent" />
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.RoundedComponent"
+		tools:src="@drawable/ic_baseline_person_128" />
 
 	<TextView
 		android:id="@+id/username"
@@ -37,13 +37,13 @@
 		android:id="@+id/import_contacts_title"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="51dp"
 		android:layout_marginStart="12dp"
+		android:layout_marginTop="51dp"
+		android:layout_marginEnd="8dp"
+		android:text="@string/import_facebook_contacts_title"
+		android:textAlignment="center"
 		android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
 		android:textSize="42sp"
-		android:layout_marginEnd="8dp"
-		android:text="@string/import_contacts_title"
-		android:textAlignment="center"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/username" />
@@ -69,7 +69,17 @@
 		style="@style/Widget.Vexl.Button"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/import_contacts_import"
+		android:text="@string/import_facebook_contacts_import"
+		app:layout_constraintBottom_toTopOf="@id/import_contacts_skip_btn"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/import_contacts_skip_btn"
+		style="@style/Widget.Vexl.GrayButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/import_contacts_skip"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />

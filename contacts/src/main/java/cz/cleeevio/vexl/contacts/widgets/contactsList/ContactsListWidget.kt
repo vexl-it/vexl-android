@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleeevio.vexl.contacts.databinding.WidgetContactsImportListBinding
-import cz.cleevio.repository.model.contact.Contact
+import cz.cleevio.repository.model.contact.BaseContact
 import lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
 
@@ -26,7 +26,7 @@ class ContactsListWidget @JvmOverloads constructor(
 	}
 
 	fun setupListeners(
-		onContactImportSwitched: (Contact, Boolean) -> Unit,
+		onContactImportSwitched: (BaseContact, Boolean) -> Unit,
 		onUnselectAllClicked: () -> Unit
 	) {
 		adapter = ContactsListAdapter(onContactImportSwitched)
@@ -38,7 +38,7 @@ class ContactsListWidget @JvmOverloads constructor(
 	}
 
 	fun setupData(
-		contacts: List<Contact>
+		contacts: List<BaseContact>
 	) {
 		adapter.submitList(contacts)
 	}

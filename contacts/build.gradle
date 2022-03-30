@@ -43,4 +43,6 @@ android {
 
 dependencies {
     implementation project(':core')
+
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 }

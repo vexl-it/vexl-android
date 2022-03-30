@@ -38,7 +38,7 @@ interface ContactApi {
 	suspend fun deleteUserMe(): Response<ResponseBody>
 
 	@GET("facebook/{facebookId}/token/{accessToken}")
-	suspend fun getFacebookToken(
+	suspend fun getFacebookUser(
 		@Path(value = "facebookId") facebookId: String,
 		@Path(value = "accessToken") accessToken: String
 	): Response<ContactFacebookResponse>

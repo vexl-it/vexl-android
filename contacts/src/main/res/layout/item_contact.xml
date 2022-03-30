@@ -24,14 +24,14 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		app:layout_constraintHorizontal_bias="0"
-		app:layout_constraintBottom_toTopOf="@id/contact_phone"
+		app:layout_constraintBottom_toTopOf="@id/contact_identifier"
 		app:layout_constraintEnd_toStartOf="@id/contact_import_checkbox"
 		app:layout_constraintStart_toEndOf="@id/contact_image"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="Cody Fisher" />
 
 	<TextView
-		android:id="@+id/contact_phone"
+		android:id="@+id/contact_identifier"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		app:layout_constraintHorizontal_bias="0"

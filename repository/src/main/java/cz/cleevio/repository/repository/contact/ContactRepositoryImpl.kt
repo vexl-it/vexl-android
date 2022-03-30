@@ -117,10 +117,21 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.newContacts.orEmpty() }
 	)
 
-	override suspend fun uploadAllMissingContacts(phoneNumbers: List<String>): Resource<ContactImport> = tryOnline(
-		request = { contactApi.postContactImport(ContactRequest(phoneNumbers)) },
+	override suspend fun uploadAllMissingContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
+		request = { contactApi.postContactImport(ContactRequest(identifiers)) },
 		mapper = { it?.fromNetwork() }
 	)
+
+	override suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>> {
+		return tryOnline(
+			mapper = {
+				it?.facebookUser?.friends?.map { friend ->
+					friend.fromFacebook()
+				}
+			},
+			request = { contactApi.getFacebookUser(facebookId, accessToken) }
+		)
+	}
 
 	override suspend fun registerUserWithContactService(): Resource<ContactUser> = tryOnline(
 		request = {
