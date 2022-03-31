@@ -9,9 +9,7 @@ import cz.cleevio.repository.model.contact.FacebookContact
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
@@ -21,8 +19,10 @@ class FacebookContactsListViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
-	private val _notSyncedContacts = MutableStateFlow<List<FacebookContact>>(emptyList())
-	val notSyncedContacts = _notSyncedContacts.asStateFlow()
+	private var notSyncedContactsList: List<FacebookContact> = emptyList()
+
+	private val _notSyncedContacts = MutableSharedFlow<List<FacebookContact>>(replay = 1)
+	val notSyncedContacts = _notSyncedContacts.asSharedFlow()
 
 	private val _uploadSuccessful = MutableSharedFlow<Boolean>()
 	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
@@ -40,34 +40,34 @@ class FacebookContactsListViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.getFacebookContacts(facebookId, accessToken)
 			response.data?.let {
-				_notSyncedContacts.emit(it)
+				notSyncedContactsList = it
+				emitContacts(notSyncedContactsList)
 			}
 		}
 	}
 
 	fun contactSelected(contact: BaseContact, selected: Boolean) {
 		viewModelScope.launch {
-			val lastValue = _notSyncedContacts.value
-			lastValue.find {
+			notSyncedContactsList.find {
 				contact.id == it.id
 			}?.markedForUpload = selected
+			emitContacts(notSyncedContactsList)
 		}
 	}
 
 	fun unselectAll() {
 		viewModelScope.launch {
-			val newList = ArrayList<FacebookContact>()
-			_notSyncedContacts.value.forEach { contact ->
-				newList.add(contact.copy().also { it.markedForUpload = false })
+			notSyncedContactsList.forEach { contact ->
+				contact.markedForUpload = false
 			}
-			_notSyncedContacts.emit(newList)
+			emitContacts(notSyncedContactsList)
 		}
 	}
 
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.uploadAllMissingContacts(
-				_notSyncedContacts.value.filter {
+				notSyncedContactsList.filter {
 					it.markedForUpload
 				}.map {
 					it.id
@@ -81,6 +81,15 @@ class FacebookContactsListViewModel constructor(
 			}
 		}
 
+	}
+
+	private suspend fun emitContacts(contacts: List<FacebookContact>) {
+		// Copying because of two lists with the same references :-(
+		val newList = ArrayList<FacebookContact>()
+		contacts.forEach { contact ->
+			newList.add(contact.copy())
+		}
+		_notSyncedContacts.emit(newList)
 	}
 
 }

@@ -18,7 +18,7 @@ class ContactsListViewModel constructor(
 	private val contactRepository: ContactRepository
 ) : BaseViewModel() {
 
-	private var notSyncedContactsTmp: List<Contact> = emptyList()
+	private var notSyncedContactsList: List<Contact> = emptyList()
 
 	private val _notSyncedContacts = MutableSharedFlow<List<Contact>>(replay = 1)
 	val notSyncedContacts = _notSyncedContacts.asSharedFlow()
@@ -39,10 +39,10 @@ class ContactsListViewModel constructor(
 			)
 
 			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
-				notSyncedContactsTmp = localContacts.filter { contact ->
+				notSyncedContactsList = localContacts.filter { contact ->
 					notSyncedPhoneNumbers.contains(contact.phoneNumber)
 				}
-				_notSyncedContacts.emit(notSyncedContactsTmp)
+				emitContacts(notSyncedContactsList)
 			}
 		}
 	}
@@ -60,25 +60,26 @@ class ContactsListViewModel constructor(
 
 	fun contactSelected(contact: BaseContact, selected: Boolean) {
 		viewModelScope.launch {
-			notSyncedContactsTmp.find {
+			notSyncedContactsList.find {
 				contact.id == it.id
 			}?.markedForUpload = selected
+			emitContacts(notSyncedContactsList)
 		}
 	}
 
 	fun unselectAll() {
 		viewModelScope.launch {
-			notSyncedContactsTmp.forEach {
-				it.markedForUpload = false
+			notSyncedContactsList.forEach { contact ->
+				contact.markedForUpload = false
 			}
-			_notSyncedContacts.emit(ArrayList(notSyncedContactsTmp))
+			emitContacts(notSyncedContactsList)
 		}
 	}
 
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.uploadAllMissingContacts(
-				notSyncedContactsTmp.filter {
+				notSyncedContactsList.filter {
 					it.markedForUpload
 				}.map {
 					it.phoneNumber
@@ -107,5 +108,14 @@ class ContactsListViewModel constructor(
 				}
 			}
 		}
+	}
+
+	private suspend fun emitContacts(contacts: List<Contact>) {
+		// Copying because of two lists with the same references :-(
+		val newList = ArrayList<Contact>()
+		contacts.forEach { contact ->
+			newList.add(contact.copy())
+		}
+		_notSyncedContacts.emit(newList)
 	}
 }
