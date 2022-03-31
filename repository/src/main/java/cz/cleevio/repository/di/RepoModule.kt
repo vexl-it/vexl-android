@@ -3,6 +3,8 @@ package cz.cleevio.repository.di
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.contact.ContactRepositoryImpl
+import cz.cleevio.repository.repository.offer.OfferRepository
+import cz.cleevio.repository.repository.offer.OfferRepositoryImpl
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.repository.repository.user.UserRepositoryImpl
 import org.koin.dsl.module
@@ -14,6 +16,13 @@ val repoModule = module {
 			userDao = get(),
 			encryptedPreference = get(),
 			userRestApi = get()
+		)
+	}
+
+	single<OfferRepository> {
+		OfferRepositoryImpl(
+			encryptedPreference = get(),
+			offerApi = get()
 		)
 	}
 
