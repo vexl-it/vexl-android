@@ -18,7 +18,7 @@ val viewModelsModule = module {
 			encryptedPreferences = get(),
 			userRepository = get(),
 			contactRepository = get(),
-			navMainGraphModel = get(),
+			navMainGraphModel = get()
 		)
 	}
 }

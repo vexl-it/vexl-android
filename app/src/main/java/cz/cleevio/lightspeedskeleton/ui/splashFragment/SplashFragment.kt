@@ -1,11 +1,9 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
-import androidx.lifecycle.coroutineScope
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.lightspeedskeleton.R
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -23,13 +21,11 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			viewModel.userFlow.collect { user ->
 
 				if (user != null) {
-					lifecycle.coroutineScope.launch {
 						Timber.i("Navigating to marketplace")
 						delay(SPLASH_DELAY)
 						viewModel.navMainGraphModel.navigateToGraph(
 							NavMainGraphModel.NavGraph.Marketplace
 						)
-					}
 				} else {
 					//debug: delete previous user, load new keys, continue to onboarding
 					viewModel.deletePreviousUserAndLoadKeys()
@@ -40,13 +36,11 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		repeatScopeOnStart {
 			viewModel.keysLoaded.collect { success ->
 				if (success) {
-					lifecycle.coroutineScope.launch {
-						Timber.i("Navigating to onboarding")
-						delay(SPLASH_DELAY)
-						viewModel.navMainGraphModel.navigateToGraph(
-							NavMainGraphModel.NavGraph.Onboarding
-						)
-					}
+					Timber.i("Navigating to onboarding")
+					delay(SPLASH_DELAY)
+					viewModel.navMainGraphModel.navigateToGraph(
+						NavMainGraphModel.NavGraph.Onboarding
+					)
 				} else {
 					//todo: inform user, or try again, or something
 				}
