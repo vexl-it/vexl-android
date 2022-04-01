@@ -4,7 +4,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class OfferUnifiedResponse constructor(
-	val id: Long,    //offerId
+	val id: Long,
 	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,

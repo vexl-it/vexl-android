@@ -22,7 +22,8 @@ interface OfferApi {
 
 	@GET("offers/{offerId}")
 	suspend fun getOffersId(
-		@Path(value = "offerId") offerId: String    //todo: BE will probably change this EP to support multiple IDs in single request
+		//todo: BE will probably change this EP to support multiple IDs in single request
+		@Path(value = "offerId") offerId: String
 	): Response<OfferUnifiedResponse>
 
 	@DELETE("offers/{offerId}")
@@ -31,5 +32,6 @@ interface OfferApi {
 	): Response<ResponseBody>
 
 	@GET("offers/me")
-	suspend fun getOffersMe(): Response<BasePagedResponse<OfferUnifiedResponse>>    //todo: BE will probably support filters on this EP
+	//todo: BE will probably support filters on this EP
+	suspend fun getOffersMe(): Response<BasePagedResponse<OfferUnifiedResponse>>
 }

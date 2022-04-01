@@ -34,7 +34,8 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun loadOffersCreatedByMe(offerIds: List<Long>): Resource<List<Offer>> = tryOnline(
 		request = {
-			offerApi.getOffersId(offerId = offerIds.first().toString())    //todo: change to sending list of strings, as soon as BE changes API
+			//todo: change to sending list of strings, as soon as BE changes API
+			offerApi.getOffersId(offerId = offerIds.first().toString())
 		},
 		mapper = { item -> item?.let { listOf(it.fromNetwork()) } ?: emptyList() }
 	)
