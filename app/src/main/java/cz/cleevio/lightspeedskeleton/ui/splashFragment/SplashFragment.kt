@@ -16,7 +16,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
 	override val viewModel by viewModel<SplashViewModel>()
 
-	override fun initView() {}
+	override fun initView() = Unit
 
 	override fun bindObservers() {
 		repeatScopeOnStart {

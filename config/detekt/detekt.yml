@@ -716,7 +716,7 @@ style:
   OptionalUnit:
     active: true
   OptionalWhenBraces:
-    active: true
+    active: false
   PreferToOverPairSyntax:
     active: true
   ProtectedMemberInFinalClass:
