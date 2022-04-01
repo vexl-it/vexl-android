@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/name_wrapper"
+		style="@style/Widget.Vexl.CardView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginTop="20dp"
+		app:layout_constraintBottom_toTopOf="@id/continue_btn"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_chainStyle="spread_inside">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/parent"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<TextView
+				android:id="@+id/name_name_title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="20dp"
+				android:text="What do your friends call you?"
+				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
+				android:textSize="42sp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<TextView
+				android:id="@+id/name_name_description"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="20dp"
+				android:layout_marginTop="28dp"
+				android:drawableStart="@drawable/ic_eye"
+				android:drawablePadding="10dp"
+				android:drawableTint="@color/black"
+				android:text="Nobody will see your name until you allow it"
+				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
+				android:textSize="16sp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/name_name_title" />
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/name_name_input"
+				style="@style/Widget.Vexl.EditText"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="24dp"
+				android:imeOptions="actionDone"
+				android:inputType="text"
+				android:maxLines="1"
+				android:textColor="@color/black"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/name_name_description"
+				tools:text="Ondrasek" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</com.google.android.material.card.MaterialCardView>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/continue_btn"
+		style="@style/Widget.Vexl.Button"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:text="Continue"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/name_wrapper" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

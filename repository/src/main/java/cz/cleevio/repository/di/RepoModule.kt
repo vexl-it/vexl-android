@@ -21,7 +21,6 @@ val repoModule = module {
 
 	single<OfferRepository> {
 		OfferRepositoryImpl(
-			encryptedPreference = get(),
 			offerApi = get()
 		)
 	}

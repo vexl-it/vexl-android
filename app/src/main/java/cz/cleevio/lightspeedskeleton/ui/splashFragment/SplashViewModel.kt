@@ -2,6 +2,7 @@ package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.user.KeyPair
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -15,14 +16,17 @@ import lightbase.core.baseClasses.BaseViewModel
 class SplashViewModel constructor(
 	private val encryptedPreferences: EncryptedPreferenceRepository,
 	private val userRepository: UserRepository,
-	private val contactRepository: ContactRepository
+	private val contactRepository: ContactRepository,
+	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
 	private val _keysLoaded = MutableSharedFlow<Boolean>(replay = 1)
 	val keysLoaded = _keysLoaded.asSharedFlow()
 
+	val userFlow = userRepository.getUserFlow()
+
 	//debug
-	fun deletePreviousUser() {
+	fun deletePreviousUserAndLoadKeys() {
 		viewModelScope.launch(Dispatchers.IO) {
 			userRepository.deleteMe()
 
@@ -34,7 +38,7 @@ class SplashViewModel constructor(
 	}
 
 	//debug
-	fun resetKeys() {
+	private fun resetKeys() {
 		encryptedPreferences.userPrivateKey = ""
 		encryptedPreferences.userPublicKey = ""
 		encryptedPreferences.hash = ""
