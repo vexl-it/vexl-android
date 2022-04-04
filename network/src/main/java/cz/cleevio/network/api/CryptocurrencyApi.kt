@@ -11,5 +11,4 @@ interface CryptocurrencyApi {
 	suspend fun getCryptocurrencyPrice(
 		@Path(value = "coin") coin: String,
 	): Response<CryptoCurrenciesResponse>
-
 }

@@ -17,7 +17,5 @@ class CryptoCurrencyRepositoryImpl constructor(
 			},
 			request = { cryptocurrencyApi.getCryptocurrencyPrice(crypto) }
 		)
-
 	}
-
 }

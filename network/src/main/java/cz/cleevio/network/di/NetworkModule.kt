@@ -6,8 +6,8 @@ import cz.cleevio.network.adapters.BigDecimalAdapter
 import cz.cleevio.network.agent.UserAgent
 import cz.cleevio.network.agent.UserAgentImpl
 import cz.cleevio.network.api.ContactApi
-import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.api.CryptocurrencyApi
+import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.cache.NetworkCache
 import cz.cleevio.network.cache.NetworkCacheImpl
