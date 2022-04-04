@@ -3,9 +3,9 @@ package cz.cleeevio.vexl.marketplace.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.WidgetCurrencyPriceChartBinding
-import cz.cleevio.core.utils.showOrGone
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
@@ -56,8 +56,8 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	}
 
 	private fun packView(packed: Boolean) {
-		binding.packedGroup.showOrGone(packed)
-		binding.unpackedGroup.showOrGone(!packed)
+		binding.packedGroup.isVisible = packed
+		binding.unpackedGroup.isVisible = !packed
 	}
 
 }
