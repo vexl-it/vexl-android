@@ -52,4 +52,6 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$corountines"
 
     api "com.googlecode.libphonenumber:libphonenumber:8.12.45"
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar"
 }
