@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'koin'
-    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.min_sdk_version
         targetSdkVersion rootProject.ext.target_sdk_version
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     flavorDimensions "environment"
@@ -32,26 +32,15 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
-        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 
 dependencies {
-    api project(':network')
-    api project(':cache')
-    api project(':resources')
-
-    implementation "com.jakewharton.timber:timber:$timber"
-
-    api "io.insert-koin:koin-core:$koin"
-    api "io.insert-koin:koin-android:$koin"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$corountines"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$corountines"
-
-    api "com.googlecode.libphonenumber:libphonenumber:8.12.45"
-
-    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar"
+    implementation project(':core')
 }

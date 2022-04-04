@@ -136,6 +136,7 @@ dependencies {
     implementation project(':onboarding')
     implementation project(':contacts')
     implementation project(':profile')
+    implementation project(':marketplace')
 
     implementation platform('com.google.firebase:firebase-bom:26.4.0')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
@@ -146,5 +147,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar"
 }

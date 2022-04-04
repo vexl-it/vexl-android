@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/wrapper"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/text_color_cryptocurrency_background">
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/packed_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="visible"
+			app:constraint_referenced_ids="small_chart"
+			tools:visibility="gone" />
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/unpacked_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, price_chart_period_radiogroup"
+			tools:visibility="visible" />
+
+		<ImageView
+			android:id="@+id/small_chart"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/chart"
+			android:visibility="gone"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/currency_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/marketplace_currency_bitcoin"
+			app:layout_constraintBottom_toTopOf="@id/crypto_change_percentage"
+			app:layout_constraintStart_toStartOf="parent" />
+
+		<TextView
+			android:id="@+id/crypto_change_percentage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableStart="@drawable/ic_arrow_up"
+			android:drawablePadding="2.5dp"
+			app:layout_constraintBottom_toTopOf="@id/chart_barrier"
+			app:layout_constraintStart_toStartOf="parent"
+			tools:text="2.5% today" />
+
+		<TextView
+			android:id="@+id/currency"
+			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyCurrency"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="$"
+			app:layout_constraintEnd_toStartOf="@id/current_price"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/current_price"
+			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyPrice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:layout_constraintBottom_toTopOf="@id/chart_barrier"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="31241" />
+
+		<androidx.constraintlayout.widget.Barrier
+			android:id="@+id/chart_barrier"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:barrierDirection="bottom"
+			app:constraint_referenced_ids="current_price, crypto_change_percentage" />
+
+		<ImageView
+			android:id="@+id/large_chart"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/large_chart"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/chart_barrier" />
+
+		<View
+			android:id="@+id/chart_divider"
+			style="@style/Widget.Cleevio.Marketplace.CurrencyHorizontalDivider"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="12dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/large_chart" />
+
+		<RadioGroup
+			android:id="@+id/price_chart_period_radiogroup"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginBottom="10dp"
+			android:orientation="horizontal"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/chart_divider">
+
+			<RadioButton
+				android:id="@+id/period_1_day"
+				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/currency_period_radio_selector"
+				android:button="@android:color/transparent"
+				android:checked="true"
+				android:text="@string/marketplace_currency_1_day" />
+
+			<RadioButton
+				android:id="@+id/period_1_week"
+				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/currency_period_radio_selector"
+				android:button="@android:color/transparent"
+				android:text="@string/marketplace_currency_1_week" />
+
+			<RadioButton
+				android:id="@+id/period_1_month"
+				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/currency_period_radio_selector"
+				android:button="@android:color/transparent"
+				android:text="@string/marketplace_currency_1_month" />
+
+			<RadioButton
+				android:id="@+id/period_3_month"
+				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/currency_period_radio_selector"
+				android:button="@android:color/transparent"
+				android:text="@string/marketplace_currency_3_month" />
+
+			<RadioButton
+				android:id="@+id/period_6_month"
+				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/currency_period_radio_selector"
+				android:button="@android:color/transparent"
+				android:text="@string/marketplace_currency_6_month" />
+
+			<RadioButton
+				android:id="@+id/period_1_year"
+				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/currency_period_radio_selector"
+				android:button="@android:color/transparent"
+				android:text="@string/marketplace_currency_1_year" />
+
+		</RadioGroup>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

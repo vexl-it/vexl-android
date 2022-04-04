@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_marketplace"
+	app:startDestination="@+id/marketplaceFragment">
+
+	<fragment
+		android:id="@+id/marketplaceFragment"
+		android:name="cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment"
+		android:label="marketplaceFragment"
+		tools:layout="@layout/fragment_marketplace">
+
+	</fragment>
+
+</navigation>

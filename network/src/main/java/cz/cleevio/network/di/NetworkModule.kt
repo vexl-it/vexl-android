@@ -2,9 +2,11 @@ package cz.cleevio.network.di
 
 import com.squareup.moshi.Moshi
 import cz.cleevio.network.*
+import cz.cleevio.network.adapters.BigDecimalAdapter
 import cz.cleevio.network.agent.UserAgent
 import cz.cleevio.network.agent.UserAgentImpl
 import cz.cleevio.network.api.ContactApi
+import cz.cleevio.network.api.CryptocurrencyApi
 import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.cache.NetworkCache
@@ -120,6 +122,19 @@ val networkModule = module {
 	}
 
 	single {
+		provideRetrofit(
+			scope = this,
+			interceptors = listOf(
+				get(named(AUTH_INTERCEPTOR)),
+				get(named(NETWORK_INTERCEPTOR)),
+				get(named(HTTP_LOGGING_INTERCEPTOR))
+			),
+			tokenAuthenticator = get(),
+			baseUrl = USER_API_BASE_URL
+		).create(CryptocurrencyApi::class.java)
+	}
+
+	single {
 		OkHttpClient.Builder()
 			.addInterceptor(get<NetworkInterceptor>())
 			.authenticator(get<TokenAuthenticator>())
@@ -151,7 +166,10 @@ val networkModule = module {
 	}
 
 	single {
-		Moshi.Builder().build()
+		Moshi
+			.Builder()
+			.add(BigDecimalAdapter)
+			.build()
 	}
 
 	single<LanguageTracker> {

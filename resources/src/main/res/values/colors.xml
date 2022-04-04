@@ -34,6 +34,9 @@
 	<color name="grey_dark">#3C3C43</color>
 	<color name="grey_light">#EBEBF5</color>
 	<color name="blue_light">#C3C3FF</color>
+	<color name="some_kind_of_green">#80C8FFC3</color>
+	<color name="some_another_kind_of_green">#4E6652</color>
+	<color name="green_2">#678061</color>
 
 	<!-- PIN -->
 	<color name="pin_bubble_color">@color/gray_20</color>
@@ -85,4 +88,6 @@
 	<color name="text_color_text_input_hint">@color/root_text_color</color>
 	<color name="text_color_text_input_placeholder">@color/root_text_color</color>
 	<color name="text_color_date_picker">@color/root_text_color</color>
+	<color name="text_color_cryptocurrency_price">@color/some_kind_of_green</color>
+	<color name="text_color_cryptocurrency_background">@color/some_another_kind_of_green</color>
 </resources>
