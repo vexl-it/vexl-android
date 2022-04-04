@@ -36,6 +36,7 @@
 	<color name="blue_light">#C3C3FF</color>
 	<color name="some_kind_of_green">#80C8FFC3</color>
 	<color name="some_another_kind_of_green">#4E6652</color>
+	<color name="green_2">#678061</color>
 
 	<!-- PIN -->
 	<color name="pin_bubble_color">@color/gray_20</color>

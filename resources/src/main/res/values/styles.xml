@@ -326,5 +326,19 @@
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.Marketplace.CryptocurrencyCurrency</item>
 	</style>
 
+	<style name="Widget.Cleevio.Vexl.HorizontalDivider" parent="">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">1dp</item>
+	</style>
+
+	<style name="Widget.Cleevio.Vexl.VerticalDivider" parent="">
+		<item name="android:layout_width">1dp</item>
+		<item name="android:layout_height">match_parent</item>
+	</style>
+
+	<style name="Widget.Cleevio.Marketplace.CurrencyHorizontalDivider" parent="Widget.Cleevio.Vexl.HorizontalDivider">
+		<item name="android:background">@color/green_2</item>
+	</style>
+
 
 </resources>
