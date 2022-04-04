@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/text_color_cryptocurrency_background">
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/packed"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:constraint_referenced_ids="small_chart" />
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/unpacked"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			app:constraint_referenced_ids="" />
+
+		<ImageView
+			android:id="@+id/small_chart"
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:src="@drawable/chart"
+			android:visibility="gone"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/currency"
+			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyCurrency"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="$"
+			app:layout_constraintEnd_toStartOf="@id/current_price"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/current_price"
+			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyPrice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="31241" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

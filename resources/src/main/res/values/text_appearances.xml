@@ -225,4 +225,17 @@
 		<item name="lineHeight">26dp</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Marketplace.CryptocurrencyPrice" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:textSize">42sp</item>
+		<item name="android:textColor">@color/text_color_cryptocurrency_price</item>
+		<item name="android:textStyle">bold</item>
+		<item name="lineHeight">41sp</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.CryptocurrencyCurrency" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:textSize">11sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">43sp</item>
+	</style>
+
 </resources>

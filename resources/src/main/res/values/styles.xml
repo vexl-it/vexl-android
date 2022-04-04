@@ -318,4 +318,13 @@
 		<item name="android:background">#EEEEEE</item>
 	</style>
 
+	<style name="Widget.Cleevio.Marketplace.TextView.CryptocurrencyPrice" parent="">
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Marketplace.CryptocurrencyPrice</item>
+	</style>
+
+	<style name="Widget.Cleevio.Marketplace.TextView.CryptocurrencyCurrency" parent="">
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Marketplace.CryptocurrencyCurrency</item>
+	</style>
+
+
 </resources>
