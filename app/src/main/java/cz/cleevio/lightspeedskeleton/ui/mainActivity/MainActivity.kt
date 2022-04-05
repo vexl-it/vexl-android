@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 						NavMainGraphModel.NavGraph.Marketplace -> navController.safeNavigateWithTransition(
 							NavMainDirections.actionGlobalToMarketplace()
 						)
+						NavMainGraphModel.NavGraph.Chat -> TODO()
 						NavMainGraphModel.NavGraph.Profile -> navController.safeNavigateWithTransition(
 							NavMainDirections.actionGlobalToProfile()
 						)
