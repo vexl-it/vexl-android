@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="ProfileRow">
+		<attr name="title" format="string" />
+		<attr name="subtitle" format="string" />
+		<attr name="icon" format="reference" />
+		<attr name="line_visibility" format="boolean" />
+	</declare-styleable>
+</resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="background">@color/grey_light</color>
-	<color name="surface">@color/grey_light</color>
+	<color name="background">@color/black</color>
+	<color name="surface">@color/black</color>
 	<color name="primary">@color/blue_light</color>
 	<color name="primary_dark">@color/dark_yellow</color>
 	<color name="secondary">@color/carbon</color>
@@ -17,11 +17,14 @@
 	<color name="navigation_bar">#000000</color>
 	<color name="button">@color/blue_light</color>
 	<color name="black_button">@color/black</color>
-	<color name="gray_button">@color/grey_darker</color>
+	<color name="gray_button">@color/gray_1</color>
 	<color name="edit_border">#AFAFAF</color>
 
 	<color name="black">#000000</color>
 	<color name="white">#FFFFFF</color>
+	<color name="gray_1">#262626</color>
+	<color name="gray_3">#AFAFAF</color>
+	<color name="gray_4">#EEEEEE</color>
 	<color name="yellow">#FEC527</color>
 	<color name="dark_yellow">#C1961F</color>
 	<color name="carbon">#1C252B</color>
@@ -30,7 +33,6 @@
 	<color name="purity">#9DCECA</color>
 	<color name="error">#FF3B30</color>
 	<color name="gray">#CFD2D3</color>
-	<color name="grey_darker">#262626</color>
 	<color name="grey_dark">#3C3C43</color>
 	<color name="grey_light">#EBEBF5</color>
 	<color name="blue_light">#C3C3FF</color>

@@ -39,4 +39,12 @@ class OfferRepositoryImpl constructor(
 		},
 		mapper = { item -> item?.let { listOf(it.fromNetwork()) } ?: emptyList() }
 	)
+
+	override suspend fun deleteMyOffers(offerIds: List<Long>): Resource<Unit> = tryOnline(
+		request = {
+			//todo: change to sending list of strings, as soon as BE changes API
+			offerApi.deleteOffersId(offerId = offerIds.first().toString())
+		},
+		mapper = { }
+	)
 }

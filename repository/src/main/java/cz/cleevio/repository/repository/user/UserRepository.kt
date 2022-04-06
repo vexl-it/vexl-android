@@ -13,6 +13,8 @@ interface UserRepository {
 
 	suspend fun authStepThree(signature: String): Resource<Signature>
 
+	suspend fun registerFacebookUser(facebookId: String): Resource<Signature>
+
 	//----------------------------------
 	fun getUserFlow(): Flow<User?>
 

@@ -28,6 +28,7 @@ interface OfferApi {
 
 	@DELETE("offers/{offerId}")
 	suspend fun deleteOffersId(
+		//todo: BE will probably change this EP to support multiple IDs in single request
 		@Path(value = "offerId") offerId: String
 	): Response<ResponseBody>
 

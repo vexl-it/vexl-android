@@ -59,6 +59,9 @@ class MainActivity : AppCompatActivity() {
 						NavMainGraphModel.NavGraph.Marketplace -> navController.safeNavigateWithTransition(
 							NavMainDirections.actionGlobalToMarketplace()
 						)
+						NavMainGraphModel.NavGraph.Profile -> navController.safeNavigateWithTransition(
+							NavMainDirections.actionGlobalToProfile()
+						)
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-package cz.cleeevio.vexl.marketplace.widgets
+package cz.cleevio.core.widget
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.network.data.Status
@@ -31,5 +31,4 @@ class CurrencyPriceChartViewModel constructor(
 			}
 		}
 	}
-
 }

@@ -17,6 +17,8 @@
 
 	<include app:graph="@navigation/nav_marketplace" />
 
+	<include app:graph="@navigation/nav_profile" />
+
 	<fragment
 		android:id="@+id/pinFragment"
 		android:name="cz.cleevio.pin.PinFragment"
@@ -125,6 +127,12 @@
 		android:id="@+id/action_global_to_marketplace"
 		app:destination="@id/nav_marketplace"
 		app:popUpTo="@id/nav_marketplace"
+		app:popUpToInclusive="true" />
+
+	<action
+		android:id="@+id/action_global_to_profile"
+		app:destination="@id/nav_profile"
+		app:popUpTo="@id/nav_profile"
 		app:popUpToInclusive="true" />
 
 </navigation>

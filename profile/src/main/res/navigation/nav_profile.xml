@@ -9,8 +9,8 @@
 
 	<fragment
 		android:id="@+id/profileFragment"
-		android:name="cz.cleeevio.profile.profileFragment.ProfileFragment"
-		android:label="TermsFragment"
+		android:name="cz.cleevio.profile.profileFragment.ProfileFragment"
+		android:label="ProfileFragment"
 		tools:layout="@layout/fragment_profile">
 
 	</fragment>
