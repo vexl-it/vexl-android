@@ -46,6 +46,14 @@
     <!-- Errors -->
 
     <!-- Profile -->
+    <string name="profile_change_picture">Change profile picture</string>
+    <string name="profile_edit_name">Edit name</string>
+    <string name="profile_pin">Set PIN / FaceID</string>
+    <string name="profile_import_contacts">Contacts Imported</string>
+    <string name="profile_import_contacts_subtitle">%s friends</string>
+    <string name="profile_import_facebook">Import Facebook</string>
+    <string name="profile_request_data">Request known data</string>
+    <string name="profile_logout">Log out</string>
 
     <!-- Marketplace -->
     <string name="marketplace_currency_bitcoin">Bitcoin</string>
@@ -55,4 +63,9 @@
     <string name="marketplace_currency_3_month">3 mth</string>
     <string name="marketplace_currency_6_month">6 mth</string>
     <string name="marketplace_currency_1_year">1 year</string>
+
+    <!-- Menu -->
+    <string name="menu_marketplace">Marketplace</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_profile">Profile</string>
 </resources>

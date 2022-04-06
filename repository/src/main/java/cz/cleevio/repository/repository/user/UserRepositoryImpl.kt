@@ -60,6 +60,17 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun registerFacebookUser(facebookId: String): Resource<Signature> = tryOnline(
+		request = { userRestApi.getUserSignatureFacebook(facebookId = facebookId) },
+		mapper = { it?.fromNetwork() },
+		doOnSuccess = {
+			it?.let { data ->
+				encryptedPreference.facebookHash = data.hash
+				encryptedPreference.facebookSignature = data.signature
+			}
+		}
+	)
+
 	override fun getUserFlow(): Flow<User?> = userDao.getUserFlow().map { it?.fromDao() }
 
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified

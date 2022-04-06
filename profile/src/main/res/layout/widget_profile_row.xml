@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/white"
+	tools:parentTag="androidx.cardview.widget.CardView">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<ImageView
+			android:id="@+id/profile_row_icon"
+			android:layout_width="24dp"
+			android:layout_height="24dp"
+			android:layout_marginStart="24dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginBottom="20dp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" />
+
+		<TextView
+			android:id="@+id/profile_row_title"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:lines="1"
+			android:textSize="18sp"
+			android:textColor="@color/gray_4"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/profile_row_subtitle"
+			app:layout_constraintStart_toEndOf="@id/profile_row_icon"
+			app:layout_constraintEnd_toEndOf="parent"
+			tools:text="Contacts Imported" />
+
+		<TextView
+			android:id="@+id/profile_row_subtitle"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:lines="1"
+			android:textSize="12sp"
+			android:textColor="@color/gray_3"
+			app:layout_constraintTop_toBottomOf="@id/profile_row_title"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/profile_row_icon"
+			app:layout_constraintEnd_toEndOf="parent"
+			tools:text="35 friends" />
+
+		<View
+			android:id="@+id/profile_row_line"
+			android:layout_width="0dp"
+			android:layout_height="1dp"
+			android:layout_marginHorizontal="24dp"
+			android:background="@color/gray_1"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

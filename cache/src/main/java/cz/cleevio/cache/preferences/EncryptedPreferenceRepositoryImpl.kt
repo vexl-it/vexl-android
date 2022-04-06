@@ -51,6 +51,18 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putStringToEP(KEY_HASH, value)
 		}
 
+	override var facebookSignature: String
+		get() = getStringFromEP(KEY_USER_FACEBOOK_SIGNATURE, "")
+		set(value) {
+			putStringToEP(KEY_USER_FACEBOOK_SIGNATURE, value)
+		}
+
+	override var facebookHash: String
+		get() = getStringFromEP(KEY_FACEBOOK_HASH, "")
+		set(value) {
+			putStringToEP(KEY_FACEBOOK_HASH, value)
+		}
+
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()
 
@@ -91,5 +103,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_USER_PRIVATE_KEY = "user_private_key"
 		private const val KEY_USER_SIGNATURE = "user_signature"
 		private const val KEY_HASH = "hash"
+		private const val KEY_USER_FACEBOOK_SIGNATURE = "user_facebook_signature"
+		private const val KEY_FACEBOOK_HASH = "facebook_hash"
 	}
 }

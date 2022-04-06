@@ -4,7 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_height="match_parent">
 
-	<cz.cleeevio.vexl.marketplace.widgets.CurrencyPriceChartWidget
+	<cz.cleevio.core.widget.CurrencyPriceChartWidget
 		android:id="@+id/price_chart"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
