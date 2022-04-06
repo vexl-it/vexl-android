@@ -2,7 +2,6 @@ package cz.cleeevio.vexl.marketplace.marketplaceFragment
 
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentMarketplaceBinding
-import cz.cleeevio.vexl.marketplace.widgets.CurrencyPriceChartViewModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
