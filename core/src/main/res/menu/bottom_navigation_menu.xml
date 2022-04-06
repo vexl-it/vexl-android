@@ -11,7 +11,7 @@
 		android:icon="@drawable/ic_chat"
 		android:title="@string/menu_chat" />
 	<item
-		android:id="@+id/nav_user"
+		android:id="@+id/nav_profile"
 		android:enabled="true"
 		android:icon="@drawable/ic_user"
 		android:title="@string/menu_profile" />
