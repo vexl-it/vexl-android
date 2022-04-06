@@ -9,7 +9,6 @@ val viewModelsModule = module {
 	single {
 		MainViewModel(
 			navMainGraphModel = get(),
-			userRepository = get()
 		)
 	}
 

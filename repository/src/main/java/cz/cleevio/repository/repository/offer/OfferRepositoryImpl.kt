@@ -45,6 +45,6 @@ class OfferRepositoryImpl constructor(
 			//todo: change to sending list of strings, as soon as BE changes API
 			offerApi.deleteOffersId(offerId = offerIds.first().toString())
 		},
-		mapper = { Unit }
+		mapper = { }
 	)
 }
