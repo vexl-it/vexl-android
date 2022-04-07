@@ -3,22 +3,25 @@ package cz.cleevio.lightspeedskeleton.ui.mainActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
 import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.core.utils.safeNavigateWithTransition
-import cz.cleevio.lightspeedskeleton.NavMainDirections
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.network.NetworkError
+import cz.cleevio.profile.profileFragment.ProfileFragment
 import kotlinx.coroutines.launch
 import lightbase.core.extensions.showSnackbar
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
 	private lateinit var binding: ActivityMainBinding
 	private val viewModel by inject<MainViewModel>()
@@ -42,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 			R.id.navHostFragment
 		) as NavHostFragment
 		navController = navHostFragment.navController
+		navController.addOnDestinationChangedListener(this)
+
+		binding.bottomNavigation.setupWithNavController(navController)
 	}
 
 	private fun bindObservers() {
@@ -50,18 +56,27 @@ class MainActivity : AppCompatActivity() {
 				viewModel.navGraphFlow.collect {
 					when (it) {
 						NavMainGraphModel.NavGraph.EmptyState -> Unit
-						NavMainGraphModel.NavGraph.Contacts -> navController.safeNavigateWithTransition(
-							NavMainDirections.actionGlobalToContacts()
-						)
-						NavMainGraphModel.NavGraph.Onboarding -> navController.safeNavigateWithTransition(
-							NavMainDirections.actionGlobalToOnboarding()
-						)
-						NavMainGraphModel.NavGraph.Marketplace -> navController.safeNavigateWithTransition(
-							NavMainDirections.actionGlobalToMarketplace()
-						)
-						NavMainGraphModel.NavGraph.Profile -> navController.safeNavigateWithTransition(
-							NavMainDirections.actionGlobalToProfile()
-						)
+						NavMainGraphModel.NavGraph.Contacts ->
+							navController.setGraph(
+								R.navigation.nav_contacts
+							)
+						NavMainGraphModel.NavGraph.Main ->
+							navController.setGraph(
+								R.navigation.nav_bottom_navigation
+							)
+						NavMainGraphModel.NavGraph.Onboarding ->
+							navController.setGraph(
+								R.navigation.nav_onboarding
+							)
+						NavMainGraphModel.NavGraph.Marketplace ->
+							navController.setGraph(
+								R.navigation.nav_marketplace
+							)
+						NavMainGraphModel.NavGraph.Chat -> TODO()
+						NavMainGraphModel.NavGraph.Profile ->
+							navController.setGraph(
+								R.navigation.nav_profile
+							)
 					}
 				}
 			}
@@ -80,6 +95,16 @@ class MainActivity : AppCompatActivity() {
 					}
 				}
 			}
+		}
+	}
+
+	override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+		when (destination.label) {
+			MarketplaceFragment::class.java.simpleName,
+			ProfileFragment::class.java.simpleName ->
+				binding.bottomNavigation.isVisible = true
+			else ->
+				binding.bottomNavigation.isVisible = false
 		}
 	}
 }

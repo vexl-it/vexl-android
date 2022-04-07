@@ -8,7 +8,7 @@
 	<fragment
 		android:id="@+id/marketplaceFragment"
 		android:name="cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment"
-		android:label="marketplaceFragment"
+		android:label="MarketplaceFragment"
 		tools:layout="@layout/fragment_marketplace">
 
 	</fragment>

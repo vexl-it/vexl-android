@@ -43,7 +43,7 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 		}
 		binding.importContactsSkipBtn.setOnClickListener {
 			viewModel.navMainGraphModel.navigateToGraph(
-				NavMainGraphModel.NavGraph.Marketplace
+				NavMainGraphModel.NavGraph.Main
 			)
 		}
 	}

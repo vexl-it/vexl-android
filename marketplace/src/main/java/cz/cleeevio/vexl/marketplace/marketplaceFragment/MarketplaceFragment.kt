@@ -13,6 +13,7 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 
 	private val binding by viewBinding(FragmentMarketplaceBinding::bind)
 	override val viewModel by viewModel<CurrencyPriceChartViewModel>()
+	private val marketplaceViewModel by viewModel<MarketplaceViewModel>()
 
 	override fun bindObservers() {
 		repeatScopeOnStart {

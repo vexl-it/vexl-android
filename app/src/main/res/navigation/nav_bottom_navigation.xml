@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/nav_bottom_navigation"
+	app:startDestination="@id/nav_marketplace">
+
+	<include app:graph="@navigation/nav_marketplace" />
+	<!--	<include app:graph="@navigation/nav_shopping_cart" /> &lt;!&ndash; TODO chat &ndash;&gt;-->
+	<include app:graph="@navigation/nav_profile" />
+
+</navigation>
