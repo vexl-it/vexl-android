@@ -24,7 +24,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 						Timber.i("Navigating to marketplace")
 						delay(SPLASH_DELAY)
 						viewModel.navMainGraphModel.navigateToGraph(
-							NavMainGraphModel.NavGraph.Marketplace
+							NavMainGraphModel.NavGraph.Main
 						)
 				} else {
 					//debug: delete previous user, load new keys, continue to onboarding

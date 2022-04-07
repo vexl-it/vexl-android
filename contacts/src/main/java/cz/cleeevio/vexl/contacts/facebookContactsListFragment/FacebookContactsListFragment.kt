@@ -23,7 +23,7 @@ class FacebookContactsListFragment : BaseFragment(R.layout.fragment_facebook_con
 		repeatScopeOnStart {
 			viewModel.uploadSuccessful.collect {
 				viewModel.navMainGraphModel.navigateToGraph(
-					NavMainGraphModel.NavGraph.Marketplace
+					NavMainGraphModel.NavGraph.Main
 				)
 			}
 		}
