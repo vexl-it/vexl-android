@@ -22,7 +22,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:visibility="gone"
-			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, price_chart_period_radiogroup"
+			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, chart_divider, price_chart_period_radiogroup"
 			tools:visibility="visible" />
 
 		<ImageView

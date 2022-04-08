@@ -23,6 +23,7 @@
 	<color name="black">#000000</color>
 	<color name="white">#FFFFFF</color>
 	<color name="gray_1">#262626</color>
+	<color name="gray_2">#808080</color>
 	<color name="gray_3">#AFAFAF</color>
 	<color name="gray_4">#EEEEEE</color>
 	<color name="yellow">#FEC527</color>
@@ -36,12 +37,11 @@
 	<color name="grey_dark">#3C3C43</color>
 	<color name="grey_light">#EBEBF5</color>
 	<color name="blue_light">#C3C3FF</color>
-	<color name="some_kind_of_green">#80C8FFC3</color>
-	<color name="some_another_kind_of_green">#4E6652</color>
+	<color name="green_1">#4E6652</color>
 	<color name="green_2">#678061</color>
+	<color name="green_5">#80C8FFC3</color>
 	<color name="purple_1">#2C2C3E</color>
 	<color name="purple_6">#C3C3FF</color>
-	<color name="gray_2">#808080</color>
 
 	<!-- PIN -->
 	<color name="pin_bubble_color">@color/gray_20</color>
@@ -93,6 +93,6 @@
 	<color name="text_color_text_input_hint">@color/root_text_color</color>
 	<color name="text_color_text_input_placeholder">@color/root_text_color</color>
 	<color name="text_color_date_picker">@color/root_text_color</color>
-	<color name="text_color_cryptocurrency_price">@color/some_kind_of_green</color>
-	<color name="text_color_cryptocurrency_background">@color/some_another_kind_of_green</color>
+	<color name="text_color_cryptocurrency_price">@color/green_5</color>
+	<color name="text_color_cryptocurrency_background">@color/green_1</color>
 </resources>
