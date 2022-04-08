@@ -302,6 +302,11 @@
 		<item name="cardBackgroundColor">@color/white</item>
 	</style>
 
+	<style name="Widget.Vexl.MarketplaceMainCardView" parent="">
+		<item name="android:paddingTop">32dp</item>
+		<item name="android:background">@drawable/background_cardview_marketplace_black</item>
+	</style>
+
 	<style name="Widget.Vexl.EditText" parent="">
 		<item name="android:layout_margin">21dp</item>
 		<item name="android:paddingStart">21dp</item>

@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.marketplace.marketplaceFragment
 
+import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentMarketplaceBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -24,6 +25,16 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 	}
 
 	override fun initView() {
+		binding.marketplaceViewpager.adapter = MarketplacePagerAdapter(this)
+
+		TabLayoutMediator(binding.marketplaceTabLayout, binding.marketplaceViewpager) { tab, position ->
+			when (position) {
+				0 -> tab.setText(R.string.marketplace_buy)
+				1 -> tab.setText(R.string.marketplace_sell)
+				else -> tab.text = "Error"
+			}
+
+		}.attach()
 	}
 
 }
