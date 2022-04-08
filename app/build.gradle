@@ -19,8 +19,7 @@ android {
     buildToolsVersion rootProject.ext.build_tools_version
 
     defaultConfig {
-        applicationId "cz.cleevio.lightspeedskeleton"
-        //applicationId "cz.vexl.app"
+        applicationId "com.cleevio.vexl"
         minSdkVersion rootProject.ext.min_sdk_version
         targetSdkVersion rootProject.ext.target_sdk_version
         versionCode buildVersionCode
@@ -138,7 +137,7 @@ dependencies {
     implementation project(':profile')
     implementation project(':marketplace')
 
-    implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
