@@ -30,7 +30,7 @@ class SplashViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			userRepository.deleteMe()
 
-			contactRepository.deleteMyUserFromContactService()
+			contactRepository.deleteMyUser()
 
 			resetKeys()
 			loadKeys()

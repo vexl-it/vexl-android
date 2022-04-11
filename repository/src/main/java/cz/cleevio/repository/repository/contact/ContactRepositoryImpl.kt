@@ -122,7 +122,7 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun uploadAllMissingFacebookContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
+	override suspend fun uploadAllMissingFBContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
 		request = {
 			contactApi.postContactImport(
 				hash = encryptedPreference.facebookHash,
@@ -182,12 +182,12 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.items?.map { item -> item.publicKey }.orEmpty() }
 	)
 
-	override suspend fun deleteMyUserFromContactService(): Resource<Unit> = tryOnline(
+	override suspend fun deleteMyUser(): Resource<Unit> = tryOnline(
 		request = { contactApi.deleteUserMe() },
 		mapper = { }
 	)
 
-	override suspend fun deleteMyFacebookUserFromContactService(): Resource<Unit> = tryOnline(
+	override suspend fun deleteMyFacebookUser(): Resource<Unit> = tryOnline(
 		request = {
 			contactApi.deleteUserMe(
 				hash = encryptedPreference.facebookHash,

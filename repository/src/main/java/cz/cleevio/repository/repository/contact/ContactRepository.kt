@@ -13,7 +13,7 @@ interface ContactRepository {
 
 	suspend fun uploadAllMissingContacts(identifiers: List<String>): Resource<ContactImport>
 
-	suspend fun uploadAllMissingFacebookContacts(identifiers: List<String>): Resource<ContactImport>
+	suspend fun uploadAllMissingFBContacts(identifiers: List<String>): Resource<ContactImport>
 
 	suspend fun registerUser(): Resource<ContactUser>
 
@@ -21,9 +21,9 @@ interface ContactRepository {
 
 	suspend fun loadMyContactsKeys(): Resource<List<String>>
 
-	suspend fun deleteMyUserFromContactService(): Resource<Unit>
+	suspend fun deleteMyUser(): Resource<Unit>
 
-	suspend fun deleteMyFacebookUserFromContactService(): Resource<Unit>
+	suspend fun deleteMyFacebookUser(): Resource<Unit>
 
 	//sync contacts between phone and app DB, also uploads to BE
 	suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit>
