@@ -10,7 +10,7 @@ import cz.cleeevio.vexl.marketplace.databinding.ItemOfferBinding
 import cz.cleevio.repository.model.offer.Offer
 
 class OffersAdapter : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Offer>() {
-	override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem.id == newItem.id
+	override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem.offerId == newItem.offerId
 
 	override fun areContentsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem == newItem
 }) {
@@ -20,13 +20,13 @@ class OffersAdapter : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : Diff
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: Offer?) {
-			binding.offerDescription.text = "I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep..."
-			binding.priceLimit.text = "up to \$10k"
-			binding.paymentMethod.text = "Revolut"
-			binding.feeAmount.text = "Wants \$30 fee per transaction"
-			binding.userName.text = "Facebook friend"
-			binding.location.text = "Prague 7"
-			binding.feeGroup.isVisible = true
+			binding.offerDescription.text = item?.direction
+			binding.priceLimit.text = item?.amount
+			binding.paymentMethod.text = item?.paymentMethod
+			binding.feeAmount.text = item?.fee
+			binding.userName.text = item?.userPublicKey
+			binding.location.text = item?.location
+			binding.feeGroup.isVisible = item?.fee != null
 		}
 
 	}

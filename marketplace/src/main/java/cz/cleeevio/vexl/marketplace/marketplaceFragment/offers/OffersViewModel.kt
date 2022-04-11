@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
+import java.time.ZonedDateTime
 
 class OffersViewModel(
 	private val offerRepository: OfferRepository
@@ -18,37 +19,63 @@ class OffersViewModel(
 
 	fun getData() {
 		viewModelScope.launch(Dispatchers.IO) {
+//			val response = offerRepository.loadOffersForMe()
+//			when (response.status) {
+//				is Status.Success -> response.data?.let { data ->
+//					_buyOffers.emit(data)
+//				}
+//			}
+
+			// TODO vyhodit
 			_buyOffers.emit(
 				listOf(
 					Offer(
-						id = 1,
-						location = "",
-						userPublicKey = "",
+						offerId = "1",
+						location = "Prague 7",
+						userPublicKey = "pub key 1",
 						offerPublicKey = "",
-						direction = "",
-						premium = "",
-						threshold = "",
-						offerSymKey = ""
+						direction = "I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep...",
+						offerSymKey = "",
+						amount = "100",
+						fee = "Wants \$30 fee per transaction",
+						friendLevel = "",
+						onlyInPerson = "",
+						paymentMethod = "Cash",
+						typeNetwork = "",
+						createdAt = ZonedDateTime.now(),
+						modifiedAt = ZonedDateTime.now()
 					),
 					Offer(
-						id = 2,
-						location = "",
-						userPublicKey = "",
+						offerId = "2",
+						location = "Prague 8",
+						userPublicKey = "pub key 2",
 						offerPublicKey = "",
-						direction = "",
-						premium = "",
-						threshold = "",
-						offerSymKey = ""
+						direction = "I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep...",
+						offerSymKey = "",
+						amount = "1000",
+						fee = "Wants \$10 fee per transaction",
+						friendLevel = "",
+						onlyInPerson = "",
+						paymentMethod = "DogeCoin",
+						typeNetwork = "",
+						createdAt = ZonedDateTime.now(),
+						modifiedAt = ZonedDateTime.now()
 					),
 					Offer(
-						id = 3,
-						location = "",
-						userPublicKey = "",
+						offerId = "3",
+						location = "Prague 9",
+						userPublicKey = "pub key 3",
 						offerPublicKey = "",
-						direction = "",
-						premium = "",
-						threshold = "",
-						offerSymKey = ""
+						direction = "I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep...",
+						offerSymKey = "",
+						amount = "9999",
+						fee = null,
+						friendLevel = "",
+						onlyInPerson = "",
+						paymentMethod = "Revolut",
+						typeNetwork = "",
+						createdAt = ZonedDateTime.now(),
+						modifiedAt = ZonedDateTime.now()
 					),
 				)
 			)
