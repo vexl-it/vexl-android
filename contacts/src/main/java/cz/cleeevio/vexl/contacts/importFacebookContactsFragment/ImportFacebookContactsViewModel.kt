@@ -42,7 +42,7 @@ class ImportFacebookContactsViewModel constructor(
 
 					viewModelScope.launch {
 						userRepository.registerFacebookUser(facebookId = loginResult.accessToken.userId)
-						contactRepository.registerFacebookUserWithContactService()
+						contactRepository.registerFacebookUser()
 
 						_facebookPermissionApproved.tryEmit(true)
 					}

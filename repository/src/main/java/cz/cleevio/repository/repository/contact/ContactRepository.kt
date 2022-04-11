@@ -15,9 +15,9 @@ interface ContactRepository {
 
 	suspend fun uploadAllMissingFacebookContacts(identifiers: List<String>): Resource<ContactImport>
 
-	suspend fun registerUserWithContactService(): Resource<ContactUser>
+	suspend fun registerUser(): Resource<ContactUser>
 
-	suspend fun registerFacebookUserWithContactService(): Resource<ContactUser>
+	suspend fun registerFacebookUser(): Resource<ContactUser>
 
 	suspend fun loadMyContactsKeys(): Resource<List<String>>
 

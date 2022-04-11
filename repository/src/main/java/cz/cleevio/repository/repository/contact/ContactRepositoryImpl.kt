@@ -151,7 +151,7 @@ class ContactRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun registerUserWithContactService(): Resource<ContactUser> = tryOnline(
+	override suspend fun registerUser(): Resource<ContactUser> = tryOnline(
 		request = {
 			contactApi.postUsers(
 				contactUserRequest = ContactUserRequest(
@@ -163,7 +163,7 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun registerFacebookUserWithContactService(): Resource<ContactUser> = tryOnline(
+	override suspend fun registerFacebookUser(): Resource<ContactUser> = tryOnline(
 		request = {
 			contactApi.postUsers(
 				hash = encryptedPreference.facebookHash,
