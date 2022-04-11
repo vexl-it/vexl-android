@@ -70,4 +70,5 @@
     <string name="marketplace_currency_1_year">1 year</string>
     <string name="marketplace_buy">Buy</string>
     <string name="marketplace_sell">Sell</string>
+    <string name="offer_request">Request</string>
 </resources>

@@ -1,18 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	style="@style/Widget.Vexl.CardView"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
+	android:layout_height="wrap_content"
+	android:layout_margin="8dp">
 
-	<TextView
-		android:id="@+id/offer_description"
-		android:layout_width="wrap_content"
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:text="I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep..." />
+		android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+		<TextView
+			android:id="@+id/offer_description"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:layout_constraintBottom_toTopOf="@id/offer_metadata"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep..." />
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/offer_metadata"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:background="@drawable/offer_border"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/offer_description">
+
+			<androidx.constraintlayout.widget.Group
+				android:id="@+id/fee_group"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:constraint_referenced_ids="fee_divider, fee_amount" />
+
+			<TextView
+				android:id="@+id/price_limit"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_margin="16dp"
+				android:gravity="center"
+				app:layout_constraintBottom_toTopOf="@id/fee_barrier"
+				app:layout_constraintEnd_toStartOf="@id/chart_divider"
+				app:layout_constraintHorizontal_weight="0.5"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="up to $10k" />
+
+			<View
+				android:id="@+id/chart_divider"
+				style="@style/Widget.Cleevio.Marketplace.OfferVerticalDivider"
+				android:layout_width="1dp"
+				android:layout_height="0dp"
+				android:layout_margin="8dp"
+				app:layout_constraintBottom_toTopOf="@id/fee_barrier"
+				app:layout_constraintEnd_toStartOf="@id/payment_method"
+				app:layout_constraintStart_toEndOf="@id/price_limit"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<TextView
+				android:id="@+id/payment_method"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_margin="16dp"
+				android:gravity="center"
+				app:layout_constraintBottom_toTopOf="@id/fee_barrier"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_weight="0.5"
+				app:layout_constraintStart_toEndOf="@id/chart_divider"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="Revolut" />
+
+			<androidx.constraintlayout.widget.Barrier
+				android:id="@+id/fee_barrier"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:barrierDirection="bottom"
+				app:constraint_referenced_ids="price_limit, chart_divider, payment_method" />
+
+
+			<View
+				android:id="@+id/fee_divider"
+				style="@style/Widget.Cleevio.Marketplace.OfferHorizontalDivider"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginStart="8dp"
+				android:layout_marginEnd="8dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/fee_barrier" />
+
+			<TextView
+				android:id="@+id/fee_amount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="16dp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/fee_divider"
+				tools:text="Wants $30 fee per transaction" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/profile_image"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginTop="16dp"
+			android:scaleType="fitCenter"
+			android:src="@drawable/profile_picture_import"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintDimensionRatio="1:1"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/offer_metadata"
+			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.RoundedComponent" />
+
+		<TextView
+			android:id="@+id/user_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="16dp"
+			app:layout_constraintBottom_toTopOf="@id/location"
+			app:layout_constraintStart_toEndOf="@id/profile_image"
+			app:layout_constraintTop_toBottomOf="@id/offer_metadata"
+			tools:text="Facebook friend" />
+
+		<TextView
+			android:id="@+id/location"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:paddingTop="4dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/profile_image"
+			app:layout_constraintTop_toBottomOf="@id/user_name"
+			tools:text="Prague 7" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/request_btn"
+			style="@style/Widget.Vexl.OfferButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:text="@string/offer_request"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/offer_metadata" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
