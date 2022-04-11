@@ -192,7 +192,7 @@ deploy:
       if [[ ! -z "$TASK_DIST" ]] ; then
         ./gradlew $TASK_DIST
 
-        echo '{"channel": "#vexl-app-dev", "text":"' > payload.json
+        echo '{"channel": "#vexl-app-deployments", "text":"' > payload.json
         echo ":android: *$VERSION_NAME ($VERSION_CODE)*\n" >> payload.json
         (sed -z 's/\n/\\n\n/g' < release_notes.txt) >> payload.json
         echo '"}' >> payload.json
