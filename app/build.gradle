@@ -25,7 +25,7 @@ android {
         versionCode buildVersionCode
         versionName buildVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        archivesBaseName = "LightSpeed-$buildVersionName"
+        archivesBaseName = "Vexl-$buildVersionName"
         manifestPlaceholders = [enableCrashReporting: buildUseCrashlytics]
 
         // Add new languages here
