@@ -25,6 +25,7 @@ val contactsModule = module {
 	viewModel {
 		ImportFacebookContactsViewModel(
 			get(),
+			get(),
 			get()
 		)
 	}
