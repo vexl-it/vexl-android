@@ -118,7 +118,18 @@ class ContactRepositoryImpl constructor(
 	)
 
 	override suspend fun uploadAllMissingContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
-		request = { contactApi.postContactImport(ContactRequest(identifiers)) },
+		request = { contactApi.postContactImport(contactImportRequest = ContactRequest(identifiers)) },
+		mapper = { it?.fromNetwork() }
+	)
+
+	override suspend fun uploadAllMissingFBContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
+		request = {
+			contactApi.postContactImport(
+				hash = encryptedPreference.facebookHash,
+				signature = encryptedPreference.facebookSignature,
+				contactImportRequest = ContactRequest(identifiers)
+			)
+		},
 		mapper = { it?.fromNetwork() }
 	)
 
@@ -129,16 +140,37 @@ class ContactRepositoryImpl constructor(
 					friend.fromFacebook()
 				}
 			},
-			request = { contactApi.getFacebookUser(facebookId, accessToken) }
+			request = {
+				contactApi.getFacebookUser(
+					hash = encryptedPreference.facebookHash,
+					signature = encryptedPreference.facebookSignature,
+					facebookId = facebookId,
+					accessToken = accessToken
+				)
+			}
 		)
 	}
 
-	override suspend fun registerUserWithContactService(): Resource<ContactUser> = tryOnline(
+	override suspend fun registerUser(): Resource<ContactUser> = tryOnline(
 		request = {
 			contactApi.postUsers(
-				ContactUserRequest(
+				contactUserRequest = ContactUserRequest(
 					publicKey = encryptedPreference.userPublicKey,
 					hash = encryptedPreference.hash
+				)
+			)
+		},
+		mapper = { it?.fromNetwork() }
+	)
+
+	override suspend fun registerFacebookUser(): Resource<ContactUser> = tryOnline(
+		request = {
+			contactApi.postUsers(
+				hash = encryptedPreference.facebookHash,
+				signature = encryptedPreference.facebookSignature,
+				contactUserRequest = ContactUserRequest(
+					publicKey = encryptedPreference.userPublicKey,
+					hash = encryptedPreference.facebookHash
 				)
 			)
 		},
@@ -150,8 +182,18 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.items?.map { item -> item.publicKey }.orEmpty() }
 	)
 
-	override suspend fun deleteMe(): Resource<Unit> = tryOnline(
+	override suspend fun deleteMyUser(): Resource<Unit> = tryOnline(
 		request = { contactApi.deleteUserMe() },
+		mapper = { }
+	)
+
+	override suspend fun deleteMyFacebookUser(): Resource<Unit> = tryOnline(
+		request = {
+			contactApi.deleteUserMe(
+				hash = encryptedPreference.facebookHash,
+				signature = encryptedPreference.facebookSignature
+			)
+		},
 		mapper = { }
 	)
 

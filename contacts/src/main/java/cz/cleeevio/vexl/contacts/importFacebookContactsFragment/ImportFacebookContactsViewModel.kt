@@ -1,6 +1,7 @@
 package cz.cleeevio.vexl.contacts.importFacebookContactsFragment
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.viewModelScope
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -8,15 +9,18 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 import timber.log.Timber
 
 
 class ImportFacebookContactsViewModel constructor(
 	private val userRepository: UserRepository,
+	private val contactRepository: ContactRepository,
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
@@ -35,7 +39,13 @@ class ImportFacebookContactsViewModel constructor(
 			object : FacebookCallback<LoginResult> {
 				override fun onSuccess(loginResult: LoginResult) {
 					Timber.d("loginResult success $loginResult")
-					_facebookPermissionApproved.tryEmit(true)
+
+					viewModelScope.launch {
+						userRepository.registerFacebookUser(facebookId = loginResult.accessToken.userId)
+						contactRepository.registerFacebookUser()
+
+						_facebookPermissionApproved.tryEmit(true)
+					}
 				}
 
 				override fun onCancel() {
