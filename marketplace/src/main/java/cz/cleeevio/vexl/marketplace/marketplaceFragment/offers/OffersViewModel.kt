@@ -1,6 +1,8 @@
 package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.lifecycle.viewModelScope
+import cz.cleeevio.vexl.marketplace.R
+import cz.cleevio.repository.model.offer.Filter
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.offer.OfferRepository
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +19,25 @@ class OffersViewModel(
 	private val _buyOffers = MutableSharedFlow<List<Offer>>(replay = 1)
 	val buyOffers = _buyOffers.asSharedFlow()
 
+	private val _filters = MutableSharedFlow<List<Filter>>(replay = 1)
+	val filters = _filters.asSharedFlow()
+
+	fun getFilters() {
+		viewModelScope.launch(Dispatchers.IO) {
+			_filters.emit(
+				listOf(
+					Filter(
+						label = "Revolut",
+						icon = R.drawable.ic_revolut
+					),
+					Filter(
+						label = "up to \$10k"
+					)
+				)
+			)
+		}
+	}
+
 	fun getData() {
 		viewModelScope.launch(Dispatchers.IO) {
 //			val response = offerRepository.loadOffersForMe()
@@ -30,7 +51,7 @@ class OffersViewModel(
 			_buyOffers.emit(
 				listOf(
 					Offer(
-						offerId = "1",
+						offerId = 1L,
 						location = "Prague 7",
 						userPublicKey = "pub key 1",
 						offerPublicKey = "",
@@ -46,7 +67,7 @@ class OffersViewModel(
 						modifiedAt = ZonedDateTime.now()
 					),
 					Offer(
-						offerId = "2",
+						offerId = 2L,
 						location = "Prague 8",
 						userPublicKey = "pub key 2",
 						offerPublicKey = "",
@@ -62,7 +83,7 @@ class OffersViewModel(
 						modifiedAt = ZonedDateTime.now()
 					),
 					Offer(
-						offerId = "3",
+						offerId = 3L,
 						location = "Prague 9",
 						userPublicKey = "pub key 3",
 						offerPublicKey = "",
