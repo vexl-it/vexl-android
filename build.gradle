@@ -19,6 +19,7 @@ buildscript {
     ext.material = "1.4.0"
     ext.detekt_version = "1.19.0"
     ext.firebase_bom = "29.2.1"
+    ext.flexbox_version = '3.0.0'
 
     ext.desugar = '1.1.5'
 

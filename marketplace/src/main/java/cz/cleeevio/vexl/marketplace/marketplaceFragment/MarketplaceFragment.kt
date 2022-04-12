@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.marketplace.marketplaceFragment
 
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentMarketplaceBinding
@@ -25,7 +26,24 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 	}
 
 	override fun initView() {
-		binding.marketplaceViewpager.adapter = MarketplacePagerAdapter(this)
+		binding.marketplaceViewpager.adapter = MarketplacePagerAdapter(
+			fragment = this,
+			navigateToFilters = {
+				findNavController().navigate(
+					MarketplaceFragmentDirections.proceedToFiltersFragment()
+				)
+			},
+			navigateToNewOffer = {
+				findNavController().navigate(
+					MarketplaceFragmentDirections.proceedToNewOfferFragment()
+				)
+			},
+			requestOffer = { offerId ->
+				findNavController().navigate(
+					MarketplaceFragmentDirections.proceedToRequestOfferFragment(offerId = offerId)
+				)
+			}
+		)
 
 		TabLayoutMediator(binding.marketplaceTabLayout, binding.marketplaceViewpager) { tab, position ->
 			when (position) {

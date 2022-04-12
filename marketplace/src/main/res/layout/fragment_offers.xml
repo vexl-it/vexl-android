@@ -5,15 +5,48 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<com.google.android.flexbox.FlexboxLayout
+		android:id="@+id/filters"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_margin="16dp"
+		app:flexDirection="row"
+		app:flexWrap="wrap"
+		app:justifyContent="center"
+		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
+		app:layout_constraintEnd_toStartOf="@id/add_offer_btn"
+		app:layout_constraintHorizontal_chainStyle="spread_inside"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<ImageButton
+		android:id="@+id/add_offer_btn"
+		style="@style/Widget.Vexl.AddOfferButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:src="@drawable/ic_plus"
+		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/filters"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<androidx.constraintlayout.widget.Barrier
+		android:id="@+id/filter_barrier"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:barrierDirection="bottom"
+		app:constraint_referenced_ids="filters, add_offer_btn" />
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/offer_list"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="0dp"
 		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/filter_barrier"
 		tools:listitem="@layout/item_offer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

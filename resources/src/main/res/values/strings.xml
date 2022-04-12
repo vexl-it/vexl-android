@@ -44,6 +44,7 @@
     <string name="import_facebook_contacts_import">Import Facebook contacts</string>
 
     <!-- Errors -->
+    <string name="error_username_not_available">The username is unavailable</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Change profile picture</string>

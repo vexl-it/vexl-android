@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cz.cleeevio.vexl.marketplace.databinding.ItemOfferBinding
 import cz.cleevio.repository.model.offer.Offer
 
-class OffersAdapter : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Offer>() {
+class OffersAdapter(val requestOffer: (Long) -> Unit) : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Offer>() {
 	override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem.offerId == newItem.offerId
 
 	override fun areContentsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem == newItem
@@ -19,14 +19,18 @@ class OffersAdapter : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : Diff
 		private val binding: ItemOfferBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: Offer?) {
-			binding.offerDescription.text = item?.direction
-			binding.priceLimit.text = item?.amount
-			binding.paymentMethod.text = item?.paymentMethod
-			binding.feeAmount.text = item?.fee
-			binding.userName.text = item?.userPublicKey
-			binding.location.text = item?.location
-			binding.feeGroup.isVisible = item?.fee != null
+		fun bind(item: Offer) {
+			binding.offerDescription.text = item.direction
+			binding.priceLimit.text = item.amount
+			binding.paymentMethod.text = item.paymentMethod
+			binding.feeAmount.text = item.fee
+			binding.userName.text = item.userPublicKey
+			binding.location.text = item.location
+			binding.feeGroup.isVisible = item.fee != null
+
+			binding.requestBtn.setOnClickListener {
+				requestOffer(item.offerId)
+			}
 		}
 
 	}

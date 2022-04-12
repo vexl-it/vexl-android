@@ -1,5 +1,6 @@
 package cz.cleeevio.onboarding.usernameFragment
 
+import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,7 +27,7 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 						UsernameFragmentDirections.proceedToAvatarFragment(usernameAvailable.username)
 					)
 				} else {
-					// TODO some error message?
+					Toast.makeText(requireContext(), R.string.error_username_not_available, Toast.LENGTH_SHORT).show()
 				}
 			}
 		}

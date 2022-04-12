@@ -11,6 +11,46 @@
 		android:label="MarketplaceFragment"
 		tools:layout="@layout/fragment_marketplace">
 
+		<action
+			android:id="@+id/proceed_to_filtersFragment"
+			app:destination="@id/filtersFragment" />
+
+		<action
+			android:id="@+id/proceed_to_newOfferFragment"
+			app:destination="@id/newOfferFragment" />
+
+		<action
+			android:id="@+id/proceed_to_requestOfferFragment"
+			app:destination="@id/requestOfferFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/filtersFragment"
+		android:name="cz.cleeevio.vexl.marketplace.filtersFragment.FiltersFragment"
+		android:label="FiltersFragment"
+		tools:layout="@layout/fragment_filters">
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/newOfferFragment"
+		android:name="cz.cleeevio.vexl.marketplace.newOfferFragment.NewOfferFragment"
+		android:label="NewOfferFragment"
+		tools:layout="@layout/fragment_new_offer">
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/requestOfferFragment"
+		android:name="cz.cleeevio.vexl.marketplace.requestOfferFragment.RequestOfferFragment"
+		android:label="RequestOfferFragment"
+		tools:layout="@layout/fragment_request_offer">
+
+		<argument
+			android:name="offer_id"
+			app:argType="long" />
+
 	</fragment>
 
 </navigation>
