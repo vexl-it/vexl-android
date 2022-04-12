@@ -32,6 +32,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
@@ -43,4 +44,6 @@ android {
 
 dependencies {
     implementation project(':core')
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar"
 }

@@ -1,27 +1,40 @@
 package cz.cleevio.repository.model.offer
 
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
+import java.time.ZonedDateTime
 
 data class Offer constructor(
-	val id: Long,
+	val offerId: String,
 	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
 	val direction: String,
-	val premium: String,
-	val threshold: String,
-	val offerSymKey: String
+	val fee: String?,
+	val offerSymKey: String,
+	val amount: String?,
+	val onlyInPerson: String,
+	val paymentMethod: String,
+	val typeNetwork: String,
+	val friendLevel: String,
+	val createdAt: ZonedDateTime,
+	val modifiedAt: ZonedDateTime
 )
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
-		id = this.id,
+		offerId = this.offerId,
 		location = this.location,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
 		direction = this.direction,
-		premium = this.premium,
-		threshold = this.threshold,
-		offerSymKey = this.offerSymKey
+		fee = this.fee,
+		offerSymKey = this.offerSymKey,
+		amount = this.amount,
+		onlyInPerson = this.onlyInPerson,
+		paymentMethod = this.paymentMethod,
+		typeNetwork = this.typeNetwork,
+		friendLevel = this.friendLevel,
+		createdAt = ZonedDateTime.parse(this.createdAt),
+		modifiedAt = ZonedDateTime.parse(this.modifiedAt)
 	)
 }
