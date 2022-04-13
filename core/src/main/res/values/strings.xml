@@ -2,4 +2,6 @@
 <resources>
 	<string name="facebook_app_id" translatable="false">364593362214966</string>
 	<string name="facebook_client_token" translatable="false">d935a8def510c23fa883f758a8ab7261</string>
+
+	<string name="price_range" translatable="false">%1$.0f - %2$.0f</string>
 </resources>
