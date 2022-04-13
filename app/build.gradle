@@ -86,7 +86,8 @@ android {
                 appId = firebaseAppId
                 groups = "cleevio"
                 releaseNotesFile = "release_notes.txt"
-                apkPath = "out/${archivesBaseName}-development-${buildTypeName}.apk"
+                artifactType = "APK"
+                artifactPath = "out/${archivesBaseName}-development-${buildTypeName}.apk"
             }
         }
         staging {
@@ -95,7 +96,8 @@ android {
                 appId = firebaseAppId
                 groups = "cleevio"
                 releaseNotesFile = "release_notes.txt"
-                apkPath = "out/${archivesBaseName}-staging-${buildTypeName}.apk"
+                artifactType = "APK"
+                artifactPath = "out/${archivesBaseName}-staging-${buildTypeName}.apk"
             }
         }
         production {
@@ -103,7 +105,8 @@ android {
                 appId = firebaseAppId
                 groups = "cleevio"
                 releaseNotesFile = "release_notes.txt"
-                apkPath = "out/${archivesBaseName}-production-${buildTypeName}.apk"
+                artifactType = "APK"
+                artifactPath = "out/${archivesBaseName}-production-${buildTypeName}.apk"
             }
         }
     }

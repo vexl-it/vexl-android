@@ -49,11 +49,11 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.security:security-crypto:$security_crypto"
 
-    def roomVersion = "2.4.0-beta01"
+    def roomVersion = "2.4.2"
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
-    androidTestImplementation "androidx.room:room-testing:2.3.0"
+    androidTestImplementation 'androidx.room:room-testing:2.4.2'
 
     api "com.squareup.moshi:moshi:$moshi"
     implementation "io.insert-koin:koin-core:$koin"
