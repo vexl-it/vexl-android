@@ -76,7 +76,7 @@
     <!-- Filters -->
     <string name="widget_fee_without">Without fee</string>
     <string name="widget_fee_ok">Fee OK</string>
-    <string name="widget_fee_percent">\u003C %s\%</string>
-    <string name="widget_location_online">Online ok</string>
+    <string name="widget_fee_percent">\u003C %s%%</string>
+    <string name="widget_location_online">Online OK</string>
     <string name="widget_location_in_person">Only in person</string>
 </resources>
