@@ -2,13 +2,13 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFeeBinding
 import lightbase.core.extensions.layoutInflater
+import timber.log.Timber
 
 class OfferFeeWidget constructor(
 	context: Context,
@@ -16,23 +16,31 @@ class OfferFeeWidget constructor(
 	defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-	constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
-
 	private lateinit var binding: WidgetOfferFeeBinding
 	private var selectedButton: FeeButtonSelected = FeeButtonSelected.NONE
 	private var feeValue: Int = 0
 
+	constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
+
 	init {
 		setupUI()
 
-		binding.feeOk.setOnClickListener {
-			selectedButton = FeeButtonSelected.WITH_FEE
-			redrawWidget()
-		}
-
-		binding.feeWithout.setOnClickListener {
-			selectedButton = FeeButtonSelected.WITHOUT_FEE
-			redrawWidget()
+		binding.feeRadiogroup.setOnCheckedChangeListener { _, id ->
+			selectedButton = when (id) {
+				R.id.fee_without -> {
+					drawSeekbarSection(visible = false)
+					FeeButtonSelected.WITHOUT_FEE
+				}
+				R.id.fee_ok -> {
+					drawSeekbarSection(visible = true)
+					FeeButtonSelected.WITH_FEE
+				}
+				else -> {
+					Timber.e("Unknown radio ID! '$id'")
+					drawSeekbarSection(visible = false)
+					FeeButtonSelected.NONE
+				}
+			}
 		}
 
 		binding.feeBar.max = FEE_MAX_VALUE
@@ -47,53 +55,11 @@ class OfferFeeWidget constructor(
 
 		//init values
 		updateFeeValue(0)
-		redrawWidget()
+		drawSeekbarSection(visible = false)
 	}
 
 	private fun setupUI() {
 		binding = WidgetOfferFeeBinding.inflate(layoutInflater, this)
-	}
-
-	private fun redrawWidget() {
-		when (selectedButton) {
-			FeeButtonSelected.NONE -> {
-				//draw both button grey
-				drawButton(binding.feeWithout)
-				drawButton(binding.feeOk)
-				//hide seekbar section
-				drawSeekbarSection()
-			}
-			FeeButtonSelected.WITHOUT_FEE -> {
-				//draw first button green with active background
-				drawButton(binding.feeWithout, true)
-				//draw second button grey
-				drawButton(binding.feeOk)
-				//hide seekbar section
-				drawSeekbarSection()
-			}
-			FeeButtonSelected.WITH_FEE -> {
-				//draw first button grey
-				drawButton(binding.feeWithout)
-				//draw second button green with active background
-				drawButton(binding.feeOk, true)
-				//show seekbar section
-				drawSeekbarSection(true)
-			}
-		}
-	}
-
-	private fun drawButton(button: Button, isSelected: Boolean = false) {
-		if (isSelected) {
-			//TODO: set background
-
-			//set green_5 text
-			button.setTextColor(context.getColor(R.color.green_5))
-		} else {
-			//TODO: remove background
-
-			//set grey text
-			button.setTextColor(context.getColor(R.color.gray))
-		}
 	}
 
 	private fun drawSeekbarSection(visible: Boolean = false) {
@@ -105,11 +71,6 @@ class OfferFeeWidget constructor(
 	private fun updateFeeValue(value: Int) {
 		feeValue = value.inc()
 		binding.feeValue.text = context.getString(R.string.widget_fee_percent, feeValue.toString())
-	}
-
-	fun setSelectedButton(newValue: FeeButtonSelected) {
-		selectedButton = newValue
-		redrawWidget()
 	}
 
 	companion object {
