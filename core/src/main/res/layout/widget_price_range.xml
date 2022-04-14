@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<com.google.android.material.card.MaterialCardView
+		style="@style/Widget.Vexl.Filters.FilterCardView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/wrapper"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<TextView
+				android:id="@+id/range_text"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="16dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="$10 - $1000" />
+
+			<com.google.android.material.slider.RangeSlider
+				android:id="@+id/price_range_slider"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:stepSize="100"
+				android:valueFrom="0"
+				android:valueTo="100000"
+				app:labelBehavior="gone"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/range_text"
+				app:thumbColor="@color/green_5"
+				app:trackColorActive="@color/green_5"
+				app:trackColorInactive="@color/gray_2"
+				app:values="@array/initial_slider_values" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</com.google.android.material.card.MaterialCardView>
+
+</merge>

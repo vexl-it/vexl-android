@@ -250,4 +250,10 @@
 		<item name="lineHeight">19.92sp</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Filter.FilterContent" parent="">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/green_5</item>
+		<item name="lineHeight">26sp</item>
+	</style>
+
 </resources>
