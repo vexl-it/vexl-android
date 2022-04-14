@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.marketplace.di
 
+import cz.cleeevio.vexl.marketplace.createOfferFragment.CreateOfferViewModel
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceViewModel
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.offers.OffersViewModel
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
@@ -23,6 +24,13 @@ val marketplaceModule = module {
 	viewModel {
 		OffersViewModel(
 			offerRepository = get()
+		)
+	}
+
+	viewModel {
+		CreateOfferViewModel(
+			offerRepository = get(),
+			contactRepository = get()
 		)
 	}
 

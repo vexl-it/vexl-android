@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_marketplace"
-	app:startDestination="@+id/marketplaceFragment">
+	app:startDestination="@+id/createOfferFragment">
 
 	<fragment
 		android:id="@+id/marketplaceFragment"
@@ -50,6 +50,14 @@
 		<argument
 			android:name="offer_id"
 			app:argType="long" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/createOfferFragment"
+		android:name="cz.cleeevio.vexl.marketplace.createOfferFragment.CreateOfferFragment"
+		android:label="CreateOfferFragment"
+		tools:layout="@layout/fragment_create_offer">
 
 	</fragment>
 
