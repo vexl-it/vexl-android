@@ -1,6 +1,7 @@
 package cz.cleevio.lightspeedskeleton
 
 import android.app.Application
+import com.cleevio.vexl.cryptography.AesCryptoLib
 import cz.cleeevio.onboarding.di.onboardingModule
 import cz.cleeevio.vexl.contacts.di.contactsModule
 import cz.cleeevio.vexl.marketplace.di.marketplaceModule
@@ -26,6 +27,10 @@ class CleevioApp : Application() {
 		if (BuildConfig.DEBUG) {
 			Timber.plant(CustomDebugTree())
 		}
+
+		val result = AesCryptoLib().encrypt("some password", "some message")
+
+		Timber.d("result of native library ${result}")
 
 		startKoin {
 			//androidLogger()
