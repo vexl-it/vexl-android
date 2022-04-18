@@ -18,15 +18,15 @@ set(cryptography_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../cryptography)
 
 add_library(libcrypto STATIC IMPORTED)
 set_target_properties(libcrypto PROPERTIES IMPORTED_LOCATION
-        ${cryptography_DIR}/${ANDROID_ABI}/lib/libcrypto.a)
+        ${cryptography_DIR}/${ANDROID_ABI}/libcrypto.a)
 
 add_library(libssl STATIC IMPORTED)
 set_target_properties(libssl PROPERTIES IMPORTED_LOCATION
-        ${cryptography_DIR}/${ANDROID_ABI}/lib/libssl.a)
+        ${cryptography_DIR}/${ANDROID_ABI}/libssl.a)
 
 add_library(libvc STATIC IMPORTED)
 set_target_properties(libvc PROPERTIES IMPORTED_LOCATION
-        ${cryptography_DIR}/${ANDROID_ABI}/lib/libvc.a)
+        ${cryptography_DIR}/${ANDROID_ABI}/libvc.a)
 
 # build application's shared lib
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++14")
@@ -35,7 +35,7 @@ add_library(libcryptography SHARED
         cryptography.cpp)
 
 target_include_directories(libcryptography PRIVATE
-        ${cryptography_DIR}/${ANDROID_ABI}/include/vc)
+        ${cryptography_DIR}/include/vc)
 
 target_link_libraries(libcryptography
         android
