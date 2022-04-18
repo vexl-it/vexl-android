@@ -30,7 +30,7 @@ class CleevioApp : Application() {
 
 		val result = AesCryptoLib().encrypt("some password", "some message")
 
-		Timber.d("result of native library ${result}")
+		Timber.d("result of native library $result")
 
 		startKoin {
 			//androidLogger()
