@@ -14,17 +14,15 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class AesCryptoInstrumentedTest {
 
-	private val aesCryptoLib = AesCryptoLib()
-
 	@Test
 	fun useAppContext() {
 		val password = "some password"
 		val originalMessage = "some message"
 
-		val enryptedMessage = aesCryptoLib.encrypt(password, originalMessage)
+		val enryptedMessage = AesCryptoLib.encrypt(password, originalMessage)
 		Assert.assertNotEquals(originalMessage, enryptedMessage)
 
-		val decryptedMessage = aesCryptoLib.decrypt(password, enryptedMessage)
+		val decryptedMessage = AesCryptoLib.decrypt(password, enryptedMessage)
 		assertEquals(originalMessage, decryptedMessage)
 	}
 }

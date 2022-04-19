@@ -1,7 +1,6 @@
 #include <jni.h>
 #include <string>
 #include <AES.h>
-#include <HMAC.h>
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_cleevio_vexl_cryptography_AesCryptoLib_encrypt(

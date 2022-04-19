@@ -1,15 +1,9 @@
 package com.cleevio.vexl.cryptography
 
-class AesCryptoLib {
+object AesCryptoLib : BaseCryptoLib() {
 
 	external fun encrypt(password: String, message: String): String
 
 	external fun decrypt(password: String, cipher: String): String
 
-	companion object {
-		// Used to load the 'cryptography' library on application startup.
-		init {
-			System.loadLibrary("libcryptography")
-		}
-	}
 }
