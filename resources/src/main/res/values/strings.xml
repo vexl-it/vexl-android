@@ -79,4 +79,8 @@
     <string name="widget_fee_percent">\u003C %s%%</string>
     <string name="widget_location_online">Online OK</string>
     <string name="widget_location_in_person">Only in person</string>
+    <string name="widget_trigger_price_title">Active when price is</string>
+    <string name="widget_trigger_price_below">bellow</string>
+    <string name="widget_trigger_price_above">above</string>
+    <string name="widget_trigger_price_curr_crypto_price">currently 1 BTC = $%f</string>
 </resources>
