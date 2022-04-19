@@ -31,11 +31,9 @@ set_target_properties(libvc PROPERTIES IMPORTED_LOCATION
 # build application's shared lib
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++14")
 
-add_library(libcryptography SHARED
-        aes.cpp
-        sha.cpp
-        ecies.cpp
-        key_pair.cpp)
+# include all .cpp files in our bridge
+file(GLOB SOURCES "*.cpp")
+add_library(libcryptography SHARED ${SOURCES})
 
 target_include_directories(libcryptography PRIVATE
         ${cryptography_DIR}/include/vc)
