@@ -340,6 +340,14 @@
 		<item name="android:background">@drawable/edit_border</item>
 	</style>
 
+	<style name="Widget.Vexl.Filters.EditText" parent="">
+		<item name="android:paddingStart">26dp</item>
+		<item name="android:paddingEnd">26dp</item>
+		<item name="android:paddingTop">19dp</item>
+		<item name="android:paddingBottom">15dp</item>
+		<item name="android:background">@drawable/edit_border</item>
+	</style>
+
 	<style name="Widget.Vexl.SearchView" parent="Widget.AppCompat.SearchView">
 		<item name="android:textColorPrimary">@color/text_primary</item>
 		<item name="android:textColorHint">@color/text_secondary</item>
@@ -375,6 +383,10 @@
 
 	<style name="Widget.Cleevio.Marketplace.OfferVerticalDivider" parent="Widget.Cleevio.Vexl.VerticalDivider">
 		<item name="android:background">@color/gray_4</item>
+	</style>
+
+	<style name="Widget.Cleevio.Filters.FilterVerticalDivider" parent="Widget.Cleevio.Vexl.VerticalDivider">
+		<item name="android:background">@color/gray_2</item>
 	</style>
 
 	<style name="Widget.Cleevio.Vexl.TabbedRadioBtn" parent="">

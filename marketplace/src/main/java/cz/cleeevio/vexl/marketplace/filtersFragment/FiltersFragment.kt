@@ -13,6 +13,7 @@ class FiltersFragment : BaseFragment(R.layout.fragment_filters) {
 	}
 
 	override fun initView() {
+		binding.priceTriggerWidget.setupData(2.0f) //TODO setup real price of the cryptocurrency
 	}
 
 }

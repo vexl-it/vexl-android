@@ -5,6 +5,7 @@
 	android:layout_height="wrap_content">
 
 	<cz.cleevio.core.widget.PriceRangeWidget
+		android:id="@+id/price_range_widget"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="17dp"
@@ -14,5 +15,17 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
+
+	<cz.cleevio.core.widget.PriceTriggerWidget
+		android:id="@+id/price_trigger_widget"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="17dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="15dp"
+		android:layout_marginBottom="10dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/price_range_widget" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
