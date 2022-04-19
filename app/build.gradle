@@ -139,6 +139,7 @@ dependencies {
     implementation project(':contacts')
     implementation project(':profile')
     implementation project(':marketplace')
+    implementation project(':cryptography')
 
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
