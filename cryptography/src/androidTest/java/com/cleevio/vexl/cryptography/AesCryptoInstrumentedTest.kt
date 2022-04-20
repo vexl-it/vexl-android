@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 class AesCryptoInstrumentedTest {
 
 	@Test
-	fun useAppContext() {
+	fun testAes() {
 		val password = "some password"
 		val originalMessage = "some message"
 

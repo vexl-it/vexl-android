@@ -11,17 +11,21 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class KeyPairCryptoInstrumentedTest {
+class EcdsaCryptoInstrumentedTest {
 
 	@Test
-	fun testKeyPair() {
+	fun testEcdsa() {
 
 		val keyPair = KeyPairCryptoLib.generateKeyPair()
+		val data = "Some data"
 
-		Assert.assertTrue(
-			keyPair.privateKey.contains("BEGIN PRIVATE KEY") &&
-				keyPair.publicKey.contains("BEGIN PUBLIC KEY")
-		)
+		val signature = EcdsaCryptoLib.sign(keyPair, data)
+
+		Assert.assertNotEquals(data, signature)
+
+		val verified = EcdsaCryptoLib.verify(keyPair, data, signature)
+
+		Assert.assertTrue(verified)
 
 	}
 

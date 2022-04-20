@@ -10,4 +10,8 @@
 
 #endif //VEXL_ANDROID_CONVERTORS_H
 
+extern Curve DEFAULT_CURVE;
+
 jobject keyPairToJObject(JNIEnv *env, KeyPair *keyPair);
+
+KeyPair jObjectToKeyPair(JNIEnv *env, jobject *jObject);
