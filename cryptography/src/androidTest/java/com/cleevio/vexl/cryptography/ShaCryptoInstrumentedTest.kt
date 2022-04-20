@@ -11,7 +11,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ShaCryptoInstrumentedTest {
 
-	// TODO crashes, non ascii characters
+	// TODO crashes, non UTF-8 characters
 
 //	@Test
 //	fun useAppContext() {
@@ -19,6 +19,6 @@ class ShaCryptoInstrumentedTest {
 //
 //		val hashedMessage = ShaCryptoLib.hash(originalMessage, originalMessage.length)
 //
-//		assertNotEquals(originalMessage, hashedMessage)
+//		Assert.assertNotEquals(originalMessage, hashedMessage)
 //	}
 }

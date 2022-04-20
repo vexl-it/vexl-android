@@ -12,17 +12,19 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class AesCryptoInstrumentedTest {
+class EciesCryptoInstrumentedTest {
 
 	@Test
-	fun testAes() {
-		val password = "some password"
+	fun testEcies() {
 		val originalMessage = "some message"
+		val keyPair = KeyPairCryptoLib.generateKeyPair()
 
-		val enryptedMessage = AesCryptoLib.encrypt(password, originalMessage)
+		EciesCryptoLib.init()
+
+		val enryptedMessage = EciesCryptoLib.encrypt(keyPair, originalMessage)
 		Assert.assertNotEquals(originalMessage, enryptedMessage)
 
-		val decryptedMessage = AesCryptoLib.decrypt(password, enryptedMessage)
+		val decryptedMessage = EciesCryptoLib.decrypt(keyPair, enryptedMessage)
 		assertEquals(originalMessage, decryptedMessage)
 	}
 }
