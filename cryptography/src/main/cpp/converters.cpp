@@ -2,7 +2,7 @@
 // Created by Martin Egermajer on 19.04.2022.
 //
 
-#include "convertors.h"
+#include "converters.h"
 
 Curve DEFAULT_CURVE = secp224r1;
 
