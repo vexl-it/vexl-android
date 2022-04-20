@@ -39,7 +39,8 @@ class AvatarViewModel constructor(
 			profileImageUri.value?.let {
 				val response = userRepository.registerUser(
 					username,
-					getAvatarData(it, contentResolver)
+					getAvatarData(it, contentResolver),
+					IMAGE_EXTENSION
 				)
 				_user.emit(response.data)
 			}
@@ -70,7 +71,7 @@ class AvatarViewModel constructor(
 		val bitmap = getBitmap(avatarUri, contentResolver)
 
 		val baos = ByteArrayOutputStream()
-		bitmap.compress(Bitmap.CompressFormat.JPEG, BITMAP_COMPRESS_QUALITY, baos)
+		bitmap.compress(COMPRESS_FORMAT, BITMAP_COMPRESS_QUALITY, baos)
 		return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT or Base64.NO_WRAP)
 	}
 
@@ -88,5 +89,7 @@ class AvatarViewModel constructor(
 
 	companion object {
 		const val BITMAP_COMPRESS_QUALITY = 50
+		const val IMAGE_EXTENSION = "jpg"
+		val COMPRESS_FORMAT = Bitmap.CompressFormat.JPEG
 	}
 }
