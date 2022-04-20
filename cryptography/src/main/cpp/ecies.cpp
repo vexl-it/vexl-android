@@ -10,13 +10,17 @@
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_cleevio_vexl_cryptography_EciesCryptoLib_init(JNIEnv *env, jobject thiz) {
+Java_com_cleevio_vexl_cryptography_EciesCryptoLib_init(JNIEnv *env, jobject /* this */) {
     ecies_init();
 }
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_cleevio_vexl_cryptography_EciesCryptoLib_encrypt(JNIEnv *env, jobject thiz, jobject keysArg, jstring messageArg) {
+Java_com_cleevio_vexl_cryptography_EciesCryptoLib_encrypt(
+        JNIEnv *env,
+        jobject /* this */,
+        jobject keysArg,
+        jstring messageArg) {
 
     KeyPair keys = jObjectToKeyPair(env, &keysArg);
     const char *message = env->GetStringUTFChars(messageArg, nullptr);
@@ -28,7 +32,11 @@ Java_com_cleevio_vexl_cryptography_EciesCryptoLib_encrypt(JNIEnv *env, jobject t
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_cleevio_vexl_cryptography_EciesCryptoLib_decrypt(JNIEnv *env, jobject thiz, jobject keysArg, jstring encodedMessageArg) {
+Java_com_cleevio_vexl_cryptography_EciesCryptoLib_decrypt(
+        JNIEnv *env,
+        jobject /* this */,
+        jobject keysArg,
+        jstring encodedMessageArg) {
 
     KeyPair keys = jObjectToKeyPair(env, &keysArg);
     const char *message = env->GetStringUTFChars(encodedMessageArg, nullptr);

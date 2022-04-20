@@ -21,7 +21,7 @@ KeyPair jObjectToKeyPair(JNIEnv *env, jobject *jObj) {
 
     jclass cls = env->GetObjectClass(*jObj);
 
-    jstring privateKey = (jstring) env->GetObjectField(
+    auto privateKey = (jstring) env->GetObjectField(
             *jObj,
             env->GetFieldID(
                     cls,
@@ -30,7 +30,7 @@ KeyPair jObjectToKeyPair(JNIEnv *env, jobject *jObj) {
             )
     );
 
-    jstring publicKey = (jstring) env->GetObjectField(
+    auto publicKey = (jstring) env->GetObjectField(
             *jObj,
             env->GetFieldID(
                     cls,

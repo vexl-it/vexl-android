@@ -5,10 +5,10 @@
 #include <jni.h>
 #include <model/KeyPair.h>
 
-#ifndef VEXL_ANDROID_CONVERTORS_H
-#define VEXL_ANDROID_CONVERTORS_H
+#ifndef VEXL_ANDROID_CONVERTERS_H
+#define VEXL_ANDROID_CONVERTERS_H
 
-#endif //VEXL_ANDROID_CONVERTORS_H
+#endif //VEXL_ANDROID_CONVERTERS_H
 
 extern Curve DEFAULT_CURVE;
 

@@ -10,7 +10,11 @@
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_sign(JNIEnv *env, jobject thiz, jobject keysArg, jstring dataArg) {
+Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_sign(
+        JNIEnv *env,
+        jobject /* this */,
+        jobject keysArg,
+        jstring dataArg) {
 
     KeyPair keys = jObjectToKeyPair(env, &keysArg);
     const char *data = env->GetStringUTFChars(dataArg, nullptr);
@@ -22,7 +26,12 @@ Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_sign(JNIEnv *env, jobject thiz
 }
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_verify(JNIEnv *env, jobject thiz, jobject keysArg, jstring dataArg, jstring signatureArg) {
+Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_verify(
+        JNIEnv *env,
+        jobject /* this */,
+        jobject keysArg,
+        jstring dataArg,
+        jstring signatureArg) {
 
     KeyPair keys = jObjectToKeyPair(env, &keysArg);
     const char *data = env->GetStringUTFChars(dataArg, nullptr);
