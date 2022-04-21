@@ -35,8 +35,4 @@ interface UserRepository {
 	suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable>
 
 	suspend fun deleteMe(): Resource<Unit>
-
-	suspend fun getFakeKeyPairFromBE(): Resource<KeyPair>
-
-	suspend fun getFakeSignatureFromBE(signature: TempSignature): Resource<String>
 }
