@@ -1,8 +1,8 @@
 package cz.cleeevio.vexl.contacts.facebookContactsListFragment
 
+import androidx.navigation.fragment.findNavController
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentFacebookContactsListBinding
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
@@ -22,8 +22,8 @@ class FacebookContactsListFragment : BaseFragment(R.layout.fragment_facebook_con
 		}
 		repeatScopeOnStart {
 			viewModel.uploadSuccessful.collect {
-				viewModel.navMainGraphModel.navigateToGraph(
-					NavMainGraphModel.NavGraph.Main
+				findNavController().navigate(
+					FacebookContactsListFragmentDirections.proceedToFinishImportFragment()
 				)
 			}
 		}

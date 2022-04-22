@@ -19,14 +19,14 @@ class PhoneNumberUtils constructor(
 
 	fun getFormattedPhoneNumber(phoneNumber: String): String {
 		val parsedPhoneNumber = phoneNumber.parsePhoneNumber(phoneUtil)
-		return parsedPhoneNumber?.countryCode.toString() + parsedPhoneNumber?.nationalNumber.toString()
+		return "+" + parsedPhoneNumber?.countryCode.toString() + parsedPhoneNumber?.nationalNumber.toString()
 	}
 
 	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
 		return try {
 			//alternative is telephonyManager.networkCountryIso
 			//phoneUtil.parse(this, telephonyManager.simCountryIso.uppercase(Locale.getDefault()))
-			phoneUtil.parse(this, telephonyManager.networkCountryIso.uppercase(Locale.getDefault()))
+			phoneUtil.parse(this, "+" + telephonyManager.networkCountryIso.uppercase(Locale.getDefault()))
 		} catch (e: NumberParseException) {
 			Timber.e("NumberParseException was thrown: $e")
 			null

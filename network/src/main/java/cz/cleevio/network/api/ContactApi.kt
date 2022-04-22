@@ -25,7 +25,11 @@ interface ContactApi {
 	): Response<ContactImportResponse>
 
 	@GET("contacts/me")
-	suspend fun getContactsMe(): Response<BasePagedResponse<ContactResponse>>
+	suspend fun getContactsMe(
+		@Query("page") page: Int,
+		@Query("limit") limit: Int,
+		@Query("level") level: ContactLevel
+	): Response<BasePagedResponse<ContactResponse>>
 
 	//todo: should this be ever used?
 	@DELETE("contact")

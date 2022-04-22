@@ -6,10 +6,14 @@ import android.provider.ContactsContract
 import android.text.TextUtils
 import android.util.Patterns
 import cz.cleevio.cache.dao.ContactDao
+import cz.cleevio.cache.dao.ContactKeyDao
 import cz.cleevio.cache.entity.ContactEntity
+import cz.cleevio.cache.entity.ContactKeyEntity
+import cz.cleevio.cache.entity.ContactLevel
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.Resource
+import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.network.request.contact.ContactUserRequest
@@ -18,6 +22,7 @@ import cz.cleevio.repository.model.contact.*
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
+	private val contactKeyDao: ContactKeyDao,
 	private val contactApi: ContactApi,
 	private val phoneNumberUtils: PhoneNumberUtils,
 	private val encryptedPreference: EncryptedPreferenceRepository
@@ -177,8 +182,24 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun loadMyContactsKeys(): Resource<List<String>> = tryOnline(
-		request = { contactApi.getContactsMe() },
+	override suspend fun loadMyContactsKeys(): Resource<List<String>> {
+		val response = loadMyContactsKeys(0, Int.MAX_VALUE, cz.cleevio.network.response.contact.ContactLevel.ALL)
+		when (response.status) {
+			is Status.Success -> {
+				contactKeyDao.replaceAll(
+					response.data.orEmpty().map { key ->
+						ContactKeyEntity(
+							publicKey = key,
+							contectLevel = ContactLevel.NOT_SPECIFIED
+						)
+					})
+			}
+		}
+		return response
+	}
+
+	suspend fun loadMyContactsKeys(page: Int, limit: Int, level: cz.cleevio.network.response.contact.ContactLevel): Resource<List<String>> = tryOnline(
+		request = { contactApi.getContactsMe(page, limit, level) },
 		mapper = { it?.items?.map { item -> item.publicKey }.orEmpty() }
 	)
 
