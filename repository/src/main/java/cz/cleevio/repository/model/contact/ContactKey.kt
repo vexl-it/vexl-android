@@ -10,6 +10,6 @@ data class ContactKey constructor(
 fun ContactKeyEntity.fromCache(): ContactKey {
 	return ContactKey(
 		key = this.publicKey,
-		level = this.contectLevel.fromCache()
+		level = this.contactLevel.fromCache()
 	)
 }

@@ -20,6 +20,8 @@ interface ContactRepository {
 
 	fun getContactKeys(): List<ContactKey>
 
+	fun getFirstLevelContactKeys(): List<ContactKey>
+
 	suspend fun deleteMyUser(): Resource<Unit>
 
 	suspend fun deleteMyFacebookUser(): Resource<Unit>

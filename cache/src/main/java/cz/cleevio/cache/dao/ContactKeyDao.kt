@@ -2,6 +2,7 @@ package cz.cleevio.cache.dao
 
 import androidx.room.*
 import cz.cleevio.cache.entity.ContactKeyEntity
+import cz.cleevio.cache.entity.ContactLevel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -12,6 +13,12 @@ interface ContactKeyDao {
 
 	@Query("SELECT * FROM ContactKeyEntity")
 	fun getAllKeysFlow(): Flow<List<ContactKeyEntity>>
+
+	@Query("SELECT * FROM ContactKeyEntity where contactLevel = :contactLevel")
+	fun getKeysByLevel(contactLevel: ContactLevel): List<ContactKeyEntity>
+
+	fun getFirstLevelKeys() =
+		getKeysByLevel(ContactLevel.FIRST)
 
 	@Query("SELECT * FROM ContactKeyEntity")
 	fun getAllKeys(): List<ContactKeyEntity>

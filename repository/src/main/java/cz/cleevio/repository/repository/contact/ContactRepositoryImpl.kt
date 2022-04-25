@@ -193,12 +193,12 @@ class ContactRepositoryImpl constructor(
 			val contactKeys = first.data.orEmpty().map {
 				ContactKeyEntity(
 					publicKey = it,
-					contectLevel = ContactLevel.FIRST
+					contactLevel = ContactLevel.FIRST
 				)
 			} + second.data.orEmpty().map {
 				ContactKeyEntity(
 					publicKey = it,
-					contectLevel = ContactLevel.SECOND
+					contactLevel = ContactLevel.SECOND
 				)
 			}
 			contactKeyDao.replaceAll(contactKeys)
@@ -209,6 +209,12 @@ class ContactRepositoryImpl constructor(
 
 	override fun getContactKeys(): List<ContactKey> {
 		return contactKeyDao.getAllKeys().map {
+			it.fromCache()
+		}
+	}
+
+	override fun getFirstLevelContactKeys(): List<ContactKey> {
+		return contactKeyDao.getFirstLevelKeys().map {
 			it.fromCache()
 		}
 	}

@@ -8,7 +8,7 @@ data class ContactKeyEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
 	val publicKey: String,
-	val contectLevel: ContactLevel,
+	val contactLevel: ContactLevel,
 )
 
 enum class ContactLevel {
