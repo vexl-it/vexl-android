@@ -1,9 +1,10 @@
 package cz.cleevio.core.utils
 
 import java.text.Normalizer
+import java.util.*
 
 fun String.stripAccents(): String {
-	var normalize = Normalizer.normalize(this.toLowerCase(), Normalizer.Form.NFD)
+	var normalize = Normalizer.normalize(this.lowercase(Locale.getDefault()), Normalizer.Form.NFD)
 	normalize = normalize.replace("[\\p{InCombiningDiacriticalMarks}]".toRegex(), "")
 	return normalize
 }
@@ -18,5 +19,4 @@ fun String.toValidPhoneNumber(): String {
 }
 
 fun String.isPhoneValid(): Boolean =
-	//this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())	//todo: discuss + sign for prefix
-	this.matches("^(?:[0-9] ?){6,14}[0-9]\$".toRegex())
+	this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())

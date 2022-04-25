@@ -30,6 +30,7 @@ val repoModule = module {
 	single<ContactRepository> {
 		ContactRepositoryImpl(
 			contactDao = get(),
+			contactKeyDao = get(),
 			contactApi = get(),
 			phoneNumberUtils = get(),
 			encryptedPreference = get()
