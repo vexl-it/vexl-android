@@ -13,11 +13,10 @@ class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi
 ) : OfferRepository {
 
-	override suspend fun createOffer(location: String, offerList: List<NewOffer>): Resource<Offer> = tryOnline(
+	override suspend fun createOffer(offerList: List<NewOffer>): Resource<Offer> = tryOnline(
 		request = {
 			offerApi.postOffers(
 				CreateOfferRequest(
-					location = location,
 					offerPrivateList = offerList.map { it.toNetwork() }
 				)
 			)
