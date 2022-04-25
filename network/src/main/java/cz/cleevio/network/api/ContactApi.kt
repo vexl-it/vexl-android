@@ -28,7 +28,7 @@ interface ContactApi {
 	suspend fun getContactsMe(
 		@Query("page") page: Int,
 		@Query("limit") limit: Int,
-		@Query("level") level: ContactLevel
+		@Query("level") levelApi: ContactLevelApi
 	): Response<BasePagedResponse<ContactResponse>>
 
 	//todo: should this be ever used?

@@ -12,7 +12,7 @@ data class ContactKeyEntity(
 )
 
 enum class ContactLevel {
-	FIRST_LEVEL,
-	SECOND_LEVEL,
+	FIRST,
+	SECOND,
 	NOT_SPECIFIED
 }

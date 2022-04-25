@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
-import timber.log.Timber
 
 class ContactsListViewModel constructor(
 	private val contactRepository: ContactRepository
@@ -93,19 +92,6 @@ class ContactsListViewModel constructor(
 			}
 		}
 
-	}
-
-	fun loadAllContacts() {
-		viewModelScope.launch(Dispatchers.IO) {
-			val response = contactRepository.loadMyContactsKeys()
-			when (response.status) {
-				is Status.Success -> response.data?.let { data ->
-					data.forEach { publicKey ->
-						Timber.tag("ASDX").d(publicKey)
-					}
-				}
-			}
-		}
 	}
 
 	private suspend fun emitContacts(contacts: List<Contact>) {

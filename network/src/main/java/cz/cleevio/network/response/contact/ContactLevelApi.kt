@@ -1,6 +1,6 @@
 package cz.cleevio.network.response.contact
 
-enum class ContactLevel {
+enum class ContactLevelApi {
 	FIRST,
 	SECOND,
 	ALL

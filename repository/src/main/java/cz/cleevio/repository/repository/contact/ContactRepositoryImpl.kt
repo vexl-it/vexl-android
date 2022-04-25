@@ -17,6 +17,7 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.network.request.contact.ContactUserRequest
+import cz.cleevio.network.response.contact.ContactLevelApi
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.model.contact.*
 
@@ -182,24 +183,42 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun loadMyContactsKeys(): Resource<List<String>> {
-		val response = loadMyContactsKeys(0, Int.MAX_VALUE, cz.cleevio.network.response.contact.ContactLevel.ALL)
-		when (response.status) {
-			is Status.Success -> {
-				contactKeyDao.replaceAll(
-					response.data.orEmpty().map { key ->
-						ContactKeyEntity(
-							publicKey = key,
-							contectLevel = ContactLevel.NOT_SPECIFIED
-						)
-					})
+	override suspend fun syncMyContactsKeys(): Boolean {
+		val first = loadMyContactsKeys(0, Int.MAX_VALUE, ContactLevelApi.FIRST)
+		val second = loadMyContactsKeys(0, Int.MAX_VALUE, ContactLevelApi.SECOND)
+
+		val success = first.status == Status.Success && second.status == Status.Success
+
+		if (success) {
+			val contactKeys = first.data.orEmpty().map {
+				ContactKeyEntity(
+					publicKey = it,
+					contectLevel = ContactLevel.FIRST
+				)
+			} + second.data.orEmpty().map {
+				ContactKeyEntity(
+					publicKey = it,
+					contectLevel = ContactLevel.SECOND
+				)
 			}
+			contactKeyDao.replaceAll(contactKeys)
 		}
-		return response
+
+		return success
 	}
 
-	suspend fun loadMyContactsKeys(page: Int, limit: Int, level: cz.cleevio.network.response.contact.ContactLevel): Resource<List<String>> = tryOnline(
-		request = { contactApi.getContactsMe(page, limit, level) },
+	override fun getContactKeys(): List<ContactKey> {
+		return contactKeyDao.getAllKeys().map {
+			it.fromCache()
+		}
+	}
+
+	private suspend fun loadMyContactsKeys(
+		page: Int,
+		limit: Int,
+		levelApi: ContactLevelApi
+	): Resource<List<String>> = tryOnline(
+		request = { contactApi.getContactsMe(page, limit, levelApi) },
 		mapper = { it?.items?.map { item -> item.publicKey }.orEmpty() }
 	)
 

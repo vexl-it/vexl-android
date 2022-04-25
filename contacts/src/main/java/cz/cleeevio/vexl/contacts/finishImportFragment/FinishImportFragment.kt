@@ -2,6 +2,7 @@ package cz.cleeevio.vexl.contacts.finishImportFragment
 
 import androidx.lifecycle.lifecycleScope
 import cz.cleeevio.vexl.contacts.R
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.viewBinding
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseFragment
@@ -14,17 +15,16 @@ class FinishImportFragment : BaseFragment(R.layout.fragment_finish_import) {
 
 	override fun bindObservers() {
 		viewLifecycleOwner.lifecycleScope.launch {
-			viewModel.user.collect { user ->
+			viewModel.sshKeyDownloadSuccessful.collect { success ->
+				// TODO maybe some delay?
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.Marketplace
+				)
 			}
 		}
 	}
 
 	override fun initView() {
 		viewModel.loadMyContactsKeys()
-
-
-//		viewModel.navMainGraphModel.navigateToGraph(
-//			NavMainGraphModel.NavGraph.Main
-//		)
 	}
 }
