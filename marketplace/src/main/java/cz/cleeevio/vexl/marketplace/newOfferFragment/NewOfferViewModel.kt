@@ -20,10 +20,10 @@ class NewOfferViewModel constructor(
 			val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
 
 			//load all public keys for specified level of friends
-			val contacts = contactRepository.loadMyContactsKeys().data //fixme: should take contacts public keys from DB
+			val contacts = contactRepository.getContactKeys()
 
 			//encrypt in loop for every contact
-			contacts?.forEach {
+			contacts.forEach {
 				//TODO: encrypt all data fields with each public key
 				val encryptedOffer = NewOffer(
 					location = params.location.toString(),
