@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferLocationBinding
+import cz.cleevio.core.model.LocationValue
 import lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
@@ -38,6 +39,10 @@ class OfferLocationWidget constructor(
 	private fun setupUI() {
 		binding = WidgetOfferLocationBinding.inflate(layoutInflater, this)
 	}
+
+	fun getLocationValue(): LocationValue = LocationValue(
+		type = selectedButton
+	)
 }
 
 enum class LocationButtonSelected {

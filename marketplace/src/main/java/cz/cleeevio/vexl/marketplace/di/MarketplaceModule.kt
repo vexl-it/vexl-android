@@ -28,7 +28,10 @@ val marketplaceModule = module {
 	}
 
 	viewModel {
-		NewOfferViewModel()
+		NewOfferViewModel(
+			offerRepository = get(),
+			contactRepository = get()
+		)
 	}
 
 }

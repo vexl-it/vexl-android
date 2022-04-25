@@ -15,6 +15,14 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 	}
 
 	override fun initView() {
+		binding.newOfferBtn.setOnClickListener {
+			val params = NewOfferParams(
+				location = binding.newOfferLocation.getLocationValue(),
+				fee = binding.newOfferFee.getFeeValue(),
+				priceRange = binding.newOfferRange.getPriceRangeValue(),
+				priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue()
+			)
+			viewModel.createOffer(params)
+		}
 	}
-
 }

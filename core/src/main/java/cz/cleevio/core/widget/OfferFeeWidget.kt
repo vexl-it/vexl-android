@@ -7,6 +7,7 @@ import android.widget.SeekBar
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFeeBinding
+import cz.cleevio.core.model.FeeValue
 import lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
@@ -72,6 +73,11 @@ class OfferFeeWidget constructor(
 		feeValue = value.inc()
 		binding.feeValue.text = context.getString(R.string.widget_fee_percent, feeValue.toString())
 	}
+
+	fun getFeeValue(): FeeValue = FeeValue(
+		type = selectedButton,
+		value = feeValue
+	)
 
 	companion object {
 		const val FEE_MAX_VALUE: Int = 24
