@@ -32,4 +32,7 @@ interface ContactRepository {
 	fun getContacts(): List<Contact>
 
 	suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>>
+
+	suspend fun generateContactsTmp(): Resource<Unit>
+	suspend fun generateFacebookContactsTmp(): Resource<Unit>
 }

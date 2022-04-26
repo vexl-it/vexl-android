@@ -243,6 +243,26 @@ class ContactRepositoryImpl constructor(
 		mapper = { }
 	)
 
+	override suspend fun generateContactsTmp(): Resource<Unit> = tryOnline(
+		request = {
+			contactApi.generateContactsTmp(
+				hash = encryptedPreference.hash,
+				signature = encryptedPreference.signature
+			)
+		},
+		mapper = { }
+	)
+
+	override suspend fun generateFacebookContactsTmp(): Resource<Unit> = tryOnline(
+		request = {
+			contactApi.generateContactsTmp(
+				hash = encryptedPreference.facebookHash,
+				signature = encryptedPreference.facebookSignature
+			)
+		},
+		mapper = { }
+	)
+
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
