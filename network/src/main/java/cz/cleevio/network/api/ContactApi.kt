@@ -68,4 +68,10 @@ interface ContactApi {
 		@Path(value = "facebookId") facebookId: String,
 		@Path(value = "accessToken") accessToken: String
 	): Response<ContactFacebookResponse>
+
+	@POST("../../temp")
+	suspend fun generateContactsTmp(
+		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
+		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
+	): Response<ResponseBody>
 }
