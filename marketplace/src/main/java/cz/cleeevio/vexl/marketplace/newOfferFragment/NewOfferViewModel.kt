@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.widget.FriendLevel
+import com.cleevio.vexl.cryptography.EciesCryptoLib
+import com.cleevio.vexl.cryptography.KeyPairCryptoLib
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -33,10 +35,22 @@ class NewOfferViewModel constructor(
 			}
 
 			//encrypt in loop for every contact
-			contacts.forEach {
-				//TODO: encrypt all data fields with each public key
+			contacts.forEach { contactKey ->
+
+				// TODO we have to save them both
+				val offerKeys = KeyPairCryptoLib.generateKeyPair()
+
 				val encryptedOffer = NewOffer(
-					location = params.location.values.map { location -> locationHelper.locationToJsonString(location) }
+					location = eciesEncrypt(params.location.toString(), contactKey.key),
+					userPublicKey = contactKey.key,
+					offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey.key),
+					direction = "",
+					fee = eciesEncrypt(params.fee.toString(), contactKey.key),
+					amount = eciesEncrypt(params.priceRange.toString(), contactKey.key),
+					onlyInPerson = "",
+					paymentMethod = "",
+					typeNetwork = "",
+					friendLevel = ""
 				)
 				encryptedOfferList.add(encryptedOffer)
 			}
@@ -69,4 +83,9 @@ class NewOfferViewModel constructor(
 			}
 		}
 	}
+
+	private fun eciesEncrypt(data: String, contactKey: String): String {
+		return EciesCryptoLib.encrypt(contactKey, data)
+	}
+
 }
