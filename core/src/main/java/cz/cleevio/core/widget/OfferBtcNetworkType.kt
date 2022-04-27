@@ -16,8 +16,6 @@ class OfferBtcNetworkType constructor(
 	private lateinit var binding: WidgetOfferBtcNetworkWidgetBinding
 	private var selectedButtons: MutableSet<BtcNetworkButtonSelected> = mutableSetOf()
 
-	constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
-
 	init {
 		setupUI()
 

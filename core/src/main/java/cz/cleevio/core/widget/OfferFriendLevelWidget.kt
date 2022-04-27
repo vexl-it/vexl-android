@@ -18,8 +18,6 @@ class OfferFriendLevelWidget constructor(
 	private lateinit var binding: WidgetOfferFriendLevelBinding
 	private var selectedButton: FriendLevel = FriendLevel.NONE
 
-	constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
-
 	init {
 		setupUI()
 

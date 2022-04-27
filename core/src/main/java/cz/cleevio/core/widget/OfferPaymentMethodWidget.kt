@@ -7,7 +7,6 @@ import cz.cleevio.core.databinding.WidgetOfferPaymentMethodBinding
 import cz.cleevio.core.model.PaymentMethodValue
 import lightbase.core.extensions.layoutInflater
 
-
 class OfferPaymentMethodWidget constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
@@ -16,8 +15,6 @@ class OfferPaymentMethodWidget constructor(
 
 	private lateinit var binding: WidgetOfferPaymentMethodBinding
 	private var selectedButtons: MutableSet<PaymentButtonSelected> = mutableSetOf()
-
-	constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
 	init {
 		setupUI()

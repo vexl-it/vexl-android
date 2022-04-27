@@ -21,8 +21,6 @@ class OfferFeeWidget constructor(
 	private var selectedButton: FeeButtonSelected = FeeButtonSelected.NONE
 	private var feeValue: Int = 0
 
-	constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
-
 	init {
 		setupUI()
 
