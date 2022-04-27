@@ -2,6 +2,7 @@ package cz.cleevio.core.di
 
 import coil.ImageLoader
 import coil.util.CoilUtils
+import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.utils.NavMainGraphModel
 import lightbase.camera.utils.ImageHelper
 import okhttp3.OkHttpClient
@@ -27,5 +28,11 @@ val coreModule = module {
 
 	single {
 		NavMainGraphModel()
+	}
+
+	single {
+		LocationHelper(
+			moshi = get()
+		)
 	}
 }

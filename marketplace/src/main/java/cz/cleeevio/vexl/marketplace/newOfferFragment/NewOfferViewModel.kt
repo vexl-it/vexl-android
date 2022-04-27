@@ -2,6 +2,7 @@ package cz.cleeevio.vexl.marketplace.newOfferFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -15,6 +16,7 @@ class NewOfferViewModel constructor(
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	private val locationHelper: LocationHelper
 ) : BaseViewModel() {
 
 	fun createOffer(params: NewOfferParams) {
@@ -28,7 +30,7 @@ class NewOfferViewModel constructor(
 			contacts.forEach {
 				//TODO: encrypt all data fields with each public key
 				val encryptedOffer = NewOffer(
-
+					location = params.location.values.map { location -> locationHelper.locationToJsonString(location) }
 				)
 				encryptedOfferList.add(encryptedOffer)
 			}
@@ -37,7 +39,7 @@ class NewOfferViewModel constructor(
 			encryptedPreferenceRepository.userPublicKey.let { publicKey ->
 				//TODO: encrypt all data fields with public key
 				val encryptedOffer = NewOffer(
-
+					location = params.location.values.map { location -> locationHelper.locationToJsonString(location) }
 				)
 				encryptedOfferList.add(encryptedOffer)
 			}
