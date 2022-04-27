@@ -18,8 +18,6 @@ class OfferLocationWidget constructor(
 	private lateinit var binding: WidgetOfferLocationBinding
 	private var selectedButton: LocationButtonSelected = LocationButtonSelected.NONE
 
-	constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
-
 	init {
 		setupUI()
 

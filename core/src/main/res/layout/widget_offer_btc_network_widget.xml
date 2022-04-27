@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/white"
+	tools:parentTag="androidx.cardview.widget.CardView">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<CheckBox
+			android:id="@+id/btc_network_lighting"
+			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/widget_location_radio_selector"
+			android:button="@android:color/transparent"
+			android:text="@string/widget_btc_network_lighting"
+			android:layout_margin="8dp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<CheckBox
+			android:id="@+id/btc_network_on_chain"
+			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/widget_location_radio_selector"
+			android:button="@android:color/transparent"
+			android:text="@string/widget_btc_network_on_chain"
+			android:layout_margin="8dp"
+			app:layout_constraintStart_toEndOf="@+id/btc_network_lighting"
+			app:layout_constraintTop_toTopOf="parent" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

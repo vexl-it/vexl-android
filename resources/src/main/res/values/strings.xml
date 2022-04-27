@@ -81,7 +81,15 @@
     <string name="widget_location_online">Online OK</string>
     <string name="widget_location_in_person">Only in person</string>
     <string name="widget_trigger_price_title">Active when price is</string>
-    <string name="widget_trigger_price_below">bellow</string>
+    <string name="widget_trigger_price_below">below</string>
     <string name="widget_trigger_price_above">above</string>
     <string name="widget_trigger_price_curr_crypto_price">currently 1 BTC = $%f</string>
+    <string name="widget_payment_cash">Cash</string>
+    <string name="widget_payment_revolut">Revolut</string>
+    <string name="widget_payment_bank">Bank</string>
+    <string name="widget_friend_first_degree">1st degree</string>
+    <string name="widget_friend_second_degree">2nd degree</string>
+    <string name="widget_btc_network_lighting">Lighting</string>
+    <string name="widget_btc_network_on_chain">On Chain</string>
+    <string name="widget_offer_description">Description</string>
 </resources>
