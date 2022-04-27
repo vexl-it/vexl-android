@@ -11,10 +11,10 @@ import cz.cleevio.core.utils.viewBinding
 import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-sealed class OffersBaseFragment(
+sealed class OffersBaseFragment constructor(
 	val navigateToFilters: () -> Unit,
 	val navigateToNewOffer: () -> Unit,
-	val requestOffer: (Long) -> Unit
+	val requestOffer: (String) -> Unit
 ) : BaseFragment(R.layout.fragment_offers) {
 
 	override val viewModel by viewModel<OffersViewModel>()

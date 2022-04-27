@@ -10,7 +10,7 @@ class MarketplacePagerAdapter constructor(
 	fragment: Fragment,
 	private val navigateToFilters: () -> (Unit),
 	private val navigateToNewOffer: () -> (Unit),
-	private val requestOffer: (Long) -> (Unit)
+	private val requestOffer: (String) -> (Unit)
 ) : FragmentStateAdapter(fragment) {
 
 	override fun getItemCount(): Int {

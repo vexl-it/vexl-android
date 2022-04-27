@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import cz.cleeevio.vexl.marketplace.databinding.ItemOfferBinding
 import cz.cleevio.repository.model.offer.Offer
 
-class OffersAdapter(val requestOffer: (Long) -> Unit) : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Offer>() {
+class OffersAdapter constructor(
+	val requestOffer: (String) -> Unit
+) : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Offer>() {
 	override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem.offerId == newItem.offerId
 
 	override fun areContentsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem == newItem
