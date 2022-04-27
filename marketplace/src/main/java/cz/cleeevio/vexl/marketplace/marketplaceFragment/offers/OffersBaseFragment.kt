@@ -19,14 +19,9 @@ sealed class OffersBaseFragment constructor(
 
 	override val viewModel by viewModel<OffersViewModel>()
 	private val binding by viewBinding(FragmentOffersBinding::bind)
-	private lateinit var adapter: OffersAdapter
+	lateinit var adapter: OffersAdapter
 
 	override fun bindObservers() {
-		repeatScopeOnStart {
-			viewModel.buyOffers.collect { offers ->
-				adapter.submitList(offers)
-			}
-		}
 		repeatScopeOnStart {
 			viewModel.filters.collect { filters ->
 				binding.filters.removeAllViews()

@@ -24,7 +24,8 @@ val repoModule = module {
 	single<OfferRepository> {
 		OfferRepositoryImpl(
 			offerApi = get(),
-			myOfferDao = get()
+			myOfferDao = get(),
+			offerDao = get()
 		)
 	}
 

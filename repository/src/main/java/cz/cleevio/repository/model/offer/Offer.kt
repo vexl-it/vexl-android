@@ -1,20 +1,24 @@
 package cz.cleevio.repository.model.offer
 
+import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
+import java.math.BigDecimal
 import java.time.ZonedDateTime
 
 data class Offer constructor(
-	val offerId: String,
+	val id: Long = 0,
+	val offerId: Long,
 	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
-	val direction: String,
-	val fee: String?,
-	val offerSymKey: String,
-	val amount: String?,
-	val onlyInPerson: String,
+	val offerDescription: String,
+	val amountBottomLimit: BigDecimal,
+	val amountTopLimit: BigDecimal,
+	val feeState: String,
+	val feeAmount: BigDecimal,
+	val locationState: String,
 	val paymentMethod: String,
-	val typeNetwork: String,
+	val btcNetwork: String,
 	val friendLevel: String,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime
@@ -22,19 +26,63 @@ data class Offer constructor(
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
+		// TODO u sure toLong()?
+		offerId = this.offerId.decryptedValue.toLong(),
+		location = this.location.decryptedValue,
+		userPublicKey = this.userPublicKey,
+		offerPublicKey = this.offerPublicKey.decryptedValue,
+		offerDescription = this.offerDescription.decryptedValue,
+		amountBottomLimit = this.amountBottomLimit.decryptedValue,
+		amountTopLimit = this.amountTopLimit.decryptedValue,
+		feeState = this.feeState.decryptedValue,
+		feeAmount = this.feeAmount.decryptedValue,
+		locationState = this.locationState.decryptedValue,
+		paymentMethod = this.paymentMethod.decryptedValue,
+		btcNetwork = this.btcNetwork.decryptedValue,
+		friendLevel = this.friendLevel.decryptedValue,
+		createdAt = ZonedDateTime.parse(this.createdAt.decryptedValue),
+		modifiedAt = ZonedDateTime.parse(this.modifiedAt.decryptedValue)
+	)
+}
+
+fun OfferEntity.fromCache(): Offer {
+	return Offer(
+		id = this.id,
 		offerId = this.offerId,
 		location = this.location,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
-		direction = this.direction,
-		fee = this.fee,
-		offerSymKey = this.offerSymKey,
-		amount = this.amount,
-		onlyInPerson = this.onlyInPerson,
+		offerDescription = this.offerDescription,
+		amountBottomLimit = this.amountBottomLimit,
+		amountTopLimit = this.amountTopLimit,
+		feeState = this.feeState,
+		feeAmount = this.feeAmount,
+		locationState = this.locationState,
 		paymentMethod = this.paymentMethod,
-		typeNetwork = this.typeNetwork,
+		btcNetwork = this.btcNetwork,
 		friendLevel = this.friendLevel,
-		createdAt = ZonedDateTime.parse(this.createdAt),
-		modifiedAt = ZonedDateTime.parse(this.modifiedAt)
+		createdAt = this.createdAt,
+		modifiedAt = this.modifiedAt
+	)
+}
+
+fun Offer.toCache(): OfferEntity {
+	return OfferEntity(
+		id = this.id,
+		offerId = this.offerId,
+		location = this.location,
+		userPublicKey = this.userPublicKey,
+		offerPublicKey = this.offerPublicKey,
+		offerDescription = this.offerDescription,
+		amountBottomLimit = this.amountBottomLimit,
+		amountTopLimit = this.amountTopLimit,
+		feeState = this.feeState,
+		feeAmount = this.feeAmount,
+		locationState = this.locationState,
+		paymentMethod = this.paymentMethod,
+		btcNetwork = this.btcNetwork,
+		friendLevel = this.friendLevel,
+		createdAt = this.createdAt,
+		modifiedAt = this.modifiedAt
 	)
 }

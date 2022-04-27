@@ -53,6 +53,8 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 			}
 
 		}.attach()
+
+		marketplaceViewModel.syncOffers()
 	}
 
 }

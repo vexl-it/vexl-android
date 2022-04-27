@@ -35,4 +35,12 @@ interface OfferApi {
 	@GET("offers/me")
 	//todo: BE will probably support filters on this EP
 	suspend fun getOffersMe(): Response<BasePagedResponse<OfferUnifiedResponse>>
+
+	@GET("offers/me/modified/")
+	//todo: BE will probably support filters on this EP
+	suspend fun getModifiedOffers(
+		@Query("page") page: Int,
+		@Query("limit") limit: Int,
+		@Query("modifiedAt") modifiedAt: String
+	): Response<BasePagedResponse<OfferUnifiedResponse>>
 }

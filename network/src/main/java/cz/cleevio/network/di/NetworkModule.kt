@@ -3,6 +3,7 @@ package cz.cleevio.network.di
 import com.squareup.moshi.Moshi
 import cz.cleevio.network.*
 import cz.cleevio.network.adapters.BigDecimalAdapter
+import cz.cleevio.network.adapters.EncryptedBigDecimalAdapter
 import cz.cleevio.network.adapters.EncryptedStringAdapter
 import cz.cleevio.network.agent.UserAgent
 import cz.cleevio.network.agent.UserAgentImpl
@@ -171,6 +172,7 @@ val networkModule = module {
 			.Builder()
 			.add(BigDecimalAdapter)
 			.add(EncryptedStringAdapter(get()))
+			.add(EncryptedBigDecimalAdapter(get()))
 			.build()
 	}
 
