@@ -17,10 +17,14 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 	override fun initView() {
 		binding.newOfferBtn.setOnClickListener {
 			val params = NewOfferParams(
+				description = binding.newOfferDescription.text.toString(),
 				location = binding.newOfferLocation.getLocationValue(),
 				fee = binding.newOfferFee.getFeeValue(),
 				priceRange = binding.newOfferRange.getPriceRangeValue(),
-				priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue()
+				priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
+				paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
+				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
+				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
 			)
 			viewModel.createOffer(params)
 		}

@@ -1,13 +1,14 @@
 package cz.cleeevio.vexl.marketplace.newOfferFragment
 
-import cz.cleevio.core.model.FeeValue
-import cz.cleevio.core.model.LocationValue
-import cz.cleevio.core.model.PriceRangeValue
-import cz.cleevio.core.model.PriceTriggerValue
+import cz.cleevio.core.model.*
 
-data class NewOfferParams(
+data class NewOfferParams constructor(
+	val description: String,
 	val location: LocationValue,    //todo: should contain GPS?
 	val fee: FeeValue,
 	val priceRange: PriceRangeValue,
-	val priceTrigger: PriceTriggerValue    //todo: BE is missing field for this value
+	val friendLevel: FriendLevelValue,
+	val priceTrigger: PriceTriggerValue,    //todo: BE is missing field for this value
+	val btcNetwork: BtcNetworkValue,
+	val paymentMethod: PaymentMethodValue
 )
