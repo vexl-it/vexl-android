@@ -15,4 +15,6 @@ interface OfferRepository {
 	suspend fun loadOffersCreatedByMe(offerIds: List<Long>): Resource<List<Offer>>
 
 	suspend fun deleteMyOffers(offerIds: List<Long>): Resource<Unit>
+
+	suspend fun saveMyOfferIdAndKeys(offerId: String, privateKey: String, publicKey: String): Resource<Unit>
 }

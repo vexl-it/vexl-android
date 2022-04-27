@@ -4,7 +4,7 @@ import cz.cleevio.network.response.offer.OfferUnifiedResponse
 import java.time.ZonedDateTime
 
 data class Offer constructor(
-	val offerId: Long,
+	val offerId: String,
 	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
@@ -22,8 +22,7 @@ data class Offer constructor(
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
-		// TODO u sure toLong()?
-		offerId = this.offerId.toLong(),
+		offerId = this.offerId,
 		location = this.location,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
