@@ -7,7 +7,7 @@ import java.time.ZonedDateTime
 
 data class Offer constructor(
 	val id: Long = 0,
-	val offerId: Long,
+	val offerId: String,
 	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
@@ -26,8 +26,7 @@ data class Offer constructor(
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
-		// TODO u sure toLong()?
-		offerId = this.offerId.decryptedValue.toLong(),
+		offerId = this.offerId.decryptedValue,
 		location = this.location.decryptedValue,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey.decryptedValue,

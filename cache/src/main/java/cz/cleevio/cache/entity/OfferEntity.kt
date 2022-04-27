@@ -10,7 +10,7 @@ import java.time.ZonedDateTime
 data class OfferEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
-	val offerId: Long,
+	val offerId: String,
 	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
