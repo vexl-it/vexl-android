@@ -1,6 +1,8 @@
 package cz.cleeevio.vexl.marketplace.newOfferFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -12,7 +14,9 @@ import lightbase.core.baseClasses.BaseViewModel
 
 class NewOfferViewModel constructor(
 	private val contactRepository: ContactRepository,
-	private val offerRepository: OfferRepository
+	private val offerRepository: OfferRepository,
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	private val locationHelper: LocationHelper
 ) : BaseViewModel() {
 
 	fun createOffer(params: NewOfferParams) {
@@ -26,17 +30,16 @@ class NewOfferViewModel constructor(
 			contacts.forEach {
 				//TODO: encrypt all data fields with each public key
 				val encryptedOffer = NewOffer(
-					location = params.location.toString(),
-					userPublicKey = "",
-					offerPublicKey = "",
-					direction = "",
-					fee = params.fee.toString(),
-					amount = params.priceRange.toString(),
-					onlyInPerson = "",
-					paymentMethod = "",
-					typeNetwork = "",
-					friendLevel = "",
-					offerSymmetricKey = "",
+					location = params.location.values.map { location -> locationHelper.locationToJsonString(location) }
+				)
+				encryptedOfferList.add(encryptedOffer)
+			}
+
+			//also encrypt with user's key
+			encryptedPreferenceRepository.userPublicKey.let { publicKey ->
+				//TODO: encrypt all data fields with public key
+				val encryptedOffer = NewOffer(
+					location = params.location.values.map { location -> locationHelper.locationToJsonString(location) }
 				)
 				encryptedOfferList.add(encryptedOffer)
 			}
@@ -45,6 +48,16 @@ class NewOfferViewModel constructor(
 			val response = offerRepository.createOffer(encryptedOfferList)
 			when (response.status) {
 				is Status.Success -> {
+					//save offer ID into DB, also save keys?
+					response.data?.offerId?.let { offerId ->
+						offerRepository.saveMyOfferIdAndKeys(
+							offerId = offerId,
+							//todo: add keys that were generated for offer
+							privateKey = "",
+							publicKey = ""
+						)
+					}
+
 					//TODO: notify UI and move user to some other screen?
 				}
 			}

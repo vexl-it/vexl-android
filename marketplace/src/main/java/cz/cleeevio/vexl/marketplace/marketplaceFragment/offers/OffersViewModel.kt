@@ -51,7 +51,7 @@ class OffersViewModel(
 			_buyOffers.emit(
 				listOf(
 					Offer(
-						offerId = 1L,
+						offerId = "1AA",
 						location = "Prague 7",
 						userPublicKey = "pub key 1",
 						offerPublicKey = "",
@@ -67,7 +67,7 @@ class OffersViewModel(
 						modifiedAt = ZonedDateTime.now()
 					),
 					Offer(
-						offerId = 2L,
+						offerId = "2BB",
 						location = "Prague 8",
 						userPublicKey = "pub key 2",
 						offerPublicKey = "",
@@ -83,7 +83,7 @@ class OffersViewModel(
 						modifiedAt = ZonedDateTime.now()
 					),
 					Offer(
-						offerId = 3L,
+						offerId = "3CC",
 						location = "Prague 9",
 						userPublicKey = "pub key 3",
 						offerPublicKey = "",

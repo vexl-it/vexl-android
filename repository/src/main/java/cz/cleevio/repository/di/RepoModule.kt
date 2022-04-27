@@ -23,7 +23,8 @@ val repoModule = module {
 
 	single<OfferRepository> {
 		OfferRepositoryImpl(
-			offerApi = get()
+			offerApi = get(),
+			myOfferDao = get()
 		)
 	}
 

@@ -1,5 +1,7 @@
 package cz.cleevio.repository.repository.offer
 
+import cz.cleevio.cache.dao.MyOfferDao
+import cz.cleevio.cache.entity.MyOfferEntity
 import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
@@ -10,7 +12,8 @@ import cz.cleevio.repository.model.offer.fromNetwork
 import cz.cleevio.repository.model.offer.toNetwork
 
 class OfferRepositoryImpl constructor(
-	private val offerApi: OfferApi
+	private val offerApi: OfferApi,
+	private val myOfferDao: MyOfferDao
 ) : OfferRepository {
 
 	override suspend fun createOffer(offerList: List<NewOffer>): Resource<Offer> = tryOnline(
@@ -46,4 +49,15 @@ class OfferRepositoryImpl constructor(
 		},
 		mapper = { }
 	)
+
+	override suspend fun saveMyOfferIdAndKeys(offerId: String, privateKey: String, publicKey: String): Resource<Unit> {
+		myOfferDao.replace(
+			MyOfferEntity(
+				extId = offerId,
+				privateKey = privateKey,
+				publicKey = publicKey
+			)
+		)
+		return Resource.success(data = Unit)
+	}
 }

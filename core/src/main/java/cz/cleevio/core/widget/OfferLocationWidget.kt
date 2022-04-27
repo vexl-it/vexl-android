@@ -39,7 +39,8 @@ class OfferLocationWidget constructor(
 	}
 
 	fun getLocationValue(): LocationValue = LocationValue(
-		type = selectedButton
+		type = selectedButton,
+		values = listOf()
 	)
 }
 

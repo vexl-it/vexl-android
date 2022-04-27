@@ -9,15 +9,16 @@ data class CreateOfferRequest constructor(
 
 @JsonClass(generateAdapter = true)
 data class CreateOfferPrivateRequest constructor(
-	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
-	val direction: String,
-	val fee: String,
-	val amount: String,
-	val onlyInPerson: String,
-	val paymentMethod: String,
-	val typeNetwork: String,
-	val friendLevel: String,
-	val offerSymmetricKey: String
+	val location: List<String>,
+	val offerDescription: String,
+	val amountBottomLimit: String,
+	val amountTopLimit: String,
+	val feeState: String,
+	val feeAmount: String,
+	val locationState: String,
+	val paymentMethod: List<String>,
+	val btcNetwork: List<String>,
+	val friendLevel: String
 )
