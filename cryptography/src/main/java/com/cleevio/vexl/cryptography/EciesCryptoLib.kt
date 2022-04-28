@@ -6,7 +6,7 @@ object EciesCryptoLib : BaseCryptoLib() {
 
 	external fun init()
 
-	external fun encrypt(keys: KeyPair, message: String): String
+	external fun encrypt(publicKey: String, message: String): String
 
 	external fun decrypt(keys: KeyPair, encodedMessage: String): String
 

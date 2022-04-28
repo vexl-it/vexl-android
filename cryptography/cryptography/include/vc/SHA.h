@@ -8,8 +8,12 @@
 #include <stdio.h>
 
 #ifdef BUILD_FOR_LIBRARY
+
 #include <openssl/sha.h>
+
 #endif
+
+#include "common/Base64.h"
 
 # ifdef __cplusplus
 extern "C" {

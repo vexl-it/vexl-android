@@ -21,7 +21,7 @@ class EciesCryptoInstrumentedTest {
 
 		EciesCryptoLib.init()
 
-		val enryptedMessage = EciesCryptoLib.encrypt(keyPair, originalMessage)
+		val enryptedMessage = EciesCryptoLib.encrypt(keyPair.publicKey, originalMessage)
 		Assert.assertNotEquals(originalMessage, enryptedMessage)
 
 		val decryptedMessage = EciesCryptoLib.decrypt(keyPair, enryptedMessage)

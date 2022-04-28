@@ -14,7 +14,6 @@
 #include <stdlib.h>
 
 void _log(char *message, ...);
-
 void _error(int code, char *message, ...);
 
 #endif

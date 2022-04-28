@@ -23,7 +23,7 @@ class EcdsaCryptoInstrumentedTest {
 
 		Assert.assertNotEquals(data, signature)
 
-		val verified = EcdsaCryptoLib.verify(keyPair, data, signature)
+		val verified = EcdsaCryptoLib.verify(keyPair.publicKey, data, signature)
 
 		Assert.assertTrue(verified)
 
