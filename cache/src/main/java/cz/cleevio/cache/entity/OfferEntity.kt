@@ -1,12 +1,13 @@
 package cz.cleevio.cache.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 
 // TODO Strings to enums
-@Entity
+@Entity(indices = [Index(value = ["offerId"], unique = true)])
 data class OfferEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
