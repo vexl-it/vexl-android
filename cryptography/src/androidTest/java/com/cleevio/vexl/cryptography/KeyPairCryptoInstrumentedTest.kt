@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -19,8 +20,8 @@ class KeyPairCryptoInstrumentedTest {
 		val keyPair = KeyPairCryptoLib.generateKeyPair()
 
 		Assert.assertTrue(
-			keyPair.privateKey.contains("BEGIN PRIVATE KEY") &&
-				keyPair.publicKey.contains("BEGIN PUBLIC KEY")
+			String(Base64.getDecoder().decode(keyPair.privateKey)).contains("BEGIN PRIVATE KEY") &&
+				String(Base64.getDecoder().decode(keyPair.publicKey)).contains("BEGIN PUBLIC KEY")
 		)
 
 	}

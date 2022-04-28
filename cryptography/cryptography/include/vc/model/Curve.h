@@ -82,8 +82,7 @@ typedef enum {
     brainpoolP384r1,
     brainpoolP384t1,
     brainpoolP512r1,
-    brainpoolP512t1,
-    SM2
+    brainpoolP512t1
 } Curve;
 
 char *_get_group_name(Curve curve);

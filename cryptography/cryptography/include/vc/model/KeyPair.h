@@ -21,6 +21,7 @@
 #include "Curve.h"
 #include "../common/Log.h"
 #include "../common/OpenSSLHelper.h"
+#include "../common/Base64.h"
 
 # ifdef __cplusplus
 extern "C" {
@@ -35,12 +36,11 @@ typedef struct {
 #ifdef BUILD_FOR_LIBRARY
 
 KeyPair _EVP_PKEY_get_KeyPair(const EVP_PKEY *pkey);
-EC_KEY *_KeyPair_get_EC_KEY(const KeyPair keys);
+void _base64_keys_get_EC_KEY(const char *base64_public_key, const char *base64_private_key, EC_KEY **eckey);
 
 #endif
 
 KeyPair generate_key_pair(Curve curve);
-
 void KeyPair_free(KeyPair KeyPair);
 
 # ifdef  __cplusplus

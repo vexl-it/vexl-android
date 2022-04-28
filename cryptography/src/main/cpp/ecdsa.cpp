@@ -20,7 +20,7 @@ Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_sign(
     const char *data = env->GetStringUTFChars(dataArg, nullptr);
     const int dataLength = strlen(data);
 
-    const char *result = ecdsa_sign(keys, data, dataLength);
+    const char *result = ecdsa_sign(keys.pemPublicKey, keys.pemPrivateKey, data, dataLength);
     return env->NewStringUTF(result);
 
 }
@@ -29,15 +29,15 @@ JNIEXPORT jboolean JNICALL
 Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_verify(
         JNIEnv *env,
         jobject /* this */,
-        jobject keysArg,
+        jstring publicKeyArg,
         jstring dataArg,
         jstring signatureArg) {
 
-    KeyPair keys = jObjectToKeyPair(env, &keysArg);
+    const char *public_key = env->GetStringUTFChars(publicKeyArg, nullptr);
     const char *data = env->GetStringUTFChars(dataArg, nullptr);
     const int dataLength = strlen(data);
     const char *signature = env->GetStringUTFChars(signatureArg, nullptr);
 
-    bool result = ecdsa_verify(keys, data, dataLength, (char *) signature);
+    bool result = ecdsa_verify(public_key, data, dataLength, signature);
     return (jboolean) result;
 }

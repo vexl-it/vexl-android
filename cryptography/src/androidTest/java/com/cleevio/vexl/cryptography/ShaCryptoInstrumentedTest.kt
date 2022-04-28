@@ -1,6 +1,8 @@
 package com.cleevio.vexl.cryptography
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert
+import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
@@ -11,14 +13,12 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ShaCryptoInstrumentedTest {
 
-	// TODO crashes, non UTF-8 characters
+	@Test
+	fun useAppContext() {
+		val originalMessage = "some message"
 
-//	@Test
-//	fun useAppContext() {
-//		val originalMessage = "some message"
-//
-//		val hashedMessage = ShaCryptoLib.hash(originalMessage, originalMessage.length)
-//
-//		Assert.assertNotEquals(originalMessage, hashedMessage)
-//	}
+		val hashedMessage = ShaCryptoLib.hash(originalMessage, originalMessage.length)
+
+		Assert.assertNotEquals(originalMessage, hashedMessage)
+	}
 }

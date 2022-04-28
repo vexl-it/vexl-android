@@ -24,11 +24,9 @@ typedef struct {
 } Cipher;
 
 Cipher *cipher_new();
-
 void cipher_free(Cipher *cipher);
 
 char *cipher_encode(Cipher *cipher);
-
 Cipher *cipher_decode(char *digest);
 
 # ifdef  __cplusplus

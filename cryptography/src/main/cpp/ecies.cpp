@@ -19,13 +19,13 @@ JNIEXPORT jstring JNICALL
 Java_com_cleevio_vexl_cryptography_EciesCryptoLib_encrypt(
         JNIEnv *env,
         jobject /* this */,
-        jobject keysArg,
+        jstring publicKeyArg,
         jstring messageArg) {
 
-    KeyPair keys = jObjectToKeyPair(env, &keysArg);
+    const char *public_key = env->GetStringUTFChars(publicKeyArg, nullptr);
     const char *message = env->GetStringUTFChars(messageArg, nullptr);
 
-    const char *result = ecies_encrypt(keys, message);
+    const char *result = ecies_encrypt(public_key, message);
     return env->NewStringUTF(result);
 
 }
@@ -41,6 +41,6 @@ Java_com_cleevio_vexl_cryptography_EciesCryptoLib_decrypt(
     KeyPair keys = jObjectToKeyPair(env, &keysArg);
     const char *message = env->GetStringUTFChars(encodedMessageArg, nullptr);
 
-    const char *result = ecies_decrypt(keys, message);
+    const char *result = ecies_decrypt(keys.pemPublicKey, keys.pemPrivateKey, message);
     return env->NewStringUTF(result);
 }

@@ -6,6 +6,6 @@ object EcdsaCryptoLib : BaseCryptoLib() {
 
 	external fun sign(keys: KeyPair, data: String): String
 
-	external fun verify(keys: KeyPair, data: String, signature: String): Boolean
+	external fun verify(publicKey: String, data: String, signature: String): Boolean
 
 }
