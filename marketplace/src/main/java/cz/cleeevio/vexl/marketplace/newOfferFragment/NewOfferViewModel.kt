@@ -71,7 +71,7 @@ class NewOfferViewModel constructor(
 	private fun encryptOffer(params: NewOfferParams, contactKey: String, offerKeys: KeyPair): NewOffer {
 		return NewOffer(
 			location = params.location.values.map {
-				locationHelper.locationToJsonString(it)
+				eciesEncrypt(locationHelper.locationToJsonString(it), contactKey)
 			},
 			userPublicKey = contactKey,
 			offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey),
