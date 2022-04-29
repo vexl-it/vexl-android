@@ -7,7 +7,7 @@ import cz.cleevio.core.databinding.WidgetOfferBtcNetworkWidgetBinding
 import cz.cleevio.core.model.BtcNetworkValue
 import lightbase.core.extensions.layoutInflater
 
-class OfferBtcNetworkType constructor(
+class OfferBtcNetworkType @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0

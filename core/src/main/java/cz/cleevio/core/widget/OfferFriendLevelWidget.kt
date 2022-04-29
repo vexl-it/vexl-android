@@ -9,7 +9,7 @@ import cz.cleevio.core.model.FriendLevelValue
 import lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
-class OfferFriendLevelWidget constructor(
+class OfferFriendLevelWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0

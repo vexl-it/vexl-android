@@ -11,7 +11,7 @@ import cz.cleevio.core.model.FeeValue
 import lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
-class OfferFeeWidget constructor(
+class OfferFeeWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
