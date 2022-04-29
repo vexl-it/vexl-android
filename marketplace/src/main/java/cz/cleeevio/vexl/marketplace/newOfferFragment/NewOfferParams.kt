@@ -10,5 +10,6 @@ data class NewOfferParams constructor(
 	val friendLevel: FriendLevelValue,
 	val priceTrigger: PriceTriggerValue,    //todo: BE is missing field for this value
 	val btcNetwork: BtcNetworkValue,
-	val paymentMethod: PaymentMethodValue
+	val paymentMethod: PaymentMethodValue,
+	val offerType: OfferTypeValue
 )

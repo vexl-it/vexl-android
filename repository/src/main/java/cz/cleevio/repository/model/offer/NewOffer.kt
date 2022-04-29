@@ -4,18 +4,19 @@ import cz.cleevio.network.request.offer.CreateOfferPrivateRequest
 
 //all fields should be encrypted strings
 data class NewOffer constructor(
-	val userPublicKey: String = "",
-	val offerPublicKey: String = "",
-	val location: List<String> = listOf(),
-	val offerDescription: String = "",
-	val amountBottomLimit: String = "",
-	val amountTopLimit: String = "",
-	val feeState: String = "",
-	val feeAmount: String = "",
-	val locationState: String = "",
-	val paymentMethod: List<String> = listOf(),
-	val btcNetwork: List<String> = listOf(),
-	val friendLevel: String = ""
+	val userPublicKey: String,
+	val offerPublicKey: String,
+	val location: List<String>,
+	val offerDescription: String,
+	val amountBottomLimit: String,
+	val amountTopLimit: String,
+	val feeState: String,
+	val feeAmount: String,
+	val locationState: String,
+	val paymentMethod: List<String>,
+	val btcNetwork: List<String>,
+	val friendLevel: String,
+	val offerType: String
 )
 
 fun NewOffer.toNetwork(): CreateOfferPrivateRequest {
@@ -31,6 +32,7 @@ fun NewOffer.toNetwork(): CreateOfferPrivateRequest {
 		locationState = this.locationState,
 		paymentMethod = this.paymentMethod,
 		btcNetwork = this.btcNetwork,
-		friendLevel = this.friendLevel
+		friendLevel = this.friendLevel,
+		offerType = this.offerType
 	)
 }

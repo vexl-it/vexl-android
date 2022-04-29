@@ -1,13 +1,12 @@
 package cz.cleeevio.vexl.marketplace.newOfferFragment
 
 import androidx.lifecycle.viewModelScope
+import com.cleevio.vexl.cryptography.EciesCryptoLib
+import com.cleevio.vexl.cryptography.KeyPairCryptoLib
+import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.widget.FriendLevel
-import com.cleevio.vexl.cryptography.EciesCryptoLib
-import com.cleevio.vexl.cryptography.KeyPairCryptoLib
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -36,42 +35,18 @@ class NewOfferViewModel constructor(
 				else -> emptyList()
 			}
 
+			val offerKeys = KeyPairCryptoLib.generateKeyPair()
+
 			//encrypt in loop for every contact
 			contacts.forEach { contactKeyWrapper ->
-
-				// TODO we have to save them both
-				val offerKeys = KeyPairCryptoLib.generateKeyPair()
-
-				val contactKey = contactKeyWrapper.key
-
-
-				val encryptedOffer = NewOffer(
-					location = params.location.values.map {
-						// FIXME proper serialization
-						it.toString()
-					},
-					userPublicKey = contactKey,
-					offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey),
-					feeState = eciesEncrypt(params.fee.type.toString(), contactKey),                        // FIXME
-					feeAmount = eciesEncrypt(params.fee.value.toString(), contactKey),
-					offerDescription = eciesEncrypt(params.description, contactKey),
-					amountBottomLimit = eciesEncrypt(params.priceRange.bottomLimit.toString(), contactKey),
-					amountTopLimit = eciesEncrypt(params.priceRange.topLimit.toString(), contactKey),
-					locationState = eciesEncrypt(params.location.values.toString(), contactKey),            // FIXME
-					paymentMethod = params.paymentMethod.value.map { eciesEncrypt(it.toString(), contactKey) },                // FIXME
-					btcNetwork = params.btcNetwork.value.map { eciesEncrypt(it.toString(), contactKey) },            // FIXME
-					friendLevel = params.friendLevel.value.toString()            // FIXME
-				)
+				val encryptedOffer = encryptOffer(params, contactKeyWrapper.key, offerKeys)
 				encryptedOfferList.add(encryptedOffer)
 			}
 
 			//also encrypt with user's key
-			encryptedPreferenceRepository.userPublicKey.let { publicKey ->
-				//TODO: encrypt all data fields with public key
-				val encryptedOffer = NewOffer(
-					location = params.location.values.map { location -> locationHelper.locationToJsonString(location) }
-				)
-				encryptedOfferList.add(encryptedOffer)
+			encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
+				val myEncryptedOffer = encryptOffer(params, myPublicKey, offerKeys)
+				encryptedOfferList.add(myEncryptedOffer)
 			}
 
 			//send all in single request to BE
@@ -82,9 +57,8 @@ class NewOfferViewModel constructor(
 					response.data?.offerId?.let { offerId ->
 						offerRepository.saveMyOfferIdAndKeys(
 							offerId = offerId,
-							//todo: add keys that were generated for offer
-							privateKey = "",
-							publicKey = ""
+							privateKey = offerKeys.privateKey,
+							publicKey = offerKeys.publicKey
 						)
 					}
 
@@ -92,6 +66,26 @@ class NewOfferViewModel constructor(
 				}
 			}
 		}
+	}
+
+	private fun encryptOffer(params: NewOfferParams, contactKey: String, offerKeys: KeyPair): NewOffer {
+		return NewOffer(
+			location = params.location.values.map {
+				locationHelper.locationToJsonString(it)
+			},
+			userPublicKey = contactKey,
+			offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey),
+			feeState = eciesEncrypt(params.fee.type.name, contactKey),
+			feeAmount = eciesEncrypt(params.fee.value.toString(), contactKey),
+			offerDescription = eciesEncrypt(params.description, contactKey),
+			amountBottomLimit = eciesEncrypt(params.priceRange.bottomLimit.toString(), contactKey),
+			amountTopLimit = eciesEncrypt(params.priceRange.topLimit.toString(), contactKey),
+			locationState = eciesEncrypt(params.location.type.name, contactKey),
+			paymentMethod = params.paymentMethod.value.map { eciesEncrypt(it.name, contactKey) },
+			btcNetwork = params.btcNetwork.value.map { eciesEncrypt(it.name, contactKey) },
+			friendLevel = eciesEncrypt(params.friendLevel.value.name, contactKey),
+			offerType = eciesEncrypt(params.offerType.value.name, contactKey)
+		)
 	}
 
 	private fun eciesEncrypt(data: String, contactKey: String): String {
