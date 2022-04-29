@@ -1,5 +1,6 @@
 package cz.cleevio.repository.model.offer
 
+import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
 import java.math.BigDecimal
@@ -8,7 +9,7 @@ import java.time.ZonedDateTime
 data class Offer constructor(
 	val id: Long = 0,
 	val offerId: String,
-	val location: String,
+	val location: List<Location>,
 	val userPublicKey: String,
 	val offerPublicKey: String,
 	val offerDescription: String,
@@ -17,9 +18,10 @@ data class Offer constructor(
 	val feeState: String,
 	val feeAmount: BigDecimal,
 	val locationState: String,
-	val paymentMethod: String,
-	val btcNetwork: String,
+	val paymentMethod: List<String>,
+	val btcNetwork: List<String>,
 	val friendLevel: String,
+	val offerType: String,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime
 )
@@ -27,7 +29,7 @@ data class Offer constructor(
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
 		offerId = this.offerId.decryptedValue,
-		location = this.location.decryptedValue,
+		location = this.location.map { it.decryptedValue.fromNetwork() },
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey.decryptedValue,
 		offerDescription = this.offerDescription.decryptedValue,
@@ -36,19 +38,20 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 		feeState = this.feeState.decryptedValue,
 		feeAmount = this.feeAmount.decryptedValue,
 		locationState = this.locationState.decryptedValue,
-		paymentMethod = this.paymentMethod.decryptedValue,
-		btcNetwork = this.btcNetwork.decryptedValue,
+		paymentMethod = this.paymentMethod.map { it.decryptedValue },
+		btcNetwork = this.btcNetwork.map { it.decryptedValue },
 		friendLevel = this.friendLevel.decryptedValue,
+		offerType = this.offerType.decryptedValue,
 		createdAt = ZonedDateTime.parse(this.createdAt.decryptedValue),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt.decryptedValue)
 	)
 }
 
-fun OfferEntity.fromCache(): Offer {
+fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 	return Offer(
 		id = this.id,
 		offerId = this.offerId,
-		location = this.location,
+		location = locations.map { it.fromCache() },
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
 		offerDescription = this.offerDescription,
@@ -57,9 +60,10 @@ fun OfferEntity.fromCache(): Offer {
 		feeState = this.feeState,
 		feeAmount = this.feeAmount,
 		locationState = this.locationState,
-		paymentMethod = this.paymentMethod,
-		btcNetwork = this.btcNetwork,
+		paymentMethod = this.paymentMethod.split(",").map { it.trim() },
+		btcNetwork = this.btcNetwork.split(",").map { it.trim() },
 		friendLevel = this.friendLevel,
+		offerType = this.offerType,
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt
 	)
@@ -69,7 +73,6 @@ fun Offer.toCache(): OfferEntity {
 	return OfferEntity(
 		id = this.id,
 		offerId = this.offerId,
-		location = this.location,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
 		offerDescription = this.offerDescription,
@@ -78,9 +81,10 @@ fun Offer.toCache(): OfferEntity {
 		feeState = this.feeState,
 		feeAmount = this.feeAmount,
 		locationState = this.locationState,
-		paymentMethod = this.paymentMethod,
-		btcNetwork = this.btcNetwork,
+		paymentMethod = this.paymentMethod.joinToString(),
+		btcNetwork = this.btcNetwork.joinToString(),
 		friendLevel = this.friendLevel,
+		offerType = this.offerType,
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt
 	)

@@ -51,7 +51,7 @@ dependencies {
     implementation "androidx.security:security-crypto:$security_crypto"
 
     def roomVersion = "2.4.2"
-    implementation "androidx.room:room-runtime:$roomVersion"
+    api "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
     androidTestImplementation 'androidx.room:room-testing:2.4.2'

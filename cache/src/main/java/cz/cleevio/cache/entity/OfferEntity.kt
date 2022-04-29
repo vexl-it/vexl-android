@@ -12,7 +12,6 @@ data class OfferEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
 	val offerId: String,
-	val location: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
 	val offerDescription: String,
@@ -24,6 +23,7 @@ data class OfferEntity(
 	val paymentMethod: String,
 	val btcNetwork: String,
 	val friendLevel: String,
+	val offerType: String,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime
 )
