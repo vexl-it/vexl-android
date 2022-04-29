@@ -22,13 +22,13 @@ class OffersAdapter constructor(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: Offer) {
-			binding.offerDescription.text = item.direction
-			binding.priceLimit.text = item.amount
-			binding.paymentMethod.text = item.paymentMethod
-			binding.feeAmount.text = item.fee
+			binding.offerDescription.text = item.offerDescription
+			binding.priceLimit.text = "${item.amountBottomLimit} - ${item.amountTopLimit}"
+			binding.paymentMethod.text = "TODO payment method"
+			binding.feeAmount.text = item.feeAmount.toString()
 			binding.userName.text = item.userPublicKey
-			binding.location.text = item.location
-			binding.feeGroup.isVisible = item.fee != null
+			binding.location.text = "TODO location"
+			binding.feeGroup.isVisible = item.feeAmount != null
 
 			binding.requestBtn.setOnClickListener {
 				requestOffer(item.offerId)

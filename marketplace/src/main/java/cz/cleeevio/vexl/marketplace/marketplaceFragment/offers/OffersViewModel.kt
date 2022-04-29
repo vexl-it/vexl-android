@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
-import java.time.ZonedDateTime
 
 class OffersViewModel(
 	private val offerRepository: OfferRepository
@@ -18,6 +17,9 @@ class OffersViewModel(
 
 	private val _buyOffers = MutableSharedFlow<List<Offer>>(replay = 1)
 	val buyOffers = _buyOffers.asSharedFlow()
+
+	private val _sellOffers = MutableSharedFlow<List<Offer>>(replay = 1)
+	val sellOffers = _sellOffers.asSharedFlow()
 
 	private val _filters = MutableSharedFlow<List<Filter>>(replay = 1)
 	val filters = _filters.asSharedFlow()
@@ -40,66 +42,10 @@ class OffersViewModel(
 
 	fun getData() {
 		viewModelScope.launch(Dispatchers.IO) {
-//			val response = offerRepository.loadOffersForMe()
-//			when (response.status) {
-//				is Status.Success -> response.data?.let { data ->
-//					_buyOffers.emit(data)
-//				}
-//			}
+			val offers = offerRepository.getOffers()
 
-			// TODO vyhodit
-			_buyOffers.emit(
-				listOf(
-					Offer(
-						offerId = "1AA",
-						location = "Prague 7",
-						userPublicKey = "pub key 1",
-						offerPublicKey = "",
-						direction = "I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep...",
-						offerSymKey = "",
-						amount = "100",
-						fee = "Wants \$30 fee per transaction",
-						friendLevel = "",
-						onlyInPerson = "",
-						paymentMethod = "Cash",
-						typeNetwork = "",
-						createdAt = ZonedDateTime.now(),
-						modifiedAt = ZonedDateTime.now()
-					),
-					Offer(
-						offerId = "2BB",
-						location = "Prague 8",
-						userPublicKey = "pub key 2",
-						offerPublicKey = "",
-						direction = "I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep...",
-						offerSymKey = "",
-						amount = "1000",
-						fee = "Wants \$10 fee per transaction",
-						friendLevel = "",
-						onlyInPerson = "",
-						paymentMethod = "DogeCoin",
-						typeNetwork = "",
-						createdAt = ZonedDateTime.now(),
-						modifiedAt = ZonedDateTime.now()
-					),
-					Offer(
-						offerId = "3CC",
-						location = "Prague 9",
-						userPublicKey = "pub key 3",
-						offerPublicKey = "",
-						direction = "I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep...",
-						offerSymKey = "",
-						amount = "9999",
-						fee = null,
-						friendLevel = "",
-						onlyInPerson = "",
-						paymentMethod = "Revolut",
-						typeNetwork = "",
-						createdAt = ZonedDateTime.now(),
-						modifiedAt = ZonedDateTime.now()
-					),
-				)
-			)
+			_buyOffers.emit(offers) // TODO filter only buy
+			_sellOffers.emit(offers) // TODO filter only sell
 		}
 	}
 

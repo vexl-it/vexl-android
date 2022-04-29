@@ -2,6 +2,7 @@ package cz.cleevio.cache.di
 
 import androidx.room.Room
 import cz.cleevio.cache.CleevioDatabase
+import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.preferences.DataStoreRepository
 import cz.cleevio.cache.preferences.DataStoreRepositoryImpl
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -33,6 +34,18 @@ val cacheModule = module {
 
 	single {
 		get<CleevioDatabase>().myOfferDao()
+	}
+
+	single {
+		get<CleevioDatabase>().offerDao()
+	}
+
+	single {
+		get<CleevioDatabase>().locationDao()
+	}
+
+	single {
+		TransactionProvider(get())
 	}
 
 	single<DataStoreRepository> {

@@ -17,7 +17,8 @@ val marketplaceModule = module {
 
 	viewModel {
 		MarketplaceViewModel(
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			offerRepository = get()
 		)
 	}
 
