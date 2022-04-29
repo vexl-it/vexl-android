@@ -7,6 +7,7 @@ import com.google.android.material.textfield.TextInputEditText
 import cz.cleevio.core.databinding.WidgetOfferLocationItemBinding
 import cz.cleevio.repository.model.offer.Location
 import lightbase.core.extensions.layoutInflater
+import timber.log.Timber
 
 class OfferLocationItem @JvmOverloads constructor(
 	context: Context,
@@ -27,7 +28,8 @@ class OfferLocationItem @JvmOverloads constructor(
 	private fun getFloat(view: TextInputEditText): Float {
 		return try {
 			view.text.toString().toFloat()
-		} catch (exception: Exception) {
+		} catch (exception: NumberFormatException) {
+			Timber.e(exception)
 			0.0f
 		}
 	}
