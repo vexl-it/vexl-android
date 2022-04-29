@@ -7,7 +7,7 @@ import cz.cleevio.core.databinding.WidgetOfferPaymentMethodBinding
 import cz.cleevio.core.model.PaymentMethodValue
 import lightbase.core.extensions.layoutInflater
 
-class OfferPaymentMethodWidget constructor(
+class OfferPaymentMethodWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0

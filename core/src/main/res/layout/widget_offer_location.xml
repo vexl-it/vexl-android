@@ -11,6 +11,54 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
+		<LinearLayout
+			android:id="@+id/location_items_wrapper"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_marginHorizontal="16dp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent">
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_one"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_two"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_three"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_four"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_five"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:visibility="gone" />
+
+			<Button
+				android:id="@+id/location_add_new_location"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Add new location" />
+
+		</LinearLayout>
+
 		<RadioGroup
 			android:id="@+id/location_radiogroup"
 			android:layout_width="match_parent"
@@ -22,7 +70,7 @@
 			android:orientation="horizontal"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
+			app:layout_constraintTop_toBottomOf="@+id/location_items_wrapper">
 
 			<RadioButton
 				android:id="@+id/location_online"

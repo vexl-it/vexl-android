@@ -3,6 +3,7 @@ package cz.cleeevio.vexl.marketplace.newOfferFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.LocationHelper
+import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -24,7 +25,12 @@ class NewOfferViewModel constructor(
 			val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
 
 			//load all public keys for specified level of friends
-			val contacts = contactRepository.getContactKeys()
+			val contacts = when (params.friendLevel.value) {
+				FriendLevel.NONE -> emptyList()
+				FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys()
+				FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
+				else -> emptyList()
+			}
 
 			//encrypt in loop for every contact
 			contacts.forEach {
