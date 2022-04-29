@@ -1,11 +1,12 @@
 package cz.cleeevio.onboarding.verifyPhoneFragment
 
 import androidx.lifecycle.viewModelScope
+import com.cleevio.vexl.cryptography.EcdsaCryptoLib
+import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.user.ConfirmCode
-import cz.cleevio.repository.model.user.TempSignature
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
@@ -32,26 +33,16 @@ class VerifyPhoneViewModel constructor(
 			val response = userRepository.authStepTwo(verificationCode, verificationId)
 			when (response.status) {
 				is Status.Success -> response.data?.challenge?.let { challenge ->
-					getSignature(challenge) {
+					val signature = EcdsaCryptoLib.sign(
+						KeyPair(
+							privateKey = encryptedPreference.userPrivateKey,
+							publicKey = encryptedPreference.userPublicKey
+						), challenge
+					)
+
+					solveChallenge(signature) {
 						_verificationChannel.send(response)
 					}
-				}
-			}
-		}
-	}
-
-	private fun getSignature(challenge: String, onSuccess: suspend () -> Unit) {
-		viewModelScope.launch(Dispatchers.IO) {
-			//todo: this should be using C encryption library
-			val response = userRepository.getFakeSignatureFromBE(
-				TempSignature(
-					challenge = challenge,
-					privateKey = encryptedPreference.userPrivateKey
-				)
-			)
-			when (response.status) {
-				is Status.Success -> response.data?.let { signature ->
-					solveChallenge(signature, onSuccess)
 				}
 			}
 		}

@@ -135,14 +135,4 @@ class UserRepositoryImpl constructor(
 		request = { userRestApi.deleteUserMe() },
 		mapper = { }
 	)
-
-	override suspend fun getFakeKeyPairFromBE(): Resource<KeyPair> = tryOnline(
-		request = { userRestApi.getTempKeyPairs() },
-		mapper = { it?.fromNetwork() }
-	)
-
-	override suspend fun getFakeSignatureFromBE(signature: TempSignature): Resource<String> = tryOnline(
-		request = { userRestApi.getTempSignature(signature.toRequest()) },
-		mapper = { it?.signed }
-	)
 }
