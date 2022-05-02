@@ -7,7 +7,7 @@ import cz.cleevio.network.response.common.EncryptedString
 
 @JsonClass(generateAdapter = true)
 data class OfferUnifiedResponse constructor(
-	val offerId: EncryptedString,
+	val offerId: String,
 	val location: List<EncryptedLocation>,
 	val userPublicKey: String,
 	val offerPublicKey: EncryptedString,
@@ -21,6 +21,6 @@ data class OfferUnifiedResponse constructor(
 	val btcNetwork: List<EncryptedString>,
 	val friendLevel: EncryptedString,
 	val offerType: EncryptedString,
-	val createdAt: EncryptedString,
-	val modifiedAt: EncryptedString
+	val createdAt: String,
+	val modifiedAt: String
 )
