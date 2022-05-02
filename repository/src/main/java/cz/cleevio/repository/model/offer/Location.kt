@@ -1,9 +1,11 @@
 package cz.cleevio.repository.model.offer
 
+import com.squareup.moshi.JsonClass
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.network.response.offer.LocationResponse
 import java.math.BigDecimal
 
+@JsonClass(generateAdapter = true)
 data class Location constructor(
 	val longitude: BigDecimal,
 	val latitude: BigDecimal,

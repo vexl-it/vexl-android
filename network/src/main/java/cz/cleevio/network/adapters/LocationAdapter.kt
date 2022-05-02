@@ -8,9 +8,9 @@ import cz.cleevio.network.response.offer.LocationResponse
 class LocationAdapter {
 
 	@FromJson
-	fun fromJson(encryptedData: String): LocationResponse {
+	fun fromJson(data: String): LocationResponse {
 		val moshi = Moshi.Builder().build()
-		return moshi.adapter(LocationResponse::class.java).fromJson(encryptedData)!!
+		return moshi.adapter(LocationResponse::class.java).fromJson(data)!!
 	}
 
 	@ToJson
