@@ -14,6 +14,7 @@ import cz.cleevio.network.di.networkModule
 import cz.cleevio.pin.di.pinModule
 import cz.cleevio.profile.di.profileModule
 import cz.cleevio.repository.di.repoModule
+import cz.cleevio.vexl.chat.di.chatModule
 import lightbase.countrypicker.di.countryPickerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -46,7 +47,8 @@ class CleevioApp : Application() {
 					cacheModule,
 					networkModule,
 					repoModule,
-					profileModule
+					profileModule,
+					chatModule
 				)
 			)
 		}
