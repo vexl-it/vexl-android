@@ -11,6 +11,7 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.offer.CreateOfferRequest
 import cz.cleevio.repository.model.offer.*
+import kotlinx.coroutines.flow.map
 
 class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
@@ -69,6 +70,12 @@ class OfferRepositoryImpl constructor(
 		offerDao.getAllOffersWithLocations().map {
 			it.offer.fromCache(it.locations)
 		}
+
+	override suspend fun getOffersFlow() = offerDao.getAllOffersWithLocationsFlow().map { list ->
+		list.map {
+			it.offer.fromCache(it.locations)
+		}
+	}
 
 	override suspend fun syncOffers() {
 		val newOffers = getNewOffers()

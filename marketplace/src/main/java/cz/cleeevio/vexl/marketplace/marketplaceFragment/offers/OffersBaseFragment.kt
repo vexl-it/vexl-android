@@ -51,7 +51,6 @@ sealed class OffersBaseFragment constructor(
 			navigateToNewOffer()
 		}
 
-		viewModel.getData()
 		viewModel.getFilters()
 	}
 

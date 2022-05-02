@@ -8,6 +8,7 @@ import cz.cleevio.repository.repository.offer.OfferRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
@@ -23,6 +24,20 @@ class OffersViewModel(
 
 	private val _filters = MutableSharedFlow<List<Filter>>(replay = 1)
 	val filters = _filters.asSharedFlow()
+
+	init {
+		viewModelScope.launch(Dispatchers.IO) {
+			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "BUY" } }.collect {
+				_buyOffers.emit(it)
+			}
+		}
+
+		viewModelScope.launch(Dispatchers.IO) {
+			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "SELL" } }.collect {
+				_sellOffers.emit(it)
+			}
+		}
+	}
 
 	fun getFilters() {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -40,14 +55,4 @@ class OffersViewModel(
 			)
 		}
 	}
-
-	fun getData() {
-		viewModelScope.launch(Dispatchers.IO) {
-			val offers = offerRepository.getOffers()
-
-			_buyOffers.emit(offers.filter { it.offerType == "BUY" })
-			_sellOffers.emit(offers.filter { it.offerType == "SELL" })
-		}
-	}
-
 }

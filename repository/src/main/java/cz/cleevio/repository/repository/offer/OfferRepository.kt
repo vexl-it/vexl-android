@@ -3,6 +3,7 @@ package cz.cleevio.repository.repository.offer
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
+import kotlinx.coroutines.flow.Flow
 
 interface OfferRepository {
 
@@ -19,6 +20,8 @@ interface OfferRepository {
 	suspend fun saveMyOfferIdAndKeys(offerId: String, privateKey: String, publicKey: String): Resource<Unit>
 
 	suspend fun getOffers(): List<Offer>
+
+	suspend fun getOffersFlow(): Flow<List<Offer>>
 
 	suspend fun syncOffers()
 }
