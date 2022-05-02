@@ -28,6 +28,7 @@ class OffersViewModel(
 		viewModelScope.launch(Dispatchers.IO) {
 			_filters.emit(
 				listOf(
+					// TODO emit correct filters
 					Filter(
 						label = "Revolut",
 						icon = R.drawable.ic_revolut
@@ -44,8 +45,8 @@ class OffersViewModel(
 		viewModelScope.launch(Dispatchers.IO) {
 			val offers = offerRepository.getOffers()
 
-			_buyOffers.emit(offers) // TODO filter only buy
-			_sellOffers.emit(offers) // TODO filter only sell
+			_buyOffers.emit(offers.filter { it.offerType == "BUY" })
+			_sellOffers.emit(offers.filter { it.offerType == "SELL" })
 		}
 	}
 

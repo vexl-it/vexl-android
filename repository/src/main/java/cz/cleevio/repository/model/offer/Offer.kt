@@ -5,6 +5,7 @@ import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
 import java.math.BigDecimal
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 data class Offer constructor(
 	val id: Long = 0,
@@ -28,7 +29,7 @@ data class Offer constructor(
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
-		offerId = this.offerId.decryptedValue,
+		offerId = this.offerId,
 		location = this.location.map { it.decryptedValue.fromNetwork() },
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey.decryptedValue,
@@ -42,8 +43,8 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 		btcNetwork = this.btcNetwork.map { it.decryptedValue },
 		friendLevel = this.friendLevel.decryptedValue,
 		offerType = this.offerType.decryptedValue,
-		createdAt = ZonedDateTime.parse(this.createdAt.decryptedValue),
-		modifiedAt = ZonedDateTime.parse(this.modifiedAt.decryptedValue)
+		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
+		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
 	)
 }
 

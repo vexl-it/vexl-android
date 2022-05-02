@@ -8,14 +8,20 @@ import cz.cleevio.network.response.offer.LocationResponse
 class LocationAdapter {
 
 	@FromJson
-	fun fromJson(encryptedData: String): LocationResponse {
-		val moshi = Moshi.Builder().build()
-		return moshi.adapter(LocationResponse::class.java).fromJson(encryptedData)!!
+	fun fromJson(data: String): LocationResponse {
+		val moshi = Moshi
+			.Builder()
+			.add(BigDecimalAdapter)
+			.build()
+		return moshi.adapter(LocationResponse::class.java).fromJson(data)!!
 	}
 
 	@ToJson
 	fun toJson(value: LocationResponse): String {
-		val moshi = Moshi.Builder().build()
+		val moshi = Moshi
+			.Builder()
+			.add(BigDecimalAdapter)
+			.build()
 		return moshi.adapter(LocationResponse::class.java).toJson(value)
 	}
 }

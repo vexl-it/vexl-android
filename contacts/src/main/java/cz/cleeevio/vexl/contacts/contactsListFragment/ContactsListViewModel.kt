@@ -77,7 +77,6 @@ class ContactsListViewModel constructor(
 
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
-			contactRepository.generateContactsTmp() //FIXME remove after testing
 			val response = contactRepository.uploadAllMissingContacts(
 				notSyncedContactsList.filter {
 					it.markedForUpload
