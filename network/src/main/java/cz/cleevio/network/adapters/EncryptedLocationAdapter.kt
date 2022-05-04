@@ -21,6 +21,8 @@ class EncryptedLocationAdapter(
 			privateKey = encryptedPreferences.userPrivateKey,
 			publicKey = encryptedPreferences.userPublicKey
 		)
+		Timber.tag("ASDX").d("with keyPair $keyPair")
+		//val decrypted = EciesCryptoLib.decrypt2(keyPair, encryptedData.toByteArray(UTF_8)).commonToUtf8String()
 		val decrypted = EciesCryptoLib.decrypt(keyPair, encryptedData)
 		Timber.tag("ASDX").d("value is $decrypted")
 		val location = locationAdapter.fromJson(decrypted)

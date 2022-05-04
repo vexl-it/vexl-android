@@ -20,6 +20,7 @@ class EncryptedStringAdapter(
 			privateKey = encryptedPreferences.userPrivateKey,
 			publicKey = encryptedPreferences.userPublicKey
 		)
+		//val decrypted = EciesCryptoLib.decrypt2(keyPair, encryptedData.toByteArray(StandardCharsets.UTF_8)).commonToUtf8String()
 		val decrypted = EciesCryptoLib.decrypt(keyPair, encryptedData)
 		Timber.tag("ASDX").d("value is $decrypted")
 		return EncryptedString(decrypted)

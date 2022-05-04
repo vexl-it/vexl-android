@@ -21,7 +21,10 @@ class EncryptedBigDecimalAdapter(
 			privateKey = encryptedPreferences.userPrivateKey,
 			publicKey = encryptedPreferences.userPublicKey
 		)
-		val decrypted = BigDecimal(EciesCryptoLib.decrypt(keyPair, encryptedData))
+		val decrypted = BigDecimal(
+			//EciesCryptoLib.decrypt2(keyPair, encryptedData.toByteArray(StandardCharsets.UTF_8)).commonToUtf8String()
+			EciesCryptoLib.decrypt(keyPair, encryptedData)
+		)
 		Timber.tag("ASDX").d("value is $decrypted")
 		return EncryptedBigDecimal(decrypted)
 	}
