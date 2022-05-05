@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import cz.cleeevio.vexl.contacts.importContactsFragment.OpenedFromScreen
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.lightspeedskeleton.R
@@ -77,6 +78,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							navController.setGraph(
 								R.navigation.nav_profile
 							)
+						NavMainGraphModel.NavGraph.ImportContacts -> {
+							val bundle = Bundle()
+							bundle.putParcelable("openedFromScreen", OpenedFromScreen.PROFILE)
+							navController.setGraph(
+								graphResId = R.navigation.nav_import_contacts,
+								startDestinationArgs = bundle
+							)
+						}
 					}
 				}
 			}

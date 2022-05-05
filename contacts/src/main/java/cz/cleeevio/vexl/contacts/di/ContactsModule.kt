@@ -19,7 +19,8 @@ val contactsModule = module {
 
 	viewModel {
 		ContactsListViewModel(
-			get()
+			contactRepository = get(),
+			navMainGraphModel = get()
 		)
 	}
 

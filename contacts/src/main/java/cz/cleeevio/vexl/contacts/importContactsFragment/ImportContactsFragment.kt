@@ -57,7 +57,9 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 				if (hasPermisson) {
 					Timber.tag("ASDX").d("Permission granted")
 					findNavController().navigate(
-						ImportContactsFragmentDirections.proceedToContactsListFragment()
+						ImportContactsFragmentDirections.proceedToContactsListFragment(
+							openedFromScreen = OpenedFromScreen.ONBOARDING
+						)
 					)
 				} else {
 					Timber.tag("ASDX").d("Permission rejected")

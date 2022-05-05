@@ -24,10 +24,10 @@ class OffersAdapter constructor(
 		fun bind(item: Offer) {
 			binding.offerDescription.text = item.offerDescription
 			binding.priceLimit.text = "${item.amountBottomLimit} - ${item.amountTopLimit}"
-			binding.paymentMethod.text = "TODO payment method"
+			binding.paymentMethod.text = "${item.paymentMethod.joinToString()}"
 			binding.feeAmount.text = item.feeAmount.toString()
-			binding.userName.text = item.userPublicKey
-			binding.location.text = "TODO location"
+			binding.userName.text = "Unknown friend"
+			binding.location.text = "${item.location.first().latitude}, ${item.location.first().longitude}"
 			binding.feeGroup.isVisible = item.feeAmount != null
 
 			binding.requestBtn.setOnClickListener {

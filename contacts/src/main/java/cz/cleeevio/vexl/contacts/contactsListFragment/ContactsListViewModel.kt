@@ -2,6 +2,7 @@ package cz.cleeevio.vexl.contacts.contactsListFragment
 
 import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.isPhoneValid
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.contact.BaseContact
@@ -14,7 +15,8 @@ import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
 class ContactsListViewModel constructor(
-	private val contactRepository: ContactRepository
+	private val contactRepository: ContactRepository,
+	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
 	private var notSyncedContactsList: List<Contact> = emptyList()

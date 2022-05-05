@@ -1,6 +1,7 @@
 package cz.cleevio.profile.profileFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -16,7 +17,8 @@ import lightbase.core.baseClasses.BaseViewModel
 class ProfileViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
-	private val offerRepository: OfferRepository
+	private val offerRepository: OfferRepository,
+	val navMainGraphModel: NavMainGraphModel,
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()

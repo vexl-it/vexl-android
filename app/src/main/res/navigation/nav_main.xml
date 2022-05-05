@@ -19,6 +19,8 @@
 
 	<include app:graph="@navigation/nav_profile" />
 
+	<include app:graph="@navigation/nav_import_contacts" />
+
 	<fragment
 		android:id="@+id/pinFragment"
 		android:name="cz.cleevio.pin.PinFragment"
@@ -134,5 +136,17 @@
 		app:destination="@id/nav_profile"
 		app:popUpTo="@id/nav_profile"
 		app:popUpToInclusive="true" />
+
+	<action
+		android:id="@+id/action_global_to_import_contacts"
+		app:destination="@id/nav_import_contacts"
+		app:popUpTo="@id/nav_import_contacts"
+		app:popUpToInclusive="true">
+
+		<argument
+			android:name="openedFromScreen"
+			app:argType="cz.cleeevio.vexl.contacts.importContactsFragment.OpenedFromScreen" />
+
+	</action>
 
 </navigation>

@@ -15,6 +15,8 @@ class NavMainGraphModel {
 		object Marketplace : NavGraph()
 		object Chat : NavGraph()
 		object Profile : NavGraph()
+
+		object ImportContacts : NavGraph()
 	}
 
 	private val navGraphChannel = Channel<NavGraph>(Channel.RENDEZVOUS)
