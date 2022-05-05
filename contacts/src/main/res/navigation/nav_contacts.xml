@@ -13,7 +13,13 @@
 
 		<action
 			android:id="@+id/proceed_to_contactsListFragment"
-			app:destination="@id/contactsListFragment" />
+			app:destination="@id/contactsListFragment">
+
+			<argument
+				android:name="openedFromScreen"
+				app:argType="cz.cleeevio.vexl.contacts.importContactsFragment.OpenedFromScreen" />
+
+		</action>
 
 	</fragment>
 
@@ -22,6 +28,10 @@
 		android:name="cz.cleeevio.vexl.contacts.contactsListFragment.ContactsListFragment"
 		android:label="contactsListFragment"
 		tools:layout="@layout/fragment_contacts_list">
+
+		<argument
+			android:name="openedFromScreen"
+			app:argType="cz.cleeevio.vexl.contacts.importContactsFragment.OpenedFromScreen" />
 
 		<action
 			android:id="@+id/proceed_to_importFacebookContactsFragment"

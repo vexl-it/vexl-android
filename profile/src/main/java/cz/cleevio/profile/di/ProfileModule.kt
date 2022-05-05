@@ -10,7 +10,8 @@ val profileModule = module {
 		ProfileViewModel(
 			userRepository = get(),
 			contactRepository = get(),
-			offerRepository = get()
+			offerRepository = get(),
+			navMainGraphModel = get()
 		)
 	}
 }

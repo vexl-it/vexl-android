@@ -1,8 +1,11 @@
 package cz.cleeevio.vexl.contacts.contactsListFragment
 
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.contacts.R
 import cz.cleeevio.vexl.contacts.databinding.FragmentContactsListBinding
+import cz.cleeevio.vexl.contacts.importContactsFragment.OpenedFromScreen
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
@@ -14,6 +17,8 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 	private val binding by viewBinding(FragmentContactsListBinding::bind)
 	override val viewModel by viewModel<ContactsListViewModel>()
 
+	private val args by navArgs<ContactsListFragmentArgs>()
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {
@@ -22,9 +27,21 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 		}
 		repeatScopeOnStart {
 			viewModel.uploadSuccessful.collect {
-				findNavController().navigate(
-					ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
-				)
+				when (args.openedFromScreen) {
+					OpenedFromScreen.UNKNOWN -> {
+						findNavController().navigate(
+							ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
+						)
+					}
+					OpenedFromScreen.PROFILE -> {
+						viewModel.navMainGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.Profile)
+					}
+					OpenedFromScreen.ONBOARDING -> {
+						findNavController().navigate(
+							ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
+						)
+					}
+				}
 			}
 		}
 	}
