@@ -102,19 +102,22 @@ class NewOfferViewModel constructor(
 		)
 	}
 
-	private fun eciesEncrypt2(data: String, contactKey: String): String {
-		Timber.tag("ASDX").d("$contactKey")
-		Timber.tag("ASDX").d("${contactKey.length}")
+	private fun eciesEncrypt(data: String, contactKey: String): String {
+		Timber.tag("ASDX").d("$data")
+		Timber.tag("ASDX").d("${data.length}")
+		Timber.tag("ASDX").d("${data.toByteArray(StandardCharsets.UTF_8).size}")
 		return EciesCryptoLib.encrypt2(
 			contactKey.toByteArray(StandardCharsets.UTF_8),
-			data.toByteArray(StandardCharsets.UTF_8)
+			contactKey.toByteArray(StandardCharsets.UTF_8).size,
+			data.toByteArray(StandardCharsets.UTF_8),
+			data.toByteArray(StandardCharsets.UTF_8).size
 		).commonToUtf8String()
 	}
 
-	private fun eciesEncrypt(data: String, contactKey: String): String {
-		Timber.tag("ASDX").d("$contactKey")
-		Timber.tag("ASDX").d("${contactKey.length}")
-		return EciesCryptoLib.encrypt(contactKey, data)
-	}
+//	private fun eciesEncrypt(data: String, contactKey: String): String {
+//		Timber.tag("ASDX").d("$contactKey")
+//		Timber.tag("ASDX").d("${contactKey.length}")
+//		return EciesCryptoLib.encrypt(contactKey, data)
+//	}
 
 }
