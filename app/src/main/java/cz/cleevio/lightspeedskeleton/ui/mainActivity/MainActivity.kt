@@ -18,6 +18,7 @@ import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.network.NetworkError
 import cz.cleevio.profile.profileFragment.ProfileFragment
+import cz.cleevio.vexl.chat.chatContactList.ChatContactListFragment
 import kotlinx.coroutines.launch
 import lightbase.core.extensions.showSnackbar
 import org.koin.android.ext.android.inject
@@ -73,7 +74,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							navController.setGraph(
 								R.navigation.nav_marketplace
 							)
-						NavMainGraphModel.NavGraph.Chat -> TODO()
+						NavMainGraphModel.NavGraph.Chat ->
+							navController.setGraph(
+								R.navigation.nav_chat
+							)
 						NavMainGraphModel.NavGraph.Profile ->
 							navController.setGraph(
 								R.navigation.nav_profile
@@ -110,6 +114,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
 		when (destination.label) {
 			MarketplaceFragment::class.java.simpleName,
+			ChatContactListFragment::class.java.simpleName,
 			ProfileFragment::class.java.simpleName ->
 				binding.bottomNavigation.isVisible = true
 			else ->

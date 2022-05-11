@@ -1,6 +1,8 @@
 package cz.cleevio.repository.di
 
 import cz.cleevio.repository.PhoneNumberUtils
+import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.chat.ChatRepositoryImpl
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.contact.ContactRepositoryImpl
 import cz.cleevio.repository.repository.marketplace.CryptoCurrencyRepository
@@ -44,6 +46,13 @@ val repoModule = module {
 	single<CryptoCurrencyRepository> {
 		CryptoCurrencyRepositoryImpl(
 			cryptocurrencyApi = get()
+		)
+	}
+
+	single<ChatRepository> {
+		ChatRepositoryImpl(
+			chatApi = get(),
+			encryptedPreferenceRepository = get()
 		)
 	}
 
