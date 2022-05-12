@@ -9,7 +9,7 @@ Curve DEFAULT_CURVE = secp224r1;
 jobject keyPairToJObject(JNIEnv *env, KeyPair *keyPair) {
 
     jclass cls = env->FindClass("com/cleevio/vexl/cryptography/model/KeyPairArrays");
-    jmethodID constructor = env->GetMethodID(cls, "<init>", "(Lkotlin/ByteArray;Lkotlin/ByteArray;)V");
+    jmethodID constructor = env->GetMethodID(cls, "<init>", "([B[B)V");
     jvalue args[2];
     jbyteArray privArray = charToByteArray(env, keyPair->pemPrivateKey);
     jbyteArray pubArray = charToByteArray(env, keyPair->pemPublicKey);
