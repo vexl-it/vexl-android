@@ -5,6 +5,8 @@ import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.nio.charset.StandardCharsets
+import okio.internal.commonToUtf8String
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -19,10 +21,21 @@ class AesCryptoInstrumentedTest {
 		val password = "some password"
 		val originalMessage = "some message"
 
-		val enryptedMessage = AesCryptoLib.encrypt(password, originalMessage)
-		Assert.assertNotEquals(originalMessage, enryptedMessage)
+		val passwordArray = password.toByteArray(StandardCharsets.UTF_8)
+		val messageArray = password.toByteArray(StandardCharsets.UTF_8)
 
-		val decryptedMessage = AesCryptoLib.decrypt(password, enryptedMessage)
+		val encryptedMessageArray = AesCryptoLib.encrypt(
+			passwordArray, passwordArray.size,
+			messageArray, passwordArray.size
+		)
+		val encryptedMessage = encryptedMessageArray.commonToUtf8String()
+		Assert.assertNotEquals(originalMessage, encryptedMessage)
+
+		val decryptedMessageArray = AesCryptoLib.decrypt(
+			passwordArray, passwordArray.size,
+			encryptedMessageArray, encryptedMessageArray.size
+		)
+		val decryptedMessage = decryptedMessageArray.commonToUtf8String()
 		assertEquals(originalMessage, decryptedMessage)
 	}
 }

@@ -23,25 +23,25 @@ class EciesCryptoInstrumentedTest {
 
 		EciesCryptoLib.init()
 
-		val pubKeyByteArray = keyPair.publicKey.toByteArray(StandardCharsets.UTF_8)
-		val privKeyByteArray = keyPair.privateKey.toByteArray(StandardCharsets.UTF_8)
 		val originalMessageByteArray = originalMessage.toByteArray(StandardCharsets.UTF_8)
 
-		val enryptedMessage = EciesCryptoLib.encrypt2(
-			pubKeyByteArray,
-			pubKeyByteArray.size,
-			originalMessageByteArray,
-			originalMessageByteArray.size
-		).commonToUtf8String()
-		Assert.assertNotEquals(originalMessage, enryptedMessage)
+		val encryptedMessageArray = EciesCryptoLib.encrypt(
+			keyPair.publicKey, keyPair.publicKey.size,
+			originalMessageByteArray, originalMessageByteArray.size
+		)
 
-		val enryptedMessageByteArray = enryptedMessage.toByteArray(StandardCharsets.UTF_8)
+		val encryptedMessaget = encryptedMessageArray.commonToUtf8String()
+		Assert.assertNotEquals(originalMessage, encryptedMessaget)
 
-		val decryptedMessage = EciesCryptoLib.decrypt2(
-			pubKeyByteArray, pubKeyByteArray.size,
-			privKeyByteArray, privKeyByteArray.size,
+		val enryptedMessageByteArray = encryptedMessaget.toByteArray(StandardCharsets.UTF_8)
+
+		val decryptedMessageArray = EciesCryptoLib.decrypt(
+			keyPair.publicKey, keyPair.publicKey.size,
+			keyPair.privateKey, keyPair.privateKey.size,
 			enryptedMessageByteArray, enryptedMessageByteArray.size
-		).commonToUtf8String()
+		)
+
+		val decryptedMessage = decryptedMessageArray.commonToUtf8String()
 		assertEquals(originalMessage, decryptedMessage)
 	}
 }

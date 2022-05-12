@@ -2,19 +2,23 @@
 #include <string>
 #include <SHA.h>
 
-extern "C"
-JNIEXPORT jstring
+#include "converters.h"
 
-JNICALL
+extern "C"
+JNIEXPORT jbyteArray JNICALL
 Java_com_cleevio_vexl_cryptography_ShaCryptoLib_hash(
         JNIEnv *env,
         jobject /* this */,
-        jstring jdata,
-        jint jdata_length) {
+        jbyteArray dataArray,
+        jint dataArrayLen) {
 
-    const char *data = env->GetStringUTFChars(jdata, nullptr);
-    const int data_length = (int) jdata_length;
+    const char *data = byteArrayToChar(env, dataArray, dataArrayLen);
 
-    const char *result = sha256_hash(data, data_length);
-    return env->NewStringUTF(result);
+    const char *digest = sha256_hash(data, dataArrayLen);
+    jbyteArray digestArray = charToByteArray(env, digest);
+
+    free((void *) digest);
+    free((void *) data);
+
+    return digestArray;
 }

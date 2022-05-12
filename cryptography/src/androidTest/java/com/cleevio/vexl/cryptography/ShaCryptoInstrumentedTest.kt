@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.nio.charset.StandardCharsets
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -17,7 +18,9 @@ class ShaCryptoInstrumentedTest {
 	fun useAppContext() {
 		val originalMessage = "some message"
 
-		val hashedMessage = ShaCryptoLib.hash(originalMessage, originalMessage.length)
+		val messageArray = originalMessage.toByteArray(StandardCharsets.UTF_8)
+
+		val hashedMessage = ShaCryptoLib.hash(messageArray, messageArray.size)
 
 		Assert.assertNotEquals(originalMessage, hashedMessage)
 	}

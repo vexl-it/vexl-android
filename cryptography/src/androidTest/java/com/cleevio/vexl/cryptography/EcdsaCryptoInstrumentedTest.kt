@@ -4,6 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.nio.charset.StandardCharsets
+import okio.internal.commonToUtf8String
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -18,12 +20,23 @@ class EcdsaCryptoInstrumentedTest {
 
 		val keyPair = KeyPairCryptoLib.generateKeyPair()
 		val data = "Some data"
+		val dataArray = data.toByteArray(StandardCharsets.UTF_8)
 
-		val signature = EcdsaCryptoLib.sign(keyPair, data)
+		val signatureArray = EcdsaCryptoLib.sign(
+			keyPair.publicKey, keyPair.publicKey.size,
+			keyPair.privateKey, keyPair.privateKey.size,
+			dataArray, dataArray.size
+		)
+
+		val signature = signatureArray.commonToUtf8String()
 
 		Assert.assertNotEquals(data, signature)
 
-		val verified = EcdsaCryptoLib.verify(keyPair.publicKey, data, signature)
+		val verified = EcdsaCryptoLib.verify(
+			keyPair.publicKey, keyPair.publicKey.size,
+			dataArray, dataArray.size,
+			signatureArray, signatureArray.size
+		)
 
 		Assert.assertTrue(verified)
 

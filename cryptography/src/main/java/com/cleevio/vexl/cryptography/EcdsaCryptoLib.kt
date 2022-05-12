@@ -4,8 +4,16 @@ import com.cleevio.vexl.cryptography.model.KeyPair
 
 object EcdsaCryptoLib : BaseCryptoLib() {
 
-	external fun sign(keys: KeyPair, data: String): String
+	external fun sign(
+		publicKeyArray: ByteArray, publicKeyArrayLen: Int,
+		privateKeyArray: ByteArray, privateKeyArrayLen: Int,
+		dataArray: ByteArray, dataArrayLen: Int
+	): ByteArray
 
-	external fun verify(publicKey: String, data: String, signature: String): Boolean
+	external fun verify(
+		publicKeyArray: ByteArray, publicKeyArrayLen: Int,
+		dataArray: ByteArray, dataArrayLen: Int,
+		signatureArray: ByteArray, signatureArrayLen: Int,
+	): Boolean
 
 }

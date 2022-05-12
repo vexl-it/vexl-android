@@ -1,9 +1,9 @@
 package com.cleevio.vexl.cryptography
 
-import com.cleevio.vexl.cryptography.model.KeyPair
+import com.cleevio.vexl.cryptography.model.KeyPairArrays
 
 object KeyPairCryptoLib : BaseCryptoLib() {
 
-	external fun generateKeyPair(): KeyPair
+	external fun generateKeyPair(): KeyPairArrays
 
 }
