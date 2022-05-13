@@ -8,8 +8,24 @@
 	<fragment
 		android:id="@+id/chatContactListFragment"
 		android:name="cz.cleevio.vexl.chat.chatContactList.ChatContactListFragment"
-		android:label="chatContactListFragment"
+		android:label="ChatContactListFragment"
 		tools:layout="@layout/fragment_chat_contact_list">
+
+		<action
+			android:id="@+id/proceed_to_chatRequestFragment"
+			app:destination="@id/chatRequestFragment" />
+
+		<action
+			android:id="@+id/proceed_to_chatFragment"
+			app:destination="@id/chatFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/chatRequestFragment"
+		android:name="cz.cleevio.vexl.chat.chatRequestFragment.ChatRequestFragment"
+		android:label="ChatRequestFragment"
+		tools:layout="@layout/fragment_chat_request">
 
 		<action
 			android:id="@+id/proceed_to_chatFragment"
@@ -20,7 +36,7 @@
 	<fragment
 		android:id="@+id/chatFragment"
 		android:name="cz.cleevio.vexl.chat.chatFragment.ChatFragment"
-		android:label="chatFragment"
+		android:label="ChatFragment"
 		tools:layout="@layout/fragment_chat">
 
 		<argument

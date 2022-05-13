@@ -16,6 +16,16 @@ class ChatRepositoryImpl constructor(
 		mapper = { Unit }
 	)
 
+	override suspend fun loadMessages(userId: Long?): Resource<List<Any>> {
+		//todo: return messages from DB
+		return Resource.success(
+			data = listOf<String>(
+				"Message one",
+				"Message two"
+			)
+		)
+	}
+
 	override suspend fun loadChatUsers(): Resource<List<User>> {
 		return Resource.success(
 			listOf(
@@ -32,6 +42,27 @@ class ChatRepositoryImpl constructor(
 					username = "Friend 2",
 					avatar = "url",
 					publicKey = "xxYY"
+				)
+			)
+		)
+	}
+
+	override suspend fun loadChatRequests(): Resource<List<User>> {
+		return Resource.success(
+			listOf(
+				User(
+					id = 155,
+					extId = 100,
+					username = "Unknown Friend 1",
+					avatar = "url",
+					publicKey = "xxYYzz"
+				),
+				User(
+					id = 156,
+					extId = 101,
+					username = "Unknown Friend 2",
+					avatar = "url",
+					publicKey = "xxYYzz"
 				)
 			)
 		)

@@ -1,4 +1,4 @@
-package cz.cleevio.vexl.chat.chatFragment
+package cz.cleevio.vexl.chat.chatRequestFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.network.data.Status
@@ -10,31 +10,25 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
-class ChatViewModel constructor(
+class ChatRequestViewModel constructor(
 	private val chatRepository: ChatRepository,
-	val user: User
 ) : BaseViewModel() {
 
-	//todo: change data type
-	private val _messages = MutableSharedFlow<List<Any>>(replay = 1)
-	val messages = _messages.asSharedFlow()
+	private val _usersRequestingChat = MutableSharedFlow<List<User>>(replay = 1)
+	val usersRequestingChat = _usersRequestingChat.asSharedFlow()
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			val response = chatRepository.loadMessages(user.id)
+			val response = chatRepository.loadChatRequests()
 			when (response.status) {
 				is Status.Success -> {
 					response.data?.let { data ->
-						_messages.emit(
+						_usersRequestingChat.emit(
 							data
 						)
 					}
 				}
 			}
 		}
-	}
-
-	init {
-		//load messages for user
 	}
 }

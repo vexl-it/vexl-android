@@ -7,5 +7,10 @@ interface ChatRepository {
 
 	suspend fun sendMessage(): Resource<Unit>
 
+	//would flow be better?
+	suspend fun loadMessages(userId: Long?): Resource<List<Any>>
+
 	suspend fun loadChatUsers(): Resource<List<User>>
+
+	suspend fun loadChatRequests(): Resource<List<User>>
 }

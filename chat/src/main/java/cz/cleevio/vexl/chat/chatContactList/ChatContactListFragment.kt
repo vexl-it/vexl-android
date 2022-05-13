@@ -39,5 +39,11 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 			}
 		)
 		binding.recycler.adapter = adapter
+
+		binding.newRequestsBtn.setOnClickListener {
+			findNavController().navigate(
+				ChatContactListFragmentDirections.proceedToChatRequestFragment()
+			)
+		}
 	}
 }

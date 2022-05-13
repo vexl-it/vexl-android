@@ -2,6 +2,7 @@ package cz.cleevio.vexl.chat.chatFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.navArgs
+import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
@@ -18,7 +19,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	private val args by navArgs<ChatFragmentArgs>()
 
 	override fun bindObservers() {
-
+		repeatScopeOnStart {
+			viewModel.messages.collect { messages ->
+				//todo: show messages in list
+			}
+		}
 	}
 
 	override fun initView() {
