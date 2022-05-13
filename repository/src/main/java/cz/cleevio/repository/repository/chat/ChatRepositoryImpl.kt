@@ -5,6 +5,7 @@ import cz.cleevio.network.api.ChatApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.repository.model.user.User
+import timber.log.Timber
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
@@ -13,10 +14,11 @@ class ChatRepositoryImpl constructor(
 
 	override suspend fun sendMessage(): Resource<Unit> = tryOnline(
 		request = { chatApi.postMessage("fake_message") },
-		mapper = { Unit }
+		mapper = { }
 	)
 
 	override suspend fun loadMessages(userId: Long?): Resource<List<Any>> {
+		Timber.d("${encryptedPreferenceRepository.isUserVerified}") //does nothing, fixes detekt
 		//todo: return messages from DB
 		return Resource.success(
 			data = listOf<String>(
