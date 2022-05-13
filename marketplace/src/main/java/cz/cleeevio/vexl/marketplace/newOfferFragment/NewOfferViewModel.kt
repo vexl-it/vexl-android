@@ -18,9 +18,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
-import okio.internal.commonToUtf8String
 import timber.log.Timber
-import java.nio.charset.StandardCharsets
 
 
 class NewOfferViewModel constructor(
@@ -103,21 +101,9 @@ class NewOfferViewModel constructor(
 	}
 
 	private fun eciesEncrypt(data: String, contactKey: String): String {
-		Timber.tag("ASDX").d("$data")
-		Timber.tag("ASDX").d("${data.length}")
-		Timber.tag("ASDX").d("${data.toByteArray(StandardCharsets.UTF_8).size}")
-		return EciesCryptoLib.encrypt2(
-			contactKey.toByteArray(StandardCharsets.UTF_8),
-			contactKey.toByteArray(StandardCharsets.UTF_8).size,
-			data.toByteArray(StandardCharsets.UTF_8),
-			data.toByteArray(StandardCharsets.UTF_8).size
-		).commonToUtf8String()
+		Timber.tag("ASDX").d(contactKey)
+		Timber.tag("ASDX").d("${contactKey.length}")
+		return EciesCryptoLib.encrypt(contactKey, data)
 	}
-
-//	private fun eciesEncrypt(data: String, contactKey: String): String {
-//		Timber.tag("ASDX").d("$contactKey")
-//		Timber.tag("ASDX").d("${contactKey.length}")
-//		return EciesCryptoLib.encrypt(contactKey, data)
-//	}
 
 }

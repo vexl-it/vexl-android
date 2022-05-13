@@ -11,7 +11,7 @@
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_cleevio_vexl_cryptography_KeyPairCryptoLib_generateKeyPair(
+Java_com_cleevio_vexl_cryptography_KeyPairCryptoLib_generateKeyPairInternal(
         JNIEnv *env,
         jobject /* this */) {
 
