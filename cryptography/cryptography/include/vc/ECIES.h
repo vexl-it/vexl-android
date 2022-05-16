@@ -41,8 +41,10 @@ void ecies_init();
 char *ecies_encrypt(const char *base64_public_key, const char *message);
 char *ecies_decrypt(const char *base64_public_key, const char *base64_private_key, const char *encoded_cipher);
 
+#ifdef BUILD_FOR_LIBRARY
 void _ecies_encrypt(const char *base64_public_key, const char *message, const int message_len, char **encoded_cipher);
 void _ecies_decrypt(const char *base64_public_key, const char *base64_private_key, const char *encoded_cipher, char **message, int *message_len);
+#endif
 
 # ifdef  __cplusplus
 }
