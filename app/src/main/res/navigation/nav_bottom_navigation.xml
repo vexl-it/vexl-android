@@ -5,7 +5,9 @@
 	app:startDestination="@id/nav_marketplace">
 
 	<include app:graph="@navigation/nav_marketplace" />
-	<!--	<include app:graph="@navigation/nav_shopping_cart" /> &lt;!&ndash; TODO chat &ndash;&gt;-->
+
 	<include app:graph="@navigation/nav_profile" />
+
+	<include app:graph="@navigation/nav_chat" />
 
 </navigation>

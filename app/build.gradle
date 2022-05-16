@@ -140,6 +140,7 @@ dependencies {
     implementation project(':profile')
     implementation project(':marketplace')
     implementation project(':cryptography')
+    implementation project(':chat')
 
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-crashlytics-ktx'

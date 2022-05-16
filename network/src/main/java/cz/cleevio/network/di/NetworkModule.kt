@@ -5,10 +5,7 @@ import cz.cleevio.network.*
 import cz.cleevio.network.adapters.*
 import cz.cleevio.network.agent.UserAgent
 import cz.cleevio.network.agent.UserAgentImpl
-import cz.cleevio.network.api.ContactApi
-import cz.cleevio.network.api.CryptocurrencyApi
-import cz.cleevio.network.api.OfferApi
-import cz.cleevio.network.api.UserApi
+import cz.cleevio.network.api.*
 import cz.cleevio.network.cache.NetworkCache
 import cz.cleevio.network.cache.NetworkCacheImpl
 import cz.cleevio.network.interceptors.AuthInterceptor
@@ -35,6 +32,7 @@ const val NETWORK_REQUEST_TIMEOUT = 30L
 const val USER_API_BASE_URL = "https://user.vexl.devel.cleevio.io/api/v1/"
 const val CONTACT_API_BASE_URL = "https://contact.vexl.devel.cleevio.io/api/v1/"
 const val OFFER_API_BASE_URL = "https://offer.vexl.devel.cleevio.io/api/v1/"
+const val CHAT_API_BASE_URL = "https://chat.vexl.devel.cleevio.io/api/v1/"
 
 val networkModule = module {
 
@@ -119,6 +117,19 @@ val networkModule = module {
 			tokenAuthenticator = get(),
 			baseUrl = OFFER_API_BASE_URL
 		).create(OfferApi::class.java)
+	}
+
+	single {
+		provideRetrofit(
+			scope = this,
+			interceptors = listOf(
+				get(named(AUTH_INTERCEPTOR)),
+				get(named(NETWORK_INTERCEPTOR)),
+				get(named(HTTP_LOGGING_INTERCEPTOR))
+			),
+			tokenAuthenticator = get(),
+			baseUrl = CHAT_API_BASE_URL
+		).create(ChatApi::class.java)
 	}
 
 	single {

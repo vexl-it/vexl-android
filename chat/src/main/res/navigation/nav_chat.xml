@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_chat"
+	app:startDestination="@+id/chatContactListFragment">
+
+	<fragment
+		android:id="@+id/chatContactListFragment"
+		android:name="cz.cleevio.vexl.chat.chatContactList.ChatContactListFragment"
+		android:label="ChatContactListFragment"
+		tools:layout="@layout/fragment_chat_contact_list">
+
+		<action
+			android:id="@+id/proceed_to_chatRequestFragment"
+			app:destination="@id/chatRequestFragment" />
+
+		<action
+			android:id="@+id/proceed_to_chatFragment"
+			app:destination="@id/chatFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/chatRequestFragment"
+		android:name="cz.cleevio.vexl.chat.chatRequestFragment.ChatRequestFragment"
+		android:label="ChatRequestFragment"
+		tools:layout="@layout/fragment_chat_request">
+
+		<action
+			android:id="@+id/proceed_to_chatFragment"
+			app:destination="@id/chatFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/chatFragment"
+		android:name="cz.cleevio.vexl.chat.chatFragment.ChatFragment"
+		android:label="ChatFragment"
+		tools:layout="@layout/fragment_chat">
+
+		<argument
+			android:name="user"
+			app:argType="cz.cleevio.repository.model.user.User" />
+
+	</fragment>
+
+</navigation>

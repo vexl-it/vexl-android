@@ -21,6 +21,8 @@
 
 	<include app:graph="@navigation/nav_import_contacts" />
 
+	<include app:graph="@navigation/nav_chat" />
+
 	<fragment
 		android:id="@+id/pinFragment"
 		android:name="cz.cleevio.pin.PinFragment"
@@ -135,6 +137,12 @@
 		android:id="@+id/action_global_to_profile"
 		app:destination="@id/nav_profile"
 		app:popUpTo="@id/nav_profile"
+		app:popUpToInclusive="true" />
+
+	<action
+		android:id="@+id/action_global_to_chat"
+		app:destination="@id/nav_chat"
+		app:popUpTo="@id/nav_chat"
 		app:popUpToInclusive="true" />
 
 	<action
