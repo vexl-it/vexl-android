@@ -17,4 +17,19 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
+	<FrameLayout
+		android:id="@+id/request_wrapper"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/title"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+
+		<cz.cleevio.vexl.chat.ui.RequestViewWidget
+			android:id="@+id/request_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+
+	</FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

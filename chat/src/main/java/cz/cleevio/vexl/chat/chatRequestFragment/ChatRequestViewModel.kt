@@ -19,6 +19,7 @@ class ChatRequestViewModel constructor(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
+			//todo: we need request, message, offer, something else?
 			val response = chatRepository.loadChatRequests()
 			when (response.status) {
 				is Status.Success -> {
