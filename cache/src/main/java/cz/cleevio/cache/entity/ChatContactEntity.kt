@@ -12,4 +12,5 @@ data class ChatContactEntity(
 	val userId: String?,
 	//maybe should be two tables?
 	val offerId: String?,
+	val isApproved: Boolean
 )
