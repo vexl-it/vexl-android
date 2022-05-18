@@ -64,14 +64,14 @@ class ChatRepositoryImpl constructor(
 					extId = 101,
 					username = "Unknown Friend 2",
 					avatar = "url",
-					publicKey = "xxYYzz"
+					publicKey = "xxY"
 				),
 				User(
 					id = 157,
 					extId = 102,
 					username = "Unknown Friend 3",
 					avatar = "url",
-					publicKey = "xxYYzz"
+					publicKey = "xxzz"
 				)
 			)
 		)
