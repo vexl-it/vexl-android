@@ -45,6 +45,14 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().chatContactDao()
+	}
+
+	single {
+		get<CleevioDatabase>().chatMessageDao()
+	}
+
+	single {
 		TransactionProvider(get())
 	}
 

@@ -34,11 +34,13 @@
 	<color name="purity">#9DCECA</color>
 	<color name="error">#FF3B30</color>
 	<color name="gray">#CFD2D3</color>
+	<color name="gray_card_background">#464646</color>
 	<color name="grey_dark">#3C3C43</color>
 	<color name="grey_light">#EBEBF5</color>
 	<color name="blue_light">#C3C3FF</color>
 	<color name="green_1">#4E6652</color>
 	<color name="green_2">#678061</color>
+	<color name="green_4">#789975</color>
 	<color name="green_5">#C8FFC3</color>
 	<color name="green_5_opacity_50">#80C8FFC3</color>
 	<color name="purple_1">#2C2C3E</color>
