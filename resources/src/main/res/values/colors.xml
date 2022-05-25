@@ -22,6 +22,7 @@
 
 	<color name="black">#000000</color>
 	<color name="white">#FFFFFF</color>
+	<color name="white_opacity_50">#80FFFFFF</color>
 	<color name="gray_1">#262626</color>
 	<color name="gray_2">#808080</color>
 	<color name="gray_3">#AFAFAF</color>
@@ -45,6 +46,9 @@
 	<color name="green_5_opacity_50">#80C8FFC3</color>
 	<color name="purple_1">#2C2C3E</color>
 	<color name="purple_6">#C3C3FF</color>
+	<color name="yellow_100">#FCCD6C</color>
+	<color name="yellow_100_opacity_0">#00FCCD6C</color>
+	<color name="yellow_darker">#957A44</color>
 
 	<!-- PIN -->
 	<color name="pin_bubble_color">@color/gray_20</color>

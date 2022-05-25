@@ -6,8 +6,7 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/wrapper"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/text_color_cryptocurrency_background">
+		android:layout_height="wrap_content">
 
 		<androidx.constraintlayout.widget.Group
 			android:id="@+id/packed_group"
@@ -31,6 +30,7 @@
 			android:layout_height="wrap_content"
 			android:src="@drawable/chart"
 			android:visibility="gone"
+			android:layout_marginStart="20dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +40,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/marketplace_currency_bitcoin"
+			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
+			android:layout_marginStart="25dp"
+			android:layout_marginTop="15dp"
+			android:layout_marginBottom="1dp"
 			app:layout_constraintBottom_toTopOf="@id/crypto_change_percentage"
 			app:layout_constraintStart_toStartOf="parent" />
 
@@ -48,7 +52,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:drawableStart="@drawable/ic_arrow_up"
-			android:drawablePadding="2.5dp"
+			style="@style/TextAppearance.Vexl.DescriptionBold"
+			android:layout_marginStart="25dp"
+			android:drawablePadding="4dp"
+			android:textColor="@color/yellow_100"
 			app:layout_constraintBottom_toTopOf="@id/chart_barrier"
 			app:layout_constraintStart_toStartOf="parent"
 			tools:text="2.5% today" />
@@ -59,14 +66,18 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="$"
+			android:layout_marginTop="15dp"
 			app:layout_constraintEnd_toStartOf="@id/current_price"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/current_price"
-			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyPrice"
+			style="@style/TextAppearance.Vexl.Heading6.GraphPrice"
+			android:layout_marginTop="15dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginEnd="24dp"
+			android:textColor="@color/yellow_100"
 			app:layout_constraintBottom_toTopOf="@id/chart_barrier"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
@@ -83,6 +94,7 @@
 			android:id="@+id/large_chart"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="30dp"
 			android:src="@drawable/large_chart"
 			android:visibility="gone"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -105,8 +117,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="8dp"
 			android:layout_marginTop="10dp"
-			android:layout_marginEnd="16dp"
-			android:layout_marginBottom="10dp"
+			android:layout_marginBottom="16dp"
 			android:orientation="horizontal"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +128,6 @@
 				android:id="@+id/period_1_day"
 				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:background="@drawable/currency_period_radio_selector"
 				android:button="@android:color/transparent"
 				android:checked="true"
@@ -127,7 +137,6 @@
 				android:id="@+id/period_1_week"
 				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:background="@drawable/currency_period_radio_selector"
 				android:button="@android:color/transparent"
 				android:text="@string/marketplace_currency_1_week" />
@@ -136,7 +145,6 @@
 				android:id="@+id/period_1_month"
 				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:background="@drawable/currency_period_radio_selector"
 				android:button="@android:color/transparent"
 				android:text="@string/marketplace_currency_1_month" />
@@ -145,7 +153,6 @@
 				android:id="@+id/period_3_month"
 				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:background="@drawable/currency_period_radio_selector"
 				android:button="@android:color/transparent"
 				android:text="@string/marketplace_currency_3_month" />
@@ -154,7 +161,6 @@
 				android:id="@+id/period_6_month"
 				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:background="@drawable/currency_period_radio_selector"
 				android:button="@android:color/transparent"
 				android:text="@string/marketplace_currency_6_month" />
@@ -163,7 +169,6 @@
 				android:id="@+id/period_1_year"
 				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:background="@drawable/currency_period_radio_selector"
 				android:button="@android:color/transparent"
 				android:text="@string/marketplace_currency_1_year" />
