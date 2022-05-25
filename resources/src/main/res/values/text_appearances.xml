@@ -239,9 +239,10 @@
 	</style>
 
 	<style name="TextAppearance.Vexl.Marketplace.CryptocurrencyCurrency" parent="TextAppearance.MaterialComponents.Headline4">
-		<item name="android:textSize">11sp</item>
-		<item name="android:textColor">@color/white</item>
-		<item name="lineHeight">43sp</item>
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">@color/yellow_100</item>
+		<item name="lineHeight">14.94sp</item>
+		<item name="android:letterSpacing">-0.03</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Marketplace.FilterChip" parent="">
@@ -260,6 +261,56 @@
 		<item name="android:textSize">18sp</item>
 		<item name="android:textColor">@color/white</item>
 		<item name="lineHeight">26sp</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Heading1" parent="TextAppearance.MaterialComponents.Headline1">
+		<item name="android:textSize">40sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">42sp</item>
+		<item name="android:letterSpacing">-0.03</item>
+		<item name="android:fontFamily">@font/pp_monument_extended_bold</item>
+		<item name="fontFamily">@font/pp_monument_extended_bold</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.ParagraphSmall" parent="">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">20.16sp</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Heading6.GraphPrice" parent="">
+		<item name="android:textSize">28sp</item>
+		<item name="lineHeight">28sp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:fontFamily">@font/pp_monument_extended_bold</item>
+		<item name="fontFamily">@font/pp_monument_extended_bold</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.ParagraphSmallBold" parent="TextAppearance.Vexl.ParagraphSmall">
+		<item name="lineHeight">16sp</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Description" parent="">
+		<item name="android:textSize">14sp</item>
+		<item name="lineHeight">17.64sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.DescriptionMicro" parent="TextAppearance.Vexl.Description">
+		<item name="android:textSize">12sp</item>
+		<item name="lineHeight">15.12sp</item>
+		<item name="android:letterSpacing">-0.03</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.DescriptionBold" parent="TextAppearance.Vexl.Description">
+		<item name="android:letterSpacing">-0.03</item>
+		<item name="android:fontFamily">@font/tt_satoshi_bold</item>
+		<item name="fontFamily">@font/tt_satoshi_bold</item>
 	</style>
 
 </resources>

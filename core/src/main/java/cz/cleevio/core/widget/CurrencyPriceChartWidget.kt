@@ -3,6 +3,7 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
@@ -10,6 +11,7 @@ import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
 import timber.log.Timber
+import java.math.BigDecimal
 
 class CurrencyPriceChartWidget @JvmOverloads constructor(
 	context: Context,
@@ -34,28 +36,52 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		}
 
 		binding.priceChartPeriodRadiogroup.setOnCheckedChangeListener { _, id ->
-			binding.cryptoChangePercentage.text = when (id) {
-				R.id.period_1_day -> currentCryptoCurrencyPrice.priceChangePercentage24h.toString()
-				R.id.period_1_week -> currentCryptoCurrencyPrice.priceChangePercentage7d.toString()
-				R.id.period_1_month -> currentCryptoCurrencyPrice.priceChangePercentage30d.toString()
-				R.id.period_3_month -> currentCryptoCurrencyPrice.priceChangePercentage60d.toString()
-				R.id.period_6_month -> currentCryptoCurrencyPrice.priceChangePercentage200d.toString()
-				R.id.period_1_year -> currentCryptoCurrencyPrice.priceChangePercentage1y.toString()
-				else -> {
-					Timber.e("Unknown currency price period radio ID! '$id'")
-					currentCryptoCurrencyPrice.priceChangePercentage24h.toString()
-				}
-			}
+			updateChartData(id)
 		}
+
+		packView(packed)
 	}
 
 	fun setupData(currentCryptoCurrencyPrice: CryptoCurrencies) {
 		this.currentCryptoCurrencyPrice = currentCryptoCurrencyPrice
 		binding.currentPrice.text = currentCryptoCurrencyPrice.priceUsd.toString()
+
+		updateChartData(binding.priceChartPeriodRadiogroup.checkedRadioButtonId)
+	}
+
+	private fun updateChartData(btnId: Int) {
+		val priceChangePercentage = when (btnId) {
+			R.id.period_1_day -> currentCryptoCurrencyPrice.priceChangePercentage24h
+			R.id.period_1_week -> currentCryptoCurrencyPrice.priceChangePercentage7d
+			R.id.period_1_month -> currentCryptoCurrencyPrice.priceChangePercentage30d
+			R.id.period_3_month -> currentCryptoCurrencyPrice.priceChangePercentage60d
+			R.id.period_6_month -> currentCryptoCurrencyPrice.priceChangePercentage200d
+			R.id.period_1_year -> currentCryptoCurrencyPrice.priceChangePercentage1y
+			else -> {
+				Timber.e("Unknown currency price period radio ID! '$id'")
+				currentCryptoCurrencyPrice.priceChangePercentage24h
+			}
+		}
+
+		binding.cryptoChangePercentage.text = priceChangePercentage.toString()
+		val drawable = if (priceChangePercentage < BigDecimal.ZERO) {
+			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_down, null)
+		} else {
+			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_up, null)
+		}
+		binding.cryptoChangePercentage.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
 	}
 
 	private fun packView(packed: Boolean) {
 		binding.packedGroup.isVisible = packed
 		binding.unpackedGroup.isVisible = !packed
+		val textColor =
+			if (packed) {
+				resources.getColor(R.color.yellow_darker, null)
+			} else {
+				resources.getColor(R.color.yellow_100, null)
+			}
+		binding.currentPrice.setTextColor(textColor)
+		binding.currency.setTextColor(textColor)
 	}
 }
