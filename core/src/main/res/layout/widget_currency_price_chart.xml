@@ -44,6 +44,7 @@
 			android:layout_marginStart="25dp"
 			android:layout_marginTop="15dp"
 			android:layout_marginBottom="1dp"
+			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toTopOf="@id/crypto_change_percentage"
 			app:layout_constraintStart_toStartOf="parent" />
 
@@ -56,8 +57,8 @@
 			android:layout_marginStart="25dp"
 			android:drawablePadding="4dp"
 			android:textColor="@color/yellow_100"
-			app:layout_constraintBottom_toTopOf="@id/chart_barrier"
 			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/currency_name"
 			tools:text="2.5% today" />
 
 		<TextView
@@ -77,6 +78,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginEnd="24dp"
+			android:layout_marginBottom="13dp"
 			android:textColor="@color/yellow_100"
 			app:layout_constraintBottom_toTopOf="@id/chart_barrier"
 			app:layout_constraintEnd_toEndOf="parent"
