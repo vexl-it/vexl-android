@@ -33,6 +33,8 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="16dp"
 		android:src="@drawable/ic_plus"
+		android:backgroundTint="@color/yellow_20"
+		android:tint="@color/yellow_100"
 		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@id/filters"
