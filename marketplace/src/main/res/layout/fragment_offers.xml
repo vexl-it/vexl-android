@@ -56,6 +56,6 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/filter_barrier"
-		tools:listitem="@layout/item_offer" />
+		tools:listitem="@layout/widget_offer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

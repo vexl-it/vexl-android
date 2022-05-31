@@ -344,6 +344,12 @@
 		<item name="android:textColor">@color/gray_2</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Marketplace.OfferDescription" parent="TextAppearance.Vexl.Description">
+		<item name="android:textSize">20sp</item>
+		<item name="lineHeight">27sp</item>
+		<item name="android:letterSpacing">-0.01</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Marketplace.Filter.Subtitle" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textSize">20sp</item>
 		<item name="android:textColor">@color/yellow_100</item>

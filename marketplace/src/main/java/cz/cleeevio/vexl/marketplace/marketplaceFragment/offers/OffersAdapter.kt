@@ -2,7 +2,6 @@ package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,17 +21,7 @@ class OffersAdapter constructor(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: Offer) {
-			binding.offerDescription.text = item.offerDescription
-			binding.priceLimit.text = "${item.amountBottomLimit} - ${item.amountTopLimit}"
-			binding.paymentMethod.text = "${item.paymentMethod.joinToString()}"
-			binding.feeAmount.text = item.feeAmount.toString()
-			binding.userName.text = "Unknown friend"
-			binding.location.text = "${item.location.first().latitude}, ${item.location.first().longitude}"
-			binding.feeGroup.isVisible = item.feeAmount != null
-
-			binding.requestBtn.setOnClickListener {
-				requestOffer(item.offerId)
-			}
+			binding.offerWidget.bind(item, requestOffer)
 		}
 
 	}
