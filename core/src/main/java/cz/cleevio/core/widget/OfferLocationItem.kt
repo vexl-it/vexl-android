@@ -33,13 +33,9 @@ class OfferLocationItem @JvmOverloads constructor(
 		onCloseListener = listener
 	}
 
-	fun getValue(): String {
-		return binding.locationItemText.text.toString()
-	}
+	fun getValue(): String = binding.locationItemText.text.toString()
 
-	fun getRadius(): String {
-		return binding.locationItemRadius.text.toString()
-	}
+	fun getRadius(): String = binding.locationItemRadius.text.toString()
 
 	fun reset() {
 		binding.locationItemText.setText("")
