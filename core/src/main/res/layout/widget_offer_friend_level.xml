@@ -4,48 +4,111 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@color/white"
-	tools:parentTag="androidx.cardview.widget.CardView">
+	tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content">
 
-		<RadioGroup
-			android:id="@+id/friend_radiogroup"
-			android:layout_width="match_parent"
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/friend_first_degree_wrapper"
+			style="@style/Widget.Vexl.Filters.FriendCardView"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="16dp"
-			android:layout_marginBottom="10dp"
-			android:orientation="horizontal"
-			app:layout_constraintEnd_toEndOf="parent"
+			android:layout_marginEnd="4dp"
+			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
+			app:layout_constraintEnd_toStartOf="@id/friend_second_degree_wrapper">
 
-			<RadioButton
-				android:id="@+id/friend_first_degree"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_weight=".5"
-				android:background="@drawable/widget_location_radio_selector"
-				android:button="@android:color/transparent"
-				android:checked="true"
-				android:text="@string/widget_friend_first_degree" />
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
 
-			<RadioButton
-				android:id="@+id/friend_second_degree"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_weight=".5"
-				android:background="@drawable/widget_location_radio_selector"
-				android:button="@android:color/transparent"
-				android:text="@string/widget_friend_second_degree" />
+				<ImageView
+					android:id="@+id/friend_first_degree_image"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_first_degree"
+					android:layout_marginBottom="16dp"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent" />
 
-		</RadioGroup>
+				<ImageView
+					android:id="@+id/friend_first_degree_check"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_successful"
+					android:layout_margin="8dp"
+					android:visibility="gone"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</com.google.android.material.card.MaterialCardView>
+
+		<TextView
+			android:id="@+id/friend_first_degree_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:text="@string/widget_friend_first_degree"
+			android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent.Gray"
+			app:layout_constraintTop_toBottomOf="@+id/friend_first_degree_wrapper"
+			app:layout_constraintStart_toStartOf="@+id/friend_first_degree_wrapper"
+			app:layout_constraintEnd_toEndOf="@+id/friend_first_degree_wrapper" />
+
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/friend_second_degree_wrapper"
+			style="@style/Widget.Vexl.Filters.FriendCardView"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="4dp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toEndOf="@id/friend_first_degree_wrapper"
+			app:layout_constraintEnd_toEndOf="parent">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+				<ImageView
+					android:id="@+id/friend_second_degree_image"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_second_degree"
+					android:layout_marginBottom="16dp"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent" />
+
+				<ImageView
+					android:id="@+id/friend_second_degree_check"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_successful"
+					android:layout_margin="8dp"
+					android:visibility="gone"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</com.google.android.material.card.MaterialCardView>
+
+		<TextView
+			android:id="@+id/friend_second_degree_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:text="@string/widget_friend_second_degree"
+			android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent.Gray"
+			app:layout_constraintTop_toBottomOf="@+id/friend_second_degree_wrapper"
+			app:layout_constraintStart_toStartOf="@+id/friend_second_degree_wrapper"
+			app:layout_constraintEnd_toEndOf="@+id/friend_second_degree_wrapper" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -9,31 +9,35 @@
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content">
 
 		<CheckBox
 			android:id="@+id/btc_network_lighting"
 			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:background="@drawable/widget_location_radio_selector"
+			android:background="@drawable/widget_payment_method_selector"
 			android:button="@android:color/transparent"
 			android:text="@string/widget_btc_network_lighting"
-			android:layout_margin="8dp"
+			android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent.White"
+			android:layout_marginVertical="8dp"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" />
 
 		<CheckBox
 			android:id="@+id/btc_network_on_chain"
 			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:background="@drawable/widget_location_radio_selector"
+			android:background="@drawable/widget_payment_method_selector"
 			android:button="@android:color/transparent"
 			android:text="@string/widget_btc_network_on_chain"
+			android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent.White"
 			android:layout_margin="8dp"
 			app:layout_constraintStart_toEndOf="@+id/btc_network_lighting"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

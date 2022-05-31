@@ -36,9 +36,9 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 
 		binding.marketplaceViewpager.adapter = MarketplacePagerAdapter(
 			fragment = this,
-			navigateToFilters = {
+			navigateToFilters = { offerType ->
 				findNavController().navigate(
-					MarketplaceFragmentDirections.proceedToFiltersFragment()
+					MarketplaceFragmentDirections.proceedToFiltersFragment(offerType)
 				)
 			},
 			navigateToNewOffer = {

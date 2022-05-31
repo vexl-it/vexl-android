@@ -15,7 +15,7 @@
 	<color name="root_text_color">@color/carbon</color>
 	<color name="status_bar">@android:color/transparent</color>
 	<color name="navigation_bar">#000000</color>
-	<color name="button">@color/blue_light</color>
+	<color name="button">@color/yellow_100</color>
 	<color name="black_button">@color/black</color>
 	<color name="gray_button">@color/gray_1</color>
 	<color name="edit_border">#AFAFAF</color>
@@ -23,6 +23,7 @@
 	<color name="black">#000000</color>
 	<color name="white">#FFFFFF</color>
 	<color name="white_opacity_50">#80FFFFFF</color>
+	<color name="white_opacity_15">#26FFFFFF</color>
 	<color name="gray_1">#262626</color>
 	<color name="gray_2">#808080</color>
 	<color name="gray_3">#AFAFAF</color>

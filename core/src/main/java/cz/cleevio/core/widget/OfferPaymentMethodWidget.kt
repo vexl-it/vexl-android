@@ -51,6 +51,14 @@ class OfferPaymentMethodWidget @JvmOverloads constructor(
 	fun getPaymentValue(): PaymentMethodValue = PaymentMethodValue(
 		value = selectedButtons.toList()
 	)
+
+	fun reset() {
+		binding.paymentCash.isChecked = false
+		binding.paymentRevolut.isChecked = false
+		binding.paymentBank.isChecked = false
+
+		selectedButtons = mutableSetOf()
+	}
 }
 
 enum class PaymentButtonSelected {

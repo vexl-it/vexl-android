@@ -31,6 +31,10 @@
 		android:label="FiltersFragment"
 		tools:layout="@layout/fragment_filters">
 
+		<argument
+			android:name="offerType"
+			app:argType="cz.cleevio.core.model.OfferType" />
+
 	</fragment>
 
 	<fragment

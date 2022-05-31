@@ -304,9 +304,19 @@
 		<item name="android:paddingEnd">13dp</item>
 	</style>
 
+	<style name="Widget.Vexl.AddButton" parent="">
+		<item name="android:background">@drawable/background_button_black_10</item>
+		<item name="android:foreground">@drawable/ripple_mask_10</item>
+	</style>
+
 	<style name="Widget.Vexl.AddOfferButton" parent="">
 		<item name="android:padding">7dp</item>
 		<item name="android:background">@drawable/background_button_green_13</item>
+	</style>
+
+	<style name="Widget.Vexl.CloseButton" parent="">
+		<item name="android:padding">7dp</item>
+		<item name="android:background">@drawable/background_button_gray_13</item>
 	</style>
 
 	<style name="Widget.Vexl.CardView" parent="Widget.MaterialComponents.CardView">
@@ -323,6 +333,14 @@
 		<item name="cardElevation">4dp</item>
 		<item name="cardCornerRadius">10dp</item>
 		<item name="backgroundColor">@color/gray_1</item>
+		<item name="cardBackgroundColor">@color/gray_1</item>
+	</style>
+
+	<style name="Widget.Vexl.Filters.FriendCardView" parent="Widget.MaterialComponents.CardView">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">10dp</item>
+		<item name="cardElevation">4dp</item>
+		<item name="cardCornerRadius">12dp</item>
 		<item name="cardBackgroundColor">@color/gray_1</item>
 	</style>
 

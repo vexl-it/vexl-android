@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import com.google.android.material.chip.Chip
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentOffersBinding
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.getDrawable
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
@@ -12,10 +13,12 @@ import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 sealed class OffersBaseFragment constructor(
-	val navigateToFilters: () -> Unit,
+	val navigateToFilters: (OfferType) -> Unit,
 	val navigateToNewOffer: () -> Unit,
 	val requestOffer: (String) -> Unit
 ) : BaseFragment(R.layout.fragment_offers) {
+
+	abstract fun getOfferType(): OfferType
 
 	override val viewModel by viewModel<OffersViewModel>()
 	private val binding by viewBinding(FragmentOffersBinding::bind)
@@ -36,7 +39,7 @@ sealed class OffersBaseFragment constructor(
 				binding.filters.addView(generateChipView(
 					icon = R.drawable.ic_chevron_down,
 					listener = {
-						navigateToFilters()
+						navigateToFilters(getOfferType())
 					}
 				))
 			}

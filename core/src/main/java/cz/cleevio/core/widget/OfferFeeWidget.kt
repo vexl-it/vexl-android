@@ -77,6 +77,12 @@ class OfferFeeWidget @JvmOverloads constructor(
 		value = feeValue
 	)
 
+	fun reset() {
+		selectedButton = FeeButtonSelected.WITHOUT_FEE
+		drawSeekbarSection(visible = false)
+		updateFeeValue(0)
+	}
+
 	companion object {
 		const val FEE_MAX_VALUE: Int = 24
 	}

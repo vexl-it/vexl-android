@@ -46,13 +46,27 @@ class OfferLocationWidget @JvmOverloads constructor(
 		}
 
 		binding.locationAddNewLocation.setOnClickListener {
-			items[visibleItems.size].isVisible = true
-			visibleItems.add(items[visibleItems.size])
+			val firstGoneItem = items.first { !it.isVisible }
+			firstGoneItem.isVisible = true
+			visibleItems.add(firstGoneItem)
 
-			if (visibleItems.size >= LOCATION_ITEMS_LIMIT) {
-				binding.locationAddNewLocation.isVisible = false
+			checkAddButtonVisibility()
+		}
+
+		items.forEach { view ->
+			view.setOnCloseListener { item ->
+				val clickedItem = items.firstOrNull { it == item }
+				clickedItem?.let {
+					it.isVisible = false
+					visibleItems.remove(it)
+				}
+				checkAddButtonVisibility()
 			}
 		}
+	}
+
+	private fun checkAddButtonVisibility() {
+		binding.locationAddNewLocation.isVisible = visibleItems.size < LOCATION_ITEMS_LIMIT
 	}
 
 	private fun setupUI() {
@@ -61,8 +75,22 @@ class OfferLocationWidget @JvmOverloads constructor(
 
 	fun getLocationValue(): LocationValue = LocationValue(
 		type = selectedButton,
+		//fixme: should use getValue() and then external API to convert to GPS coords
 		values = visibleItems.map { it.getLocation() }
 	)
+
+	fun reset() {
+		items.forEach {
+			it.reset()
+			it.isVisible = false
+		}
+
+		visibleItems.clear()
+
+		selectedButton = LocationButtonSelected.NONE
+		binding.locationInPerson.isChecked = false
+		binding.locationOnline.isChecked = false
+	}
 
 	companion object {
 		const val LOCATION_ITEMS_LIMIT = 5

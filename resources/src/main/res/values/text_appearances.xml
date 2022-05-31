@@ -70,6 +70,14 @@
 		<item name="android:textAllCaps">false</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.AddButton" parent="TextAppearance.MaterialComponents.Button">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="lineHeight">17.43dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:letterSpacing">-0.03</item>
+	</style>
+
 	<style name="TextAppearance.Cleevio.MiniButton" parent="TextAppearance.MaterialComponents.Button">
 		<item name="android:textSize">13sp</item>
 		<item name="android:textColor">@android:color/white</item>
@@ -253,8 +261,28 @@
 
 	<style name="TextAppearance.Vexl.Filter.FilterContent" parent="">
 		<item name="android:textSize">18sp</item>
-		<item name="android:textColor">@color/green_5</item>
+		<item name="android:textColor">@color/yellow_100</item>
 		<item name="lineHeight">26sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Filter.FilterContent.White" parent="">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">26sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Filter.FilterContent.Gray" parent="">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="lineHeight">26sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Chat.Item.Text" parent="TextAppearance.MaterialComponents.Body2">
@@ -312,5 +340,49 @@
 		<item name="android:fontFamily">@font/tt_satoshi_bold</item>
 		<item name="fontFamily">@font/tt_satoshi_bold</item>
 	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.Filter.Subtitle" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">20sp</item>
+		<item name="android:textColor">@color/yellow_100</item>
+		<item name="lineHeight">24.94sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.Filter.Title" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">32sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">46sp</item>
+		<item name="android:fontFamily">@font/pp_monument_extended_bold</item>
+		<item name="fontFamily">@font/pp_monument_extended_bold</item>
+		<item name="android:letterSpacing">-0.03</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.Filter.Section.Title" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">24sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">30.24sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+		<item name="android:letterSpacing">-0.03</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="lineHeight">26sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.Filter.Section.Description.Gray" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="lineHeight">20sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
 
 </resources>

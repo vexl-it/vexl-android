@@ -4,24 +4,35 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@color/white"
 	tools:parentTag="androidx.cardview.widget.CardView">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content">
 
 		<CheckBox
 			android:id="@+id/payment_cash"
 			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:background="@drawable/widget_location_radio_selector"
+			android:background="@drawable/widget_payment_method_selector"
 			android:button="@android:color/transparent"
 			android:text="@string/widget_payment_cash"
+			android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent.White"
 			android:layout_margin="8dp"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toStartOf="@+id/payment_revolut"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" />
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/popular_badge"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_badge_popular"
+			android:layout_marginTop="2dp"
+			android:layout_marginStart="2dp"
+			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<CheckBox
@@ -29,25 +40,28 @@
 			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:background="@drawable/widget_location_radio_selector"
+			android:background="@drawable/widget_payment_method_selector"
 			android:button="@android:color/transparent"
 			android:text="@string/widget_payment_revolut"
+			android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent.White"
 			android:layout_margin="8dp"
 			app:layout_constraintStart_toEndOf="@+id/payment_cash"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" />
 
 		<CheckBox
 			android:id="@+id/payment_bank"
 			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_weight=".5"
-			android:background="@drawable/widget_location_radio_selector"
+			android:background="@drawable/widget_payment_method_selector"
 			android:button="@android:color/transparent"
 			android:text="@string/widget_payment_bank"
+			android:textAppearance="@style/TextAppearance.Vexl.Filter.FilterContent.White"
 			android:layout_margin="8dp"
 			app:layout_constraintStart_toEndOf="@+id/payment_revolut"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

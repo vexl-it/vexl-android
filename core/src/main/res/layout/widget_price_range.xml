@@ -25,19 +25,20 @@
 
 			<com.google.android.material.slider.RangeSlider
 				android:id="@+id/price_range_slider"
-				android:layout_width="match_parent"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:stepSize="100"
 				android:valueFrom="0"
-				android:valueTo="100000"
+				android:valueTo="10000"
 				app:labelBehavior="gone"
+				android:layout_marginBottom="24dp"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/range_text"
-				app:thumbColor="@color/green_5"
-				app:trackColorActive="@color/green_5"
-				app:trackColorInactive="@color/gray_2"
+				app:thumbColor="@color/white"
+				app:tickColor="@null"
+				app:trackColorActive="@color/white"
+				app:trackColorInactive="@color/gray_3"
 				app:values="@array/initial_slider_values" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>

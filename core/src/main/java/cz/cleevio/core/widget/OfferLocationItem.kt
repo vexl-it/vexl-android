@@ -17,13 +17,22 @@ class OfferLocationItem @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 	private lateinit var binding: WidgetOfferLocationItemBinding
+	private var onCloseListener: ((OfferLocationItem) -> Unit)? = null
 
 	init {
 		setupUI()
+
+		binding.locationItemClose.setOnClickListener {
+			onCloseListener?.invoke(this)
+		}
 	}
 
 	private fun setupUI() {
 		binding = WidgetOfferLocationItemBinding.inflate(layoutInflater, this)
+	}
+
+	fun setOnCloseListener(listener: (OfferLocationItem) -> Unit) {
+		onCloseListener = listener
 	}
 
 	private fun getBigDecimal(view: TextInputEditText): BigDecimal {
@@ -35,9 +44,23 @@ class OfferLocationItem @JvmOverloads constructor(
 		}
 	}
 
+	fun getValue(): String {
+		return binding.locationItemText.text.toString()
+	}
+
+	fun getRadius(): String {
+		return binding.locationItemRadius.text.toString()
+	}
+
+	fun reset() {
+		binding.locationItemText.setText("")
+		binding.locationItemRadius.setText("+- 1 km")
+	}
+
+	@Deprecated("Use getValue and getRadius instead")
 	fun getLocation(): Location = Location(
-		latitude = getBigDecimal(binding.locationItemLatitude),
-		longitude = getBigDecimal(binding.locationItemLongitude),
-		radius = getBigDecimal(binding.locationItemRadius)
+		latitude = BigDecimal("50.0811704"),    ///getBigDecimal(binding.locationItemLatitude),
+		longitude = BigDecimal("14.4084831"),    //getBigDecimal(binding.locationItemLongitude),
+		radius = BigDecimal("20")                //getBigDecimal(binding.locationItemRadius)
 	)
 }

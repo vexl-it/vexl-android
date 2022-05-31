@@ -43,6 +43,13 @@ class OfferBtcNetworkType @JvmOverloads constructor(
 	fun getBtcNetworkValue(): BtcNetworkValue = BtcNetworkValue(
 		value = selectedButtons.toList()
 	)
+
+	fun reset() {
+		binding.btcNetworkLighting.isChecked = false
+		binding.btcNetworkOnChain.isChecked = false
+
+		selectedButtons = mutableSetOf()
+	}
 }
 
 enum class BtcNetworkButtonSelected {

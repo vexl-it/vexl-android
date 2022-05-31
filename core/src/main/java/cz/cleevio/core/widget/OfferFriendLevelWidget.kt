@@ -3,11 +3,11 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFriendLevelBinding
 import cz.cleevio.core.model.FriendLevelValue
 import lightbase.core.extensions.layoutInflater
-import timber.log.Timber
 
 class OfferFriendLevelWidget @JvmOverloads constructor(
 	context: Context,
@@ -21,19 +21,12 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 	init {
 		setupUI()
 
-		binding.friendRadiogroup.setOnCheckedChangeListener { _, id ->
-			selectedButton = when (id) {
-				R.id.friend_first_degree -> {
-					FriendLevel.FIRST_DEGREE
-				}
-				R.id.friend_second_degree -> {
-					FriendLevel.SECOND_DEGREE
-				}
-				else -> {
-					Timber.e("Unknown radio ID! '$id'")
-					FriendLevel.NONE
-				}
-			}
+		binding.friendFirstDegreeWrapper.setOnClickListener {
+			redrawWithSelection(FriendLevel.FIRST_DEGREE)
+		}
+
+		binding.friendSecondDegreeWrapper.setOnClickListener {
+			redrawWithSelection(FriendLevel.SECOND_DEGREE)
 		}
 	}
 
@@ -41,9 +34,50 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 		binding = WidgetOfferFriendLevelBinding.inflate(layoutInflater, this)
 	}
 
+	private fun redrawWithSelection(selection: FriendLevel) {
+		selectedButton = selection
+
+		when (selectedButton) {
+			FriendLevel.FIRST_DEGREE -> {
+				binding.friendFirstDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_2))
+				binding.friendSecondDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
+
+				binding.friendFirstDegreeCheck.isVisible = true
+				binding.friendSecondDegreeCheck.isVisible = false
+
+				binding.friendFirstDegreeText.setTextColor(resources.getColor(R.color.white))
+				binding.friendSecondDegreeText.setTextColor(resources.getColor(R.color.gray_3))
+			}
+			FriendLevel.SECOND_DEGREE -> {
+				binding.friendFirstDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
+				binding.friendSecondDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_2))
+
+				binding.friendFirstDegreeCheck.isVisible = false
+				binding.friendSecondDegreeCheck.isVisible = true
+
+				binding.friendFirstDegreeText.setTextColor(resources.getColor(R.color.gray_3))
+				binding.friendSecondDegreeText.setTextColor(resources.getColor(R.color.white))
+			}
+			else -> {
+				binding.friendFirstDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
+				binding.friendSecondDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
+
+				binding.friendFirstDegreeCheck.isVisible = false
+				binding.friendSecondDegreeCheck.isVisible = false
+
+				binding.friendFirstDegreeText.setTextColor(resources.getColor(R.color.gray_3))
+				binding.friendSecondDegreeText.setTextColor(resources.getColor(R.color.gray_3))
+			}
+		}
+	}
+
 	fun getFriendLevel(): FriendLevelValue = FriendLevelValue(
 		value = selectedButton
 	)
+
+	fun reset() {
+		redrawWithSelection(FriendLevel.NONE)
+	}
 }
 
 enum class FriendLevel {
