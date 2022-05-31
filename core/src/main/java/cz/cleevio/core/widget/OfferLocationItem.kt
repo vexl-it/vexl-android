@@ -3,11 +3,9 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import com.google.android.material.textfield.TextInputEditText
 import cz.cleevio.core.databinding.WidgetOfferLocationItemBinding
 import cz.cleevio.repository.model.offer.Location
 import lightbase.core.extensions.layoutInflater
-import timber.log.Timber
 import java.math.BigDecimal
 
 class OfferLocationItem @JvmOverloads constructor(
@@ -35,15 +33,6 @@ class OfferLocationItem @JvmOverloads constructor(
 		onCloseListener = listener
 	}
 
-	private fun getBigDecimal(view: TextInputEditText): BigDecimal {
-		return try {
-			BigDecimal(view.text.toString())
-		} catch (exception: NumberFormatException) {
-			Timber.e(exception)
-			BigDecimal(0.0)
-		}
-	}
-
 	fun getValue(): String {
 		return binding.locationItemText.text.toString()
 	}
@@ -59,8 +48,8 @@ class OfferLocationItem @JvmOverloads constructor(
 
 	@Deprecated("Use getValue and getRadius instead")
 	fun getLocation(): Location = Location(
-		latitude = BigDecimal("50.0811704"),    ///getBigDecimal(binding.locationItemLatitude),
-		longitude = BigDecimal("14.4084831"),    //getBigDecimal(binding.locationItemLongitude),
-		radius = BigDecimal("20")                //getBigDecimal(binding.locationItemRadius)
+		latitude = BigDecimal("50.0811704"),
+		longitude = BigDecimal("14.4084831"),
+		radius = BigDecimal("20")
 	)
 }
