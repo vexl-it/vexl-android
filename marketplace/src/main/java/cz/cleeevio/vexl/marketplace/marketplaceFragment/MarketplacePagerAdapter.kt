@@ -4,11 +4,12 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.offers.OffersBuyFragment
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.offers.OffersSellFragment
+import cz.cleevio.core.model.OfferType
 import timber.log.Timber
 
 class MarketplacePagerAdapter constructor(
 	fragment: Fragment,
-	private val navigateToFilters: () -> (Unit),
+	private val navigateToFilters: (OfferType) -> (Unit),
 	private val navigateToNewOffer: () -> (Unit),
 	private val requestOffer: (String) -> (Unit)
 ) : FragmentStateAdapter(fragment) {

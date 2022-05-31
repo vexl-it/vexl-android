@@ -75,6 +75,9 @@
     <string name="offer_request">Request</string>
 
     <!-- Filters -->
+    <string name="filter_title">Filter</string>
+    <string name="filter_apply">Apply filter</string>
+    <string name="filter_offers">Filter offers</string>
     <string name="widget_fee_without">Without fee</string>
     <string name="widget_fee_ok">Fee OK</string>
     <string name="widget_fee_percent">\u003C %s%%</string>
@@ -84,12 +87,26 @@
     <string name="widget_trigger_price_below">below</string>
     <string name="widget_trigger_price_above">above</string>
     <string name="widget_trigger_price_curr_crypto_price">currently 1 BTC = $%f</string>
+    <string name="filter_amount_title">Amount</string>
+    <string name="filter_location_title">Location</string>
+    <string name="widget_location_add_new">Another Location</string>
     <string name="widget_payment_cash">Cash</string>
     <string name="widget_payment_revolut">Revolut</string>
     <string name="widget_payment_bank">Bank</string>
+    <string name="filter_payment_method_title">Payment Method</string>
     <string name="widget_friend_first_degree">1st degree</string>
     <string name="widget_friend_second_degree">2nd degree</string>
+    <string name="filter_friend_level_description">Trade with your friends only. \nOr with friends of your friends.</string>
     <string name="widget_btc_network_lighting">Lighting</string>
     <string name="widget_btc_network_on_chain">On Chain</string>
     <string name="widget_offer_description">Description</string>
+    <string name="filter_advanced_title">Advanced</string>
+    <string name="filter_type_title">Type</string>
+    <string name="filter_friend_level_title">Friend level</string>
+
+    <!-- Offer Request -->
+
+    <!-- Chat -->
+
+    <!-- Chat requests -->
 </resources>

@@ -26,6 +26,7 @@ class PriceRangeWidget @JvmOverloads constructor(
 	private fun setupUI() {
 		binding = WidgetPriceRangeBinding.inflate(layoutInflater, this)
 
+		binding.priceRangeSlider.setCustomThumbDrawable(R.drawable.ic_picker)
 		val initValues = binding.priceRangeSlider.values
 		processLimits(initValues[0], initValues[1])
 		binding.priceRangeSlider.addOnChangeListener { slider, _, _ ->
@@ -44,4 +45,10 @@ class PriceRangeWidget @JvmOverloads constructor(
 		topLimit = topLimit,
 		bottomLimit = bottomLimit
 	)
+
+	fun reset() {
+		val initValues = resources.getIntArray(R.array.initial_slider_values).map { it.toFloat() }
+		binding.priceRangeSlider.values = initValues
+		processLimits(initValues[0], initValues[1])
+	}
 }

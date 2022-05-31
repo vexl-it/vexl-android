@@ -4,19 +4,17 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@color/white"
 	tools:parentTag="androidx.cardview.widget.CardView">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content">
 
 		<LinearLayout
 			android:id="@+id/location_items_wrapper"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			android:layout_marginHorizontal="16dp"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent">
@@ -31,69 +29,110 @@
 				android:id="@+id/location_new_two"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
 				android:visibility="gone" />
 
 			<cz.cleevio.core.widget.OfferLocationItem
 				android:id="@+id/location_new_three"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
 				android:visibility="gone" />
 
 			<cz.cleevio.core.widget.OfferLocationItem
 				android:id="@+id/location_new_four"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
 				android:visibility="gone" />
 
 			<cz.cleevio.core.widget.OfferLocationItem
 				android:id="@+id/location_new_five"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
 				android:visibility="gone" />
 
-			<Button
+			<androidx.constraintlayout.widget.ConstraintLayout
 				android:id="@+id/location_add_new_location"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="Add new location" />
+				android:layout_marginTop="8dp"
+				style="@style/Widget.Vexl.AddButton">
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:id="@+id/add_button_icon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_plus"
+					android:tint="@color/gray_3"
+					android:layout_marginVertical="16dp"
+					android:layout_marginEnd="4dp"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/add_button_text"
+					app:layout_constraintHorizontal_chainStyle="packed" />
+
+				<TextView
+					android:id="@+id/add_button_text"
+					android:layout_width="wrap_content"
+					android:layout_height="0dp"
+					android:gravity="center"
+					android:text="@string/widget_location_add_new"
+					android:textAppearance="@style/TextAppearance.Vexl.AddButton"
+					app:layout_constraintTop_toTopOf="@+id/add_button_icon"
+					app:layout_constraintBottom_toBottomOf="@+id/add_button_icon"
+					app:layout_constraintStart_toEndOf="@+id/add_button_icon"
+					app:layout_constraintEnd_toEndOf="parent" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
 
 		</LinearLayout>
 
-		<RadioGroup
-			android:id="@+id/location_radiogroup"
+		<com.google.android.material.card.MaterialCardView
+			style="@style/Widget.Vexl.Filters.FilterCardView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="16dp"
-			android:layout_marginBottom="10dp"
-			android:orientation="horizontal"
+			android:layout_marginTop="8dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/location_items_wrapper">
+			app:layout_constraintTop_toBottomOf="@+id/location_items_wrapper"
+			app:layout_constraintBottom_toBottomOf="parent">
 
-			<RadioButton
-				android:id="@+id/location_online"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
+			<RadioGroup
+				android:id="@+id/location_radiogroup"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_weight=".5"
-				android:background="@drawable/widget_location_radio_selector"
-				android:button="@android:color/transparent"
-				android:checked="true"
-				android:text="@string/widget_location_online" />
+				android:padding="4dp"
+				android:orientation="horizontal">
 
-			<RadioButton
-				android:id="@+id/location_in_person"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_weight=".5"
-				android:background="@drawable/widget_location_radio_selector"
-				android:button="@android:color/transparent"
-				android:text="@string/widget_location_in_person" />
+				<RadioButton
+					android:id="@+id/location_online"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight=".5"
+					android:background="@drawable/widget_location_radio_selector"
+					android:button="@android:color/transparent"
+					android:checked="true"
+					android:gravity="center"
+					android:text="@string/widget_location_online" />
 
-		</RadioGroup>
+				<RadioButton
+					android:id="@+id/location_in_person"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight=".5"
+					android:background="@drawable/widget_location_radio_selector"
+					android:button="@android:color/transparent"
+					android:gravity="center"
+					android:text="@string/widget_location_in_person" />
+
+			</RadioGroup>
+
+		</com.google.android.material.card.MaterialCardView>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
