@@ -253,9 +253,8 @@
 		<item name="android:letterSpacing">-0.03</item>
 	</style>
 
-	<style name="TextAppearance.Vexl.Marketplace.FilterChip" parent="">
-		<item name="android:textSize">16sp</item>
-		<item name="android:textColor">@color/gray_3</item>
+	<style name="TextAppearance.Vexl.Marketplace.FilterChip" parent="TextAppearance.Vexl.ParagraphSmall">
+		<item name="android:textColor">@color/gray_4</item>
 		<item name="lineHeight">19.92sp</item>
 	</style>
 
@@ -339,6 +338,16 @@
 		<item name="android:letterSpacing">-0.03</item>
 		<item name="android:fontFamily">@font/tt_satoshi_bold</item>
 		<item name="fontFamily">@font/tt_satoshi_bold</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.MainTab" parent="TextAppearance.Vexl.Heading1">
+		<item name="android:textColor">@color/gray_2</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.OfferDescription" parent="TextAppearance.Vexl.Description">
+		<item name="android:textSize">20sp</item>
+		<item name="lineHeight">27sp</item>
+		<item name="android:letterSpacing">-0.01</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Marketplace.Filter.Subtitle" parent="TextAppearance.MaterialComponents.Body1">

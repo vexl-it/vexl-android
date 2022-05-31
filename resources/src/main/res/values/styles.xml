@@ -345,7 +345,6 @@
 	</style>
 
 	<style name="Widget.Vexl.MarketplaceMainCardView" parent="">
-		<item name="android:paddingTop">32dp</item>
 		<item name="android:background">@drawable/background_cardview_marketplace_black</item>
 	</style>
 
@@ -423,6 +422,25 @@
 		<item name="android:layout_marginBottom">20dp</item>
 		<item name="android:padding">10dp</item>
 		<item name="android:background">@drawable/bottom_nav_background</item>
+	</style>
+
+	<style name="Widget.Cleevio.Vexl.Marketplace.TabLayout" parent="Widget.Design.TabLayout">
+		<item name="tabIndicatorColor">@color/yellow_100</item>
+		<item name="tabIndicatorHeight">2dp</item>
+		<item name="tabPaddingTop">24dp</item>
+		<item name="tabPaddingBottom">26dp</item>
+		<item name="tabTextAppearance">@style/TextAppearance.Vexl.Marketplace.MainTab</item>
+		<item name="tabSelectedTextColor">@color/white</item>
+	</style>
+
+	<style name="Widget.Cleevio.Vexl.Marketplace.FilterChip" parent="">
+		<item name="chipMinHeight">100dp</item>
+		<item name="chipStartPadding">13dp</item>
+		<item name="chipEndPadding">13dp</item>
+		<item name="iconEndPadding">9dp</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Vexl.Marketplace.Chip</item>
+		<item name="chipBackgroundColor">@color/gray_1</item>
+		<item name="android:checkable">false</item>
 	</style>
 
 

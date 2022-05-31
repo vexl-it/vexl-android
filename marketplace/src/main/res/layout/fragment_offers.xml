@@ -5,19 +5,26 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<com.google.android.flexbox.FlexboxLayout
-		android:id="@+id/filters"
-		android:layout_width="wrap_content"
+
+	<HorizontalScrollView
+		android:id="@+id/filters_wrapper"
+		android:layout_width="0dp"
 		android:layout_height="0dp"
+		android:clipToPadding="false"
+		android:scrollbars="none"
 		android:layout_margin="16dp"
-		app:flexDirection="row"
-		app:flexWrap="wrap"
-		app:justifyContent="center"
 		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toStartOf="@id/add_offer_btn"
-		app:layout_constraintHorizontal_chainStyle="spread_inside"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent">
+
+		<com.google.android.material.chip.ChipGroup
+			android:id="@+id/filters"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:singleLine="true" />
+
+	</HorizontalScrollView>
 
 	<ImageButton
 		android:id="@+id/add_offer_btn"
@@ -26,17 +33,19 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="16dp"
 		android:src="@drawable/ic_plus"
+		android:backgroundTint="@color/yellow_20"
 		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/filters"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintStart_toEndOf="@id/filters_wrapper"
+		app:layout_constraintTop_toTopOf="parent"
+		app:tint="@color/yellow_100" />
 
 	<androidx.constraintlayout.widget.Barrier
 		android:id="@+id/filter_barrier"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		app:barrierDirection="bottom"
-		app:constraint_referenced_ids="filters, add_offer_btn" />
+		app:constraint_referenced_ids="filters_wrapper, add_offer_btn" />
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/offer_list"
@@ -47,6 +56,6 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/filter_barrier"
-		tools:listitem="@layout/item_offer" />
+		tools:listitem="@layout/widget_offer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

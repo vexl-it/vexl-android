@@ -25,9 +25,9 @@
 	<color name="white_opacity_50">#80FFFFFF</color>
 	<color name="white_opacity_15">#26FFFFFF</color>
 	<color name="gray_1">#262626</color>
-	<color name="gray_2">#808080</color>
-	<color name="gray_3">#AFAFAF</color>
-	<color name="gray_4">#EEEEEE</color>
+	<color name="gray_2">#4C4C4C</color>
+	<color name="gray_3">#808080</color>
+	<color name="gray_4">#AFAFAF</color>
 	<color name="yellow">#FEC527</color>
 	<color name="dark_yellow">#C1961F</color>
 	<color name="carbon">#1C252B</color>

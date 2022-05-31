@@ -3,6 +3,7 @@ package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 import android.view.View
 import androidx.annotation.DrawableRes
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentOffersBinding
 import cz.cleevio.core.model.OfferType
@@ -11,6 +12,7 @@ import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 sealed class OffersBaseFragment constructor(
 	val navigateToFilters: (OfferType) -> Unit,
@@ -38,6 +40,8 @@ sealed class OffersBaseFragment constructor(
 				}
 				binding.filters.addView(generateChipView(
 					icon = R.drawable.ic_chevron_down,
+					iconAtStart = false,
+					filter = getString(R.string.filter_offers),
 					listener = {
 						navigateToFilters(getOfferType())
 					}
@@ -58,12 +62,23 @@ sealed class OffersBaseFragment constructor(
 	}
 
 
-	private fun generateChipView(filter: String? = null, @DrawableRes icon: Int? = null, listener: () -> (Unit) = {}): Chip {
+	private fun generateChipView(
+		filter: String? = null,
+		@DrawableRes icon: Int? = null,
+		iconAtStart: Boolean = true,
+		listener: () -> (Unit) = {}
+	): Chip {
+
 		val newChip = Chip(context)
+		val chipDrawable = ChipDrawable.createFromAttributes(
+			requireContext(),
+			null,
+			0,
+			R.style.Widget_Cleevio_Vexl_Marketplace_FilterChip
+		)
+		newChip.setChipDrawable(chipDrawable)
+
 		newChip.id = View.generateViewId()
-		newChip.setEnsureMinTouchTargetSize(false)
-		newChip.setChipBackgroundColorResource(R.color.gray_1)
-		newChip.setRippleColorResource(R.color.gray_2)
 		newChip.setOnClickListener {
 			listener()
 		}
@@ -76,7 +91,15 @@ sealed class OffersBaseFragment constructor(
 			newChip.textEndPadding = 0.0f
 		}
 		icon?.let {
-			newChip.chipIcon = getDrawable(icon)
+			val icon = getDrawable(icon)
+			icon?.setTint(resources.getColor(R.color.gray_3, null))
+			newChip.chipIcon = icon
+			newChip.isChipIconVisible = true
+			newChip.layoutDirection = if (iconAtStart) {
+				View.LAYOUT_DIRECTION_LTR
+			} else {
+				View.LAYOUT_DIRECTION_RTL
+			}
 		}
 		return newChip
 	}

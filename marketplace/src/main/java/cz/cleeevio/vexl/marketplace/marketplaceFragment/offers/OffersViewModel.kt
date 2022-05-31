@@ -1,7 +1,6 @@
 package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.lifecycle.viewModelScope
-import cz.cleeevio.vexl.marketplace.R
 import cz.cleevio.repository.model.offer.Filter
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -44,13 +43,7 @@ class OffersViewModel(
 			_filters.emit(
 				listOf(
 					// TODO emit correct filters
-					Filter(
-						label = "Revolut",
-						icon = R.drawable.ic_revolut
-					),
-					Filter(
-						label = "up to \$10k"
-					)
+
 				)
 			)
 		}
