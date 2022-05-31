@@ -32,7 +32,7 @@
 					android:layout_marginStart="20dp"
 					android:layout_marginVertical="8dp"
 					android:textColor="@color/yellow_100"
-					android:hint="Zadejte město"
+					android:hint="@string/widget_location_hint"
 					android:textColorHint="@color/gray_3"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintBottom_toBottomOf="parent"
@@ -51,14 +51,13 @@
 					app:layout_constraintStart_toEndOf="@+id/location_item_text"
 					app:layout_constraintEnd_toStartOf="@+id/location_item_radius" />
 
-				<com.google.android.material.textfield.TextInputEditText
+				<TextView
 					android:id="@+id/location_item_radius"
 					android:layout_width="80dp"
 					android:layout_height="wrap_content"
-					android:layout_marginEnd="20dp"
+					android:layout_marginHorizontal="10dp"
 					android:layout_marginVertical="8dp"
 					android:textColor="@color/white"
-					android:text="+- 1 km"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintStart_toEndOf="@+id/location_item_separator"
