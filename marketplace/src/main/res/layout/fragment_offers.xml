@@ -34,18 +34,18 @@
 		android:layout_margin="16dp"
 		android:src="@drawable/ic_plus"
 		android:backgroundTint="@color/yellow_20"
-		android:tint="@color/yellow_100"
 		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/filters"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintStart_toEndOf="@id/filters_wrapper"
+		app:layout_constraintTop_toTopOf="parent"
+		app:tint="@color/yellow_100" />
 
 	<androidx.constraintlayout.widget.Barrier
 		android:id="@+id/filter_barrier"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		app:barrierDirection="bottom"
-		app:constraint_referenced_ids="filters, add_offer_btn" />
+		app:constraint_referenced_ids="filters_wrapper, add_offer_btn" />
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/offer_list"
