@@ -1,24 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	style="@style/Widget.Vexl.CardView"
+	android:id="@+id/container"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_margin="8dp">
+	android:layout_height="match_parent"
+	tools:background="@color/black"
+	xmlns:tools="http://schemas.android.com/tools">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/nested_scroll_view"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="16dp">
+		android:layout_height="0dp"
+		android:fillViewport="true"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<TextView
-			android:id="@+id/offer_id"
-			android:layout_width="wrap_content"
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="RequestOfferFragment"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			android:padding="16dp">
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+			<TextView
+				android:id="@+id/offer_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/request_title"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Request.Title"
+				android:layout_marginTop="16dp"
+				android:layout_marginStart="16dp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<ImageButton
+				android:id="@+id/close"
+				style="@style/Widget.Vexl.CloseButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="16dp"
+				android:src="@drawable/ic_close_x"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
+
+			<cz.cleevio.core.widget.OfferWidget
+				android:id="@+id/offer_widget"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				app:layout_constraintTop_toBottomOf="@+id/offer_title"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
+
+			<com.google.android.material.card.MaterialCardView
+				android:id="@+id/common_friends_placeholder"
+				style="@style/Widget.Vexl.CardView"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				app:cardBackgroundColor="@color/gray_1"
+				app:layout_constraintTop_toBottomOf="@+id/offer_widget"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+					<TextView
+						android:id="@+id/common_friends_number"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:layout_marginStart="16dp"
+						android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Request.Friends"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintStart_toStartOf="parent" />
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="80dp"
+						android:layout_marginTop="8dp"
+						android:layout_marginStart="16dp"
+						android:layout_marginBottom="14dp"
+						android:gravity="center"
+						android:text="TODO: There will be common friends"
+						android:textSize="20sp"
+						app:layout_constraintTop_toBottomOf="@+id/common_friends_number"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent" />
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</com.google.android.material.card.MaterialCardView>
+
+			<androidx.cardview.widget.CardView
+				android:id="@+id/request_text_wrapper"
+				style="@style/Widget.Vexl.CardView"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:padding="8dp"
+				app:cardBackgroundColor="@color/gray_1"
+				app:layout_constraintTop_toBottomOf="@+id/common_friends_placeholder"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/request_text"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="16dp"
+					android:layout_marginHorizontal="8dp"
+					android:minLines="4"
+					android:hint="@string/request_text_hint"
+					android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Request.Text"
+					app:layout_constraintTop_toBottomOf="@id/new_offer_title"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					tools:text="This long long description capped at 120 chars" />
+
+			</androidx.cardview.widget.CardView>
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/fake_request_btn"
+				style="@style/Widget.Vexl.Button"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:elevation="0dp"
+				android:text="@string/request_button"
+				android:textAllCaps="false"
+				android:visibility="invisible"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.core.widget.NestedScrollView>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/request_offer_btn"
+		style="@style/Widget.Vexl.Button"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:elevation="0dp"
+		android:text="@string/request_button"
+		android:textAllCaps="false"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

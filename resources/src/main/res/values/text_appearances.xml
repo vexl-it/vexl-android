@@ -364,7 +364,16 @@
 		<item name="lineHeight">46sp</item>
 		<item name="android:fontFamily">@font/pp_monument_extended_bold</item>
 		<item name="fontFamily">@font/pp_monument_extended_bold</item>
-		<item name="android:letterSpacing">-0.03</item>
+		<item name="android:letterSpacing">-0.01</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Marketplace.Request.Title" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">32sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">46sp</item>
+		<item name="android:fontFamily">@font/pp_monument_extended_bold</item>
+		<item name="fontFamily">@font/pp_monument_extended_bold</item>
+		<item name="android:letterSpacing">-0.01</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Marketplace.Filter.Section.Title" parent="TextAppearance.MaterialComponents.Body1">
@@ -393,5 +402,17 @@
 		<item name="fontFamily">@font/tt_satoshi_regular</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Marketplace.Request.Friends" parent="TextAppearance.Vexl.Description">
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="android:letterSpacing">-0.03</item>
+	</style>
 
+	<style name="TextAppearance.Vexl.Marketplace.Request.Text" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="lineHeight">26sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
 </resources>
