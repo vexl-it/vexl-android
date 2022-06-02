@@ -34,6 +34,8 @@ class FiltersFragment : BaseFragment(R.layout.fragment_filters) {
 			//and go back to offers
 			findNavController().popBackStack()
 		}
+
+		binding.filterLocation.setFragmentManager(parentFragmentManager)
 	}
 
 	private fun resetAllInputs() {

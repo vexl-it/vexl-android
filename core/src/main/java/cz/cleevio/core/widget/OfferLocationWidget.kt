@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferLocationBinding
 import cz.cleevio.core.model.LocationValue
@@ -90,6 +91,12 @@ class OfferLocationWidget @JvmOverloads constructor(
 		selectedButton = LocationButtonSelected.NONE
 		binding.locationInPerson.isChecked = false
 		binding.locationOnline.isChecked = false
+	}
+
+	fun setFragmentManager(fragmentManager: FragmentManager) {
+		items.forEach {
+			it.setFragmentManager(fragmentManager)
+		}
 	}
 
 	companion object {
