@@ -26,7 +26,8 @@ class OfferWidget @JvmOverloads constructor(
 		binding.paymentMethod.text = "${item.paymentMethod.joinToString()}"
 		binding.feeAmount.text = item.feeAmount.toString()
 		binding.userName.text = "Unknown friend"
-		binding.location.text = "${item.location.first().latitude}, ${item.location.first().longitude}"
+//		binding.location.text = "${item.location.first().latitude}, ${item.location.first().longitude}"
+		binding.userType.text = "Friend of friend"
 		binding.feeGroup.isVisible = item.feeAmount != null
 
 		binding.requestBtn.isVisible = requestOffer != null
