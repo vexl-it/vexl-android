@@ -107,11 +107,16 @@
     <string name="widget_location_km"> +- %d km</string>
     <string name="widget_location_hint">City</string>
 
-    <!-- Offer Request -->
+	<!-- Offer Request -->
+	<string name="request_title">Offer</string>
+	<string name="request_title_loading">Sending</string>
+	<string name="request_text_hint">e.g. let\'s trade my friend...</string>
+	<string name="request_button">Send request</string>
+	<string name="request_common_friends">%d common friends</string>
 
-    <!-- Chat -->
+	<!-- Chat -->
 
-    <!-- Chat requests -->
+	<!-- Chat requests -->
 
-    <!-- Chat messaging -->
+	<!-- Chat messaging -->
 </resources>
