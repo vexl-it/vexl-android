@@ -27,97 +27,137 @@
 
 				<TextView
 					android:id="@+id/offer_description"
-					android:layout_width="wrap_content"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:textAppearance="@style/TextAppearance.Vexl.Marketplace.OfferDescription"
-					app:layout_constraintBottom_toTopOf="@id/offer_metadata"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
 					tools:text="I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep..." />
 
 				<androidx.constraintlayout.widget.ConstraintLayout
-					android:id="@+id/offer_metadata"
-					android:layout_width="match_parent"
+					android:id="@+id/price_wrapper"
+					android:layout_width="0dp"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="16dp"
-					android:background="@drawable/offer_border"
-					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
+					android:layout_marginTop="24dp"
+					app:layout_constraintEnd_toStartOf="@id/price_divider"
+					app:layout_constraintHorizontal_weight="1"
 					app:layout_constraintTop_toBottomOf="@id/offer_description">
 
-					<androidx.constraintlayout.widget.Group
-						android:id="@+id/fee_group"
+					<TextView
+						android:id="@+id/price_up_to"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						app:constraint_referenced_ids="fee_divider, fee_amount" />
+						android:letterSpacing="-0.04"
+						android:text="@string/marketplace_detail_up_to"
+						android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro"
+						android:textColor="@color/gray_2"
+						app:layout_constraintBottom_toBottomOf="@id/price_limit"
+						app:layout_constraintEnd_toStartOf="@+id/price_limit"
+						app:layout_constraintHorizontal_chainStyle="packed"
+						app:layout_constraintStart_toStartOf="parent"
+						app:lineHeight="14.94sp" />
 
 					<TextView
 						android:id="@+id/price_limit"
-						android:layout_width="0dp"
+						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:layout_margin="16dp"
-						android:gravity="center"
-						app:layout_constraintBottom_toTopOf="@id/fee_barrier"
-						app:layout_constraintEnd_toStartOf="@id/chart_divider"
-						app:layout_constraintHorizontal_weight="0.5"
-						app:layout_constraintStart_toStartOf="parent"
+						android:letterSpacing="-0.04"
+						android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro"
+						android:textColor="@color/gray_2"
+						android:textSize="23sp"
+						app:layout_constraintEnd_toStartOf="@id/price_currency"
+						app:layout_constraintStart_toEndOf="@id/price_up_to"
 						app:layout_constraintTop_toTopOf="parent"
-						tools:text="up to $10k" />
+						app:lineHeight="28.64sp"
+						tools:text="10k" />
 
-					<View
-						android:id="@+id/chart_divider"
-						style="@style/Widget.Cleevio.Marketplace.OfferVerticalDivider"
-						android:layout_width="1dp"
-						android:layout_height="0dp"
-						android:layout_margin="8dp"
-						app:layout_constraintBottom_toTopOf="@id/fee_barrier"
-						app:layout_constraintEnd_toStartOf="@id/payment_method"
+					<TextView
+						android:id="@+id/price_currency"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:letterSpacing="-0.03"
+						android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro"
+						android:textColor="@color/gray_2"
+						android:textSize="12sp"
+						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toEndOf="@id/price_limit"
-						app:layout_constraintTop_toTopOf="parent" />
+						app:layout_constraintTop_toTopOf="parent"
+						app:lineHeight="14.94sp"
+						tools:text="Kč" />
+
+					<TextView
+						android:id="@+id/offer_type"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textAppearance="@style/TextAppearance.Vexl.DescriptionBold"
+						android:textColor="@color/gray_3"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/price_limit"
+						tools:text="to sell" />
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<View
+					android:id="@+id/price_divider"
+					style="@style/Widget.Cleevio.Marketplace.OfferVerticalDivider"
+					android:layout_width="1dp"
+					android:layout_height="0dp"
+					android:layout_margin="8dp"
+					app:layout_constraintEnd_toStartOf="@id/payment_method_wrapper"
+					app:layout_constraintStart_toEndOf="@id/price_wrapper"
+					app:layout_constraintTop_toBottomOf="@id/offer_description" />
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/payment_method_wrapper"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="24dp"
+					app:layout_constraintEnd_toStartOf="@id/payment_method_divider"
+					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintStart_toEndOf="@id/price_divider"
+					app:layout_constraintTop_toBottomOf="@id/offer_description">
 
 					<TextView
 						android:id="@+id/payment_method"
-						android:layout_width="0dp"
-						android:layout_height="wrap_content"
-						android:layout_margin="16dp"
-						android:gravity="center"
-						app:layout_constraintBottom_toTopOf="@id/fee_barrier"
-						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintHorizontal_weight="0.5"
-						app:layout_constraintStart_toEndOf="@id/chart_divider"
-						app:layout_constraintTop_toTopOf="parent"
-						tools:text="Revolut" />
-
-					<androidx.constraintlayout.widget.Barrier
-						android:id="@+id/fee_barrier"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						app:barrierDirection="bottom"
-						app:constraint_referenced_ids="price_limit, chart_divider, payment_method" />
-
-
-					<View
-						android:id="@+id/fee_divider"
-						style="@style/Widget.Cleevio.Marketplace.OfferHorizontalDivider"
-						android:layout_width="match_parent"
-						android:layout_height="1dp"
-						android:layout_marginStart="8dp"
-						android:layout_marginEnd="8dp"
-						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintTop_toBottomOf="@id/fee_barrier" />
-
-					<TextView
-						android:id="@+id/fee_amount"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_margin="16dp"
+						android:text="@string/marketplace_detail_payment"
 						app:layout_constraintBottom_toBottomOf="parent"
 						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintTop_toBottomOf="@id/fee_divider"
-						tools:text="Wants $30 fee per transaction" />
+						app:layout_constraintStart_toStartOf="parent" />
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<View
+					android:id="@+id/payment_method_divider"
+					style="@style/Widget.Cleevio.Marketplace.OfferVerticalDivider"
+					android:layout_width="1dp"
+					android:layout_height="0dp"
+					android:layout_margin="8dp"
+					app:layout_constraintEnd_toStartOf="@id/location_wrapper"
+					app:layout_constraintStart_toEndOf="@id/payment_method_wrapper"
+					app:layout_constraintTop_toBottomOf="@id/offer_description" />
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/location_wrapper"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="24dp"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintStart_toEndOf="@id/payment_method_divider"
+					app:layout_constraintTop_toBottomOf="@id/offer_description">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/marketplace_detail_payment"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toStartOf="parent" />
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 

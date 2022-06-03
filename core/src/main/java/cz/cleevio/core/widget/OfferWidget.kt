@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.repository.model.offer.Offer
 import lightbase.core.extensions.layoutInflater
+import java.math.BigDecimal
 
 class OfferWidget @JvmOverloads constructor(
 	context: Context,
@@ -22,13 +23,13 @@ class OfferWidget @JvmOverloads constructor(
 
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)?) {
 		binding.offerDescription.text = item.offerDescription
-		binding.priceLimit.text = "${item.amountBottomLimit} - ${item.amountTopLimit}"
+		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(1000)}k"
 		binding.paymentMethod.text = "${item.paymentMethod.joinToString()}"
-		binding.feeAmount.text = item.feeAmount.toString()
+//		binding.feeAmount.text = item.feeAmount.toString()
 		binding.userName.text = "Unknown friend"
 //		binding.location.text = "${item.location.first().latitude}, ${item.location.first().longitude}"
 		binding.userType.text = "Friend of friend"
-		binding.feeGroup.isVisible = item.feeAmount != null
+//		binding.feeGroup.isVisible = item.feeAmount != null
 
 		binding.requestBtn.isVisible = requestOffer != null
 		binding.requestBtn.setOnClickListener {

@@ -73,6 +73,8 @@
     <string name="marketplace_currency_1_year">1 year</string>
     <string name="marketplace_buy">Buy</string>
     <string name="marketplace_sell">Sell</string>
+    <string name="marketplace_detail_up_to">up to</string>
+    <string name="marketplace_detail_payment">Payment</string>
     <string name="offer_request">Request</string>
 
     <!-- Filters -->
@@ -101,22 +103,23 @@
     <string name="widget_btc_network_lighting">Lighting</string>
     <string name="widget_btc_network_on_chain">On Chain</string>
     <string name="widget_offer_description">Description</string>
+    <string name="widget_offer_description_hint">Enter offer description</string>
     <string name="filter_advanced_title">Advanced</string>
     <string name="filter_type_title">Type</string>
     <string name="filter_friend_level_title">Friend level</string>
     <string name="widget_location_km"> +- %d km</string>
     <string name="widget_location_hint">City</string>
 
-	<!-- Offer Request -->
-	<string name="request_title">Offer</string>
-	<string name="request_title_loading">Sending</string>
-	<string name="request_text_hint">e.g. let\'s trade my friend...</string>
-	<string name="request_button">Send request</string>
-	<string name="request_common_friends">%d common friends</string>
+    <!-- Offer Request -->
+    <string name="request_title">Offer</string>
+    <string name="request_title_loading">Sending</string>
+    <string name="request_text_hint">e.g. let\'s trade my friend...</string>
+    <string name="request_button">Send request</string>
+    <string name="request_common_friends">%d common friends</string>
 
 	<!-- Chat -->
 
-	<!-- Chat requests -->
+    <!-- Chat requests -->
 
-	<!-- Chat messaging -->
+    <!-- Chat messaging -->
 </resources>
