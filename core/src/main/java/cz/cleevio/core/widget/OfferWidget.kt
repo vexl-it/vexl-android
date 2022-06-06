@@ -26,7 +26,11 @@ class OfferWidget @JvmOverloads constructor(
 		binding.offerDescription.text = item.offerDescription
 		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(1000)}k"
 		binding.priceCurrency.text = "Kč"
-		binding.offerType.text = item.offerType
+		binding.offerType.text = if (item.offerType == "SELL") {
+			resources.getString(R.string.offer_to_sell)
+		} else {
+			resources.getString(R.string.offer_to_buy)
+		}
 		binding.userName.text = if (item.offerType == "SELL") {
 			resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
 		} else {

@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
+import cz.cleevio.core.databinding.WidgetPaymentMethodIconsBinding
 import lightbase.core.extensions.layoutInflater
 
 class PaymentMethodIconsWidget @JvmOverloads constructor(
@@ -23,6 +24,8 @@ class PaymentMethodIconsWidget @JvmOverloads constructor(
 		binding.oneMethodGroup.isVisible = false
 		binding.twoMethodsGroup.isVisible = false
 		binding.threeMethodsGroup.isVisible = false
+
+		@Suppress("MagicNumber")
 		when (paymentTypes.size) {
 			1 -> {
 				binding.oneMethodFirst.setImageResource(getIcon(paymentTypes[0]))
