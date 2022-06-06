@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/one_method_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:constraint_referenced_ids="one_method_first"
+			tools:visibility="gone" />
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/two_methods_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:constraint_referenced_ids="two_methods_first, two_methods_second"
+			tools:visibility="gone" />
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/three_methods_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:constraint_referenced_ids="three_methods_first, three_methods_second, three_methods_third"
+			tools:visibility="visible" />
+
+
+		<ImageView
+			android:id="@+id/one_method_first"
+			android:layout_width="wrap_content"
+			android:layout_height="30dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+
+		<ImageView
+			android:id="@+id/two_methods_first"
+			android:layout_width="wrap_content"
+			android:layout_height="20dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toStartOf="@id/two_methods_second"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+		<ImageView
+			android:id="@+id/two_methods_second"
+			android:layout_width="wrap_content"
+			android:layout_height="20dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/two_methods_first"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+
+		<ImageView
+			android:id="@+id/three_methods_first"
+			android:layout_width="wrap_content"
+			android:layout_height="15dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+		<ImageView
+			android:id="@+id/three_methods_second"
+			android:layout_width="wrap_content"
+			android:layout_height="15dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toStartOf="@id/three_methods_third"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/three_methods_first"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+		<ImageView
+			android:id="@+id/three_methods_third"
+			android:layout_width="wrap_content"
+			android:layout_height="15dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/three_methods_second"
+			app:layout_constraintTop_toBottomOf="@id/three_methods_first"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>
