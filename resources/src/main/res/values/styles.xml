@@ -295,13 +295,16 @@
 	</style>
 
 	<style name="Widget.Vexl.OfferButton" parent="">
+		<item name="android:layout_height">48dp</item>
+		<item name="icon">@drawable/ic_eye</item>
+		<item name="iconPadding">10dp</item>
+		<item name="backgroundTint">@color/yellow_100</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.OfferButton</item>
-		<item name="android:background">@drawable/background_button_blue_12</item>
-		<item name="android:foreground">@drawable/ripple_mask_12</item>
-		<item name="android:paddingTop">14dp</item>
-		<item name="android:paddingBottom">13dp</item>
+		<item name="android:paddingTop">15.5dp</item>
+		<item name="android:paddingBottom">14.5dp</item>
 		<item name="android:paddingStart">15dp</item>
 		<item name="android:paddingEnd">13dp</item>
+		<item name="cornerRadius">13dp</item>
 	</style>
 
 	<style name="Widget.Vexl.AddButton" parent="">
@@ -324,6 +327,14 @@
 		<item name="cornerSize">20dp</item>
 		<item name="cardElevation">4dp</item>
 		<item name="cardCornerRadius">20dp</item>
+		<item name="cardBackgroundColor">@color/white</item>
+	</style>
+
+	<style name="Widget.Vexl.OfferCardView" parent="Widget.Vexl.CardView">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">12dp</item>
+		<item name="cardElevation">4dp</item>
+		<item name="cardCornerRadius">12dp</item>
 		<item name="cardBackgroundColor">@color/white</item>
 	</style>
 
