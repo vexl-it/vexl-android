@@ -51,13 +51,19 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 				binding.deleteTimeframe.text = "---"
 			}
 			DeleteTimeframe.DAYS -> {
-				binding.deleteTimeframe.text = context.getString(R.string.widget_trigger_delete_days).lowercase(Locale.getDefault())
+				binding.deleteTimeframe.text = context
+					.getString(R.string.widget_trigger_delete_days)
+					.lowercase(Locale.getDefault())
 			}
 			DeleteTimeframe.WEEKS -> {
-				binding.deleteTimeframe.text = context.getString(R.string.widget_trigger_delete_weeks).lowercase(Locale.getDefault())
+				binding.deleteTimeframe.text = context
+					.getString(R.string.widget_trigger_delete_weeks)
+					.lowercase(Locale.getDefault())
 			}
 			DeleteTimeframe.MONTHS -> {
-				binding.deleteTimeframe.text = context.getString(R.string.widget_trigger_delete_months).lowercase(Locale.getDefault())
+				binding.deleteTimeframe.text = context
+					.getString(R.string.widget_trigger_delete_months)
+					.lowercase(Locale.getDefault())
 			}
 		}
 	}

@@ -105,5 +105,4 @@ class TimeframePickerBottomSheetDialog : BottomSheetDialogFragment() {
 	fun setOnDoneListener(listener: (DeleteTimeframe) -> Unit) {
 		onDone = listener
 	}
-
 }

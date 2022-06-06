@@ -29,7 +29,7 @@ class NumberPickerBottomSheetDialog : BottomSheetDialogFragment() {
 	}
 
 	private fun setUpViews() {
-		binding.numberPicker.maxValue = 100
+		binding.numberPicker.maxValue = MAX_NUMBER_FOR_RADIUS
 		binding.numberPicker.minValue = 0
 		binding.numberPicker.wrapSelectorWheel = false
 		binding.numberPicker.value = initialValue
@@ -48,4 +48,8 @@ class NumberPickerBottomSheetDialog : BottomSheetDialogFragment() {
 	}
 
 	private fun getResult(): Int = binding.numberPicker.value
+
+	companion object {
+		const val MAX_NUMBER_FOR_RADIUS = 100
+	}
 }
