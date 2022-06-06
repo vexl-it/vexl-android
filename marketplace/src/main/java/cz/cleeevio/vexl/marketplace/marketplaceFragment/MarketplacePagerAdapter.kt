@@ -10,7 +10,7 @@ import timber.log.Timber
 class MarketplacePagerAdapter constructor(
 	fragment: Fragment,
 	private val navigateToFilters: (OfferType) -> (Unit),
-	private val navigateToNewOffer: () -> (Unit),
+	private val navigateToNewOffer: (OfferType) -> (Unit),
 	private val requestOffer: (String) -> (Unit)
 ) : FragmentStateAdapter(fragment) {
 

@@ -12,7 +12,7 @@
 			android:id="@+id/heading"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/widget_trigger_price_title"
+			android:text="@string/widget_trigger_delete_title"
 			android:textColor="@color/gray_3"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +40,7 @@
 			style="@style/Widget.Vexl.Filters.FilterCardView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/price_trigger_barrier">
@@ -48,54 +49,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
-				<RadioGroup
-					android:id="@+id/price_trigger_type"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="7dp"
-					android:orientation="horizontal"
-					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintEnd_toStartOf="@id/price_divider"
-					app:layout_constraintHorizontal_chainStyle="spread_inside"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent">
-
-					<RadioButton
-						android:id="@+id/price_below"
-						style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:background="@drawable/filter_radio_selector"
-						android:button="@android:color/transparent"
-						android:checked="true"
-						android:text="@string/widget_trigger_price_below"
-						android:textColor="@drawable/filter_radio_text_selector" />
-
-					<RadioButton
-						android:id="@+id/price_above"
-						style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:background="@drawable/filter_radio_selector"
-						android:button="@android:color/transparent"
-						android:text="@string/widget_trigger_price_above"
-						android:textColor="@drawable/filter_radio_text_selector" />
-
-				</RadioGroup>
-
-				<View
-					android:id="@+id/price_divider"
-					style="@style/Widget.Cleevio.Filters.FilterVerticalDivider"
-					android:layout_width="1dp"
-					android:layout_height="0dp"
-					android:layout_margin="8dp"
-					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintEnd_toStartOf="@id/price_edit"
-					app:layout_constraintStart_toEndOf="@id/price_trigger_type"
-					app:layout_constraintTop_toTopOf="parent" />
-
 				<com.google.android.material.textfield.TextInputEditText
-					android:id="@+id/price_edit"
+					android:id="@+id/delete_input"
 					style="@style/Widget.Vexl.Filters.EditText"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -105,23 +60,37 @@
 					android:minWidth="100dp"
 					android:textColor="@color/yellow_100"
 					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@id/delete_divider"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:text="30" />
+
+				<View
+					android:id="@+id/delete_divider"
+					style="@style/Widget.Cleevio.Filters.FilterVerticalDivider"
+					android:layout_width="1dp"
+					android:layout_height="0dp"
+					android:layout_margin="8dp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@id/price_divider"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<TextView
+					android:id="@+id/delete_timeframe"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe"
+					app:drawableEndCompat="@drawable/ic_chevron_down"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toEndOf="@id/delete_divider"
 					app:layout_constraintTop_toTopOf="parent"
 					tools:text="$32 500" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
 		</com.google.android.material.card.MaterialCardView>
-
-		<TextView
-			android:id="@+id/current_crypto_price"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/gray_3"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/price_trigger_card"
-			tools:text="currently 1 BTC = $34.124" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,7 +6,7 @@ import cz.cleevio.core.utils.repeatScopeOnStart
 
 class OffersSellFragment constructor(
 	navigateToFilters: (OfferType) -> Unit,
-	navigateToNewOffer: () -> Unit,
+	navigateToNewOffer: (OfferType) -> Unit,
 	requestOffer: (String) -> Unit
 ) : OffersBaseFragment(navigateToFilters, navigateToNewOffer, requestOffer) {
 

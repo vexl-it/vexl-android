@@ -373,7 +373,6 @@
 		<item name="android:paddingEnd">26dp</item>
 		<item name="android:paddingTop">19dp</item>
 		<item name="android:paddingBottom">15dp</item>
-		<item name="android:background">@drawable/edit_border</item>
 	</style>
 
 	<style name="Widget.Vexl.SearchView" parent="Widget.AppCompat.SearchView">

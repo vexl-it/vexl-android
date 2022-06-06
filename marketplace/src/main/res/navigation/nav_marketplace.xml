@@ -43,6 +43,10 @@
 		android:label="NewOfferFragment"
 		tools:layout="@layout/fragment_new_offer">
 
+		<argument
+			android:name="offerType"
+			app:argType="cz.cleevio.core.model.OfferType" />
+
 	</fragment>
 
 	<fragment
