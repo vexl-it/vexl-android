@@ -19,10 +19,11 @@ class AesCryptoInstrumentedTest {
 		val password = "some password"
 		val originalMessage = "some message"
 
-		val enryptedMessage = AesCryptoLib.encrypt(password, originalMessage)
-		Assert.assertNotEquals(originalMessage, enryptedMessage)
+		val encryptedMessage = AesCryptoLib.encrypt(password, originalMessage)
+		Assert.assertNotEquals(originalMessage, encryptedMessage)
 
-		val decryptedMessage = AesCryptoLib.decrypt(password, enryptedMessage)
+		val decryptedMessage = AesCryptoLib.decrypt(password, encryptedMessage)
 		assertEquals(originalMessage, decryptedMessage)
 	}
+
 }

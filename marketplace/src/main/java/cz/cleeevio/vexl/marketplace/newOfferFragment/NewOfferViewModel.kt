@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
+import timber.log.Timber
 
 
 class NewOfferViewModel constructor(
@@ -100,6 +101,8 @@ class NewOfferViewModel constructor(
 	}
 
 	private fun eciesEncrypt(data: String, contactKey: String): String {
+		Timber.tag("ASDX").d(contactKey)
+		Timber.tag("ASDX").d("${contactKey.length}")
 		return EciesCryptoLib.encrypt(contactKey, data)
 	}
 

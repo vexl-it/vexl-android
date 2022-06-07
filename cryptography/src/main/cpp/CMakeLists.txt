@@ -38,8 +38,12 @@ add_library(libcryptography SHARED ${SOURCES})
 target_include_directories(libcryptography PRIVATE
         ${cryptography_DIR}/include/vc)
 
+find_library(log-lib
+        log)
+
 target_link_libraries(libcryptography
         android
         libcrypto
         libssl
-        libvc)
+        libvc
+        ${log-lib})

@@ -17,7 +17,7 @@ class ShaCryptoInstrumentedTest {
 	fun useAppContext() {
 		val originalMessage = "some message"
 
-		val hashedMessage = ShaCryptoLib.hash(originalMessage, originalMessage.length)
+		val hashedMessage = ShaCryptoLib.hash(originalMessage)
 
 		Assert.assertNotEquals(originalMessage, hashedMessage)
 	}

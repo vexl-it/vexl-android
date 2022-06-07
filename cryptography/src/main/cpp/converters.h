@@ -15,3 +15,7 @@ extern Curve DEFAULT_CURVE;
 jobject keyPairToJObject(JNIEnv *env, KeyPair *keyPair);
 
 KeyPair jObjectToKeyPair(JNIEnv *env, jobject *jObject);
+
+char *byteArrayToChar(JNIEnv *env, jbyteArray array, jint publicKeyLenArg);
+
+jbyteArray charToByteArray(JNIEnv *env, const char *str);

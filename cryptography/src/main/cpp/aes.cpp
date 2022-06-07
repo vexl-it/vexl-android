@@ -2,32 +2,50 @@
 #include <string>
 #include <AES.h>
 
-extern "C" JNIEXPORT jstring JNICALL
+#include "converters.h"
+
+extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_cleevio_vexl_cryptography_AesCryptoLib_encrypt(
         JNIEnv *env,
         jobject /* this */,
-        jstring jpassword,
-        jstring jmessage) {
+        jbyteArray passwordArray,
+        jint passwordArrayLen,
+        jbyteArray messageArray,
+        jint messageArrayLen) {
 
-    const char *password = env->GetStringUTFChars(jpassword, nullptr);
-    const char *message = env->GetStringUTFChars(jmessage, nullptr);
+    const char *password = byteArrayToChar(env, passwordArray, passwordArrayLen);
+    const char *message = byteArrayToChar(env, messageArray, messageArrayLen);
 
-    const char *result = aes_encrypt(password, message);
-    return env->NewStringUTF(result);
+    const char *cipher = aes_encrypt(password, message);
+    jbyteArray cipherArray = charToByteArray(env, cipher);
+
+    free((void *) password);
+    free((void *) message);
+    free((void *) cipher);
+
+    return cipherArray;
 
 }
 
-extern "C" JNIEXPORT jstring JNICALL
+extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_cleevio_vexl_cryptography_AesCryptoLib_decrypt(
         JNIEnv *env,
         jobject /* this */,
-        jstring jpassword,
-        jstring jcipher) {
+        jbyteArray passwordArray,
+        jint passwordArrayLen,
+        jbyteArray cipherArray,
+        jint cipherArrayLen) {
 
-    const char *password = env->GetStringUTFChars(jpassword, nullptr);
-    const char *cipher = env->GetStringUTFChars(jcipher, nullptr);
+    const char *password = byteArrayToChar(env, passwordArray, passwordArrayLen);
+    const char *cipher = byteArrayToChar(env, cipherArray, cipherArrayLen);
 
-    const char *result = aes_decrypt(password, cipher);
-    return env->NewStringUTF(result);
+    const char *message = aes_decrypt(password, cipher);
+    jbyteArray messageArray = charToByteArray(env, message);
+
+    free((void *) password);
+    free((void *) message);
+    free((void *) cipher);
+
+    return messageArray;
 
 }

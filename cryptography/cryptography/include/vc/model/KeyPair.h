@@ -40,6 +40,9 @@ void _base64_keys_get_EC_KEY(const char *base64_public_key, const char *base64_p
 
 #endif
 
+// This function generates only public key. This function is implemented by request from backend for testing purposes.
+char *generate_key_public_key(const int curve);
+
 KeyPair generate_key_pair(Curve curve);
 void KeyPair_free(KeyPair KeyPair);
 

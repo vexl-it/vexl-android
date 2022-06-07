@@ -39,7 +39,6 @@ extern "C" {
 void ecies_init();
 
 char *ecies_encrypt(const char *base64_public_key, const char *message);
-
 char *ecies_decrypt(const char *base64_public_key, const char *base64_private_key, const char *encoded_cipher);
 
 #ifdef BUILD_FOR_LIBRARY

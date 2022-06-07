@@ -9,19 +9,30 @@
 //
 
 extern "C"
-JNIEXPORT jstring JNICALL
+JNIEXPORT jbyteArray JNICALL
 Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_sign(
         JNIEnv *env,
         jobject /* this */,
-        jobject keysArg,
-        jstring dataArg) {
+        jbyteArray publicKeyArray,
+        jint publicKeyArrayLen,
+        jbyteArray privateKeyArray,
+        jint privateKeyArrayLen,
+        jbyteArray dataArray,
+        jint dataArrayLen) {
 
-    KeyPair keys = jObjectToKeyPair(env, &keysArg);
-    const char *data = env->GetStringUTFChars(dataArg, nullptr);
-    const int dataLength = strlen(data);
+    const char *publicKey = byteArrayToChar(env, publicKeyArray, publicKeyArrayLen);
+    const char *privateKey = byteArrayToChar(env, privateKeyArray, privateKeyArrayLen);
+    const char *data = byteArrayToChar(env, dataArray, dataArrayLen);
 
-    const char *result = ecdsa_sign(keys.pemPublicKey, keys.pemPrivateKey, data, dataLength);
-    return env->NewStringUTF(result);
+    const char *signature = ecdsa_sign(publicKey, privateKey, data, dataArrayLen);
+    jbyteArray signatureArray = charToByteArray(env, signature);
+
+    free((void *) publicKey);
+    free((void *) privateKey);
+    free((void *) data);
+    free((void *) signature);
+
+    return signatureArray;
 
 }
 extern "C"
@@ -29,15 +40,22 @@ JNIEXPORT jboolean JNICALL
 Java_com_cleevio_vexl_cryptography_EcdsaCryptoLib_verify(
         JNIEnv *env,
         jobject /* this */,
-        jstring publicKeyArg,
-        jstring dataArg,
-        jstring signatureArg) {
+        jbyteArray publicKeyArray,
+        jint publicKeyArrayLen,
+        jbyteArray dataArray,
+        jint dataArrayLen,
+        jbyteArray signatureArray,
+        jint signatureArrayLen) {
 
-    const char *public_key = env->GetStringUTFChars(publicKeyArg, nullptr);
-    const char *data = env->GetStringUTFChars(dataArg, nullptr);
-    const int dataLength = strlen(data);
-    const char *signature = env->GetStringUTFChars(signatureArg, nullptr);
+    const char *publicKey = byteArrayToChar(env, publicKeyArray, publicKeyArrayLen);
+    const char *data = byteArrayToChar(env, dataArray, dataArrayLen);
+    const char *signature = byteArrayToChar(env, signatureArray, signatureArrayLen);
 
-    bool result = ecdsa_verify(public_key, data, dataLength, signature);
+    bool result = ecdsa_verify(publicKey, data, dataArrayLen, signature);
+
+    free((void *) publicKey);
+    free((void *) data);
+    free((void *) signature);
+
     return (jboolean) result;
 }
