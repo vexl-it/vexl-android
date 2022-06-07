@@ -1,54 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	style="@style/Widget.Vexl.CardView"
+	android:id="@+id/container"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
+	android:layout_height="match_parent"
 	android:layout_margin="8dp">
 
 	<androidx.core.widget.NestedScrollView
 		android:id="@+id/nested_scroll_view"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="0dp"
 		android:fillViewport="true"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:background="@color/black"
 			android:padding="16dp">
 
-			<TextView
+			<cz.cleevio.core.widget.CreateTitleWidget
 				android:id="@+id/new_offer_title"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="NewOfferFragment"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 
-			<com.google.android.material.textfield.TextInputEditText
-				android:id="@+id/new_offer_description"
-				android:layout_width="0dp"
+			<View
+				android:id="@+id/title_separator"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="12dp"
+				android:background="@color/white_opacity_15"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_title"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<TextView
+				android:id="@+id/description_title"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="24dp"
-				android:textColor="@color/black"
-				android:hint="@string/widget_offer_description"
-				app:layout_constraintTop_toBottomOf="@id/new_offer_title"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title"
+				app:drawableStartCompat="@drawable/ic_description"
+				android:drawablePadding="8dp"
+				android:text="@string/widget_offer_description"
+				app:layout_constraintTop_toBottomOf="@id/title_separator"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<TextView
+				android:id="@+id/description_counter"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="24dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Offer.Description.Counter"
+				app:layout_constraintTop_toBottomOf="@id/title_separator"
+				app:layout_constraintEnd_toEndOf="parent"
+				tools:text="140/140" />
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/new_offer_description"
+				style="@style/Widget.Vexl.Filters.EditText"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:background="@drawable/background_input_gray"
+				android:layout_marginTop="24dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Filter.NewOffer.Gray"
+				android:textColor="@color/gray_4"
+				android:minLines="3"
+				android:maxLength="140"
+				app:layout_constraintTop_toBottomOf="@id/description_title"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				tools:text="This long long description capped at 120 chars" />
 
+			<TextView
+				android:id="@+id/amount_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="24dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title"
+				app:drawableStartCompat="@drawable/ic_amount"
+				android:drawablePadding="8dp"
+				android:text="@string/filter_amount_title"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_description"
+				app:layout_constraintStart_toStartOf="parent" />
+
 			<cz.cleevio.core.widget.PriceRangeWidget
 				android:id="@+id/new_offer_range"
-				android:layout_width="match_parent"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="17dp"
 				android:layout_marginTop="16dp"
-				android:layout_marginEnd="15dp"
 				android:layout_marginBottom="10dp"
-				app:layout_constraintTop_toBottomOf="@+id/new_offer_description"
+				app:layout_constraintTop_toBottomOf="@+id/amount_title"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent" />
 
@@ -56,73 +104,215 @@
 				android:id="@+id/new_offer_fee"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
 				app:layout_constraintTop_toBottomOf="@+id/new_offer_range"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent" />
+
+			<TextView
+				android:id="@+id/location_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="36dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title"
+				app:drawableStartCompat="@drawable/ic_map_pin"
+				android:drawablePadding="8dp"
+				android:text="@string/filter_location_title"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_fee"
+				app:layout_constraintStart_toStartOf="parent" />
 
 			<cz.cleevio.core.widget.OfferLocationWidget
 				android:id="@+id/new_offer_location"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				app:layout_constraintTop_toBottomOf="@+id/new_offer_fee"
+				app:layout_constraintTop_toBottomOf="@+id/location_title"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent" />
+
+			<TextView
+				android:id="@+id/payment_method_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="36dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title"
+				app:drawableStartCompat="@drawable/ic_payment_method"
+				android:drawablePadding="8dp"
+				android:text="@string/filter_payment_method_title"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_location"
+				app:layout_constraintStart_toStartOf="parent" />
 
 			<cz.cleevio.core.widget.OfferPaymentMethodWidget
 				android:id="@+id/new_offer_payment_method"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				app:layout_constraintTop_toBottomOf="@+id/new_offer_location"
+				app:layout_constraintTop_toBottomOf="@+id/payment_method_title"
 				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
+
+			<View
+				android:id="@+id/trigger_separator"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="12dp"
+				android:background="@color/white_opacity_15"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_payment_method"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<TextView
+				android:id="@+id/trigger_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="32dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title"
+				app:drawableStartCompat="@drawable/ic_timer"
+				android:drawablePadding="8dp"
+				android:text="@string/widget_trigger_title"
+				app:layout_constraintTop_toBottomOf="@id/trigger_separator"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<ImageButton
+				android:id="@+id/trigger_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="16dp"
+				android:src="@drawable/ic_chevron_down"
+				app:tint="@color/gray_3"
+				android:background="@color/black"
+				app:layout_constraintTop_toTopOf="@+id/trigger_title"
 				app:layout_constraintEnd_toEndOf="parent" />
 
 			<cz.cleevio.core.widget.PriceTriggerWidget
 				android:id="@+id/new_offer_price_trigger"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="17dp"
-				android:layout_marginTop="16dp"
-				android:layout_marginEnd="15dp"
+				android:layout_marginTop="24dp"
 				android:layout_marginBottom="10dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/new_offer_payment_method" />
+				app:layout_constraintTop_toBottomOf="@id/trigger_title" />
+
+			<cz.cleevio.core.widget.DeleteTriggerWidget
+				android:id="@+id/new_offer_delete_trigger"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="24dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_price_trigger" />
+
+			<View
+				android:id="@+id/advanced_separator"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="48dp"
+				android:background="@color/white_opacity_15"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_delete_trigger"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<TextView
+				android:id="@+id/advanced_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="32dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title"
+				app:drawableStartCompat="@drawable/ic_advanced"
+				android:drawablePadding="8dp"
+				android:text="@string/filter_advanced_title"
+				app:layout_constraintTop_toBottomOf="@id/advanced_separator"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<ImageButton
+				android:id="@+id/advanced_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="16dp"
+				android:src="@drawable/ic_chevron_down"
+				app:tint="@color/gray_3"
+				android:background="@color/black"
+				app:layout_constraintTop_toTopOf="@+id/advanced_title"
+				app:layout_constraintEnd_toEndOf="parent" />
+
+			<TextView
+				android:id="@+id/network_type_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="24dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				app:drawableEndCompat="@drawable/ic_info"
+				android:drawablePadding="8dp"
+				android:text="@string/filter_type_title"
+				app:layout_constraintTop_toBottomOf="@id/advanced_title"
+				app:layout_constraintStart_toStartOf="parent" />
 
 			<cz.cleevio.core.widget.OfferBtcNetworkType
 				android:id="@+id/new_offer_btc_network"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="17dp"
 				android:layout_marginTop="16dp"
-				android:layout_marginEnd="15dp"
 				android:layout_marginBottom="10dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/new_offer_price_trigger" />
+				app:layout_constraintTop_toBottomOf="@id/network_type_title" />
+
+			<TextView
+				android:id="@+id/friend_level_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="32dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				android:text="@string/filter_friend_level_title"
+				app:layout_constraintTop_toBottomOf="@id/new_offer_btc_network"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<TextView
+				android:id="@+id/friend_level_description"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="4dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				android:text="@string/filter_friend_level_description"
+				app:layout_constraintTop_toBottomOf="@id/friend_level_title"
+				app:layout_constraintStart_toStartOf="parent" />
 
 			<cz.cleevio.core.widget.OfferFriendLevelWidget
 				android:id="@+id/new_offer_friend_level"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="17dp"
 				android:layout_marginTop="16dp"
-				android:layout_marginEnd="15dp"
 				android:layout_marginBottom="10dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/new_offer_btc_network" />
+				app:layout_constraintTop_toBottomOf="@id/friend_level_description" />
 
 			<com.google.android.material.button.MaterialButton
-				android:id="@+id/new_offer_btn"
+				android:id="@+id/fake_btn"
 				style="@style/Widget.Vexl.Button"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_margin="16dp"
-				android:text="Vytvořit nabídku"
+				android:layout_marginTop="8dp"
+				android:elevation="0dp"
+				android:text="@string/filter_apply"
+				android:textAllCaps="false"
+				android:visibility="invisible"
 				app:layout_constraintTop_toBottomOf="@+id/new_offer_friend_level"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.core.widget.NestedScrollView>
-</com.google.android.material.card.MaterialCardView>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/new_offer_btn"
+		style="@style/Widget.Vexl.Button"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:elevation="0dp"
+		android:text="Vytvořit nabídku"
+		android:textAllCaps="false"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

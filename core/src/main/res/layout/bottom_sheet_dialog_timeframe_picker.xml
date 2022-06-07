@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="8dp"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<androidx.cardview.widget.CardView
+		android:id="@+id/timeframe_wrapper"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="8dp"
+		app:cardElevation="4dp"
+		app:cardCornerRadius="20dp"
+		app:cardBackgroundColor="@color/white"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<TextView
+				android:id="@+id/timeframe_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="24dp"
+				android:layout_marginTop="24dp"
+				android:text="@string/widget_trigger_delete_timeframe"
+				android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Title"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<RadioGroup
+				android:id="@+id/timeframe_radiogroup"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="24dp"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="16dp"
+				android:orientation="vertical"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/timeframe_title">
+
+				<RadioButton
+					android:id="@+id/timeframe_days"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_height="wrap_content"
+					android:checked="true"
+					android:buttonTint="@color/yellow"
+					android:text="@string/widget_trigger_delete_days"
+					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe.Active" />
+
+				<RadioButton
+					android:id="@+id/timeframe_weeks"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_height="wrap_content"
+					android:buttonTint="@color/yellow"
+					android:text="@string/widget_trigger_delete_weeks"
+					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe.Inactive" />
+
+				<RadioButton
+					android:id="@+id/timeframe_months"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_height="wrap_content"
+					android:buttonTint="@color/yellow"
+					android:text="@string/widget_trigger_delete_months"
+					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe.Inactive" />
+
+			</RadioGroup>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.cardview.widget.CardView>
+
+	<Button
+		android:id="@+id/done_btn"
+		style="@style/Widget.Cleevio.Button.ContainedButton"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:text="@string/general_done"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="4dp"
+		app:layout_constraintTop_toBottomOf="@id/timeframe_wrapper"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

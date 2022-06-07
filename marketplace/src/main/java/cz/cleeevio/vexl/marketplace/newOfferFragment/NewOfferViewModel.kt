@@ -95,7 +95,7 @@ class NewOfferViewModel constructor(
 			paymentMethod = params.paymentMethod.value.map { eciesEncrypt(it.name, contactKey) },
 			btcNetwork = params.btcNetwork.value.map { eciesEncrypt(it.name, contactKey) },
 			friendLevel = eciesEncrypt(params.friendLevel.value.name, contactKey),
-			offerType = eciesEncrypt(params.offerType.value.name, contactKey)
+			offerType = eciesEncrypt(params.offerType.name, contactKey)
 		)
 	}
 
