@@ -469,4 +469,22 @@
 		<item name="fontFamily">@font/pp_monument_extended_bold</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Offer.State.Btn" parent="">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/gray_4</item>
+		<item name="lineHeight">20.16sp</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Offer.State.Active" parent="">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/green_100</item>
+		<item name="lineHeight">22sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
 </resources>

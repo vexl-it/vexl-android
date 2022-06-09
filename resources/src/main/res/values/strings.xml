@@ -47,6 +47,7 @@
 
     <!-- Errors -->
     <string name="error_username_not_available">The username is unavailable</string>
+    <string name="error_missing_offer_keys">You don\'t have keys for this offer</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Change profile picture</string>
@@ -106,6 +107,10 @@
     <string name="widget_trigger_delete_days">Days</string>
     <string name="widget_trigger_delete_weeks">Weeks</string>
     <string name="widget_trigger_delete_months">Months</string>
+    <string name="widget_offer_state_pause">Pause</string>
+    <string name="widget_offer_state_delete">Delete</string>
+    <string name="widget_offer_state_active">Active</string>
+    <string name="widget_offer_state_inactive">Inactive</string>
     <string name="filter_amount_title">Amount</string>
     <string name="filter_location_title">Location</string>
     <string name="widget_location_add_new">Another Location</string>

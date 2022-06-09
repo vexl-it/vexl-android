@@ -77,4 +77,12 @@ class OfferLocationItem @JvmOverloads constructor(
 	fun setFragmentManager(manager: FragmentManager) {
 		fragmentManager = manager
 	}
+
+	fun setValue(location: Location) {
+		radius = location.radius.toInt()
+		updateRadiusText(radius)
+
+		//todo: we need to translate lat/lon to City name here
+		binding.locationItemText.setText("Placeholder: City")
+	}
 }
