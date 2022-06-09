@@ -78,6 +78,11 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 	fun reset() {
 		redrawWithSelection(FriendLevel.NONE)
 	}
+
+	fun setValues(button: FriendLevel) {
+		selectedButton = button
+		redrawWithSelection(selectedButton)
+	}
 }
 
 enum class FriendLevel {

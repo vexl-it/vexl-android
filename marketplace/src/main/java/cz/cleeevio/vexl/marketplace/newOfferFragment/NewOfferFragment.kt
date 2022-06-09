@@ -81,7 +81,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
 				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
 				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
-				offerType = args.offerType
+				offerType = args.offerType.name
 			)
 			viewModel.createOffer(params)
 		}

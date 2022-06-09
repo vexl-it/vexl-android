@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferLocationBinding
 import cz.cleevio.core.model.LocationValue
+import cz.cleevio.repository.model.offer.Location
 import lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
@@ -89,13 +90,42 @@ class OfferLocationWidget @JvmOverloads constructor(
 		visibleItems.clear()
 
 		selectedButton = LocationButtonSelected.NONE
-		binding.locationInPerson.isChecked = false
-		binding.locationOnline.isChecked = false
+		updateSelectedButton(selectedButton)
 	}
 
 	fun setFragmentManager(fragmentManager: FragmentManager) {
 		items.forEach {
 			it.setFragmentManager(fragmentManager)
+		}
+	}
+
+	fun setValues(location: List<Location>, locationButton: LocationButtonSelected) {
+		location.forEachIndexed { index, location ->
+			val item = items[index]
+			item.setValue(location)
+			item.isVisible = true
+			visibleItems.add(item)
+		}
+		checkAddButtonVisibility()
+
+		selectedButton = locationButton
+		updateSelectedButton(selectedButton)
+	}
+
+	private fun updateSelectedButton(selectedButton: LocationButtonSelected) {
+		when (selectedButton) {
+			LocationButtonSelected.NONE -> {
+				binding.locationInPerson.isChecked = false
+				binding.locationOnline.isChecked = false
+			}
+			LocationButtonSelected.ONLINE -> {
+				binding.locationInPerson.isChecked = false
+				binding.locationOnline.isChecked = true
+			}
+			LocationButtonSelected.IN_PERSON -> {
+				binding.locationInPerson.isChecked = true
+				binding.locationOnline.isChecked = false
+			}
 		}
 	}
 

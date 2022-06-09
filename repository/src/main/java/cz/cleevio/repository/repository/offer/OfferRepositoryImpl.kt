@@ -1,5 +1,6 @@
 package cz.cleevio.repository.repository.offer
 
+import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.dao.LocationDao
 import cz.cleevio.cache.dao.MyOfferDao
@@ -10,6 +11,7 @@ import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.offer.CreateOfferRequest
+import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.repository.model.offer.*
 import kotlinx.coroutines.flow.map
 
@@ -26,6 +28,18 @@ class OfferRepositoryImpl constructor(
 			offerApi.postOffers(
 				CreateOfferRequest(
 					offerPrivateList = offerList.map { it.toNetwork() }
+				)
+			)
+		},
+		mapper = { it?.fromNetwork() }
+	)
+
+	override suspend fun updateOffer(offerId: String, offerList: List<NewOffer>): Resource<Offer> = tryOnline(
+		request = {
+			offerApi.putOffers(
+				UpdateOfferRequest(
+					offerId = offerId,
+					offerPrivateCreateList = offerList.map { it.toNetwork() }
 				)
 			)
 		},
@@ -70,6 +84,13 @@ class OfferRepositoryImpl constructor(
 			)
 		)
 		return Resource.success(data = Unit)
+	}
+
+	override suspend fun loadOfferKeysByOfferId(offerId: String): KeyPair? {
+		val entity = myOfferDao.getMyOfferById(offerId)
+		return entity?.let {
+			KeyPair(privateKey = entity.privateKey, publicKey = entity.publicKey)
+		}
 	}
 
 	override suspend fun getOffers() =
