@@ -25,7 +25,8 @@ val marketplaceModule = module {
 
 	viewModel {
 		OffersViewModel(
-			offerRepository = get()
+			offerRepository = get(),
+			preferences = get()
 		)
 	}
 

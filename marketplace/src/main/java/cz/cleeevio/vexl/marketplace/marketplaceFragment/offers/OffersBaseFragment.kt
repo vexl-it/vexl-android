@@ -2,6 +2,7 @@ package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 
 import android.view.View
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import cz.cleeevio.vexl.marketplace.R
@@ -23,7 +24,7 @@ sealed class OffersBaseFragment constructor(
 	abstract fun getOfferType(): OfferType
 
 	override val viewModel by viewModel<OffersViewModel>()
-	private val binding by viewBinding(FragmentOffersBinding::bind)
+	protected val binding by viewBinding(FragmentOffersBinding::bind)
 	lateinit var adapter: OffersAdapter
 
 	override fun bindObservers() {
@@ -48,6 +49,11 @@ sealed class OffersBaseFragment constructor(
 				))
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.myOffersCount.collect { myOffersCount ->
+				processMyOffersButtons(myOffersCount > 0)
+			}
+		}
 	}
 
 	override fun initView() {
@@ -58,9 +64,24 @@ sealed class OffersBaseFragment constructor(
 			navigateToNewOffer(getOfferType())
 		}
 
+		checkMyOffersCount(getOfferType())
+
 		viewModel.getFilters()
 	}
 
+	private fun processMyOffersButtons(hasMyOffers: Boolean) {
+		if (hasMyOffers) {
+			binding.addOfferBtn.isVisible = false
+			binding.myOffersBtn.isVisible = true
+		} else {
+			binding.addOfferBtn.isVisible = true
+			binding.myOffersBtn.isVisible = false
+		}
+	}
+
+	protected fun checkMyOffersCount(offerType: OfferType) {
+		viewModel.checkMyOffersCount(offerType)
+	}
 
 	private fun generateChipView(
 		filter: String? = null,

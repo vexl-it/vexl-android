@@ -1,6 +1,8 @@
 package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.repository.model.offer.Filter
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -12,7 +14,8 @@ import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
 class OffersViewModel(
-	private val offerRepository: OfferRepository
+	private val offerRepository: OfferRepository,
+	private val preferences: EncryptedPreferenceRepository
 ) : BaseViewModel() {
 
 	private val _buyOffers = MutableSharedFlow<List<Offer>>(replay = 1)
@@ -23,6 +26,9 @@ class OffersViewModel(
 
 	private val _filters = MutableSharedFlow<List<Filter>>(replay = 1)
 	val filters = _filters.asSharedFlow()
+
+	private val _myOffersCount = MutableSharedFlow<Int>(replay = 1)
+	val myOffersCount = _myOffersCount.asSharedFlow()
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -46,6 +52,13 @@ class OffersViewModel(
 
 				)
 			)
+		}
+	}
+
+	fun checkMyOffersCount(offerType: OfferType) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val myOfferCount = offerRepository.getMyOffersCount(offerType.name)
+			_myOffersCount.emit(myOfferCount)
 		}
 	}
 }

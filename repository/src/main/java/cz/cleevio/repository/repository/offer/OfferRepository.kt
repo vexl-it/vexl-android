@@ -17,11 +17,18 @@ interface OfferRepository {
 
 	suspend fun deleteMyOffers(offerIds: List<Long>): Resource<Unit>
 
-	suspend fun saveMyOfferIdAndKeys(offerId: String, privateKey: String, publicKey: String): Resource<Unit>
+	suspend fun saveMyOfferIdAndKeys(
+		offerId: String,
+		privateKey: String,
+		publicKey: String,
+		offerType: String
+	): Resource<Unit>
 
 	suspend fun getOffers(): List<Offer>
 
 	suspend fun getOffersFlow(): Flow<List<Offer>>
 
 	suspend fun syncOffers()
+
+	suspend fun getMyOffersCount(offerType: String): Int
 }

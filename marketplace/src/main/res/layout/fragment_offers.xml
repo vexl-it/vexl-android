@@ -14,7 +14,7 @@
 		android:scrollbars="none"
 		android:layout_margin="16dp"
 		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
-		app:layout_constraintEnd_toStartOf="@id/add_offer_btn"
+		app:layout_constraintEnd_toStartOf="@id/buttons_barrier"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
@@ -26,19 +26,35 @@
 
 	</HorizontalScrollView>
 
+	<androidx.constraintlayout.widget.Barrier
+		android:id="@+id/buttons_barrier"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:barrierDirection="start"
+		app:constraint_referenced_ids="add_offer_btn, my_offers_btn" />
+
 	<ImageButton
 		android:id="@+id/add_offer_btn"
 		style="@style/Widget.Vexl.AddOfferButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_margin="16dp"
 		android:src="@drawable/ic_plus"
-		android:backgroundTint="@color/yellow_20"
+		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/filters_wrapper"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/my_offers_btn"
+		style="@style/Widget.Vexl.AddOfferButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/marketplace_my_offers"
 		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@id/filters_wrapper"
 		app:layout_constraintTop_toTopOf="parent"
-		app:tint="@color/yellow_100" />
+		tools:visibility="gone" />
 
 	<androidx.constraintlayout.widget.Barrier
 		android:id="@+id/filter_barrier"
