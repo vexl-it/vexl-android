@@ -7,8 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentEditOfferBinding
-import cz.cleeevio.vexl.marketplace.newOfferFragment.NewOfferParams
 import cz.cleevio.core.model.FeeValue
+import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
@@ -120,7 +120,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
 		binding.newOfferBtn.setOnClickListener {
-			val params = NewOfferParams(
+			val params = OfferParams(
 				description = binding.newOfferDescription.text.toString(),
 				location = binding.newOfferLocation.getLocationValue(),
 				fee = binding.newOfferFee.getFeeValue(),
