@@ -59,6 +59,17 @@ class OfferPaymentMethodWidget @JvmOverloads constructor(
 
 		selectedButtons = mutableSetOf()
 	}
+
+	fun setValues(buttons: List<PaymentButtonSelected>) {
+		selectedButtons = buttons.toMutableSet()
+		updateButtonView(selectedButtons)
+	}
+
+	private fun updateButtonView(selectedButtons: MutableSet<PaymentButtonSelected>) {
+		binding.paymentCash.isChecked = selectedButtons.contains(PaymentButtonSelected.CASH)
+		binding.paymentRevolut.isChecked = selectedButtons.contains(PaymentButtonSelected.REVOLUT)
+		binding.paymentBank.isChecked = selectedButtons.contains(PaymentButtonSelected.BANK)
+	}
 }
 
 enum class PaymentButtonSelected {

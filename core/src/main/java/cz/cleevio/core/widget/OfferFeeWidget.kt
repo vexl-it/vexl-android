@@ -27,19 +27,18 @@ class OfferFeeWidget @JvmOverloads constructor(
 		binding.feeRadiogroup.setOnCheckedChangeListener { _, id ->
 			selectedButton = when (id) {
 				R.id.fee_without -> {
-					drawSeekbarSection(visible = false)
 					FeeButtonSelected.WITHOUT_FEE
 				}
 				R.id.fee_ok -> {
-					drawSeekbarSection(visible = true)
 					FeeButtonSelected.WITH_FEE
 				}
 				else -> {
 					Timber.e("Unknown radio ID! '$id'")
-					drawSeekbarSection(visible = false)
+
 					FeeButtonSelected.NONE
 				}
 			}
+			drawSeekbarSection(selectedButton)
 		}
 
 		binding.feeBar.max = FEE_MAX_VALUE
@@ -54,14 +53,15 @@ class OfferFeeWidget @JvmOverloads constructor(
 
 		//init values
 		updateFeeValue(0)
-		drawSeekbarSection(visible = false)
+		drawSeekbarSection(selectedButton)
 	}
 
 	private fun setupUI() {
 		binding = WidgetOfferFeeBinding.inflate(layoutInflater, this)
 	}
 
-	private fun drawSeekbarSection(visible: Boolean = false) {
+	private fun drawSeekbarSection(selectedButton: FeeButtonSelected) {
+		val visible = selectedButton == FeeButtonSelected.WITH_FEE
 		binding.feeDivider.isVisible = visible
 		binding.feeValue.isVisible = visible
 		binding.feeBar.isVisible = visible
@@ -79,8 +79,14 @@ class OfferFeeWidget @JvmOverloads constructor(
 
 	fun reset() {
 		selectedButton = FeeButtonSelected.WITHOUT_FEE
-		drawSeekbarSection(visible = false)
+		drawSeekbarSection(selectedButton)
 		updateFeeValue(0)
+	}
+
+	fun setValues(data: FeeValue) {
+		selectedButton = data.type
+		drawSeekbarSection(selectedButton)
+		updateFeeValue(data.value)
 	}
 
 	companion object {

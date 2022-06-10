@@ -50,6 +50,16 @@ class OfferBtcNetworkType @JvmOverloads constructor(
 
 		selectedButtons = mutableSetOf()
 	}
+
+	fun setValues(buttons: List<BtcNetworkButtonSelected>) {
+		selectedButtons = buttons.toMutableSet()
+		updateButtonView(selectedButtons)
+	}
+
+	private fun updateButtonView(selectedButtons: MutableSet<BtcNetworkButtonSelected>) {
+		binding.btcNetworkLighting.isChecked = selectedButtons.contains(BtcNetworkButtonSelected.LIGHTING)
+		binding.btcNetworkOnChain.isChecked = selectedButtons.contains(BtcNetworkButtonSelected.ON_CHAIN)
+	}
 }
 
 enum class BtcNetworkButtonSelected {

@@ -51,4 +51,8 @@ class PriceRangeWidget @JvmOverloads constructor(
 		binding.priceRangeSlider.values = initValues
 		processLimits(initValues[0], initValues[1])
 	}
+
+	fun setValues(bottomLimit: Float, topLimit: Float) {
+		processLimits(bottomLimit = bottomLimit, topLimit = topLimit)
+	}
 }

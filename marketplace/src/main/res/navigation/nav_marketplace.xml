@@ -61,4 +61,16 @@
 
 	</fragment>
 
+	<fragment
+		android:id="@+id/editOfferFragment"
+		android:name="cz.cleeevio.vexl.marketplace.editOfferFragment.EditOfferFragment"
+		android:label="EditOfferFragment"
+		tools:layout="@layout/fragment_edit_offer">
+
+		<argument
+			android:name="offer_id"
+			app:argType="string" />
+
+	</fragment>
+
 </navigation>
