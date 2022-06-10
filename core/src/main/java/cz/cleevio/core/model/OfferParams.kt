@@ -1,8 +1,6 @@
-package cz.cleeevio.vexl.marketplace.newOfferFragment
+package cz.cleevio.core.model
 
-import cz.cleevio.core.model.*
-
-data class NewOfferParams constructor(
+data class OfferParams constructor(
 	val description: String,
 	val location: LocationValue,    //todo: should contain GPS?
 	val fee: FeeValue,

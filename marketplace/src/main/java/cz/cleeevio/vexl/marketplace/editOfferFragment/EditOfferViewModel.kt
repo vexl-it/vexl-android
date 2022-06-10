@@ -1,12 +1,11 @@
 package cz.cleeevio.vexl.marketplace.editOfferFragment
 
 import androidx.lifecycle.viewModelScope
-import com.cleevio.vexl.cryptography.EciesCryptoLib
-import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleeevio.vexl.marketplace.R
-import cz.cleeevio.vexl.marketplace.newOfferFragment.NewOfferParams
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.utils.LocationHelper
+import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
@@ -47,7 +46,7 @@ class EditOfferViewModel constructor(
 		}
 	}
 
-	fun updateOffer(offerId: String, params: NewOfferParams) {
+	fun updateOffer(offerId: String, params: OfferParams) {
 		viewModelScope.launch(Dispatchers.IO) {
 
 			_updateOfferRequest.emit(Resource.loading())
@@ -73,13 +72,13 @@ class EditOfferViewModel constructor(
 
 			//encrypt in loop for every contact
 			contacts.forEach { contactKeyWrapper ->
-				val encryptedOffer = encryptOffer(params, contactKeyWrapper.key, offerKeys)
+				val encryptedOffer = OfferUtils.encryptOffer(locationHelper, params, contactKeyWrapper.key, offerKeys)
 				encryptedOfferList.add(encryptedOffer)
 			}
 
 			//also encrypt with user's key
 			encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
-				val myEncryptedOffer = encryptOffer(params, myPublicKey, offerKeys)
+				val myEncryptedOffer = OfferUtils.encryptOffer(locationHelper, params, myPublicKey, offerKeys)
 				encryptedOfferList.add(myEncryptedOffer)
 			}
 
@@ -97,29 +96,5 @@ class EditOfferViewModel constructor(
 				}
 			}
 		}
-	}
-
-	private fun encryptOffer(params: NewOfferParams, contactKey: String, offerKeys: KeyPair): NewOffer {
-		return NewOffer(
-			location = params.location.values.map {
-				eciesEncrypt(locationHelper.locationToJsonString(it), contactKey)
-			},
-			userPublicKey = contactKey,
-			offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey),
-			feeState = eciesEncrypt(params.fee.type.name, contactKey),
-			feeAmount = eciesEncrypt(params.fee.value.toString(), contactKey),
-			offerDescription = eciesEncrypt(params.description, contactKey),
-			amountBottomLimit = eciesEncrypt(params.priceRange.bottomLimit.toString(), contactKey),
-			amountTopLimit = eciesEncrypt(params.priceRange.topLimit.toString(), contactKey),
-			locationState = eciesEncrypt(params.location.type.name, contactKey),
-			paymentMethod = params.paymentMethod.value.map { eciesEncrypt(it.name, contactKey) },
-			btcNetwork = params.btcNetwork.value.map { eciesEncrypt(it.name, contactKey) },
-			friendLevel = eciesEncrypt(params.friendLevel.value.name, contactKey),
-			offerType = eciesEncrypt(params.offerType, contactKey)
-		)
-	}
-
-	private fun eciesEncrypt(data: String, contactKey: String): String {
-		return EciesCryptoLib.encrypt(contactKey, data)
 	}
 }
