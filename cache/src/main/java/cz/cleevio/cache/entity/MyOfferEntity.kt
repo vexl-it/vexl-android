@@ -10,5 +10,6 @@ data class MyOfferEntity(
 	val id: Long = 0,
 	val extId: String,
 	val privateKey: String,
-	val publicKey: String
+	val publicKey: String,
+	val offerType: String
 )

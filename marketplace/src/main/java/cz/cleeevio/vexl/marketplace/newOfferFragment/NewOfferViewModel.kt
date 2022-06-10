@@ -63,11 +63,12 @@ class NewOfferViewModel constructor(
 			when (response.status) {
 				is Status.Success -> {
 					//save offer ID into DB, also save keys
-					response.data?.offerId?.let { offerId ->
+					response.data?.let { offer ->
 						offerRepository.saveMyOfferIdAndKeys(
-							offerId = offerId,
+							offerId = offer.offerId,
 							privateKey = offerKeys.privateKey,
-							publicKey = offerKeys.publicKey
+							publicKey = offerKeys.publicKey,
+							offerType = offer.offerType
 						)
 					}
 					_newOfferRequest.emit(response)

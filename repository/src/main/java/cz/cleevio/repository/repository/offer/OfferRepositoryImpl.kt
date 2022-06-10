@@ -69,12 +69,18 @@ class OfferRepositoryImpl constructor(
 		mapper = { }
 	)
 
-	override suspend fun saveMyOfferIdAndKeys(offerId: String, privateKey: String, publicKey: String): Resource<Unit> {
+	override suspend fun saveMyOfferIdAndKeys(
+		offerId: String,
+		privateKey: String,
+		publicKey: String,
+		offerType: String
+	): Resource<Unit> {
 		myOfferDao.replace(
 			MyOfferEntity(
 				extId = offerId,
 				privateKey = privateKey,
-				publicKey = publicKey
+				publicKey = publicKey,
+				offerType = offerType
 			)
 		)
 		return Resource.success(data = Unit)
@@ -106,6 +112,10 @@ class OfferRepositoryImpl constructor(
 				overwriteOffers(newOffers.data.orEmpty())
 			}
 		}
+	}
+
+	override suspend fun getMyOffersCount(offerType: String): Int {
+		return myOfferDao.getMyOfferCount(offerType)
 	}
 
 	private suspend fun overwriteOffers(offers: List<Offer>) {

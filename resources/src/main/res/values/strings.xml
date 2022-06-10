@@ -74,6 +74,7 @@
     <string name="marketplace_currency_1_year">1 year</string>
     <string name="marketplace_buy">Buy</string>
     <string name="marketplace_sell">Sell</string>
+    <string name="marketplace_my_offers">My Offers</string>
     <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of Friend</string>
     <string name="marketplace_detail_user_sell">%s is selling</string>
