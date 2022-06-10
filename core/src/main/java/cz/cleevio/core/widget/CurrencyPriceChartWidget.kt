@@ -51,7 +51,6 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	}
 
 	private fun updateChartData(btnId: Int) {
-
 		val priceChangePercentage = getValue(btnId)
 		val priceChangeText = getText(btnId, priceChangePercentage)
 
@@ -66,15 +65,36 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 	private fun getText(btnId: Int, priceChangePercentage: BigDecimal): String {
 		return when (btnId) {
-			R.id.period_1_day -> resources.getString(R.string.marketplace_currency_variation_1_day, priceChangePercentage.formatAsPercentage())
-			R.id.period_1_week -> resources.getString(R.string.marketplace_currency_variation_1_week, priceChangePercentage.formatAsPercentage())
-			R.id.period_1_month -> resources.getString(R.string.marketplace_currency_variation_1_month, priceChangePercentage.formatAsPercentage())
-			R.id.period_3_month -> resources.getString(R.string.marketplace_currency_variation_3_month, priceChangePercentage.formatAsPercentage())
-			R.id.period_6_month -> resources.getString(R.string.marketplace_currency_variation_6_month, priceChangePercentage.formatAsPercentage())
-			R.id.period_1_year -> resources.getString(R.string.marketplace_currency_variation_1_year, priceChangePercentage.formatAsPercentage())
+			R.id.period_1_day -> resources.getString(
+				R.string.marketplace_currency_variation_1_day,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_1_week -> resources.getString(
+				R.string.marketplace_currency_variation_1_week,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_1_month -> resources.getString(
+				R.string.marketplace_currency_variation_1_month,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_3_month -> resources.getString(
+				R.string.marketplace_currency_variation_3_month,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_6_month -> resources.getString(
+				R.string.marketplace_currency_variation_6_month,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_1_year -> resources.getString(
+				R.string.marketplace_currency_variation_1_year,
+				priceChangePercentage.formatAsPercentage()
+			)
 			else -> {
 				Timber.e("Unknown currency price period radio ID! '$id'")
-				resources.getString(R.string.marketplace_currency_variation_1_day, priceChangePercentage.formatAsPercentage())
+				resources.getString(
+					R.string.marketplace_currency_variation_1_day,
+					priceChangePercentage.formatAsPercentage()
+				)
 			}
 		}
 	}
