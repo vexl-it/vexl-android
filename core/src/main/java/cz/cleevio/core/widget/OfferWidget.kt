@@ -24,7 +24,7 @@ class OfferWidget @JvmOverloads constructor(
 
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)?) {
 		binding.offerDescription.text = item.offerDescription
-		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(1000)}k"
+		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
 		binding.priceCurrency.text = "Kč"
 		binding.offerType.text = if (item.offerType == "SELL") {
 			resources.getString(R.string.offer_to_sell)
@@ -54,5 +54,9 @@ class OfferWidget @JvmOverloads constructor(
 
 	private fun setupUI() {
 		binding = WidgetOfferBinding.inflate(layoutInflater, this)
+	}
+
+	companion object {
+		const val THOUSAND = 1000
 	}
 }
