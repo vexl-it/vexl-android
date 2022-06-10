@@ -30,8 +30,6 @@ interface OfferRepository {
 
 	suspend fun loadOfferKeysByOfferId(offerId: String): KeyPair?
 
-	suspend fun loadOfferKeysByOfferId(offerId: String): KeyPair?
-
 	suspend fun getOffers(): List<Offer>
 
 	suspend fun getOffersFlow(): Flow<List<Offer>>
