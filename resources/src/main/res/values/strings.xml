@@ -66,12 +66,12 @@
 
     <!-- Marketplace -->
     <string name="marketplace_currency_bitcoin">Bitcoin</string>
-    <string name="marketplace_currency_variation_1_day">%s%% today</string>
-    <string name="marketplace_currency_variation_1_week">%s%% last week</string>
-    <string name="marketplace_currency_variation_1_month">%s%% last month</string>
-    <string name="marketplace_currency_variation_3_month">%s%% 3 months ago</string>
-    <string name="marketplace_currency_variation_6_month">%s%% 6 months ago</string>
-    <string name="marketplace_currency_variation_1_year">%s%% last year</string>
+    <string name="marketplace_currency_variation_1_day">%1$s%% today</string>
+    <string name="marketplace_currency_variation_1_week">%1$s%% last week</string>
+    <string name="marketplace_currency_variation_1_month">%1$s%% last month</string>
+    <string name="marketplace_currency_variation_3_month">%1$s%% 3 months ago</string>
+    <string name="marketplace_currency_variation_6_month">%1$s%% 6 months ago</string>
+    <string name="marketplace_currency_variation_1_year">%1$s%% last year</string>
     <string name="marketplace_currency_1_day">1 day</string>
     <string name="marketplace_currency_1_week">1 week</string>
     <string name="marketplace_currency_1_month">1 mth</string>
