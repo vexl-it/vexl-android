@@ -114,9 +114,8 @@ class OfferRepositoryImpl constructor(
 		}
 	}
 
-	override suspend fun getMyOffersCount(offerType: String): Int {
-		return myOfferDao.getMyOfferCount(offerType)
-	}
+	override suspend fun getMyOffersCount(offerType: String): Int =
+		myOfferDao.getMyOfferCount(offerType)
 
 	private suspend fun overwriteOffers(offers: List<Offer>) {
 		transactionProvider.runAsTransaction {

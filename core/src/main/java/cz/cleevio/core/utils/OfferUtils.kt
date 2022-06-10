@@ -7,7 +7,12 @@ import cz.cleevio.repository.model.offer.NewOffer
 
 object OfferUtils {
 
-	fun encryptOffer(locationHelper: LocationHelper, params: OfferParams, contactKey: String, offerKeys: KeyPair): NewOffer {
+	fun encryptOffer(
+		locationHelper: LocationHelper,
+		params: OfferParams,
+		contactKey: String,
+		offerKeys: KeyPair
+	): NewOffer {
 		return NewOffer(
 			location = params.location.values.map {
 				eciesEncrypt(locationHelper.locationToJsonString(it), contactKey)
@@ -27,7 +32,6 @@ object OfferUtils {
 		)
 	}
 
-	private fun eciesEncrypt(data: String, contactKey: String): String {
-		return EciesCryptoLib.encrypt(contactKey, data)
-	}
+	private fun eciesEncrypt(data: String, contactKey: String): String =
+		EciesCryptoLib.encrypt(contactKey, data)
 }
