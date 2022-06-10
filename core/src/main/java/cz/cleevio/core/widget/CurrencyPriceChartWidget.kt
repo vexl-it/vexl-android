@@ -7,6 +7,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
+import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
@@ -50,7 +51,56 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	}
 
 	private fun updateChartData(btnId: Int) {
-		val priceChangePercentage = when (btnId) {
+		val priceChangePercentage = getValue(btnId)
+		val priceChangeText = getText(btnId, priceChangePercentage)
+
+		binding.cryptoChangePercentage.text = priceChangeText
+		val drawable = if (priceChangePercentage < BigDecimal.ZERO) {
+			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_down, null)
+		} else {
+			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_up, null)
+		}
+		binding.cryptoChangePercentage.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+	}
+
+	private fun getText(btnId: Int, priceChangePercentage: BigDecimal): String {
+		return when (btnId) {
+			R.id.period_1_day -> resources.getString(
+				R.string.marketplace_currency_variation_1_day,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_1_week -> resources.getString(
+				R.string.marketplace_currency_variation_1_week,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_1_month -> resources.getString(
+				R.string.marketplace_currency_variation_1_month,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_3_month -> resources.getString(
+				R.string.marketplace_currency_variation_3_month,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_6_month -> resources.getString(
+				R.string.marketplace_currency_variation_6_month,
+				priceChangePercentage.formatAsPercentage()
+			)
+			R.id.period_1_year -> resources.getString(
+				R.string.marketplace_currency_variation_1_year,
+				priceChangePercentage.formatAsPercentage()
+			)
+			else -> {
+				Timber.e("Unknown currency price period radio ID! '$id'")
+				resources.getString(
+					R.string.marketplace_currency_variation_1_day,
+					priceChangePercentage.formatAsPercentage()
+				)
+			}
+		}
+	}
+
+	private fun getValue(btnId: Int): BigDecimal {
+		return when (btnId) {
 			R.id.period_1_day -> currentCryptoCurrencyPrice.priceChangePercentage24h
 			R.id.period_1_week -> currentCryptoCurrencyPrice.priceChangePercentage7d
 			R.id.period_1_month -> currentCryptoCurrencyPrice.priceChangePercentage30d
@@ -62,14 +112,6 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 				currentCryptoCurrencyPrice.priceChangePercentage24h
 			}
 		}
-
-		binding.cryptoChangePercentage.text = priceChangePercentage.toString()
-		val drawable = if (priceChangePercentage < BigDecimal.ZERO) {
-			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_down, null)
-		} else {
-			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_up, null)
-		}
-		binding.cryptoChangePercentage.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
 	}
 
 	private fun packView(packed: Boolean) {
