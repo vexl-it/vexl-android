@@ -16,9 +16,6 @@ class OffersBuyFragment constructor(
 		repeatScopeOnStart {
 			viewModel.buyOffers.collect { offers ->
 				adapter.submitList(offers)
-				processMyOffersButtons(
-					containsMyOffer(offers)
-				)
 			}
 		}
 	}

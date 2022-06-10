@@ -11,7 +11,6 @@ import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.getDrawable
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.repository.model.offer.Offer
 import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -50,6 +49,11 @@ sealed class OffersBaseFragment constructor(
 				))
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.myOffersCount.collect { myOffersCount ->
+				processMyOffersButtons(myOffersCount > 0)
+			}
+		}
 	}
 
 	override fun initView() {
@@ -60,10 +64,12 @@ sealed class OffersBaseFragment constructor(
 			navigateToNewOffer(getOfferType())
 		}
 
+		checkMyOffersCount(getOfferType())
+
 		viewModel.getFilters()
 	}
 
-	protected fun processMyOffersButtons(hasMyOffers: Boolean) {
+	private fun processMyOffersButtons(hasMyOffers: Boolean) {
 		if (hasMyOffers) {
 			binding.addOfferBtn.isVisible = false
 			binding.myOffersBtn.isVisible = true
@@ -73,8 +79,9 @@ sealed class OffersBaseFragment constructor(
 		}
 	}
 
-	protected fun containsMyOffer(offers: List<Offer>): Boolean =
-		viewModel.containsMyOffer(offers)
+	protected fun checkMyOffersCount(offerType: OfferType) {
+		viewModel.checkMyOffersCount(offerType)
+	}
 
 	private fun generateChipView(
 		filter: String? = null,

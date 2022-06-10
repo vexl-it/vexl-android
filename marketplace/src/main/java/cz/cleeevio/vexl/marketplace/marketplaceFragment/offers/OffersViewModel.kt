@@ -2,6 +2,7 @@ package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.repository.model.offer.Filter
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -25,6 +26,9 @@ class OffersViewModel(
 
 	private val _filters = MutableSharedFlow<List<Filter>>(replay = 1)
 	val filters = _filters.asSharedFlow()
+
+	private val _myOffersCount = MutableSharedFlow<Int>(replay = 1)
+	val myOffersCount = _myOffersCount.asSharedFlow()
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -51,10 +55,10 @@ class OffersViewModel(
 		}
 	}
 
-	fun containsMyOffer(offers: List<Offer>): Boolean {
-		val myPublicKey = preferences.userPublicKey
-		return offers.any { offer ->
-			offer.userPublicKey == myPublicKey
+	fun checkMyOffersCount(offerType: OfferType) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val myOfferCount = offerRepository.getMyOffersCount(offerType.name)
+			_myOffersCount.emit(myOfferCount)
 		}
 	}
 }
