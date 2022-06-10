@@ -7,7 +7,6 @@ import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferStateBinding
 import lightbase.core.extensions.layoutInflater
 
-
 class OfferStateWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,

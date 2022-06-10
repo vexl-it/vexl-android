@@ -61,7 +61,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 	}
 
 	private fun drawSeekbarSection(selectedButton: FeeButtonSelected) {
-		val visible = (selectedButton == FeeButtonSelected.WITH_FEE)
+		val visible = selectedButton == FeeButtonSelected.WITH_FEE
 		binding.feeDivider.isVisible = visible
 		binding.feeValue.isVisible = visible
 		binding.feeBar.isVisible = visible
