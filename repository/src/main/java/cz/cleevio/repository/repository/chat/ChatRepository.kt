@@ -5,7 +5,9 @@ import cz.cleevio.repository.model.user.User
 
 interface ChatRepository {
 
-	suspend fun sendMessage(): Resource<Unit>
+	suspend fun createInbox(publicKey: String, firebaseToken: String): Resource<Unit>
+
+	suspend fun sendMessage(senderPublicKey: String, receiverPublicKey: String, message: String, messageType: String): Resource<Unit>
 
 	//would flow be better?
 	suspend fun loadMessages(userId: Long?): Resource<List<Any>>

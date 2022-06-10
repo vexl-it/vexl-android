@@ -4,4 +4,8 @@
 	<string name="facebook_client_token" translatable="false">d935a8def510c23fa883f758a8ab7261</string>
 
 	<string name="price_range" translatable="false">%1$s - %2$s</string>
+
+	<string name="channel_chat_id" translatable="false">channel_chat</string>
+	<string name="channel_chat_id_name">Chat</string>
+	<string name="channel_chat_id_desc">Channel for messages</string>
 </resources>
