@@ -66,12 +66,12 @@
 
     <!-- Marketplace -->
     <string name="marketplace_currency_bitcoin">Bitcoin</string>
-    <string name="marketplace_currency_variation_1_day">%1$s%% today</string>
-    <string name="marketplace_currency_variation_1_week">%1$s%% last week</string>
-    <string name="marketplace_currency_variation_1_month">%1$s%% last month</string>
-    <string name="marketplace_currency_variation_3_month">%1$s%% 3 months ago</string>
-    <string name="marketplace_currency_variation_6_month">%1$s%% 6 months ago</string>
-    <string name="marketplace_currency_variation_1_year">%1$s%% last year</string>
+    <string name="marketplace_currency_variation_1_day">%1$s %% today</string>
+    <string name="marketplace_currency_variation_1_week">%1$s %% last week</string>
+    <string name="marketplace_currency_variation_1_month">%1$s %% last month</string>
+    <string name="marketplace_currency_variation_3_month">%1$s %% 3 months ago</string>
+    <string name="marketplace_currency_variation_6_month">%1$s %% 6 months ago</string>
+    <string name="marketplace_currency_variation_1_year">%1$s %% last year</string>
     <string name="marketplace_currency_1_day">1 day</string>
     <string name="marketplace_currency_1_week">1 week</string>
     <string name="marketplace_currency_1_month">1 mth</string>
@@ -87,6 +87,7 @@
     <string name="marketplace_detail_user_buy">%s is buying</string>
     <string name="marketplace_detail_up_to">up to</string>
     <string name="marketplace_detail_payment">Payment</string>
+    <string name="marketplace_detail_fee">Includes %1$s %% fee for transaction</string>
     <string name="offer_request">Request</string>
     <string name="offer_edit_sell_title">My Sell Offers</string>
     <string name="offer_edit_buy_title">My Buy Offers</string>
