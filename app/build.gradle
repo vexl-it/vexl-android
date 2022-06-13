@@ -58,7 +58,7 @@ android {
             def releaseKeyPassword = System.getenv("RELEASE_KEY_PASSWORD") ?: "${secretProperties['secretKeyPassword']}"
             storeFile file("production.keystore")
             storePassword releaseStorePassword
-            keyAlias "upload"
+            keyAlias "key0"
             keyPassword releaseKeyPassword
         }
     }
