@@ -134,6 +134,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="32dp"
+				android:background="@color/yellow"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title"
 				app:drawableStartCompat="@drawable/ic_advanced"
 				android:drawablePadding="8dp"
