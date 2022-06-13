@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
+import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.offer.Offer
 import lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
@@ -43,6 +44,9 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			resources.getString(R.string.marketplace_detail_friend_second)
 		}
+
+		binding.feeDescription.isVisible = item.feeState == "WITH_FEE"
+		binding.feeDescription.text = resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
 
 		binding.paymentMethodIcons.bind(item.paymentMethod)
 

@@ -109,7 +109,7 @@
 					android:layout_margin="8dp"
 					app:layout_constraintEnd_toStartOf="@id/payment_method_wrapper"
 					app:layout_constraintStart_toEndOf="@id/price_wrapper"
-					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintBottom_toTopOf="@id/fee_barrier"
 					app:layout_constraintTop_toBottomOf="@id/offer_description" />
 
 				<androidx.constraintlayout.widget.ConstraintLayout
@@ -152,7 +152,7 @@
 					android:layout_margin="8dp"
 					app:layout_constraintEnd_toStartOf="@id/location_wrapper"
 					app:layout_constraintStart_toEndOf="@id/payment_method_wrapper"
-					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintBottom_toTopOf="@id/fee_barrier"
 					app:layout_constraintTop_toBottomOf="@id/offer_description" />
 
 				<androidx.constraintlayout.widget.ConstraintLayout
@@ -190,6 +190,24 @@
 						tools:text="Prague" />
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<androidx.constraintlayout.widget.Barrier
+					android:id="@+id/fee_barrier"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:barrierDirection="bottom"
+					app:constraint_referenced_ids="price_wrapper, payment_method_wrapper, location_wrapper" />
+
+				<TextView
+					android:id="@+id/fee_description"
+					style="@style/TextAppearance.Vexl.Description"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="18dp"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/fee_barrier"
+					tools:text="Includes 4% fee for transaction" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
