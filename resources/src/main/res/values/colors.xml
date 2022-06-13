@@ -104,4 +104,6 @@
 	<color name="text_color_date_picker">@color/root_text_color</color>
 	<color name="text_color_cryptocurrency_price">@color/green_5_opacity_50</color>
 	<color name="text_color_cryptocurrency_background">@color/green_1</color>
+
+	<color name="main_navbar_selected_color">#322916</color>
 </resources>
