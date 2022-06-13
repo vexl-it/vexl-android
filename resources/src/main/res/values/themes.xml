@@ -90,4 +90,12 @@
 		<item name="colorOnSurface">@color/primary</item>
 		<item name="colorSecondary">@color/secondary</item>
 	</style>
+
+	<style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined.Yellow" parent="">
+		<item name="colorPrimary">@color/yellow_100</item>
+	</style>
+
+	<style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray" parent="">
+		<item name="colorPrimary">@color/gray_4</item>
+	</style>
 </resources>

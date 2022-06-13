@@ -60,6 +60,7 @@ class OfferLocationWidget @JvmOverloads constructor(
 				val clickedItem = items.firstOrNull { it == item }
 				clickedItem?.let {
 					it.isVisible = false
+					it.reset()
 					visibleItems.remove(it)
 				}
 				checkAddButtonVisibility()

@@ -95,10 +95,15 @@
 					app:layout_constraintTop_toTopOf="parent" />
 
 				<com.google.android.material.textfield.TextInputEditText
+					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Yellow"
 					android:id="@+id/price_edit"
-					style="@style/Widget.Vexl.Filters.EditText"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:paddingTop="18dp"
+					android:paddingBottom="16dp"
+					android:paddingStart="26dp"
+					android:paddingEnd="26dp"
 					android:imeOptions="actionDone"
 					android:inputType="numberDecimal|numberSigned"
 					android:maxLines="1"

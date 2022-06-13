@@ -26,6 +26,8 @@
 				android:layout_height="wrap_content">
 
 				<com.google.android.material.textfield.TextInputEditText
+					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Yellow"
 					android:id="@+id/location_item_text"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
