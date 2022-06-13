@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.marketplace.filtersFragment
 
+import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.marketplace.R
