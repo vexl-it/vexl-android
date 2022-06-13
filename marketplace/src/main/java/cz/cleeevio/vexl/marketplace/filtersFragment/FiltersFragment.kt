@@ -6,6 +6,7 @@ import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentFiltersBinding
 import cz.cleevio.core.utils.viewBinding
 import lightbase.core.baseClasses.BaseFragment
+import lightbase.core.extensions.listenForInsets
 
 class FiltersFragment : BaseFragment(R.layout.fragment_filters) {
 
@@ -16,6 +17,13 @@ class FiltersFragment : BaseFragment(R.layout.fragment_filters) {
 	}
 
 	override fun initView() {
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(
+				top = insets.top,
+				bottom = insets.bottomWithIME
+			)
+		}
+
 		binding.filterTitleWidget.setTypeAndTitle(args.offerType, getString(R.string.filter_title))
 		binding.filterTitleWidget.setListeners(
 			onReset = {
