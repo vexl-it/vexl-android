@@ -13,7 +13,8 @@
 		android:layout_height="wrap_content"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="MissingClass" />
 
 	<ImageView
 		android:id="@+id/profile_user_photo"
