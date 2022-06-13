@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetPriceRangeBinding
 import cz.cleevio.core.model.PriceRangeValue
+import cz.cleevio.core.utils.formatCurrency
 import lightbase.core.extensions.layoutInflater
 
 class PriceRangeWidget @JvmOverloads constructor(
@@ -38,7 +39,11 @@ class PriceRangeWidget @JvmOverloads constructor(
 	private fun processLimits(bottomLimit: Float, topLimit: Float) {
 		this.bottomLimit = bottomLimit
 		this.topLimit = topLimit
-		binding.rangeText.text = resources.getString(R.string.price_range, bottomLimit, topLimit)
+		binding.rangeText.text = resources.getString(
+			R.string.price_range,
+			bottomLimit.formatCurrency("CZK", resources.configuration.locale),
+			topLimit.formatCurrency("CZK", resources.configuration.locale)
+		)
 	}
 
 	fun getPriceRangeValue(): PriceRangeValue = PriceRangeValue(
