@@ -369,7 +369,7 @@
 		<item name="cardBackgroundColor">@color/gray_1</item>
 	</style>
 
-	<style name="Widget.Vexl.MarketplaceMainCardView" parent="">
+	<style name="Widget.Vexl.MainCardView" parent="">
 		<item name="android:background">@drawable/background_cardview_marketplace_black</item>
 	</style>
 
