@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import cz.cleeevio.onboarding.BuildConfig
 import cz.cleeevio.onboarding.R
 import cz.cleeevio.onboarding.databinding.FragmentUsernameBinding
 import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
@@ -43,10 +44,16 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 
 		binding.continueBtn.setOnClickListener {
 			val username = binding.nameNameInput.text.toString()
-			viewModel.checkUsernameAvailability(username)
+			if (username.isNotBlank()) {
+				viewModel.checkUsernameAvailability(username)
+			} else {
+				Toast.makeText(requireContext(), R.string.error_nickname_blank, Toast.LENGTH_SHORT).show()
+			}
 		}
 
 		//debug
-		binding.nameNameInput.setText("jakub_test_account")
+		if (BuildConfig.DEBUG) {
+			binding.nameNameInput.setText("jakub_test_account")
+		}
 	}
 }

@@ -48,6 +48,7 @@
     <!-- Errors -->
     <string name="error_username_not_available">The username is unavailable</string>
     <string name="error_missing_offer_keys">You don\'t have keys for this offer</string>
+    <string name="error_nickname_blank">Nickname is empty</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Change profile picture</string>
@@ -148,6 +149,10 @@
     <string name="request_common_friends">%d common friends</string>
 
     <!-- Chat -->
+    <string name="chat_main_title">Chat</string>
+    <string name="chat_filter_all">All</string>
+    <string name="chat_filter_buyers">Buyers</string>
+    <string name="chat_filter_sellers">Sellers</string>
 
     <!-- Chat requests -->
 

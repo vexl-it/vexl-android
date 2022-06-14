@@ -8,6 +8,6 @@ data class UsernameAvailable constructor(
 )
 
 fun UsernameAvailableResponse.fromNetwork(username: String) = UsernameAvailable(
-	available = available,
+	available = isAvailable,
 	username = username
 )
