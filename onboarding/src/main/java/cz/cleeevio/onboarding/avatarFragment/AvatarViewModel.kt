@@ -8,8 +8,11 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.user.User
+import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +25,8 @@ import java.io.ByteArrayOutputStream
 
 class AvatarViewModel constructor(
 	private val userRepository: UserRepository,
+	private val chatRepository: ChatRepository,
+	private val encryptedPreference: EncryptedPreferenceRepository,
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
@@ -42,7 +47,19 @@ class AvatarViewModel constructor(
 					getAvatarData(it, contentResolver),
 					IMAGE_EXTENSION
 				)
-				_user.emit(response.data)
+				//create inbox for user
+				val inboxResponse = chatRepository.createInbox(
+					publicKey = encryptedPreference.userPublicKey
+				)
+				when (inboxResponse.status) {
+					Status.Success -> {
+						_user.emit(response.data)
+					}
+					Status.Error -> {
+						//todo: add error handling?
+					}
+				}
+
 			}
 		}
 	}

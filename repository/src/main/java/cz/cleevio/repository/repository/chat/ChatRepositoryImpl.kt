@@ -2,6 +2,9 @@ package cz.cleevio.repository.repository.chat
 
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
+import cz.cleevio.cache.dao.ChatMessageDao
+import cz.cleevio.cache.dao.NotificationDao
+import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ChatApi
 import cz.cleevio.network.data.ErrorIdentification
@@ -13,13 +16,20 @@ import cz.cleevio.network.request.chat.CreateInboxRequest
 import cz.cleevio.network.request.chat.MessageRequest
 import cz.cleevio.network.request.chat.SendMessageRequest
 import cz.cleevio.repository.R
-import cz.cleevio.repository.model.chat.ChatChallenge
-import cz.cleevio.repository.model.chat.fromNetwork
+import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.user.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import timber.log.Timber
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
+	private val notificationDao: NotificationDao,
+	private val chatMessageDao: ChatMessageDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : ChatRepository {
 
@@ -65,16 +75,31 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
-	override suspend fun createInbox(publicKey: String, firebaseToken: String): Resource<Unit> = tryOnline(
-		request = {
-			chatApi.postInboxes(
-				inboxRequest = CreateInboxRequest(
-					publicKey = publicKey, token = firebaseToken
-				)
+	override fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>> =
+		chatMessageDao.listAllBySenders(inboxPublicKey = inboxPublicKey, senderPublicKeys = senderPublicKeys)
+			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
+			.shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, replay = 1)
+
+	//todo: add also some mechanism to update all existing inboxes with new firebase token
+	override suspend fun saveFirebasePushToken(token: String) {
+		//save token into DB on error
+		notificationDao.replace(NotificationEntity(token = token))
+	}
+
+	override suspend fun createInbox(publicKey: String): Resource<Unit> {
+		return notificationDao.getOne()?.let { notificationDataStorage ->
+			tryOnline(
+				request = {
+					chatApi.postInboxes(
+						inboxRequest = CreateInboxRequest(
+							publicKey = publicKey, token = notificationDataStorage.token
+						)
+					)
+				},
+				mapper = { }
 			)
-		},
-		mapper = { }
-	)
+		} ?: Resource.error(ErrorIdentification.MessageError(code = R.string.error_missing_firebase_token))
+	}
 
 	override suspend fun syncMessages(keyPair: KeyPair): Resource<Unit> {
 		//verify that you have valid challenge for this inbox
@@ -86,7 +111,7 @@ class ChatRepositoryImpl constructor(
 		val signatureNullable = getSignature(keyPair.publicKey)
 		signatureNullable?.let { signature ->
 			//load messages
-			val messages = tryOnline(
+			val messagesResponse = tryOnline(
 				request = {
 					chatApi.putInboxesMessages(
 						messageRequest = MessageRequest(
@@ -95,17 +120,36 @@ class ChatRepositoryImpl constructor(
 						)
 					)
 				},
-				mapper = { it?.messages?.map { message -> message.fromNetwork() } }
+				mapper = { it?.messages?.map { message -> message.fromNetwork(keyPair.publicKey) } },
+				//save messages to DB
+				doOnSuccess = { messages ->
+					chatMessageDao.insertAll(
+						messages?.map { it.toCache() } ?: listOf()
+					)
+				}
 			)
+			when (messagesResponse.status) {
+				is Status.Error -> {
+					return Resource.error(messagesResponse.errorIdentification)
+				}
+				else -> {
 
-			//save messages to DB
+				}
+			}
 
-
-			//todo: add correct message
+			//todo: add correct text
 		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 
-
 		//delete messages from BE
+		val deleteResponse = deleteMessagesFromBE(keyPair.publicKey)
+		when (deleteResponse.status) {
+			is Status.Error -> {
+				return Resource.error(deleteResponse.errorIdentification)
+			}
+			else -> {
+
+			}
+		}
 
 		return Resource.success(Unit)
 	}
@@ -118,6 +162,11 @@ class ChatRepositoryImpl constructor(
 				)
 			)
 		},
+		mapper = { }
+	)
+
+	override suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit> = tryOnline(
+		request = { chatApi.deleteInboxesMessages(publicKey) },
 		mapper = { }
 	)
 

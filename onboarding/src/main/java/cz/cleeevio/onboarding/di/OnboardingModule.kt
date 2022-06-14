@@ -49,6 +49,8 @@ val onboardingModule = module {
 	viewModel {
 		AvatarViewModel(
 			userRepository = get(),
+			chatRepository = get(),
+			encryptedPreference = get(),
 			navMainGraphModel = get()
 		)
 	}

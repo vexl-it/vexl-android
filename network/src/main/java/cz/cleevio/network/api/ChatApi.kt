@@ -56,13 +56,13 @@ interface ChatApi {
 
 	//delete whole inbox
 	@DELETE("inboxes/{publicKey}")
-	suspend fun deleteInboxesByPublicKey(
+	suspend fun deleteInboxes(
 		@Path(value = "publicKey") publicKey: String
 	): Response<ResponseBody>
 
 	//delete pulled messages
 	@DELETE("inboxes/{publicKey}/messages")
-	suspend fun deleteInboxesMessagesByPublicKey(
+	suspend fun deleteInboxesMessages(
 		@Path(value = "publicKey") publicKey: String
 	): Response<ResponseBody>
 
