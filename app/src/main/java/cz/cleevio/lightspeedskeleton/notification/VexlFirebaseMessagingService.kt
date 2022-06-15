@@ -42,14 +42,16 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 			INTENT_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 		)
 
-		GlobalScope.launch(Dispatchers.IO) {
-			showNotification(
-				createNotificationBuilder(
-					title = title,
-					message = message,
-					pendingIntent = pendingIntent
+		if (title != null && message != null) {
+			GlobalScope.launch(Dispatchers.IO) {
+				showNotification(
+					createNotificationBuilder(
+						title = title,
+						message = message,
+						pendingIntent = pendingIntent
+					)
 				)
-			)
+			}
 		}
 
 		super.onMessageReceived(remoteMessage)
@@ -64,13 +66,13 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	}
 
 	private fun createNotificationBuilder(
-		title: String?,
-		message: String?,
+		title: String,
+		message: String,
 		pendingIntent: PendingIntent
 	): NotificationCompat.Builder? {
 		return NotificationCompat.Builder(applicationContext, applicationContext.getString(CHANNEL_ID))
-			.setContentTitle(title ?: return null)
-			.setContentText(message ?: return null)
+			.setContentTitle(title)
+			.setContentText(message)
 			.setAutoCancel(true)
 			.setContentIntent(pendingIntent)
 			//todo: check icon

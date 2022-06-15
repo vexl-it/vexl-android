@@ -46,7 +46,8 @@ class OfferWidget @JvmOverloads constructor(
 		}
 
 		binding.feeDescription.isVisible = item.feeState == "WITH_FEE"
-		binding.feeDescription.text = resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
+		binding.feeDescription.text =
+			resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
 
 		binding.paymentMethodIcons.bind(item.paymentMethod)
 

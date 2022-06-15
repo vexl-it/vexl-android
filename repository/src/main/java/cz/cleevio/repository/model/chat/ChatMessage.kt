@@ -6,7 +6,6 @@ import com.squareup.moshi.Moshi
 import cz.cleevio.cache.entity.ChatMessageEntity
 import cz.cleevio.network.response.chat.MessageResponse
 
-
 //do we need to work with public fields from response?
 @JsonClass(generateAdapter = true)
 data class ChatMessage constructor(
@@ -27,7 +26,8 @@ data class ChatUser constructor(
 )
 
 enum class MessageType {
-	TEXT, IMAGE, ANON_REQUEST, ANON_REQUEST_RESPONSE, COMMUNICATION_REQUEST, COMMUNICATION_REQUEST_RESPONSE, DELETE_CHAT, BROKEN
+	TEXT, IMAGE, ANON_REQUEST, ANON_REQUEST_RESPONSE, COMMUNICATION_REQUEST,
+	COMMUNICATION_REQUEST_RESPONSE, DELETE_CHAT, BROKEN
 }
 
 fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {

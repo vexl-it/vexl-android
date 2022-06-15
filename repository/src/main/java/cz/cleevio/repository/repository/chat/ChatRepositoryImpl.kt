@@ -99,9 +99,12 @@ class ChatRepositoryImpl constructor(
 				},
 				mapper = { it }
 			)
-			if (response.status is Status.Error) {
-				//exit on error
-				return
+			when (response.status) {
+				is Status.Error -> {
+					//exit on error
+					return
+				}
+				else -> {}
 			}
 		}
 
@@ -156,7 +159,6 @@ class ChatRepositoryImpl constructor(
 					return Resource.error(messagesResponse.errorIdentification)
 				}
 				else -> {
-
 				}
 			}
 
@@ -170,7 +172,6 @@ class ChatRepositoryImpl constructor(
 				return Resource.error(deleteResponse.errorIdentification)
 			}
 			else -> {
-
 			}
 		}
 

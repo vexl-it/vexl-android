@@ -59,7 +59,6 @@ class AvatarViewModel constructor(
 						//todo: add error handling?
 					}
 				}
-
 			}
 		}
 	}
