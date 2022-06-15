@@ -364,7 +364,7 @@
 		<item name="fontFamily">@font/tt_satoshi_regular</item>
 	</style>
 
-	<style name="TextAppearance.Vexl.Marketplace.Filter.Title" parent="TextAppearance.MaterialComponents.Body1">
+	<style name="TextAppearance.Vexl.MainScreenHeading" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textSize">32sp</item>
 		<item name="android:textColor">@color/white</item>
 		<item name="lineHeight">46sp</item>
@@ -373,14 +373,9 @@
 		<item name="android:letterSpacing">-0.01</item>
 	</style>
 
-	<style name="TextAppearance.Vexl.Marketplace.Request.Title" parent="TextAppearance.MaterialComponents.Body1">
-		<item name="android:textSize">32sp</item>
-		<item name="android:textColor">@color/white</item>
-		<item name="lineHeight">46sp</item>
-		<item name="android:fontFamily">@font/pp_monument_extended_bold</item>
-		<item name="fontFamily">@font/pp_monument_extended_bold</item>
-		<item name="android:letterSpacing">-0.01</item>
-	</style>
+	<style name="TextAppearance.Vexl.Marketplace.Filter.Title" parent="TextAppearance.Vexl.MainScreenHeading"></style>
+
+	<style name="TextAppearance.Vexl.Marketplace.Request.Title" parent="TextAppearance.Vexl.MainScreenHeading"></style>
 
 	<style name="TextAppearance.Vexl.Marketplace.Filter.Section.Title" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textSize">24sp</item>
