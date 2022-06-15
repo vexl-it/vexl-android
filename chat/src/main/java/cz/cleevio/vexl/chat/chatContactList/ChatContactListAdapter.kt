@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.repository.model.user.User
+import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatContactBinding
 
 class ChatContactListAdapter constructor(
@@ -22,7 +23,12 @@ class ChatContactListAdapter constructor(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: User) {
-			binding.chatContactIcon.load(item.avatar)
+			binding.chatContactIcon.load(item.avatar) {
+				crossfade(true)
+				fallback(R.drawable.ic_baseline_person_128)
+				error(R.drawable.ic_baseline_person_128)
+				placeholder(R.drawable.ic_baseline_person_128)
+			}
 			binding.chatContactName.text = item.username
 			binding.chatLastMessage.text = "There will be message later"    //todo: connect to Message Dao or something
 
