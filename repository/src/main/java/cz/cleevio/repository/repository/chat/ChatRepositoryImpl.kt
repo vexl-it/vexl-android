@@ -3,6 +3,7 @@ package cz.cleevio.repository.repository.chat
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.dao.ChatMessageDao
+import cz.cleevio.cache.dao.MyOfferDao
 import cz.cleevio.cache.dao.NotificationDao
 import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -11,10 +12,7 @@ import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
-import cz.cleevio.network.request.chat.CreateChallengeRequest
-import cz.cleevio.network.request.chat.CreateInboxRequest
-import cz.cleevio.network.request.chat.MessageRequest
-import cz.cleevio.network.request.chat.SendMessageRequest
+import cz.cleevio.network.request.chat.*
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.user.User
@@ -24,12 +22,12 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
-import timber.log.Timber
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
 	private val notificationDao: NotificationDao,
 	private val chatMessageDao: ChatMessageDao,
+	private val myOfferDao: MyOfferDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : ChatRepository {
 
@@ -80,10 +78,35 @@ class ChatRepositoryImpl constructor(
 			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
 			.shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, replay = 1)
 
-	//todo: add also some mechanism to update all existing inboxes with new firebase token
 	override suspend fun saveFirebasePushToken(token: String) {
 		//save token into DB on error
-		notificationDao.replace(NotificationEntity(token = token))
+		notificationDao.replace(NotificationEntity(token = token, uploaded = false))
+
+		//get all offer inbox keys
+		val inboxKeys = myOfferDao.getAllOfferKeys().toMutableList()
+		//add users inbox
+		inboxKeys.add(
+			encryptedPreferenceRepository.userPublicKey
+		)
+		//update firebase token for each of them
+		//todo: ask BE for EP where we sent list of publicKeys
+		inboxKeys.forEach { inboxKey ->
+			val response = tryOnline(
+				request = {
+					chatApi.putInboxes(
+						UpdateInboxRequest(publicKey = inboxKey, token = token)
+					)
+				},
+				mapper = { it }
+			)
+			if (response.status is Status.Error) {
+				//exit on error
+				return
+			}
+		}
+
+		//in case of no error, mark firebase token as uploaded
+		notificationDao.replace(NotificationEntity(token = token, uploaded = true))
 	}
 
 	override suspend fun createInbox(publicKey: String): Resource<Unit> {
@@ -98,7 +121,7 @@ class ChatRepositoryImpl constructor(
 				},
 				mapper = { }
 			)
-		} ?: Resource.error(ErrorIdentification.MessageError(code = R.string.error_missing_firebase_token))
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
 	}
 
 	override suspend fun syncMessages(keyPair: KeyPair): Resource<Unit> {
@@ -154,32 +177,104 @@ class ChatRepositoryImpl constructor(
 		return Resource.success(Unit)
 	}
 
-	override suspend fun sendMessage(senderPublicKey: String, receiverPublicKey: String, message: String, messageType: String): Resource<Unit> = tryOnline(
-		request = {
-			chatApi.postInboxesMessages(
-				sendMessageRequest = SendMessageRequest(
-					senderPublicKey = senderPublicKey, receiverPublicKey = receiverPublicKey, message = message, messageType = messageType
+	override suspend fun sendMessage(senderPublicKey: String, receiverPublicKey: String, message: ChatMessage, messageType: String): Resource<Unit> {
+		//todo: should we add some `uploaded` flag?
+		chatMessageDao.insert(
+			message.toCache()
+		)
+		return tryOnline(
+			request = {
+				chatApi.postInboxesMessages(
+					sendMessageRequest = SendMessageRequest(
+						senderPublicKey = senderPublicKey, receiverPublicKey = receiverPublicKey, message = message.toNetwork(), messageType = messageType
+					)
 				)
-			)
-		},
-		mapper = { }
-	)
+			},
+			mapper = { }
+		)
+	}
 
 	override suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit> = tryOnline(
 		request = { chatApi.deleteInboxesMessages(publicKey) },
 		mapper = { }
 	)
 
-	override suspend fun loadMessages(userId: Long?): Resource<List<Any>> {
-		Timber.d("${encryptedPreferenceRepository.isUserVerified}") //does nothing, fixes detekt
-		//todo: return messages from DB
-		return Resource.success(
-			data = listOf<String>(
-				"Message one",
-				"Message two"
+	override suspend fun changeUserBlock(senderKeyPair: KeyPair, publicKeyToBlock: String, block: Boolean): Resource<Unit> {
+		if (!hasSignature(senderKeyPair.publicKey)) {
+			//refresh challenge
+			refreshChallenge(senderKeyPair)
+		}
+
+		val signatureNullable = getSignature(senderKeyPair.publicKey)
+		return signatureNullable?.let { signature ->
+			val blockResponse = tryOnline(
+				request = {
+					chatApi.putInboxesBlock(
+						BlockInboxRequest(
+							publicKey = senderKeyPair.publicKey,
+							publicKeyToBlock = publicKeyToBlock,
+							signature = signature,
+							block = block
+						)
+					)
+				},
+				mapper = { }
 			)
+			blockResponse
+			//todo: add correct text
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+	}
+
+	override suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit> {
+		return tryOnline(
+			request = {
+				chatApi.postInboxesApprovalRequest(
+					ApprovalRequest(
+						publicKey = publicKey,
+						message = message.toNetwork()
+					)
+				)
+			},
+			mapper = { }
 		)
 	}
+
+	override suspend fun confirmCommunicationRequest(
+		senderKeyPair: KeyPair, publicKeyToConfirm: String,
+		message: ChatMessage, approve: Boolean
+	): Resource<Unit> {
+		if (!hasSignature(senderKeyPair.publicKey)) {
+			//refresh challenge
+			refreshChallenge(senderKeyPair)
+		}
+
+		val signatureNullable = getSignature(senderKeyPair.publicKey)
+		return signatureNullable?.let { signature ->
+			val confirmResponse = tryOnline(
+				request = {
+					chatApi.postInboxesApprovalConfirm(
+						ApprovalConfirmRequest(
+							publicKey = senderKeyPair.publicKey,
+							publicKeyToConfirm = publicKeyToConfirm,
+							signature = signature,
+							message = message.toNetwork(),
+							approve = approve
+						)
+					)
+				},
+				mapper = { }
+			)
+
+			confirmResponse
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+	}
+
+	override suspend fun deleteInbox(publicKey: String): Resource<Unit> = tryOnline(
+		request = {
+			chatApi.deleteInboxes(publicKey = publicKey)
+		},
+		mapper = { }
+	)
 
 	override suspend fun loadChatUsers(): Resource<List<User>> {
 		return Resource.success(

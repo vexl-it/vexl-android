@@ -8,7 +8,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class NotificationEntity constructor(
 	@PrimaryKey val id: Long = NOTIFICATION_ID,
-	val token: String
+	val token: String,
+	val uploaded: Boolean
 ) {
 	companion object {
 		private const val NOTIFICATION_ID = 123L

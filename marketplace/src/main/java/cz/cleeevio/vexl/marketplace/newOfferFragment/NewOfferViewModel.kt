@@ -11,6 +11,7 @@ import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ import lightbase.core.baseClasses.BaseViewModel
 class NewOfferViewModel constructor(
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
+	private val chatRepository: ChatRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	private val locationHelper: LocationHelper
 ) : BaseViewModel() {
@@ -75,6 +77,14 @@ class NewOfferViewModel constructor(
 				}
 				is Status.Error -> {
 					_newOfferRequest.emit(Resource.error(response.errorIdentification))
+				}
+			}
+
+			val inboxResponse = chatRepository.createInbox(offerKeys.publicKey)
+			when (response.status) {
+				is Status.Error -> {
+					//do we need other flow for errors?
+					_newOfferRequest.emit(Resource.error(inboxResponse.errorIdentification))
 				}
 			}
 		}

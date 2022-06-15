@@ -34,6 +34,7 @@ val marketplaceModule = module {
 		NewOfferViewModel(
 			offerRepository = get(),
 			contactRepository = get(),
+			chatRepository = get(),
 			encryptedPreferenceRepository = get(),
 			locationHelper = get()
 		)

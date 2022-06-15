@@ -19,12 +19,25 @@ interface ChatRepository {
 
 	fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>>
 
-	suspend fun sendMessage(senderPublicKey: String, receiverPublicKey: String, message: String, messageType: String): Resource<Unit>
+	suspend fun sendMessage(
+		senderPublicKey: String, receiverPublicKey: String, message: ChatMessage,
+		messageType: String
+	): Resource<Unit>
 
-	//would flow be better?
-	suspend fun loadMessages(userId: Long?): Resource<List<Any>>
+	suspend fun changeUserBlock(senderKeyPair: KeyPair, publicKeyToBlock: String, block: Boolean): Resource<Unit>
 
+	suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit>
+
+	suspend fun confirmCommunicationRequest(
+		senderKeyPair: KeyPair, publicKeyToConfirm: String,
+		message: ChatMessage, approve: Boolean
+	): Resource<Unit>
+
+	suspend fun deleteInbox(publicKey: String): Resource<Unit>
+
+	//todo: dummy data, connect to DB
 	suspend fun loadChatUsers(): Resource<List<User>>
 
+	//todo: dummy data, connect to BE
 	suspend fun loadChatRequests(): Resource<List<User>>
 }
