@@ -10,7 +10,7 @@ class ChatViewModel constructor(
 ) : BaseViewModel() {
 
 	//todo: get correct keys (should be probably supplied by navArgs)
-	private val messages = chatRepository.getMessages(
+	val messages = chatRepository.getMessages(
 		inboxPublicKey = "xxx", senderPublicKeys = listOf("xxx", "yyy")
 	)
 
