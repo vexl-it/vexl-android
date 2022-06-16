@@ -34,7 +34,7 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		repeatScopeOnStart {
 			viewModel.offer.collect {
 				it?.let { offer ->
-					binding.offerWidget.bind(offer, null)
+					binding.offerWidget.bind(offer)
 				}
 			}
 		}

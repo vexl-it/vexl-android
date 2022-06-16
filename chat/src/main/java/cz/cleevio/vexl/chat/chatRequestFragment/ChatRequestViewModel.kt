@@ -2,7 +2,7 @@ package cz.cleevio.vexl.chat.chatRequestFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.network.data.Status
-import cz.cleevio.repository.model.user.User
+import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,7 +14,7 @@ class ChatRequestViewModel constructor(
 	private val chatRepository: ChatRepository,
 ) : BaseViewModel() {
 
-	private val _usersRequestingChat = MutableSharedFlow<List<User>>(replay = 1)
+	private val _usersRequestingChat = MutableSharedFlow<List<ChatMessage>>(replay = 1)
 	val usersRequestingChat = _usersRequestingChat.asSharedFlow()
 
 	init {

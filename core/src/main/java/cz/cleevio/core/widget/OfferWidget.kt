@@ -13,7 +13,7 @@ import java.math.BigDecimal
 
 class OfferWidget @JvmOverloads constructor(
 	context: Context,
-	attrs: AttributeSet? = null,
+	val attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
@@ -23,7 +23,7 @@ class OfferWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	fun bind(item: Offer, requestOffer: ((String) -> Unit)?) {
+	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null) {
 		binding.offerDescription.text = item.offerDescription
 		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
 		binding.priceCurrency.text = "Kč"
@@ -59,6 +59,29 @@ class OfferWidget @JvmOverloads constructor(
 
 	private fun setupUI() {
 		binding = WidgetOfferBinding.inflate(layoutInflater, this)
+
+		val widgetMode = getMode()
+		binding.userInformationGroup.isVisible = widgetMode == Mode.MARKETPLACE
+		if (widgetMode == Mode.CHAT) {
+			binding.offerWrapper.run {
+				setCardBackgroundColor(resources.getColor(R.color.gray_6, null))
+				cardElevation = 0.0f
+			}
+		}
+	}
+
+	private fun getMode(): Mode {
+		val a = context.theme.obtainStyledAttributes(
+			attrs,
+			R.styleable.OfferWidget,
+			0, 0
+		)
+		val value = a.getInt(R.styleable.OfferWidget_widget_mode, 0)
+		return Mode.values()[value]
+	}
+
+	enum class Mode {
+		MARKETPLACE, CHAT
 	}
 
 	companion object {

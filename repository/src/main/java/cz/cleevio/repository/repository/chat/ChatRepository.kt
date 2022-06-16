@@ -39,5 +39,5 @@ interface ChatRepository {
 	suspend fun loadChatUsers(): Resource<List<User>>
 
 	//todo: dummy data, connect to BE
-	suspend fun loadChatRequests(): Resource<List<User>>
+	suspend fun loadChatRequests(): Resource<List<ChatMessage>>
 }

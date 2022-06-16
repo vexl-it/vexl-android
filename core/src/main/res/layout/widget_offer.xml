@@ -8,6 +8,12 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="8dp">
 
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/user_information_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:constraint_referenced_ids="profile_image, user_name, user_type" />
+
 		<com.google.android.material.card.MaterialCardView
 			android:id="@+id/offer_wrapper"
 			style="@style/Widget.Vexl.CardView"
