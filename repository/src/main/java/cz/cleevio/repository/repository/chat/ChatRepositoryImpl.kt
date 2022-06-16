@@ -168,10 +168,11 @@ class ChatRepositoryImpl constructor(
 
 		//delete messages from BE
 		val deleteResponse = deleteMessagesFromBE(keyPair.publicKey)
-		if (deleteResponse.status is Status.Error) {
-			return Resource.error(deleteResponse.errorIdentification)
+		return if (deleteResponse.status is Status.Error) {
+			Resource.error(deleteResponse.errorIdentification)
+		} else {
+			Resource.success(Unit)
 		}
-		return Resource.success(Unit)
 	}
 
 	@Suppress("ReturnCount")
@@ -284,7 +285,8 @@ class ChatRepositoryImpl constructor(
 	override suspend fun loadCommunicationRequests(): List<CommunicationRequest> {
 		val result: MutableList<CommunicationRequest> = mutableListOf()
 		//get all communication requests
-		val communicationRequests = chatMessageDao.listAllMessagesByType(MessageType.COMMUNICATION_REQUEST.name).map { it.fromCache() }
+		val communicationRequests = chatMessageDao.listAllMessagesByType(MessageType.COMMUNICATION_REQUEST.name)
+			.map { it.fromCache() }
 
 		communicationRequests.forEach { message ->
 			//inboxPublicKey in communication requests should be always offer public key, because users react to offer
@@ -307,9 +309,7 @@ class ChatRepositoryImpl constructor(
 		return result.toList()
 	}
 
-
 	override suspend fun loadChatUsers(): List<ChatListUser> {
-
 		val result: MutableList<ChatListUser> = mutableListOf()
 		//go over all inboxes, find all messages, sort by time, take X latest?
 		val contactKeys = chatMessageDao.getAllContactKeys()
@@ -323,7 +323,8 @@ class ChatRepositoryImpl constructor(
 				).fromCache()
 
 				if (latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
-					//todo: check if we know user's identity. Maybe go over all messages from this user and look for type ANON_REQUEST_RESPONSE?
+					//todo: check if we know user's identity. Maybe go over all messages from this user
+					// and look for type ANON_REQUEST_RESPONSE?
 					result.add(
 						ChatListUser(message = latestMessage)
 					)
