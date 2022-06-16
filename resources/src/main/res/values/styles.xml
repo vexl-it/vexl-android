@@ -364,6 +364,10 @@
 		<item name="cardBackgroundColor">@color/white</item>
 	</style>
 
+	<style name="Widget.Vexl.ChatOfferCardView" parent="Widget.Vexl.CardView">
+		<item name="cardBackgroundColor">@color/gray_6</item>
+	</style>
+
 	<style name="Widget.Vexl.OfferCardView" parent="Widget.Vexl.CardView">
 		<item name="cornerFamily">rounded</item>
 		<item name="cornerSize">12dp</item>

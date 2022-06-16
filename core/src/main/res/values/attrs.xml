@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+	<declare-styleable name="OfferWidget">
+		<attr name="widget_mode" format="enum">
+			<enum name="marketplace" value="0" />
+			<enum name="chat" value="1" />
+		</attr>
+	</declare-styleable>
+
+</resources>

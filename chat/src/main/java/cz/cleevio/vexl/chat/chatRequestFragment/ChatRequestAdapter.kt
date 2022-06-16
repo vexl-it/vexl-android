@@ -27,8 +27,7 @@ class ChatRequestAdapter : ListAdapter<ChatMessage, ChatRequestAdapter.ViewHolde
 
 			//todo: we will also need message and offer
 			//fixme: debug data
-			var debugDescription = ""
-			repeat(4) { debugDescription = "$debugDescription Dlouhy text o offer na nekolik radku, abych videl vetsi card view" }
+			var debugDescription = "Nejaky popisek offeru"
 			val debugOffer = Offer(
 				id = 100,
 				offerId = "ab123",
@@ -48,6 +47,8 @@ class ChatRequestAdapter : ListAdapter<ChatMessage, ChatRequestAdapter.ViewHolde
 				createdAt = ZonedDateTime.now(),
 				modifiedAt = ZonedDateTime.now()
 			)
+			binding.userName.text = "Sakurote is buying"
+			binding.userType.text = "Friend of Friend"
 			binding.requestMessage.text = "Tohle je zprava od jineho uzivatele"
 			binding.offerWidget.bind(debugOffer)
 		}
