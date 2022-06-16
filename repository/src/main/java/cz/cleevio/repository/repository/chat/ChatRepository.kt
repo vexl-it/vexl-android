@@ -2,8 +2,9 @@ package cz.cleevio.repository.repository.chat
 
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.network.data.Resource
+import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.ChatMessage
-import cz.cleevio.repository.model.user.User
+import cz.cleevio.repository.model.chat.CommunicationRequest
 import kotlinx.coroutines.flow.SharedFlow
 
 interface ChatRepository {
@@ -35,9 +36,7 @@ interface ChatRepository {
 
 	suspend fun deleteInbox(publicKey: String): Resource<Unit>
 
-	//todo: dummy data, connect to DB
-	suspend fun loadChatUsers(): Resource<List<User>>
+	suspend fun loadCommunicationRequests(): List<CommunicationRequest>
 
-	//todo: dummy data, connect to BE
-	suspend fun loadChatRequests(): Resource<List<ChatMessage>>
+	suspend fun loadChatUsers(): List<ChatListUser>
 }

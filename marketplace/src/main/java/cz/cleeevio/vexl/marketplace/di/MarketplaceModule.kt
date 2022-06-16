@@ -42,7 +42,9 @@ val marketplaceModule = module {
 
 	viewModel {
 		RequestOfferViewModel(
-			offerRepository = get()
+			offerRepository = get(),
+			chatRepository = get(),
+			encryptedPreferenceRepository = get()
 		)
 	}
 

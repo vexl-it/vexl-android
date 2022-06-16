@@ -5,6 +5,7 @@ import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.dao.ChatMessageDao
 import cz.cleevio.cache.dao.MyOfferDao
 import cz.cleevio.cache.dao.NotificationDao
+import cz.cleevio.cache.dao.OfferDao
 import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ChatApi
@@ -15,7 +16,7 @@ import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.chat.*
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
-import cz.cleevio.repository.model.user.User
+import cz.cleevio.repository.model.offer.fromCache
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharedFlow
@@ -28,6 +29,7 @@ class ChatRepositoryImpl constructor(
 	private val notificationDao: NotificationDao,
 	private val chatMessageDao: ChatMessageDao,
 	private val myOfferDao: MyOfferDao,
+	private val offerDao: OfferDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : ChatRepository {
 
@@ -73,6 +75,17 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
+	private suspend fun getMyInboxKeys(): List<String> {
+		//get all offer inbox keys
+		val inboxKeys = myOfferDao.getAllOfferKeys().toMutableList()
+		//add users inbox
+		inboxKeys.add(
+			encryptedPreferenceRepository.userPublicKey
+		)
+
+		return inboxKeys.toList()
+	}
+
 	override fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>> =
 		chatMessageDao.listAllBySenders(inboxPublicKey = inboxPublicKey, senderPublicKeys = senderPublicKeys)
 			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
@@ -82,12 +95,8 @@ class ChatRepositoryImpl constructor(
 		//save token into DB on error
 		notificationDao.replace(NotificationEntity(token = token, uploaded = false))
 
-		//get all offer inbox keys
-		val inboxKeys = myOfferDao.getAllOfferKeys().toMutableList()
-		//add users inbox
-		inboxKeys.add(
-			encryptedPreferenceRepository.userPublicKey
-		)
+		val inboxKeys = getMyInboxKeys()
+
 		//update firebase token for each of them
 		//todo: ask BE for EP where we sent list of publicKeys
 		inboxKeys.forEach { inboxKey ->
@@ -272,52 +281,56 @@ class ChatRepositoryImpl constructor(
 		mapper = { }
 	)
 
-	override suspend fun loadChatUsers(): Resource<List<User>> {
-		return Resource.success(
-			listOf(
-				User(
-					id = 1,
-					extId = 10,
-					username = "Friend 1",
-					avatar = "url",
-					publicKey = "xxYY"
-				),
-				User(
-					id = 2,
-					extId = 11,
-					username = "Friend 2",
-					avatar = "url",
-					publicKey = "xxYY"
+	override suspend fun loadCommunicationRequests(): List<CommunicationRequest> {
+		val result: MutableList<CommunicationRequest> = mutableListOf()
+		//get all communication requests
+		val communicationRequests = chatMessageDao.listAllMessagesByType(MessageType.COMMUNICATION_REQUEST.name).map { it.fromCache() }
+
+		communicationRequests.forEach { message ->
+			//inboxPublicKey in communication requests should be always offer public key, because users react to offer
+			val offerPublicKey = message.inboxPublicKey
+			//find offerId by public key
+			val myOfferId = myOfferDao.getMyOfferByPublicKey(offerPublicKey)?.extId
+			myOfferId?.let { offerId ->
+				//find offer by offerId
+				val offerWithLocation = offerDao.getOfferById(offerId)
+				val offer = offerWithLocation.offer.fromCache(offerWithLocation.locations)
+				result.add(
+					CommunicationRequest(
+						message = message,
+						offer = offer
+					)
 				)
-			)
-		)
+			}
+		}
+
+		return result.toList()
 	}
 
-	override suspend fun loadChatRequests(): Resource<List<ChatMessage>> {
-		return Resource.success(
-			listOf(
-				ChatMessage(
-					uuid = "155",
-					inboxPublicKey = "100",
-					senderPublicKey = "100",
-					type = MessageType.COMMUNICATION_REQUEST,
-					time = System.currentTimeMillis()
-				),
-				ChatMessage(
-					uuid = "156",
-					inboxPublicKey = "101",
-					senderPublicKey = "101",
-					type = MessageType.COMMUNICATION_REQUEST,
-					time = System.currentTimeMillis()
-				),
-				ChatMessage(
-					uuid = "157",
-					inboxPublicKey = "102",
-					senderPublicKey = "102",
-					type = MessageType.COMMUNICATION_REQUEST,
-					time = System.currentTimeMillis()
-				),
-			)
-		)
+
+	override suspend fun loadChatUsers(): List<ChatListUser> {
+
+		val result: MutableList<ChatListUser> = mutableListOf()
+		//go over all inboxes, find all messages, sort by time, take X latest?
+		val contactKeys = chatMessageDao.getAllContactKeys()
+		//get keys to all of my inboxes
+		val inboxKeys = getMyInboxKeys()
+		inboxKeys.forEach { inboxKey ->
+			contactKeys.forEach { contactPublicKey ->
+				val latestMessage = chatMessageDao.getLatestBySenders(
+					inboxPublicKey = inboxKey,
+					senderPublicKeys = listOf(inboxKey, contactPublicKey)
+				).fromCache()
+
+				if (latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
+					//todo: check if we know user's identity. Maybe go over all messages from this user and look for type ANON_REQUEST_RESPONSE?
+					result.add(
+						ChatListUser(message = latestMessage)
+					)
+				}
+			}
+		}
+
+		return result.toList()
 	}
 }
