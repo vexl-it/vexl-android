@@ -49,6 +49,7 @@
     <string name="error_username_not_available">The username is unavailable</string>
     <string name="error_missing_offer_keys">You don\'t have keys for this offer</string>
     <string name="error_nickname_blank">Nickname is empty</string>
+    <string name="error_missing_firebase_token">Firebase token for Inbox is missing</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Change profile picture</string>

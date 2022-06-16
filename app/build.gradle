@@ -142,7 +142,6 @@ dependencies {
     implementation project(':cryptography')
     implementation project(':chat')
 
-    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'

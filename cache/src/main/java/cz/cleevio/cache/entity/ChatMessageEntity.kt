@@ -5,10 +5,18 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ChatMessageEntity(
+	//----- metadata -----
 	@PrimaryKey(autoGenerate = true)
-	val id: Long,
+	val id: Long = 0,
 	val extId: String,
-	val text: String,
+	val inboxPublicKey: String,
+	val senderPublicKey: String,
+
+	//------ data --------
+	val text: String?,
+	val image: String?,
 	val type: String,
-	val inboxId: Long
+	val time: Long,
+	val deAnonName: String?,
+	val deAnonImage: String?,
 )

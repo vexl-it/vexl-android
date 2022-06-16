@@ -52,6 +52,9 @@ val repoModule = module {
 	single<ChatRepository> {
 		ChatRepositoryImpl(
 			chatApi = get(),
+			notificationDao = get(),
+			chatMessageDao = get(),
+			myOfferDao = get(),
 			encryptedPreferenceRepository = get()
 		)
 	}
