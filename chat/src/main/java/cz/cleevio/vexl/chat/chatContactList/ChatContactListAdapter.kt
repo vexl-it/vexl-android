@@ -6,31 +6,31 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import cz.cleevio.repository.model.user.User
+import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatContactBinding
 
 class ChatContactListAdapter constructor(
-	val chatWithUser: (User) -> Unit
-) : ListAdapter<User, ChatContactListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<User>() {
-	override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.id == newItem.id
+	val chatWithUser: (ChatListUser) -> Unit
+) : ListAdapter<ChatListUser, ChatContactListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<ChatListUser>() {
+	override fun areItemsTheSame(oldItem: ChatListUser, newItem: ChatListUser): Boolean = oldItem.message.uuid == newItem.message.uuid
 
-	override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
+	override fun areContentsTheSame(oldItem: ChatListUser, newItem: ChatListUser): Boolean = oldItem == newItem
 }) {
 
 	inner class ViewHolder constructor(
 		private val binding: ItemChatContactBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: User) {
-			binding.chatContactIcon.load(item.avatar) {
+		fun bind(item: ChatListUser) {
+			binding.chatContactIcon.load(item.user?.avatar) {
 				crossfade(true)
 				fallback(R.drawable.ic_baseline_person_128)
 				error(R.drawable.ic_baseline_person_128)
 				placeholder(R.drawable.ic_baseline_person_128)
 			}
-			binding.chatContactName.text = item.username
-			binding.chatLastMessage.text = "There will be message later"    //todo: connect to Message Dao or something
+			binding.chatContactName.text = item.user?.username
+			binding.chatLastMessage.text = item.message.text
 
 			binding.container.setOnClickListener {
 				chatWithUser(item)

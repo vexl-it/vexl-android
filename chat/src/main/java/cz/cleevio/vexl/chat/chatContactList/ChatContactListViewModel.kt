@@ -1,8 +1,7 @@
 package cz.cleevio.vexl.chat.chatContactList
 
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.network.data.Status
-import cz.cleevio.repository.model.user.User
+import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,23 +13,17 @@ class ChatContactListViewModel constructor(
 	private val chatRepository: ChatRepository
 ) : BaseViewModel() {
 
-	private var usersChattedWithList: List<User> = emptyList()
+	private var usersChattedWithList: List<ChatListUser> = emptyList()
 	private var currentFilter = FilterType.ALL
 
-	private val _usersChattedWith = MutableStateFlow<List<User>>(emptyList())
+	private val _usersChattedWith = MutableStateFlow<List<ChatListUser>>(emptyList())
 	val usersChattedWith = _usersChattedWith.asStateFlow()
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			val response = chatRepository.loadChatUsers()
-			when (response.status) {
-				is Status.Success -> {
-					response.data?.let { data ->
-						usersChattedWithList = data
-						emitUsers()
-					}
-				}
-			}
+			val data = chatRepository.loadChatUsers()
+			usersChattedWithList = data
+			emitUsers()
 		}
 	}
 

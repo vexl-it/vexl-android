@@ -41,9 +41,10 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 		}
 
 		adapter = ChatContactListAdapter(
-			chatWithUser = { user ->
+			chatWithUser = { userWithMessage ->
 				findNavController().navigate(
-					ChatContactListFragmentDirections.proceedToChatFragment(user = user)
+					//todo: fix `!!`
+					ChatContactListFragmentDirections.proceedToChatFragment(user = userWithMessage.user!!)
 				)
 			}
 		)
