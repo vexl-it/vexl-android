@@ -99,12 +99,9 @@ class ChatRepositoryImpl constructor(
 				},
 				mapper = { it }
 			)
-			when (response.status) {
-				is Status.Error -> {
-					//exit on error
-					return
-				}
-				else -> {}
+			if (response.status is Status.Error) {
+				//exit on error
+				return
 			}
 		}
 
@@ -154,31 +151,25 @@ class ChatRepositoryImpl constructor(
 					)
 				}
 			)
-			when (messagesResponse.status) {
-				is Status.Error -> {
-					return Resource.error(messagesResponse.errorIdentification)
-				}
-				else -> {
-				}
+			if (messagesResponse.status is Status.Error) {
+				return Resource.error(messagesResponse.errorIdentification)
 			}
-
 			//todo: add correct text
 		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 
 		//delete messages from BE
 		val deleteResponse = deleteMessagesFromBE(keyPair.publicKey)
-		when (deleteResponse.status) {
-			is Status.Error -> {
-				return Resource.error(deleteResponse.errorIdentification)
-			}
-			else -> {
-			}
+		if (deleteResponse.status is Status.Error) {
+			return Resource.error(deleteResponse.errorIdentification)
 		}
-
 		return Resource.success(Unit)
 	}
 
-	override suspend fun sendMessage(senderPublicKey: String, receiverPublicKey: String, message: ChatMessage, messageType: String): Resource<Unit> {
+	@Suppress("ReturnCount")
+	override suspend fun sendMessage(
+		senderPublicKey: String, receiverPublicKey: String,
+		message: ChatMessage, messageType: String
+	): Resource<Unit> {
 		//todo: should we add some `uploaded` flag?
 		chatMessageDao.insert(
 			message.toCache()
@@ -187,7 +178,8 @@ class ChatRepositoryImpl constructor(
 			request = {
 				chatApi.postInboxesMessages(
 					sendMessageRequest = SendMessageRequest(
-						senderPublicKey = senderPublicKey, receiverPublicKey = receiverPublicKey, message = message.toNetwork(), messageType = messageType
+						senderPublicKey = senderPublicKey, receiverPublicKey = receiverPublicKey,
+						message = message.toNetwork(), messageType = messageType
 					)
 				)
 			},
@@ -200,7 +192,10 @@ class ChatRepositoryImpl constructor(
 		mapper = { }
 	)
 
-	override suspend fun changeUserBlock(senderKeyPair: KeyPair, publicKeyToBlock: String, block: Boolean): Resource<Unit> {
+	override suspend fun changeUserBlock(
+		senderKeyPair: KeyPair, publicKeyToBlock: String,
+		block: Boolean
+	): Resource<Unit> {
 		if (!hasSignature(senderKeyPair.publicKey)) {
 			//refresh challenge
 			refreshChallenge(senderKeyPair)

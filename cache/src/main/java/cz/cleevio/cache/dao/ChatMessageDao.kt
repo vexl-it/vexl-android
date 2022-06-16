@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	@Query(
-		"SELECT * FROM ChatMessageEntity WHERE inboxPublicKey LIKE :inboxPublicKey" +
+		"SELECT * FROM ChatMessageEntity WHERE inboxPublicKey == :inboxPublicKey" +
 			" AND senderPublicKey IN (:senderPublicKeys)  ORDER BY time"
 	)
 	fun listAllBySenders(inboxPublicKey: String, senderPublicKeys: List<String>): Flow<List<ChatMessageEntity>>

@@ -54,6 +54,7 @@ val repoModule = module {
 			chatApi = get(),
 			notificationDao = get(),
 			chatMessageDao = get(),
+			myOfferDao = get(),
 			encryptedPreferenceRepository = get()
 		)
 	}

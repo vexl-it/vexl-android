@@ -9,7 +9,10 @@ import com.google.firebase.messaging.RemoteMessage
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
 import cz.cleevio.repository.repository.chat.ChatRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import timber.log.Timber
@@ -39,11 +42,11 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
 		val pendingIntent = PendingIntent.getActivity(
 			applicationContext,
-			INTENT_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+			CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 		)
 
 		if (title != null && message != null) {
-			GlobalScope.launch(Dispatchers.IO) {
+			coroutineScope.launch {
 				showNotification(
 					createNotificationBuilder(
 						title = title,
@@ -89,7 +92,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		private const val NOTIFICATION_BODY = "body"
 
 		const val NOTIFICATION_TYPE_DEFAULT = "UNKNOWN"
-		private const val INTENT_CODE = 102487
+		private const val CODE = 102487
 	}
 }
 
