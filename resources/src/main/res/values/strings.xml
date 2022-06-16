@@ -156,6 +156,10 @@
     <string name="chat_filter_sellers">Sellers</string>
 
     <!-- Chat requests -->
+    <string name="chat_request_main_title">%s Requests</string>
+    <string name="chat_request_accept">Accept</string>
+    <string name="chat_request_decline">Decline</string>
+    <string name="chat_request_my_offer">My Offer</string>
 
     <!-- Chat messaging -->
 </resources>

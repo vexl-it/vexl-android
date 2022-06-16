@@ -38,6 +38,9 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.usersRequestingChat.collect { users ->
+
+				binding.title.text = resources.getString(R.string.chat_request_main_title, users.size)
+
 				//show stacked cards
 				//todo: we will also need message and offer
 				//fixme: debug data
