@@ -23,7 +23,7 @@ class OfferWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	fun bind(item: Offer, requestOffer: ((String) -> Unit)?) {
+	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null) {
 		binding.offerDescription.text = item.offerDescription
 		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
 		binding.priceCurrency.text = "Kč"

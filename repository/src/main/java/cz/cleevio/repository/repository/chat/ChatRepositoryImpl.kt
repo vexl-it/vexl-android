@@ -293,30 +293,30 @@ class ChatRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun loadChatRequests(): Resource<List<User>> {
+	override suspend fun loadChatRequests(): Resource<List<ChatMessage>> {
 		return Resource.success(
 			listOf(
-				User(
-					id = 155,
-					extId = 100,
-					username = "Unknown Friend 1",
-					avatar = "url",
-					publicKey = "xxYYzz"
+				ChatMessage(
+					uuid = "155",
+					inboxPublicKey = "100",
+					senderPublicKey = "100",
+					type = MessageType.COMMUNICATION_REQUEST,
+					time = System.currentTimeMillis()
 				),
-				User(
-					id = 156,
-					extId = 101,
-					username = "Unknown Friend 2",
-					avatar = "url",
-					publicKey = "xxY"
+				ChatMessage(
+					uuid = "156",
+					inboxPublicKey = "101",
+					senderPublicKey = "101",
+					type = MessageType.COMMUNICATION_REQUEST,
+					time = System.currentTimeMillis()
 				),
-				User(
-					id = 157,
-					extId = 102,
-					username = "Unknown Friend 3",
-					avatar = "url",
-					publicKey = "xxzz"
-				)
+				ChatMessage(
+					uuid = "157",
+					inboxPublicKey = "102",
+					senderPublicKey = "102",
+					type = MessageType.COMMUNICATION_REQUEST,
+					time = System.currentTimeMillis()
+				),
 			)
 		)
 	}

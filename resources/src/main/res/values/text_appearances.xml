@@ -373,6 +373,10 @@
 		<item name="android:letterSpacing">-0.01</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.SubScreenHeading" parent="TextAppearance.Vexl.MainScreenHeading">
+		<item name="android:textSize">28sp</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Marketplace.Filter.Title" parent="TextAppearance.Vexl.MainScreenHeading"></style>
 
 	<style name="TextAppearance.Vexl.Marketplace.Request.Title" parent="TextAppearance.Vexl.MainScreenHeading"></style>
@@ -480,6 +484,14 @@
 		<item name="android:letterSpacing">-0.02</item>
 		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
 		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Chat.RequestButton" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">20sp</item>
+		<item name="lineHeight">24.94sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_demi_bold</item>
+		<item name="fontFamily">@font/tt_satoshi_demi_bold</item>
+		<item name="android:letterSpacing">-0.02</item>
 	</style>
 
 </resources>

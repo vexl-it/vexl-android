@@ -12,7 +12,8 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textColor="@color/white"
-		app:layout_constraintEnd_toEndOf="parent"
+		android:layout_margin="24dp"
+		android:textAppearance="@style/TextAppearance.Vexl.SubScreenHeading"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="@string/chat_request_main_title" />
@@ -32,19 +33,32 @@
 		tools:itemCount="2"
 		tools:listitem="@layout/item_chat_request" />
 
-	<!--	<FrameLayout-->
-	<!--		android:id="@+id/request_wrapper"-->
-	<!--		android:layout_width="match_parent"-->
-	<!--		android:layout_height="wrap_content"-->
-	<!--		app:layout_constraintTop_toBottomOf="@id/title"-->
-	<!--		app:layout_constraintStart_toStartOf="parent"-->
-	<!--		app:layout_constraintEnd_toEndOf="parent">-->
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/decline_btn"
+		style="@style/Widget.Vexl.ChatRequestButton.Decline"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="4dp"
+		android:text="@string/chat_request_decline"
+		app:layout_constraintEnd_toStartOf="@id/accept_btn"
+		app:layout_constraintHorizontal_weight="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/requests_recycler_view" />
 
-	<!--		<cz.cleevio.vexl.chat.ui.RequestViewWidget-->
-	<!--			android:id="@+id/request_view"-->
-	<!--			android:layout_width="match_parent"-->
-	<!--			android:layout_height="wrap_content" />-->
-
-	<!--	</FrameLayout>-->
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/accept_btn"
+		style="@style/Widget.Vexl.ChatRequestButton.Accept"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="4dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
+		android:text="@string/chat_request_accept"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_weight="0.5"
+		app:layout_constraintStart_toEndOf="@id/decline_btn"
+		app:layout_constraintTop_toBottomOf="@id/requests_recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
