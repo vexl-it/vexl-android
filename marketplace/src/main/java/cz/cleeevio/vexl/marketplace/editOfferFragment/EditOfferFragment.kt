@@ -10,6 +10,7 @@ import cz.cleeevio.vexl.marketplace.databinding.FragmentEditOfferBinding
 import cz.cleevio.core.model.FeeValue
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.model.OfferType
+import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
@@ -129,7 +130,8 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 				paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
 				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
 				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
-				offerType = viewModel.offer.value!!.offerType
+				offerType = viewModel.offer.value!!.offerType,
+				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp()
 			)
 			viewModel.updateOffer(offerId = args.offerId, params = params)
 		}

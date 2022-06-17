@@ -4,7 +4,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class CreateOfferRequest constructor(
-	val offerPrivateList: List<CreateOfferPrivateRequest>
+	val offerPrivateList: List<CreateOfferPrivateRequest>,
+	val expiration: Long
 )
 
 @JsonClass(generateAdapter = true)

@@ -23,11 +23,12 @@ class OfferRepositoryImpl constructor(
 	private val transactionProvider: TransactionProvider
 ) : OfferRepository {
 
-	override suspend fun createOffer(offerList: List<NewOffer>): Resource<Offer> = tryOnline(
+	override suspend fun createOffer(offerList: List<NewOffer>, expiration: Long): Resource<Offer> = tryOnline(
 		request = {
 			offerApi.postOffers(
 				CreateOfferRequest(
-					offerPrivateList = offerList.map { it.toNetwork() }
+					offerPrivateList = offerList.map { it.toNetwork() },
+					expiration = expiration
 				)
 			)
 		},

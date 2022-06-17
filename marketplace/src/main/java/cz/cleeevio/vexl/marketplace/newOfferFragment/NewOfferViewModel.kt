@@ -61,7 +61,7 @@ class NewOfferViewModel constructor(
 			}
 
 			//send all in single request to BE
-			val response = offerRepository.createOffer(encryptedOfferList)
+			val response = offerRepository.createOffer(encryptedOfferList, params.expiration)
 			when (response.status) {
 				is Status.Success -> {
 					//save offer ID into DB, also save keys

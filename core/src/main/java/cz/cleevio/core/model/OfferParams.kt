@@ -11,5 +11,6 @@ data class OfferParams constructor(
 	val priceTrigger: PriceTriggerValue,
 	val btcNetwork: BtcNetworkValue,
 	val paymentMethod: PaymentMethodValue,
-	val offerType: String
+	val offerType: String,
+	val expiration: Long
 )
