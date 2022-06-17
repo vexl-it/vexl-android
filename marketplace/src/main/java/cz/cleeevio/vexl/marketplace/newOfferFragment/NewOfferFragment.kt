@@ -9,6 +9,7 @@ import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentNewOfferBinding
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.model.OfferType
+import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.network.data.Status
@@ -82,7 +83,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
 				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
 				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
-				offerType = args.offerType.name
+				offerType = args.offerType.name,
+				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp()
 			)
 			viewModel.createOffer(params)
 		}
