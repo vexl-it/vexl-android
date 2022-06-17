@@ -1,18 +1,25 @@
 package cz.cleeevio.vexl.marketplace.requestOfferFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
+import java.util.*
 
 
 class RequestOfferViewModel constructor(
-	private val offerRepository: OfferRepository
+	private val offerRepository: OfferRepository,
+	private val chatRepository: ChatRepository,
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : BaseViewModel() {
 
 	private val _isRequesting = MutableStateFlow<Boolean>(false)
@@ -28,7 +35,28 @@ class RequestOfferViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_isRequesting.emit(true)
 			//fake operation todo: connect to BE
-			delay(3000)
+			val response = chatRepository.askForCommunicationApproval(
+				publicKey = offerPublicKey,
+				message = ChatMessage(
+					uuid = UUID.randomUUID().toString(),
+					inboxPublicKey = offerPublicKey,
+					senderPublicKey = encryptedPreferenceRepository.userPublicKey,
+					text = text,
+					type = MessageType.COMMUNICATION_REQUEST,
+					time = System.currentTimeMillis()
+				)
+			)
+			when (response.status) {
+				is Status.Success -> {
+					//emit and go back to list of offers?
+				}
+				is Status.Error -> {
+					//any special handling?
+				}
+				else -> {
+					//nothing
+				}
+			}
 
 			_isRequesting.emit(false)
 		}

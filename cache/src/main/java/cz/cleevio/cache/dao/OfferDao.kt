@@ -26,6 +26,9 @@ interface OfferDao {
 	@Query("DELETE FROM OfferEntity")
 	suspend fun clearTable()
 
+	@Query("SELECT * FROM OfferEntity WHERE offerId == :offerId")
+	fun getOfferById(offerId: String): OfferWithLocations
+
 	@Transaction
 	suspend fun replaceAll(offers: List<OfferEntity>) {
 		clearTable()

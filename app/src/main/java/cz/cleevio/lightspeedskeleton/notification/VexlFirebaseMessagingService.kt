@@ -92,7 +92,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		private const val NOTIFICATION_BODY = "body"
 
 		const val NOTIFICATION_TYPE_DEFAULT = "UNKNOWN"
-		private const val CODE = 102487
+		private const val CODE = 102_487
 	}
 }
 

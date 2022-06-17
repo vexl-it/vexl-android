@@ -38,7 +38,7 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.usersRequestingChat.collect { messages ->
-				binding.title.text = resources.getString(R.string.chat_request_main_title, messages.size)
+				binding.title.text = resources.getString(R.string.chat_request_main_title, messages.size.toString())
 				adapter.submitList(messages)
 			}
 		}

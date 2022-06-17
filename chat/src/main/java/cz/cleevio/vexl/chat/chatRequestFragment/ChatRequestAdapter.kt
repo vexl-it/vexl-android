@@ -5,25 +5,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.model.offer.Location
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.chat.databinding.ItemChatRequestBinding
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 
-class ChatRequestAdapter : ListAdapter<ChatMessage, ChatRequestAdapter.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
-	override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.uuid == newItem.uuid
-	// TODO uuid???
+class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.ViewHolder>(
+	object : DiffUtil.ItemCallback<CommunicationRequest>() {
+		override fun areItemsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean = oldItem.message.uuid == newItem.message.uuid
 
-	override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem == newItem
-}) {
+		override fun areContentsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean = oldItem == newItem
+	}) {
 
 	inner class ViewHolder constructor(
 		private val binding: ItemChatRequestBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: ChatMessage) {
+		fun bind(item: CommunicationRequest) {
 
 			//todo: we will also need message and offer
 			//fixme: debug data
