@@ -133,6 +133,7 @@ class ChatRepositoryImpl constructor(
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
 	}
 
+	@Suppress("ReturnCount")
 	override suspend fun syncMessages(keyPair: KeyPair): Resource<Unit> {
 		//verify that you have valid challenge for this inbox
 		if (!hasSignature(keyPair.publicKey)) {
