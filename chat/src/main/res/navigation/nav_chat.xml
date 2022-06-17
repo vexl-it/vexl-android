@@ -40,8 +40,8 @@
 		tools:layout="@layout/fragment_chat">
 
 		<argument
-			android:name="user"
-			app:argType="cz.cleevio.repository.model.user.User" />
+			android:name="communicationRequest"
+			app:argType="cz.cleevio.repository.model.chat.CommunicationRequest" />
 
 	</fragment>
 

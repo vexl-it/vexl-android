@@ -10,7 +10,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	@Query(
 		"SELECT * FROM ChatMessageEntity WHERE inboxPublicKey == :inboxPublicKey" +
-			" AND senderPublicKey IN (:senderPublicKeys) ORDER BY time"
+			" AND senderPublicKey IN (:senderPublicKeys) AND recipientPublicKey IN (:senderPublicKeys) ORDER BY time"
 	)
 	fun listAllBySenders(inboxPublicKey: String, senderPublicKeys: List<String>): Flow<List<ChatMessageEntity>>
 
@@ -22,8 +22,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	//get all unique public keys of persons you have talked with
 	@Query(
-		"SELECT senderPublicKey FROM ChatMessageEntity WHERE senderPublicKey != inboxPublicKey" +
-			" GROUP BY senderPublicKey"
+		"SELECT DISTINCT senderPublicKey FROM ChatMessageEntity WHERE senderPublicKey != inboxPublicKey"
 	)
 	fun getAllContactKeys(): List<String>
 

@@ -1,12 +1,15 @@
 package cz.cleevio.repository.model.offer
 
+import android.os.Parcelable
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
+import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+@Parcelize
 data class Offer constructor(
 	val id: Long = 0,
 	val offerId: String,
@@ -29,7 +32,7 @@ data class Offer constructor(
 	val commonFriends: List<String>,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime
-)
+) : Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(

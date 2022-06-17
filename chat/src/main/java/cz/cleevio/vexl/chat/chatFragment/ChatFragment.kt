@@ -14,7 +14,7 @@ import org.koin.core.parameter.parametersOf
 class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	private val binding by viewBinding(FragmentChatBinding::bind)
-	override val viewModel by viewModel<ChatViewModel> { parametersOf(args.user) }
+	override val viewModel by viewModel<ChatViewModel> { parametersOf(args.communicationRequest) }
 
 	private val args by navArgs<ChatFragmentArgs>()
 
@@ -32,7 +32,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
 
-		binding.username.text = viewModel.user.username
+//		binding.username.text = viewModel.user.username
 	}
 
 }

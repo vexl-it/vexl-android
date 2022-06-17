@@ -24,6 +24,9 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 	@Query("SELECT publicKey, privateKey FROM MyOfferEntity")
 	suspend fun getAllOfferKeys(): List<MyOfferKeyPair>
 
+	@Query("SELECT publicKey, privateKey FROM MyOfferEntity where extId = :extId")
+	suspend fun getOfferKeysByExtId(extId: String): MyOfferKeyPair
+
 	@Query("SELECT COUNT(id) FROM MyOfferEntity where offerType  = :offerType")
 	suspend fun getMyOfferCount(offerType: String): Int
 }

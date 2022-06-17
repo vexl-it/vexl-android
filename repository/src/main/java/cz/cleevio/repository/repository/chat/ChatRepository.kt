@@ -32,7 +32,7 @@ interface ChatRepository {
 	suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit>
 
 	suspend fun confirmCommunicationRequest(
-		senderKeyPair: KeyPair, publicKeyToConfirm: String,
+		offerId: String, publicKeyToConfirm: String,
 		message: ChatMessage, approve: Boolean
 	): Resource<Unit>
 
@@ -41,4 +41,6 @@ interface ChatRepository {
 	suspend fun loadCommunicationRequests(): List<CommunicationRequest>
 
 	suspend fun loadChatUsers(): List<ChatListUser>
+
+	suspend fun deleteMessage(communicationRequest: CommunicationRequest)
 }

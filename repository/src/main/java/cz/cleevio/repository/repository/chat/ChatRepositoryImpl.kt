@@ -258,9 +258,6 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit> {
-		chatMessageDao.insert(
-			message.toCache()
-		)
 		return tryOnline(
 			request = {
 				chatApi.postInboxesApprovalRequest(
@@ -275,9 +272,16 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun confirmCommunicationRequest(
-		senderKeyPair: KeyPair, publicKeyToConfirm: String,
+		offerId: String, publicKeyToConfirm: String,
 		message: ChatMessage, approve: Boolean
 	): Resource<Unit> {
+
+		val myOfferKeyPair = myOfferDao.getOfferKeysByExtId(offerId)
+		val senderKeyPair = KeyPair(
+			privateKey = myOfferKeyPair.privateKey,
+			publicKey = myOfferKeyPair.publicKey
+		)
+
 		if (!hasSignature(senderKeyPair.publicKey)) {
 			//refresh challenge
 			refreshChallenge(senderKeyPair)
@@ -285,9 +289,6 @@ class ChatRepositoryImpl constructor(
 
 		val signatureNullable = getSignature(senderKeyPair.publicKey)
 		return signatureNullable?.let { signature ->
-			chatMessageDao.insert(
-				message.toCache()
-			)
 			val confirmResponse = tryOnline(
 				request = {
 					chatApi.postInboxesApprovalConfirm(
@@ -367,5 +368,9 @@ class ChatRepositoryImpl constructor(
 		}
 
 		return result.toList()
+	}
+
+	override suspend fun deleteMessage(communicationRequest: CommunicationRequest) {
+		chatMessageDao.delete(communicationRequest.message.toCache())
 	}
 }
