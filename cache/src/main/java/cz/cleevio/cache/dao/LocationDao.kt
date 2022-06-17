@@ -7,7 +7,10 @@ import androidx.room.Query
 import cz.cleevio.cache.entity.LocationEntity
 
 @Dao
-interface LocationDao {
+interface LocationDao : BaseDao<LocationEntity> {
+
+	@Query("SELECT * FROM LocationEntity")
+	suspend fun getAll(): List<LocationEntity>
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertLocations(locations: List<LocationEntity>)

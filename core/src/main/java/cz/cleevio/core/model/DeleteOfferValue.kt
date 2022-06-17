@@ -10,4 +10,4 @@ data class DeleteOfferValue(
 )
 
 //right now hardcoded 1 MONTH fixme: change to parse DeleteOfferValue
-fun DeleteOfferValue.toUnixTimestamp(): Long = System.currentTimeMillis().and(ONE_MONTH_IN_MS)
+fun DeleteOfferValue.toUnixTimestamp(): Long = System.currentTimeMillis() + ONE_MONTH_IN_MS

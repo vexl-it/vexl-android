@@ -77,7 +77,7 @@ class ChatRepositoryImpl constructor(
 
 	private suspend fun getMyInboxKeys(): List<String> {
 		//get all offer inbox keys
-		val inboxKeys = myOfferDao.getAllOfferKeys().toMutableList()
+		val inboxKeys = myOfferDao.getAllOfferPublicKeys().toMutableList()
 		//add users inbox
 		inboxKeys.add(
 			encryptedPreferenceRepository.userPublicKey
@@ -176,6 +176,31 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
+	override suspend fun syncAllMessages(): Resource<Unit> {
+		val keyPairList = mutableListOf(
+			KeyPair(
+				privateKey = encryptedPreferenceRepository.userPrivateKey,
+				publicKey = encryptedPreferenceRepository.userPublicKey
+			)
+		)
+
+		val keyPairs = myOfferDao.getAllOfferKeys()
+		keyPairList.addAll(
+			keyPairs.map {
+				KeyPair(
+					privateKey = it.privateKey,
+					publicKey = it.publicKey
+				)
+			}
+		)
+
+		keyPairList.forEach {
+			val result = syncMessages(it)
+		}
+
+		return Resource.success(Unit) // TODO think about the result status
+	}
+
 	@Suppress("ReturnCount")
 	override suspend fun sendMessage(
 		senderPublicKey: String, receiverPublicKey: String,
@@ -233,6 +258,9 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit> {
+		chatMessageDao.insert(
+			message.toCache()
+		)
 		return tryOnline(
 			request = {
 				chatApi.postInboxesApprovalRequest(
@@ -257,6 +285,9 @@ class ChatRepositoryImpl constructor(
 
 		val signatureNullable = getSignature(senderKeyPair.publicKey)
 		return signatureNullable?.let { signature ->
+			chatMessageDao.insert(
+				message.toCache()
+			)
 			val confirmResponse = tryOnline(
 				request = {
 					chatApi.postInboxesApprovalConfirm(
@@ -321,14 +352,16 @@ class ChatRepositoryImpl constructor(
 				val latestMessage = chatMessageDao.getLatestBySenders(
 					inboxPublicKey = inboxKey,
 					senderPublicKeys = listOf(inboxKey, contactPublicKey)
-				).fromCache()
+				)?.fromCache()
 
-				if (latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
-					//todo: check if we know user's identity. Maybe go over all messages from this user
-					// and look for type ANON_REQUEST_RESPONSE?
-					result.add(
-						ChatListUser(message = latestMessage)
-					)
+				latestMessage?.let {
+					if (latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
+						//todo: check if we know user's identity. Maybe go over all messages from this user
+						// and look for type ANON_REQUEST_RESPONSE?
+						result.add(
+							ChatListUser(message = latestMessage)
+						)
+					}
 				}
 			}
 		}

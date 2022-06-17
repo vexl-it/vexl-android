@@ -16,6 +16,8 @@ interface ChatRepository {
 
 	suspend fun syncMessages(keyPair: KeyPair): Resource<Unit>
 
+	suspend fun syncAllMessages(): Resource<Unit>
+
 	suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit>
 
 	fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>>

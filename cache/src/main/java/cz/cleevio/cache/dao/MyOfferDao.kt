@@ -3,6 +3,7 @@ package cz.cleevio.cache.dao
 import androidx.room.Dao
 import androidx.room.Query
 import cz.cleevio.cache.entity.MyOfferEntity
+import cz.cleevio.cache.entity.MyOfferKeyPair
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,7 +19,10 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 	suspend fun getMyOfferByPublicKey(publicKey: String): MyOfferEntity?
 
 	@Query("SELECT publicKey FROM MyOfferEntity")
-	suspend fun getAllOfferKeys(): List<String>
+	suspend fun getAllOfferPublicKeys(): List<String>
+
+	@Query("SELECT publicKey, privateKey FROM MyOfferEntity")
+	suspend fun getAllOfferKeys(): List<MyOfferKeyPair>
 
 	@Query("SELECT COUNT(id) FROM MyOfferEntity where offerType  = :offerType")
 	suspend fun getMyOfferCount(offerType: String): Int
