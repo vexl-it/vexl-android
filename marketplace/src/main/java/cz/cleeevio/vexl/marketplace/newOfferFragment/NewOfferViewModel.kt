@@ -73,18 +73,20 @@ class NewOfferViewModel constructor(
 							offerType = offer.offerType
 						)
 					}
-					_newOfferRequest.emit(response)
+
+					val inboxResponse = chatRepository.createInbox(offerKeys.publicKey)
+					when (response.status) {
+						is Status.Success -> {
+							_newOfferRequest.emit(response)
+						}
+						is Status.Error -> {
+							//do we need other flow for errors?
+							_newOfferRequest.emit(Resource.error(inboxResponse.errorIdentification))
+						}
+					}
 				}
 				is Status.Error -> {
 					_newOfferRequest.emit(Resource.error(response.errorIdentification))
-				}
-			}
-
-			val inboxResponse = chatRepository.createInbox(offerKeys.publicKey)
-			when (response.status) {
-				is Status.Error -> {
-					//do we need other flow for errors?
-					_newOfferRequest.emit(Resource.error(inboxResponse.errorIdentification))
 				}
 			}
 		}
