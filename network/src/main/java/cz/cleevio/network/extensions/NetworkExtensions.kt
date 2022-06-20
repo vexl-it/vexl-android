@@ -53,7 +53,7 @@ suspend fun <E, O> tryOnline(
 				//fixme: hack to prevent crash in case of missing response body
 			} catch (e: EOFException) {
 				//return some constant that means error, fixme: BE is supposed to check why there is no body
-				SUB_CODE_NO_BODY
+				null
 			}
 			val resource = Resource.error<O>(code = response.code(), subcode = subcode)
 			error = doOnError(response.code(), resource.errorIdentification.subcode) ?: resource.errorIdentification
