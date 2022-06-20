@@ -44,6 +44,10 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 				btcNetwork = listOf(),
 				friendLevel = "",
 				offerType = "BUY",
+				activePriceState = "PRICE_IS_ABOVE",
+				activePriceValue = BigDecimal(10000),
+				active = true,
+				commonFriends = listOf("XXX", "YYY"),
 				createdAt = ZonedDateTime.now(),
 				modifiedAt = ZonedDateTime.now()
 			)

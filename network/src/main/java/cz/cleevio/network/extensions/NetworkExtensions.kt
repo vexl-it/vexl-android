@@ -12,9 +12,12 @@ import org.koin.core.component.inject
 import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
+import java.io.EOFException
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+
+const val SUB_CODE_NO_BODY = -1
 
 suspend fun <E, O> tryOnline(
 	doOnSuccess: suspend ((O?) -> Unit) = {},
@@ -36,14 +39,21 @@ suspend fun <E, O> tryOnline(
 			doOnSuccess(mappedResponse.data)
 			mappedResponse
 		} else {
-			val subcode = response.errorBody()
-				?.source()
-				?.let {
-					BaseResponseJsonAdapter(
-						moshi = Moshi.Builder().build()
-					).fromJson(it)
-						?.code
-						?.toIntOrNull()
+			val subcode = try {
+				response.errorBody()
+					?.source()
+					?.let {
+						it
+						BaseResponseJsonAdapter(
+							moshi = Moshi.Builder().build()
+						).fromJson(it)
+							?.code
+							?.toIntOrNull()
+					}
+				//fixme: hack to prevent crash in case of missing response body
+			} catch (e: EOFException) {
+				//return some constant that means error, fixme: BE is supposed to check why there is no body
+				SUB_CODE_NO_BODY
 			}
 			val resource = Resource.error<O>(code = response.code(), subcode = subcode)
 			error = doOnError(response.code(), resource.errorIdentification.subcode) ?: resource.errorIdentification

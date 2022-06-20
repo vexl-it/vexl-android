@@ -21,6 +21,10 @@ data class OfferUnifiedResponse constructor(
 	val btcNetwork: List<EncryptedString>,
 	val friendLevel: EncryptedString,
 	val offerType: EncryptedString,
+	val activePriceState: EncryptedString,
+	val activePriceValue: EncryptedBigDecimal,
+	val active: EncryptedString,
+	val commonFriends: List<EncryptedString>,
 	val createdAt: String,
 	val modifiedAt: String
 )

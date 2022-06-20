@@ -23,6 +23,10 @@ data class Offer constructor(
 	val btcNetwork: List<String>,
 	val friendLevel: String,
 	val offerType: String,
+	val activePriceState: String,
+	val activePriceValue: BigDecimal,
+	val active: Boolean,
+	val commonFriends: List<String>,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime
 )
@@ -43,6 +47,10 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 		btcNetwork = this.btcNetwork.map { it.decryptedValue },
 		friendLevel = this.friendLevel.decryptedValue,
 		offerType = this.offerType.decryptedValue,
+		activePriceState = this.activePriceState.decryptedValue,
+		activePriceValue = this.activePriceValue.decryptedValue,
+		active = this.active.decryptedValue.toBoolean(),
+		commonFriends = this.commonFriends.map { it.decryptedValue },
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
 	)
@@ -65,6 +73,10 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 		btcNetwork = this.btcNetwork.split(",").map { it.trim() },
 		friendLevel = this.friendLevel,
 		offerType = this.offerType,
+		activePriceState = this.activePriceState,
+		activePriceValue = this.activePriceValue,
+		active = this.active,
+		commonFriends = this.commonFriends.split(",").map { it.trim() },
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt
 	)
@@ -86,6 +98,10 @@ fun Offer.toCache(): OfferEntity {
 		btcNetwork = this.btcNetwork.joinToString(),
 		friendLevel = this.friendLevel,
 		offerType = this.offerType,
+		activePriceState = this.activePriceState,
+		activePriceValue = this.activePriceValue,
+		active = this.active,
+		commonFriends = this.commonFriends.joinToString(),
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt
 	)

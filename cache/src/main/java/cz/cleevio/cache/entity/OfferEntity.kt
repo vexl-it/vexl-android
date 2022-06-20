@@ -24,6 +24,11 @@ data class OfferEntity(
 	val btcNetwork: String,
 	val friendLevel: String,
 	val offerType: String,
+	val activePriceState: String,
+	val activePriceValue: BigDecimal,
+	val active: Boolean,
+	//todo: not implemented yet
+	val commonFriends: String,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime
 )

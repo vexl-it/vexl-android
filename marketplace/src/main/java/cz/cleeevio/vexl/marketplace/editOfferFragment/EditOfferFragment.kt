@@ -131,7 +131,9 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
 				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
 				offerType = viewModel.offer.value!!.offerType,
-				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp()
+				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
+				//todo: how to pause offer? send with original data and just active = false?
+				active = true
 			)
 			viewModel.updateOffer(offerId = args.offerId, params = params)
 		}
