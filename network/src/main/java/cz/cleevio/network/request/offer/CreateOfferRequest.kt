@@ -22,5 +22,9 @@ data class CreateOfferPrivateRequest constructor(
 	val paymentMethod: List<String>,
 	val btcNetwork: List<String>,
 	val friendLevel: String,
-	val offerType: String
+	val offerType: String,
+	val activePriceState: String,
+	val activePriceValue: String,
+	val active: String,
+	val commonFriends: List<String>
 )

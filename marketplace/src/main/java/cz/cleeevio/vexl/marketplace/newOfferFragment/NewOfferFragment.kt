@@ -84,7 +84,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
 				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
 				offerType = args.offerType.name,
-				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp()
+				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
+				active = true
 			)
 			viewModel.createOffer(params)
 		}

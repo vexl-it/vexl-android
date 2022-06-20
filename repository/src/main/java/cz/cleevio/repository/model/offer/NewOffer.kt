@@ -16,7 +16,12 @@ data class NewOffer constructor(
 	val paymentMethod: List<String>,
 	val btcNetwork: List<String>,
 	val friendLevel: String,
-	val offerType: String
+	val offerType: String,
+	val activePriceState: String,
+	val activePriceValue: String,
+	val active: String,
+	//fixme: common friends will be implemented later
+	val commonFriends: List<String> = listOf(),
 )
 
 fun NewOffer.toNetwork(): CreateOfferPrivateRequest {
@@ -33,6 +38,10 @@ fun NewOffer.toNetwork(): CreateOfferPrivateRequest {
 		paymentMethod = this.paymentMethod,
 		btcNetwork = this.btcNetwork,
 		friendLevel = this.friendLevel,
-		offerType = this.offerType
+		offerType = this.offerType,
+		activePriceState = this.activePriceState,
+		activePriceValue = this.activePriceValue,
+		active = this.active,
+		commonFriends = this.commonFriends,
 	)
 }

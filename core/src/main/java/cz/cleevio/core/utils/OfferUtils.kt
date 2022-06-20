@@ -28,7 +28,10 @@ object OfferUtils {
 			paymentMethod = params.paymentMethod.value.map { eciesEncrypt(it.name, contactKey) },
 			btcNetwork = params.btcNetwork.value.map { eciesEncrypt(it.name, contactKey) },
 			friendLevel = eciesEncrypt(params.friendLevel.value.name, contactKey),
-			offerType = eciesEncrypt(params.offerType, contactKey)
+			offerType = eciesEncrypt(params.offerType, contactKey),
+			activePriceState = eciesEncrypt(params.priceTrigger.type.name, contactKey),
+			activePriceValue = eciesEncrypt(params.priceTrigger.value.toString(), contactKey),
+			active = eciesEncrypt(params.active.toString(), contactKey)
 		)
 	}
 
