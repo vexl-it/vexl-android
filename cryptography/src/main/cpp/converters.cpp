@@ -60,6 +60,9 @@ char *byteArrayToChar(JNIEnv *env, jbyteArray array, jint arrayLen) {
 }
 
 jbyteArray charToByteArray(JNIEnv *env, const char *str) {
+    if (str == NULL) {
+        return env->NewByteArray(0);
+    }
     jsize strLen = strlen(str);
     jbyteArray byteArray = env->NewByteArray(strLen);
     env->SetByteArrayRegion(byteArray, 0, strLen, reinterpret_cast<const jbyte *>(str));
