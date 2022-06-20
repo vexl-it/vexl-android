@@ -471,6 +471,10 @@
 		<item name="android:background">@color/gray_4</item>
 	</style>
 
+	<style name="Widget.Cleevio.Chat.MessagesHorizontalDivider" parent="Widget.Cleevio.Vexl.HorizontalDivider">
+		<item name="android:background">@color/white</item>
+	</style>
+
 	<style name="Widget.Cleevio.Filters.FilterVerticalDivider" parent="Widget.Cleevio.Vexl.VerticalDivider">
 		<item name="android:background">@color/gray_2</item>
 	</style>

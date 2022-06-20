@@ -21,6 +21,7 @@
 	<color name="edit_border">#AFAFAF</color>
 
 	<color name="black">#000000</color>
+	<color name="black_opacity_75">#BF000000</color>
 	<color name="white">#FFFFFF</color>
 	<color name="white_opacity_50">#80FFFFFF</color>
 	<color name="white_opacity_15">#26FFFFFF</color>
@@ -109,4 +110,6 @@
 	<color name="text_color_cryptocurrency_background">@color/green_1</color>
 
 	<color name="main_navbar_selected_color">#322916</color>
+
+	<color name="yellow_btn_chat_send">#F8C471</color>
 </resources>
