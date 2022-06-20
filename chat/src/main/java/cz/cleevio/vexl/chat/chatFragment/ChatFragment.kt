@@ -18,10 +18,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	private val args by navArgs<ChatFragmentArgs>()
 
+	lateinit var adapter: ChatMessagesAdapter
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
-				//todo: show messages in list
+				adapter.submitList(messages)
 			}
 		}
 	}
@@ -31,6 +33,9 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
+
+		adapter = ChatMessagesAdapter()
+		binding.chatRv.adapter = adapter
 
 //		binding.username.text = viewModel.user.username
 	}
