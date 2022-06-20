@@ -499,6 +499,18 @@
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmallBold</item>
 	</style>
 
+	<style name="Widget.Vexl.Chat.ActionButton" parent="">
+		<item name="android:layout_height">38dp</item>
+		<item name="android:drawablePadding">7.5dp</item>
+		<item name="android:layout_marginStart">9dp</item>
+		<item name="android:layout_marginEnd">9dp</item>
+		<item name="android:paddingStart">12dp</item>
+		<item name="android:paddingEnd">11dp</item>
+		<item name="android:background">@drawable/background_button_chat_action</item>
+		<item name="android:textColor">@color/gray_4</item>
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.ActionButton</item>
+	</style>
+
 	<style name="Widget.Cleevio.Marketplace.BottomNavigation" parent="">
 		<item name="android:layout_marginStart">18dp</item>
 		<item name="android:layout_marginEnd">18dp</item>

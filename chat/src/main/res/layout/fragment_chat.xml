@@ -41,12 +41,89 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/username" />
 
+	<HorizontalScrollView
+		android:id="@+id/buttons_scroll"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="12dp"
+		android:layout_marginBottom="12dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/header_divider">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/reveal_identity_btn"
+				style="@style/Widget.Vexl.Chat.ActionButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/ic_eye_open"
+				android:text="@string/chat_btns_reveal_identity"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/my_offer_btn"
+				style="@style/Widget.Vexl.Chat.ActionButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/ic_my_offer"
+				android:text="@string/chat_btns_my_offer"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toEndOf="@id/reveal_identity_btn"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/common_friends_btn"
+				style="@style/Widget.Vexl.Chat.ActionButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/ic_common_friends"
+				android:text="@string/chat_btns_common_friends"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toEndOf="@id/my_offer_btn"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/delete_chat_btn"
+				style="@style/Widget.Vexl.Chat.ActionButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/ic_warning"
+				android:text="@string/chat_btns_delete_chat"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toEndOf="@id/common_friends_btn"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/block_user_btn"
+				style="@style/Widget.Vexl.Chat.ActionButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/ic_block"
+				android:text="@string/chat_btns_block_user"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toEndOf="@id/delete_chat_btn"
+				app:layout_constraintTop_toTopOf="parent" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</HorizontalScrollView>
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/chat_rv"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		app:layout_constraintTop_toBottomOf="@+id/header_divider"
-		app:layout_constraintVertical_weight="1" />
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/buttons_scroll"
+		app:layout_constraintVertical_weight="1"
+		tools:itemCount="15"
+		tools:listitem="@layout/item_chat_message" />
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
