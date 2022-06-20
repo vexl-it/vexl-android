@@ -43,7 +43,6 @@ suspend fun <E, O> tryOnline(
 				response.errorBody()
 					?.source()
 					?.let {
-						it
 						BaseResponseJsonAdapter(
 							moshi = Moshi.Builder().build()
 						).fromJson(it)
