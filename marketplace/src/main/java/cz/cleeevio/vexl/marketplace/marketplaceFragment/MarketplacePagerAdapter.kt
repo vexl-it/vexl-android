@@ -11,6 +11,7 @@ class MarketplacePagerAdapter constructor(
 	fragment: Fragment,
 	private val navigateToFilters: (OfferType) -> (Unit),
 	private val navigateToNewOffer: (OfferType) -> (Unit),
+	private val navigateToMyOffers: (OfferType) -> (Unit),
 	private val requestOffer: (String) -> (Unit)
 ) : FragmentStateAdapter(fragment) {
 
@@ -21,11 +22,11 @@ class MarketplacePagerAdapter constructor(
 	override fun createFragment(position: Int): Fragment {
 		return when (position) {
 			0 -> {
-				OffersBuyFragment(navigateToFilters, navigateToNewOffer, requestOffer)
+				OffersBuyFragment(navigateToFilters, navigateToNewOffer, navigateToMyOffers, requestOffer)
 			}
 
 			1 -> {
-				OffersSellFragment(navigateToFilters, navigateToNewOffer, requestOffer)
+				OffersSellFragment(navigateToFilters, navigateToNewOffer, navigateToMyOffers, requestOffer)
 			}
 
 			else -> {

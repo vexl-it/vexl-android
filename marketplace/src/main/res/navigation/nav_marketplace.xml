@@ -20,6 +20,10 @@
 			app:destination="@id/newOfferFragment" />
 
 		<action
+			android:id="@+id/proceed_to_myOffersFragment"
+			app:destination="@id/myOffersFragment" />
+
+		<action
 			android:id="@+id/proceed_to_requestOfferFragment"
 			app:destination="@id/requestOfferFragment" />
 
@@ -41,6 +45,18 @@
 		android:id="@+id/newOfferFragment"
 		android:name="cz.cleeevio.vexl.marketplace.newOfferFragment.NewOfferFragment"
 		android:label="NewOfferFragment"
+		tools:layout="@layout/fragment_new_offer">
+
+		<argument
+			android:name="offerType"
+			app:argType="cz.cleevio.core.model.OfferType" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/myOffersFragment"
+		android:name="cz.cleeevio.vexl.marketplace.myOffersFragment.MyOffersFragment"
+		android:label="MyOffersFragment"
 		tools:layout="@layout/fragment_new_offer">
 
 		<argument
