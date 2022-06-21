@@ -46,7 +46,9 @@ class ContactsListViewModel constructor(
 
 			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
 				notSyncedContactsList = localContacts.filter { contact ->
-					notSyncedPhoneNumbers.contains(contact.phoneNumber)
+					notSyncedPhoneNumbers.contains(
+						HmacCryptoLib.digest(HMAC_PRIVATE_KEY, contact.phoneNumber)
+					)
 				}
 				emitContacts(notSyncedContactsList)
 			}
