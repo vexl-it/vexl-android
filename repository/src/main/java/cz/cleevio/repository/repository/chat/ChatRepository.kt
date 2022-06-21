@@ -16,6 +16,8 @@ interface ChatRepository {
 
 	suspend fun syncMessages(keyPair: KeyPair): Resource<Unit>
 
+	suspend fun syncAllMessages(): Resource<Unit>
+
 	suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit>
 
 	fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>>
@@ -30,7 +32,7 @@ interface ChatRepository {
 	suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit>
 
 	suspend fun confirmCommunicationRequest(
-		senderKeyPair: KeyPair, publicKeyToConfirm: String,
+		offerId: String, publicKeyToConfirm: String,
 		message: ChatMessage, approve: Boolean
 	): Resource<Unit>
 
@@ -39,4 +41,6 @@ interface ChatRepository {
 	suspend fun loadCommunicationRequests(): List<CommunicationRequest>
 
 	suspend fun loadChatUsers(): List<ChatListUser>
+
+	suspend fun deleteMessage(communicationRequest: CommunicationRequest)
 }

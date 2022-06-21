@@ -74,8 +74,8 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 				}
 			} else {
 				viewModel.sendRequest(
-					text = offerPublicKey,
-					offerPublicKey = messageText
+					text = messageText,
+					offerPublicKey = offerPublicKey
 				)
 			}
 		}

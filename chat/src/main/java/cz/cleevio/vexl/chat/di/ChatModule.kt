@@ -1,6 +1,6 @@
 package cz.cleevio.vexl.chat.di
 
-import cz.cleevio.repository.model.user.User
+import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.chatContactList.ChatContactListViewModel
 import cz.cleevio.vexl.chat.chatFragment.ChatViewModel
 import cz.cleevio.vexl.chat.chatRequestFragment.ChatRequestViewModel
@@ -16,9 +16,9 @@ val chatModule = module {
 		)
 	}
 
-	viewModel { (user: User) ->
+	viewModel { (communicationRequest: CommunicationRequest) ->
 		ChatViewModel(
-			user = user,
+			communicationRequest = communicationRequest,
 			chatRepository = get()
 		)
 	}

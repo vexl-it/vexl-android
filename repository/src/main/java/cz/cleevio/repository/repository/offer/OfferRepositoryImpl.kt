@@ -121,6 +121,7 @@ class OfferRepositoryImpl constructor(
 	private suspend fun overwriteOffers(offers: List<Offer>) {
 		transactionProvider.runAsTransaction {
 			locationDao.clearTable()
+			offerDao.clearTable()
 			offers.forEach { offer ->
 				val offerId = offerDao.insertOffer(offer.toCache())
 				locationDao.insertLocations(offer.location.map {

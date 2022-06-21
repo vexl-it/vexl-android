@@ -19,6 +19,10 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 		override fun areContentsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean = oldItem == newItem
 	}) {
 
+	fun getItemAtIndex(index: Int): CommunicationRequest {
+		return getItem(index)
+	}
+
 	inner class ViewHolder constructor(
 		private val binding: ItemChatRequestBinding
 	) : RecyclerView.ViewHolder(binding.root) {

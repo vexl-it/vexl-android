@@ -5,15 +5,21 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentMarketplaceBinding
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
+import cz.cleevio.repository.repository.chat.ChatRepository
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 
+
+	private val chatRepository: ChatRepository by inject()
+	private val encryptedPreference: EncryptedPreferenceRepository by inject()
 
 	private val binding by viewBinding(FragmentMarketplaceBinding::bind)
 	override val viewModel by viewModel<CurrencyPriceChartViewModel>()
@@ -65,6 +71,10 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 		}.attach()
 
 		marketplaceViewModel.syncOffers()
+
+		repeatScopeOnStart {
+			chatRepository.syncAllMessages()
+		}
 	}
 
 }

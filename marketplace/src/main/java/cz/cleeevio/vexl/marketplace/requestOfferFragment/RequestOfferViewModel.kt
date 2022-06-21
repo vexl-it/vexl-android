@@ -41,6 +41,7 @@ class RequestOfferViewModel constructor(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = offerPublicKey,
 					senderPublicKey = encryptedPreferenceRepository.userPublicKey,
+					recipientPublicKey = offerPublicKey,
 					text = text,
 					type = MessageType.COMMUNICATION_REQUEST,
 					time = System.currentTimeMillis()

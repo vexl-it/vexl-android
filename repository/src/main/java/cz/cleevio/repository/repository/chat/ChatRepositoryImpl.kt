@@ -77,7 +77,7 @@ class ChatRepositoryImpl constructor(
 
 	private suspend fun getMyInboxKeys(): List<String> {
 		//get all offer inbox keys
-		val inboxKeys = myOfferDao.getAllOfferKeys().toMutableList()
+		val inboxKeys = myOfferDao.getAllOfferPublicKeys().toMutableList()
 		//add users inbox
 		inboxKeys.add(
 			encryptedPreferenceRepository.userPublicKey
@@ -176,6 +176,31 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
+	override suspend fun syncAllMessages(): Resource<Unit> {
+		val keyPairList = mutableListOf(
+			KeyPair(
+				privateKey = encryptedPreferenceRepository.userPrivateKey,
+				publicKey = encryptedPreferenceRepository.userPublicKey
+			)
+		)
+
+		val keyPairs = myOfferDao.getAllOfferKeys()
+		keyPairList.addAll(
+			keyPairs.map {
+				KeyPair(
+					privateKey = it.privateKey,
+					publicKey = it.publicKey
+				)
+			}
+		)
+
+		keyPairList.forEach {
+			val result = syncMessages(it)
+		}
+
+		return Resource.success(Unit) // TODO think about the result status
+	}
+
 	@Suppress("ReturnCount")
 	override suspend fun sendMessage(
 		senderPublicKey: String, receiverPublicKey: String,
@@ -247,9 +272,15 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun confirmCommunicationRequest(
-		senderKeyPair: KeyPair, publicKeyToConfirm: String,
+		offerId: String, publicKeyToConfirm: String,
 		message: ChatMessage, approve: Boolean
 	): Resource<Unit> {
+		val myOfferKeyPair = myOfferDao.getOfferKeysByExtId(offerId)
+		val senderKeyPair = KeyPair(
+			privateKey = myOfferKeyPair.privateKey,
+			publicKey = myOfferKeyPair.publicKey
+		)
+
 		if (!hasSignature(senderKeyPair.publicKey)) {
 			//refresh challenge
 			refreshChallenge(senderKeyPair)
@@ -321,9 +352,9 @@ class ChatRepositoryImpl constructor(
 				val latestMessage = chatMessageDao.getLatestBySenders(
 					inboxPublicKey = inboxKey,
 					senderPublicKeys = listOf(inboxKey, contactPublicKey)
-				).fromCache()
+				)?.fromCache()
 
-				if (latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
+				if (latestMessage != null && latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
 					//todo: check if we know user's identity. Maybe go over all messages from this user
 					// and look for type ANON_REQUEST_RESPONSE?
 					result.add(
@@ -334,5 +365,9 @@ class ChatRepositoryImpl constructor(
 		}
 
 		return result.toList()
+	}
+
+	override suspend fun deleteMessage(communicationRequest: CommunicationRequest) {
+		chatMessageDao.delete(communicationRequest.message.toCache())
 	}
 }

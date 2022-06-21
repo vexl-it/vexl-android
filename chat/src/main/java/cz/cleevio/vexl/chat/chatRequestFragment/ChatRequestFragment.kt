@@ -2,10 +2,12 @@ package cz.cleevio.vexl.chat.chatRequestFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.repository.model.user.User
+import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatRequestBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -19,27 +21,22 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 
 	lateinit var adapter: ChatRequestAdapter
 
-	private val onAccept: (User) -> Unit = { user ->
-		//move to chat
-		findNavController().navigate(
-			ChatRequestFragmentDirections.proceedToChatFragment(user)
-		)
-	}
-	private val onBlock: (User) -> Unit = {
-		//#TODO
-		//mark user as blocked?
-
-		//reload users?
-
-		//and show next?
-
-	}
-
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.usersRequestingChat.collect { messages ->
 				binding.title.text = resources.getString(R.string.chat_request_main_title, messages.size.toString())
 				adapter.submitList(messages)
+			}
+		}
+		repeatScopeOnStart {
+			viewModel.communicationRequestResponse.collect { pair ->
+				when (pair.second.status) {
+					is Status.Success -> {
+						findNavController().navigate(
+							ChatRequestFragmentDirections.proceedToChatFragment(pair.first)
+						)
+					}
+				}
 			}
 		}
 	}
@@ -55,11 +52,17 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 		}
 
 		binding.acceptBtn.setOnClickListener {
-			// TODO
+			val currentRequest = getCurrentChatRequest()
+			viewModel.acceptCommunicationRequest(currentRequest)
 		}
 
 		binding.declineBtn.setOnClickListener {
 			// TODO
 		}
+	}
+
+	private fun getCurrentChatRequest(): CommunicationRequest {
+		val currentIndex = (binding.requestsRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+		return adapter.getItemAtIndex(currentIndex)
 	}
 }

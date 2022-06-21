@@ -11,6 +11,7 @@ data class ChatMessageEntity(
 	val extId: String,
 	val inboxPublicKey: String,
 	val senderPublicKey: String,
+	val recipientPublicKey: String,
 
 	//------ data --------
 	val text: String?,
