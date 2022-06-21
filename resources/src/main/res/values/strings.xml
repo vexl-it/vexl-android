@@ -97,6 +97,9 @@
     <string name="offer_create_buy_title">New Buy Offer</string>
     <string name="offer_to_sell">to sell</string>
     <string name="offer_to_buy">to buy</string>
+    <string name="offer_my_offer">My offer</string>
+    <string name="offer_edit">Edit offer</string>
+    <string name="offer_added">Added %s</string>
 
     <!-- Filters -->
     <string name="filter_title">Filter</string>
@@ -162,4 +165,10 @@
     <string name="chat_request_my_offer">My Offer</string>
 
     <!-- Chat messaging -->
+    <string name="chat_btns_reveal_identity">Reveal Identity</string>
+    <string name="chat_btns_my_offer">My Offer</string>
+    <string name="chat_btns_common_friends">Common Friends</string>
+    <string name="chat_btns_delete_chat">Delete Chat</string>
+    <string name="chat_btns_block_user">Block User</string>
+    <string name="chat_message_input_placeholder">Type something</string>
 </resources>

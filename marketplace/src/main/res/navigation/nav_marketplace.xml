@@ -63,6 +63,20 @@
 			android:name="offerType"
 			app:argType="cz.cleevio.core.model.OfferType" />
 
+		<action
+			android:id="@+id/proceed_to_editOfferFragment"
+			app:destination="@id/editOfferFragment">
+
+			<argument
+				android:name="offer_id"
+				app:argType="string" />
+
+		</action>
+
+		<action
+			android:id="@+id/proceed_to_newOfferFragment"
+			app:destination="@id/newOfferFragment" />
+
 	</fragment>
 
 	<fragment

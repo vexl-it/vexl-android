@@ -12,6 +12,9 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 	@Query("SELECT * FROM MyOfferEntity")
 	fun listAllFlow(): Flow<List<MyOfferEntity>>
 
+	@Query("SELECT * FROM MyOfferEntity")
+	suspend fun listAll(): List<MyOfferEntity>
+
 	@Query("SELECT * FROM MyOfferEntity where extId = :offerId LIMIT 1")
 	suspend fun getMyOfferById(offerId: String): MyOfferEntity?
 

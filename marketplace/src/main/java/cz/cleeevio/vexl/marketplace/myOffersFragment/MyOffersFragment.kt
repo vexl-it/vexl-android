@@ -1,12 +1,15 @@
 package cz.cleeevio.vexl.marketplace.myOffersFragment
 
+import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentMyOffersBinding
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.offers.OffersAdapter
 import cz.cleevio.core.model.OfferType
+import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.widget.OfferWidget
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,12 +22,16 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 	private val args by navArgs<MyOffersFragmentArgs>()
 
 	lateinit var adapter: OffersAdapter
-	val onInteractWithOffer: (String) -> Unit = {
-		//find directions, go to...
+	private val onInteractWithOffer: (String) -> Unit = { offerId ->
+		MyOffersFragmentDirections.proceedToEditOfferFragment(offerId)
 	}
 
 	override fun bindObservers() {
-
+		repeatScopeOnStart {
+			viewModel.offers.collect { offers ->
+				adapter.submitList(offers)
+			}
+		}
 	}
 
 	override fun initView() {
@@ -35,8 +42,8 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 			)
 		}
 
-		adapter = OffersAdapter(onInteractWithOffer)
-		binding.offerList.adapter = adapter
+		adapter = OffersAdapter(onInteractWithOffer, OfferWidget.Mode.MY_OFFER)
+		binding.myOffersList.adapter = adapter
 
 		binding.newOfferTitle.setTypeAndTitle(
 			when (args.offerType) {

@@ -23,7 +23,7 @@ class OfferWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null) {
+	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null) {
 		binding.offerDescription.text = item.offerDescription
 		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
 		binding.priceCurrency.text = "Kč"
@@ -32,17 +32,33 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			resources.getString(R.string.offer_to_buy)
 		}
-		binding.userName.text = if (item.offerType == "SELL") {
-			resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
-		} else {
-			resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
+		binding.userName.text = when (mode) {
+			Mode.MY_OFFER -> {
+				context.getString(R.string.offer_my_offer)
+			}
+			else -> {
+				if (item.offerType == "SELL") {
+					resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
+				} else {
+					resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
+				}
+			}
 		}
+
 		// TODO convert to readable format
 		binding.location.text = "${item.location.first().latitude},\n${item.location.first().longitude}"
-		binding.userType.text = if (item.friendLevel == "FIRST") {
-			resources.getString(R.string.marketplace_detail_friend_first)
-		} else {
-			resources.getString(R.string.marketplace_detail_friend_second)
+
+		binding.userType.text = when (mode) {
+			Mode.MY_OFFER -> {
+				context.getString(R.string.offer_added, item.createdAt.toString())
+			}
+			else -> {
+				if (item.friendLevel == "FIRST") {
+					resources.getString(R.string.marketplace_detail_friend_first)
+				} else {
+					resources.getString(R.string.marketplace_detail_friend_second)
+				}
+			}
 		}
 
 		binding.feeDescription.isVisible = item.feeState == "WITH_FEE"
@@ -51,6 +67,15 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.paymentMethodIcons.bind(item.paymentMethod)
 
+		binding.requestBtn.text = when (mode) {
+			Mode.MY_OFFER -> {
+				context.getString(R.string.offer_edit)
+			}
+			else -> {
+				context.getString(R.string.offer_request)
+			}
+		}
+		//todo: restyle button for `Edit offer`
 		binding.requestBtn.isVisible = requestOffer != null
 		binding.requestBtn.setOnClickListener {
 			requestOffer?.invoke(item.offerId)
@@ -81,7 +106,7 @@ class OfferWidget @JvmOverloads constructor(
 	}
 
 	enum class Mode {
-		MARKETPLACE, CHAT
+		MARKETPLACE, CHAT, MY_OFFER
 	}
 
 	companion object {

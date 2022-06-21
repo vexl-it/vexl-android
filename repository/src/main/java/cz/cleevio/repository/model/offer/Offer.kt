@@ -1,6 +1,7 @@
 package cz.cleevio.repository.model.offer
 
 import android.os.Parcelable
+import android.os.Parcelable
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
@@ -31,8 +32,10 @@ data class Offer constructor(
 	val active: Boolean,
 	val commonFriends: List<String>,
 	val createdAt: ZonedDateTime,
-	val modifiedAt: ZonedDateTime
-) : Parcelable
+	val modifiedAt: ZonedDateTime,
+	//custom flags
+	var isMine: Boolean = false
+): Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
@@ -81,7 +84,8 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 		active = this.active,
 		commonFriends = this.commonFriends.split(",").map { it.trim() },
 		createdAt = this.createdAt,
-		modifiedAt = this.modifiedAt
+		modifiedAt = this.modifiedAt,
+		isMine = this.isMine
 	)
 }
 
@@ -106,6 +110,7 @@ fun Offer.toCache(): OfferEntity {
 		active = this.active,
 		commonFriends = this.commonFriends.joinToString(),
 		createdAt = this.createdAt,
-		modifiedAt = this.modifiedAt
+		modifiedAt = this.modifiedAt,
+		isMine = this.isMine
 	)
 }

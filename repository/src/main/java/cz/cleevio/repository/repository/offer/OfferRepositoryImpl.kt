@@ -119,10 +119,12 @@ class OfferRepositoryImpl constructor(
 		myOfferDao.getMyOfferCount(offerType)
 
 	private suspend fun overwriteOffers(offers: List<Offer>) {
+		val myOfferIds = myOfferDao.listAll().map { it.extId }
 		transactionProvider.runAsTransaction {
 			locationDao.clearTable()
 			offerDao.clearTable()
 			offers.forEach { offer ->
+				offer.isMine = myOfferIds.contains(offer.offerId)
 				val offerId = offerDao.insertOffer(offer.toCache())
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)

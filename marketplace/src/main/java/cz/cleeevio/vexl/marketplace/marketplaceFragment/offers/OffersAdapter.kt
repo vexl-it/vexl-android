@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cz.cleeevio.vexl.marketplace.databinding.ItemOfferBinding
+import cz.cleevio.core.widget.OfferWidget
 import cz.cleevio.repository.model.offer.Offer
 
 class OffersAdapter constructor(
-	val requestOffer: (String) -> Unit
+	val requestOffer: (String) -> Unit,
+	val offerMode: OfferWidget.Mode = OfferWidget.Mode.MARKETPLACE
 ) : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Offer>() {
 	override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem.offerId == newItem.offerId
 
@@ -21,7 +23,7 @@ class OffersAdapter constructor(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: Offer) {
-			binding.offerWidget.bind(item, requestOffer)
+			binding.offerWidget.bind(item, requestOffer, offerMode)
 		}
 
 	}
