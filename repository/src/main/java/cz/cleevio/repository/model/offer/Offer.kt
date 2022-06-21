@@ -10,6 +10,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Parcelize
+@Suppress("DataClassShouldBeImmutable")
 data class Offer constructor(
 	val id: Long = 0,
 	val offerId: String,
@@ -31,7 +32,9 @@ data class Offer constructor(
 	val active: Boolean,
 	val commonFriends: List<String>,
 	val createdAt: ZonedDateTime,
-	val modifiedAt: ZonedDateTime
+	val modifiedAt: ZonedDateTime,
+	//custom flags
+	var isMine: Boolean = false
 ) : Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
@@ -81,7 +84,8 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 		active = this.active,
 		commonFriends = this.commonFriends.split(",").map { it.trim() },
 		createdAt = this.createdAt,
-		modifiedAt = this.modifiedAt
+		modifiedAt = this.modifiedAt,
+		isMine = this.isMine
 	)
 }
 
@@ -106,6 +110,7 @@ fun Offer.toCache(): OfferEntity {
 		active = this.active,
 		commonFriends = this.commonFriends.joinToString(),
 		createdAt = this.createdAt,
-		modifiedAt = this.modifiedAt
+		modifiedAt = this.modifiedAt,
+		isMine = this.isMine
 	)
 }

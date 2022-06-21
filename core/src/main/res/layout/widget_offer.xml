@@ -262,7 +262,18 @@
 			android:layout_height="wrap_content"
 			android:text="@string/offer_request"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/offer_wrapper" />
+			app:layout_constraintTop_toBottomOf="@id/offer_wrapper"
+			tools:visibility="visible" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/edit_btn"
+			style="@style/Widget.Vexl.OfferButton.Edit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/offer_edit"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/offer_wrapper"
+			tools:visibility="invisible" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

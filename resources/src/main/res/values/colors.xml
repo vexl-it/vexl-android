@@ -47,6 +47,8 @@
 	<color name="green_5">#C8FFC3</color>
 	<color name="green_5_opacity_50">#80C8FFC3</color>
 	<color name="green_100">#ACD9B7</color>
+	<color name="pink_20">#322930</color>
+	<color name="pink_100">#FCC5F3</color>
 	<color name="purple_1">#2C2C3E</color>
 	<color name="purple_6">#C3C3FF</color>
 	<color name="yellow_100">#FCCD6C</color>

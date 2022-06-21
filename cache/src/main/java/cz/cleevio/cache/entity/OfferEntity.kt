@@ -30,5 +30,7 @@ data class OfferEntity(
 	//todo: not implemented yet
 	val commonFriends: String,
 	val createdAt: ZonedDateTime,
-	val modifiedAt: ZonedDateTime
+	val modifiedAt: ZonedDateTime,
+	//custom flags
+	val isMine: Boolean
 )

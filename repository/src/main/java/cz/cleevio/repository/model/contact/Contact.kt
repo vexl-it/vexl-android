@@ -6,6 +6,7 @@ import cz.cleevio.cache.entity.ContactEntity
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Suppress("DataClassShouldBeImmutable")
 @Parcelize
 data class Contact constructor(
 	override val id: String,

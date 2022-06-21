@@ -10,6 +10,7 @@ import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.offer.Offer
 import lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
+import java.time.format.DateTimeFormatter
 
 class OfferWidget @JvmOverloads constructor(
 	context: Context,
@@ -23,7 +24,7 @@ class OfferWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null) {
+	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null) {
 		binding.offerDescription.text = item.offerDescription
 		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
 		binding.priceCurrency.text = "Kč"
@@ -32,17 +33,27 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			resources.getString(R.string.offer_to_buy)
 		}
-		binding.userName.text = if (item.offerType == "SELL") {
-			resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
+		binding.userName.text = if (mode == Mode.MY_OFFER) {
+			context.getString(R.string.offer_my_offer)
 		} else {
-			resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
+			if (item.offerType == "SELL") {
+				resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
+			} else {
+				resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
+			}
 		}
+
 		// TODO convert to readable format
 		binding.location.text = "${item.location.first().latitude},\n${item.location.first().longitude}"
-		binding.userType.text = if (item.friendLevel == "FIRST") {
-			resources.getString(R.string.marketplace_detail_friend_first)
+
+		binding.userType.text = if (mode == Mode.MY_OFFER) {
+			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
 		} else {
-			resources.getString(R.string.marketplace_detail_friend_second)
+			if (item.friendLevel == "FIRST") {
+				resources.getString(R.string.marketplace_detail_friend_first)
+			} else {
+				resources.getString(R.string.marketplace_detail_friend_second)
+			}
 		}
 
 		binding.feeDescription.isVisible = item.feeState == "WITH_FEE"
@@ -51,8 +62,19 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.paymentMethodIcons.bind(item.paymentMethod)
 
-		binding.requestBtn.isVisible = requestOffer != null
+		if (mode == Mode.MY_OFFER) {
+			binding.requestBtn.isVisible = false
+			binding.editBtn.isVisible = true
+		} else {
+			binding.requestBtn.isVisible = true
+			binding.editBtn.isVisible = false
+
+			binding.requestBtn.isVisible = requestOffer != null
+		}
 		binding.requestBtn.setOnClickListener {
+			requestOffer?.invoke(item.offerId)
+		}
+		binding.editBtn.setOnClickListener {
 			requestOffer?.invoke(item.offerId)
 		}
 	}
@@ -81,10 +103,11 @@ class OfferWidget @JvmOverloads constructor(
 	}
 
 	enum class Mode {
-		MARKETPLACE, CHAT
+		MARKETPLACE, CHAT, MY_OFFER
 	}
 
 	companion object {
 		const val THOUSAND = 1000
+		val myOfferFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd. MM. yyyy")
 	}
 }

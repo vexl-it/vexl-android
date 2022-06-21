@@ -19,7 +19,7 @@ class OfferLocationWidget @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 	private lateinit var binding: WidgetOfferLocationBinding
-	private var selectedButton: LocationButtonSelected = LocationButtonSelected.NONE
+	private var selectedButton: LocationButtonSelected = LocationButtonSelected.ONLINE
 
 	private val visibleItems = mutableListOf<OfferLocationItem>()
 	private val items: List<OfferLocationItem>

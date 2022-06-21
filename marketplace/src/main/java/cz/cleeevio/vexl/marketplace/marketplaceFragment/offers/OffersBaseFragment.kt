@@ -18,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 sealed class OffersBaseFragment constructor(
 	val navigateToFilters: (OfferType) -> Unit,
 	val navigateToNewOffer: (OfferType) -> Unit,
+	val navigateToMyOffers: (OfferType) -> Unit,
 	val requestOffer: (String) -> Unit
 ) : BaseFragment(R.layout.fragment_offers) {
 
@@ -62,6 +63,9 @@ sealed class OffersBaseFragment constructor(
 
 		binding.addOfferBtn.setOnClickListener {
 			navigateToNewOffer(getOfferType())
+		}
+		binding.myOffersBtn.setOnClickListener {
+			navigateToMyOffers(getOfferType())
 		}
 
 		checkMyOffersCount(getOfferType())

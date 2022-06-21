@@ -6,8 +6,9 @@ import cz.cleevio.core.utils.repeatScopeOnStart
 class OffersBuyFragment constructor(
 	navigateToFilters: (OfferType) -> Unit,
 	navigateToNewOffer: (OfferType) -> Unit,
+	navigateToMyOffers: (OfferType) -> Unit,
 	requestOffer: (String) -> Unit
-) : OffersBaseFragment(navigateToFilters, navigateToNewOffer, requestOffer) {
+) : OffersBaseFragment(navigateToFilters, navigateToNewOffer, navigateToMyOffers, requestOffer) {
 
 	override fun getOfferType(): OfferType = OfferType.BUY
 
