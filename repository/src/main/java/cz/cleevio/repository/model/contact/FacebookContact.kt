@@ -3,6 +3,7 @@ package cz.cleevio.repository.model.contact
 import android.net.Uri
 import cz.cleevio.network.response.contact.FacebookUserResponse
 
+@Suppress("DataClassShouldBeImmutable")
 data class FacebookContact(
 	override val id: String,
 	override val name: String,

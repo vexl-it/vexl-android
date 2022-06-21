@@ -35,7 +35,7 @@ data class Offer constructor(
 	val modifiedAt: ZonedDateTime,
 	//custom flags
 	var isMine: Boolean = false
-): Parcelable
+) : Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
 	return Offer(
