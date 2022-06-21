@@ -13,17 +13,20 @@ import cz.cleevio.core.widget.OfferWidget
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 
 	private val binding by viewBinding(FragmentMyOffersBinding::bind)
-	override val viewModel by viewModel<MyOffersViewModel>()
+	override val viewModel by viewModel<MyOffersViewModel> { parametersOf(args.offerType) }
 
 	private val args by navArgs<MyOffersFragmentArgs>()
 
 	lateinit var adapter: OffersAdapter
 	private val onInteractWithOffer: (String) -> Unit = { offerId ->
-		MyOffersFragmentDirections.proceedToEditOfferFragment(offerId)
+		findNavController().navigate(
+			MyOffersFragmentDirections.proceedToEditOfferFragment(offerId)
+		)
 	}
 
 	override fun bindObservers() {
@@ -52,13 +55,21 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 			}
 		)
 
+		binding.myOffersNew.text = when (args.offerType) {
+			OfferType.BUY -> getString(R.string.offer_create_buy_title)
+			OfferType.SELL -> getString(R.string.offer_create_sell_title)
+		}
+		binding.myOffersNew.setOnClickListener {
+			findNavController().navigate(
+				MyOffersFragmentDirections.proceedToNewOfferFragment(args.offerType)
+			)
+		}
+
 		binding.newOfferTitle.setListeners(
 			onClose = {
 				//close this screen
 				findNavController().popBackStack()
 			}
 		)
-
-
 	}
 }

@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.marketplace.di
 
+import cz.cleeevio.vexl.marketplace.editOfferFragment.EditOfferViewModel
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceViewModel
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.offers.OffersViewModel
 import cz.cleeevio.vexl.marketplace.myOffersFragment.MyOffersViewModel
@@ -47,6 +48,15 @@ val marketplaceModule = module {
 			offerRepository = get(),
 			chatRepository = get(),
 			encryptedPreferenceRepository = get()
+		)
+	}
+
+	viewModel {
+		EditOfferViewModel(
+			offerRepository = get(),
+			contactRepository = get(),
+			encryptedPreferenceRepository = get(),
+			locationHelper = get(),
 		)
 	}
 

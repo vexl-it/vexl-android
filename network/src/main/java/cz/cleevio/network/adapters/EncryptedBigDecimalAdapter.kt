@@ -6,7 +6,6 @@ import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.response.common.EncryptedBigDecimal
-import timber.log.Timber
 import java.math.BigDecimal
 
 class EncryptedBigDecimalAdapter(
@@ -16,13 +15,11 @@ class EncryptedBigDecimalAdapter(
 	// decrypting the field with our private key
 	@FromJson
 	fun fromJson(encryptedData: String): EncryptedBigDecimal {
-		Timber.tag("ASDX").d("Decrypting decimal field")
 		val keyPair = KeyPair(
 			privateKey = encryptedPreferences.userPrivateKey,
 			publicKey = encryptedPreferences.userPublicKey
 		)
 		val decrypted = BigDecimal(EciesCryptoLib.decrypt(keyPair, encryptedData))
-		Timber.tag("ASDX").d("value is $decrypted")
 		return EncryptedBigDecimal(decrypted)
 	}
 

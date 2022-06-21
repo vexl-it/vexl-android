@@ -10,6 +10,7 @@ import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.offer.Offer
 import lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
+import java.time.format.DateTimeFormatter
 
 class OfferWidget @JvmOverloads constructor(
 	context: Context,
@@ -50,7 +51,7 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.userType.text = when (mode) {
 			Mode.MY_OFFER -> {
-				context.getString(R.string.offer_added, item.createdAt.toString())
+				context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
 			}
 			else -> {
 				if (item.friendLevel == "FIRST") {
@@ -67,17 +68,22 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.paymentMethodIcons.bind(item.paymentMethod)
 
-		binding.requestBtn.text = when (mode) {
+		when (mode) {
 			Mode.MY_OFFER -> {
-				context.getString(R.string.offer_edit)
+				binding.requestBtn.isVisible = false
+				binding.editBtn.isVisible = true
 			}
 			else -> {
-				context.getString(R.string.offer_request)
+				binding.requestBtn.isVisible = true
+				binding.editBtn.isVisible = false
+
+				binding.requestBtn.isVisible = requestOffer != null
 			}
 		}
-		//todo: restyle button for `Edit offer`
-		binding.requestBtn.isVisible = requestOffer != null
 		binding.requestBtn.setOnClickListener {
+			requestOffer?.invoke(item.offerId)
+		}
+		binding.editBtn.setOnClickListener {
 			requestOffer?.invoke(item.offerId)
 		}
 	}
@@ -111,5 +117,6 @@ class OfferWidget @JvmOverloads constructor(
 
 	companion object {
 		const val THOUSAND = 1000
+		val myOfferFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd. MM. yyyy")
 	}
 }

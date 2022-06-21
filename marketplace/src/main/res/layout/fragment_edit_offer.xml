@@ -67,7 +67,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="24dp"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Offer.Description.Counter"
-				app:layout_constraintTop_toBottomOf="@id/title_separator"
+				app:layout_constraintTop_toTopOf="@+id/description_title"
 				app:layout_constraintEnd_toEndOf="parent"
 				tools:text="140/140" />
 
@@ -82,7 +82,7 @@
 				android:textColor="@color/gray_4"
 				android:minLines="3"
 				android:maxLength="140"
-				app:layout_constraintTop_toBottomOf="@id/description_title"
+				app:layout_constraintTop_toBottomOf="@+id/description_title"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				tools:text="This long long description capped at 120 chars" />
@@ -96,7 +96,7 @@
 				app:drawableStartCompat="@drawable/ic_amount"
 				android:drawablePadding="8dp"
 				android:text="@string/filter_amount_title"
-				app:layout_constraintTop_toBottomOf="@id/new_offer_description"
+				app:layout_constraintTop_toBottomOf="@+id/new_offer_description"
 				app:layout_constraintStart_toStartOf="parent" />
 
 			<cz.cleevio.core.widget.PriceRangeWidget
@@ -114,7 +114,7 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="8dp"
-				app:layout_constraintTop_toBottomOf="@+id/new_offer_range"
+				app:layout_constraintTop_toBottomOf="@+id/amount_range"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent" />
 

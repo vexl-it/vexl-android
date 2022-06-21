@@ -63,7 +63,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 
 					//todo: add offer state widget
 
-					binding.descriptionTitle.text = offer.offerDescription
+					binding.newOfferDescription.setText(offer.offerDescription)
 					binding.amountRange.setValues(offer.amountBottomLimit.toFloat(), offer.amountTopLimit.toFloat())
 					binding.newOfferFee.setValues(
 						FeeValue(

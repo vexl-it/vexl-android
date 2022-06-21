@@ -21,7 +21,9 @@ class MyOffersViewModel constructor(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == offerType.name && it.isMine } }.collect {
+			offerRepository.getOffersFlow().map { list ->
+				list.filter { it.offerType == offerType.name && it.isMine }
+			}.collect {
 				_offers.emit(it)
 			}
 		}
