@@ -2,6 +2,8 @@ package cz.cleeevio.vexl.contacts.contactsListFragment
 
 import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
+import com.cleevio.vexl.cryptography.HMAC_PRIVATE_KEY
+import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.isPhoneValid
 import cz.cleevio.network.data.Status
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
+import timber.log.Timber
 
 class ContactsListViewModel constructor(
 	private val contactRepository: ContactRepository,
@@ -36,6 +39,8 @@ class ContactsListViewModel constructor(
 					contact.phoneNumber
 				}.filter {
 					it.isNotBlank() && it.isPhoneValid()
+				}.map {
+					HmacCryptoLib.digest(HMAC_PRIVATE_KEY, it)
 				}
 			)
 
@@ -83,7 +88,8 @@ class ContactsListViewModel constructor(
 				notSyncedContactsList.filter {
 					it.markedForUpload
 				}.map {
-					it.phoneNumber
+					Timber.tag("ASDX").d("${it.phoneNumber}")
+					HmacCryptoLib.digest(HMAC_PRIVATE_KEY, it.phoneNumber)
 				}
 			)
 			when (response.status) {
