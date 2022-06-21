@@ -354,14 +354,12 @@ class ChatRepositoryImpl constructor(
 					senderPublicKeys = listOf(inboxKey, contactPublicKey)
 				)?.fromCache()
 
-				latestMessage?.let {
-					if (latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
-						//todo: check if we know user's identity. Maybe go over all messages from this user
-						// and look for type ANON_REQUEST_RESPONSE?
-						result.add(
-							ChatListUser(message = latestMessage)
-						)
-					}
+				if (latestMessage != null && latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
+					//todo: check if we know user's identity. Maybe go over all messages from this user
+					// and look for type ANON_REQUEST_RESPONSE?
+					result.add(
+						ChatListUser(message = latestMessage)
+					)
 				}
 			}
 		}
