@@ -1,7 +1,6 @@
 package cz.cleevio.repository.model.offer
 
 import android.os.Parcelable
-import android.os.Parcelable
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
