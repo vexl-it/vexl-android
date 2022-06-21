@@ -2,6 +2,7 @@ package cz.cleevio.vexl.chat.chatFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, ChatMessagesAdapter.ViewHol
 		)
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		holder.bind(getItem(position))
+		holder.bind(getItem(position), position)
 	}
 
 
@@ -28,7 +29,18 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, ChatMessagesAdapter.ViewHol
 		private val binding: ItemChatMessageBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: ChatMessage) {
+		fun bind(item: ChatMessage, position: Int) {
+
+			if (position % 2 == 0) { // FIXME fix after debugging
+				binding.receivedMessage.text = item.text
+				binding.receivedMessage.isVisible = true
+				binding.sentMessage.isVisible = false
+			} else {
+				binding.sentMessage.text = item.text
+				binding.receivedMessage.isVisible = false
+				binding.sentMessage.isVisible = true
+			}
+
 		}
 	}
 }
