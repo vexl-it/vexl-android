@@ -33,32 +33,26 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			resources.getString(R.string.offer_to_buy)
 		}
-		binding.userName.text = when (mode) {
-			Mode.MY_OFFER -> {
-				context.getString(R.string.offer_my_offer)
-			}
-			else -> {
-				if (item.offerType == "SELL") {
-					resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
-				} else {
-					resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
-				}
+		binding.userName.text = if (mode == Mode.MY_OFFER) {
+			context.getString(R.string.offer_my_offer)
+		} else {
+			if (item.offerType == "SELL") {
+				resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
+			} else {
+				resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
 			}
 		}
 
 		// TODO convert to readable format
 		binding.location.text = "${item.location.first().latitude},\n${item.location.first().longitude}"
 
-		binding.userType.text = when (mode) {
-			Mode.MY_OFFER -> {
-				context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
-			}
-			else -> {
-				if (item.friendLevel == "FIRST") {
-					resources.getString(R.string.marketplace_detail_friend_first)
-				} else {
-					resources.getString(R.string.marketplace_detail_friend_second)
-				}
+		binding.userType.text = if (mode == Mode.MY_OFFER) {
+			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
+		} else {
+			if (item.friendLevel == "FIRST") {
+				resources.getString(R.string.marketplace_detail_friend_first)
+			} else {
+				resources.getString(R.string.marketplace_detail_friend_second)
 			}
 		}
 
@@ -68,17 +62,14 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.paymentMethodIcons.bind(item.paymentMethod)
 
-		when (mode) {
-			Mode.MY_OFFER -> {
-				binding.requestBtn.isVisible = false
-				binding.editBtn.isVisible = true
-			}
-			else -> {
-				binding.requestBtn.isVisible = true
-				binding.editBtn.isVisible = false
+		if (mode == Mode.MY_OFFER) {
+			binding.requestBtn.isVisible = false
+			binding.editBtn.isVisible = true
+		} else {
+			binding.requestBtn.isVisible = true
+			binding.editBtn.isVisible = false
 
-				binding.requestBtn.isVisible = requestOffer != null
-			}
+			binding.requestBtn.isVisible = requestOffer != null
 		}
 		binding.requestBtn.setOnClickListener {
 			requestOffer?.invoke(item.offerId)

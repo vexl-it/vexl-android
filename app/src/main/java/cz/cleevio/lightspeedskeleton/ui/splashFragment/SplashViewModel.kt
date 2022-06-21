@@ -5,7 +5,6 @@ import com.cleevio.vexl.cryptography.KeyPairCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +15,6 @@ import lightbase.core.baseClasses.BaseViewModel
 class SplashViewModel constructor(
 	private val encryptedPreferences: EncryptedPreferenceRepository,
 	private val userRepository: UserRepository,
-	private val contactRepository: ContactRepository,
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 

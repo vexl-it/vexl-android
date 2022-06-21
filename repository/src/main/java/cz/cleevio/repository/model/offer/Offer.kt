@@ -11,6 +11,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Parcelize
+@Suppress("DataClassShouldBeImmutable")
 data class Offer constructor(
 	val id: Long = 0,
 	val offerId: String,
