@@ -62,7 +62,6 @@ fun ChatMessageRequest.fromNetwork(recipientPublicKey: String): ChatMessage {
 }
 
 fun ChatMessage.toNetwork(): String {
-
 	val request = ChatMessageRequest(
 		uuid = this.uuid,
 		inboxPublicKey = this.inboxPublicKey,

@@ -275,7 +275,6 @@ class ChatRepositoryImpl constructor(
 		offerId: String, publicKeyToConfirm: String,
 		message: ChatMessage, approve: Boolean
 	): Resource<Unit> {
-
 		val myOfferKeyPair = myOfferDao.getOfferKeysByExtId(offerId)
 		val senderKeyPair = KeyPair(
 			privateKey = myOfferKeyPair.privateKey,
