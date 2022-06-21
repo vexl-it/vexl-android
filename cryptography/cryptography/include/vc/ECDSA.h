@@ -23,8 +23,8 @@
 extern "C" {
 # endif
 
-char *ecdsa_sign(const char* base64_public_key, const char* base64_private_key, const void *data, const int data_len);
-bool ecdsa_verify(const char* base64_public_key, const void *data, const int data_len, const char *base64_signature);
+char *ecdsa_sign(const char *base64_public_key, const char *base64_private_key, const void *data, const int data_len);
+bool ecdsa_verify(const char *base64_public_key, const char *data, const int data_len, const char *base64_signature);
 
 # ifdef  __cplusplus
 }
