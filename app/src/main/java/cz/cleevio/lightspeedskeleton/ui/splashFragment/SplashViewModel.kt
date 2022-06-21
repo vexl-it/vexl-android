@@ -26,10 +26,6 @@ class SplashViewModel constructor(
 	//debug
 	fun deletePreviousUserAndLoadKeys() {
 		viewModelScope.launch(Dispatchers.IO) {
-			//userRepository.deleteMe()
-
-			//contactRepository.deleteMyUser()
-
 			resetKeys()
 			loadKeys()
 		}
