@@ -32,6 +32,17 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 				binding.priceChart.setupData(currentCryptoCurrencyPrice)
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.usersRequestingChat.collect { messages ->
+				binding.newRequestsBtn.setImageResource(
+					if (messages.isNotEmpty()) {
+						R.drawable.ic_users_notification_on
+					} else {
+						R.drawable.ic_users_notification_off
+					}
+				)
+			}
+		}
 	}
 
 	override fun initView() {
