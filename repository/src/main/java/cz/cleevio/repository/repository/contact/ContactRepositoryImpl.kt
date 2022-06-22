@@ -5,7 +5,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.util.Patterns
-import com.cleevio.vexl.cryptography.HMAC_PRIVATE_KEY
+import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.dao.ContactKeyDao
@@ -112,7 +112,7 @@ class ContactRepositoryImpl constructor(
 					id = it.id.toLong(),
 					name = it.name,
 					phone = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber),
-					phoneHashed = HmacCryptoLib.digest(HMAC_PRIVATE_KEY, phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber)),
+					phoneHashed = HmacCryptoLib.digest(HMAC_PASSWORD, phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber)),
 					email = it.email,
 					photoUri = it.photoUri.toString()
 				)

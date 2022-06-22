@@ -2,7 +2,7 @@ package cz.cleeevio.vexl.contacts.contactsListFragment
 
 import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
-import com.cleevio.vexl.cryptography.HMAC_PRIVATE_KEY
+import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.isPhoneValid
@@ -40,14 +40,14 @@ class ContactsListViewModel constructor(
 				}.filter {
 					it.isNotBlank() && it.isPhoneValid()
 				}.map {
-					HmacCryptoLib.digest(HMAC_PRIVATE_KEY, it)
+					HmacCryptoLib.digest(HMAC_PASSWORD, it)
 				}
 			)
 
 			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
 				notSyncedContactsList = localContacts.filter { contact ->
 					notSyncedPhoneNumbers.contains(
-						HmacCryptoLib.digest(HMAC_PRIVATE_KEY, contact.phoneNumber)
+						HmacCryptoLib.digest(HMAC_PASSWORD, contact.phoneNumber)
 					)
 				}
 				emitContacts(notSyncedContactsList)
@@ -91,7 +91,7 @@ class ContactsListViewModel constructor(
 					it.markedForUpload
 				}.map {
 					Timber.tag("ASDX").d("${it.phoneNumber}")
-					HmacCryptoLib.digest(HMAC_PRIVATE_KEY, it.phoneNumber)
+					HmacCryptoLib.digest(HMAC_PASSWORD, it.phoneNumber)
 				}
 			)
 			when (response.status) {
