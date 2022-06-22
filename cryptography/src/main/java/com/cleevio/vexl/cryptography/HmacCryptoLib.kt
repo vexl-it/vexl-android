@@ -3,6 +3,8 @@ package com.cleevio.vexl.cryptography
 import okio.internal.commonToUtf8String
 import java.nio.charset.StandardCharsets
 
+const val HMAC_PASSWORD = "VexlVexl"
+
 object HmacCryptoLib : BaseCryptoLib() {
 
 	fun digest(password: String, message: String): String {
