@@ -1,5 +1,6 @@
 package cz.cleevio.vexl.chat.chatFragment
 
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -32,7 +33,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	override fun initView() {
 
 		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
+			binding.container.updatePadding(top = insets.top, bottom = insets.bottomWithIME)
 		}
 
 		args.communicationRequest.let { request ->
@@ -40,16 +41,27 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 
 		binding.sendMessageButton.setOnClickListener {
-			binding.messageEdit.text.toString().let { message ->
-				if (message.isNotBlank()) {
-					viewModel.sendMessage(message)
-					binding.messageEdit.text?.clear()
-				}
+			sendMessage()
+		}
+
+		binding.messageEdit.setOnEditorActionListener { v, actionId, event ->
+			if (actionId == EditorInfo.IME_ACTION_SEND) {
+				sendMessage()
 			}
+			false
 		}
 
 		adapter = ChatMessagesAdapter()
 		binding.chatRv.adapter = adapter
+	}
+
+	private fun sendMessage() {
+		binding.messageEdit.text.toString().let { message ->
+			if (message.isNotBlank()) {
+				viewModel.sendMessage(message)
+				binding.messageEdit.text?.clear()
+			}
+		}
 	}
 
 	private fun getUserName(communicationRequest: CommunicationRequest): String {
