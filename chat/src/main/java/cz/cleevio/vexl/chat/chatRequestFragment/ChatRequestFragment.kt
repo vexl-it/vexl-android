@@ -46,14 +46,13 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 	}
 
 	override fun initView() {
-		adapter = ChatRequestAdapter()
-		binding.requestsRecyclerView.adapter = adapter
-
-		PagerSnapHelper().attachToRecyclerView(binding.requestsRecyclerView)
-
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
+
+		adapter = ChatRequestAdapter()
+		binding.requestsRecyclerView.adapter = adapter
+		PagerSnapHelper().attachToRecyclerView(binding.requestsRecyclerView)
 
 		binding.acceptBtn.setOnClickListener {
 			val currentRequest = getCurrentChatRequest()
