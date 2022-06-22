@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_height="wrap_content"
+	android:layout_margin="8dp">
+
+	<TextView
+		android:id="@+id/received_message"
+		style="@style/Widget.Cleevio.Chat.ReceivedMessage"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:layout_marginEnd="116dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="This is message from request. Bla bla buy some Bitcoins but first you must reveal identity!"
+		tools:visibility="gone" />
+
+	<TextView
+		android:id="@+id/sent_message"
+		style="@style/Widget.Cleevio.Chat.SentMessage"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="74dp"
+		android:layout_marginEnd="8dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Lorem ipsum dolor sit amet amet. asd aasdsDASDASDASDASDASasasd"
+		tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,7 +75,7 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
-	private suspend fun getMyInboxKeys(): List<String> {
+	override suspend fun getMyInboxKeys(): List<String> {
 		//get all offer inbox keys
 		val inboxKeys = myOfferDao.getAllOfferPublicKeys().toMutableList()
 		//add users inbox
@@ -358,7 +358,14 @@ class ChatRepositoryImpl constructor(
 					//todo: check if we know user's identity. Maybe go over all messages from this user
 					// and look for type ANON_REQUEST_RESPONSE?
 					result.add(
-						ChatListUser(message = latestMessage)
+						ChatListUser(
+							message = latestMessage,
+							offer = offerDao.getAllOffers().filter {
+								it.offerPublicKey == latestMessage.recipientPublicKey || it.offerPublicKey == latestMessage.senderPublicKey
+							}.map {
+								it.fromCache(emptyList())
+							}.firstOrNull()
+						)
 					)
 				}
 			}

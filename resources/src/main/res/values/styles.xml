@@ -471,6 +471,10 @@
 		<item name="android:background">@color/gray_4</item>
 	</style>
 
+	<style name="Widget.Cleevio.Chat.MessagesHorizontalDivider" parent="Widget.Cleevio.Vexl.HorizontalDivider">
+		<item name="android:background">@color/white</item>
+	</style>
+
 	<style name="Widget.Cleevio.Filters.FilterVerticalDivider" parent="Widget.Cleevio.Vexl.VerticalDivider">
 		<item name="android:background">@color/gray_2</item>
 	</style>
@@ -493,6 +497,18 @@
 		<item name="android:layout_height">40dp</item>
 		<item name="android:textColor">@color/chat_radio_button_text_color_selector</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmallBold</item>
+	</style>
+
+	<style name="Widget.Vexl.Chat.ActionButton" parent="">
+		<item name="android:layout_height">38dp</item>
+		<item name="android:drawablePadding">7.5dp</item>
+		<item name="android:layout_marginStart">9dp</item>
+		<item name="android:layout_marginEnd">9dp</item>
+		<item name="android:paddingStart">12dp</item>
+		<item name="android:paddingEnd">11dp</item>
+		<item name="android:background">@drawable/background_button_chat_action</item>
+		<item name="android:textColor">@color/gray_4</item>
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.ActionButton</item>
 	</style>
 
 	<style name="Widget.Cleevio.Marketplace.BottomNavigation" parent="">
@@ -520,6 +536,21 @@
 		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Vexl.Marketplace.Chip</item>
 		<item name="chipBackgroundColor">@color/gray_1</item>
 		<item name="android:checkable">false</item>
+	</style>
+
+	<style name="Widget.Cleevio.Chat.Message" parent="">
+		<item name="android:padding">10dp</item>
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmall</item>
+	</style>
+
+	<style name="Widget.Cleevio.Chat.ReceivedMessage" parent="Widget.Cleevio.Chat.Message">
+		<item name="android:textColor">@color/white</item>
+		<item name="android:background">@drawable/background_chat_received_message</item>
+	</style>
+
+	<style name="Widget.Cleevio.Chat.SentMessage" parent="Widget.Cleevio.Chat.Message">
+		<item name="android:textColor">@color/black</item>
+		<item name="android:background">@drawable/background_chat_received_message</item>
 	</style>
 
 

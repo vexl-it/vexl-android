@@ -8,11 +8,12 @@ import cz.cleevio.network.request.chat.ChatMessageRequest
 import cz.cleevio.network.request.chat.ChatUserRequest
 import cz.cleevio.network.response.chat.MessageResponse
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 //do we need to work with public fields from response?
 @Parcelize
 data class ChatMessage constructor(
-	val uuid: String,
+	val uuid: String = UUID.randomUUID().toString(),
 	val inboxPublicKey: String,
 	val senderPublicKey: String,
 	val recipientPublicKey: String,
@@ -20,7 +21,9 @@ data class ChatMessage constructor(
 	val image: String? = null,
 	val type: MessageType,
 	val time: Long = System.currentTimeMillis(),
-	val deanonymizedUser: ChatUser? = null
+	val deanonymizedUser: ChatUser? = null,
+	//custom flags
+	val isMine: Boolean
 ) : Parcelable
 
 @Parcelize
@@ -43,7 +46,7 @@ fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
 		?.copy(inboxPublicKey = inboxPublicKey, senderPublicKey = this.senderPublicKey)
 	return chatMessage?.fromNetwork(inboxPublicKey) ?: ChatMessage(
 		uuid = "broken", type = MessageType.BROKEN, time = System.currentTimeMillis(),
-		inboxPublicKey = "", senderPublicKey = "", recipientPublicKey = ""
+		inboxPublicKey = "", senderPublicKey = "", recipientPublicKey = "", isMine = false
 	)
 }
 
@@ -57,7 +60,8 @@ fun ChatMessageRequest.fromNetwork(recipientPublicKey: String): ChatMessage {
 		image = this.image,
 		type = MessageType.valueOf(this.type),
 		time = this.time,
-		deanonymizedUser = this.deanonymizedUser?.fromNetwork()
+		deanonymizedUser = this.deanonymizedUser?.fromNetwork(),
+		isMine = false
 	)
 }
 
@@ -104,7 +108,8 @@ fun ChatMessage.toCache(): ChatMessageEntity = ChatMessageEntity(
 	type = this.type.name,
 	time = this.time,
 	deAnonName = this.deanonymizedUser?.name,
-	deAnonImage = this.deanonymizedUser?.image
+	deAnonImage = this.deanonymizedUser?.image,
+	isMine = this.isMine
 )
 
 fun ChatMessageEntity.fromCache(): ChatMessage {
@@ -123,6 +128,7 @@ fun ChatMessageEntity.fromCache(): ChatMessage {
 		image = this.image,
 		type = MessageType.valueOf(this.type),
 		time = this.time,
-		deanonymizedUser = chatUser
+		deanonymizedUser = chatUser,
+		isMine = this.isMine
 	)
 }

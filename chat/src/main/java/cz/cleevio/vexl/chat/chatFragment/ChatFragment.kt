@@ -4,6 +4,7 @@ import androidx.core.view.updatePadding
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -18,10 +19,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	private val args by navArgs<ChatFragmentArgs>()
 
+	lateinit var adapter: ChatMessagesAdapter
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
-				//todo: show messages in list
+				adapter.submitList(messages)
 			}
 		}
 	}
@@ -32,7 +35,32 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
 
-//		binding.username.text = viewModel.user.username
+		args.communicationRequest.let { request ->
+			binding.username.text = getUserName(request)
+		}
+
+		binding.sendMessageButton.setOnClickListener {
+			binding.messageEdit.text.toString().let { message ->
+				if (message.isNotBlank()) {
+					viewModel.sendMessage(message)
+				}
+			}
+		}
+
+		adapter = ChatMessagesAdapter()
+		binding.chatRv.adapter = adapter
+	}
+
+	private fun getUserName(communicationRequest: CommunicationRequest): String {
+		val name = communicationRequest.message.deanonymizedUser?.name ?: run {
+			resources.getString(R.string.marketplace_detail_friend_first)
+		}
+
+		return if (communicationRequest.offer?.offerType == "BUY") {
+			resources.getString(R.string.marketplace_detail_user_buy, name)
+		} else {
+			resources.getString(R.string.marketplace_detail_user_sell, name)
+		}
 	}
 
 }

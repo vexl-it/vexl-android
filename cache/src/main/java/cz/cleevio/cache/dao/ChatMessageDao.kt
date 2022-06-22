@@ -16,7 +16,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	@Query(
 		"SELECT * FROM ChatMessageEntity WHERE inboxPublicKey == :inboxPublicKey" +
-			" AND senderPublicKey IN (:senderPublicKeys) ORDER BY time LIMIT 1"
+			" AND senderPublicKey IN (:senderPublicKeys) ORDER BY time DESC LIMIT 1"
 	)
 	fun getLatestBySenders(inboxPublicKey: String, senderPublicKeys: List<String>): ChatMessageEntity?
 
