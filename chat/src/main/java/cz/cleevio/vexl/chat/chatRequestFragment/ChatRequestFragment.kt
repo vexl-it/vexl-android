@@ -61,7 +61,7 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 
 		binding.declineBtn.setOnClickListener {
 			val currentRequest = getCurrentChatRequest()
-			viewModel.processCommunicationRequest(currentRequest, false)
+			viewModel.processCommunicationRequest(currentRequest, true)
 		}
 	}
 
