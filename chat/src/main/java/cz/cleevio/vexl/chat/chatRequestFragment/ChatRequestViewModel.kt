@@ -45,9 +45,11 @@ class ChatRequestViewModel constructor(
 					senderPublicKey = communicationRequest.offer?.offerPublicKey!!,
 					type = MessageType.COMMUNICATION_REQUEST_RESPONSE,
 					recipientPublicKey = communicationRequest.message.senderPublicKey,
-					isMine = true
+					isMine = true,
+					isProcessed = false
 				),
-				approve = approve
+				originalRequestMessage = communicationRequest.message,
+				approve = true
 			)
 			if (response.status == Status.Success) {
 				chatRepository.deleteMessage(communicationRequest)

@@ -56,7 +56,8 @@ class ChatViewModel constructor(
 					recipientPublicKey = receiverPublicKey,
 					text = message,
 					type = messageType,
-					isMine = true
+					isMine = true,
+					isProcessed = false
 				),
 				messageType = "MESSAGE"
 			)

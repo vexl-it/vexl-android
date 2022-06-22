@@ -1,5 +1,6 @@
 package cz.cleevio.vexl.chat.chatRequestFragment
 
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,9 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 			viewModel.usersRequestingChat.collect { messages ->
 				binding.title.text = resources.getString(R.string.chat_request_main_title, messages.size.toString())
 				adapter.submitList(messages)
+
+				binding.declineBtn.isVisible = messages.isNotEmpty()
+				binding.acceptBtn.isVisible = messages.isNotEmpty()
 			}
 		}
 		repeatScopeOnStart {
