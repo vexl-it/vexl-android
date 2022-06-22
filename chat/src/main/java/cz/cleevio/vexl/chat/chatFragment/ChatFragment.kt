@@ -43,6 +43,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			binding.messageEdit.text.toString().let { message ->
 				if (message.isNotBlank()) {
 					viewModel.sendMessage(message)
+					binding.messageEdit.text?.clear()
 				}
 			}
 		}

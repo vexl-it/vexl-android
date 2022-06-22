@@ -2,10 +2,12 @@ package cz.cleevio.repository.repository.offer
 
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.network.data.Resource
+import cz.cleevio.repository.model.offer.MyOffer
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
 import kotlinx.coroutines.flow.Flow
 
+@Suppress("TooManyFunctions")
 interface OfferRepository {
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
@@ -25,7 +27,8 @@ interface OfferRepository {
 		offerId: String,
 		privateKey: String,
 		publicKey: String,
-		offerType: String
+		offerType: String,
+		isInboxCreated: Boolean
 	): Resource<Unit>
 
 	suspend fun loadOfferKeysByOfferId(offerId: String): KeyPair?
@@ -37,4 +40,6 @@ interface OfferRepository {
 	suspend fun syncOffers()
 
 	suspend fun getMyOffersCount(offerType: String): Int
+
+	suspend fun getMyOffersWithoutInbox(): List<MyOffer>
 }

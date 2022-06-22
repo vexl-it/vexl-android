@@ -65,18 +65,29 @@ class NewOfferViewModel constructor(
 			when (response.status) {
 				is Status.Success -> {
 					//save offer ID into DB, also save keys
-					response.data?.let { offer ->
+					val offerData = response.data
+					offerData?.let { offer ->
 						offerRepository.saveMyOfferIdAndKeys(
 							offerId = offer.offerId,
 							privateKey = offerKeys.privateKey,
 							publicKey = offerKeys.publicKey,
-							offerType = offer.offerType
+							offerType = offer.offerType,
+							isInboxCreated = false
 						)
 					}
 
 					val inboxResponse = chatRepository.createInbox(offerKeys.publicKey)
-					when (response.status) {
+					when (inboxResponse.status) {
 						is Status.Success -> {
+							offerData?.let { offer ->
+								offerRepository.saveMyOfferIdAndKeys(
+									offerId = offer.offerId,
+									privateKey = offerKeys.privateKey,
+									publicKey = offerKeys.publicKey,
+									offerType = offer.offerType,
+									isInboxCreated = true
+								)
+							}
 							_newOfferRequest.emit(response)
 						}
 						is Status.Error -> {

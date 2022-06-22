@@ -1,9 +1,10 @@
 package cz.cleevio.cache.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(indices = [Index(value = ["extId"], unique = true)])
 data class ChatMessageEntity(
 	//----- metadata -----
 	@PrimaryKey(autoGenerate = true)

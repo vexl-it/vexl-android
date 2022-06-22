@@ -83,7 +83,9 @@ class ChatRepositoryImpl constructor(
 			encryptedPreferenceRepository.userPublicKey
 		)
 
-		return inboxKeys.toList()
+		return inboxKeys.filter {
+			it.isNotBlank()
+		}.toList()
 	}
 
 	override fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>> =
@@ -258,6 +260,9 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit> {
+		chatMessageDao.insert(
+			message.toCache()
+		)
 		return tryOnline(
 			request = {
 				chatApi.postInboxesApprovalRequest(
@@ -317,7 +322,7 @@ class ChatRepositoryImpl constructor(
 	override suspend fun loadCommunicationRequests(): List<CommunicationRequest> {
 		val result: MutableList<CommunicationRequest> = mutableListOf()
 		//get all communication requests
-		val communicationRequests = chatMessageDao.listAllMessagesByType(MessageType.COMMUNICATION_REQUEST.name)
+		val communicationRequests = chatMessageDao.listNotMyMessagesByType(MessageType.COMMUNICATION_REQUEST.name)
 			.map { it.fromCache() }
 
 		communicationRequests.forEach { message ->

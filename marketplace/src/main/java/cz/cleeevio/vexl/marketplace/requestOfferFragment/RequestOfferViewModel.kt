@@ -31,10 +31,9 @@ class RequestOfferViewModel constructor(
 	private val _friends = MutableStateFlow<List<Any>>(listOf())
 	val friends = _friends.asStateFlow()
 
-	fun sendRequest(text: String, offerPublicKey: String) {
+	fun sendRequest(text: String, offerPublicKey: String, onSuccess: suspend () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_isRequesting.emit(true)
-			//fake operation todo: connect to BE
 			val response = chatRepository.askForCommunicationApproval(
 				publicKey = offerPublicKey,
 				message = ChatMessage(
@@ -50,7 +49,7 @@ class RequestOfferViewModel constructor(
 			)
 			when (response.status) {
 				is Status.Success -> {
-					//emit and go back to list of offers?
+					onSuccess()
 				}
 				is Status.Error -> {
 					//any special handling?

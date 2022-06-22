@@ -32,13 +32,13 @@ class OffersViewModel(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "BUY" } }.collect {
+			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "BUY" && !it.isMine } }.collect {
 				_buyOffers.emit(it)
 			}
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {
-			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "SELL" } }.collect {
+			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "SELL" && !it.isMine } }.collect {
 				_sellOffers.emit(it)
 			}
 		}

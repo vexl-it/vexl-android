@@ -8,8 +8,9 @@ import androidx.room.PrimaryKey
 data class MyOfferEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
-	val extId: String, // TODO add unique, maybe?
+	val extId: String,
 	val privateKey: String,
 	val publicKey: String,
-	val offerType: String
+	val offerType: String,
+	val isInboxCreated: Boolean
 )
