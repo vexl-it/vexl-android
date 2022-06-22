@@ -39,6 +39,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			binding.username.text = getUserName(request)
 		}
 
+		binding.sendMessageButton.setOnClickListener {
+			binding.messageEdit.text.toString().let { message ->
+				if (message.isNotBlank()) {
+					viewModel.sendMessage(message)
+				}
+			}
+		}
+
 		adapter = ChatMessagesAdapter()
 		binding.chatRv.adapter = adapter
 	}
@@ -48,7 +56,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			resources.getString(R.string.marketplace_detail_friend_first)
 		}
 
-		return if (communicationRequest.offer.offerType == "BUY") {
+		return if (communicationRequest.offer?.offerType == "BUY") {
 			resources.getString(R.string.marketplace_detail_user_buy, name)
 		} else {
 			resources.getString(R.string.marketplace_detail_user_sell, name)

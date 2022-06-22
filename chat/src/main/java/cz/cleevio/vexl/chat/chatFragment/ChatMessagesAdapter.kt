@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
 
 class ChatMessagesAdapter : ListAdapter<ChatMessage, ChatMessagesAdapter.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
@@ -31,14 +32,20 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, ChatMessagesAdapter.ViewHol
 
 		fun bind(item: ChatMessage, position: Int) {
 
-			if (position % 2 == 0) { // FIXME fix after debugging
-				binding.receivedMessage.text = item.text
-				binding.receivedMessage.isVisible = true
-				binding.sentMessage.isVisible = false
+			val itemTmp = if (item.type == MessageType.COMMUNICATION_REQUEST_RESPONSE) {
+				item.copy(text = "Some super cool text")
 			} else {
-				binding.sentMessage.text = item.text
+				item
+			}
+
+			if (item.isMine) {
+				binding.sentMessage.text = itemTmp.text
 				binding.receivedMessage.isVisible = false
 				binding.sentMessage.isVisible = true
+			} else {
+				binding.receivedMessage.text = itemTmp.text
+				binding.receivedMessage.isVisible = true
+				binding.sentMessage.isVisible = false
 			}
 
 		}

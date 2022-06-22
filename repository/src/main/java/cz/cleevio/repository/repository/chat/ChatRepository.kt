@@ -43,4 +43,5 @@ interface ChatRepository {
 	suspend fun loadChatUsers(): List<ChatListUser>
 
 	suspend fun deleteMessage(communicationRequest: CommunicationRequest)
+	suspend fun getMyInboxKeys(): List<String>
 }

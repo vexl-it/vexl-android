@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
+import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatContactListBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -42,10 +43,15 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 
 		adapter = ChatContactListAdapter(
 			chatWithUser = { userWithMessage ->
-//				findNavController().navigate(
-				//todo: fix `!!`
-//					ChatContactListFragmentDirections.proceedToChatFragment(user = userWithMessage.user!!)
-//				)
+				findNavController().navigate(
+//				todo: fix `!!`
+					ChatContactListFragmentDirections.proceedToChatFragment(
+						communicationRequest = CommunicationRequest(
+							message = userWithMessage.message,
+							offer = userWithMessage.offer
+						)
+					)
+				)
 			}
 		)
 		binding.recycler.adapter = adapter

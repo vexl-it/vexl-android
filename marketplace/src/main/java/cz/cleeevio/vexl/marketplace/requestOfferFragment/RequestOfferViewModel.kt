@@ -44,7 +44,8 @@ class RequestOfferViewModel constructor(
 					recipientPublicKey = offerPublicKey,
 					text = text,
 					type = MessageType.COMMUNICATION_REQUEST,
-					time = System.currentTimeMillis()
+					time = System.currentTimeMillis(),
+					isMine = true
 				)
 			)
 			when (response.status) {

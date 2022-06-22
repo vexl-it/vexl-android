@@ -37,14 +37,15 @@ class ChatRequestViewModel constructor(
 	fun acceptCommunicationRequest(communicationRequest: CommunicationRequest) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = chatRepository.confirmCommunicationRequest(
-				communicationRequest.offer.offerId,
+				communicationRequest.offer?.offerId!!,
 				communicationRequest.message.senderPublicKey,
 				ChatMessage(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = communicationRequest.message.senderPublicKey,
-					senderPublicKey = communicationRequest.offer.offerPublicKey,
+					senderPublicKey = communicationRequest.offer?.offerPublicKey!!,
 					type = MessageType.COMMUNICATION_REQUEST_RESPONSE,
-					recipientPublicKey = communicationRequest.message.senderPublicKey
+					recipientPublicKey = communicationRequest.message.senderPublicKey,
+					isMine = true
 				),
 				true
 			)
