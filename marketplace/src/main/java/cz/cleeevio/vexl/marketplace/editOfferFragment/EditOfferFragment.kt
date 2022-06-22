@@ -68,7 +68,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 					binding.newOfferFee.setValues(
 						FeeValue(
 							type = FeeButtonSelected.valueOf(offer.feeState),
-							value = offer.feeAmount.intValueExact()
+							value = offer.feeAmount.toFloat()
 						)
 					)
 					binding.newOfferLocation.setValues(offer.location, LocationButtonSelected.valueOf(offer.locationState))

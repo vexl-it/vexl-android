@@ -25,7 +25,7 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintBottom_toTopOf="@id/fee_divider">
+				app:layout_constraintBottom_toTopOf="@id/fee_value">
 
 				<RadioButton
 					android:id="@+id/fee_without"
@@ -52,30 +52,20 @@
 
 			</RadioGroup>
 
-			<View
-				android:id="@+id/fee_divider"
-				android:layout_width="0dp"
-				android:layout_height="1dp"
-				android:background="@color/grey_light"
-				app:layout_constraintTop_toBottomOf="@id/fee_radiogroup"
-				app:layout_constraintBottom_toTopOf="@id/fee_value"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				tools:visibility="gone" />
-
 			<TextView
 				android:id="@+id/fee_value"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
 				android:textSize="20sp"
 				android:textColor="@color/grey_light"
-				app:layout_constraintTop_toBottomOf="@id/fee_divider"
+				app:layout_constraintTop_toBottomOf="@id/fee_radiogroup"
 				app:layout_constraintBottom_toTopOf="@id/fee_bar"
 				app:layout_constraintStart_toStartOf="parent"
 				tools:visibility="gone"
 				tools:text="10%" />
 
-			<SeekBar
+			<com.google.android.material.slider.Slider
 				android:id="@+id/fee_bar"
 				android:layout_width="0dp"
 				android:layout_height="40dp"
@@ -83,7 +73,10 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintBottom_toBottomOf="parent"
-				tools:visibility="gone" />
+				app:thumbColor="@color/white"
+				app:tickColor="@null"
+				app:trackColorActive="@color/white"
+				app:trackColorInactive="@color/gray_3" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
