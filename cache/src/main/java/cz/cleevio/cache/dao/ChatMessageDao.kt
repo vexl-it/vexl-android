@@ -27,9 +27,9 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	fun getAllContactKeys(): List<String>
 
 	@Query(
-		"SELECT * FROM ChatMessageEntity WHERE type == :type ORDER BY time"
+		"SELECT * FROM ChatMessageEntity WHERE type == :type AND isMine == 0 ORDER BY time"
 	)
-	fun listAllMessagesByType(type: String): List<ChatMessageEntity>
+	fun listNotMyMessagesByType(type: String): List<ChatMessageEntity>
 
 	@Query("DELETE FROM ChatMessageEntity")
 	fun deleteAll()

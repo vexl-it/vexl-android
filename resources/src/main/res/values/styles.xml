@@ -550,7 +550,7 @@
 
 	<style name="Widget.Cleevio.Chat.SentMessage" parent="Widget.Cleevio.Chat.Message">
 		<item name="android:textColor">@color/black</item>
-		<item name="android:background">@drawable/background_chat_received_message</item>
+		<item name="android:background">@drawable/background_chat_sent_message</item>
 	</style>
 
 

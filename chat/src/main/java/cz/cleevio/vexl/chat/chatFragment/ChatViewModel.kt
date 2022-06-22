@@ -1,11 +1,14 @@
 package cz.cleevio.vexl.chat.chatFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
@@ -13,6 +16,9 @@ class ChatViewModel constructor(
 	private val chatRepository: ChatRepository,
 	val communicationRequest: CommunicationRequest
 ) : BaseViewModel() {
+
+	val _messageSentSuccessfully = MutableSharedFlow<Boolean>(replay = 1)
+	val messageSentSuccessfully = _messageSentSuccessfully.asSharedFlow()
 
 	val messages = communicationRequest.message.let { message ->
 		chatRepository.getMessages(
@@ -41,7 +47,7 @@ class ChatViewModel constructor(
 
 			val messageType = MessageType.TEXT
 
-			chatRepository.sendMessage(
+			val result = chatRepository.sendMessage(
 				senderPublicKey = senderPublicKey,
 				receiverPublicKey = receiverPublicKey,
 				message = ChatMessage(
@@ -54,6 +60,8 @@ class ChatViewModel constructor(
 				),
 				messageType = "MESSAGE"
 			)
+
+			_messageSentSuccessfully.emit(result.status == Status.Success)
 		}
 	}
 
