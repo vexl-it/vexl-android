@@ -83,7 +83,9 @@ class ChatRepositoryImpl constructor(
 			encryptedPreferenceRepository.userPublicKey
 		)
 
-		return inboxKeys.toList()
+		return inboxKeys.filter {
+			it.isNotBlank()
+		}.toList()
 	}
 
 	override fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>> =

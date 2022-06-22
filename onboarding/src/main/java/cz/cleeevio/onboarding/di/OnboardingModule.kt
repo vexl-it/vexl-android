@@ -22,6 +22,7 @@ val onboardingModule = module {
 
 	viewModel {
 		InitPhoneViewModel(
+			encryptedPreferences = get(),
 			userRepository = get()
 		)
 	}

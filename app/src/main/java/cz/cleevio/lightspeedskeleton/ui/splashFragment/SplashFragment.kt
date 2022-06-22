@@ -21,28 +21,20 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			viewModel.userFlow.collect { user ->
 
 				if (user != null) {
-						Timber.i("Navigating to marketplace")
-						delay(SPLASH_DELAY)
-						viewModel.navMainGraphModel.navigateToGraph(
-							NavMainGraphModel.NavGraph.Main
-						)
+					Timber.i("Navigating to marketplace")
+					delay(SPLASH_DELAY)
+					viewModel.navMainGraphModel.navigateToGraph(
+						NavMainGraphModel.NavGraph.Main
+					)
 				} else {
-					//debug: delete previous user, load new keys, continue to onboarding
+					// continue to onboarding
 					viewModel.deletePreviousUserAndLoadKeys()
-				}
-			}
-		}
 
-		repeatScopeOnStart {
-			viewModel.keysLoaded.collect { success ->
-				if (success) {
 					Timber.i("Navigating to onboarding")
 					delay(SPLASH_DELAY)
 					viewModel.navMainGraphModel.navigateToGraph(
 						NavMainGraphModel.NavGraph.Onboarding
 					)
-				} else {
-					//todo: inform user, or try again, or something
 				}
 			}
 		}

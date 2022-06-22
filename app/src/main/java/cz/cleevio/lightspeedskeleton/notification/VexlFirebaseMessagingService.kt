@@ -37,6 +37,9 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val type = remoteMessage.data[NOTIFICATION_TYPE] ?: NOTIFICATION_TYPE_DEFAULT
 
 		//todo: do some custom stuff here, check notification type, check DB, display or not
+		coroutineScope.launch {
+			chatRepository.syncAllMessages()
+		}
 		val intent = Intent(applicationContext, MainActivity::class.java)
 		intent.putExtra(NOTIFICATION_TYPE, type)
 		intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
