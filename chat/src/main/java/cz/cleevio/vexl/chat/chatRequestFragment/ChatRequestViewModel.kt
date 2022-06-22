@@ -34,12 +34,12 @@ class ChatRequestViewModel constructor(
 		}
 	}
 
-	fun acceptCommunicationRequest(communicationRequest: CommunicationRequest) {
+	fun processCommunicationRequest(communicationRequest: CommunicationRequest, approve: Boolean) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = chatRepository.confirmCommunicationRequest(
-				communicationRequest.offer?.offerId!!,
-				communicationRequest.message.senderPublicKey,
-				ChatMessage(
+				offerId = communicationRequest.offer?.offerId!!,
+				publicKeyToConfirm = communicationRequest.message.senderPublicKey,
+				message = ChatMessage(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = communicationRequest.message.senderPublicKey,
 					senderPublicKey = communicationRequest.offer?.offerPublicKey!!,
@@ -47,14 +47,17 @@ class ChatRequestViewModel constructor(
 					recipientPublicKey = communicationRequest.message.senderPublicKey,
 					isMine = true
 				),
-				true
+				approve = approve
 			)
 			if (response.status == Status.Success) {
 				chatRepository.deleteMessage(communicationRequest)
 			}
-			_communicationRequestResponse.emit(
-				Pair(communicationRequest, response)
-			)
+
+			if (approve) {
+				_communicationRequestResponse.emit(
+					Pair(communicationRequest, response)
+				)
+			}
 		}
 	}
 

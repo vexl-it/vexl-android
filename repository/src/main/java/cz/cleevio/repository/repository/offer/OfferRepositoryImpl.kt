@@ -74,14 +74,16 @@ class OfferRepositoryImpl constructor(
 		offerId: String,
 		privateKey: String,
 		publicKey: String,
-		offerType: String
+		offerType: String,
+		isInboxCreated: Boolean
 	): Resource<Unit> {
 		myOfferDao.replace(
 			MyOfferEntity(
 				extId = offerId,
 				privateKey = privateKey,
 				publicKey = publicKey,
-				offerType = offerType
+				offerType = offerType,
+				isInboxCreated = isInboxCreated
 			)
 		)
 		return Resource.success(data = Unit)
@@ -139,4 +141,8 @@ class OfferRepositoryImpl constructor(
 		},
 		mapper = { it?.items?.map { item -> item.fromNetwork() } }
 	)
+
+	override suspend fun getMyOffersWithoutInbox(): List<MyOffer> =
+		myOfferDao.getMyOffersWithoutInbox()
+			.map { it.fromCache() }
 }

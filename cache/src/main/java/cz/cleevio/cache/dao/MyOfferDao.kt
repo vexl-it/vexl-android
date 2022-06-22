@@ -32,4 +32,7 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 
 	@Query("SELECT COUNT(id) FROM MyOfferEntity where offerType  = :offerType")
 	suspend fun getMyOfferCount(offerType: String): Int
+
+	@Query("SELECT * FROM MyOfferEntity where isInboxCreated == 0")
+	suspend fun getMyOffersWithoutInbox(): List<MyOfferEntity>
 }

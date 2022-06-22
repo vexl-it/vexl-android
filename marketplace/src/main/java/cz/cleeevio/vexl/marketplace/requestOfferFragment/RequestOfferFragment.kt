@@ -9,6 +9,7 @@ import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentRequestOfferBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import kotlinx.coroutines.delay
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -76,7 +77,12 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 				viewModel.sendRequest(
 					text = messageText,
 					offerPublicKey = offerPublicKey
-				)
+				) {
+					Toast.makeText(requireContext(), "Communication request sent successfully", Toast.LENGTH_SHORT)
+						.show()
+					delay(1500)
+					findNavController().popBackStack()
+				}
 			}
 		}
 
