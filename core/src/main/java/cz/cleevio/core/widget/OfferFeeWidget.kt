@@ -3,7 +3,6 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import android.widget.SeekBar
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFeeBinding
@@ -19,7 +18,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 
 	private lateinit var binding: WidgetOfferFeeBinding
 	private var selectedButton: FeeButtonSelected = FeeButtonSelected.NONE
-	private var feeValue: Int = 0
+	private var feeValue: Float = FEE_MIN_VALUE
 
 	init {
 		setupUI()
@@ -41,34 +40,32 @@ class OfferFeeWidget @JvmOverloads constructor(
 			drawSeekbarSection(selectedButton)
 		}
 
-		binding.feeBar.max = FEE_MAX_VALUE
-		binding.feeBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-			override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-				updateFeeValue(progress)
-			}
-
-			override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
-			override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
-		})
+		binding.feeBar.value = FEE_MIN_VALUE
+		binding.feeBar.valueFrom = FEE_MIN_VALUE
+		binding.feeBar.valueTo = FEE_MAX_VALUE
+		binding.feeBar.addOnChangeListener { slider, value, fromUser ->
+			updateFeeValue(value)
+		}
 
 		//init values
-		updateFeeValue(0)
+		updateFeeValue(FEE_MIN_VALUE)
 		drawSeekbarSection(selectedButton)
 	}
 
 	private fun setupUI() {
 		binding = WidgetOfferFeeBinding.inflate(layoutInflater, this)
+
+		binding.feeBar.setCustomThumbDrawable(R.drawable.ic_picker)
 	}
 
 	private fun drawSeekbarSection(selectedButton: FeeButtonSelected) {
 		val visible = selectedButton == FeeButtonSelected.WITH_FEE
-		binding.feeDivider.isVisible = visible
 		binding.feeValue.isVisible = visible
 		binding.feeBar.isVisible = visible
 	}
 
-	private fun updateFeeValue(value: Int) {
-		feeValue = value.inc()
+	private fun updateFeeValue(value: Float) {
+		feeValue = value
 		binding.feeValue.text = context.getString(R.string.widget_fee_percent, feeValue.toString())
 	}
 
@@ -80,7 +77,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 	fun reset() {
 		selectedButton = FeeButtonSelected.WITHOUT_FEE
 		drawSeekbarSection(selectedButton)
-		updateFeeValue(0)
+		updateFeeValue(FEE_MIN_VALUE)
 	}
 
 	fun setValues(data: FeeValue) {
@@ -90,7 +87,8 @@ class OfferFeeWidget @JvmOverloads constructor(
 	}
 
 	companion object {
-		const val FEE_MAX_VALUE: Int = 24
+		const val FEE_MIN_VALUE = 1f
+		const val FEE_MAX_VALUE = 10f
 	}
 }
 

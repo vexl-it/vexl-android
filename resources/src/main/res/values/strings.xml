@@ -106,8 +106,8 @@
     <string name="filter_apply">Apply filter</string>
     <string name="filter_offers">Filter offers</string>
     <string name="widget_fee_without">Without fee</string>
-    <string name="widget_fee_ok">Fee OK</string>
-    <string name="widget_fee_percent">\u003C %s%%</string>
+    <string name="widget_fee_ok">With fee</string>
+    <string name="widget_fee_percent">%s%%</string>
     <string name="widget_location_online">Online OK</string>
     <string name="widget_location_in_person">Only in person</string>
     <string name="widget_trigger_price_title">Active when price is</string>
