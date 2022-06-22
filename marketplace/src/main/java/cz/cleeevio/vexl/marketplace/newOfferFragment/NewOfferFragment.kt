@@ -1,8 +1,7 @@
 package cz.cleeevio.vexl.marketplace.newOfferFragment
 
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.core.view.updatePadding
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.marketplace.R
@@ -58,17 +57,11 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		)
 
 		binding.descriptionCounter.text = getString(R.string.widget_offer_description_counter, 0, MAX_INPUT_LENGTH)
-		binding.newOfferDescription.addTextChangedListener(object : TextWatcher {
-			override fun afterTextChanged(s: Editable?) {
-			}
-
-			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-			}
-
-			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-				binding.descriptionCounter.text = getString(R.string.widget_offer_description_counter, count, MAX_INPUT_LENGTH)
-			}
-		})
+		binding.newOfferDescription.addTextChangedListener {
+			binding.descriptionCounter.text = getString(
+				R.string.widget_offer_description_counter, it?.length ?: 0, MAX_INPUT_LENGTH
+			)
+		}
 
 		binding.newOfferLocation.setFragmentManager(parentFragmentManager)
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)

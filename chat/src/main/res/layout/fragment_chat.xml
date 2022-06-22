@@ -164,6 +164,7 @@
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/message_edit"
 				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="18dp"
