@@ -2,7 +2,6 @@ package cz.cleevio.repository.model.offer
 
 import cz.cleevio.cache.entity.MyOfferEntity
 
-
 data class MyOffer constructor(
 	val offerId: String,
 	val privateKey: String,
