@@ -39,25 +39,25 @@ class NewOfferViewModel constructor(
 			val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
 
 			//load all public keys for specified level of friends
-			val contacts = when (params.friendLevel.value) {
+			val contactsPublicKeys = when (params.friendLevel.value) {
 				FriendLevel.NONE -> emptyList()
 				FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys()
 				FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
 				else -> emptyList()
+			}.map {
+				it.key // get just the keys
+			}.toMutableSet() // remove duplicities
+
+			//also add user's key
+			encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
+				contactsPublicKeys.add(myPublicKey)
 			}
 
 			val offerKeys = KeyPairCryptoLib.generateKeyPair()
-
 			//encrypt in loop for every contact
-			contacts.forEach { contactKeyWrapper ->
-				val encryptedOffer = OfferUtils.encryptOffer(locationHelper, params, contactKeyWrapper.key, offerKeys)
+			contactsPublicKeys.forEach { key ->
+				val encryptedOffer = OfferUtils.encryptOffer(locationHelper, params, key, offerKeys)
 				encryptedOfferList.add(encryptedOffer)
-			}
-
-			//also encrypt with user's key
-			encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
-				val myEncryptedOffer = OfferUtils.encryptOffer(locationHelper, params, myPublicKey, offerKeys)
-				encryptedOfferList.add(myEncryptedOffer)
 			}
 
 			//send all in single request to BE
