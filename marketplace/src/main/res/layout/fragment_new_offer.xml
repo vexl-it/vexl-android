@@ -64,7 +64,8 @@
 
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/new_offer_description"
-				style="@style/Widget.Vexl.Filters.EditText"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:background="@drawable/background_input_gray"

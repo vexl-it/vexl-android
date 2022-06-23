@@ -48,10 +48,12 @@
 
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/verify_phone_input"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="24dp"
-				android:textColor="@color/black"
+				android:textColor="@color/gray_4"
 				app:layout_constraintTop_toBottomOf="@id/verify_phone_subtitle"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
