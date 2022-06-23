@@ -158,9 +158,9 @@ class ChatRepositoryImpl constructor(
 				mapper = { it?.messages?.map { message -> message.fromNetwork(keyPair.publicKey) } },
 				//save messages to DB
 				doOnSuccess = { messages ->
-					chatMessageDao.insertAll(
-						messages?.map { it.toCache() } ?: listOf()
-					)
+					messages?.map { it.toCache() }?.let {
+						chatMessageDao.insertAll(it)
+					}
 				}
 			)
 			if (messagesResponse.status is Status.Error) {
@@ -226,7 +226,7 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit> = tryOnline(
-		request = { chatApi.deleteInboxesMessages(publicKey) },
+		request = { chatApi.deleteInboxesMessages(DeletionRequest(publicKey = publicKey)) },
 		mapper = { }
 	)
 
@@ -314,7 +314,7 @@ class ChatRepositoryImpl constructor(
 
 	override suspend fun deleteInbox(publicKey: String): Resource<Unit> = tryOnline(
 		request = {
-			chatApi.deleteInboxes(publicKey = publicKey)
+			chatApi.deleteInboxes(DeletionRequest(publicKey = publicKey))
 		},
 		mapper = { }
 	)
