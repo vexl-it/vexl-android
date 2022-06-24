@@ -27,11 +27,14 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"ORDER BY time DESC " +
 			"LIMIT 1"
 	)
-	fun getLatestBySenderAndRecipientKeys(inboxPublicKey: String, firstKey: String, secondKey: String): ChatMessageEntity?
+	fun getLatestBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): ChatMessageEntity?
 
 	//get all unique public keys of persons you have talked with
 	@Query(
-		"SELECT DISTINCT senderPublicKey FROM ChatMessageEntity WHERE senderPublicKey != inboxPublicKey AND type NOT IN ('COMMUNICATION_REQUEST', 'COMMUNICATION_REQUEST_RESPONSE')"
+		"SELECT DISTINCT senderPublicKey " +
+			"FROM ChatMessageEntity " +
+			"WHERE senderPublicKey != inboxPublicKey " +
+			" AND type NOT IN ('COMMUNICATION_REQUEST', 'COMMUNICATION_REQUEST_RESPONSE')"
 	)
 	fun getAllContactKeys(): List<String>
 

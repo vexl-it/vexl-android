@@ -360,7 +360,7 @@ class ChatRepositoryImpl constructor(
 		val inboxKeys = getMyInboxKeys()
 		inboxKeys.forEach { inboxKey ->
 			contactKeys.forEach { contactPublicKey ->
-				val latestMessage = chatMessageDao.getLatestBySenderAndRecipientKeys(
+				val latestMessage = chatMessageDao.getLatestBySenders(
 					inboxPublicKey = inboxKey,
 					firstKey = inboxKey,
 					secondKey = contactPublicKey
