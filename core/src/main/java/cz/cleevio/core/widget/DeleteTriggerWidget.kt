@@ -18,12 +18,14 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 	private lateinit var binding: WidgetTriggerDeleteBinding
-	private var type: DeleteTimeframe = DeleteTimeframe.NONE
+	private var type: DeleteTimeframe = DeleteTimeframe.DAYS
 
 	private var fragmentManager: FragmentManager? = null
 
 	init {
 		setupUI()
+
+		binding.deleteInput.setText("30")
 
 		binding.deleteTimeframe.setOnClickListener {
 			fragmentManager?.let { manager ->
@@ -70,8 +72,13 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 
 	//todo: connect to new offer, when BE ready
 	fun getValue(): DeleteOfferValue {
+		val value = try {
+			binding.deleteInput.text.toString().toInt()
+		} catch (e: NumberFormatException) {
+			30
+		}
 		return DeleteOfferValue(
-			value = binding.deleteInput.text.toString().toInt(),
+			value = value,
 			type = type
 		)
 	}
