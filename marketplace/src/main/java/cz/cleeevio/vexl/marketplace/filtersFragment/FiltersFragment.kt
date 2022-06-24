@@ -5,16 +5,26 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentFiltersBinding
+import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FiltersFragment : BaseFragment(R.layout.fragment_filters) {
 
 	private val binding by viewBinding(FragmentFiltersBinding::bind)
 	private val args by navArgs<FiltersFragmentArgs>()
 
+	private val currencyPriceChartViewModel by viewModel<CurrencyPriceChartViewModel>()
+
 	override fun bindObservers() {
+		repeatScopeOnStart {
+			currencyPriceChartViewModel.currentCryptoCurrencyPrice.collect { currentCryptoCurrencyPrice ->
+				binding.priceChart.setupData(currentCryptoCurrencyPrice)
+			}
+		}
 	}
 
 	override fun initView() {
