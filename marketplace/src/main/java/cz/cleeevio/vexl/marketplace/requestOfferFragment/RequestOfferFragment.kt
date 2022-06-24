@@ -3,13 +3,16 @@ package cz.cleeevio.vexl.marketplace.requestOfferFragment
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentRequestOfferBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -67,21 +70,27 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 			if (offerPublicKey.isNullOrBlank() || messageText.isBlank()) {
 				//show error/toast
 				if (offerPublicKey.isNullOrBlank()) {
-					Toast.makeText(requireActivity(), "Offer is missing public key", Toast.LENGTH_SHORT).show()
+					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+						Toast.makeText(requireActivity(), "Offer is missing public key", Toast.LENGTH_SHORT).show()
+					}
 				}
 
 				if (messageText.isBlank()) {
-					Toast.makeText(requireActivity(), "No message detected", Toast.LENGTH_SHORT).show()
+					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+						Toast.makeText(requireActivity(), "No message detected", Toast.LENGTH_SHORT).show()
+					}
 				}
 			} else {
 				viewModel.sendRequest(
 					text = messageText,
 					offerPublicKey = offerPublicKey
 				) {
-					Toast.makeText(requireContext(), "Communication request sent successfully", Toast.LENGTH_SHORT)
-						.show()
-					delay(1500)
-					findNavController().popBackStack()
+					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+						Toast.makeText(requireContext(), "Communication request sent successfully", Toast.LENGTH_SHORT)
+							.show()
+						delay(1500)
+						findNavController().popBackStack()
+					}
 				}
 			}
 		}

@@ -22,7 +22,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	//get all unique public keys of persons you have talked with
 	@Query(
-		"SELECT DISTINCT senderPublicKey FROM ChatMessageEntity WHERE senderPublicKey != inboxPublicKey"
+		"SELECT DISTINCT senderPublicKey FROM ChatMessageEntity WHERE senderPublicKey != inboxPublicKey AND type NOT IN ('COMMUNICATION_REQUEST', 'COMMUNICATION_REQUEST_RESPONSE')"
 	)
 	fun getAllContactKeys(): List<String>
 
