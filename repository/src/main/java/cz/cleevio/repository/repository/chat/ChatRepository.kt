@@ -20,7 +20,7 @@ interface ChatRepository {
 
 	suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit>
 
-	fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>>
+	fun getMessages(inboxPublicKey: String, firstKey: String, secondKey: String): SharedFlow<List<ChatMessage>>
 
 	suspend fun sendMessage(
 		senderPublicKey: String, receiverPublicKey: String, message: ChatMessage,

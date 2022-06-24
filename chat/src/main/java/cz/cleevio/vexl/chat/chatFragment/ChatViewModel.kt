@@ -23,10 +23,8 @@ class ChatViewModel constructor(
 	val messages = communicationRequest.message.let { message ->
 		chatRepository.getMessages(
 			inboxPublicKey = message.inboxPublicKey,
-			senderPublicKeys = listOf(
-				message.senderPublicKey,
-				message.recipientPublicKey
-			)
+			firstKey = message.senderPublicKey,
+			secondKey = message.recipientPublicKey
 		)
 	}
 
