@@ -25,12 +25,15 @@ class ChatContactListViewModel constructor(
 	private val _usersChattedWith = MutableStateFlow<List<ChatListUser>>(emptyList())
 	val usersChattedWith = _usersChattedWith.asStateFlow()
 
-	init {
+	fun refreshChats() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val data = chatRepository.loadChatUsers()
 			usersChattedWithList = data
 			emitUsers()
 		}
+	}
+
+	fun refreshChatRequests() {
 		viewModelScope.launch(Dispatchers.IO) {
 			//we need message, offer, something else? User?
 			val requests = chatRepository.loadCommunicationRequests()

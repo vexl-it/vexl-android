@@ -2,6 +2,7 @@ package cz.cleevio.vexl.chat.chatContactList
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.utils.repeatScopeOnResume
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
@@ -42,6 +43,10 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 					}
 				)
 			}
+		}
+		repeatScopeOnResume {
+			viewModel.refreshChats()
+			viewModel.refreshChatRequests()
 		}
 	}
 

@@ -88,8 +88,8 @@ class ChatRepositoryImpl constructor(
 		}.toList()
 	}
 
-	override fun getMessages(inboxPublicKey: String, senderPublicKeys: List<String>): SharedFlow<List<ChatMessage>> =
-		chatMessageDao.listAllBySenders(inboxPublicKey = inboxPublicKey, senderPublicKeys = senderPublicKeys)
+	override fun getMessages(inboxPublicKey: String, firstKey: String, secondKey: String): SharedFlow<List<ChatMessage>> =
+		chatMessageDao.listAllBySenders(inboxPublicKey = inboxPublicKey, firstKey = firstKey, secondKey = secondKey)
 			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
 			.shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, replay = 1)
 
@@ -362,7 +362,8 @@ class ChatRepositoryImpl constructor(
 			contactKeys.forEach { contactPublicKey ->
 				val latestMessage = chatMessageDao.getLatestBySenders(
 					inboxPublicKey = inboxKey,
-					senderPublicKeys = listOf(inboxKey, contactPublicKey)
+					firstKey = inboxKey,
+					secondKey = contactPublicKey
 				)?.fromCache()
 
 				if (latestMessage != null && latestMessage.type != MessageType.COMMUNICATION_REQUEST) {

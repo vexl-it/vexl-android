@@ -9,20 +9,32 @@ import kotlinx.coroutines.flow.Flow
 interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	@Query(
-		"SELECT * FROM ChatMessageEntity WHERE inboxPublicKey == :inboxPublicKey" +
-			" AND senderPublicKey IN (:senderPublicKeys) AND recipientPublicKey IN (:senderPublicKeys) ORDER BY time"
+		"SELECT * " +
+			"FROM ChatMessageEntity " +
+			"WHERE inboxPublicKey == :inboxPublicKey" +
+			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			"ORDER BY time"
 	)
-	fun listAllBySenders(inboxPublicKey: String, senderPublicKeys: List<String>): Flow<List<ChatMessageEntity>>
+	fun listAllBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<List<ChatMessageEntity>>
 
 	@Query(
-		"SELECT * FROM ChatMessageEntity WHERE inboxPublicKey == :inboxPublicKey" +
-			" AND senderPublicKey IN (:senderPublicKeys) ORDER BY time DESC LIMIT 1"
+		"SELECT * " +
+			"FROM ChatMessageEntity " +
+			"WHERE inboxPublicKey == :inboxPublicKey" +
+			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			"ORDER BY time DESC " +
+			"LIMIT 1"
 	)
-	fun getLatestBySenders(inboxPublicKey: String, senderPublicKeys: List<String>): ChatMessageEntity?
+	fun getLatestBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): ChatMessageEntity?
 
 	//get all unique public keys of persons you have talked with
 	@Query(
-		"SELECT DISTINCT senderPublicKey FROM ChatMessageEntity WHERE senderPublicKey != inboxPublicKey"
+		"SELECT DISTINCT senderPublicKey " +
+			"FROM ChatMessageEntity " +
+			"WHERE senderPublicKey != inboxPublicKey " +
+			" AND type NOT IN ('COMMUNICATION_REQUEST', 'COMMUNICATION_REQUEST_RESPONSE')"
 	)
 	fun getAllContactKeys(): List<String>
 
