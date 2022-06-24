@@ -8,6 +8,7 @@ import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetTriggerDeleteBinding
 import cz.cleevio.core.model.DeleteOfferValue
 import lightbase.core.extensions.layoutInflater
+import timber.log.Timber
 import java.util.*
 
 //todo: should we have default values for delete trigger?
@@ -75,6 +76,7 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 		val value = try {
 			binding.deleteInput.text.toString().toInt()
 		} catch (e: NumberFormatException) {
+			Timber.w("Invalid number for delete trigger")
 			30
 		}
 		return DeleteOfferValue(
