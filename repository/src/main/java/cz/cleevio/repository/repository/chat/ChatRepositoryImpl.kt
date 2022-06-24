@@ -158,9 +158,9 @@ class ChatRepositoryImpl constructor(
 				mapper = { it?.messages?.map { message -> message.fromNetwork(keyPair.publicKey) } },
 				//save messages to DB
 				doOnSuccess = { messages ->
-					chatMessageDao.insertAll(
-						messages?.map { it.toCache() } ?: listOf()
-					)
+					messages?.map { it.toCache() }?.let {
+						chatMessageDao.insertAll(it)
+					}
 				}
 			)
 			if (messagesResponse.status is Status.Error) {
@@ -226,7 +226,7 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit> = tryOnline(
-		request = { chatApi.deleteInboxesMessages(publicKey) },
+		request = { chatApi.deleteInboxesMessages(DeletionRequest(publicKey = publicKey)) },
 		mapper = { }
 	)
 
@@ -277,8 +277,11 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun confirmCommunicationRequest(
-		offerId: String, publicKeyToConfirm: String,
-		message: ChatMessage, approve: Boolean
+		offerId: String,
+		publicKeyToConfirm: String,
+		message: ChatMessage,
+		originalRequestMessage: ChatMessage,
+		approve: Boolean
 	): Resource<Unit> {
 		val myOfferKeyPair = myOfferDao.getOfferKeysByExtId(offerId)
 		val senderKeyPair = KeyPair(
@@ -305,7 +308,10 @@ class ChatRepositoryImpl constructor(
 						)
 					)
 				},
-				mapper = { }
+				mapper = { },
+				doOnSuccess = {
+					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
+				}
 			)
 
 			confirmResponse
@@ -314,7 +320,7 @@ class ChatRepositoryImpl constructor(
 
 	override suspend fun deleteInbox(publicKey: String): Resource<Unit> = tryOnline(
 		request = {
-			chatApi.deleteInboxes(publicKey = publicKey)
+			chatApi.deleteInboxes(DeletionRequest(publicKey = publicKey))
 		},
 		mapper = { }
 	)
@@ -322,7 +328,7 @@ class ChatRepositoryImpl constructor(
 	override suspend fun loadCommunicationRequests(): List<CommunicationRequest> {
 		val result: MutableList<CommunicationRequest> = mutableListOf()
 		//get all communication requests
-		val communicationRequests = chatMessageDao.listNotMyMessagesByType(MessageType.COMMUNICATION_REQUEST.name)
+		val communicationRequests = chatMessageDao.listAllPendingCommunicationMessages()
 			.map { it.fromCache() }
 
 		communicationRequests.forEach { message ->

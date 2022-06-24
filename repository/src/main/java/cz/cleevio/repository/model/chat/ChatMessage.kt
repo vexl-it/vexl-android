@@ -23,7 +23,8 @@ data class ChatMessage constructor(
 	val time: Long = System.currentTimeMillis(),
 	val deanonymizedUser: ChatUser? = null,
 	//custom flags
-	val isMine: Boolean
+	val isMine: Boolean,
+	val isProcessed: Boolean
 ) : Parcelable
 
 @Parcelize
@@ -46,7 +47,8 @@ fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
 		?.copy(inboxPublicKey = inboxPublicKey, senderPublicKey = this.senderPublicKey)
 	return chatMessage?.fromNetwork(inboxPublicKey) ?: ChatMessage(
 		uuid = "broken", type = MessageType.BROKEN, time = System.currentTimeMillis(),
-		inboxPublicKey = "", senderPublicKey = "", recipientPublicKey = "", isMine = false
+		inboxPublicKey = "", senderPublicKey = "", recipientPublicKey = "",
+		isMine = false, isProcessed = false
 	)
 }
 
@@ -61,7 +63,8 @@ fun ChatMessageRequest.fromNetwork(recipientPublicKey: String): ChatMessage {
 		type = MessageType.valueOf(this.type),
 		time = this.time,
 		deanonymizedUser = this.deanonymizedUser?.fromNetwork(),
-		isMine = false
+		isMine = false,
+		isProcessed = false
 	)
 }
 
@@ -109,7 +112,8 @@ fun ChatMessage.toCache(): ChatMessageEntity = ChatMessageEntity(
 	time = this.time,
 	deAnonName = this.deanonymizedUser?.name,
 	deAnonImage = this.deanonymizedUser?.image,
-	isMine = this.isMine
+	isMine = this.isMine,
+	isProcessed = this.isProcessed
 )
 
 fun ChatMessageEntity.fromCache(): ChatMessage {
@@ -129,6 +133,7 @@ fun ChatMessageEntity.fromCache(): ChatMessage {
 		type = MessageType.valueOf(this.type),
 		time = this.time,
 		deanonymizedUser = chatUser,
-		isMine = this.isMine
+		isMine = this.isMine,
+		isProcessed = this.isProcessed
 	)
 }

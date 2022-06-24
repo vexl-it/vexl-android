@@ -3,6 +3,7 @@ package cz.cleeevio.vexl.marketplace.marketplaceFragment.offers
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import cz.cleeevio.vexl.marketplace.R
@@ -12,6 +13,7 @@ import cz.cleevio.core.utils.getDrawable
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import lightbase.core.baseClasses.BaseFragment
+import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -58,6 +60,10 @@ sealed class OffersBaseFragment constructor(
 	}
 
 	override fun initView() {
+		listenForInsets(binding.offersContainer) { insets ->
+			binding.offerList.updatePadding(bottom = 2 * insets.bottom)    // 2x because of once per size of the inset, and twice for the inset of the bottom menu
+		}
+
 		adapter = OffersAdapter(requestOffer)
 		binding.offerList.adapter = adapter
 

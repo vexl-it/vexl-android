@@ -29,7 +29,9 @@
 
 		<action
 			android:id="@+id/proceed_to_chatFragment"
-			app:destination="@id/chatFragment" />
+			app:destination="@id/chatFragment"
+			app:popUpTo="@id/chatRequestFragment"
+			app:popUpToInclusive="true" />
 
 	</fragment>
 

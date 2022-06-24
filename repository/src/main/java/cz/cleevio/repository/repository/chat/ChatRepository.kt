@@ -32,8 +32,11 @@ interface ChatRepository {
 	suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit>
 
 	suspend fun confirmCommunicationRequest(
-		offerId: String, publicKeyToConfirm: String,
-		message: ChatMessage, approve: Boolean
+		offerId: String,
+		publicKeyToConfirm: String,
+		message: ChatMessage,
+		originalRequestMessage: ChatMessage,
+		approve: Boolean
 	): Resource<Unit>
 
 	suspend fun deleteInbox(publicKey: String): Resource<Unit>

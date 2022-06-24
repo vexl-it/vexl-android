@@ -5,12 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import cz.cleevio.core.R
 import cz.cleevio.repository.model.chat.CommunicationRequest
-import cz.cleevio.repository.model.offer.Location
-import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.chat.databinding.ItemChatRequestBinding
-import java.math.BigDecimal
-import java.time.ZonedDateTime
 
 class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.ViewHolder>(
 	object : DiffUtil.ItemCallback<CommunicationRequest>() {
@@ -28,37 +25,18 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: CommunicationRequest) {
-
-			//todo: we will also need message and offer
-			//fixme: debug data
-			var debugDescription = "Nejaky popisek offeru"
-			val debugOffer = Offer(
-				id = 100,
-				offerId = "ab123",
-				location = listOf(Location(BigDecimal(100.0), BigDecimal(40.0), BigDecimal(1.0))),
-				userPublicKey = "",
-				offerPublicKey = "",
-				offerDescription = debugDescription,
-				amountBottomLimit = BigDecimal(100),
-				amountTopLimit = BigDecimal(15000),
-				feeState = "",
-				feeAmount = BigDecimal(0),
-				locationState = "",
-				paymentMethod = listOf("CASH", "REVOLUT"),
-				btcNetwork = listOf(),
-				friendLevel = "",
-				offerType = "BUY",
-				activePriceState = "PRICE_IS_ABOVE",
-				activePriceValue = BigDecimal(10000),
-				active = true,
-				commonFriends = listOf("XXX", "YYY"),
-				createdAt = ZonedDateTime.now(),
-				modifiedAt = ZonedDateTime.now()
-			)
-			binding.userName.text = "Sakurote is buying"
-			binding.userType.text = "Friend of Friend"
-			binding.requestMessage.text = "Tohle je zprava od jineho uzivatele"
-			binding.offerWidget.bind(debugOffer)
+			binding.userName.text = if (item.offer?.offerType == "SELL") {
+				binding.userName.resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
+			} else {
+				binding.userName.resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
+			}
+			binding.userType.text = if (item.offer?.friendLevel == "FIRST") {
+				binding.userType.resources.getString(R.string.marketplace_detail_friend_first)
+			} else {
+				binding.userType.resources.getString(R.string.marketplace_detail_friend_second)
+			}
+			binding.requestMessage.text = item.message.text
+			binding.offerWidget.bind(item.offer!!)
 		}
 	}
 

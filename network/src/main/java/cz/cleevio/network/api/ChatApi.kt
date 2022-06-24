@@ -6,7 +6,10 @@ import cz.cleevio.network.response.chat.InboxResponse
 import cz.cleevio.network.response.chat.MessagesResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.HTTP
+import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ChatApi {
 
@@ -55,15 +58,15 @@ interface ChatApi {
 	): Response<ResponseBody>
 
 	//delete whole inbox
-	@DELETE("inboxes/{publicKey}")
+	@HTTP(method = "DELETE", path = "inboxes", hasBody = true)
 	suspend fun deleteInboxes(
-		@Path(value = "publicKey") publicKey: String
+		@Body deletionRequest: DeletionRequest
 	): Response<ResponseBody>
 
 	//delete pulled messages
-	@DELETE("inboxes/{publicKey}/messages")
+	@HTTP(method = "DELETE", path = "inboxes/messages", hasBody = true)
 	suspend fun deleteInboxesMessages(
-		@Path(value = "publicKey") publicKey: String
+		@Body deletionRequest: DeletionRequest
 	): Response<ResponseBody>
 
 	//create a new challenge

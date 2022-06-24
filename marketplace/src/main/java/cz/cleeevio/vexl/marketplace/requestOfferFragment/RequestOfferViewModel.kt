@@ -44,7 +44,8 @@ class RequestOfferViewModel constructor(
 					text = text,
 					type = MessageType.COMMUNICATION_REQUEST,
 					time = System.currentTimeMillis(),
-					isMine = true
+					isMine = true,
+					isProcessed = false
 				)
 			)
 			when (response.status) {
