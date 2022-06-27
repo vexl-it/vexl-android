@@ -373,7 +373,8 @@ class ChatRepositoryImpl constructor(
 						ChatListUser(
 							message = latestMessage,
 							offer = offerDao.getAllOffersWithLocations().filter {
-								it.offer.offerPublicKey == latestMessage.recipientPublicKey || it.offer.offerPublicKey == latestMessage.senderPublicKey
+								it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
+									it.offer.offerPublicKey == latestMessage.senderPublicKey
 							}.map {
 								it.offer.fromCache(it.locations)
 							}.first()
