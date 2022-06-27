@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.marketplace.myOffersFragment
 
+import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -7,6 +8,7 @@ import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentMyOffersBinding
 import cz.cleeevio.vexl.marketplace.marketplaceFragment.offers.OffersAdapter
 import cz.cleevio.core.model.OfferType
+import cz.cleevio.core.utils.ChipViewUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.OfferWidget
@@ -35,6 +37,12 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 				adapter.submitList(offers)
 			}
 		}
+
+		repeatScopeOnStart {
+			viewModel.offersCount.collect { myOffersCount ->
+				binding.myOffersActive.text = getString(R.string.offer_active_count, myOffersCount)
+			}
+		}
 	}
 
 	override fun initView() {
@@ -44,6 +52,16 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 				bottom = insets.bottom
 			)
 		}
+
+		binding.myOffersSort.addView(ChipViewUtils.generateChipView(
+			context = requireContext(),
+			icon = R.drawable.ic_chevron_down,
+			iconAtStart = false,
+			filter = getString(R.string.offer_sort_newest),
+			listener = {
+				Toast.makeText(requireActivity(), "Sort not implemented yet", Toast.LENGTH_SHORT).show()
+			}
+		))
 
 		adapter = OffersAdapter(onInteractWithOffer, OfferWidget.Mode.MY_OFFER)
 		binding.myOffersList.adapter = adapter
@@ -55,7 +73,7 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 			}
 		)
 
-		binding.myOffersNew.text = when (args.offerType) {
+		binding.addButtonText.text = when (args.offerType) {
 			OfferType.BUY -> getString(R.string.offer_create_buy_title)
 			OfferType.SELL -> getString(R.string.offer_create_sell_title)
 		}

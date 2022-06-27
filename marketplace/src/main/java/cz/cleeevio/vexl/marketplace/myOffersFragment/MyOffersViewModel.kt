@@ -19,6 +19,9 @@ class MyOffersViewModel constructor(
 	private val _offers = MutableSharedFlow<List<Offer>>(replay = 1)
 	val offers = _offers.asSharedFlow()
 
+	private val _offersCount = MutableSharedFlow<Int>(replay = 1)
+	val offersCount = _offersCount.asSharedFlow()
+
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.getOffersFlow().map { list ->
@@ -26,6 +29,10 @@ class MyOffersViewModel constructor(
 			}.collect {
 				_offers.emit(it)
 			}
+		}
+
+		viewModelScope.launch(Dispatchers.IO) {
+			_offersCount.emit(offerRepository.getMyOffersCount(offerType.name))
 		}
 	}
 }

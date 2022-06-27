@@ -310,7 +310,7 @@
 	<style name="Widget.Vexl.OfferButton.Edit" parent="">
 		<item name="android:layout_height">48dp</item>
 		<item name="tint">@color/yellow_100</item>
-		<item name="android:backgroundTint">@color/yellow_20</item>
+		<item name="android:backgroundTint">@color/edit_offer_btn_background</item>
 		<item name="android:textColor">@color/yellow_100</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.OfferButton</item>
 		<item name="android:paddingTop">15.5dp</item>
@@ -322,6 +322,11 @@
 
 	<style name="Widget.Vexl.AddButton" parent="">
 		<item name="android:background">@drawable/background_button_black_10</item>
+		<item name="android:foreground">@drawable/ripple_mask_10</item>
+	</style>
+
+	<style name="Widget.Vexl.EditOffer.AddButton" parent="">
+		<item name="android:background">@drawable/background_button_pink_13</item>
 		<item name="android:foreground">@drawable/ripple_mask_10</item>
 	</style>
 

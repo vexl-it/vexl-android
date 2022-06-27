@@ -119,6 +119,9 @@
     <string name="offer_create_buy_title">New Buy Offer</string>
     <string name="offer_to_sell">to sell</string>
     <string name="offer_to_buy">to buy</string>
+    <string name="offer_active_count">%s active offers</string>
+    <string name="offer_sort_newest">Sorted by newest</string>
+    <string name="offer_sort_oldest">Sorted by oldest</string>
     <string name="offer_my_offer">My offer</string>
     <string name="offer_edit">Edit offer</string>
     <string name="offer_added">Added %s</string>
