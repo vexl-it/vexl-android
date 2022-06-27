@@ -66,6 +66,12 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		binding.newOfferLocation.setFragmentManager(parentFragmentManager)
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
+		binding.newOfferBtn.setText(
+			when (args.offerType) {
+				OfferType.BUY -> getString(R.string.offer_create_buy_btn)
+				OfferType.SELL -> getString(R.string.offer_create_sell_btn)
+			}
+		)
 		binding.newOfferBtn.setOnClickListener {
 			val params = OfferParams(
 				description = binding.newOfferDescription.text.toString(),

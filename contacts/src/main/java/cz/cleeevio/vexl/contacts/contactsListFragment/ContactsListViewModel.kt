@@ -32,24 +32,29 @@ class ContactsListViewModel constructor(
 
 	private fun checkNotSyncedContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
+			//get all contacts from phone
 			val localContacts = contactRepository.getContacts()
 
+			//send all contacts to BE, hashed by HMAC-256
+			//BE returns list of contacts that user didn't import previously
 			val notSyncedIdentifiers = contactRepository.checkAllContacts(
 				localContacts.map { contact ->
 					contact.phoneNumber
 				}.filter {
 					it.isNotBlank() && it.isPhoneValid()
-				}.map {
-					HmacCryptoLib.digest(HMAC_PASSWORD, it)
+				}.map { validPhoneNumber ->
+					HmacCryptoLib.digest(HMAC_PASSWORD, validPhoneNumber)
 				}
 			)
 
+			//now we take list all contacts from phone and keep only contacts that BE returned (keeping only NOT imported contacts)
 			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
 				notSyncedContactsList = localContacts.filter { contact ->
 					notSyncedPhoneNumbers.contains(
 						HmacCryptoLib.digest(HMAC_PASSWORD, contact.phoneNumber)
 					)
 				}
+				//we emit those contacts to UI and show it to user
 				emitContacts(notSyncedContactsList)
 			}
 		}

@@ -26,6 +26,8 @@ interface UserRepository {
 
 	suspend fun getUser(): User?
 
+	suspend fun getUserMe(): Resource<User?>
+
 	suspend fun getUserFullname(): UserProfile?
 
 	suspend fun registerUser(username: String, avatar: String, avatarImageExtension: String): Resource<User>

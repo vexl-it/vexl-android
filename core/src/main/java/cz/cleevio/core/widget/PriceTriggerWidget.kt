@@ -33,13 +33,13 @@ class PriceTriggerWidget @JvmOverloads constructor(
 		)
 	}
 
-	fun getTriggerType(): TriggerType = when (binding.priceTriggerType.checkedRadioButtonId) {
+	private fun getTriggerType(): TriggerType = when (binding.priceTriggerType.checkedRadioButtonId) {
 		R.id.price_below -> TriggerType.PRICE_IS_BELOW
 		R.id.price_above -> TriggerType.PRICE_IS_ABOVE
 		else -> TriggerType.NONE
 	}
 
-	fun getTriggerValue(): BigDecimal? {
+	private fun getTriggerValue(): BigDecimal? {
 		val currentValue = binding.priceEdit.text.toString()
 		if (currentValue.isNotBlank()) {
 			try {
@@ -55,6 +55,24 @@ class PriceTriggerWidget @JvmOverloads constructor(
 		type = getTriggerType(),
 		value = getTriggerValue()
 	)
+
+	fun setPriceTriggerValue(data: PriceTriggerValue) {
+		when (data.type) {
+			TriggerType.NONE -> {
+				binding.priceBelow.isChecked = false
+				binding.priceAbove.isChecked = false
+			}
+			TriggerType.PRICE_IS_BELOW -> {
+				binding.priceBelow.isChecked = true
+				binding.priceAbove.isChecked = false
+			}
+			TriggerType.PRICE_IS_ABOVE -> {
+				binding.priceBelow.isChecked = false
+				binding.priceAbove.isChecked = true
+			}
+		}
+		binding.priceEdit.setText(data.value.toString())
+	}
 }
 
 enum class TriggerType {

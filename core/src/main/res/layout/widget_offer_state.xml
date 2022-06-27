@@ -12,13 +12,13 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="@style/TextAppearance.Vexl.Offer.State.Active"
-			android:textColor="@color/green_100"
 			android:paddingHorizontal="16dp"
 			android:drawablePadding="8dp"
-			app:drawableStartCompat="@drawable/ic_ellipse_green"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
+			tools:drawableStart="@drawable/ic_ellipse_green"
+			tools:textColor="@color/green_100"
 			tools:text="Active" />
 
 		<com.google.android.material.card.MaterialCardView
@@ -49,9 +49,9 @@
 			app:layout_constraintEnd_toStartOf="@id/state_delete">
 
 			<TextView
+				android:id="@+id/state_pause_text"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/widget_offer_state_pause"
 				app:drawableStartCompat="@drawable/ic_pause"
 				android:drawablePadding="6dp"
 				android:padding="8dp"

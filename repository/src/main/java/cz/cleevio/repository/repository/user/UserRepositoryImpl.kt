@@ -90,6 +90,11 @@ class UserRepositoryImpl constructor(
 
 	override suspend fun getUser(): User? = userDao.getUser()?.fromDao()
 
+	override suspend fun getUserMe(): Resource<User?> = tryOnline(
+		request = { userRestApi.getUserMe() },
+		mapper = { it?.fromNetwork() }
+	)
+
 	override suspend fun getUserFullname(): UserProfile? {
 		val user = userDao.getUser() ?: return null
 		return UserProfile(
