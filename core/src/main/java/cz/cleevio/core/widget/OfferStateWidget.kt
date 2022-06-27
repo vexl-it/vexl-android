@@ -3,6 +3,8 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.ContextCompat.getColor
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferStateBinding
 import lightbase.core.extensions.layoutInflater
@@ -16,7 +18,7 @@ class OfferStateWidget @JvmOverloads constructor(
 	private lateinit var binding: WidgetOfferStateBinding
 
 	private var onDelete: () -> Unit = {}
-	private var onPause: () -> Unit = {}
+	private var onChangeActiveState: () -> Unit = {}
 
 	init {
 		setupUI()
@@ -26,7 +28,7 @@ class OfferStateWidget @JvmOverloads constructor(
 		}
 
 		binding.statePause.setOnClickListener {
-			onPause()
+			onChangeActiveState()
 		}
 	}
 
@@ -35,16 +37,25 @@ class OfferStateWidget @JvmOverloads constructor(
 	}
 
 	fun setActive(active: Boolean) {
-		//todo: also update text color and icon color
 		if (active) {
 			binding.stateActive.text = context.getText(R.string.widget_offer_state_active)
+			binding.stateActive.setTextColor(getColor(context, R.color.green_100))
+			binding.stateActive.setCompoundDrawablesWithIntrinsicBounds(
+				getDrawable(context, R.drawable.ic_ellipse_green), null, null, null
+			)
+			binding.statePauseText.text = context.getText(R.string.widget_offer_state_pause)
 		} else {
 			binding.stateActive.text = context.getText(R.string.widget_offer_state_inactive)
+			binding.stateActive.setTextColor(getColor(context, R.color.gray_4))
+			binding.stateActive.setCompoundDrawablesWithIntrinsicBounds(
+				getDrawable(context, R.drawable.ic_ellipse_gray), null, null, null
+			)
+			binding.statePauseText.text = context.getText(R.string.widget_offer_state_activate)
 		}
 	}
 
-	fun setListeners(onDelete: () -> Unit, onPause: () -> Unit) {
+	fun setListeners(onDelete: () -> Unit, onChangeActiveState: () -> Unit) {
 		this.onDelete = onDelete
-		this.onPause = onPause
+		this.onChangeActiveState = onChangeActiveState
 	}
 }

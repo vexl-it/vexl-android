@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import lightbase.core.baseClasses.BaseViewModel
 
 
@@ -30,13 +31,13 @@ class EditOfferViewModel constructor(
 	private val locationHelper: LocationHelper
 ) : BaseViewModel() {
 
-	private val _updateOfferRequest = MutableSharedFlow<Resource<Offer>>()
-	val updateOfferRequest = _updateOfferRequest.asSharedFlow()
+	private val _errorFlow = MutableSharedFlow<Resource<Any>>()
+	val errorFlow = _errorFlow.asSharedFlow()
 
 	private val _offer = MutableStateFlow<Offer?>(null)
 	val offer = _offer.asStateFlow()
 
-	fun loadOfferById(offerId: String) {
+	fun loadOfferFromCacheById(offerId: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.getOffersFlow().collect { offers ->
 				_offer.emit(
@@ -46,23 +47,13 @@ class EditOfferViewModel constructor(
 		}
 	}
 
-	fun updateOffer(offerId: String, params: OfferParams) {
+	fun updateOffer(offerId: String, params: OfferParams, onSuccess: () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 
-			_updateOfferRequest.emit(Resource.loading())
 			val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
-
-			//load all public keys for specified level of friends
-			val contacts = when (params.friendLevel.value) {
-				FriendLevel.NONE -> emptyList()
-				FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys()
-				FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
-				else -> emptyList()
-			}
-
 			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = offerId)
 			if (offerKeys == null) {
-				_updateOfferRequest.emit(
+				_errorFlow.emit(
 					Resource.error(
 						ErrorIdentification.MessageError(message = R.string.error_missing_offer_keys)
 					)
@@ -70,16 +61,24 @@ class EditOfferViewModel constructor(
 				return@launch
 			}
 
-			//encrypt in loop for every contact
-			contacts.forEach { contactKeyWrapper ->
-				val encryptedOffer = OfferUtils.encryptOffer(locationHelper, params, contactKeyWrapper.key, offerKeys)
-				encryptedOfferList.add(encryptedOffer)
+			//load all public keys for specified level of friends
+			val contactsPublicKeys = when (params.friendLevel.value) {
+				FriendLevel.NONE -> emptyList()
+				FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys()
+				FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
+				else -> emptyList()
+			}.map {
+				it.key // get just the keys
+			}.toMutableSet() // remove duplicities
+
+			//also add user's key
+			encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
+				contactsPublicKeys.add(myPublicKey)
 			}
 
-			//also encrypt with user's key
-			encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
-				val myEncryptedOffer = OfferUtils.encryptOffer(locationHelper, params, myPublicKey, offerKeys)
-				encryptedOfferList.add(myEncryptedOffer)
+			contactsPublicKeys.forEach { key ->
+				val encryptedOffer = OfferUtils.encryptOffer(locationHelper, params, key, offerKeys)
+				encryptedOfferList.add(encryptedOffer)
 			}
 
 			//send all in single request to BE
@@ -89,10 +88,36 @@ class EditOfferViewModel constructor(
 			)
 			when (response.status) {
 				is Status.Success -> {
-					_updateOfferRequest.emit(response)
+					val updateResponse = offerRepository.refreshOffer(offerId)
+					when (updateResponse.status) {
+						is Status.Success -> {
+							withContext(Dispatchers.Main) {
+								onSuccess()
+							}
+						}
+						is Status.Error -> {
+							_errorFlow.emit(Resource.error(updateResponse.errorIdentification))
+						}
+					}
 				}
 				is Status.Error -> {
-					_updateOfferRequest.emit(Resource.error(response.errorIdentification))
+					_errorFlow.emit(Resource.error(response.errorIdentification))
+				}
+			}
+		}
+	}
+
+	fun deleteOffer(offerId: String, onSuccess: () -> Unit) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val response = offerRepository.deleteOfferById(offerId)
+			when (response.status) {
+				is Status.Success -> {
+					withContext(Dispatchers.Main) {
+						onSuccess()
+					}
+				}
+				is Status.Error -> {
+					_errorFlow.emit(Resource.error(response.errorIdentification))
 				}
 			}
 		}

@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 @Parcelize
 @Suppress("DataClassShouldBeImmutable")
 data class Offer constructor(
-	val id: Long = 0,
+	val databaseId: Long = 0,
 	val offerId: String,
 	val location: List<Location>,
 	val userPublicKey: String,
@@ -64,7 +64,7 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 
 fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 	return Offer(
-		id = this.id,
+		databaseId = this.id,
 		offerId = this.offerId,
 		location = locations.map { it.fromCache() },
 		userPublicKey = this.userPublicKey,
@@ -91,7 +91,7 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 
 fun Offer.toCache(): OfferEntity {
 	return OfferEntity(
-		id = this.id,
+		id = this.databaseId,
 		offerId = this.offerId,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,

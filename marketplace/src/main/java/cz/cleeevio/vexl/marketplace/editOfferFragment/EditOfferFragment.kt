@@ -7,10 +7,7 @@ import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentEditOfferBinding
 import cz.cleeevio.vexl.marketplace.newOfferFragment.NewOfferFragment
-import cz.cleevio.core.model.FeeValue
-import cz.cleevio.core.model.OfferParams
-import cz.cleevio.core.model.OfferType
-import cz.cleevio.core.model.toUnixTimestamp
+import cz.cleevio.core.model.*
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
@@ -19,6 +16,7 @@ import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import lightbase.core.extensions.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
@@ -30,20 +28,15 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.updateOfferRequest.collect { resource ->
-				when (resource.status) {
-					is Status.Success -> {
-						findNavController().popBackStack()
-					}
-					is Status.Error -> {
-						//show error toast
-						resource.errorIdentification.message?.let { messageCode ->
-							if (messageCode != -1) {
-								showSnackbar(
-									view = binding.container,
-									message = getString(messageCode)
-								)
-							}
+			viewModel.errorFlow.collect { resource ->
+				if (resource.status is Status.Error) {
+					//show error toast
+					resource.errorIdentification.message?.let { messageCode ->
+						if (messageCode != -1) {
+							showSnackbar(
+								view = binding.container,
+								message = getString(messageCode)
+							)
 						}
 					}
 				}
@@ -53,15 +46,40 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		repeatScopeOnStart {
 			viewModel.offer.collect {
 				it?.let { offer ->
-					//todo: set values from offer
+					Timber.tag("OFFER").d("$offer")
 					binding.newOfferTitle.setTypeAndTitle(
 						when (OfferType.valueOf(offer.offerType)) {
-							OfferType.BUY -> getString(R.string.offer_create_buy_title)
-							OfferType.SELL -> getString(R.string.offer_create_sell_title)
+							OfferType.BUY -> getString(R.string.offer_edit_buy_title)
+							OfferType.SELL -> getString(R.string.offer_edit_sell_title)
 						}
 					)
 
-					//todo: add offer state widget
+					binding.offerState.setActive(offer.active)
+					binding.offerState.setListeners(
+						onDelete = {
+							viewModel.deleteOffer(offer.offerId, onSuccess = {
+								findNavController().popBackStack()
+							})
+						},
+						onChangeActiveState = {
+							val params = OfferParams(
+								description = binding.newOfferDescription.text.toString(),
+								location = binding.newOfferLocation.getLocationValue(),
+								fee = binding.newOfferFee.getFeeValue(),
+								priceRange = binding.amountRange.getPriceRangeValue(),
+								priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
+								paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
+								btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
+								friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
+								offerType = offer.offerType,
+								expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
+								active = !offer.active
+							)
+							viewModel.updateOffer(offerId = offer.offerId, params = params, onSuccess = {
+								findNavController().popBackStack()
+							})
+						}
+					)
 
 					binding.newOfferDescription.setText(offer.offerDescription)
 					binding.amountRange.setValues(offer.amountBottomLimit.toFloat(), offer.amountTopLimit.toFloat())
@@ -75,13 +93,24 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 					binding.newOfferPaymentMethod.setValues(offer.paymentMethod.map { method ->
 						PaymentButtonSelected.valueOf(method)
 					})
-					//todo: we need BE to support price trigger
-					//todo: we need BE to support time delete trigger
+
+					binding.newOfferPriceTrigger.setPriceTriggerValue(
+						PriceTriggerValue(
+							value = offer.activePriceValue,
+							type = TriggerType.valueOf(offer.activePriceState)
+						)
+					)
+					//todo: we need someone to specify behavior for time delete trigger
 
 					binding.newOfferBtcNetwork.setValues(offer.btcNetwork.map { btcNetwork ->
 						BtcNetworkButtonSelected.valueOf(btcNetwork)
 					})
 					binding.newOfferFriendLevel.setValues(FriendLevel.valueOf(offer.friendLevel))
+
+					binding.newOfferBtn.text = when (OfferType.valueOf(offer.offerType)) {
+						OfferType.BUY -> getString(R.string.offer_update_buy_btn)
+						OfferType.SELL -> getString(R.string.offer_update_sell_btn)
+					}
 				}
 			}
 		}
@@ -95,7 +124,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			)
 		}
 
-		viewModel.loadOfferById(args.offerId)
+		viewModel.loadOfferFromCacheById(args.offerId)
 
 		binding.newOfferTitle.setListeners(
 			onClose = {
@@ -126,10 +155,11 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
 				offerType = viewModel.offer.value!!.offerType,
 				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
-				//todo: how to pause offer? send with original data and just active = false?
-				active = true
+				active = viewModel.offer.value!!.active
 			)
-			viewModel.updateOffer(offerId = args.offerId, params = params)
+			viewModel.updateOffer(offerId = args.offerId, params = params, onSuccess = {
+				findNavController().popBackStack()
+			})
 		}
 	}
 

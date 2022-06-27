@@ -35,4 +35,7 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 
 	@Query("SELECT * FROM MyOfferEntity where isInboxCreated == 0")
 	suspend fun getMyOffersWithoutInbox(): List<MyOfferEntity>
+
+	@Query("DELETE FROM MyOfferEntity WHERE extId in (:offerIds)")
+	suspend fun deleteMyOffersById(offerIds: List<String>)
 }

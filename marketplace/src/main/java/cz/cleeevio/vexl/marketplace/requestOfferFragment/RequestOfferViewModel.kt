@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import lightbase.core.baseClasses.BaseViewModel
 import java.util.*
 
@@ -50,7 +51,9 @@ class RequestOfferViewModel constructor(
 			)
 			when (response.status) {
 				is Status.Success -> {
-					onSuccess()
+					withContext(Dispatchers.Main) {
+						onSuccess()
+					}
 				}
 				is Status.Error -> {
 					//any special handling?

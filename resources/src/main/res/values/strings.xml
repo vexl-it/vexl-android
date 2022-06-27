@@ -55,11 +55,33 @@
     <string name="profile_change_picture">Change profile picture</string>
     <string name="profile_edit_name">Edit name</string>
     <string name="profile_pin">Set PIN / FaceID</string>
+    <string name="profile_allow_screenshots">Allow Screenshots</string>
+    <string name="profile_allow_screenshots_description">Refuse users to snap the chat</string>
     <string name="profile_import_contacts">Contacts Imported</string>
     <string name="profile_import_contacts_subtitle">%s friends</string>
     <string name="profile_import_facebook">Import Facebook</string>
+    <string name="profile_terms_and_privacy">Terms and Privacy</string>
+    <string name="profile_faq">FAQs</string>
+    <string name="profile_report_issue">Report issue</string>
     <string name="profile_request_data">Request known data</string>
-    <string name="profile_logout">Log out</string>
+    <string name="profile_logout">Delete account</string>
+
+    <!-- JoinVexl -->
+    <string name="profile_join_vexl_title">Join vexl</string>
+    <string name="profile_join_vexl_button_title">Got it</string>
+
+    <!-- Donate -->
+    <string name="profile_donate_title">Give love</string>
+    <string name="profile_donate_description">If you like Vexl, support it’s improvement by sending some Bitcoins as donation!</string>
+    <string name="profile_donate_button_donate">Donate</string>
+    <string name="profile_donate_button_dismiss">Back</string>
+
+    <!-- CurrencySelect -->
+    <string name="user_profile_currency_title">Currency</string>
+    <string name="user_profile_currency_czk">Czech crown</string>
+    <string name="user_profile_currency_eur">Euro</string>
+    <string name="user_profile_currency_usd">United states dollar</string>
+    <string name="user_profile_currency_dismissButton">Done</string>
 
     <!-- Menu -->
     <string name="menu_marketplace">Marketplace</string>
@@ -121,6 +143,7 @@
     <string name="widget_trigger_delete_weeks">Weeks</string>
     <string name="widget_trigger_delete_months">Months</string>
     <string name="widget_offer_state_pause">Pause</string>
+    <string name="widget_offer_state_activate">Activate</string>
     <string name="widget_offer_state_delete">Delete</string>
     <string name="widget_offer_state_active">Active</string>
     <string name="widget_offer_state_inactive">Inactive</string>
@@ -142,6 +165,10 @@
     <string name="filter_advanced_title">Advanced</string>
     <string name="filter_type_title">Type</string>
     <string name="filter_friend_level_title">Friend level</string>
+    <string name="offer_create_sell_btn">Create sell offer</string>
+    <string name="offer_update_sell_btn">Update sell offer</string>
+    <string name="offer_create_buy_btn">Create buy offer</string>
+    <string name="offer_update_buy_btn">Update buy offer</string>
     <string name="widget_location_km"> +- %d km</string>
     <string name="widget_location_hint">City</string>
 

@@ -54,20 +54,29 @@ class OfferRepositoryImpl constructor(
 		mapper = { it?.items?.map { item -> item.fromNetwork() } }
 	)
 
-	override suspend fun loadOffersCreatedByMe(offerIds: List<Long>): Resource<List<Offer>> = tryOnline(
+	override suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit> = tryOnline(
 		request = {
-			//todo: change to sending list of strings, as soon as BE changes API
-			offerApi.getOffersId(offerId = offerIds.first().toString())
+			offerApi.deleteOffersId(offerIds = offerIds)
 		},
-		mapper = { item -> item?.let { listOf(it.fromNetwork()) } ?: emptyList() }
+		mapper = { },
+		doOnSuccess = {
+			offerDao.deleteOffersById(offerIds)
+			myOfferDao.deleteMyOffersById(offerIds)
+		}
 	)
 
-	override suspend fun deleteMyOffers(offerIds: List<Long>): Resource<Unit> = tryOnline(
-		request = {
-			//todo: change to sending list of strings, as soon as BE changes API
-			offerApi.deleteOffersId(offerId = offerIds.first().toString())
-		},
-		mapper = { }
+	override suspend fun deleteOfferById(offerId: String): Resource<Unit> = deleteMyOffers(
+		listOf(offerId)
+	)
+
+	override suspend fun refreshOffer(offerId: String): Resource<List<Offer>> = tryOnline(
+		request = { offerApi.getOffersId(listOf(offerId)) },
+		mapper = { items -> items?.map { item -> item.fromNetwork() } ?: emptyList() },
+		doOnSuccess = {
+			it?.let { offers ->
+				updateOffers(offers)
+			}
+		}
 	)
 
 	override suspend fun saveMyOfferIdAndKeys(
@@ -125,6 +134,19 @@ class OfferRepositoryImpl constructor(
 		transactionProvider.runAsTransaction {
 			locationDao.clearTable()
 			offerDao.clearTable()
+			offers.forEach { offer ->
+				offer.isMine = myOfferIds.contains(offer.offerId)
+				val offerId = offerDao.insertOffer(offer.toCache())
+				locationDao.insertLocations(offer.location.map {
+					it.toCache(offerId)
+				})
+			}
+		}
+	}
+
+	private suspend fun updateOffers(offers: List<Offer>) {
+		val myOfferIds = myOfferDao.listAll().map { it.extId }
+		transactionProvider.runAsTransaction {
 			offers.forEach { offer ->
 				offer.isMine = myOfferIds.contains(offer.offerId)
 				val offerId = offerDao.insertOffer(offer.toCache())

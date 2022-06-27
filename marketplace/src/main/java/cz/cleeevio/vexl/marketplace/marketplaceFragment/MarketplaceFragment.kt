@@ -76,6 +76,7 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 		}.attach()
 
 		marketplaceViewModel.syncOffers()
+		marketplaceViewModel.loadMe()
 
 		repeatScopeOnStart {
 			chatRepository.syncAllMessages()

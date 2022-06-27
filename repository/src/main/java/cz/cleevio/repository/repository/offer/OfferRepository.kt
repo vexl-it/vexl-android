@@ -19,9 +19,11 @@ interface OfferRepository {
 	//todo: will probably have to use Paging Adapter and return paging data somewhere
 	suspend fun loadOffersForMe(): Resource<List<Offer>>
 
-	suspend fun loadOffersCreatedByMe(offerIds: List<Long>): Resource<List<Offer>>
+	suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit>
 
-	suspend fun deleteMyOffers(offerIds: List<Long>): Resource<Unit>
+	suspend fun deleteOfferById(offerId: String): Resource<Unit>
+
+	suspend fun refreshOffer(offerId: String): Resource<List<Offer>>
 
 	suspend fun saveMyOfferIdAndKeys(
 		offerId: String,
