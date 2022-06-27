@@ -125,6 +125,7 @@
 		app:layout_constraintBottom_toTopOf="@id/submit_message_wrapper"
 		app:layout_constraintVertical_weight="1"
 		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:stackFromEnd="true"
 		tools:itemCount="15"
 		tools:listitem="@layout/item_chat_message" />
 

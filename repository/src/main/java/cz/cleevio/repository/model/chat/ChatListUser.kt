@@ -7,5 +7,5 @@ data class ChatListUser constructor(
 	val message: ChatMessage,
 	//maybe User later?
 	val user: User? = null,
-	val offer: Offer? = null
+	val offer: Offer
 )

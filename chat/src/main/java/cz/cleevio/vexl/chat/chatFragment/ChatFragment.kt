@@ -5,6 +5,7 @@ import androidx.core.view.updatePadding
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.widget.MyOfferBottomSheetDialog
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
@@ -53,6 +54,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 		adapter = ChatMessagesAdapter()
 		binding.chatRv.adapter = adapter
+
+		binding.myOfferBtn.setOnClickListener {
+			childFragmentManager.let { manager ->
+				val bottomSheetDialog = MyOfferBottomSheetDialog(args.communicationRequest.offer!!) // TODO solve double !
+				bottomSheetDialog.show(manager, "MyOfferBottomSheetDialog")
+			}
+		}
+
 	}
 
 	private fun sendMessage() {
