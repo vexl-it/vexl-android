@@ -372,11 +372,11 @@ class ChatRepositoryImpl constructor(
 					result.add(
 						ChatListUser(
 							message = latestMessage,
-							offer = offerDao.getAllOffers().filter {
-								it.offerPublicKey == latestMessage.recipientPublicKey || it.offerPublicKey == latestMessage.senderPublicKey
+							offer = offerDao.getAllOffersWithLocations().filter {
+								it.offer.offerPublicKey == latestMessage.recipientPublicKey || it.offer.offerPublicKey == latestMessage.senderPublicKey
 							}.map {
-								it.fromCache(emptyList())
-							}.firstOrNull()
+								it.offer.fromCache(it.locations)
+							}.first()
 						)
 					)
 				}
