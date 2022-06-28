@@ -86,6 +86,19 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun markUserFinishedOnboarding(user: User) {
+		userDao.update(
+			UserEntity(
+				id = user.id ?: 1,
+				extId = user.extId,
+				username = user.username,
+				avatar = user.avatar,
+				publicKey = user.publicKey,
+				finishedOnboarding = true
+			)
+		)
+	}
+
 	override suspend fun getUserId(): Long? = userDao.getUser()?.id
 
 	override suspend fun getUser(): User? = userDao.getUser()?.fromDao()

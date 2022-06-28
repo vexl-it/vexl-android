@@ -1,5 +1,6 @@
 package cz.cleeevio.onboarding.verifyPhoneFragment
 
+import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -8,12 +9,15 @@ import cz.cleeevio.onboarding.databinding.FragmentVerifyPhoneBinding
 import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.network.data.ErrorIdentification.Companion.CODE_ENTITY_NOT_EXIST_404
 import cz.cleevio.network.data.Status
+import kotlinx.coroutines.delay
 import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.dpValueToPx
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import java.util.concurrent.TimeUnit
 
 class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
@@ -32,7 +36,9 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 					is Status.Success -> {
 						if (resource.data?.phoneVerified == true) {
 							//todo: switch button to verified state
-							//todo: move to next screen after delay?
+							Toast.makeText(requireContext(), "Verification successful", Toast.LENGTH_SHORT)
+								.show()
+							delay(TimeUnit.SECONDS.toMillis(1))
 							findNavController().navigate(
 								VerifyPhoneFragmentDirections.proceedToPhoneDoneFragment()
 							)
@@ -41,6 +47,21 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 						}
 					}
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.errorFlow.collect { errorIdentification ->
+				if (errorIdentification.code == CODE_ENTITY_NOT_EXIST_404) {
+					viewModel.resetKeys()
+					Toast.makeText(requireContext(), "Verification expired. Start you registration again please.", Toast.LENGTH_SHORT)
+						.show()
+					delay(TimeUnit.SECONDS.toMillis(1))
+					//go back to previous screen and start again
+					findNavController().popBackStack()
+				}
+
+				//todo: any other expected errors?
 			}
 		}
 	}

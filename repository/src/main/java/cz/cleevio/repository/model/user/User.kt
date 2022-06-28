@@ -11,7 +11,8 @@ data class User constructor(
 	val extId: Long,
 	val username: String,
 	val avatar: String,
-	val publicKey: String
+	val publicKey: String,
+	val finishedOnboarding: Boolean
 ) : Parcelable
 
 fun UserResponse.fromNetwork() = User(
@@ -19,7 +20,8 @@ fun UserResponse.fromNetwork() = User(
 	extId = userId,
 	username = username,
 	avatar = avatar,
-	publicKey = publicKey
+	publicKey = publicKey,
+	finishedOnboarding = false
 )
 
 fun UserEntity.fromDao() = User(
@@ -27,5 +29,6 @@ fun UserEntity.fromDao() = User(
 	extId = extId,
 	username = username,
 	avatar = avatar,
-	publicKey = publicKey
+	publicKey = publicKey,
+	finishedOnboarding = finishedOnboarding
 )

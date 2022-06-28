@@ -58,12 +58,6 @@
 		<action
 			android:id="@+id/action_crossroadFragment_to_listTemplateFragment"
 			app:destination="@id/listTemplateFragment" />
-		<action
-			android:id="@+id/action_crossroadFragment_to_activateFingerprintFragment"
-			app:destination="@id/activateFingerprintFragment" />
-		<action
-			android:id="@+id/action_crossroadFragment_to_codeValidationFragment"
-			app:destination="@id/codeValidationFragment" />
 	</fragment>
 
 	<fragment
@@ -103,18 +97,6 @@
 			android:id="@+id/action_to_contacts"
 			app:destination="@+id/nav_contacts" />
 	</fragment>
-
-	<fragment
-		android:id="@+id/activateFingerprintFragment"
-		android:name="cz.cleeevio.onboarding.activateFingerprintFragment.ActivateFingerprintFragment"
-		android:label="ActivateFingerprintFragment"
-		tools:layout="@layout/fragment_activate_fingerprint" />
-
-	<fragment
-		android:id="@+id/codeValidationFragment"
-		android:name="cz.cleeevio.onboarding.codeValidationFragment.CodeValidationFragment"
-		android:label="CodeValidationFragment"
-		tools:layout="@layout/fragment_code_validation" />
 
 	<action
 		android:id="@+id/action_global_to_contacts"

@@ -1,25 +1,32 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.UserUtils
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
 class SplashViewModel constructor(
-	private val encryptedPreferences: EncryptedPreferenceRepository,
 	private val userRepository: UserRepository,
+	private val contactRepository: ContactRepository,
 	val navMainGraphModel: NavMainGraphModel,
 	private val offerRepository: OfferRepository,
-	private val chatRepository: ChatRepository
+	private val chatRepository: ChatRepository,
+	private val userUtils: UserUtils
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
+
+	private val _contactKeysLoaded = MutableSharedFlow<Boolean>(replay = 1)
+	val contactKeysLoaded = _contactKeysLoaded.asSharedFlow()
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -39,18 +46,16 @@ class SplashViewModel constructor(
 		}
 	}
 
-	//debug
-	fun deletePreviousUserAndLoadKeys() {
+	fun deletePreviousUserKeys() {
 		viewModelScope.launch(Dispatchers.IO) {
-			resetKeys()
+			userUtils.resetKeys()
 		}
 	}
 
-	//debug
-	private fun resetKeys() {
-		encryptedPreferences.userPrivateKey = ""
-		encryptedPreferences.userPublicKey = ""
-		encryptedPreferences.hash = ""
-		encryptedPreferences.signature = ""
+	fun loadMyContactsKeys() {
+		viewModelScope.launch(Dispatchers.IO) {
+			val success = contactRepository.syncMyContactsKeys()
+			_contactKeysLoaded.emit(success)
+		}
 	}
 }

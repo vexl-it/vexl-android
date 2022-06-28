@@ -4,6 +4,7 @@ import coil.ImageLoader
 import coil.util.CoilUtils
 import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.UserUtils
 import lightbase.camera.utils.ImageHelper
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
@@ -24,6 +25,12 @@ val coreModule = module {
 
 	single {
 		ImageHelper()
+	}
+
+	single {
+		UserUtils(
+			encryptedPreferenceRepository = get()
+		)
 	}
 
 	single {
