@@ -358,13 +358,15 @@
 		<item name="android:textColor">@color/black</item>
 	</style>
 
-	<style name="Widget.Vexl.ChatRequestButton.Decline" parent="Widget.Vexl.Chat.Button.Negative"></style>
+	<style name="Widget.Vexl.ChatRequestButton.Decline" parent="Widget.Vexl.Chat.Button.Negative" />
 
-	<style name="Widget.Vexl.Chat.IdentityRequestButton.Decline" parent="Widget.Vexl.Chat.Button.Negative"></style>
+	<style name="Widget.Vexl.Chat.IdentityRequestButton.Decline" parent="Widget.Vexl.Chat.Button.Negative" />
 
-	<style name="Widget.Vexl.ChatRequestButton.Accept" parent="Widget.Vexl.Chat.Button.Positive"></style>
+	<style name="Widget.Vexl.ChatRequestButton.Accept" parent="Widget.Vexl.Chat.Button.Positive" />
 
-	<style name="Widget.Vexl.Chat.IdentityRequestButton.Accept" parent="Widget.Vexl.Chat.Button.Positive"></style>
+	<style name="Widget.Vexl.Chat.IdentityRequestButton.Accept" parent="Widget.Vexl.Chat.Button.Positive" />
+
+	<style name="Widget.Vexl.Chat.ActionButton.GotIt" parent="Widget.Vexl.Chat.Button.Positive" />
 
 	<style name="Widget.Vexl.FriendRequestsButton" parent="">
 		<item name="android:padding">10dp</item>
