@@ -69,10 +69,10 @@ sealed class OffersBaseFragment constructor(
 
 		binding.addOfferBtn.setOnClickListener {
 			navigateToNewOffer(getOfferType())
-		} DeleteTriggerWidget
-			binding.myOffersBtn.setOnClickListener {
-				navigateToMyOffers(getOfferType())
-			}
+		}
+		binding.myOffersBtn.setOnClickListener {
+			navigateToMyOffers(getOfferType())
+		}
 
 		checkMyOffersCount(getOfferType())
 
