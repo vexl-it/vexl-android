@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.marketplace.editOfferFragment
 
+import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -144,17 +145,53 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
 		binding.newOfferBtn.setOnClickListener {
+			val description = binding.newOfferDescription.text.toString()
+			if (description.isNullOrBlank()) {
+				Toast.makeText(requireActivity(), "Missing description", Toast.LENGTH_SHORT).show()
+				return@setOnClickListener
+			}
+			val location = binding.newOfferLocation.getLocationValue()
+			if (location.values.isEmpty()) {
+				Toast.makeText(requireActivity(), "Missing location", Toast.LENGTH_SHORT).show()
+				return@setOnClickListener
+			}
+			val paymentMethod = binding.newOfferPaymentMethod.getPaymentValue()
+			if (paymentMethod.value.isEmpty()) {
+				Toast.makeText(requireActivity(), "Missing payment method", Toast.LENGTH_SHORT).show()
+				return@setOnClickListener
+			}
+			val priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue()
+			if (priceTrigger.value == null) {
+				Toast.makeText(requireActivity(), "Invalid price trigger", Toast.LENGTH_SHORT).show()
+				return@setOnClickListener
+			}
+			val btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue()
+			if (btcNetwork.value.isEmpty()) {
+				Toast.makeText(requireActivity(), "Invalid type", Toast.LENGTH_SHORT).show()
+				return@setOnClickListener
+			}
+			val friendLevel = binding.newOfferFriendLevel.getFriendLevel()
+			if (friendLevel.value == FriendLevel.NONE) {
+				Toast.makeText(requireActivity(), "Invalid friend level", Toast.LENGTH_SHORT).show()
+				return@setOnClickListener
+			}
+			val expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp()
+			if (expiration < System.currentTimeMillis()) {
+				Toast.makeText(requireActivity(), "Invalid delete trigger", Toast.LENGTH_SHORT).show()
+				return@setOnClickListener
+			}
+
 			val params = OfferParams(
-				description = binding.newOfferDescription.text.toString(),
-				location = binding.newOfferLocation.getLocationValue(),
+				description = description,
+				location = location,
 				fee = binding.newOfferFee.getFeeValue(),
 				priceRange = binding.amountRange.getPriceRangeValue(),
-				priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
-				paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
-				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
-				friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
+				priceTrigger = priceTrigger,
+				paymentMethod = paymentMethod,
+				btcNetwork = btcNetwork,
+				friendLevel = friendLevel,
 				offerType = viewModel.offer.value!!.offerType,
-				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
+				expiration = expiration,
 				active = viewModel.offer.value!!.active
 			)
 			viewModel.updateOffer(offerId = args.offerId, params = params, onSuccess = {
