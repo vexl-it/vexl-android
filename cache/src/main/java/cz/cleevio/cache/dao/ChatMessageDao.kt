@@ -38,6 +38,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	)
 	fun getAllContactKeys(): List<String>
 
+	@Suppress("FunctionMaxLength")
 	@Query(
 		"SELECT * " +
 			"FROM ChatMessageEntity " +

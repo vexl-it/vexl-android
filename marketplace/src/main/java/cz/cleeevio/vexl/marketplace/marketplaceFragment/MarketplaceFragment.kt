@@ -50,8 +50,6 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 			navigateToNewOffer = { offerType ->
 				findNavController().navigate(
 					MarketplaceFragmentDirections.proceedToNewOfferFragment(offerType)
-					//debug only
-					//MarketplaceFragmentDirections.proceedToRequestOfferFragment(offerId = "123")
 				)
 			},
 			navigateToMyOffers = { offerType ->
