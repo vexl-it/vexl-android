@@ -9,7 +9,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import cz.cleevio.core.R
 
-
 object ChipViewUtils {
 
 	fun generateChipView(
@@ -19,7 +18,6 @@ object ChipViewUtils {
 		iconAtStart: Boolean = true,
 		listener: () -> (Unit) = {}
 	): Chip {
-
 		val newChip = Chip(context)
 		val chipDrawable = ChipDrawable.createFromAttributes(
 			context,

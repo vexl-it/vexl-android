@@ -11,7 +11,6 @@ import lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 import java.util.*
 
-//todo: should we have default values for delete trigger?
 class DeleteTriggerWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
@@ -71,13 +70,12 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 		}
 	}
 
-	//todo: connect to new offer, when BE ready
 	fun getValue(): DeleteOfferValue {
 		val value = try {
 			binding.deleteInput.text.toString().toInt()
 		} catch (e: NumberFormatException) {
 			Timber.w("Invalid number for delete trigger")
-			30
+			DEFAULT_NUMBER
 		}
 		return DeleteOfferValue(
 			value = value,
@@ -87,6 +85,10 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 
 	fun setFragmentManager(manager: FragmentManager) {
 		fragmentManager = manager
+	}
+
+	companion object {
+		const val DEFAULT_NUMBER = 30
 	}
 }
 
