@@ -201,4 +201,8 @@
     <string name="chat_btns_delete_chat">Delete Chat</string>
     <string name="chat_btns_block_user">Block User</string>
     <string name="chat_message_input_placeholder">Type something</string>
+    <string name="chat_message_identity_request_title">Send reveal identity request</string>
+    <string name="chat_message_identity_request_subtitle">By sending request you agree with revealing of your own identity too.</string>
+    <string name="chat_message_identity_request_send">Send request</string>
+    <string name="chat_message_identity_request_back">Back</string>
 </resources>

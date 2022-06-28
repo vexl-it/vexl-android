@@ -3,9 +3,11 @@ package cz.cleevio.vexl.chat.chatFragment
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CommonFriendsBottomSheetDialog
+import cz.cleevio.core.widget.IdentityRequestBottomSheetDialog
 import cz.cleevio.core.widget.MyOfferBottomSheetDialog
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.model.contact.CommonFriend
@@ -58,10 +60,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		binding.chatRv.adapter = adapter
 
 		binding.myOfferBtn.setOnClickListener {
-			childFragmentManager.let { manager ->
-				val dialog = MyOfferBottomSheetDialog(args.communicationRequest.offer!!) // TODO solve double !
-				dialog.show(manager, "MyOfferBottomSheetDialog")
-			}
+			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer!!)) // TODO solve double !
 		}
 		binding.commonFriendsBtn.setOnClickListener {
 			val commonFriends = listOf(
@@ -84,12 +83,16 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					"https://i.imgflip.com/4/1480cf.jpg"
 				)
 			)
-			childFragmentManager.let { manager ->
-				val dialog = CommonFriendsBottomSheetDialog(commonFriends) // TODO get correct data
-				dialog.show(manager, "CommonFriendsBottomSheetDialog")
-			}
+			showBottomDialog(CommonFriendsBottomSheetDialog(commonFriends)) // TODO get correct data
+		}
+		binding.revealIdentityBtn.setOnClickListener {
+			showBottomDialog(IdentityRequestBottomSheetDialog())
 		}
 
+	}
+
+	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
+		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
 	}
 
 	private fun sendMessage() {

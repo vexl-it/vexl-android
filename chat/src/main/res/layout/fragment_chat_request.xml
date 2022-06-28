@@ -46,7 +46,8 @@
 		app:layout_constraintEnd_toStartOf="@id/accept_btn"
 		app:layout_constraintHorizontal_weight="0.5"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/requests_recycler_view" />
+		app:layout_constraintTop_toBottomOf="@id/requests_recycler_view"
+		tools:visibility="visible" />
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/accept_btn"
@@ -61,6 +62,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_weight="0.5"
 		app:layout_constraintStart_toEndOf="@id/decline_btn"
-		app:layout_constraintTop_toBottomOf="@id/requests_recycler_view" />
+		app:layout_constraintTop_toBottomOf="@id/requests_recycler_view"
+		tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
