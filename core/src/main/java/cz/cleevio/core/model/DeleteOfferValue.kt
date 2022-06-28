@@ -1,13 +1,23 @@
 package cz.cleevio.core.model
 
 import cz.cleevio.core.widget.DeleteTimeframe
+import java.util.concurrent.TimeUnit
 
-const val ONE_MONTH_IN_MS = 2_629_800_000L
+const val DAY = 1L
+const val WEEK = 7L
+const val MONTH = 30L
 
 data class DeleteOfferValue(
 	val type: DeleteTimeframe,
 	val value: Int
 )
 
-//right now hardcoded 1 MONTH fixme: change to parse DeleteOfferValue
-fun DeleteOfferValue.toUnixTimestamp(): Long = System.currentTimeMillis() + ONE_MONTH_IN_MS
+fun DeleteOfferValue.toUnixTimestamp(): Long {
+	val modifier = when (this.type) {
+		DeleteTimeframe.NONE -> 0
+		DeleteTimeframe.DAYS -> TimeUnit.DAYS.toMillis(DAY)
+		DeleteTimeframe.WEEKS -> TimeUnit.DAYS.toMillis(WEEK)
+		DeleteTimeframe.MONTHS -> TimeUnit.DAYS.toMillis(MONTH)
+	}
+	return System.currentTimeMillis() + (modifier * value)
+}
