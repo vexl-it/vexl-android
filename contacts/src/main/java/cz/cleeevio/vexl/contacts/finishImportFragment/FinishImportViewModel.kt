@@ -19,6 +19,14 @@ class FinishImportViewModel constructor(
 	private val _sshKeyDownloadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
 	val sshKeyDownloadSuccessful = _sshKeyDownloadSuccessful.asSharedFlow()
 
+	init {
+		viewModelScope.launch {
+			userRepository.getUser()?.let { user ->
+				userRepository.markUserFinishedOnboarding(user)
+			}
+		}
+	}
+
 	fun loadMyContactsKeys() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val success = contactRepository.syncMyContactsKeys()

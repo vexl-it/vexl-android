@@ -18,7 +18,8 @@ val viewModelsModule = module {
 			userRepository = get(),
 			offerRepository = get(),
 			chatRepository = get(),
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			userUtils = get()
 		)
 	}
 }

@@ -33,7 +33,8 @@ val onboardingModule = module {
 			verificationId = verificationId,
 			userRepository = get(),
 			encryptedPreference = get(),
-			contactRepository = get()
+			contactRepository = get(),
+			userUtils = get()
 		)
 	}
 

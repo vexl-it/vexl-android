@@ -58,18 +58,6 @@ class CrossroadFragment : BaseFragment(R.layout.fragment_crossroad) {
 			)
 		}
 
-		binding.btnFingerprint.setOnClickListener {
-			findNavController().navigate(
-				CrossroadFragmentDirections.actionCrossroadFragmentToActivateFingerprintFragment()
-			)
-		}
-
-		binding.btnCodeValidation.setOnClickListener {
-			findNavController().navigate(
-				CrossroadFragmentDirections.actionCrossroadFragmentToCodeValidationFragment()
-			)
-		}
-
 		setupListeners()
 	}
 

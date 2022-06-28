@@ -5,11 +5,11 @@ import cz.cleeevio.onboarding.R
 import cz.cleeevio.onboarding.databinding.FragmentCodeValidationBinding
 import cz.cleeevio.onboarding.extensions.navigateToEmailApp
 import cz.cleevio.core.utils.viewBinding
-import kotlinx.coroutines.flow.collect
 import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+//NOT USED RIGHT NOW
 class CodeValidationFragment : BaseFragment(R.layout.fragment_code_validation) {
 
 	override val viewModel by viewModel<CodeValidationViewModel>()

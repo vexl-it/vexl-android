@@ -9,8 +9,9 @@ data class UserEntity constructor(
 	val extId: Long,
 	val username: String,
 	val avatar: String,
-	val publicKey: String
+	val publicKey: String,
+	val finishedOnboarding: Boolean = false
 ) {
 	override fun toString(): String =
-		"User(id='$id', extId='$extId', username='$username', avatar='$avatar')"
+		"User(id='$id', extId='$extId', username='$username', avatar='$avatar', finishedOnboarding='$finishedOnboarding')"
 }

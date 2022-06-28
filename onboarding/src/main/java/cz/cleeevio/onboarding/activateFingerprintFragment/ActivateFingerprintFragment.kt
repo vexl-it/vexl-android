@@ -10,6 +10,7 @@ import lightbase.core.extensions.isFingerprintAvailable
 import lightbase.core.extensions.showToast
 import lightbase.onboarding.AbstractActivateFingerprintFragment
 
+//NOT USED RIGHT NOW
 class ActivateFingerprintFragment : AbstractActivateFingerprintFragment(R.layout.fragment_activate_fingerprint) {
 
 	private val binding by viewBinding(FragmentActivateFingerprintBinding::bind)

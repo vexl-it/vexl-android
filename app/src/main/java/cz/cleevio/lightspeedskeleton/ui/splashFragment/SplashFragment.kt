@@ -20,7 +20,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect { user ->
 
-				if (user != null) {
+				if (user != null && user.finishedOnboarding) {
 					Timber.i("Navigating to marketplace")
 					delay(SPLASH_DELAY)
 					viewModel.navMainGraphModel.navigateToGraph(
