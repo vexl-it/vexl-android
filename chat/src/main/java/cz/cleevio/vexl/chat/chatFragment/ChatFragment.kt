@@ -5,8 +5,10 @@ import androidx.core.view.updatePadding
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.widget.CommonFriendsBottomSheetDialog
 import cz.cleevio.core.widget.MyOfferBottomSheetDialog
 import cz.cleevio.repository.model.chat.CommunicationRequest
+import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -57,8 +59,34 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 		binding.myOfferBtn.setOnClickListener {
 			childFragmentManager.let { manager ->
-				val bottomSheetDialog = MyOfferBottomSheetDialog(args.communicationRequest.offer!!) // TODO solve double !
-				bottomSheetDialog.show(manager, "MyOfferBottomSheetDialog")
+				val dialog = MyOfferBottomSheetDialog(args.communicationRequest.offer!!) // TODO solve double !
+				dialog.show(manager, "MyOfferBottomSheetDialog")
+			}
+		}
+		binding.commonFriendsBtn.setOnClickListener {
+			val commonFriends = listOf(
+				CommonFriend(
+					1L,
+					"Spongebob Squarepants",
+					"FACEBOOK",
+					"https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/640px-SpongeBob_SquarePants_character.svg.png"
+				),
+				CommonFriend(
+					2L,
+					"Patrick Star",
+					"+420 111 111 111",
+					"https://upload.wikimedia.org/wikipedia/en/thumb/3/33/Patrick_Star.svg/1200px-Patrick_Star.svg.png"
+				),
+				CommonFriend(
+					3L,
+					"Samuel L. Jackson",
+					"Facebook",
+					"https://i.imgflip.com/4/1480cf.jpg"
+				)
+			)
+			childFragmentManager.let { manager ->
+				val dialog = CommonFriendsBottomSheetDialog(commonFriends) // TODO get correct data
+				dialog.show(manager, "CommonFriendsBottomSheetDialog")
 			}
 		}
 

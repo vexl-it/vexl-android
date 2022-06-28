@@ -401,6 +401,10 @@
 		<item name="android:letterSpacing">-0.01</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.BlackScreenHeading" parent="TextAppearance.Vexl.MainScreenHeading">
+		<item name="android:textColor">@color/black</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.SubScreenHeading" parent="TextAppearance.Vexl.MainScreenHeading">
 		<item name="android:textSize">28sp</item>
 	</style>
