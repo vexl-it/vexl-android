@@ -19,16 +19,12 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect { user ->
-
 				if (user != null && user.finishedOnboarding) {
 					Timber.i("Navigating to marketplace")
-					delay(SPLASH_DELAY)
-					viewModel.navMainGraphModel.navigateToGraph(
-						NavMainGraphModel.NavGraph.Main
-					)
+					viewModel.loadMyContactsKeys()
 				} else {
 					// continue to onboarding
-					viewModel.deletePreviousUserAndLoadKeys()
+					viewModel.deletePreviousUserKeys()
 
 					Timber.i("Navigating to onboarding")
 					delay(SPLASH_DELAY)
@@ -36,6 +32,14 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 						NavMainGraphModel.NavGraph.Onboarding
 					)
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.contactKeysLoaded.collect { success ->
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.Main
+				)
 			}
 		}
 	}

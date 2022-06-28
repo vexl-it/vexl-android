@@ -14,8 +14,8 @@ val viewModelsModule = module {
 
 	single {
 		SplashViewModel(
-			encryptedPreferences = get(),
 			userRepository = get(),
+			contactRepository = get(),
 			offerRepository = get(),
 			chatRepository = get(),
 			navMainGraphModel = get(),
