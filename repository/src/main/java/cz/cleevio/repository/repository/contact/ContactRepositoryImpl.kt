@@ -112,7 +112,13 @@ class ContactRepositoryImpl constructor(
 
 		contactDao.replaceAll(contactList
 			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
+			.apply {
+				Timber.tag("ContactSync").d("Replacing only ${this.size} after distinctBy")
+			}
 			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber) }
+			.apply {
+				Timber.tag("ContactSync").d("Replacing only ${this.size} after filter")
+			}
 			.map {
 				ContactEntity(
 					id = it.id.toLong(),
