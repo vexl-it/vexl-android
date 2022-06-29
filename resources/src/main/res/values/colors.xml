@@ -37,6 +37,8 @@
 	<color name="rose">#FEA388</color>
 	<color name="purity">#9DCECA</color>
 	<color name="error">#FF3B30</color>
+	<color name="light_red">#EE675E</color>
+	<color name="block_back_btn">#461E1B</color>
 	<color name="gray">#CFD2D3</color>
 	<color name="gray_card_background">#464646</color>
 	<color name="grey_dark">#3C3C43</color>

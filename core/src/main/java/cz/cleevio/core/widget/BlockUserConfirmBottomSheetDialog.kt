@@ -5,25 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import cz.cleevio.core.databinding.BottomSheetDialogDeleteChatConfirmBinding
+import cz.cleevio.core.databinding.BottomSheetDialogBlockUserConfirmBinding
 
-class DeleteChatConfirmBottomSheetDialog : BottomSheetDialogFragment() {
+class BlockUserConfirmBottomSheetDialog : BottomSheetDialogFragment() {
 
-	private lateinit var binding: BottomSheetDialogDeleteChatConfirmBinding
+	private lateinit var binding: BottomSheetDialogBlockUserConfirmBinding
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		binding = BottomSheetDialogDeleteChatConfirmBinding.inflate(layoutInflater, container, false)
+		binding = BottomSheetDialogBlockUserConfirmBinding.inflate(layoutInflater, container, false)
 		return binding.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
-			// TODO delete chat
+			// TODO block user
 			dismiss()
 		}
 		binding.backBtn.setOnClickListener {

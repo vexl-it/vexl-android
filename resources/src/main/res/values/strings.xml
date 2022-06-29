@@ -209,6 +209,14 @@
     <string name="chat_delete_chat_confirm_description">This is definitive step, please confirm this action once again to make it real.</string>
     <string name="chat_delete_chat_confirm_back">Nope</string>
     <string name="chat_delete_chat_confirm_action">Yes, delete</string>
+    <string name="chat_block_user_title">Block forever?</string>
+    <string name="chat_block_user_description">Do you really want to block this user? You will never be able to undo this action. Choose wisley.</string>
+    <string name="chat_block_user_back">Nope</string>
+    <string name="chat_block_user_block">Yes, block</string>
+    <string name="chat_block_user_confirm_title">You sure?</string>
+    <string name="chat_block_user_confirm_description">Do you really want to block this user? You will never be able to undo this action. Choose wisley.</string>
+    <string name="chat_block_user_confirm_nope">Nope</string>
+    <string name="chat_block_user_confirm_action">Yes, block</string>
     <string name="chat_message_identity_request_title">Send reveal identity request</string>
     <string name="chat_message_identity_request_subtitle">By sending request you agree with revealing of your own identity too.</string>
     <string name="chat_message_identity_request_send">Send request</string>
