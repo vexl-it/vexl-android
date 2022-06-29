@@ -201,6 +201,14 @@
     <string name="chat_btns_delete_chat">Delete Chat</string>
     <string name="chat_btns_block_user">Block User</string>
     <string name="chat_message_input_placeholder">Type something</string>
+    <string name="chat_delete_chat_title">Delete chat?</string>
+    <string name="chat_delete_chat_description">Are you done trading? Closing chat means that something something and something.</string>
+    <string name="chat_delete_chat_back">Back</string>
+    <string name="chat_delete_chat_delete">Delete Chat</string>
+    <string name="chat_delete_chat_confirm_title">You sure?</string>
+    <string name="chat_delete_chat_confirm_description">This is definitive step, please confirm this action once again to make it real.</string>
+    <string name="chat_delete_chat_confirm_back">Nope</string>
+    <string name="chat_delete_chat_confirm_action">Yes, delete</string>
     <string name="chat_message_identity_request_title">Send reveal identity request</string>
     <string name="chat_message_identity_request_subtitle">By sending request you agree with revealing of your own identity too.</string>
     <string name="chat_message_identity_request_send">Send request</string>

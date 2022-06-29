@@ -7,6 +7,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CommonFriendsBottomSheetDialog
+import cz.cleevio.core.widget.DeleteChatBottomSheetDialog
 import cz.cleevio.core.widget.IdentityRequestBottomSheetDialog
 import cz.cleevio.core.widget.MyOfferBottomSheetDialog
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -87,6 +88,9 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		binding.revealIdentityBtn.setOnClickListener {
 			showBottomDialog(IdentityRequestBottomSheetDialog())
+		}
+		binding.deleteChatBtn.setOnClickListener {
+			showBottomDialog(DeleteChatBottomSheetDialog())
 		}
 
 	}
