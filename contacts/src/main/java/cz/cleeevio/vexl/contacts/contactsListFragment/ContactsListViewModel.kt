@@ -35,6 +35,8 @@ class ContactsListViewModel constructor(
 			//get all contacts from phone
 			val localContacts = contactRepository.getContacts()
 
+			Timber.tag("ContactSync").d("Checking all contacts with the API")
+
 			//send all contacts to BE, hashed by HMAC-256
 			//BE returns list of contacts that user didn't import previously
 			val notSyncedIdentifiers = contactRepository.checkAllContacts(
@@ -47,6 +49,8 @@ class ContactsListViewModel constructor(
 				}
 			)
 
+			Timber.tag("ContactSync").d("Checking done, we have ${notSyncedIdentifiers.data?.size} not synced contacts")
+
 			//now we take list all contacts from phone and keep only contacts that BE returned (keeping only NOT imported contacts)
 			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
 				notSyncedContactsList = localContacts.filter { contact ->
@@ -54,6 +58,8 @@ class ContactsListViewModel constructor(
 						HmacCryptoLib.digest(HMAC_PASSWORD, contact.phoneNumber)
 					)
 				}
+
+				Timber.tag("ContactSync").d("All done, emiting contacts")
 				//we emit those contacts to UI and show it to user
 				emitContacts(notSyncedContactsList)
 			}

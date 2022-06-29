@@ -22,6 +22,7 @@ import cz.cleevio.network.request.contact.ContactUserRequest
 import cz.cleevio.network.response.contact.ContactLevelApi
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.model.contact.*
+import timber.log.Timber
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
@@ -35,6 +36,7 @@ class ContactRepositoryImpl constructor(
 		.getAllContacts().map { it.fromDao() }
 
 	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit> {
+		Timber.tag("ContactSync").d("Starting contact synchronization")
 		val contactList: ArrayList<Contact> = ArrayList()
 
 		val projection = arrayOf(
@@ -66,6 +68,8 @@ class ContactRepositoryImpl constructor(
 			selectionArgs,
 			order
 		)
+
+		Timber.tag("ContactSync").d("Finished querying with count ${cursor?.count}")
 
 		if (cursor != null && cursor.count > 0) {
 			while (cursor.moveToNext()) {
@@ -104,9 +108,17 @@ class ContactRepositoryImpl constructor(
 		}
 		cursor?.close()
 
+		Timber.tag("ContactSync").d("Replacing ${contactList.size} contacts in the database")
+
 		contactDao.replaceAll(contactList
 			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
+			.apply {
+				Timber.tag("ContactSync").d("Replacing only ${this.size} after distinctBy")
+			}
 			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber) }
+			.apply {
+				Timber.tag("ContactSync").d("Replacing only ${this.size} after filter")
+			}
 			.map {
 				ContactEntity(
 					id = it.id.toLong(),
@@ -117,6 +129,8 @@ class ContactRepositoryImpl constructor(
 					photoUri = it.photoUri.toString()
 				)
 			})
+
+		Timber.tag("ContactSync").d("Replacing ${contactList.size} contacts in the database DONE")
 
 		return Resource.success(data = Unit)
 	}
