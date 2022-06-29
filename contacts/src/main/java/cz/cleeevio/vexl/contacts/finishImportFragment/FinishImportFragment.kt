@@ -18,7 +18,7 @@ class FinishImportFragment : BaseFragment(R.layout.fragment_finish_import) {
 			viewModel.sshKeyDownloadSuccessful.collect { success ->
 				// TODO maybe some delay?
 				viewModel.navMainGraphModel.navigateToGraph(
-					NavMainGraphModel.NavGraph.Marketplace
+					NavMainGraphModel.NavGraph.Main
 				)
 			}
 		}
