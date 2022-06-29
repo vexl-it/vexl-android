@@ -29,7 +29,8 @@ val repoModule = module {
 			myOfferDao = get(),
 			offerDao = get(),
 			locationDao = get(),
-			transactionProvider = get()
+			transactionProvider = get(),
+			requestedOfferDao = get()
 		)
 	}
 
@@ -55,6 +56,7 @@ val repoModule = module {
 			notificationDao = get(),
 			chatMessageDao = get(),
 			myOfferDao = get(),
+			requestedOfferDao = get(),
 			offerDao = get(),
 			encryptedPreferenceRepository = get()
 		)

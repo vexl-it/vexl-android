@@ -5,6 +5,7 @@ import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.dao.LocationDao
 import cz.cleevio.cache.dao.MyOfferDao
 import cz.cleevio.cache.dao.OfferDao
+import cz.cleevio.cache.dao.RequestedOfferDao
 import cz.cleevio.cache.entity.MyOfferEntity
 import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
@@ -19,6 +20,7 @@ class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
 	private val myOfferDao: MyOfferDao,
 	private val offerDao: OfferDao,
+	private val requestedOfferDao: RequestedOfferDao,
 	private val locationDao: LocationDao,
 	private val transactionProvider: TransactionProvider
 ) : OfferRepository {
@@ -131,11 +133,13 @@ class OfferRepositoryImpl constructor(
 
 	private suspend fun overwriteOffers(offers: List<Offer>) {
 		val myOfferIds = myOfferDao.listAll().map { it.extId }
+		val requestedOffersIds = requestedOfferDao.listAll().map { it.offerId }
 		transactionProvider.runAsTransaction {
 			locationDao.clearTable()
 			offerDao.clearTable()
 			offers.forEach { offer ->
 				offer.isMine = myOfferIds.contains(offer.offerId)
+				offer.isRequested = requestedOffersIds.contains(offer.offerId)
 				val offerId = offerDao.insertOffer(offer.toCache())
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)

@@ -2,11 +2,9 @@ package cz.cleevio.repository.repository.chat
 
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
-import cz.cleevio.cache.dao.ChatMessageDao
-import cz.cleevio.cache.dao.MyOfferDao
-import cz.cleevio.cache.dao.NotificationDao
-import cz.cleevio.cache.dao.OfferDao
+import cz.cleevio.cache.dao.*
 import cz.cleevio.cache.entity.NotificationEntity
+import cz.cleevio.cache.entity.RequestedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ChatApi
 import cz.cleevio.network.data.ErrorIdentification
@@ -29,6 +27,7 @@ class ChatRepositoryImpl constructor(
 	private val notificationDao: NotificationDao,
 	private val chatMessageDao: ChatMessageDao,
 	private val myOfferDao: MyOfferDao,
+	private val requestedOfferDao: RequestedOfferDao,
 	private val offerDao: OfferDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : ChatRepository {
@@ -259,7 +258,11 @@ class ChatRepositoryImpl constructor(
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 	}
 
-	override suspend fun askForCommunicationApproval(publicKey: String, message: ChatMessage): Resource<Unit> {
+	override suspend fun askForCommunicationApproval(
+		publicKey: String,
+		offerId: String,
+		message: ChatMessage
+	): Resource<Unit> {
 		chatMessageDao.insert(
 			message.toCache()
 		)
@@ -272,7 +275,10 @@ class ChatRepositoryImpl constructor(
 					)
 				)
 			},
-			mapper = { }
+			mapper = { },
+			doOnSuccess = {
+				requestedOfferDao.replace(RequestedOfferEntity(offerId = offerId))
+			}
 		)
 	}
 

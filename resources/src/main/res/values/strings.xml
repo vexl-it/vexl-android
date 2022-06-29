@@ -113,6 +113,7 @@
     <string name="marketplace_detail_payment">Payment</string>
     <string name="marketplace_detail_fee">Includes %1$s %% fee for transaction</string>
     <string name="offer_request">Request</string>
+    <string name="offer_requested">Requested</string>
     <string name="offer_edit_sell_title">My Sell Offers</string>
     <string name="offer_edit_buy_title">My Buy Offers</string>
     <string name="offer_create_sell_title">New Sell Offer</string>

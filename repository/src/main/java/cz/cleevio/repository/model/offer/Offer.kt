@@ -34,7 +34,8 @@ data class Offer constructor(
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime,
 	//custom flags
-	var isMine: Boolean = false
+	var isMine: Boolean = false,
+	var isRequested: Boolean = false
 ) : Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
@@ -85,7 +86,8 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 		commonFriends = this.commonFriends.split(",").map { it.trim() },
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt,
-		isMine = this.isMine
+		isMine = this.isMine,
+		isRequested = this.isRequested
 	)
 }
 
@@ -111,6 +113,7 @@ fun Offer.toCache(): OfferEntity {
 		commonFriends = this.commonFriends.joinToString(),
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt,
-		isMine = this.isMine
+		isMine = this.isMine,
+		isRequested = this.isRequested
 	)
 }

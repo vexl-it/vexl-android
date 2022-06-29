@@ -65,9 +65,10 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 
 		binding.requestOfferBtn.setOnClickListener {
 			val offerPublicKey = viewModel.offer.value?.offerPublicKey
+			val offerId = viewModel.offer.value?.offerId
 			val messageText = binding.requestText.text.toString()
 
-			if (offerPublicKey.isNullOrBlank() || messageText.isBlank()) {
+			if (offerPublicKey.isNullOrBlank() || messageText.isBlank() || offerId.isNullOrBlank()) {
 				//show error/toast
 				if (offerPublicKey.isNullOrBlank()) {
 					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -80,10 +81,17 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 						Toast.makeText(requireActivity(), "No message detected", Toast.LENGTH_SHORT).show()
 					}
 				}
+
+				if (offerId.isNullOrBlank()) {
+					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+						Toast.makeText(requireActivity(), "Offer is missing ID", Toast.LENGTH_SHORT).show()
+					}
+				}
 			} else {
 				viewModel.sendRequest(
 					text = messageText,
-					offerPublicKey = offerPublicKey
+					offerPublicKey = offerPublicKey,
+					offerId = offerId
 				) {
 					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
 						Toast.makeText(requireContext(), "Communication request sent successfully", Toast.LENGTH_SHORT)
