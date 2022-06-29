@@ -6,9 +6,9 @@ import cz.cleevio.repository.model.contact.*
 
 interface ContactRepository {
 
-	suspend fun checkAllContacts(phoneNumbers: List<String>): Resource<List<String>>
+	suspend fun checkAllContacts(hashedPhoneNumbers: List<String>): Resource<List<String>>
 
-	suspend fun uploadAllMissingContacts(identifiers: List<String>): Resource<ContactImport>
+	suspend fun uploadAllMissingContacts(contacts: List<Contact>): Resource<ContactImport>
 
 	suspend fun uploadAllMissingFBContacts(identifiers: List<String>): Resource<ContactImport>
 
@@ -27,7 +27,7 @@ interface ContactRepository {
 	suspend fun deleteMyFacebookUser(): Resource<Unit>
 
 	//sync contacts between phone and app DB, also uploads to BE
-	suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit>
+	suspend fun syncContacts(contentResolver: ContentResolver): Resource<List<Contact>>
 
 	fun getContacts(): List<Contact>
 

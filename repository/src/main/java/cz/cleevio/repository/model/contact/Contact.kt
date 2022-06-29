@@ -14,7 +14,9 @@ data class Contact constructor(
 	val email: String,
 	val phoneNumber: String,
 	override val photoUri: Uri?,
-	override var markedForUpload: Boolean = true
+	override var markedForUpload: Boolean = true,
+	//will be computed just in time before upload to BE
+	val hashedPhoneNumber: String = ""
 ) : BaseContact(
 	id = id,
 	name = name,
@@ -62,6 +64,16 @@ fun ContactEntity.fromDao(): Contact {
 			null
 		} else {
 			Uri.parse(this.photoUri)
-		}
+		},
+		hashedPhoneNumber = this.phoneHashed
 	)
 }
+
+fun Contact.toDao(): ContactEntity = ContactEntity(
+	id = this.id.toLong(),
+	name = this.name,
+	phone = this.phoneNumber,
+	phoneHashed = this.hashedPhoneNumber,
+	email = this.email,
+	photoUri = this.photoUri.toString()
+)
