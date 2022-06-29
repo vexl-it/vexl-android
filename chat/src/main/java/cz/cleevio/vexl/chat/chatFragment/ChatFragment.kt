@@ -3,10 +3,12 @@ package cz.cleevio.vexl.chat.chatFragment
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.core.widget.MyOfferBottomSheetDialog
+import cz.cleevio.core.widget.*
 import cz.cleevio.repository.model.chat.CommunicationRequest
+import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -56,12 +58,45 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		binding.chatRv.adapter = adapter
 
 		binding.myOfferBtn.setOnClickListener {
-			childFragmentManager.let { manager ->
-				val bottomSheetDialog = MyOfferBottomSheetDialog(args.communicationRequest.offer!!) // TODO solve double !
-				bottomSheetDialog.show(manager, "MyOfferBottomSheetDialog")
-			}
+			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer!!)) // TODO solve double !
+		}
+		binding.commonFriendsBtn.setOnClickListener {
+			val commonFriends = listOf(
+				CommonFriend(
+					1L,
+					"Spongebob Squarepants",
+					"FACEBOOK",
+					"https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/640px-SpongeBob_SquarePants_character.svg.png"
+				),
+				CommonFriend(
+					2L,
+					"Patrick Star",
+					"+420 111 111 111",
+					"https://upload.wikimedia.org/wikipedia/en/thumb/3/33/Patrick_Star.svg/1200px-Patrick_Star.svg.png"
+				),
+				CommonFriend(
+					3L,
+					"Samuel L. Jackson",
+					"Facebook",
+					"https://i.imgflip.com/4/1480cf.jpg"
+				)
+			)
+			showBottomDialog(CommonFriendsBottomSheetDialog(commonFriends)) // TODO get correct data
+		}
+		binding.revealIdentityBtn.setOnClickListener {
+			showBottomDialog(IdentityRequestBottomSheetDialog())
+		}
+		binding.deleteChatBtn.setOnClickListener {
+			showBottomDialog(DeleteChatBottomSheetDialog())
+		}
+		binding.blockUserBtn.setOnClickListener {
+			showBottomDialog(BlockUserBottomSheetDialog())
 		}
 
+	}
+
+	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
+		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
 	}
 
 	private fun sendMessage() {

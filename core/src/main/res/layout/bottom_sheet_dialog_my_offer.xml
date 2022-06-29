@@ -14,9 +14,9 @@
 		app:layout_constraintTop_toTopOf="parent"
 		app:widget_mode="chat" />
 
-	<Button
+	<com.google.android.material.button.MaterialButton
 		android:id="@+id/got_it_btn"
-		style="@style/Widget.Cleevio.Button.ContainedButton"
+		style="@style/Widget.Vexl.Chat.ActionButton.GotIt"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="8dp"
