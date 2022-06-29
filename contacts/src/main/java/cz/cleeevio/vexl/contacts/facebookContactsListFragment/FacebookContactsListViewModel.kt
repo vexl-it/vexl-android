@@ -38,7 +38,7 @@ class FacebookContactsListViewModel constructor(
 
 	private fun loadNotSyncedFacebookContacts(facebookId: String, accessToken: String) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val response = contactRepository.getFacebookContacts(facebookId, accessToken)
+			val response = contactRepository.syncFacebookContacts(facebookId, accessToken)
 			response.data?.let {
 				notSyncedContactsList = it
 				emitContacts(notSyncedContactsList)

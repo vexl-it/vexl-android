@@ -2,6 +2,7 @@ package cz.cleevio.repository.model.contact
 
 import android.content.Context
 import android.net.Uri
+import cz.cleevio.cache.entity.FacebookContactEntity
 import cz.cleevio.network.response.contact.FacebookUserResponse
 import cz.cleevio.repository.R
 import kotlinx.parcelize.Parcelize
@@ -33,6 +34,16 @@ fun FacebookUserResponse.fromFacebook(): FacebookContact {
 		id = this.id,
 		name = this.name,
 		photoUri = this.picture?.data?.url?.let {
+			Uri.parse(it)
+		}
+	)
+}
+
+fun FacebookContactEntity.fromCache(): FacebookContact {
+	return FacebookContact(
+		id = this.facebookId,
+		name = this.name,
+		photoUri = this.photoUri?.let {
 			Uri.parse(it)
 		}
 	)

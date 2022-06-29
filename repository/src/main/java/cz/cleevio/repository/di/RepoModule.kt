@@ -40,6 +40,7 @@ val repoModule = module {
 		ContactRepositoryImpl(
 			contactDao = get(),
 			contactKeyDao = get(),
+			facebookContactDao = get(),
 			contactApi = get(),
 			phoneNumberUtils = get(),
 			encryptedPreference = get()

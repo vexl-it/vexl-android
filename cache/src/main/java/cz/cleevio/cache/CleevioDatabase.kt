@@ -12,6 +12,7 @@ import cz.cleevio.cache.entity.*
 	entities = [
 		UserEntity::class,
 		ContactEntity::class,
+		FacebookContactEntity::class,
 		ContactKeyEntity::class,
 		MyOfferEntity::class,
 		OfferEntity::class,
@@ -34,6 +35,7 @@ abstract class CleevioDatabase : RoomDatabase() {
 
 	abstract fun userDao(): UserDao
 	abstract fun contactDao(): ContactDao
+	abstract fun facebookContactDao(): FacebookContactDao
 	abstract fun contactKeyDao(): ContactKeyDao
 	abstract fun myOfferDao(): MyOfferDao
 	abstract fun offerDao(): OfferDao

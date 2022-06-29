@@ -29,6 +29,10 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().facebookContactDao()
+	}
+
+	single {
 		get<CleevioDatabase>().contactKeyDao()
 	}
 

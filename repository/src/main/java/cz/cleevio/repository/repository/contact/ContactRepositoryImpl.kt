@@ -9,8 +9,11 @@ import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.dao.ContactKeyDao
+import cz.cleevio.cache.dao.FacebookContactDao
+import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.ContactKeyEntity
 import cz.cleevio.cache.entity.ContactLevel
+import cz.cleevio.cache.entity.FacebookContactEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.Resource
@@ -26,6 +29,7 @@ import timber.log.Timber
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
 	private val contactKeyDao: ContactKeyDao,
+	private val facebookContactDao: FacebookContactDao,
 	private val contactApi: ContactApi,
 	private val phoneNumberUtils: PhoneNumberUtils,
 	private val encryptedPreference: EncryptedPreferenceRepository
@@ -179,7 +183,7 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>> {
+	override suspend fun syncFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>> {
 		return tryOnline(
 			mapper = {
 				it?.facebookUser?.friends?.map { friend ->
@@ -192,6 +196,18 @@ class ContactRepositoryImpl constructor(
 					signature = encryptedPreference.facebookSignature,
 					facebookId = facebookId,
 					accessToken = accessToken
+				)
+			},
+			doOnSuccess = {
+				facebookContactDao.replaceAllContacts(
+					it.orEmpty().map { fbContact ->
+						FacebookContactEntity(
+							name = fbContact.name,
+							facebookId = fbContact.id,
+							facebookIdHashed = HmacCryptoLib.digest(HMAC_PASSWORD, fbContact.id),
+							photoUri = fbContact.photoUri?.toString()
+						)
+					}
 				)
 			}
 		)
