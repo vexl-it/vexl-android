@@ -9,5 +9,4 @@ interface RequestedOfferDao : BaseDao<RequestedOfferEntity> {
 
 	@Query("SELECT * FROM RequestedOfferEntity")
 	fun listAll(): List<RequestedOfferEntity>
-
 }
