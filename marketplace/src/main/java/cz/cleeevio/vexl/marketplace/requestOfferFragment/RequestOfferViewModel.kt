@@ -32,11 +32,12 @@ class RequestOfferViewModel constructor(
 	private val _friends = MutableStateFlow<List<Any>>(listOf())
 	val friends = _friends.asStateFlow()
 
-	fun sendRequest(text: String, offerPublicKey: String, onSuccess: suspend () -> Unit) {
+	fun sendRequest(text: String, offerPublicKey: String, offerId: String, onSuccess: suspend () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_isRequesting.emit(true)
 			val response = chatRepository.askForCommunicationApproval(
 				publicKey = offerPublicKey,
+				offerId = offerId,
 				message = ChatMessage(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = offerPublicKey,

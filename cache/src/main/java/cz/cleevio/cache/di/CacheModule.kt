@@ -57,6 +57,10 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().requestedOfferDao()
+	}
+
+	single {
 		TransactionProvider(get())
 	}
 

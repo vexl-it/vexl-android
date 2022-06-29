@@ -296,9 +296,8 @@
 
 	<style name="Widget.Vexl.OfferButton" parent="">
 		<item name="android:layout_height">48dp</item>
-		<item name="icon">@drawable/ic_eye</item>
 		<item name="iconPadding">10dp</item>
-		<item name="backgroundTint">@color/yellow_100</item>
+		<item name="backgroundTint">@color/background_request_button</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.OfferButton</item>
 		<item name="android:paddingTop">15.5dp</item>
 		<item name="android:paddingBottom">14.5dp</item>

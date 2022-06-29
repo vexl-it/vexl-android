@@ -32,5 +32,6 @@ data class OfferEntity(
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime,
 	//custom flags
-	val isMine: Boolean
+	val isMine: Boolean,
+	val isRequested: Boolean,
 )

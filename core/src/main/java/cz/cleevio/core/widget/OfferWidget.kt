@@ -70,6 +70,24 @@ class OfferWidget @JvmOverloads constructor(
 			binding.editBtn.isVisible = false
 
 			binding.requestBtn.isVisible = requestOffer != null
+			binding.requestBtn.text = if (item.isRequested) {
+				context.getString(R.string.offer_requested)
+			} else {
+				context.getString(R.string.offer_request)
+			}
+			binding.requestBtn.setTextColor(
+				if (item.isRequested) {
+					context.getColor(R.color.white)
+				} else {
+					context.getColor(R.color.black)
+				}
+			)
+			binding.requestBtn.icon = if (item.isRequested) {
+				context.getDrawable(R.drawable.ic_succesfull_blue)
+			} else {
+				context.getDrawable(R.drawable.ic_eye)
+			}
+			binding.requestBtn.isEnabled = !item.isRequested
 		}
 		binding.requestBtn.setOnClickListener {
 			requestOffer?.invoke(item.offerId)

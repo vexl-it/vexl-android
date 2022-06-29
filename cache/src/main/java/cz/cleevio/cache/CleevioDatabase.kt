@@ -15,6 +15,7 @@ import cz.cleevio.cache.entity.*
 		ContactKeyEntity::class,
 		MyOfferEntity::class,
 		OfferEntity::class,
+		RequestedOfferEntity::class,
 		LocationEntity::class,
 		ChatContactEntity::class,
 		ChatMessageEntity::class,
@@ -39,4 +40,5 @@ abstract class CleevioDatabase : RoomDatabase() {
 	abstract fun chatMessageDao(): ChatMessageDao
 	abstract fun chatContactDao(): ChatContactDao
 	abstract fun notificationDao(): NotificationDao
+	abstract fun requestedOfferDao(): RequestedOfferDao
 }

@@ -19,5 +19,5 @@ fun DeleteOfferValue.toUnixTimestamp(): Long {
 		DeleteTimeframe.WEEKS -> TimeUnit.DAYS.toMillis(WEEK)
 		DeleteTimeframe.MONTHS -> TimeUnit.DAYS.toMillis(MONTH)
 	}
-	return System.currentTimeMillis() + (modifier * value)
+	return System.currentTimeMillis() + modifier * value
 }
