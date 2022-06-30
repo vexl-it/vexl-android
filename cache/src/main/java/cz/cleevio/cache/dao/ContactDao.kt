@@ -1,14 +1,12 @@
 package cz.cleevio.cache.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
 import cz.cleevio.cache.entity.ContactEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ContactDao {
-
-	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun insertContacts(contactEntity: List<ContactEntity>)
+interface ContactDao : BaseDao<ContactEntity> {
 
 	@Query("SELECT photoUri FROM ContactEntity where name = :name")
 	suspend fun getContactPhotoUriByName(name: String): String?
@@ -21,10 +19,4 @@ interface ContactDao {
 
 	@Query("DELETE FROM ContactEntity")
 	suspend fun clearTable()
-
-	@Transaction
-	suspend fun replaceAll(contactEntity: List<ContactEntity>) {
-		clearTable()
-		insertContacts(contactEntity)
-	}
 }

@@ -1,5 +1,6 @@
 package cz.cleeevio.vexl.contacts.contactsListFragment
 
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleeevio.vexl.contacts.R
@@ -44,6 +45,18 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 				}
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.progressFlow.collect { show ->
+				binding.contactsListWidget.isVisible = !show
+				binding.importContactsBtn.isVisible = !show
+
+				if (show) {
+					binding.progress.show()
+				} else {
+					binding.progress.hide()
+				}
+			}
+		}
 	}
 
 	override fun initView() {
@@ -60,7 +73,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 			viewModel.uploadAllMissingContacts()
 		}
 
-		viewModel.syncContacts(requireActivity().contentResolver)
+		viewModel.syncContacts(requireActivity().contentResolver, args.openedFromScreen)
 	}
 
 }

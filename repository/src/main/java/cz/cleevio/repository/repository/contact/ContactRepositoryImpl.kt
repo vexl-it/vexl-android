@@ -9,7 +9,6 @@ import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.dao.ContactKeyDao
-import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.ContactKeyEntity
 import cz.cleevio.cache.entity.ContactLevel
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -35,7 +34,7 @@ class ContactRepositoryImpl constructor(
 	override fun getContacts(): List<Contact> = contactDao
 		.getAllContacts().map { it.fromDao() }
 
-	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<Unit> {
+	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<List<Contact>> {
 		Timber.tag("ContactSync").d("Starting contact synchronization")
 		val contactList: ArrayList<Contact> = ArrayList()
 
@@ -108,42 +107,66 @@ class ContactRepositoryImpl constructor(
 		}
 		cursor?.close()
 
-		Timber.tag("ContactSync").d("Replacing ${contactList.size} contacts in the database")
-
-		contactDao.replaceAll(contactList
+		val result = contactList
 			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
 			.apply {
 				Timber.tag("ContactSync").d("Replacing only ${this.size} after distinctBy")
 			}
+			//take only valid phone numbers
 			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber) }
 			.apply {
 				Timber.tag("ContactSync").d("Replacing only ${this.size} after filter")
-			}
-			.map {
-				ContactEntity(
-					id = it.id.toLong(),
-					name = it.name,
-					phone = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber),
-					phoneHashed = HmacCryptoLib.digest(HMAC_PASSWORD, phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber)),
-					email = it.email,
-					photoUri = it.photoUri.toString()
+			}.map {
+				//format phone number to proper format
+				it.copy(
+					phoneNumber = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber)
 				)
-			})
+			}
 
-		Timber.tag("ContactSync").d("Replacing ${contactList.size} contacts in the database DONE")
-
-		return Resource.success(data = Unit)
+		return Resource.success(data = result)
 	}
 
-	override suspend fun checkAllContacts(phoneNumbers: List<String>) = tryOnline(
-		request = { contactApi.postContactNotImported(ContactRequest(phoneNumbers)) },
+	private suspend fun saveContactsToDB(contactList: List<Contact>) {
+		Timber.tag("ContactSync").d("Replacing ${contactList.size} contacts in the database")
+		contactDao.replaceAll(
+			contactList.map {
+				it.toDao()
+			}
+		)
+		Timber.tag("ContactSync").d("Replacing ${contactList.size} contacts in the database DONE")
+	}
+
+	override suspend fun checkAllContacts(hashedPhoneNumbers: List<String>) = tryOnline(
+		request = { contactApi.postContactNotImported(ContactRequest(hashedPhoneNumbers)) },
 		mapper = { it?.newContacts.orEmpty() }
 	)
 
-	override suspend fun uploadAllMissingContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
-		request = { contactApi.postContactImport(contactImportRequest = ContactRequest(identifiers)) },
-		mapper = { it?.fromNetwork() }
-	)
+	override suspend fun uploadAllMissingContacts(contacts: List<Contact>): Resource<ContactImport> {
+		Timber.tag("ContactSync").d("Starting hashing ${contacts.size} contacts before uploading")
+		// hash phone numbers if we are here from onboarding.
+		// that means that we have skipped hashing before `not-imported` EP
+		val hashedContacts = contacts.map {
+			if (it.hashedPhoneNumber.isBlank()) {
+				it.copy(hashedPhoneNumber = HmacCryptoLib.digest(HMAC_PASSWORD, it.phoneNumber))
+			} else {
+				it
+			}
+		}
+		//take those hashed phone numbers as identifiers
+		val identifiers = hashedContacts.map {
+			it.hashedPhoneNumber
+		}
+		Timber.tag("ContactSync").d("Hashing is DONE")
+		return tryOnline(
+			//send identifiers to BE
+			request = { contactApi.postContactImport(contactImportRequest = ContactRequest(identifiers)) },
+			mapper = { it?.fromNetwork() },
+			doOnSuccess = {
+				//save contacts to DB including the hashed number
+				saveContactsToDB(hashedContacts)
+			}
+		)
+	}
 
 	override suspend fun uploadAllMissingFBContacts(identifiers: List<String>): Resource<ContactImport> = tryOnline(
 		request = {
