@@ -57,7 +57,7 @@ data class Contact constructor(
 
 fun ContactEntity.fromDao(): Contact {
 	return Contact(
-		id = this.id.toString(),
+		id = this.contactId.toString(),
 		name = this.name,
 		email = this.email,
 		phoneNumber = this.phone,
@@ -71,7 +71,7 @@ fun ContactEntity.fromDao(): Contact {
 }
 
 fun Contact.toDao(): ContactEntity = ContactEntity(
-	id = this.id.toLong(),
+	contactId = this.id.toLong(),
 	name = this.name,
 	phone = this.phoneNumber,
 	phoneHashed = this.hashedPhoneNumber,

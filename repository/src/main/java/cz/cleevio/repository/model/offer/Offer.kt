@@ -1,9 +1,12 @@
 package cz.cleevio.repository.model.offer
 
 import android.os.Parcelable
+import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
+import cz.cleevio.repository.model.contact.CommonFriend
+import cz.cleevio.repository.model.contact.fromDao
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 import java.time.ZonedDateTime
@@ -30,8 +33,7 @@ data class Offer constructor(
 	val activePriceState: String,
 	val activePriceValue: BigDecimal,
 	val active: Boolean,
-//	val commonFriends: List<CommonFriend>,
-	val commonFriends: List<String>,
+	val commonFriends: List<CommonFriend>,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime,
 	//custom flags
@@ -58,17 +60,16 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 		activePriceState = this.activePriceState.decryptedValue,
 		activePriceValue = this.activePriceValue.decryptedValue,
 		active = this.active.decryptedValue.toBoolean(),
-//		commonFriends = this.commonFriends.map { CommonFriend(it.decryptedValue) },
-		commonFriends = this.commonFriends.map { it.decryptedValue },
+		commonFriends = this.commonFriends.map { CommonFriend(it.decryptedValue) },
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
 	)
 }
 
-fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
+fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<ContactEntity>): Offer {
 	return Offer(
-		databaseId = this.id,
-		offerId = this.offerId,
+		databaseId = this.offerId,
+		offerId = this.externalOfferId,
 		location = locations.map { it.fromCache() },
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
@@ -85,7 +86,7 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 		activePriceState = this.activePriceState,
 		activePriceValue = this.activePriceValue,
 		active = this.active,
-		commonFriends = this.commonFriends.split(",").map { it.trim() },
+		commonFriends = commonFriends.map { CommonFriend(it.phoneHashed, it.fromDao()) },
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt,
 		isMine = this.isMine,
@@ -95,8 +96,8 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>): Offer {
 
 fun Offer.toCache(): OfferEntity {
 	return OfferEntity(
-		id = this.databaseId,
-		offerId = this.offerId,
+		offerId = this.databaseId,
+		externalOfferId = this.offerId,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
 		offerDescription = this.offerDescription,

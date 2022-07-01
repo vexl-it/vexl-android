@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.ItemChatCommonFriendBinding
-import cz.cleevio.repository.model.contact.CommonFriend
+import cz.cleevio.repository.model.contact.BaseContact
 
 class CommonFriendsDialogAdapter :
-	ListAdapter<CommonFriend, CommonFriendsDialogAdapter.ViewHolder>(object : DiffUtil.ItemCallback<CommonFriend>() {
-		override fun areItemsTheSame(oldItem: CommonFriend, newItem: CommonFriend): Boolean = oldItem.id == newItem.id
+	ListAdapter<BaseContact, CommonFriendsDialogAdapter.ViewHolder>(object : DiffUtil.ItemCallback<BaseContact>() {
+		override fun areItemsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean = oldItem.id == newItem.id
 
-		override fun areContentsTheSame(oldItem: CommonFriend, newItem: CommonFriend): Boolean = oldItem == newItem
+		override fun areContentsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean = oldItem == newItem
 	}) {
 
 	inner class ViewHolder constructor(
 		private val binding: ItemChatCommonFriendBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: CommonFriend) {
-			binding.profileImage.load(item.userAvatar) {
+		fun bind(item: BaseContact) {
+			binding.profileImage.load(item.photoUri) {
 				crossfade(true)
 				fallback(R.drawable.ic_baseline_person_128)
 				error(R.drawable.ic_baseline_person_128)

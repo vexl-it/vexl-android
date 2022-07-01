@@ -2,7 +2,7 @@ package cz.cleevio.cache.dao
 
 import androidx.room.*
 import cz.cleevio.cache.entity.OfferEntity
-import cz.cleevio.cache.entity.OfferWithLocations
+import cz.cleevio.cache.entity.OfferWithLocationsAndCommonFriends
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,10 +18,10 @@ interface OfferDao {
 	fun getAllOffers(): List<OfferEntity>
 
 	@Query("SELECT * FROM OfferEntity")
-	fun getAllOffersWithLocations(): List<OfferWithLocations>
+	fun getAllExtendedOffers(): List<OfferWithLocationsAndCommonFriends>
 
 	@Query("SELECT * FROM OfferEntity")
-	fun getAllOffersWithLocationsFlow(): Flow<List<OfferWithLocations>>
+	fun getAllExtendedOffersFlow(): Flow<List<OfferWithLocationsAndCommonFriends>>
 
 	@Query("DELETE FROM OfferEntity")
 	suspend fun clearTable()
@@ -30,7 +30,7 @@ interface OfferDao {
 	suspend fun deleteOffersById(offerIds: List<String>)
 
 	@Query("SELECT * FROM OfferEntity WHERE offerId == :offerId")
-	fun getOfferById(offerId: String): OfferWithLocations
+	fun getOfferById(offerId: String): OfferWithLocationsAndCommonFriends
 
 	@Transaction
 	suspend fun replaceAll(offers: List<OfferEntity>) {

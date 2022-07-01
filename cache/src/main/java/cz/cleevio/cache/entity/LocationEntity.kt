@@ -10,7 +10,7 @@ import java.math.BigDecimal
 		ForeignKey(
 			onDelete = ForeignKey.CASCADE,
 			entity = OfferEntity::class,
-			parentColumns = ["id"],
+			parentColumns = ["offerId"],
 			childColumns = ["offerId"]
 		)
 	]

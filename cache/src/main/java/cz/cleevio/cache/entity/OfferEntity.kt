@@ -7,11 +7,11 @@ import java.math.BigDecimal
 import java.time.ZonedDateTime
 
 // TODO Strings to enums
-@Entity(indices = [Index(value = ["offerId"], unique = true)])
+@Entity(indices = [Index(value = ["externalOfferId"], unique = true)])
 data class OfferEntity(
 	@PrimaryKey(autoGenerate = true)
-	val id: Long = 0,
-	val offerId: String,
+	val offerId: Long = 0,
+	val externalOfferId: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,
 	val offerDescription: String,

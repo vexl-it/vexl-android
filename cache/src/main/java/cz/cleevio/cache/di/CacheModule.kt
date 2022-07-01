@@ -61,6 +61,10 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().offerCommonFriendCrossRefDao()
+	}
+
+	single {
 		TransactionProvider(get())
 	}
 
