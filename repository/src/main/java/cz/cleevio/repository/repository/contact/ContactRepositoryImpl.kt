@@ -304,7 +304,6 @@ class ContactRepositoryImpl constructor(
 	)
 
 	override suspend fun getCommonFriends(contactsPublicKeys: Set<String>): Map<String, List<BaseContact>> {
-
 		val facebookContacts = contactApi.getCommonContacts(
 			hash = encryptedPreference.facebookHash,
 			signature = encryptedPreference.facebookSignature,

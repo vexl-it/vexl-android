@@ -147,7 +147,8 @@ class OfferRepositoryImpl constructor(
 				})
 				//TODO toCache?
 				val commonFriendRefs = contactDao.getContactByHashedPhones(
-					offer.commonFriends.map { it.contactHash }    // because we don't have full objects at this moment yet (it's from the API, not database)
+					// because we don't have full objects at this moment yet (it's from the API, not database)
+					offer.commonFriends.map { it.contactHash }
 				).map {
 					OfferCommonFriendCrossRef(
 						offerId = offerId,
@@ -169,7 +170,8 @@ class OfferRepositoryImpl constructor(
 					it.toCache(offerId)
 				})
 				val commonFriendRefs = contactDao.getContactByHashedPhones(
-					offer.commonFriends.map { it.contactHash }    // because we don't have full objects at this moment yet (it's from the API, not database)
+					// because we don't have full objects at this moment yet (it's from the API, not database)
+					offer.commonFriends.map { it.contactHash }
 				).map {
 					OfferCommonFriendCrossRef(
 						offerId = offerId,
