@@ -303,6 +303,40 @@ class ContactRepositoryImpl constructor(
 		mapper = { }
 	)
 
+	override suspend fun getCommonFriends(contactsPublicKeys: Set<String>): Map<String, List<BaseContact>> {
+
+		val facebookContacts = contactApi.getCommonContacts(
+			hash = encryptedPreference.facebookHash,
+			signature = encryptedPreference.facebookSignature,
+			publicKeys = contactsPublicKeys
+		)
+
+		val phoneContacts = contactApi.getCommonContacts(
+			hash = encryptedPreference.hash,
+			signature = encryptedPreference.signature,
+			publicKeys = contactsPublicKeys
+		)
+
+		val commonFriendsMap = mutableMapOf<String, List<Contact>>()
+
+		if (phoneContacts.isSuccessful) {
+			phoneContacts.body()?.commonContacts.orEmpty().map { friend ->
+				val contacts = contactDao.getContactByHashedPhones(friend.common.hashes)
+				commonFriendsMap.put(friend.publicKey, contacts.map { it.fromDao() })
+			}
+		}
+
+		if (facebookContacts.isSuccessful) {
+			facebookContacts.body()?.commonContacts.orEmpty().map { friend ->
+				// TODO
+//				val contacts = contactDao.getContactByHashedPhones(friend.common.hashes)
+//				commonFriendsMap.put(friend.publicKey, contacts.map { it.fromDao() })
+			}
+		}
+
+		return commonFriendsMap
+	}
+
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 

@@ -17,6 +17,9 @@ interface ContactDao : BaseDao<ContactEntity> {
 	@Query("SELECT * FROM ContactEntity")
 	fun getAllContacts(): List<ContactEntity>
 
+	@Query("SELECT * FROM ContactEntity WHERE phoneHashed IN (:hashedPhones)")
+	fun getContactByHashedPhones(hashedPhones: Collection<String>): List<ContactEntity>
+
 	@Query("DELETE FROM ContactEntity")
 	suspend fun clearTable()
 }

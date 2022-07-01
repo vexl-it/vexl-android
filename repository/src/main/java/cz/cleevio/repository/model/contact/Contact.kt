@@ -52,6 +52,7 @@ data class Contact constructor(
 	}
 
 	override fun getIdentifier(): String = phoneNumber
+	override fun getHashedContact(): String = hashedPhoneNumber
 }
 
 fun ContactEntity.fromDao(): Contact {

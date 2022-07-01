@@ -9,4 +9,5 @@ abstract class BaseContact(
 	open var markedForUpload: Boolean
 ) {
 	abstract fun getIdentifier(): String
+	abstract fun getHashedContact(): String
 }

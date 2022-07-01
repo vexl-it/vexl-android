@@ -16,6 +16,9 @@ data class FacebookContact(
 	markedForUpload = markedForUpload
 ) {
 	override fun getIdentifier(): String = id
+	override fun getHashedContact(): String {
+		TODO("Not yet implemented")
+	}
 }
 
 fun FacebookUserResponse.fromFacebook(): FacebookContact {

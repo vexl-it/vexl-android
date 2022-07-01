@@ -76,8 +76,16 @@ class EditOfferViewModel constructor(
 				contactsPublicKeys.add(myPublicKey)
 			}
 
+			val commonFriends = contactRepository.getCommonFriends(contactsPublicKeys)
+
 			contactsPublicKeys.forEach { key ->
-				val encryptedOffer = OfferUtils.encryptOffer(locationHelper, params, key, offerKeys)
+				val encryptedOffer = OfferUtils.encryptOffer(
+					locationHelper = locationHelper,
+					params = params,
+					commonFriends = commonFriends[key].orEmpty(), // TODO orEmpty should not happen, list in map is not nullable
+					contactKey = key,
+					offerKeys = offerKeys
+				)
 				encryptedOfferList.add(encryptedOffer)
 			}
 

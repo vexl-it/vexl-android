@@ -3,6 +3,7 @@ package cz.cleevio.core.utils
 import com.cleevio.vexl.cryptography.EciesCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.core.model.OfferParams
+import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.offer.NewOffer
 
 object OfferUtils {
@@ -10,6 +11,7 @@ object OfferUtils {
 	fun encryptOffer(
 		locationHelper: LocationHelper,
 		params: OfferParams,
+		commonFriends: List<BaseContact>,
 		contactKey: String,
 		offerKeys: KeyPair
 	): NewOffer {
@@ -31,7 +33,10 @@ object OfferUtils {
 			offerType = eciesEncrypt(params.offerType, contactKey),
 			activePriceState = eciesEncrypt(params.priceTrigger.type.name, contactKey),
 			activePriceValue = eciesEncrypt(params.priceTrigger.value.toString(), contactKey),
-			active = eciesEncrypt(params.active.toString(), contactKey)
+			active = eciesEncrypt(params.active.toString(), contactKey),
+			commonFriends = commonFriends.map { friend ->
+				eciesEncrypt(friend.getHashedContact(), contactKey)
+			}
 		)
 	}
 

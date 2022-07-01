@@ -63,18 +63,21 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		binding.commonFriendsBtn.setOnClickListener {
 			val commonFriends = listOf(
 				CommonFriend(
+					"contact_hash_1",
 					1L,
 					"Spongebob Squarepants",
 					"FACEBOOK",
 					"https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/640px-SpongeBob_SquarePants_character.svg.png"
 				),
 				CommonFriend(
+					"contact_hash_2",
 					2L,
 					"Patrick Star",
 					"+420 111 111 111",
 					"https://upload.wikimedia.org/wikipedia/en/thumb/3/33/Patrick_Star.svg/1200px-Patrick_Star.svg.png"
 				),
 				CommonFriend(
+					"contact_hash_3",
 					3L,
 					"Samuel L. Jackson",
 					"Facebook",

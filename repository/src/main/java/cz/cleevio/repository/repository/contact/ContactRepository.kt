@@ -35,4 +35,5 @@ interface ContactRepository {
 
 	suspend fun generateContactsTmp(): Resource<Unit>
 	suspend fun generateFacebookContactsTmp(): Resource<Unit>
+	suspend fun getCommonFriends(contactsPublicKeys: Set<String>): Map<String, List<BaseContact>>
 }

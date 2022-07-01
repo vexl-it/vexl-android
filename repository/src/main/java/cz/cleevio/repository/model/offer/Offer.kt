@@ -30,6 +30,7 @@ data class Offer constructor(
 	val activePriceState: String,
 	val activePriceValue: BigDecimal,
 	val active: Boolean,
+//	val commonFriends: List<CommonFriend>,
 	val commonFriends: List<String>,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime,
@@ -57,6 +58,7 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 		activePriceState = this.activePriceState.decryptedValue,
 		activePriceValue = this.activePriceValue.decryptedValue,
 		active = this.active.decryptedValue.toBoolean(),
+//		commonFriends = this.commonFriends.map { CommonFriend(it.decryptedValue) },
 		commonFriends = this.commonFriends.map { it.decryptedValue },
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
