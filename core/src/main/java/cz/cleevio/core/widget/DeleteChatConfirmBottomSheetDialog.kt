@@ -6,10 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogDeleteChatConfirmBinding
+import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.MessageType
+import cz.cleevio.repository.repository.chat.ChatRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
-class DeleteChatConfirmBottomSheetDialog : BottomSheetDialogFragment() {
+class DeleteChatConfirmBottomSheetDialog constructor(
+	private val senderPublicKey: String,
+	private val receiverPublicKey: String,
+	private val inboxPublicKey: String,
+) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogDeleteChatConfirmBinding
+
+	private val chatRepository: ChatRepository by inject()
+	private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -23,7 +37,22 @@ class DeleteChatConfirmBottomSheetDialog : BottomSheetDialogFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
-			// TODO delete chat
+			coroutineScope.launch {
+				chatRepository.sendMessage(
+					senderPublicKey = senderPublicKey,
+					receiverPublicKey = receiverPublicKey,
+					message = ChatMessage(
+						inboxPublicKey = inboxPublicKey,
+						senderPublicKey = senderPublicKey,
+						recipientPublicKey = receiverPublicKey,
+						text = "TODO: need text?",
+						type = MessageType.DELETE_CHAT,
+						isMine = true,
+						isProcessed = false
+					),
+					messageType = "DELETE_CHAT"
+				)
+			}
 			dismiss()
 		}
 		binding.backBtn.setOnClickListener {

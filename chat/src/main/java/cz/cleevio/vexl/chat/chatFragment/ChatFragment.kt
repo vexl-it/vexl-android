@@ -64,10 +64,20 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			showBottomDialog(IdentityRequestBottomSheetDialog())
 		}
 		binding.deleteChatBtn.setOnClickListener {
-			showBottomDialog(DeleteChatBottomSheetDialog())
+			showBottomDialog(
+				DeleteChatBottomSheetDialog(
+					senderPublicKey = viewModel.senderPublicKey,
+					receiverPublicKey = viewModel.receiverPublicKey,
+					inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey
+				)
+			)
 		}
 		binding.blockUserBtn.setOnClickListener {
-			showBottomDialog(BlockUserBottomSheetDialog())
+			showBottomDialog(
+				BlockUserBottomSheetDialog(
+					senderPublicKey = viewModel.senderPublicKey, publicKeyToBlock = viewModel.receiverPublicKey
+				)
+			)
 		}
 
 	}

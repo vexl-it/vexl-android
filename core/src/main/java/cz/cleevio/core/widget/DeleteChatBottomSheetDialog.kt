@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogDeleteChatBinding
 
-class DeleteChatBottomSheetDialog : BottomSheetDialogFragment() {
+class DeleteChatBottomSheetDialog(
+	private val senderPublicKey: String,
+	private val receiverPublicKey: String,
+	private val inboxPublicKey: String,
+) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogDeleteChatBinding
 
@@ -23,7 +27,11 @@ class DeleteChatBottomSheetDialog : BottomSheetDialogFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
-			val dialog = DeleteChatConfirmBottomSheetDialog()
+			val dialog = DeleteChatConfirmBottomSheetDialog(
+				senderPublicKey = senderPublicKey,
+				receiverPublicKey = receiverPublicKey,
+				inboxPublicKey = inboxPublicKey
+			)
 			dismiss()
 			dialog.show(parentFragmentManager, dialog.javaClass.simpleName)
 		}

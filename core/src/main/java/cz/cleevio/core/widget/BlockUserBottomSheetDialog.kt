@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogBlockUserBinding
 
-class BlockUserBottomSheetDialog : BottomSheetDialogFragment() {
+class BlockUserBottomSheetDialog(
+	private val senderPublicKey: String,
+	private val publicKeyToBlock: String
+) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogBlockUserBinding
 
@@ -23,7 +26,9 @@ class BlockUserBottomSheetDialog : BottomSheetDialogFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
-			val dialog = BlockUserConfirmBottomSheetDialog()
+			val dialog = BlockUserConfirmBottomSheetDialog(
+				senderPublicKey = senderPublicKey, publicKeyToBlock = publicKeyToBlock
+			)
 			dismiss()
 			dialog.show(parentFragmentManager, dialog.javaClass.simpleName)
 		}
