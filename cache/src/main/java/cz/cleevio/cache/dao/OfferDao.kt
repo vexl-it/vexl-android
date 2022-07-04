@@ -26,10 +26,10 @@ interface OfferDao {
 	@Query("DELETE FROM OfferEntity")
 	suspend fun clearTable()
 
-	@Query("DELETE FROM OfferEntity WHERE offerId in (:offerIds)")
+	@Query("DELETE FROM OfferEntity WHERE externalOfferId in (:offerIds)")
 	suspend fun deleteOffersById(offerIds: List<String>)
 
-	@Query("SELECT * FROM OfferEntity WHERE offerId == :offerId")
+	@Query("SELECT * FROM OfferEntity WHERE externalOfferId == :offerId")
 	fun getOfferById(offerId: String): OfferWithLocationsAndCommonFriends
 
 	@Transaction
