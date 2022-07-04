@@ -24,6 +24,8 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 	private val args by navArgs<RequestOfferFragmentArgs>()
 	private val binding by viewBinding(FragmentRequestOfferBinding::bind)
 
+	private lateinit var commonFriendsAdapter: CommonFriendAdapter
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.isRequesting.collect { isRequesting ->
@@ -39,15 +41,9 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 			viewModel.offer.collect {
 				it?.let { offer ->
 					binding.offerWidget.bind(offer)
+					binding.commonFriendsNumber.text = getString(R.string.request_common_friends, offer.commonFriends.size)
+					commonFriendsAdapter.submitList(offer.commonFriends.map { friend -> friend.contact })
 				}
-			}
-		}
-
-		repeatScopeOnStart {
-			viewModel.friends.collect {
-				binding.commonFriendsNumber.text = getString(R.string.request_common_friends, it.size)
-
-				//todo: show list of profile photos or something
 			}
 		}
 	}
@@ -60,8 +56,10 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 			)
 		}
 
+		commonFriendsAdapter = CommonFriendAdapter()
+		binding.commonFriendsList.adapter = commonFriendsAdapter
+
 		viewModel.loadOfferById(args.offerId)
-		viewModel.loadFriends()
 
 		binding.requestOfferBtn.setOnClickListener {
 			val offerPublicKey = viewModel.offer.value?.offerPublicKey
