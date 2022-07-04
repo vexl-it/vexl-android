@@ -345,7 +345,7 @@ class ChatRepositoryImpl constructor(
 			myOfferId?.let { offerId ->
 				//find offer by offerId
 				val offerWithLocation = offerDao.getOfferById(offerId)
-				val offer = offerWithLocation.offer.fromCache(offerWithLocation.locations)
+				val offer = offerWithLocation.offer.fromCache(offerWithLocation.locations, offerWithLocation.commonFriends)
 				result.add(
 					CommunicationRequest(
 						message = message,
@@ -378,11 +378,11 @@ class ChatRepositoryImpl constructor(
 					result.add(
 						ChatListUser(
 							message = latestMessage,
-							offer = offerDao.getAllOffersWithLocations().filter {
+							offer = offerDao.getAllExtendedOffers().filter {
 								it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
 									it.offer.offerPublicKey == latestMessage.senderPublicKey
 							}.map {
-								it.offer.fromCache(it.locations)
+								it.offer.fromCache(it.locations, it.commonFriends)
 							}.first()
 						)
 					)

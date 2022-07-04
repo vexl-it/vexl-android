@@ -2,11 +2,9 @@ package cz.cleevio.repository.repository.offer
 
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.TransactionProvider
-import cz.cleevio.cache.dao.LocationDao
-import cz.cleevio.cache.dao.MyOfferDao
-import cz.cleevio.cache.dao.OfferDao
-import cz.cleevio.cache.dao.RequestedOfferDao
+import cz.cleevio.cache.dao.*
 import cz.cleevio.cache.entity.MyOfferEntity
+import cz.cleevio.cache.entity.OfferCommonFriendCrossRef
 import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
@@ -22,6 +20,8 @@ class OfferRepositoryImpl constructor(
 	private val offerDao: OfferDao,
 	private val requestedOfferDao: RequestedOfferDao,
 	private val locationDao: LocationDao,
+	private val contactDao: ContactDao,
+	private val offerCommonFriendCrossRefDao: OfferCommonFriendCrossRefDao,
 	private val transactionProvider: TransactionProvider
 ) : OfferRepository {
 
@@ -108,13 +108,13 @@ class OfferRepositoryImpl constructor(
 	}
 
 	override suspend fun getOffers() =
-		offerDao.getAllOffersWithLocations().map {
-			it.offer.fromCache(it.locations)
+		offerDao.getAllExtendedOffers().map {
+			it.offer.fromCache(it.locations, it.commonFriends)
 		}
 
-	override suspend fun getOffersFlow() = offerDao.getAllOffersWithLocationsFlow().map { list ->
+	override suspend fun getOffersFlow() = offerDao.getAllExtendedOffersFlow().map { list ->
 		list.map {
-			it.offer.fromCache(it.locations)
+			it.offer.fromCache(it.locations, it.commonFriends)
 		}
 	}
 
@@ -135,6 +135,7 @@ class OfferRepositoryImpl constructor(
 		val myOfferIds = myOfferDao.listAll().map { it.extId }
 		val requestedOffersIds = requestedOfferDao.listAll().map { it.offerId }
 		transactionProvider.runAsTransaction {
+			offerCommonFriendCrossRefDao.clearTable()
 			locationDao.clearTable()
 			offerDao.clearTable()
 			offers.forEach { offer ->
@@ -144,6 +145,17 @@ class OfferRepositoryImpl constructor(
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)
 				})
+				//TODO toCache?
+				val commonFriendRefs = contactDao.getContactByHashedPhones(
+					// because we don't have full objects at this moment yet (it's from the API, not database)
+					offer.commonFriends.map { it.contactHash }
+				).map {
+					OfferCommonFriendCrossRef(
+						offerId = offerId,
+						contactId = it.contactId
+					)
+				}
+				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
 			}
 		}
 	}
@@ -157,6 +169,16 @@ class OfferRepositoryImpl constructor(
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)
 				})
+				val commonFriendRefs = contactDao.getContactByHashedPhones(
+					// because we don't have full objects at this moment yet (it's from the API, not database)
+					offer.commonFriends.map { it.contactHash }
+				).map {
+					OfferCommonFriendCrossRef(
+						offerId = offerId,
+						contactId = it.contactId
+					)
+				}
+				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
 			}
 		}
 	}

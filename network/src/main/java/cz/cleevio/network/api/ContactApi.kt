@@ -74,4 +74,11 @@ interface ContactApi {
 		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
 		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
 	): Response<ResponseBody>
+
+	@GET("contacts/common")
+	suspend fun getCommonContacts(
+		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
+		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
+		@Query(value = "publicKeys") publicKeys: Collection<String>
+	): Response<CommonFriendsResponse>
 }

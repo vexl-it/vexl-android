@@ -29,7 +29,7 @@ class CommonFriendsBottomSheetDialog(
 		adapter = CommonFriendsDialogAdapter()
 		binding.friendsList.adapter = adapter
 
-		adapter.submitList(commonFriends)
+		adapter.submitList(commonFriends.map { it.contact })
 
 		binding.gotItBtn.setOnClickListener {
 			dismiss()

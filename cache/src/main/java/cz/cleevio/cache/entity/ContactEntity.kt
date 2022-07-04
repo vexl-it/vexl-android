@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class ContactEntity(
 	@PrimaryKey(autoGenerate = true)
-	val id: Long,
+	val contactId: Long,
 	val name: String,
 	val phone: String,
 	val phoneHashed: String,

@@ -3,8 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:maxHeight="575dp">
+	android:layout_height="wrap_content">
 
 	<com.google.android.material.card.MaterialCardView
 		android:id="@+id/common_friends_wrapper"
@@ -36,10 +35,13 @@
 				android:id="@+id/friends_list"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:clipToPadding="false"
+				app:layout_constrainedHeight="true"
 				app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/title"
+				app:layout_constraintHeight_max="400dp"
 				tools:listitem="@layout/item_chat_common_friend" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>

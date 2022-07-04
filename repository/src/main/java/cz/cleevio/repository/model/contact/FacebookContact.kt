@@ -2,8 +2,10 @@ package cz.cleevio.repository.model.contact
 
 import android.net.Uri
 import cz.cleevio.network.response.contact.FacebookUserResponse
+import kotlinx.parcelize.Parcelize
 
 @Suppress("DataClassShouldBeImmutable")
+@Parcelize
 data class FacebookContact(
 	override val id: String,
 	override val name: String,
@@ -16,6 +18,9 @@ data class FacebookContact(
 	markedForUpload = markedForUpload
 ) {
 	override fun getIdentifier(): String = id
+	override fun getHashedContact(): String {
+		TODO("Not yet implemented")
+	}
 }
 
 fun FacebookUserResponse.fromFacebook(): FacebookContact {
