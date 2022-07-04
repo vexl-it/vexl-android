@@ -58,7 +58,6 @@ data class Contact constructor(
 
 	override fun getChatDescription(context: Context): String =
 		phoneNumber
-
 }
 
 fun ContactEntity.fromDao(): Contact {

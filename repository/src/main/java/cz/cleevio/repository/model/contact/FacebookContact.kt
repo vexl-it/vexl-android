@@ -26,7 +26,6 @@ data class FacebookContact(
 
 	override fun getChatDescription(context: Context): String =
 		context.resources.getString(R.string.chat_common_friends_facebook_contact)
-
 }
 
 fun FacebookUserResponse.fromFacebook(): FacebookContact {
