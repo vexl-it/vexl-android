@@ -24,6 +24,8 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 		private val binding: ItemChatRequestBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
+		private lateinit var adapter: ChatRequestCommonFriendAdapter
+
 		fun bind(item: CommunicationRequest) {
 			binding.userName.text = if (item.offer?.offerType == "SELL") {
 				binding.userName.resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
@@ -37,13 +39,22 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 			}
 			binding.requestMessage.text = item.message.text
 			binding.offerWidget.bind(item.offer!!)
+			adapter.submitList(item.offer?.commonFriends.orEmpty().map { it.contact })
+		}
+
+		fun initAdapter() {
+			adapter = ChatRequestCommonFriendAdapter()
+			binding.commonFriendsList.adapter = adapter
 		}
 	}
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-		ViewHolder(
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+		val viewHolder = ViewHolder(
 			ItemChatRequestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		)
+		viewHolder.initAdapter()
+		return viewHolder
+	}
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		holder.bind(getItem(position))

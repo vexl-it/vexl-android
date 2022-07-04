@@ -29,9 +29,6 @@ class RequestOfferViewModel constructor(
 	private val _offer = MutableStateFlow<Offer?>(null)
 	val offer = _offer.asStateFlow()
 
-	private val _friends = MutableStateFlow<List<Any>>(listOf())
-	val friends = _friends.asStateFlow()
-
 	fun sendRequest(text: String, offerPublicKey: String, offerId: String, onSuccess: suspend () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_isRequesting.emit(true)
@@ -75,17 +72,6 @@ class RequestOfferViewModel constructor(
 					offers.firstOrNull { it.offerId == offerId }
 				)
 			}
-		}
-	}
-
-	fun loadFriends() {
-		viewModelScope.launch(Dispatchers.IO) {
-			//somehow load friends? todo: when BE supports this feature
-			_friends.emit(
-				listOf(
-					Any(), Any(), Any()
-				)
-			)
 		}
 	}
 }

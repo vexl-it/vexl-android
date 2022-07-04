@@ -1,5 +1,6 @@
 package cz.cleevio.repository.model.contact
 
+import android.content.Context
 import android.net.Uri
 import android.os.Parcelable
 import cz.cleevio.cache.entity.ContactEntity
@@ -52,7 +53,11 @@ data class Contact constructor(
 	}
 
 	override fun getIdentifier(): String = phoneNumber
+
 	override fun getHashedContact(): String = hashedPhoneNumber
+
+	override fun getChatDescription(context: Context): String =
+		phoneNumber
 }
 
 fun ContactEntity.fromDao(): Contact {

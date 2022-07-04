@@ -1,7 +1,9 @@
 package cz.cleevio.repository.model.contact
 
+import android.content.Context
 import android.net.Uri
 import cz.cleevio.network.response.contact.FacebookUserResponse
+import cz.cleevio.repository.R
 import kotlinx.parcelize.Parcelize
 
 @Suppress("DataClassShouldBeImmutable")
@@ -21,6 +23,9 @@ data class FacebookContact(
 	override fun getHashedContact(): String {
 		TODO("Not yet implemented")
 	}
+
+	override fun getChatDescription(context: Context): String =
+		context.resources.getString(R.string.chat_common_friends_facebook_contact)
 }
 
 fun FacebookUserResponse.fromFacebook(): FacebookContact {
