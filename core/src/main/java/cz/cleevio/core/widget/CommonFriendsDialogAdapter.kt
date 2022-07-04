@@ -29,7 +29,7 @@ class CommonFriendsDialogAdapter :
 				placeholder(R.drawable.ic_baseline_person_128)
 			}
 			binding.name.text = item.name
-			binding.description.text = "TODO"
+			binding.description.text = item.getChatDescription(binding.description.context)
 		}
 	}
 

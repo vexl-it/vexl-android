@@ -199,6 +199,7 @@
     <string name="chat_btns_reveal_identity">Reveal Identity</string>
     <string name="chat_btns_my_offer">My Offer</string>
     <string name="chat_btns_common_friends">Common Friends</string>
+    <string name="chat_common_friends_facebook_contact">via Facebook</string>
     <string name="chat_btns_delete_chat">Delete Chat</string>
     <string name="chat_btns_block_user">Block User</string>
     <string name="chat_message_input_placeholder">Type something</string>
