@@ -402,8 +402,9 @@
 		<item name="cardBackgroundColor">@color/white</item>
 	</style>
 
-	<style name="Widget.Vexl.ChatOfferCardView" parent="Widget.Vexl.CardView">
+	<style name="Widget.Vexl.ChatRequestSubCardView" parent="Widget.Vexl.CardView">
 		<item name="cardBackgroundColor">@color/gray_6</item>
+		<item name="cardElevation">0dp</item>
 	</style>
 
 	<style name="Widget.Vexl.OfferCardView" parent="Widget.Vexl.CardView">

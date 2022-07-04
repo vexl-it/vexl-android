@@ -49,11 +49,9 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="8dp"
 		android:background="@color/white"
-		app:cardCornerRadius="20dp"
-		app:cardElevation="4dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/profile_image">
+		app:layout_constraintTop_toBottomOf="@id/user_type">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
@@ -72,6 +70,39 @@
 				app:layout_constraintTop_toTopOf="parent"
 				tools:text="Request 1. Dolor sit amet, conse ctetuer adipiscing elit. Pellentesque arcu. Phasellus et lorem id felis nonummy placerat. Maecenas aliqueto." />
 
+			<com.google.android.material.card.MaterialCardView
+				android:id="@+id/common_friends_wrapper"
+				style="@style/Widget.Vexl.ChatRequestSubCardView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="8dp"
+				android:background="@color/white"
+				android:padding="13dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/request_message">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_margin="13dp">
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/common_friends_list"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal"
+						app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						tools:listitem="@layout/item_chat_request_common_friend" />
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</com.google.android.material.card.MaterialCardView>
+
 			<cz.cleevio.core.widget.OfferWidget
 				android:id="@+id/offer_widget"
 				android:layout_width="match_parent"
@@ -79,7 +110,7 @@
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/request_message"
+				app:layout_constraintTop_toBottomOf="@id/common_friends_wrapper"
 				app:widget_mode="chat" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
