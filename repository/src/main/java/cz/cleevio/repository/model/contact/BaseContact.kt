@@ -14,11 +14,15 @@ abstract class BaseContact(
 	abstract fun getIdentifier(): String
 	abstract fun getHashedContact(): String
 	abstract fun getChatDescription(context: Context): String
-	abstract fun getContactType(): String
+	abstract fun getContactType(): ContactType
+}
+
+enum class ContactType {
+	PHONE, FACEBOOK
 }
 
 fun ContactEntity.fromDao(): BaseContact {
-	return if (this.contactType == "FACEBOOK") {
+	return if (this.contactType == ContactType.FACEBOOK.name) {
 		this.fbContactFromDao()
 	} else {
 		this.phoneContactFromDao()

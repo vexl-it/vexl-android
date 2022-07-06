@@ -51,13 +51,13 @@ data class Contact constructor(
 	override fun getChatDescription(context: Context): String =
 		phoneNumber
 
-	override fun getContactType(): String =
-		"PHONE"
+	override fun getContactType(): ContactType =
+		ContactType.PHONE
 }
 
 fun Contact.toDao(): ContactEntity = ContactEntity(
 	contactId = this.id,
-	contactType = this.getContactType(),
+	contactType = this.getContactType().name,
 	name = this.name,
 	phone = this.phoneNumber,
 	phoneHashed = this.hashedPhoneNumber,

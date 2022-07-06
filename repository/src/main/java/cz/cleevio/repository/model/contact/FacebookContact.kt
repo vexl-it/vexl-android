@@ -28,8 +28,8 @@ data class FacebookContact(
 	override fun getChatDescription(context: Context): String =
 		context.resources.getString(R.string.chat_common_friends_facebook_contact)
 
-	override fun getContactType(): String =
-		"FACEBOOK"
+	override fun getContactType(): ContactType =
+		ContactType.FACEBOOK
 }
 
 fun FacebookUserResponse.fromFacebook(): FacebookContact {
@@ -45,7 +45,7 @@ fun FacebookUserResponse.fromFacebook(): FacebookContact {
 
 fun FacebookContact.toDao(): ContactEntity = ContactEntity(
 	contactId = this.id,
-	contactType = this.getContactType(),
+	contactType = this.getContactType().name,
 	name = this.name,
 	facebookId = this.facebookId,
 	facebookIdHashed = this.hashedFacebookId,

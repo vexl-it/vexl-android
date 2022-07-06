@@ -265,7 +265,7 @@ class ContactRepositoryImpl constructor(
 		contactDao.replaceAll(
 			response.data.orEmpty().map { fbContact ->
 				ContactEntity(
-					contactType = fbContact.getContactType(),
+					contactType = fbContact.getContactType().name,
 					name = fbContact.name,
 					facebookId = fbContact.facebookId,
 					facebookIdHashed = HmacCryptoLib.digest(HMAC_PASSWORD, fbContact.facebookId),
