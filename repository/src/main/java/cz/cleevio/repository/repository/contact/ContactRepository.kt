@@ -30,6 +30,7 @@ interface ContactRepository {
 	suspend fun syncContacts(contentResolver: ContentResolver): Resource<List<Contact>>
 
 	fun getPhoneContacts(): List<Contact>
+	fun getFacebookContacts(): List<FacebookContact>
 
 	suspend fun syncFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>>
 

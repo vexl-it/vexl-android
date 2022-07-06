@@ -35,6 +35,9 @@ class ContactRepositoryImpl constructor(
 	override fun getPhoneContacts(): List<Contact> = contactDao
 		.getAllPhoneContacts().map { it.phoneContactFromDao() }
 
+	override fun getFacebookContacts(): List<FacebookContact> = contactDao
+		.getAllFacebookContacts().map { it.fbContactFromDao() }
+
 	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<List<Contact>> {
 		Timber.tag("ContactSync").d("Starting contact synchronization")
 		val contactList: ArrayList<Contact> = ArrayList()
@@ -181,11 +184,68 @@ class ContactRepositoryImpl constructor(
 	)
 
 	override suspend fun syncFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>> {
-		return tryOnline(
+		val response = tryOnline(
 			mapper = {
 				it?.facebookUser?.friends?.map { friend ->
 					friend.fromFacebook()
 				}
+//				ContactFacebookResponse(
+//					facebookUser = FacebookUserResponse(
+//						id = "MyFBID",
+//						 name = "My name",
+//						 picture = Picture(
+//							 data = PictureData(
+//								 height = 0,
+//								 width = 0,
+//								 isSilhouette = false,
+//									url = "https://i.imgflip.com/1a9v1k.jpg"
+//							 )
+//						 ),
+//						 friends = listOf(
+//							 FacebookUserResponse(
+//								 id = "SomeFBID1",
+//								 name = "Samuel L. Jackson",
+//								 picture = Picture(
+//									 data = PictureData(
+//										 height = 0,
+//										 width = 0,
+//										 isSilhouette = false,
+//										 url = "https://i.imgflip.com/1a9v1k.jpg"
+//									 )
+//								 ),
+//								 friends = emptyList()
+//							 ),
+//							 FacebookUserResponse(
+//								 id = "SomeFBID2",
+//								 name = "Spongebob Squarepants",
+//								 picture = Picture(
+//									 data = PictureData(
+//										 height = 0,
+//										 width = 0,
+//										 isSilhouette = false,
+//										 url = "https://www.kidscompany.cz/user/categories/orig/logo-spongebob.png"
+//									 )
+//								 ),
+//								 friends = emptyList()
+//							 ),
+//							 FacebookUserResponse(
+//								 id = "SomeFBID3",
+//								 name = "Patrick Star",
+//								 picture = Picture(
+//									 data = PictureData(
+//										 height = 0,
+//										 width = 0,
+//										 isSilhouette = false,
+//										 url = "https://upload.wikimedia.org/wikipedia/en/thumb/3/33/Patrick_Star.svg/1200px-Patrick_Star.svg.png"
+//									 )
+//								 ),
+//								 friends = emptyList()
+//							 )
+//						 )
+//					 )
+//				).facebookUser.friends.map { friend ->
+//					friend.fromFacebook()
+//				}
 			},
 			request = {
 				contactApi.getFacebookUser(
@@ -194,21 +254,27 @@ class ContactRepositoryImpl constructor(
 					facebookId = facebookId,
 					accessToken = accessToken
 				)
-			},
-			doOnSuccess = {
-				contactDao.replaceAll(
-					it.orEmpty().map { fbContact ->
-						ContactEntity(
-							contactType = fbContact.getContactType(),
-							name = fbContact.name,
-							facebookId = fbContact.facebookId,
-							facebookIdHashed = HmacCryptoLib.digest(HMAC_PASSWORD, fbContact.facebookId),
-							photoUri = fbContact.photoUri?.toString()
-						)
-					}
+			}
+		)
+
+		if (response.status != Status.Success) {
+			return response
+		}
+
+		// TODO replace all?
+		contactDao.replaceAll(
+			response.data.orEmpty().map { fbContact ->
+				ContactEntity(
+					contactType = fbContact.getContactType(),
+					name = fbContact.name,
+					facebookId = fbContact.facebookId,
+					facebookIdHashed = HmacCryptoLib.digest(HMAC_PASSWORD, fbContact.facebookId),
+					photoUri = fbContact.photoUri?.toString()
 				)
 			}
 		)
+
+		return Resource.success(getFacebookContacts())
 	}
 
 	override suspend fun registerUser(): Resource<ContactUser> = tryOnline(

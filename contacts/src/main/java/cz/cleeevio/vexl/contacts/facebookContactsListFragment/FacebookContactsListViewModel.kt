@@ -70,7 +70,7 @@ class FacebookContactsListViewModel constructor(
 				notSyncedContactsList.filter {
 					it.markedForUpload
 				}.map {
-					it.facebookId
+					it.hashedFacebookId
 				}
 			)
 			when (response.status) {
