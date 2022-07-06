@@ -10,7 +10,7 @@ import java.util.*
 @Suppress("DataClassShouldBeImmutable")
 @Parcelize
 data class Contact constructor(
-	override val id: String,
+	override val id: Long,
 	override val name: String,
 	val email: String,
 	val phoneNumber: String,
@@ -24,14 +24,6 @@ data class Contact constructor(
 	photoUri = photoUri,
 	markedForUpload = markedForUpload
 ), Parcelable {
-
-	constructor() : this(
-		id = "",
-		name = "",
-		email = "",
-		phoneNumber = "",
-		photoUri = null,
-	)
 
 	fun phoneOrEmail(): String {
 		return if (phoneNumber.isNotEmpty()) {
@@ -58,25 +50,14 @@ data class Contact constructor(
 
 	override fun getChatDescription(context: Context): String =
 		phoneNumber
-}
 
-fun ContactEntity.fromDao(): Contact {
-	return Contact(
-		id = this.contactId.toString(),
-		name = this.name,
-		email = this.email,
-		phoneNumber = this.phone,
-		photoUri = if (this.photoUri == "null") {
-			null
-		} else {
-			Uri.parse(this.photoUri)
-		},
-		hashedPhoneNumber = this.phoneHashed
-	)
+	override fun getContactType(): String =
+		"PHONE"
 }
 
 fun Contact.toDao(): ContactEntity = ContactEntity(
-	contactId = this.id.toLong(),
+	contactId = this.id,
+	contactType = this.getContactType(),
 	name = this.name,
 	phone = this.phoneNumber,
 	phoneHashed = this.hashedPhoneNumber,

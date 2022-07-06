@@ -29,7 +29,7 @@ interface ContactRepository {
 	//sync contacts between phone and app DB, also uploads to BE
 	suspend fun syncContacts(contentResolver: ContentResolver): Resource<List<Contact>>
 
-	fun getContacts(): List<Contact>
+	fun getPhoneContacts(): List<Contact>
 
 	suspend fun syncFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>>
 
