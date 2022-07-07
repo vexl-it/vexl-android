@@ -86,7 +86,10 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 		activePriceState = this.activePriceState,
 		activePriceValue = this.activePriceValue,
 		active = this.active,
-		commonFriends = commonFriends.map { CommonFriend(it.phoneHashed, it.fromDao()) },
+		commonFriends = commonFriends.map {
+			val contact = it.fromDao()
+			CommonFriend(contact.getHashedContact(), contact)
+		},
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt,
 		isMine = this.isMine,

@@ -6,10 +6,13 @@ import androidx.room.PrimaryKey
 @Entity
 data class ContactEntity(
 	@PrimaryKey(autoGenerate = true)
-	val contactId: Long,
+	val contactId: Long = 0,
+	val contactType: String, // PHONE, FACEBOOK (maybe both?)
 	val name: String,
-	val phone: String,
-	val phoneHashed: String,
-	val email: String,
-	val photoUri: String?
+	val phone: String? = null,
+	val phoneHashed: String? = null,
+	val email: String? = null,
+	val photoUri: String? = null,
+	val facebookId: String? = null,
+	val facebookIdHashed: String? = null
 )

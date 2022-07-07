@@ -9,6 +9,7 @@ import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.dao.ContactKeyDao
+import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.ContactKeyEntity
 import cz.cleevio.cache.entity.ContactLevel
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -31,8 +32,11 @@ class ContactRepositoryImpl constructor(
 	private val encryptedPreference: EncryptedPreferenceRepository
 ) : ContactRepository {
 
-	override fun getContacts(): List<Contact> = contactDao
-		.getAllContacts().map { it.fromDao() }
+	override fun getPhoneContacts(): List<Contact> = contactDao
+		.getAllPhoneContacts().map { it.phoneContactFromDao() }
+
+	override fun getFacebookContacts(): List<FacebookContact> = contactDao
+		.getAllFacebookContacts().map { it.fbContactFromDao() }
 
 	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<List<Contact>> {
 		Timber.tag("ContactSync").d("Starting contact synchronization")
@@ -72,7 +76,7 @@ class ContactRepositoryImpl constructor(
 
 		if (cursor != null && cursor.count > 0) {
 			while (cursor.moveToNext()) {
-				val id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
+				val id = cursor.getLong(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
 				val name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME))
 				val photo = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.PHOTO_URI))
 				val emailOrMobile = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Data.DATA1))
@@ -179,12 +183,69 @@ class ContactRepositoryImpl constructor(
 		mapper = { it?.fromNetwork() }
 	)
 
-	override suspend fun getFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>> {
-		return tryOnline(
+	override suspend fun syncFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>> {
+		val response = tryOnline(
 			mapper = {
 				it?.facebookUser?.friends?.map { friend ->
 					friend.fromFacebook()
 				}
+//				ContactFacebookResponse(
+//					facebookUser = FacebookUserResponse(
+//						id = "MyFBID",
+//						 name = "My name",
+//						 picture = Picture(
+//							 data = PictureData(
+//								 height = 0,
+//								 width = 0,
+//								 isSilhouette = false,
+//									url = "https://i.imgflip.com/1a9v1k.jpg"
+//							 )
+//						 ),
+//						 friends = listOf(
+//							 FacebookUserResponse(
+//								 id = "SomeFBID1",
+//								 name = "Samuel L. Jackson",
+//								 picture = Picture(
+//									 data = PictureData(
+//										 height = 0,
+//										 width = 0,
+//										 isSilhouette = false,
+//										 url = "https://i.imgflip.com/1a9v1k.jpg"
+//									 )
+//								 ),
+//								 friends = emptyList()
+//							 ),
+//							 FacebookUserResponse(
+//								 id = "SomeFBID2",
+//								 name = "Spongebob Squarepants",
+//								 picture = Picture(
+//									 data = PictureData(
+//										 height = 0,
+//										 width = 0,
+//										 isSilhouette = false,
+//										 url = "https://www.kidscompany.cz/user/categories/orig/logo-spongebob.png"
+//									 )
+//								 ),
+//								 friends = emptyList()
+//							 ),
+//							 FacebookUserResponse(
+//								 id = "SomeFBID3",
+//								 name = "Patrick Star",
+//								 picture = Picture(
+//									 data = PictureData(
+//										 height = 0,
+//										 width = 0,
+//										 isSilhouette = false,
+//										 url = "https://upload.wikimedia.org/wikipedia/en/thumb/3/33/Patrick_Star.svg/1200px-Patrick_Star.svg.png"
+//									 )
+//								 ),
+//								 friends = emptyList()
+//							 )
+//						 )
+//					 )
+//				).facebookUser.friends.map { friend ->
+//					friend.fromFacebook()
+//				}
 			},
 			request = {
 				contactApi.getFacebookUser(
@@ -195,6 +256,25 @@ class ContactRepositoryImpl constructor(
 				)
 			}
 		)
+
+		if (response.status != Status.Success) {
+			return response
+		}
+
+		// TODO replace all?
+		contactDao.replaceAll(
+			response.data.orEmpty().map { fbContact ->
+				ContactEntity(
+					contactType = fbContact.getContactType().name,
+					name = fbContact.name,
+					facebookId = fbContact.facebookId,
+					facebookIdHashed = HmacCryptoLib.digest(HMAC_PASSWORD, fbContact.facebookId),
+					photoUri = fbContact.photoUri?.toString()
+				)
+			}
+		)
+
+		return Resource.success(getFacebookContacts())
 	}
 
 	override suspend fun registerUser(): Resource<ContactUser> = tryOnline(
@@ -316,20 +396,24 @@ class ContactRepositoryImpl constructor(
 			publicKeys = contactsPublicKeys
 		)
 
-		val commonFriendsMap = mutableMapOf<String, List<Contact>>()
+		val commonFriendsMap = mutableMapOf<String, List<BaseContact>>()
 
 		if (phoneContacts.isSuccessful) {
 			phoneContacts.body()?.commonContacts.orEmpty().map { friend ->
-				val contacts = contactDao.getContactByHashedPhones(friend.common.hashes)
-				commonFriendsMap.put(friend.publicKey, contacts.map { it.fromDao() })
+				val contacts = contactDao.getContactByHashes(friend.common.hashes)
+					.map { it.fromDao() }
+				commonFriendsMap.put(friend.publicKey, contacts)
 			}
 		}
 
 		if (facebookContacts.isSuccessful) {
 			facebookContacts.body()?.commonContacts.orEmpty().map { friend ->
-				// TODO
-//				val contacts = contactDao.getContactByHashedPhones(friend.common.hashes)
-//				commonFriendsMap.put(friend.publicKey, contacts.map { it.fromDao() })
+				val contacts = contactDao.getContactByHashes(friend.common.hashes).map { it.fromDao() }
+				if (commonFriendsMap.containsKey(friend.publicKey)) {
+					commonFriendsMap[friend.publicKey] = commonFriendsMap[friend.publicKey].orEmpty() + contacts
+				} else {
+					commonFriendsMap.put(friend.publicKey, contacts)
+				}
 			}
 		}
 

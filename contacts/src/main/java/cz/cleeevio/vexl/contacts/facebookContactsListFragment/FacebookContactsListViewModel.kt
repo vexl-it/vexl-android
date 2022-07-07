@@ -38,7 +38,7 @@ class FacebookContactsListViewModel constructor(
 
 	private fun loadNotSyncedFacebookContacts(facebookId: String, accessToken: String) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val response = contactRepository.getFacebookContacts(facebookId, accessToken)
+			val response = contactRepository.syncFacebookContacts(facebookId, accessToken)
 			response.data?.let {
 				notSyncedContactsList = it
 				emitContacts(notSyncedContactsList)
@@ -70,7 +70,7 @@ class FacebookContactsListViewModel constructor(
 				notSyncedContactsList.filter {
 					it.markedForUpload
 				}.map {
-					it.id
+					it.hashedFacebookId
 				}
 			)
 			when (response.status) {

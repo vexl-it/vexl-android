@@ -145,8 +145,7 @@ class OfferRepositoryImpl constructor(
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)
 				})
-				//TODO toCache?
-				val commonFriendRefs = contactDao.getContactByHashedPhones(
+				val commonFriendRefs = contactDao.getContactByHashes(
 					// because we don't have full objects at this moment yet (it's from the API, not database)
 					offer.commonFriends.map { it.contactHash }
 				).map {
@@ -169,7 +168,7 @@ class OfferRepositoryImpl constructor(
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)
 				})
-				val commonFriendRefs = contactDao.getContactByHashedPhones(
+				val commonFriendRefs = contactDao.getContactByHashes(
 					// because we don't have full objects at this moment yet (it's from the API, not database)
 					offer.commonFriends.map { it.contactHash }
 				).map {
