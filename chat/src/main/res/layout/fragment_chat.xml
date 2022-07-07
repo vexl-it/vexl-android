@@ -20,6 +20,17 @@
 		app:layout_constraintTop_toTopOf="parent"
 		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.AvatarImage" />
 
+	<ImageButton
+		android:id="@+id/close"
+		style="@style/Widget.Vexl.CloseButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:src="@drawable/ic_close_x"
+		app:layout_constraintTop_toTopOf="@id/profile_image"
+		app:layout_constraintBottom_toBottomOf="@id/username"
+		app:layout_constraintStart_toStartOf="parent" />
+
 	<TextView
 		android:id="@+id/username"
 		android:layout_width="wrap_content"

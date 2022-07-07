@@ -18,6 +18,17 @@
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="@string/chat_request_main_title" />
 
+	<ImageButton
+		android:id="@+id/close"
+		style="@style/Widget.Vexl.CloseButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:src="@drawable/ic_close_x"
+		app:layout_constraintTop_toTopOf="@id/title"
+		app:layout_constraintBottom_toBottomOf="@id/title"
+		app:layout_constraintEnd_toEndOf="parent" />
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/requests_recycler_view"
 		android:layout_width="match_parent"
