@@ -17,7 +17,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 	private lateinit var binding: WidgetOfferFeeBinding
-	private var selectedButton: FeeButtonSelected = FeeButtonSelected.NONE
+	private var selectedButton: FeeButtonSelected = FeeButtonSelected.WITHOUT_FEE
 	private var feeValue: Float = FEE_MIN_VALUE
 
 	init {
