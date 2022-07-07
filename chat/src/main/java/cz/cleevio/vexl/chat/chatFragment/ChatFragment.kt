@@ -2,6 +2,7 @@ package cz.cleevio.vexl.chat.chatFragment
 
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.updatePadding
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -54,6 +55,10 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		adapter = ChatMessagesAdapter()
 		binding.chatRv.adapter = adapter
 
+		binding.close.setOnClickListener {
+			//close this screen
+			findNavController().popBackStack()
+		}
 		binding.myOfferBtn.setOnClickListener {
 			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer!!)) // TODO solve double !
 		}

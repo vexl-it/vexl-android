@@ -54,6 +54,10 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 		binding.requestsRecyclerView.adapter = adapter
 		PagerSnapHelper().attachToRecyclerView(binding.requestsRecyclerView)
 
+		binding.close.setOnClickListener {
+			findNavController().popBackStack()
+		}
+
 		binding.acceptBtn.setOnClickListener {
 			val currentRequest = getCurrentChatRequest()
 			viewModel.processCommunicationRequest(currentRequest, true)
