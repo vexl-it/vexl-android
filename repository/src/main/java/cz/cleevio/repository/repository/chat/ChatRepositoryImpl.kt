@@ -160,6 +160,18 @@ class ChatRepositoryImpl constructor(
 					messages?.map { it.toCache() }?.let {
 						chatMessageDao.insertAll(it)
 					}
+
+					//special handling for DELETE_CHAT
+					messages
+						?.filter { it.type == MessageType.DELETE_CHAT }
+						?.forEach { deleteMessage ->
+							//delete all messages from and for this user
+							chatMessageDao.deleteByKeys(
+								inboxPublicKey = deleteMessage.inboxPublicKey,
+								firstKey = deleteMessage.senderPublicKey,
+								secondKey = deleteMessage.recipientPublicKey
+							)
+						}
 				}
 			)
 			if (messagesResponse.status is Status.Error) {
@@ -207,10 +219,20 @@ class ChatRepositoryImpl constructor(
 		senderPublicKey: String, receiverPublicKey: String,
 		message: ChatMessage, messageType: String
 	): Resource<Unit> {
-		//todo: should we add some `uploaded` flag?
-		chatMessageDao.insert(
-			message.toCache()
-		)
+		//we don't want to store DELETE_CHAT message, delete other messages instead
+		if (message.type == MessageType.DELETE_CHAT) {
+			chatMessageDao.deleteByKeys(
+				inboxPublicKey = message.inboxPublicKey,
+				firstKey = message.senderPublicKey,
+				secondKey = message.recipientPublicKey
+			)
+		} else {
+			//we save every message into DB before upload to BE
+			//todo: should we add some `uploaded` flag?
+			chatMessageDao.insert(
+				message.toCache()
+			)
+		}
 		return tryOnline(
 			request = {
 				chatApi.postInboxesMessages(
@@ -395,5 +417,21 @@ class ChatRepositoryImpl constructor(
 
 	override suspend fun deleteMessage(communicationRequest: CommunicationRequest) {
 		chatMessageDao.delete(communicationRequest.message.toCache())
+	}
+
+	override suspend fun getKeyPairByMyPublicKey(myPublicKey: String): KeyPair? {
+		if (myPublicKey == encryptedPreferenceRepository.userPublicKey) {
+			return KeyPair(
+				privateKey = encryptedPreferenceRepository.userPrivateKey,
+				publicKey = encryptedPreferenceRepository.userPublicKey
+			)
+		}
+
+		return myOfferDao.getMyOfferByPublicKey(myPublicKey)?.let {
+			KeyPair(
+				privateKey = it.privateKey,
+				publicKey = it.publicKey
+			)
+		}
 	}
 }

@@ -28,13 +28,16 @@ class ChatViewModel constructor(
 		)
 	}
 
-	fun sendMessage(message: String) {
+	//my public key
+	lateinit var senderPublicKey: String
 
+	//my friend public key
+	lateinit var receiverPublicKey: String
+
+	init {
 		viewModelScope.launch(Dispatchers.IO) {
-
 			val myInboxKeys = chatRepository.getMyInboxKeys()
-			var senderPublicKey = ""
-			var receiverPublicKey = ""
+
 			if (myInboxKeys.contains(communicationRequest.message.senderPublicKey)) {
 				senderPublicKey = communicationRequest.message.senderPublicKey
 				receiverPublicKey = communicationRequest.message.recipientPublicKey
@@ -42,7 +45,12 @@ class ChatViewModel constructor(
 				senderPublicKey = communicationRequest.message.recipientPublicKey
 				receiverPublicKey = communicationRequest.message.senderPublicKey
 			}
+		}
+	}
 
+	fun sendMessage(message: String) {
+
+		viewModelScope.launch(Dispatchers.IO) {
 			val messageType = MessageType.TEXT
 
 			val result = chatRepository.sendMessage(

@@ -51,4 +51,13 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	@Query("DELETE FROM ChatMessageEntity")
 	fun deleteAll()
+
+	@Query(
+		"DELETE " +
+			"FROM ChatMessageEntity " +
+			"WHERE inboxPublicKey == :inboxPublicKey" +
+			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) "
+	)
+	fun deleteByKeys(inboxPublicKey: String, firstKey: String, secondKey: String)
 }
