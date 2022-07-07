@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogDeleteChatConfirmBinding
+import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class DeleteChatConfirmBottomSheetDialog constructor(
@@ -38,7 +41,7 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
 			coroutineScope.launch {
-				chatRepository.sendMessage(
+				val response = chatRepository.sendMessage(
 					senderPublicKey = senderPublicKey,
 					receiverPublicKey = receiverPublicKey,
 					message = ChatMessage(
@@ -52,8 +55,21 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 					),
 					messageType = "DELETE_CHAT"
 				)
+				when (response.status) {
+					is Status.Success -> {
+						withContext(Dispatchers.Main) {
+							dismiss()
+							findNavController().popBackStack()
+						}
+					}
+					is Status.Error -> {
+						//todo: handle error?
+					}
+					else -> {
+						//nothing
+					}
+				}
 			}
-			dismiss()
 		}
 		binding.backBtn.setOnClickListener {
 			dismiss()
