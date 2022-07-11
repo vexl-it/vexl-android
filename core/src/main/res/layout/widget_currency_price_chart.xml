@@ -28,33 +28,33 @@
 			android:id="@+id/small_chart"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginStart="20dp"
 			android:src="@drawable/chart"
 			android:visibility="gone"
-			android:layout_marginStart="20dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/currency_name"
+			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/marketplace_currency_bitcoin"
-			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
 			android:layout_marginStart="25dp"
 			android:layout_marginTop="15dp"
 			android:layout_marginBottom="1dp"
-			app:layout_constraintTop_toTopOf="parent"
+			android:text="@string/marketplace_currency_bitcoin"
 			app:layout_constraintBottom_toTopOf="@id/crypto_change_percentage"
-			app:layout_constraintStart_toStartOf="parent" />
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/crypto_change_percentage"
+			style="@style/TextAppearance.Vexl.DescriptionBold"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:drawableStart="@drawable/ic_arrow_up"
-			style="@style/TextAppearance.Vexl.DescriptionBold"
 			android:layout_marginStart="25dp"
+			android:drawableStart="@drawable/ic_arrow_up"
 			android:drawablePadding="4dp"
 			android:textColor="@color/yellow_100"
 			app:layout_constraintStart_toStartOf="parent"
@@ -62,21 +62,21 @@
 			tools:text="2.5% today" />
 
 		<TextView
-			android:id="@+id/currency"
+			android:id="@+id/prefix_currency"
 			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyCurrency"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="$"
 			android:layout_marginTop="15dp"
+			android:text="$"
 			app:layout_constraintEnd_toStartOf="@id/current_price"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/current_price"
 			style="@style/TextAppearance.Vexl.Heading6.GraphPrice"
-			android:layout_marginTop="15dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="15dp"
 			android:layout_marginEnd="24dp"
 			android:layout_marginBottom="13dp"
 			android:textColor="@color/yellow_100"
@@ -85,6 +85,16 @@
 			app:layout_constraintTop_toTopOf="parent"
 			tools:text="31241" />
 
+		<TextView
+			android:id="@+id/suffix_currency"
+			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyCurrency"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="15dp"
+			android:text="Kč"
+			app:layout_constraintStart_toEndOf="@id/current_price"
+			app:layout_constraintTop_toTopOf="parent" />
+
 		<androidx.constraintlayout.widget.Barrier
 			android:id="@+id/chart_barrier"
 			android:layout_width="wrap_content"
@@ -92,13 +102,14 @@
 			app:barrierDirection="bottom"
 			app:constraint_referenced_ids="current_price, crypto_change_percentage" />
 
-		<ImageView
+		<com.github.mikephil.charting.charts.LineChart
 			android:id="@+id/large_chart"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
 			android:layout_marginTop="30dp"
 			android:src="@drawable/large_chart"
 			android:visibility="gone"
+			app:layout_constraintDimensionRatio="H,3:1"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/chart_barrier" />

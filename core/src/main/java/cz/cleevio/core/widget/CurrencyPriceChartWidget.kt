@@ -124,6 +124,6 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 				resources.getColor(R.color.yellow_100, null)
 			}
 		binding.currentPrice.setTextColor(textColor)
-		binding.currency.setTextColor(textColor)
+		binding.prefixCurrency.setTextColor(textColor)
 	}
 }

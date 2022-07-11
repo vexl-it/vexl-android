@@ -8,4 +8,9 @@
 	<string name="channel_chat_id" translatable="false">channel_chat</string>
 	<string name="channel_chat_id_name">Chat</string>
 	<string name="channel_chat_id_desc">Channel for messages</string>
+
+	<string name="global_value_in_euro" translatable="false">€%s</string>
+	<string name="global_value_in_percentage">%s %%</string>
+	<string name="global_plus_value_in_percentage">\u002B%s %%</string>
+	<string name="trading_no_data">NO DATA</string>
 </resources>

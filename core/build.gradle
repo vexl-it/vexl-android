@@ -71,6 +71,9 @@ dependencies {
     api "io.insert-koin:koin-core:$koin"
     api "io.insert-koin:koin-android:$koin"
 
+    implementation "com.github.PhilJay:MPAndroidChart:$mp_android_chart_version"
+    implementation 'com.lyft.kronos:kronos-android:0.0.1-alpha11'
+
     api platform("com.google.firebase:firebase-bom:$firebase_bom")
     api 'com.google.firebase:firebase-messaging-ktx'
 
