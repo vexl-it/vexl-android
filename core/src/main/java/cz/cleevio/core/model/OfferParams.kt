@@ -12,5 +12,6 @@ data class OfferParams constructor(
 	val paymentMethod: PaymentMethodValue,
 	val offerType: String,
 	val expiration: Long,
-	val active: Boolean
+	val active: Boolean,
+	val groupUuid: String = "FIXME"
 )

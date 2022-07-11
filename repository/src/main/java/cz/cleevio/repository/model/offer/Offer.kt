@@ -34,6 +34,7 @@ data class Offer constructor(
 	val activePriceValue: BigDecimal,
 	val active: Boolean,
 	val commonFriends: List<CommonFriend>,
+	val groupUuid: String,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime,
 	//custom flags
@@ -60,6 +61,7 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 		activePriceState = this.activePriceState.decryptedValue,
 		activePriceValue = this.activePriceValue.decryptedValue,
 		active = this.active.decryptedValue.toBoolean(),
+		groupUuid = this.groupUuid.decryptedValue,
 		commonFriends = this.commonFriends.map { CommonFriend(it.decryptedValue) },
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
@@ -86,6 +88,7 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 		activePriceState = this.activePriceState,
 		activePriceValue = this.activePriceValue,
 		active = this.active,
+		groupUuid = this.groupUuid,
 		commonFriends = commonFriends.map {
 			val contact = it.fromDao()
 			CommonFriend(contact.getHashedContact(), contact)
@@ -117,6 +120,7 @@ fun Offer.toCache(): OfferEntity {
 		activePriceValue = this.activePriceValue,
 		active = this.active,
 		commonFriends = this.commonFriends.joinToString(),
+		groupUuid = this.groupUuid,
 		createdAt = this.createdAt,
 		modifiedAt = this.modifiedAt,
 		isMine = this.isMine,

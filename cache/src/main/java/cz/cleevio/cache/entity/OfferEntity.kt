@@ -27,6 +27,7 @@ data class OfferEntity(
 	val activePriceState: String,
 	val activePriceValue: BigDecimal,
 	val active: Boolean,
+	val groupUuid: String,
 	val commonFriends: String,
 	val createdAt: ZonedDateTime,
 	val modifiedAt: ZonedDateTime,

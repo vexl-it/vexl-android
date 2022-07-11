@@ -20,7 +20,8 @@ data class NewOffer constructor(
 	val activePriceState: String,
 	val activePriceValue: String,
 	val active: String,
-	val commonFriends: List<String>
+	val commonFriends: List<String>,
+	val groupUuid: String
 )
 
 fun NewOffer.toNetwork(): CreateOfferPrivateRequest {
@@ -42,5 +43,6 @@ fun NewOffer.toNetwork(): CreateOfferPrivateRequest {
 		activePriceValue = this.activePriceValue,
 		active = this.active,
 		commonFriends = this.commonFriends,
+		groupUuid = this.groupUuid,
 	)
 }
