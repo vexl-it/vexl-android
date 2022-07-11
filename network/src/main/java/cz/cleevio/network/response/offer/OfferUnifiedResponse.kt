@@ -25,6 +25,7 @@ data class OfferUnifiedResponse constructor(
 	val activePriceValue: EncryptedBigDecimal,
 	val active: EncryptedString,
 	val commonFriends: List<EncryptedString>,
+	val groupUuid: EncryptedString,
 	val createdAt: String,
 	val modifiedAt: String
 )

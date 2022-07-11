@@ -26,5 +26,6 @@ data class CreateOfferPrivateRequest constructor(
 	val activePriceState: String,
 	val activePriceValue: String,
 	val active: String,
-	val commonFriends: List<String>
+	val commonFriends: List<String>,
+	val groupUuid: String
 )
