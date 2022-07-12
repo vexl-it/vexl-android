@@ -1,6 +1,7 @@
 package cz.cleeevio.vexl.marketplace.editOfferFragment
 
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -31,6 +32,8 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		repeatScopeOnStart {
 			viewModel.errorFlow.collect { resource ->
 				if (resource.status is Status.Error) {
+					binding.newOfferBtn.isVisible = true
+					binding.progress.isVisible = false
 					//show error toast
 					resource.errorIdentification.message?.let { messageCode ->
 						if (messageCode != -1) {
@@ -194,6 +197,8 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 				expiration = expiration,
 				active = viewModel.offer.value!!.active
 			)
+			binding.newOfferBtn.isVisible = false
+			binding.progress.isVisible = true
 			viewModel.updateOffer(offerId = args.offerId, params = params, onSuccess = {
 				findNavController().popBackStack()
 			})

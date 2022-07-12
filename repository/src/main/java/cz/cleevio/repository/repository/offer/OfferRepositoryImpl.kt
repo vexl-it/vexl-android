@@ -11,6 +11,7 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.offer.CreateOfferRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
+import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.offer.*
 import kotlinx.coroutines.flow.map
 
@@ -145,15 +146,17 @@ class OfferRepositoryImpl constructor(
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)
 				})
-				val commonFriendRefs = contactDao.getContactByHashes(
-					// because we don't have full objects at this moment yet (it's from the API, not database)
-					offer.commonFriends.map { it.contactHash }
-				).map {
-					OfferCommonFriendCrossRef(
-						offerId = offerId,
-						contactId = it.contactId
-					)
-				}
+				val commonFriendRefs = contactDao.getAllContacts()
+					.map { it.fromDao() }
+					.filter { contact ->
+						offer.commonFriends.firstOrNull { it.contactHash == contact.getHashedContact() } != null
+					}
+					.map {
+						OfferCommonFriendCrossRef(
+							offerId = offerId,
+							contactId = it.id
+						)
+					}
 				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
 			}
 		}
@@ -168,15 +171,18 @@ class OfferRepositoryImpl constructor(
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)
 				})
-				val commonFriendRefs = contactDao.getContactByHashes(
-					// because we don't have full objects at this moment yet (it's from the API, not database)
-					offer.commonFriends.map { it.contactHash }
-				).map {
-					OfferCommonFriendCrossRef(
-						offerId = offerId,
-						contactId = it.contactId
-					)
-				}
+				// because we don't have full objects at this moment yet (it's from the API, not database)
+				val commonFriendRefs = contactDao.getAllContacts()
+					.map { it.fromDao() }
+					.filter { contact ->
+						offer.commonFriends.firstOrNull { it.contactHash == contact.getHashedContact() } != null
+					}
+					.map {
+						OfferCommonFriendCrossRef(
+							offerId = offerId,
+							contactId = it.id
+						)
+					}
 				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
 			}
 		}

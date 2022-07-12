@@ -26,15 +26,24 @@ android {
     productFlavors {
         development {
             buildConfigField "String", "API_BASE_URL", "\"https://lightspeed.cleevio.io/\""
-            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.devel.cleevio.io/\""
+            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.devel.cleevio.io/api/v1/\""
+            buildConfigField "String", "CONTACT_API_BASE_URL", "\"https://contact.vexl.devel.cleevio.io/api/v1/\""
+            buildConfigField "String", "OFFER_API_BASE_URL", "\"https://offer.vexl.devel.cleevio.io/api/v1/\""
+            buildConfigField "String", "CHAT_API_BASE_URL", "\"https://chat.vexl.devel.cleevio.io/api/v1/\""
         }
         staging {
             buildConfigField "String", "API_BASE_URL", "\"https://lightspeed.cleevio.io/\""
-            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.devel.cleevio.io/\""
+            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.staging.cleevio.io/api/v1/\""
+            buildConfigField "String", "CONTACT_API_BASE_URL", "\"https://contact.vexl.staging.cleevio.io/api/v1/\""
+            buildConfigField "String", "OFFER_API_BASE_URL", "\"https://offer.vexl.staging.cleevio.io/api/v1/\""
+            buildConfigField "String", "CHAT_API_BASE_URL", "\"https://chat.vexl.staging.cleevio.io/api/v1/\""
         }
         production {
             buildConfigField "String", "API_BASE_URL", "\"https://lightspeed.cleevio.io/\""
-            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.devel.cleevio.io/\""
+            buildConfigField "String", "USER_API_BASE_URL", "\"https://user.vexl.staging.cleevio.io/api/v1/\""
+            buildConfigField "String", "CONTACT_API_BASE_URL", "\"https://contact.vexl.staging.cleevio.io/api/v1/\""
+            buildConfigField "String", "OFFER_API_BASE_URL", "\"https://offer.vexl.staging.cleevio.io/api/v1/\""
+            buildConfigField "String", "CHAT_API_BASE_URL", "\"https://chat.vexl.staging.cleevio.io/api/v1/\""
         }
     }
 

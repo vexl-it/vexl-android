@@ -400,15 +400,18 @@ class ContactRepositoryImpl constructor(
 
 		if (phoneContacts.isSuccessful) {
 			phoneContacts.body()?.commonContacts.orEmpty().map { friend ->
-				val contacts = contactDao.getContactByHashes(friend.common.hashes)
+				val contacts = contactDao.getAllPhoneContacts()
 					.map { it.fromDao() }
+					.filter { friend.common.hashes.contains(it.getHashedContact()) }
 				commonFriendsMap.put(friend.publicKey, contacts)
 			}
 		}
 
 		if (facebookContacts.isSuccessful) {
 			facebookContacts.body()?.commonContacts.orEmpty().map { friend ->
-				val contacts = contactDao.getContactByHashes(friend.common.hashes).map { it.fromDao() }
+				val contacts = contactDao.getAllFacebookContacts()
+					.map { it.fromDao() }
+					.filter { friend.common.hashes.contains(it.getHashedContact()) }
 				if (commonFriendsMap.containsKey(friend.publicKey)) {
 					commonFriendsMap[friend.publicKey] = commonFriendsMap[friend.publicKey].orEmpty() + contacts
 				} else {

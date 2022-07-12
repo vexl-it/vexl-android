@@ -1,6 +1,7 @@
 package cz.cleeevio.vexl.marketplace.newOfferFragment
 
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -31,6 +32,10 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				when (resource.status) {
 					is Status.Success -> {
 						findNavController().popBackStack()
+					}
+					is Status.Error -> {
+						binding.newOfferBtn.isVisible = true
+						binding.progress.isVisible = false
 					}
 				}
 			}
@@ -124,6 +129,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				expiration = expiration,
 				active = true
 			)
+			binding.newOfferBtn.isVisible = false
+			binding.progress.isVisible = true
 			viewModel.createOffer(params)
 		}
 	}

@@ -158,7 +158,7 @@
 	</style>
 
 	<style name="Widget.Cleevio.CircularProgress" parent="Widget.MaterialComponents.CircularProgressIndicator">
-		<item name="indicatorColor">@color/secondary</item>
+		<item name="indicatorColor">@color/primary</item>
 		<item name="android:indeterminate">true</item>
 	</style>
 
