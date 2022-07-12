@@ -17,13 +17,8 @@ interface ContactDao : BaseDao<ContactEntity> {
 	@Query("SELECT * FROM ContactEntity where contactType = 'FACEBOOK'")
 	fun getAllFacebookContacts(): List<ContactEntity>
 
-	@Query(
-		"SELECT * " +
-			"FROM ContactEntity " +
-			"WHERE (contactType = 'PHONE' AND phoneHashed IN (:hashes)) " +
-			"OR (contactType = 'FACEBOOK' AND facebookIdHashed IN (:hashes))"
-	)
-	fun getContactByHashes(hashes: Collection<String>): List<ContactEntity>
+	@Query("SELECT * FROM ContactEntity")
+	fun getAllContacts(): List<ContactEntity>
 
 	@Query("DELETE FROM ContactEntity where contactType = :contactType")
 	suspend fun clearTableByType(contactType: String)
