@@ -29,11 +29,6 @@ const val AUTH_INTERCEPTOR = "AUTH_INTERCEPTOR"
 const val HTTP_LOGGING_INTERCEPTOR = "HTTP_LOGGING_INTERCEPTOR"
 const val NETWORK_REQUEST_TIMEOUT = 30L
 
-const val USER_API_BASE_URL = "https://user.vexl.devel.cleevio.io/api/v1/"
-const val CONTACT_API_BASE_URL = "https://contact.vexl.devel.cleevio.io/api/v1/"
-const val OFFER_API_BASE_URL = "https://offer.vexl.devel.cleevio.io/api/v1/"
-const val CHAT_API_BASE_URL = "https://chat.vexl.devel.cleevio.io/api/v1/"
-
 val networkModule = module {
 
 	fun provideRetrofit(
@@ -89,7 +84,7 @@ val networkModule = module {
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
 			tokenAuthenticator = get(),
-			baseUrl = USER_API_BASE_URL
+			baseUrl = BuildConfig.USER_API_BASE_URL
 		).create(UserApi::class.java)
 	}
 
@@ -102,7 +97,7 @@ val networkModule = module {
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
 			tokenAuthenticator = get(),
-			baseUrl = CONTACT_API_BASE_URL
+			baseUrl = BuildConfig.CONTACT_API_BASE_URL
 		).create(ContactApi::class.java)
 	}
 
@@ -115,7 +110,7 @@ val networkModule = module {
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
 			tokenAuthenticator = get(),
-			baseUrl = OFFER_API_BASE_URL
+			baseUrl = BuildConfig.OFFER_API_BASE_URL
 		).create(OfferApi::class.java)
 	}
 
@@ -128,7 +123,7 @@ val networkModule = module {
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
 			tokenAuthenticator = get(),
-			baseUrl = CHAT_API_BASE_URL
+			baseUrl = BuildConfig.CHAT_API_BASE_URL
 		).create(ChatApi::class.java)
 	}
 
@@ -141,7 +136,7 @@ val networkModule = module {
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
 			tokenAuthenticator = get(),
-			baseUrl = USER_API_BASE_URL
+			baseUrl = BuildConfig.USER_API_BASE_URL
 		).create(CryptocurrencyApi::class.java)
 	}
 

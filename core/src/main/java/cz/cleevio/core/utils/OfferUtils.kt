@@ -35,6 +35,7 @@ object OfferUtils {
 			activePriceValue = eciesEncrypt(params.priceTrigger.value.toString(), contactKey),
 			active = eciesEncrypt(params.active.toString(), contactKey),
 			groupUuid = eciesEncrypt(params.groupUuid, contactKey),
+			currency = eciesEncrypt(params.currency, contactKey),
 			commonFriends = commonFriends.map { friend ->
 				eciesEncrypt(friend.getHashedContact(), contactKey)
 			}

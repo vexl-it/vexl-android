@@ -313,13 +313,28 @@
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.core.widget.NestedScrollView>
 
+	<com.google.android.material.progressindicator.CircularProgressIndicator
+		android:id="@+id/progress"
+		android:layout_width="120dp"
+		android:layout_height="120dp"
+		android:layout_marginHorizontal="16dp"
+		android:indeterminate="true"
+		android:visibility="gone"
+		app:indicatorColor="@color/yellow_100"
+		app:showDelay="500"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		tools:visibility="visible" />
+
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/new_offer_btn"
 		style="@style/Widget.Vexl.Button"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:elevation="0dp"
-		android:text="Vytvořit nabídku"
+		android:text="@string/offer_edit"
 		android:textAllCaps="false"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
