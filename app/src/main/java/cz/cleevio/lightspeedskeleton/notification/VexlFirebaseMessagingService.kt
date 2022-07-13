@@ -35,11 +35,16 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val title = remoteMessage.data[NOTIFICATION_TITLE]
 		val message = remoteMessage.data[NOTIFICATION_BODY]
 		val type = remoteMessage.data[NOTIFICATION_TYPE] ?: NOTIFICATION_TYPE_DEFAULT
+		val inbox = remoteMessage.data[NOTIFICATION_INBOX]
 
 		//todo: do some custom stuff here, check notification type, check DB, display or not
-		coroutineScope.launch {
-			chatRepository.syncAllMessages()
+		//there will be more stuff when we implement group functionality
+		inbox?.let { inboxPublicKey ->
+			coroutineScope.launch {
+				chatRepository.syncMessages(inboxPublicKey)
+			}
 		}
+
 		val intent = Intent(applicationContext, MainActivity::class.java)
 		intent.putExtra(NOTIFICATION_TYPE, type)
 		intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
@@ -93,6 +98,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		const val NOTIFICATION_LOG_MESSAGE = "log_message"
 		private const val NOTIFICATION_TITLE = "title"
 		private const val NOTIFICATION_BODY = "body"
+		private const val NOTIFICATION_INBOX = "inbox"
 
 		const val NOTIFICATION_TYPE_DEFAULT = "UNKNOWN"
 		private const val CODE = 102_487
