@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.showSnackbar
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -65,7 +66,16 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer?.commonFriends.orEmpty()))
 		}
 		binding.revealIdentityBtn.setOnClickListener {
-			showBottomDialog(IdentityRequestBottomSheetDialog())
+			showBottomDialog(IdentityRequestBottomSheetDialog(
+				senderPublicKey = viewModel.senderPublicKey,
+				receiverPublicKey = viewModel.receiverPublicKey,
+				inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey,
+				onSendSuccess = {
+					showSnackbar(
+						message = getString(R.string.chat_identity_reveal_sent)
+					)
+				}
+			))
 		}
 		binding.deleteChatBtn.setOnClickListener {
 			showBottomDialog(
