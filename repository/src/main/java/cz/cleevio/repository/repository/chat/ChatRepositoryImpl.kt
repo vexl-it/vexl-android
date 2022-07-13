@@ -134,6 +134,27 @@ class ChatRepositoryImpl constructor(
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
 	}
 
+	override suspend fun syncMessages(inboxPublicKey: String): Resource<Unit> {
+		val keyPair = if (inboxPublicKey == encryptedPreferenceRepository.userPublicKey) {
+			KeyPair(
+				privateKey = encryptedPreferenceRepository.userPrivateKey,
+				publicKey = encryptedPreferenceRepository.userPublicKey
+			)
+		} else {
+			myOfferDao.getMyOfferByPublicKey(inboxPublicKey)?.fromCache()?.let {
+				KeyPair(
+					privateKey = it.privateKey,
+					publicKey = it.publicKey
+				)
+			}
+		}
+
+		return keyPair?.let {
+			syncMessages(keyPair)
+			//todo: add correct text
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+	}
+
 	@Suppress("ReturnCount")
 	override suspend fun syncMessages(keyPair: KeyPair): Resource<Unit> {
 		//verify that you have valid challenge for this inbox

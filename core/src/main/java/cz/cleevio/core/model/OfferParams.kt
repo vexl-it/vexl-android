@@ -14,5 +14,5 @@ data class OfferParams constructor(
 	val expiration: Long,
 	val active: Boolean,
 	val groupUuid: String = "FIXME",
-	val currency: String = "FIXME"
+	val currency: String = "CZK"
 )

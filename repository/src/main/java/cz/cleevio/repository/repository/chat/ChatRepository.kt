@@ -14,6 +14,8 @@ interface ChatRepository {
 	//-----------------------------
 	suspend fun createInbox(publicKey: String): Resource<Unit>
 
+	suspend fun syncMessages(inboxPublicKey: String): Resource<Unit>
+
 	suspend fun syncMessages(keyPair: KeyPair): Resource<Unit>
 
 	suspend fun syncAllMessages(): Resource<Unit>

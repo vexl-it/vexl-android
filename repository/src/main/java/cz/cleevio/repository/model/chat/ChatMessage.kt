@@ -44,19 +44,22 @@ fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
 	val jsonAdapter: JsonAdapter<ChatMessageRequest> = moshi.adapter(ChatMessageRequest::class.java)
 
 	val chatMessage = jsonAdapter.fromJson(this.message)
-		?.copy(inboxPublicKey = inboxPublicKey, senderPublicKey = this.senderPublicKey)
-	return chatMessage?.fromNetwork(inboxPublicKey) ?: ChatMessage(
+	return chatMessage?.fromNetwork(
+		recipientPublicKey = inboxPublicKey,
+		inboxPublicKey = inboxPublicKey,
+		senderPublicKey = senderPublicKey
+	) ?: ChatMessage(
 		uuid = "broken", type = MessageType.BROKEN, time = System.currentTimeMillis(),
 		inboxPublicKey = "", senderPublicKey = "", recipientPublicKey = "",
 		isMine = false, isProcessed = false
 	)
 }
 
-fun ChatMessageRequest.fromNetwork(recipientPublicKey: String): ChatMessage {
+fun ChatMessageRequest.fromNetwork(recipientPublicKey: String, inboxPublicKey: String, senderPublicKey: String): ChatMessage {
 	return ChatMessage(
 		uuid = this.uuid,
-		inboxPublicKey = this.inboxPublicKey,
-		senderPublicKey = this.senderPublicKey,
+		inboxPublicKey = inboxPublicKey,
+		senderPublicKey = senderPublicKey,
 		recipientPublicKey = recipientPublicKey,
 		text = this.text,
 		image = this.image,
@@ -71,8 +74,6 @@ fun ChatMessageRequest.fromNetwork(recipientPublicKey: String): ChatMessage {
 fun ChatMessage.toNetwork(): String {
 	val request = ChatMessageRequest(
 		uuid = this.uuid,
-		inboxPublicKey = this.inboxPublicKey,
-		senderPublicKey = this.senderPublicKey,
 		text = this.text,
 		image = this.image,
 		type = this.type.name,
