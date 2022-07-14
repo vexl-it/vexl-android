@@ -47,6 +47,8 @@ class ChatRequestViewModel constructor(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = communicationRequest.message.senderPublicKey,
 					senderPublicKey = communicationRequest.offer?.offerPublicKey!!,
+					//todo: move to strings or remove
+					text = if (approve) "The conversation has started" else "",
 					type = MessageType.COMMUNICATION_REQUEST_RESPONSE,
 					recipientPublicKey = communicationRequest.message.senderPublicKey,
 					isMine = true,
