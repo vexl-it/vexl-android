@@ -1,7 +1,6 @@
 package cz.cleevio.core.utils.marketGraph
 
 import android.content.Context
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -35,7 +34,13 @@ class MarketChartUtils constructor(
 		initTradingChart(chartView, isTouchEnabled, viewOffset)
 	}
 
-	fun handleChartData(marketChartData: MarketChartEntry, chartView: LineChart, isDrawValuesEnabled: Boolean = false, viewOffset: Int? = null) {
+	fun handleChartData(
+		marketChartData: MarketChartEntry,
+		chartView: LineChart,
+		isDrawValuesEnabled: Boolean = false,
+		viewOffset: Int? = null,
+		graphLineColor: Int? = null
+	) {
 		chartView.highlightValues(emptyArray())
 
 		val lineDataSet = LineDataSet(marketChartData.entries, "Label").apply {
@@ -44,7 +49,7 @@ class MarketChartUtils constructor(
 			cubicIntensity = 0.1f
 			mode = LineDataSet.Mode.CUBIC_BEZIER
 			highLightColor = ContextCompat.getColor(context, R.color.yellow)
-			color = ContextCompat.getColor(context, R.color.yellow)
+			color = ContextCompat.getColor(context, graphLineColor ?: R.color.yellow)
 			fillDrawable = ContextCompat.getDrawable(context, R.drawable.background_gradient_graph_yellow)
 			valueTextColor = ContextCompat.getColor(context, R.color.yellow)
 			valueFormatter = MarketChartValueFormatter(context)
@@ -85,7 +90,7 @@ class MarketChartUtils constructor(
 			isAutoScaleMinMaxEnabled = true
 			isHighlightPerTapEnabled = true
 			isHighlightPerDragEnabled = true
-			setPinchZoom(true)
+			setPinchZoom(false)
 			setTouchEnabled(isTouchEnabled)
 			setScaleEnabled(false)
 			setDrawGridBackground(false)

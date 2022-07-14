@@ -24,13 +24,16 @@
 			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, chart_divider, price_chart_period_radiogroup"
 			tools:visibility="visible" />
 
-		<ImageView
+		<com.github.mikephil.charting.charts.LineChart
 			android:id="@+id/small_chart"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
 			android:layout_marginStart="20dp"
-			android:src="@drawable/chart"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"
+			android:src="@drawable/large_chart"
 			android:visibility="gone"
+			app:layout_constraintDimensionRatio="H,2:5"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
@@ -116,7 +119,6 @@
 			android:id="@+id/large_chart"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
-			android:layout_marginTop="30dp"
 			android:layout_margin="20dp"
 			android:src="@drawable/large_chart"
 			android:visibility="gone"

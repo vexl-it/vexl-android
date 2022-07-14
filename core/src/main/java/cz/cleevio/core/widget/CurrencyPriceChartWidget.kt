@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import com.github.mikephil.charting.data.LineDataSet
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
 import cz.cleevio.core.model.CryptoCurrency
@@ -70,6 +69,11 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 				data,
 				binding.largeChart
 			)
+			graphUtils.handleChartData(
+				data,
+				binding.smallChart,
+				graphLineColor = R.color.yellow_darker
+			)
 		}
 	}
 
@@ -100,6 +104,7 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 		packView(packed)
 		graphUtils.init(binding.largeChart, false, 0)
+		graphUtils.init(binding.smallChart, false, 0)
 	}
 
 	private fun updatePercentageData(btnId: Int = binding.priceChartPeriodRadiogroup.checkedRadioButtonId) {
