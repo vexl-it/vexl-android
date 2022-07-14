@@ -3,6 +3,9 @@ package cz.cleevio.core.widget
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.CryptoCurrency
+import cz.cleevio.core.model.CryptoCurrency.Companion.getExactName
+import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.DateTimeRange
 import cz.cleevio.core.utils.getChartTimeRange
@@ -14,11 +17,10 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
-import java.text.DateFormat
 
 class CurrencyPriceChartViewModel constructor(
 	private val cryptoCurrencyRepository: CryptoCurrencyRepository,
-	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
+	val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : BaseViewModel() {
 
 	private val _currentCryptoCurrencyPrice = MutableSharedFlow<CryptoCurrencies>(replay = 1)
@@ -31,8 +33,8 @@ class CurrencyPriceChartViewModel constructor(
 
 	init {
 		// TODO move into currency selector in onboarding
-		encryptedPreferenceRepository.selectedCurrency = "USD"
-		encryptedPreferenceRepository.selectedCryptoCurrency = "bitcoin"
+		encryptedPreferenceRepository.selectedCurrency = Currency.USD.name
+		encryptedPreferenceRepository.selectedCryptoCurrency = CryptoCurrency.BITCOIN.getExactName()
 	}
 
 	fun syncMarketData(time: DateTimeRange? = null) {
@@ -53,13 +55,12 @@ class CurrencyPriceChartViewModel constructor(
 				currency = encryptedPreferenceRepository.selectedCurrency
 			)
 			response.data?.let { marketRates ->
-				// todo map market data to timestamp & value
 				var x = -1f
-				val entries = marketRates.entries.map { marketRate ->
+				val entries = marketRates.entries.map { entries ->
 					x++
 					Entry(
-						x,
-						marketRate.firstOrNull()?.toFloat() ?: 0f
+						entries[0].toFloat(),
+						entries[1].toFloat()
 					)
 				}.toMutableList()
 
@@ -104,7 +105,6 @@ class CurrencyPriceChartViewModel constructor(
 	}
 
 	companion object {
-		// todo change to DAY
-		private val DEFAULT_TIME_RANGE = DateTimeRange.YEAR
+		private val DEFAULT_TIME_RANGE = DateTimeRange.DAY
 	}
 }

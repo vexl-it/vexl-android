@@ -3,17 +3,17 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.github.mikephil.charting.data.LineDataSet
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
+import cz.cleevio.core.model.CryptoCurrency
+import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.DateTimeRange
 import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.core.utils.marketGraph.MarketChartUtils
-import cz.cleevio.core.utils.marketGraph.MarketChartValueFormatter
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
@@ -30,8 +30,9 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	private lateinit var binding: WidgetCurrencyPriceChartBinding
 	private lateinit var currentCryptoCurrencyPrice: CryptoCurrencies
 	private var marketChartData: MarketChartEntry? = null
+	private var currency: Currency = Currency.USD
+	private var cryptoCurrency: CryptoCurrency = CryptoCurrency.BITCOIN
 	private var packed = true
-	private var lineDataSet: LineDataSet? = null
 
 	var onPriceChartPeriodClicked: ((DateTimeRange) -> Unit)? = null
 
@@ -43,24 +44,33 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 	fun setupCryptoCurrencies(currentCryptoCurrencyPrice: CryptoCurrencies) {
 		this.currentCryptoCurrencyPrice = currentCryptoCurrencyPrice
-		binding.currentPrice.text = currentCryptoCurrencyPrice.priceUsd.toString()
+		binding.currentPrice.text =
+			when (currency) {
+				Currency.CZK -> currentCryptoCurrencyPrice.priceCzk.toString()
+				Currency.EUR -> currentCryptoCurrencyPrice.priceEur.toString()
+				else -> currentCryptoCurrencyPrice.priceUsd.toString()
+			}
 
-		updateChartData(binding.priceChartPeriodRadiogroup.checkedRadioButtonId)
+		updatePercentageData()
+	}
+
+	fun setupCurrencies(currency: Currency, cryptoCurrency: CryptoCurrency) {
+		this.currency = currency
+		this.cryptoCurrency = cryptoCurrency
 	}
 
 	fun setupMarketData(marketChartEntry: MarketChartEntry) {
 		this.marketChartData = marketChartEntry
-
-		graphUtils.setMarketData(marketChartData)
+		updateChartData()
 	}
 
-	fun handleChartData() {
-		/*graphUtils.handleChartData(
-			lineDataSet, marketChartData,
-
-		)
-
-		 */
+	private fun updateChartData() {
+		marketChartData?.let { data ->
+			graphUtils.handleChartData(
+				data,
+				binding.largeChart
+			)
+		}
 	}
 
 	private fun setupUI() {
@@ -72,7 +82,7 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		}
 
 		binding.priceChartPeriodRadiogroup.setOnCheckedChangeListener { _, id ->
-			updateChartData(id)
+			updatePercentageData(id)
 			onPriceChartPeriodClicked?.invoke(
 				when (id) {
 					R.id.period_1_day -> DateTimeRange.DAY
@@ -89,10 +99,10 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		}
 
 		packView(packed)
-		graphUtils.init(binding.largeChart, binding.currentPrice, true, 0)
+		graphUtils.init(binding.largeChart, false, 0)
 	}
 
-	private fun updateChartData(btnId: Int) {
+	private fun updatePercentageData(btnId: Int = binding.priceChartPeriodRadiogroup.checkedRadioButtonId) {
 		val priceChangePercentage = getValue(btnId)
 		val priceChangeText = getText(btnId, priceChangePercentage)
 
@@ -103,41 +113,6 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_up, null)
 		}
 		binding.cryptoChangePercentage.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-
-		lineDataSet = LineDataSet(marketChartData?.entries, "Label").apply {
-			lineWidth = 2f
-			valueTextSize = 12f
-			cubicIntensity = 0.1f
-			mode = LineDataSet.Mode.CUBIC_BEZIER
-			highLightColor = ContextCompat.getColor(context, R.color.yellow)
-
-			when {
-				(priceChangePercentage.toDouble() == INV_ZERO_DOUBLE) ||
-					(priceChangePercentage.toDouble() == ZERO_DOUBLE) -> {
-					color = ContextCompat.getColor(context, R.color.yellow)
-					fillDrawable = ContextCompat.getDrawable(context, R.drawable.background_gradient_graph_yellow)
-					valueTextColor = ContextCompat.getColor(context, R.color.yellow)
-				}
-				(priceChangePercentage.toDouble()) < ZERO_DOUBLE -> {
-					color = ContextCompat.getColor(context, R.color.yellow)
-					fillDrawable = ContextCompat.getDrawable(context, R.drawable.background_gradient_graph_yellow)
-					valueTextColor = ContextCompat.getColor(context, R.color.yellow)
-				}
-				(priceChangePercentage.toDouble()) > ZERO_DOUBLE -> {
-					color = ContextCompat.getColor(context, R.color.yellow)
-					fillDrawable = ContextCompat.getDrawable(context, R.drawable.background_gradient_graph_yellow)
-					valueTextColor = ContextCompat.getColor(context, R.color.yellow)
-				}
-			}
-
-			//valueTypeface = ResourcesCompat.getFont(context, R.font.barlow_medium)
-			valueFormatter = MarketChartValueFormatter(context)
-			setDrawFilled(true)
-			setDrawCircles(false)
-			setDrawValues(isDrawValuesEnabled)
-			setDrawIcons(false)
-			setDrawHorizontalHighlightIndicator(false)
-		}
 	}
 
 	private fun getText(btnId: Int, priceChangePercentage: BigDecimal): String {
@@ -201,14 +176,20 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 				resources.getColor(R.color.yellow_100, null)
 			}
 		binding.currentPrice.setTextColor(textColor)
-		binding.prefixCurrency.setTextColor(textColor)
-	}
 
-	companion object {
-		private const val ZERO_DOUBLE = 0.0
-		private const val INV_ZERO_DOUBLE = -0.0
-		private const val MAX_VISIBLE_VALUE = 500
-		private const val VIEW_PORT_OFFSET = 16
-		private const val VERTICAL_VIEW_PORT_OFFSET = 20
+		if (currency == Currency.CZK) {
+			binding.prefixCurrency.isVisible = false
+			binding.suffixCurrency.isVisible = true
+
+			binding.suffixCurrency.setTextColor(textColor)
+		} else {
+			binding.prefixCurrency.isVisible = true
+			binding.suffixCurrency.isVisible = false
+
+			binding.prefixCurrency.setTextColor(textColor)
+			binding.prefixCurrency.text = if (currency == Currency.EUR) resources.getString(R.string.general_eur_sign) else resources.getString(R.string.general_usd_sign)
+		}
+
+		binding.currencyName.text = if (cryptoCurrency == CryptoCurrency.BITCOIN) resources.getString(R.string.marketplace_currency_bitcoin) else ""
 	}
 }

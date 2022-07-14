@@ -43,7 +43,7 @@
 			android:layout_marginStart="25dp"
 			android:layout_marginTop="15dp"
 			android:layout_marginBottom="1dp"
-			android:text="@string/marketplace_currency_bitcoin"
+			tools:text="@string/marketplace_currency_bitcoin"
 			app:layout_constraintBottom_toTopOf="@id/crypto_change_percentage"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
@@ -102,18 +102,6 @@
 			app:barrierDirection="bottom"
 			app:constraint_referenced_ids="current_price, crypto_change_percentage" />
 
-		<com.github.mikephil.charting.charts.LineChart
-			android:id="@+id/large_chart"
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			android:layout_marginTop="30dp"
-			android:src="@drawable/large_chart"
-			android:visibility="gone"
-			app:layout_constraintDimensionRatio="H,3:1"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/chart_barrier" />
-
 		<View
 			android:id="@+id/chart_divider"
 			style="@style/Widget.Cleevio.Marketplace.CurrencyHorizontalDivider"
@@ -123,6 +111,19 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/large_chart" />
+
+		<com.github.mikephil.charting.charts.LineChart
+			android:id="@+id/large_chart"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_marginTop="30dp"
+			android:layout_margin="20dp"
+			android:src="@drawable/large_chart"
+			android:visibility="gone"
+			app:layout_constraintDimensionRatio="H,3:1"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/chart_barrier" />
 
 		<RadioGroup
 			android:id="@+id/price_chart_period_radiogroup"

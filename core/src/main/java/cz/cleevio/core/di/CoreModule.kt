@@ -46,8 +46,7 @@ val coreModule = module {
 
 	single {
 		MarketChartUtils(
-			androidContext(),
-			cryptoCurrencyRepository = get()
+			androidContext()
 		)
 	}
 }
