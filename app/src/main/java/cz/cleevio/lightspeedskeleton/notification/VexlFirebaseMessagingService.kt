@@ -37,6 +37,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val type = remoteMessage.data[NOTIFICATION_TYPE] ?: NOTIFICATION_TYPE_DEFAULT
 		val inbox = remoteMessage.data[NOTIFICATION_INBOX]
 
+		Timber.tag("FIREBASE").d("$inbox")
+
 		//todo: do some custom stuff here, check notification type, check DB, display or not
 		//there will be more stuff when we implement group functionality
 		inbox?.let { inboxPublicKey ->

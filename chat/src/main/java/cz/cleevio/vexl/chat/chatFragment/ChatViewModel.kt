@@ -6,16 +6,17 @@ import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseViewModel
 
 class ChatViewModel constructor(
 	private val chatRepository: ChatRepository,
 	val communicationRequest: CommunicationRequest
 ) : BaseViewModel() {
+
+	protected var messagePullJob: Job? = null
 
 	val _messageSentSuccessfully = MutableSharedFlow<Boolean>(replay = 1)
 	val messageSentSuccessfully = _messageSentSuccessfully.asSharedFlow()
@@ -45,6 +46,8 @@ class ChatViewModel constructor(
 				senderPublicKey = communicationRequest.message.recipientPublicKey
 				receiverPublicKey = communicationRequest.message.senderPublicKey
 			}
+
+			startMessageRefresh(myInboxPublicKey = senderPublicKey)
 		}
 	}
 
@@ -72,4 +75,16 @@ class ChatViewModel constructor(
 		}
 	}
 
+	private fun startMessageRefresh(myInboxPublicKey: String) {
+		messagePullJob = viewModelScope.launch(Dispatchers.IO) {
+			while (isActive) {
+				chatRepository.syncMessages(myInboxPublicKey)
+				delay(MESSAGE_PULL_TIMEOUT)
+			}
+		}
+	}
+
+	companion object {
+		const val MESSAGE_PULL_TIMEOUT = 20_000L
+	}
 }
