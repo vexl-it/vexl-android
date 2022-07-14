@@ -37,6 +37,7 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 		repeatScopeOnStart {
 			viewModel.marketData.collect { marketData ->
 				binding.priceChart.setupMarketData(marketData)
+				binding.priceChart.setupTimeRange(viewModel.dateTimeRange)
 			}
 		}
 	}

@@ -19,22 +19,24 @@ enum class DateTimeRange {
 	YEAR;
 }
 
-fun getChartTimeRange(dateTimeRange: DateTimeRange): Pair<String, String> {
-	val nowInMillis = System.currentTimeMillis()
+fun getChartTimeRange(dateTimeRange: DateTimeRange?): Pair<String, String> {
+	dateTimeRange?.let {
+		val nowInMillis = System.currentTimeMillis()
 
-	val timeInterval: Long = when (dateTimeRange) {
-		DateTimeRange.HOUR -> HOUR_IN_MILLIS
-		DateTimeRange.DAY -> DAY_IN_MILLIS
-		DateTimeRange.WEEK -> DAY_IN_MILLIS * DAYS_IN_WEEK
-		DateTimeRange.MONTH -> DAY_IN_MILLIS * DAYS_IN_MONTH
-		DateTimeRange.THREE_MONTHS -> DAY_IN_MILLIS * DAYS_IN_THREE_MONTHS
-		DateTimeRange.SIX_MONTHS -> DAY_IN_MILLIS * DAYS_IN_SIX_MONTHS
-		DateTimeRange.YEAR -> DAY_IN_MILLIS * DAYS_IN_YEAR
-	}
+		val timeInterval: Long = when (dateTimeRange) {
+			DateTimeRange.HOUR -> HOUR_IN_MILLIS
+			DateTimeRange.DAY -> DAY_IN_MILLIS
+			DateTimeRange.WEEK -> DAY_IN_MILLIS * DAYS_IN_WEEK
+			DateTimeRange.MONTH -> DAY_IN_MILLIS * DAYS_IN_MONTH
+			DateTimeRange.THREE_MONTHS -> DAY_IN_MILLIS * DAYS_IN_THREE_MONTHS
+			DateTimeRange.SIX_MONTHS -> DAY_IN_MILLIS * DAYS_IN_SIX_MONTHS
+			DateTimeRange.YEAR -> DAY_IN_MILLIS * DAYS_IN_YEAR
+		}
 
-	// Reduce millis
-	val fromDate = (nowInMillis - timeInterval) / 1000
-	val toDate = nowInMillis / 1000
+		// Reduce millis
+		val fromDate = (nowInMillis - timeInterval) / 1000
+		val toDate = nowInMillis / 1000
 
-	return Pair(fromDate.toString(), toDate.toString())
+		return Pair(fromDate.toString(), toDate.toString())
+	} ?: return Pair("0", "0")
 }

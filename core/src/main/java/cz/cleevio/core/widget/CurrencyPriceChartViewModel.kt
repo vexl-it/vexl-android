@@ -29,7 +29,7 @@ class CurrencyPriceChartViewModel constructor(
 	private val _marketData = MutableSharedFlow<MarketChartEntry>(replay = 1)
 	val marketData = _marketData.asSharedFlow()
 
-	private var dateTimeRange: DateTimeRange? = null
+	var dateTimeRange: DateTimeRange? = null
 
 	init {
 		// TODO move into currency selector in onboarding

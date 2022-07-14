@@ -12,6 +12,7 @@ import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.DateTimeRange
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.core.utils.getChartTimeRange
 import cz.cleevio.core.utils.marketGraph.MarketChartUtils
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import lightbase.core.extensions.layoutInflater
@@ -19,6 +20,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import timber.log.Timber
 import java.math.BigDecimal
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CurrencyPriceChartWidget @JvmOverloads constructor(
 	context: Context,
@@ -61,6 +64,49 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	fun setupMarketData(marketChartEntry: MarketChartEntry) {
 		this.marketChartData = marketChartEntry
 		updateChartData()
+	}
+
+	fun setupTimeRange(dateTimeRange: DateTimeRange?) {
+		val numberOfDatesOnTimeline = if (dateTimeRange == DateTimeRange.WEEK) 7 else 5
+		val dates = getDateIntervals(numberOfDatesOnTimeline, getChartTimeRange(dateTimeRange))
+
+		binding.secondDate.isVisible = numberOfDatesOnTimeline == 7
+		binding.thirdDate.isVisible = numberOfDatesOnTimeline == 7
+
+		if (dateTimeRange == DateTimeRange.DAY) {
+			// todo format with hours
+		} else {
+			// todo format with short date
+			val formattedDates = dates.map {
+				SimpleDateFormat("")
+			}
+
+			if (formattedDates.size == 7) {
+				binding.firstDate.text = formattedDates[0]
+				binding.secondDate.text = formattedDates[1]
+				binding.thirdDate.text = formattedDates[2]
+				binding.forthDate.text = formattedDates[3]
+				binding.fifthDate.text = formattedDates[4]
+				binding.sixthDate.text = formattedDates[5]
+				binding.seventhDate.text = formattedDates[6]
+			} else if (formattedDates.size == 5) {
+				binding.firstDate.text = formattedDates[0]
+				binding.forthDate.text = formattedDates[1]
+				binding.fifthDate.text = formattedDates[2]
+				binding.sixthDate.text = formattedDates[3]
+				binding.seventhDate.text = formattedDates[4]
+			}
+		}
+	}
+
+	private fun getDateIntervals(numberOfDates: Int, timeRange: Pair<String, String>): List<Date> {
+		val step = (timeRange.first.toLong() - timeRange.second.toLong()) / numberOfDates
+
+		return (0 to numberOfDates).toList().map {
+			timeRange.first + (it * step)
+		}.map {
+			Date(it.toLong())
+		}
 	}
 
 	private fun updateChartData() {
