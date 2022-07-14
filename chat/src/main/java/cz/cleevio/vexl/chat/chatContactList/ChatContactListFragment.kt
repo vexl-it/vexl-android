@@ -30,7 +30,7 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 		}
 		repeatScopeOnStart {
 			priceChartViewModel.currentCryptoCurrencyPrice.collect { currentCryptoCurrencyPrice ->
-				binding.priceChart.setupData(currentCryptoCurrencyPrice)
+				binding.priceChart.setupCryptoCurrencies(currentCryptoCurrencyPrice)
 			}
 		}
 		repeatScopeOnStart {

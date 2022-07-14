@@ -1,15 +1,13 @@
 package cz.cleevio.core.utils
 
-import com.lyft.kronos.KronosClock
-import cz.cleevio.network.request.market.MarketChartRequest
-import lightbase.core.extensions.formatToUTC
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
+private const val HOUR_IN_MILLIS = 3_600L
+private const val DAY_IN_MILLIS = 86_400L
 
-const val ONE_HOUR_IN_SECONDS: Long = 60 * 60
-const val ONE_DAY_IN_SECONDS: Long = ONE_HOUR_IN_SECONDS * 24
-const val ONE_WEEK_IN_SECONDS: Long = ONE_DAY_IN_SECONDS * 7
+private const val DAYS_IN_WEEK = 7
+private const val DAYS_IN_MONTH = 30
+private const val DAYS_IN_THREE_MONTHS = 30 * 3
+private const val DAYS_IN_SIX_MONTHS = 30 * 6
+private const val DAYS_IN_YEAR = 365
 
 enum class DateTimeRange {
 	HOUR,
@@ -19,47 +17,24 @@ enum class DateTimeRange {
 	THREE_MONTHS,
 	SIX_MONTHS,
 	YEAR;
-	
-	fun getRange(kronosClock: KronosClock): MarketChartRequest {
-		val instantTo = Instant.ofEpochMilli(kronosClock.getCurrentTimeMs())
-		val fromDateTime = when (this) {
-			HOUR -> {
-				instantTo.minusSeconds(ONE_HOUR_IN_SECONDS)
-					.formatToUTC()
-			}
-			DAY -> {
-				instantTo.minusSeconds(ONE_DAY_IN_SECONDS)
-					.formatToUTC()
-			}
-			WEEK -> {
-				instantTo.minusSeconds(ONE_WEEK_IN_SECONDS)
-					.formatToUTC()
-			}
-			MONTH -> {
-				ZonedDateTime.now(ZoneOffset.UTC)
-					.minusMonths(1)
-					.formatToUTC()
-			}
-			THREE_MONTHS -> {
-				ZonedDateTime.now(ZoneOffset.UTC)
-					.minusMonths(3)
-					.formatToUTC()
-			}
-			SIX_MONTHS -> {
-				ZonedDateTime.now(ZoneOffset.UTC)
-					.minusMonths(6)
-					.formatToUTC()
-			}
-			YEAR -> {
-				ZonedDateTime.now(ZoneOffset.UTC)
-					.minusYears(1)
-					.formatToUTC()
-			}
-		}
-		return MarketChartRequest(
-			from = fromDateTime,
-			to = instantTo.formatToUTC(),
-			currency = "bitcoin"
-		)
+}
+
+fun getChartTimeRange(dateTimeRange: DateTimeRange): Pair<String, String> {
+	val nowInMillis = System.currentTimeMillis()
+
+	val timeInterval: Long = when (dateTimeRange) {
+		DateTimeRange.HOUR -> HOUR_IN_MILLIS
+		DateTimeRange.DAY -> DAY_IN_MILLIS
+		DateTimeRange.WEEK -> DAY_IN_MILLIS * DAYS_IN_WEEK
+		DateTimeRange.MONTH -> DAY_IN_MILLIS * DAYS_IN_MONTH
+		DateTimeRange.THREE_MONTHS -> DAY_IN_MILLIS * DAYS_IN_THREE_MONTHS
+		DateTimeRange.SIX_MONTHS -> DAY_IN_MILLIS * DAYS_IN_SIX_MONTHS
+		DateTimeRange.YEAR -> DAY_IN_MILLIS * DAYS_IN_YEAR
 	}
+
+	// Reduce millis
+	val fromDate = (nowInMillis - timeInterval) / 1000
+	val toDate = nowInMillis / 1000
+
+	return Pair(fromDate.toString(), toDate.toString())
 }

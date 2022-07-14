@@ -3,7 +3,6 @@ package cz.cleevio.repository.repository.marketplace
 import cz.cleevio.network.api.CryptocurrencyApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
-import cz.cleevio.network.request.market.MarketChartRequest
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import cz.cleevio.repository.model.marketplace.MarketChartEntries
 import cz.cleevio.repository.model.marketplace.fromNetwork
@@ -21,12 +20,12 @@ class CryptoCurrencyRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun getMarketChartData(marketChartRequest: MarketChartRequest): Resource<MarketChartEntries> {
+	override suspend fun getMarketChartData(from: String, to: String, currency: String): Resource<MarketChartEntries> {
 		return tryOnline(
 			mapper = {
 				MarketChartEntries(it?.prices ?: emptyList())
 			},
-			request = { cryptocurrencyApi.getMarketChartData(marketChartRequest) }
+			request = { cryptocurrencyApi.getMarketChartData(from, to, currency) }
 		)
 	}
 }

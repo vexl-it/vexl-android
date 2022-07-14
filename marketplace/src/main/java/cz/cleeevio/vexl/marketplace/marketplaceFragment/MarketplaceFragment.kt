@@ -19,7 +19,6 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 
 
 	private val chatRepository: ChatRepository by inject()
-	private val encryptedPreference: EncryptedPreferenceRepository by inject()
 
 	private val binding by viewBinding(FragmentMarketplaceBinding::bind)
 	override val viewModel by viewModel<CurrencyPriceChartViewModel>()
@@ -28,9 +27,19 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.currentCryptoCurrencyPrice.collect { currentCryptoCurrencyPrice ->
-				binding.priceChart.setupData(currentCryptoCurrencyPrice)
+				binding.priceChart.setupCryptoCurrencies(currentCryptoCurrencyPrice)
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.marketData.collect { marketData ->
+				binding.priceChart.setupMarketData(marketData)
+			}
+		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+		viewModel.syncMarketData()
 	}
 
 	override fun initView() {
@@ -78,6 +87,10 @@ class MarketplaceFragment : BaseFragment(R.layout.fragment_marketplace) {
 
 		repeatScopeOnStart {
 			chatRepository.syncAllMessages()
+		}
+
+		binding.priceChart.onPriceChartPeriodClicked = {
+			viewModel.syncMarketData(it)
 		}
 	}
 

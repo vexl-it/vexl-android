@@ -1,12 +1,11 @@
 package cz.cleevio.network.api
 
-import cz.cleevio.network.request.market.MarketChartRequest
 import cz.cleevio.network.response.market.MarketChartResponse
 import cz.cleevio.network.response.marketplace.CryptoCurrenciesResponse
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface CryptocurrencyApi {
 
@@ -17,6 +16,8 @@ interface CryptocurrencyApi {
 
 	@GET("cryptocurrencies/bitcoin/market_chart")
 	suspend fun getMarketChartData(
-		@Body bitcoinMarketDataRequest: MarketChartRequest
+		@Query("from") from: String,
+		@Query("to") to: String,
+		@Query("currency") currency: String
 	): Response<MarketChartResponse>
 }

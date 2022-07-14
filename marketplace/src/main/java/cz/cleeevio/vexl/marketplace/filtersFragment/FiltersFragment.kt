@@ -22,7 +22,7 @@ class FiltersFragment : BaseFragment(R.layout.fragment_filters) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			currencyPriceChartViewModel.currentCryptoCurrencyPrice.collect { currentCryptoCurrencyPrice ->
-				binding.priceChart.setupData(currentCryptoCurrencyPrice)
+				binding.priceChart.setupCryptoCurrencies(currentCryptoCurrencyPrice)
 			}
 		}
 	}

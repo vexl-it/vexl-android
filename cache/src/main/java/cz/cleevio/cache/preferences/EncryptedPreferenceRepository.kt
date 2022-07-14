@@ -9,4 +9,6 @@ interface EncryptedPreferenceRepository {
 	var hash: String
 	var facebookSignature: String
 	var facebookHash: String
+	var selectedCurrency: String
+	var selectedCryptoCurrency: String
 }

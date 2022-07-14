@@ -3,14 +3,21 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import com.github.mikephil.charting.data.LineDataSet
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
+import cz.cleevio.core.model.MarketChartEntry
+import cz.cleevio.core.utils.DateTimeRange
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.core.utils.marketGraph.MarketChartUtils
+import cz.cleevio.core.utils.marketGraph.MarketChartValueFormatter
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import timber.log.Timber
 import java.math.BigDecimal
 
@@ -22,10 +29,38 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 	private lateinit var binding: WidgetCurrencyPriceChartBinding
 	private lateinit var currentCryptoCurrencyPrice: CryptoCurrencies
+	private var marketChartData: MarketChartEntry? = null
 	private var packed = true
+	private var lineDataSet: LineDataSet? = null
+
+	var onPriceChartPeriodClicked: ((DateTimeRange) -> Unit)? = null
+
+	private val graphUtils: MarketChartUtils by inject()
 
 	init {
 		setupUI()
+	}
+
+	fun setupCryptoCurrencies(currentCryptoCurrencyPrice: CryptoCurrencies) {
+		this.currentCryptoCurrencyPrice = currentCryptoCurrencyPrice
+		binding.currentPrice.text = currentCryptoCurrencyPrice.priceUsd.toString()
+
+		updateChartData(binding.priceChartPeriodRadiogroup.checkedRadioButtonId)
+	}
+
+	fun setupMarketData(marketChartEntry: MarketChartEntry) {
+		this.marketChartData = marketChartEntry
+
+		graphUtils.setMarketData(marketChartData)
+	}
+
+	fun handleChartData() {
+		/*graphUtils.handleChartData(
+			lineDataSet, marketChartData,
+
+		)
+
+		 */
 	}
 
 	private fun setupUI() {
@@ -38,16 +73,23 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 		binding.priceChartPeriodRadiogroup.setOnCheckedChangeListener { _, id ->
 			updateChartData(id)
+			onPriceChartPeriodClicked?.invoke(
+				when (id) {
+					R.id.period_1_day -> DateTimeRange.DAY
+					R.id.period_1_week -> DateTimeRange.WEEK
+					R.id.period_1_month -> DateTimeRange.MONTH
+					R.id.period_3_month -> DateTimeRange.THREE_MONTHS
+					R.id.period_6_month -> DateTimeRange.SIX_MONTHS
+					R.id.period_1_year -> DateTimeRange.YEAR
+					else -> {
+						DateTimeRange.DAY
+					}
+				}
+			)
 		}
 
 		packView(packed)
-	}
-
-	fun setupData(currentCryptoCurrencyPrice: CryptoCurrencies) {
-		this.currentCryptoCurrencyPrice = currentCryptoCurrencyPrice
-		binding.currentPrice.text = currentCryptoCurrencyPrice.priceUsd.toString()
-
-		updateChartData(binding.priceChartPeriodRadiogroup.checkedRadioButtonId)
+		graphUtils.init(binding.largeChart, binding.currentPrice, true, 0)
 	}
 
 	private fun updateChartData(btnId: Int) {
@@ -61,6 +103,41 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_up, null)
 		}
 		binding.cryptoChangePercentage.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+
+		lineDataSet = LineDataSet(marketChartData?.entries, "Label").apply {
+			lineWidth = 2f
+			valueTextSize = 12f
+			cubicIntensity = 0.1f
+			mode = LineDataSet.Mode.CUBIC_BEZIER
+			highLightColor = ContextCompat.getColor(context, R.color.yellow)
+
+			when {
+				(priceChangePercentage.toDouble() == INV_ZERO_DOUBLE) ||
+					(priceChangePercentage.toDouble() == ZERO_DOUBLE) -> {
+					color = ContextCompat.getColor(context, R.color.yellow)
+					fillDrawable = ContextCompat.getDrawable(context, R.drawable.background_gradient_graph_yellow)
+					valueTextColor = ContextCompat.getColor(context, R.color.yellow)
+				}
+				(priceChangePercentage.toDouble()) < ZERO_DOUBLE -> {
+					color = ContextCompat.getColor(context, R.color.yellow)
+					fillDrawable = ContextCompat.getDrawable(context, R.drawable.background_gradient_graph_yellow)
+					valueTextColor = ContextCompat.getColor(context, R.color.yellow)
+				}
+				(priceChangePercentage.toDouble()) > ZERO_DOUBLE -> {
+					color = ContextCompat.getColor(context, R.color.yellow)
+					fillDrawable = ContextCompat.getDrawable(context, R.drawable.background_gradient_graph_yellow)
+					valueTextColor = ContextCompat.getColor(context, R.color.yellow)
+				}
+			}
+
+			//valueTypeface = ResourcesCompat.getFont(context, R.font.barlow_medium)
+			valueFormatter = MarketChartValueFormatter(context)
+			setDrawFilled(true)
+			setDrawCircles(false)
+			setDrawValues(isDrawValuesEnabled)
+			setDrawIcons(false)
+			setDrawHorizontalHighlightIndicator(false)
+		}
 	}
 
 	private fun getText(btnId: Int, priceChangePercentage: BigDecimal): String {
@@ -125,5 +202,13 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 			}
 		binding.currentPrice.setTextColor(textColor)
 		binding.prefixCurrency.setTextColor(textColor)
+	}
+
+	companion object {
+		private const val ZERO_DOUBLE = 0.0
+		private const val INV_ZERO_DOUBLE = -0.0
+		private const val MAX_VISIBLE_VALUE = 500
+		private const val VIEW_PORT_OFFSET = 16
+		private const val VERTICAL_VIEW_PORT_OFFSET = 20
 	}
 }

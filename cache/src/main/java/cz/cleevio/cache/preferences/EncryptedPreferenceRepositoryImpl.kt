@@ -63,6 +63,18 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putStringToEP(KEY_FACEBOOK_HASH, value)
 		}
 
+	override var selectedCurrency: String
+		get() = getStringFromEP(KEY_SELECTED_CURRENCY, "")
+		set(value) {
+			putStringToEP(KEY_SELECTED_CURRENCY, value)
+		}
+
+	override var selectedCryptoCurrency: String
+		get() = getStringFromEP(KEY_SELECTED_CRYPTO_CURRENCY, "")
+		set(value) {
+			putStringToEP(KEY_SELECTED_CRYPTO_CURRENCY, value)
+		}
+
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()
 
@@ -105,5 +117,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_HASH = "hash"
 		private const val KEY_USER_FACEBOOK_SIGNATURE = "user_facebook_signature"
 		private const val KEY_FACEBOOK_HASH = "facebook_hash"
+		private const val KEY_SELECTED_CURRENCY = "selected_currency"
+		private const val KEY_SELECTED_CRYPTO_CURRENCY = "selected_crypto_currency"
 	}
 }
