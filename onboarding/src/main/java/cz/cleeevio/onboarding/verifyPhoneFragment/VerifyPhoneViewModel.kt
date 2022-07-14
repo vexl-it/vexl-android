@@ -53,6 +53,7 @@ class VerifyPhoneViewModel constructor(
 					}
 				}
 				is Status.Error -> {
+					//todo: resend authOne
 					_errorFlow.emit(response.errorIdentification)
 				}
 			}
