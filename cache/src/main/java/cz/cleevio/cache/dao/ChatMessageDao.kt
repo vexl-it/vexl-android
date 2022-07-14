@@ -34,7 +34,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		"SELECT DISTINCT senderPublicKey " +
 			"FROM ChatMessageEntity " +
 			"WHERE senderPublicKey != inboxPublicKey " +
-			" AND type NOT IN ('COMMUNICATION_REQUEST', 'COMMUNICATION_REQUEST_RESPONSE')"
+			" AND type NOT IN ('COMMUNICATION_REQUEST')"
 	)
 	fun getAllContactKeys(): List<String>
 

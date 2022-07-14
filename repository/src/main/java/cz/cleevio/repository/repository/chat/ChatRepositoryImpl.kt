@@ -345,6 +345,9 @@ class ChatRepositoryImpl constructor(
 
 		val signatureNullable = getSignature(senderKeyPair.publicKey)
 		return signatureNullable?.let { signature ->
+			chatMessageDao.insert(
+				message.toCache()
+			)
 			val confirmResponse = tryOnline(
 				request = {
 					chatApi.postInboxesApprovalConfirm(
