@@ -26,12 +26,16 @@ class ChatRequestViewModel constructor(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			//we need message, offer, something else? User?
-			val requests = chatRepository.loadCommunicationRequests()
-			_usersRequestingChat.emit(
-				requests
-			)
+			loadCommunicationRequests()
 		}
+	}
+
+	private suspend fun loadCommunicationRequests() {
+		//we need message, offer, something else? User?
+		val requests = chatRepository.loadCommunicationRequests()
+		_usersRequestingChat.emit(
+			requests
+		)
 	}
 
 	fun processCommunicationRequest(communicationRequest: CommunicationRequest, approve: Boolean) {
@@ -49,7 +53,7 @@ class ChatRequestViewModel constructor(
 					isProcessed = false
 				),
 				originalRequestMessage = communicationRequest.message,
-				approve = true
+				approve = approve
 			)
 			if (response.status == Status.Success) {
 				chatRepository.deleteMessage(communicationRequest)
@@ -59,6 +63,9 @@ class ChatRequestViewModel constructor(
 				_communicationRequestResponse.emit(
 					Pair(communicationRequest, response)
 				)
+			} else {
+				//reload data, old message should be processed
+				loadCommunicationRequests()
 			}
 		}
 	}
