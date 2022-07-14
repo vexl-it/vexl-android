@@ -3,7 +3,6 @@ package cz.cleevio.profile.profileFragment
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import coil.load
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.profile.R
@@ -66,9 +65,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileContacts.setOnClickListener {
-			viewModel.navMainGraphModel.navigateToGraph(
-				NavMainGraphModel.NavGraph.ImportContacts
-			)
+			Toast.makeText(requireContext(), "Contact import not implemented", Toast.LENGTH_SHORT)
+				.show()
 		}
 
 		binding.profileFacebook.setOnClickListener {
