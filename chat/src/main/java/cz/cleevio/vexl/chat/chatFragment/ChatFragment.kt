@@ -34,7 +34,6 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	}
 
 	override fun initView() {
-
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(top = insets.top, bottom = insets.bottomWithIME)
 		}
@@ -84,7 +83,6 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				)
 			)
 		}
-
 	}
 
 	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
