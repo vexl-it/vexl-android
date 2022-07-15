@@ -140,7 +140,6 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		}
 
 		binding.priceChartPeriodRadiogroup.setOnCheckedChangeListener { _, id ->
-			//updatePercentageData(id)
 			showLoading(true)
 			onPriceChartPeriodClicked?.invoke(
 				when (id) {
@@ -235,7 +234,7 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		binding.packedGroup.isVisible = packed
 		binding.unpackedGroup.isVisible = !packed
 		if (packed) {
-			binding.progress.isVisible = false
+			binding.chartProgress.isVisible = false
 		}
 		updateModifyingCellsVisibility()
 		val textColor =
@@ -279,12 +278,14 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	private fun showLoading(isVisible: Boolean) {
 		if (!packed && !isVisible) {
 			binding.largeChart.isVisible = true
+			binding.chartProgress.isVisible = false
 		} else if (!packed && isVisible) {
 			binding.largeChart.isInvisible = true
+			binding.chartProgress.isVisible = true
 		} else {
 			binding.largeChart.isVisible = false
+			binding.chartProgress.isVisible = false
 		}
-		binding.progress.isVisible = isVisible
 	}
 
 	companion object {
