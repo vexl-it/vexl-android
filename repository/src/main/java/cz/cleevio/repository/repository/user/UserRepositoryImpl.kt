@@ -78,7 +78,6 @@ class UserRepositoryImpl constructor(
 	override suspend fun createUser(user: User) {
 		userDao.insert(
 			UserEntity(
-				extId = user.extId,
 				username = user.username,
 				avatar = user.avatar,
 				publicKey = user.publicKey
@@ -90,7 +89,6 @@ class UserRepositoryImpl constructor(
 		userDao.update(
 			UserEntity(
 				id = user.id ?: 1,
-				extId = user.extId,
 				username = user.username,
 				avatar = user.avatar,
 				publicKey = user.publicKey,

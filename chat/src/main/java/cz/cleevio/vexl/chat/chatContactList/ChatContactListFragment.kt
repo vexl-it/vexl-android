@@ -1,8 +1,8 @@
 package cz.cleevio.vexl.chat.chatContactList
 
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import cz.cleevio.core.utils.repeatScopeOnResume
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
@@ -29,6 +29,11 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 			}
 		}
 		repeatScopeOnStart {
+			viewModel.showRefreshIndicator.collect { shouldShow ->
+				binding.progress.isVisible = shouldShow
+			}
+		}
+		repeatScopeOnStart {
 			priceChartViewModel.currentCryptoCurrencyPrice.collect { currentCryptoCurrencyPrice ->
 				binding.priceChart.setupCryptoCurrencies(currentCryptoCurrencyPrice)
 			}
@@ -43,10 +48,6 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 					}
 				)
 			}
-		}
-		repeatScopeOnResume {
-			viewModel.refreshChats()
-			viewModel.refreshChatRequests()
 		}
 	}
 
@@ -89,5 +90,12 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 				}
 			}
 		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+
+		viewModel.refreshChats()
+		viewModel.refreshChatRequests()
 	}
 }
