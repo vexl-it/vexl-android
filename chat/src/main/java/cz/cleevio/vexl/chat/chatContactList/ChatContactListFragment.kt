@@ -3,28 +3,32 @@ package cz.cleevio.vexl.chat.chatContactList
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.base.BaseGraphFragment
+import cz.cleevio.core.utils.repeatScopeOnResume
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.core.widget.CurrencyPriceChartViewModel
+import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatContactListBinding
-import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list) {
+class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact_list) {
 
 	private val binding by viewBinding(FragmentChatContactListBinding::bind)
-	override val viewModel by viewModel<ChatContactListViewModel>()
-	private val priceChartViewModel by viewModel<CurrencyPriceChartViewModel>()
+	private val chatContactListViewModel by viewModel<ChatContactListViewModel>()
+
+	override var priceChartWidget: CurrencyPriceChartWidget? = null
 
 	lateinit var adapter: ChatContactListAdapter
 
 	override fun bindObservers() {
+		super.bindObservers()
+
 		repeatScopeOnStart {
-			viewModel.usersChattedWith.collect { offers ->
+			chatContactListViewModel.usersChattedWith.collect { offers ->
 				adapter.submitList(offers)
 			}
 		}
@@ -34,12 +38,7 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 			}
 		}
 		repeatScopeOnStart {
-			priceChartViewModel.currentCryptoCurrencyPrice.collect { currentCryptoCurrencyPrice ->
-				binding.priceChart.setupCryptoCurrencies(currentCryptoCurrencyPrice)
-			}
-		}
-		repeatScopeOnStart {
-			viewModel.usersRequestingChat.collect { messages ->
+			chatContactListViewModel.usersRequestingChat.collect { messages ->
 				binding.newRequestsBtn.setImageResource(
 					if (messages.isNotEmpty()) {
 						R.drawable.ic_users_notification_on
@@ -52,7 +51,9 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 	}
 
 	override fun initView() {
+		priceChartWidget = binding.priceChart
 
+		super.initView()
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(top = insets.top)
 			binding.chatsWrapper.updatePadding(bottom = insets.bottom)
@@ -81,12 +82,12 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 
 		binding.chatTypeRadiogroup.setOnCheckedChangeListener { _, id ->
 			when (id) {
-				R.id.all_radio -> viewModel.filter(ChatContactListViewModel.FilterType.ALL)
-				R.id.buyers_radio -> viewModel.filter(ChatContactListViewModel.FilterType.BUYERS)
-				R.id.sellers_radio -> viewModel.filter(ChatContactListViewModel.FilterType.SELLERS)
+				R.id.all_radio -> chatContactListViewModel.filter(ChatContactListViewModel.FilterType.ALL)
+				R.id.buyers_radio -> chatContactListViewModel.filter(ChatContactListViewModel.FilterType.BUYERS)
+				R.id.sellers_radio -> chatContactListViewModel.filter(ChatContactListViewModel.FilterType.SELLERS)
 				else -> {
 					Timber.e("Unknown chat filter ID! '$id'")
-					viewModel.filter(ChatContactListViewModel.FilterType.ALL)
+					chatContactListViewModel.filter(ChatContactListViewModel.FilterType.ALL)
 				}
 			}
 		}
@@ -95,7 +96,7 @@ class ChatContactListFragment : BaseFragment(R.layout.fragment_chat_contact_list
 	override fun onResume() {
 		super.onResume()
 
-		viewModel.refreshChats()
-		viewModel.refreshChatRequests()
+		chatContactListViewModel.refreshChats()
+		chatContactListViewModel.refreshChatRequests()
 	}
 }
