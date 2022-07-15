@@ -25,11 +25,16 @@ class ChatContactListViewModel constructor(
 	private val _usersChattedWith = MutableStateFlow<List<ChatListUser>>(emptyList())
 	val usersChattedWith = _usersChattedWith.asStateFlow()
 
+	private val _showRefreshIndicator = MutableStateFlow<Boolean>(false)
+	val showRefreshIndicator = _showRefreshIndicator.asStateFlow()
+
 	fun refreshChats() {
 		viewModelScope.launch(Dispatchers.IO) {
+			_showRefreshIndicator.emit(true)
 			val data = chatRepository.loadChatUsers()
 			usersChattedWithList = data
 			emitUsers()
+			_showRefreshIndicator.emit(false)
 		}
 	}
 

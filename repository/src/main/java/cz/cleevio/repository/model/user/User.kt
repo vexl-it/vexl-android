@@ -8,7 +8,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User constructor(
 	val id: Long?,
-	val extId: Long,
 	val username: String,
 	val avatar: String,
 	val publicKey: String,
@@ -17,7 +16,6 @@ data class User constructor(
 
 fun UserResponse.fromNetwork() = User(
 	id = null,
-	extId = userId,
 	username = username,
 	avatar = avatar,
 	publicKey = publicKey,
@@ -26,7 +24,6 @@ fun UserResponse.fromNetwork() = User(
 
 fun UserEntity.fromDao() = User(
 	id = id,
-	extId = extId,
 	username = username,
 	avatar = avatar,
 	publicKey = publicKey,

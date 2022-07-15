@@ -12,12 +12,11 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="8dp"
-		android:layout_marginEnd="116dp"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="0"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintWidth_max="wrap"
+		app:layout_constraintWidth_percent="0.8"
 		tools:text="This is message from request. Bla bla buy some Bitcoins but first you must reveal identity!"
 		tools:visibility="gone" />
 
@@ -26,12 +25,12 @@
 		style="@style/Widget.Cleevio.Chat.SentMessage"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="74dp"
 		android:layout_marginEnd="8dp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintWidth_max="wrap"
+		app:layout_constraintWidth_percent="0.8"
 		tools:text="Lorem ipsum dolor sit amet amet. asd aasdsDASDASDASDASDASasasd"
 		tools:visibility="visible" />
 
