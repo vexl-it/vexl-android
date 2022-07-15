@@ -55,9 +55,7 @@ class CurrencyPriceChartViewModel constructor(
 				currency = encryptedPreferenceRepository.selectedCurrency
 			)
 			response.data?.let { marketRates ->
-				var x = -1f
 				val entries = marketRates.entries.map { entries ->
-					x++
 					Entry(
 						entries[0].toFloat(),
 						entries[1].toFloat()

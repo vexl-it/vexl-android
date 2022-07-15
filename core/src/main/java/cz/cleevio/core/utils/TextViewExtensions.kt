@@ -1,7 +1,11 @@
 package cz.cleevio.core.utils
 
+import android.content.Context
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import cz.cleevio.core.R
 
 fun TextView.setIcons(
 	starIcon: Int?,
@@ -15,4 +19,17 @@ fun TextView.setIcons(
 		endIcon?.let { ContextCompat.getDrawable(context, it) },
 		bottomIcon?.let { ContextCompat.getDrawable(context, it) }
 	)
+}
+
+fun animateTextChange(context: Context, textView: TextView, animationId: Int, newText: String) : Animation {
+	val animation = AnimationUtils.loadAnimation(context, animationId)
+	animation.setAnimationListener(object : Animation.AnimationListener {
+		override fun onAnimationStart(animation: Animation?) {
+			textView.text = newText
+		}
+		override fun onAnimationEnd(animation: Animation?) {}
+		override fun onAnimationRepeat(animation: Animation?) {}
+	})
+
+	return animation
 }
