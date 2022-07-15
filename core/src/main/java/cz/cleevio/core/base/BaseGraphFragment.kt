@@ -7,11 +7,12 @@ import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import lightbase.core.baseClasses.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 abstract class BaseGraphFragment(fragment: Int) : BaseFragment(fragment) {
 
-	override val viewModel by viewModel<CurrencyPriceChartViewModel>()
+	override val viewModel by sharedViewModel<CurrencyPriceChartViewModel>()
 
 	// Always initialize chart widget in implementing Fragment
 	abstract var priceChartWidget: CurrencyPriceChartWidget?
