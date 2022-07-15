@@ -179,7 +179,7 @@ class ChatRepositoryImpl constructor(
 				//save messages to DB
 				doOnSuccess = { messages ->
 					messages?.map { it.toCache() }?.let {
-						chatMessageDao.insertAll(it)
+						chatMessageDao.replaceAll(it)
 					}
 
 					//special handling for DELETE_CHAT
