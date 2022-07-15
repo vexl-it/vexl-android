@@ -2,8 +2,6 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
@@ -68,6 +66,7 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		updateChartData()
 	}
 
+	@Suppress("MagicNumber")
 	fun setupTimeRange(dateTimeRange: DateTimeRange?) {
 		val numberOfDatesOnTimeline = if (dateTimeRange == DateTimeRange.WEEK) 7 else 5
 		val dates = getDateIntervals(numberOfDatesOnTimeline, getChartTimeRange(dateTimeRange))
@@ -112,9 +111,9 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 		// first == from, second == to
 		return (0 until numberOfDates).map {
-			rangeInLong.first + (it * step)
+			rangeInLong.first + it * step
 		}.map {
-			Date(it * 1000L)
+			Date(it * MILLIS_FORMATTER)
 		}
 	}
 
@@ -257,10 +256,20 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 			binding.suffixCurrency.isVisible = false
 
 			binding.prefixCurrency.setTextColor(textColor)
-			binding.prefixCurrency.text = if (currency == Currency.EUR) resources.getString(R.string.general_eur_sign) else resources.getString(R.string.general_usd_sign)
+			binding.prefixCurrency.text =
+				if (currency == Currency.EUR) {
+					resources.getString(R.string.general_eur_sign)
+				} else {
+					resources.getString(R.string.general_usd_sign)
+				}
 		}
 
-		binding.currencyName.text = if (cryptoCurrency == CryptoCurrency.BITCOIN) resources.getString(R.string.marketplace_currency_bitcoin) else ""
+		binding.currencyName.text =
+			if (cryptoCurrency == CryptoCurrency.BITCOIN) {
+				resources.getString(R.string.marketplace_currency_bitcoin)
+			} else {
+				""
+			}
 	}
 
 	private fun updateModifyingCellsVisibility() {
@@ -276,5 +285,9 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 			binding.largeChart.isVisible = false
 		}
 		binding.progress.isVisible = isVisible
+	}
+
+	companion object {
+		private const val MILLIS_FORMATTER = 1000L
 	}
 }

@@ -44,9 +44,9 @@ class MarketChartUtils constructor(
 		chartView.highlightValues(emptyArray())
 
 		val lineDataSet = LineDataSet(marketChartData.entries, "Label").apply {
-			lineWidth = 2f
-			valueTextSize = 12f
-			cubicIntensity = 0.1f
+			lineWidth = LINE_WIDTH
+			valueTextSize = VALUE_TEXT_SIZE
+			cubicIntensity = CUBIC_INTENSITY
 			mode = LineDataSet.Mode.CUBIC_BEZIER
 			highLightColor = ContextCompat.getColor(context, R.color.yellow)
 			color = ContextCompat.getColor(context, graphLineColor ?: R.color.yellow)
@@ -106,5 +106,8 @@ class MarketChartUtils constructor(
 		private const val MAX_VISIBLE_VALUE = 500
 		private const val VIEW_PORT_OFFSET = 16
 		private const val VERTICAL_VIEW_PORT_OFFSET = 20
+		private const val LINE_WIDTH = 2f
+		private const val VALUE_TEXT_SIZE = 2f
+		private const val CUBIC_INTENSITY = 0.1f
 	}
 }

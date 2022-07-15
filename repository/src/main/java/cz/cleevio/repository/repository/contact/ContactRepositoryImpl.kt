@@ -38,6 +38,7 @@ class ContactRepositoryImpl constructor(
 	override fun getFacebookContacts(): List<FacebookContact> = contactDao
 		.getAllFacebookContacts().map { it.fbContactFromDao() }
 
+	@Suppress("NestedBlockDepth")
 	override suspend fun syncContacts(contentResolver: ContentResolver): Resource<List<Contact>> {
 		Timber.tag("ContactSync").d("Starting contact synchronization")
 		val contactList: ArrayList<Contact> = ArrayList()

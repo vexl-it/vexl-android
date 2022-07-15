@@ -2,6 +2,7 @@ package cz.cleevio.core.utils
 
 private const val HOUR_IN_SECONDS = 3_600L
 private const val DAY_IN_SECONDS = 86_400L
+private const val MILLIS_FORMATTER = 1000L
 
 private const val DAYS_IN_WEEK = 7
 private const val DAYS_IN_MONTH = 30
@@ -21,7 +22,7 @@ enum class DateTimeRange {
 
 fun getChartTimeRange(dateTimeRange: DateTimeRange?): Pair<String, String> {
 	dateTimeRange?.let {
-		val nowInSeconds = System.currentTimeMillis() / 1000
+		val nowInSeconds = System.currentTimeMillis() / MILLIS_FORMATTER
 
 		val timeInterval: Long = when (dateTimeRange) {
 			DateTimeRange.HOUR -> HOUR_IN_SECONDS
@@ -33,7 +34,7 @@ fun getChartTimeRange(dateTimeRange: DateTimeRange?): Pair<String, String> {
 			DateTimeRange.YEAR -> DAY_IN_SECONDS * DAYS_IN_YEAR
 		}
 
-		val fromDate = (nowInSeconds - timeInterval)
+		val fromDate = nowInSeconds - timeInterval
 
 		return Pair(fromDate.toString(), nowInSeconds.toString())
 	} ?: return Pair("0", "0")

@@ -91,12 +91,9 @@ class CurrencyPriceChartViewModel constructor(
 				cryptoCurrencyRepository.getCryptocurrencyPrice(
 					crypto = encryptedPreferenceRepository.selectedCryptoCurrency
 				)
-			when (response.status) {
-				is Status.Success -> response.data?.let { data ->
+			if (response.status is Status.Success) {
+				response.data?.let { data ->
 					_currentCryptoCurrencyPrice.emit(data)
-				}
-				else -> {
-					// Do nothing
 				}
 			}
 		}

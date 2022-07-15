@@ -19,6 +19,7 @@ import java.net.UnknownHostException
 
 const val SUB_CODE_NO_BODY = -1
 
+@Suppress("NestedBlockDepth")
 suspend fun <E, O> tryOnline(
 	doOnSuccess: suspend ((O?) -> Unit) = {},
 	doOnError: suspend ((Int, Int?) -> ErrorIdentification?) = { _, _ -> null },

@@ -11,9 +11,10 @@ enum class CryptoCurrency {
 		}
 
 		fun String.mapStringToCryptoCurrency(): CryptoCurrency {
-			return when (this) {
-				"bitcoin" -> BITCOIN
-				else -> BITCOIN
+			return if (this == "bitcoin") {
+				BITCOIN
+			} else {
+				BITCOIN
 			}
 		}
 	}
