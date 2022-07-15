@@ -4,7 +4,6 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.base.BaseGraphFragment
-import cz.cleevio.core.utils.repeatScopeOnResume
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
@@ -33,7 +32,7 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 			}
 		}
 		repeatScopeOnStart {
-			viewModel.showRefreshIndicator.collect { shouldShow ->
+			chatContactListViewModel.showRefreshIndicator.collect { shouldShow ->
 				binding.progress.isVisible = shouldShow
 			}
 		}
