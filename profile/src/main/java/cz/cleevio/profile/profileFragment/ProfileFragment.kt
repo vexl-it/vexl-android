@@ -3,8 +3,11 @@ package cz.cleevio.profile.profileFragment
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import coil.load
+import cz.cleevio.core.base.BaseGraphFragment
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentProfileBinding
 import lightbase.core.baseClasses.BaseFragment
@@ -12,13 +15,17 @@ import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
-	override val viewModel by viewModel<ProfileViewModel>()
+class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
+
+	private val profileViewModel by viewModel<ProfileViewModel>()
 	private val binding by viewBinding(FragmentProfileBinding::bind)
 
+	override var priceChartWidget: CurrencyPriceChartWidget? = null
+
 	override fun bindObservers() {
+		super.bindObservers()
 		repeatScopeOnStart {
-			viewModel.userFlow.collect {
+			profileViewModel.userFlow.collect {
 				it?.let { user ->
 					binding.profileUserName.text = user.username
 					//todo: this should convert from base64 to bitmap
@@ -33,7 +40,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 		}
 
 		repeatScopeOnStart {
-			viewModel.contactsNumber.collect {
+			profileViewModel.contactsNumber.collect {
 				binding.profileContacts.setSubtitle(
 					getString(R.string.profile_import_contacts_subtitle, it.toString())
 				)
@@ -42,6 +49,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 	}
 
 	override fun initView() {
+		priceChartWidget = binding.priceChart
+
+		super.initView()
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
@@ -81,7 +91,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
 		binding.profileLogout.setOnClickListener {
 			Timber.tag("ASDX").d("Logout clicked")
-			viewModel.logout {
+			profileViewModel.logout {
 				//todo: move to onboarding?
 				Timber.tag("ASDX").d("Logout successful")
 			}
