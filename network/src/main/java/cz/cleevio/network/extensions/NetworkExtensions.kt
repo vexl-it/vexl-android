@@ -40,22 +40,31 @@ suspend fun <E, O> tryOnline(
 			doOnSuccess(mappedResponse.data)
 			mappedResponse
 		} else {
-			val subcode = try {
+			val baseResponse = try {
 				response.errorBody()
 					?.source()
 					?.let {
 						BaseResponseJsonAdapter(
 							moshi = Moshi.Builder().build()
 						).fromJson(it)
-							?.code
-							?.toIntOrNull()
 					}
 				//fixme: hack to prevent crash in case of missing response body
 			} catch (e: EOFException) {
 				//return some constant that means error, fixme: BE is supposed to check why there is no body
 				null
 			}
-			val resource = Resource.error<O>(code = response.code(), subcode = subcode)
+
+			val firstMessage = baseResponse?.message?.firstOrNull()
+			val resource = if (firstMessage != null) {
+				Resource.error<O>(
+					errorIdentification = ErrorIdentification.StringMessageError(stringMessage = firstMessage)
+				)
+			} else {
+				val subcode = baseResponse?.code
+					?.toIntOrNull()
+				Resource.error<O>(code = response.code(), subcode = subcode)
+			}
+
 			error = doOnError(response.code(), resource.errorIdentification.subcode) ?: resource.errorIdentification
 			resource
 		}

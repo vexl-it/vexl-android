@@ -98,6 +98,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				errorFlow.error.collect { error ->
+					error?.stringMessage?.let { message ->
+						showSnackbar(
+							view = binding.container,
+							message = message
+						)
+					}
+
 					error?.message?.let { messageCode ->
 						if (messageCode != -1) {
 							showSnackbar(

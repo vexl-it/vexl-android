@@ -5,7 +5,9 @@ import cz.cleevio.network.R
 sealed class ErrorIdentification constructor(
 	val code: Int = CODE_UNKNOWN,
 	val subcode: Int? = null,
-	val message: Int? = null
+	val message: Int? = null,
+	//fixme: hack until we have all BE errors in translation sheet
+	val stringMessage: String? = null
 ) {
 	object None : ErrorIdentification()
 	object Unauthorized : ErrorIdentification(code = CODE_UNAUTHORIZED, message = R.string.error_unauthorized)
@@ -27,6 +29,18 @@ sealed class ErrorIdentification constructor(
 		code,
 		subcode,
 		message
+	)
+
+	class StringMessageError constructor(
+		code: Int = CODE_UNKNOWN,
+		subcode: Int? = CODE_UNKNOWN,
+		message: Int? = CODE_UNKNOWN,
+		stringMessage: String
+	) : ErrorIdentification(
+		code,
+		subcode,
+		message,
+		stringMessage = stringMessage
 	)
 
 	override fun toString(): String =
