@@ -104,6 +104,7 @@ class CurrencyPriceChartViewModel constructor(
 		}
 	}
 
+	@Suppress("MagicNumber", "UnderscoresInNumericLiterals")
 	private fun getMockedMarketResponse(): List<List<Double>> {
 		val firstDataList: List<List<Double>> = listOf(
 			listOf(1657801227342.0, 19752.917470136545),
@@ -1053,7 +1054,6 @@ class CurrencyPriceChartViewModel constructor(
 		)
 		return listOf(firstDataList, secondDataList, thirdDataList).random()
 	}
-
 
 	companion object {
 		private val DEFAULT_TIME_RANGE = DateTimeRange.DAY
