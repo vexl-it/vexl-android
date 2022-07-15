@@ -2,6 +2,8 @@
 <resources>
 
     <!-- General -->
+    <string name="general_eur_sign">€</string>
+    <string name="general_usd_sign">$</string>
     <string name="general_continue">Continue</string>
     <string name="general_more">More</string>
     <string name="general_close">Close</string>
@@ -38,9 +40,9 @@
     <string name="import_contacts_title">Looking cute,\nlet’s find you some friends.</string>
     <string name="import_contacts_subtitle">vexl doesn’t see your contacts</string>
     <string name="import_contacts_request_title">Allow contacts</string>
-	<string name="import_contacts_request_description">Vexl needs access to your contacts in order to work. Don\'t worry we won’t ever see them</string>
+    <string name="import_contacts_request_description">Vexl needs access to your contacts in order to work. Don\'t worry we won’t ever see them</string>
     <string name="import_contacts_secondary_request_title">Really?</string>
-	<string name="import_contacts_secondary_request_description">Vexl only works by anonymously using your contacts to connect you with other users.</string>
+    <string name="import_contacts_secondary_request_description">Vexl only works by anonymously using your contacts to connect you with other users.</string>
     <string name="import_facebook_contacts_title">Expand your network with Facebook</string>
     <string name="import_facebook_contacts_import">Import Facebook contacts</string>
     <string name="import_contacts_finish_title">Setting everything up...</string>
@@ -56,7 +58,7 @@
     <string name="profile_edit_name">Edit name</string>
     <string name="profile_pin">Set PIN / FaceID</string>
     <string name="profile_allow_screenshots">Allow Screenshots</string>
-	<string name="profile_allow_screenshots_description">Block screenshots</string>
+    <string name="profile_allow_screenshots_description">Block screenshots</string>
     <string name="profile_import_contacts">Contacts Imported</string>
     <string name="profile_import_contacts_subtitle">%s friends</string>
     <string name="profile_import_facebook">Import Facebook</string>
@@ -90,12 +92,12 @@
 
     <!-- Marketplace -->
     <string name="marketplace_currency_bitcoin">Bitcoin</string>
-    <string name="marketplace_currency_variation_1_day">%1$s %% today</string>
-    <string name="marketplace_currency_variation_1_week">%1$s %% last week</string>
-    <string name="marketplace_currency_variation_1_month">%1$s %% last month</string>
-    <string name="marketplace_currency_variation_3_month">%1$s %% 3 months ago</string>
-    <string name="marketplace_currency_variation_6_month">%1$s %% 6 months ago</string>
-    <string name="marketplace_currency_variation_1_year">%1$s %% last year</string>
+    <string name="marketplace_currency_variation_1_day">%1$s%% today</string>
+    <string name="marketplace_currency_variation_1_week">%1$s%% last week</string>
+    <string name="marketplace_currency_variation_1_month">%1$s%% last month</string>
+    <string name="marketplace_currency_variation_3_month">%1$s%% 3 months ago</string>
+    <string name="marketplace_currency_variation_6_month">%1$s%% 6 months ago</string>
+    <string name="marketplace_currency_variation_1_year">%1$s%% last year</string>
     <string name="marketplace_currency_1_day">1 day</string>
     <string name="marketplace_currency_1_week">1 week</string>
     <string name="marketplace_currency_1_month">1 mth</string>
@@ -108,48 +110,48 @@
     <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of Friend</string>
     <string name="marketplace_detail_user_sell">%s is selling</string>
-	<string name="marketplace_detail_user_buy">%s is buying</string>
-	<string name="marketplace_detail_up_to">Up to</string>
-	<string name="marketplace_detail_payment">Payment</string>
-	<string name="marketplace_detail_fee">Includes %1$s %% fee for transaction</string>
-	<string name="offer_request">Request</string>
-	<string name="offer_requested">Requested</string>
-	<string name="offer_edit_sell_title">My Sell Offers</string>
-	<string name="offer_edit_buy_title">My Buy Offers</string>
-	<string name="offer_create_sell_title">New Sell Offer</string>
-	<string name="offer_create_buy_title">New Buy Offer</string>
-	<string name="offer_to_sell">To sell</string>
-	<string name="offer_to_buy">To buy</string>
-	<string name="offer_active_count">%s active offers</string>
-	<string name="offer_sort_newest">Sorted by newest</string>
-	<string name="offer_sort_oldest">Sorted by oldest</string>
-	<string name="offer_my_offer">My offer</string>
-	<string name="offer_edit">Edit offer</string>
-	<string name="offer_added">Added %s</string>
+    <string name="marketplace_detail_user_buy">%s is buying</string>
+    <string name="marketplace_detail_up_to">Up to</string>
+    <string name="marketplace_detail_payment">Payment</string>
+    <string name="marketplace_detail_fee">Includes %1$s %% fee for transaction</string>
+    <string name="offer_request">Request</string>
+    <string name="offer_requested">Requested</string>
+    <string name="offer_edit_sell_title">My Sell Offers</string>
+    <string name="offer_edit_buy_title">My Buy Offers</string>
+    <string name="offer_create_sell_title">New Sell Offer</string>
+    <string name="offer_create_buy_title">New Buy Offer</string>
+    <string name="offer_to_sell">To sell</string>
+    <string name="offer_to_buy">To buy</string>
+    <string name="offer_active_count">%s active offers</string>
+    <string name="offer_sort_newest">Sorted by newest</string>
+    <string name="offer_sort_oldest">Sorted by oldest</string>
+    <string name="offer_my_offer">My offer</string>
+    <string name="offer_edit">Edit offer</string>
+    <string name="offer_added">Added %s</string>
 
-	<!-- Filters -->
-	<string name="filter_title">Filter</string>
-	<string name="filter_apply">Apply filter</string>
-	<string name="filter_offers">Filter offers</string>
-	<string name="widget_fee_without">Without fee</string>
-	<string name="widget_fee_ok">With fee</string>
-	<string name="widget_fee_percent">%s%%</string>
-	<string name="widget_location_online">Online OK</string>
-	<string name="widget_location_in_person">Only in person</string>
-	<string name="widget_trigger_price_title">Active when price is</string>
-	<string name="widget_trigger_title">Triggers</string>
-	<string name="widget_trigger_price_below">Below</string>
-	<string name="widget_trigger_price_above">Above</string>
-	<string name="widget_trigger_price_curr_crypto_price">currently 1 BTC = $%f</string>
-	<string name="widget_trigger_delete_title">Delete offer after</string>
-	<string name="widget_trigger_delete_timeframe">Timeframe</string>
-	<string name="widget_trigger_delete_days">Days</string>
-	<string name="widget_trigger_delete_weeks">Weeks</string>
-	<string name="widget_trigger_delete_months">Months</string>
-	<string name="widget_offer_state_pause">Pause</string>
-	<string name="widget_offer_state_activate">Activate</string>
-	<string name="widget_offer_state_delete">Delete</string>
-	<string name="widget_offer_state_active">Active</string>
+    <!-- Filters -->
+    <string name="filter_title">Filter</string>
+    <string name="filter_apply">Apply filter</string>
+    <string name="filter_offers">Filter offers</string>
+    <string name="widget_fee_without">Without fee</string>
+    <string name="widget_fee_ok">With fee</string>
+    <string name="widget_fee_percent">%s%%</string>
+    <string name="widget_location_online">Online OK</string>
+    <string name="widget_location_in_person">Only in person</string>
+    <string name="widget_trigger_price_title">Active when price is</string>
+    <string name="widget_trigger_title">Triggers</string>
+    <string name="widget_trigger_price_below">Below</string>
+    <string name="widget_trigger_price_above">Above</string>
+    <string name="widget_trigger_price_curr_crypto_price">currently 1 BTC = $%f</string>
+    <string name="widget_trigger_delete_title">Delete offer after</string>
+    <string name="widget_trigger_delete_timeframe">Timeframe</string>
+    <string name="widget_trigger_delete_days">Days</string>
+    <string name="widget_trigger_delete_weeks">Weeks</string>
+    <string name="widget_trigger_delete_months">Months</string>
+    <string name="widget_offer_state_pause">Pause</string>
+    <string name="widget_offer_state_activate">Activate</string>
+    <string name="widget_offer_state_delete">Delete</string>
+    <string name="widget_offer_state_active">Active</string>
     <string name="widget_offer_state_inactive">Inactive</string>
     <string name="filter_amount_title">Amount</string>
     <string name="filter_location_title">Location</string>
@@ -161,7 +163,7 @@
     <string name="widget_friend_first_degree">1st degree</string>
     <string name="widget_friend_second_degree">2nd degree</string>
     <string name="filter_friend_level_description">Trade with your friends only. \nOr with friends of your friends.</string>
-	<string name="widget_btc_network_lighting">Lightning</string>
+    <string name="widget_btc_network_lighting">Lightning</string>
     <string name="widget_btc_network_on_chain">On Chain</string>
     <string name="widget_offer_description">Description</string>
     <string name="widget_offer_description_hint">Enter offer description</string>
@@ -175,7 +177,7 @@
     <string name="offer_update_buy_btn">Update buy offer</string>
     <string name="widget_location_km"> +- %d km</string>
     <string name="widget_location_hint">City</string>
-	<string name="create_create_offer">Create offer</string>
+    <string name="create_create_offer">Create offer</string>
 
     <!-- Offer Request -->
     <string name="request_title">Offer</string>
@@ -200,28 +202,29 @@
     <string name="chat_btns_reveal_identity">Reveal Identity</string>
     <string name="chat_btns_my_offer">My Offer</string>
     <string name="chat_btns_common_friends">Common Friends</string>
-	<string name="chat_common_friends_facebook_contact">Via Facebook</string>
+    <string name="chat_common_friends_facebook_contact">Via Facebook</string>
     <string name="chat_btns_delete_chat">Delete Chat</string>
     <string name="chat_btns_block_user">Block User</string>
     <string name="chat_message_input_placeholder">Type something</string>
     <string name="chat_delete_chat_title">Delete chat?</string>
-	<string name="chat_delete_chat_description">Are you done trading? Closing chat means that you are finished with the trade. Closing the chat deletes all chat history. </string>
+    <string name="chat_delete_chat_description">Are you done trading? Closing chat means that you are finished with the trade. Closing the chat deletes all chat history. </string>
     <string name="chat_delete_chat_back">Back</string>
     <string name="chat_delete_chat_delete">Delete Chat</string>
     <string name="chat_delete_chat_confirm_title">You sure?</string>
-	<string name="chat_delete_chat_confirm_description">This action is permament. Are you sure you wish to delete the chat?</string>
+    <string name="chat_delete_chat_confirm_description">This action is permament. Are you sure you wish to delete the chat?</string>
     <string name="chat_delete_chat_confirm_back">Nope</string>
     <string name="chat_delete_chat_confirm_action">Yes, delete</string>
     <string name="chat_block_user_title">Block forever?</string>
-    <string name="chat_block_user_description">Do you really want to block this user? You will never be able to undo this action. Choose wisley.</string>
+    <string name="chat_block_user_description">Do you really want to block this user? You will never be able to undo this action. Choose wisely.</string>
     <string name="chat_block_user_back">Nope</string>
     <string name="chat_block_user_block">Yes, block</string>
     <string name="chat_block_user_confirm_title">You sure?</string>
-    <string name="chat_block_user_confirm_description">Do you really want to block this user? You will never be able to undo this action. Choose wisley.</string>
+    <string name="chat_block_user_confirm_description">Do you really want to block this user? You will never be able to undo this action. Choose wisely.</string>
     <string name="chat_block_user_confirm_nope">Nope</string>
     <string name="chat_block_user_confirm_action">Yes, block</string>
     <string name="chat_message_identity_request_title">Send reveal identity request</string>
     <string name="chat_message_identity_request_subtitle">By sending request you agree with revealing of your own identity too.</string>
     <string name="chat_message_identity_request_send">Send request</string>
     <string name="chat_message_identity_request_back">Back</string>
+    <string name="chat_identity_reveal_sent">Identity reveal request sent</string>
 </resources>

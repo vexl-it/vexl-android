@@ -4,15 +4,23 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
-import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.core.model.CryptoCurrency
+import cz.cleevio.core.model.Currency
+import cz.cleevio.core.model.MarketChartEntry
+import cz.cleevio.core.utils.*
+import cz.cleevio.core.utils.marketGraph.MarketChartUtils
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import timber.log.Timber
 import java.math.BigDecimal
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CurrencyPriceChartWidget @JvmOverloads constructor(
 	context: Context,
@@ -22,10 +30,105 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 	private lateinit var binding: WidgetCurrencyPriceChartBinding
 	private lateinit var currentCryptoCurrencyPrice: CryptoCurrencies
+	private var marketChartData: MarketChartEntry? = null
+	private var currency: Currency = Currency.USD
+	private var cryptoCurrency: CryptoCurrency = CryptoCurrency.BITCOIN
 	private var packed = true
+	private var dateTimeRange: DateTimeRange? = DateTimeRange.DAY
+
+	var onPriceChartPeriodClicked: ((DateTimeRange) -> Unit)? = null
+
+	private val graphUtils: MarketChartUtils by inject()
 
 	init {
 		setupUI()
+	}
+
+	fun setupCryptoCurrencies(currentCryptoCurrencyPrice: CryptoCurrencies) {
+		this.currentCryptoCurrencyPrice = currentCryptoCurrencyPrice
+		binding.currentPrice.text =
+			when (currency) {
+				Currency.CZK -> currentCryptoCurrencyPrice.priceCzk.formatAsPrice()
+				Currency.EUR -> currentCryptoCurrencyPrice.priceEur.formatAsPrice()
+				else -> currentCryptoCurrencyPrice.priceUsd.formatAsPrice()
+			}
+
+		updatePercentageData()
+	}
+
+	fun setupCurrencies(currency: Currency, cryptoCurrency: CryptoCurrency) {
+		this.currency = currency
+		this.cryptoCurrency = cryptoCurrency
+	}
+
+	fun setupMarketData(marketChartEntry: MarketChartEntry) {
+		this.marketChartData = marketChartEntry
+		updateChartData()
+	}
+
+	@Suppress("MagicNumber")
+	fun setupTimeRange(dateTimeRange: DateTimeRange?) {
+		val numberOfDatesOnTimeline = if (dateTimeRange == DateTimeRange.WEEK) 7 else 5
+		val dates = getDateIntervals(numberOfDatesOnTimeline, getChartTimeRange(dateTimeRange))
+
+		this.dateTimeRange = dateTimeRange
+		updateModifyingCellsVisibility()
+
+		val formattedDates = if (dateTimeRange == DateTimeRange.DAY) {
+			dates.map {
+				val format = SimpleDateFormat("hh:mm")
+				format.format(it)
+			}
+		} else {
+			dates.map {
+				val format = SimpleDateFormat("dd. LLL")
+				format.format(it)
+			}
+		}
+
+		if (formattedDates.size == 7) {
+			binding.firstDate.text = formattedDates[0]
+			binding.secondDate.text = formattedDates[1]
+			binding.thirdDate.text = formattedDates[2]
+			binding.forthDate.text = formattedDates[3]
+			binding.fifthDate.text = formattedDates[4]
+			binding.sixthDate.text = formattedDates[5]
+			binding.seventhDate.text = formattedDates[6]
+		} else if (formattedDates.size == 5) {
+			binding.firstDate.text = formattedDates[0]
+			binding.forthDate.text = formattedDates[1]
+			binding.fifthDate.text = formattedDates[2]
+			binding.sixthDate.text = formattedDates[3]
+			binding.seventhDate.text = formattedDates[4]
+		}
+
+		showLoading(false)
+	}
+
+	private fun getDateIntervals(numberOfDates: Int, timeRange: Pair<String, String>): List<Date> {
+		val rangeInLong = Pair(timeRange.first.toLong(), timeRange.second.toLong())
+		val step = (rangeInLong.second - rangeInLong.first) / numberOfDates
+
+		// first == from, second == to
+		return (0 until numberOfDates).map {
+			rangeInLong.first + it * step
+		}.map {
+			Date(it * MILLIS_FORMATTER)
+		}
+	}
+
+	private fun updateChartData() {
+		marketChartData?.let { data ->
+			graphUtils.handleChartData(
+				data,
+				binding.largeChart
+			)
+			graphUtils.handleChartData(
+				data,
+				binding.smallChart,
+				graphLineColor = R.color.yellow_darker
+			)
+		}
 	}
 
 	private fun setupUI() {
@@ -37,24 +140,36 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		}
 
 		binding.priceChartPeriodRadiogroup.setOnCheckedChangeListener { _, id ->
-			updateChartData(id)
+			//updatePercentageData(id)
+			showLoading(true)
+			onPriceChartPeriodClicked?.invoke(
+				when (id) {
+					R.id.period_1_day -> DateTimeRange.DAY
+					R.id.period_1_week -> DateTimeRange.WEEK
+					R.id.period_1_month -> DateTimeRange.MONTH
+					R.id.period_3_month -> DateTimeRange.THREE_MONTHS
+					R.id.period_6_month -> DateTimeRange.SIX_MONTHS
+					R.id.period_1_year -> DateTimeRange.YEAR
+					else -> {
+						DateTimeRange.DAY
+					}
+				}
+			)
 		}
 
 		packView(packed)
+		graphUtils.init(binding.largeChart, false, 0)
+		graphUtils.init(binding.smallChart, false, 0)
 	}
 
-	fun setupData(currentCryptoCurrencyPrice: CryptoCurrencies) {
-		this.currentCryptoCurrencyPrice = currentCryptoCurrencyPrice
-		binding.currentPrice.text = currentCryptoCurrencyPrice.priceUsd.toString()
-
-		updateChartData(binding.priceChartPeriodRadiogroup.checkedRadioButtonId)
-	}
-
-	private fun updateChartData(btnId: Int) {
+	private fun updatePercentageData(btnId: Int = binding.priceChartPeriodRadiogroup.checkedRadioButtonId) {
 		val priceChangePercentage = getValue(btnId)
 		val priceChangeText = getText(btnId, priceChangePercentage)
 
-		binding.cryptoChangePercentage.text = priceChangeText
+		binding.cryptoChangePercentage.startAnimation(
+			animateTextChange(context, binding.cryptoChangePercentage, R.anim.show_text_animation, priceChangeText)
+		)
+
 		val drawable = if (priceChangePercentage < BigDecimal.ZERO) {
 			ResourcesCompat.getDrawable(resources, R.drawable.ic_arrow_down, null)
 		} else {
@@ -115,8 +230,14 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	}
 
 	private fun packView(packed: Boolean) {
+		binding.cryptoChangePercentage.clearAnimation()
+
 		binding.packedGroup.isVisible = packed
 		binding.unpackedGroup.isVisible = !packed
+		if (packed) {
+			binding.progress.isVisible = false
+		}
+		updateModifyingCellsVisibility()
 		val textColor =
 			if (packed) {
 				resources.getColor(R.color.yellow_darker, null)
@@ -124,6 +245,49 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 				resources.getColor(R.color.yellow_100, null)
 			}
 		binding.currentPrice.setTextColor(textColor)
-		binding.currency.setTextColor(textColor)
+
+		if (currency == Currency.CZK) {
+			binding.prefixCurrency.isVisible = false
+			binding.suffixCurrency.isVisible = true
+
+			binding.suffixCurrency.setTextColor(textColor)
+		} else {
+			binding.prefixCurrency.isVisible = true
+			binding.suffixCurrency.isVisible = false
+
+			binding.prefixCurrency.setTextColor(textColor)
+			binding.prefixCurrency.text =
+				if (currency == Currency.EUR) {
+					resources.getString(R.string.general_eur_sign)
+				} else {
+					resources.getString(R.string.general_usd_sign)
+				}
+		}
+
+		binding.currencyName.text =
+			if (cryptoCurrency == CryptoCurrency.BITCOIN) {
+				resources.getString(R.string.marketplace_currency_bitcoin)
+			} else {
+				""
+			}
+	}
+
+	private fun updateModifyingCellsVisibility() {
+		binding.modifyingCells.isVisible = !packed && dateTimeRange == DateTimeRange.WEEK
+	}
+
+	private fun showLoading(isVisible: Boolean) {
+		if (!packed && !isVisible) {
+			binding.largeChart.isVisible = true
+		} else if (!packed && isVisible) {
+			binding.largeChart.isInvisible = true
+		} else {
+			binding.largeChart.isVisible = false
+		}
+		binding.progress.isVisible = isVisible
+	}
+
+	companion object {
+		private const val MILLIS_FORMATTER = 1000L
 	}
 }

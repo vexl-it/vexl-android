@@ -20,6 +20,7 @@ buildscript {
     ext.detekt_version = "1.19.0"
     ext.firebase_bom = "29.2.1"
     ext.flexbox_version = '3.0.0'
+    ext.mp_android_chart_version = 'v3.1.0'
 
     ext.desugar = '1.1.5'
 
@@ -89,6 +90,7 @@ allprojects {
                 header(HttpHeaderAuthentication)
             }
         }
+        maven { url 'https://jitpack.io' }
     }
 }
 

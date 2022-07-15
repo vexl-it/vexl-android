@@ -21,40 +21,52 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:visibility="gone"
-			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, chart_divider, price_chart_period_radiogroup"
+			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, chart_divider, price_chart_period_radiogroup,first_date,forth_date,fifth_date,sixth_date,seventh_date"
 			tools:visibility="visible" />
 
-		<ImageView
-			android:id="@+id/small_chart"
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/modifying_cells"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:src="@drawable/chart"
 			android:visibility="gone"
+			app:constraint_referenced_ids="second_date,third_date"
+			tools:visibility="visible" />
+
+		<com.github.mikephil.charting.charts.LineChart
+			android:id="@+id/small_chart"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
 			android:layout_marginStart="20dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="20dp"
+			android:layout_marginBottom="12dp"
+			android:src="@drawable/large_chart"
+			android:visibility="gone"
 			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/prefix_currency"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/currency_name"
+			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/marketplace_currency_bitcoin"
-			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
 			android:layout_marginStart="25dp"
 			android:layout_marginTop="15dp"
 			android:layout_marginBottom="1dp"
-			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toTopOf="@id/crypto_change_percentage"
-			app:layout_constraintStart_toStartOf="parent" />
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="@string/marketplace_currency_bitcoin" />
 
 		<TextView
 			android:id="@+id/crypto_change_percentage"
+			style="@style/TextAppearance.Vexl.DescriptionBold"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:drawableStart="@drawable/ic_arrow_up"
-			style="@style/TextAppearance.Vexl.DescriptionBold"
 			android:layout_marginStart="25dp"
+			android:drawableStart="@drawable/ic_arrow_up"
 			android:drawablePadding="4dp"
 			android:textColor="@color/yellow_100"
 			app:layout_constraintStart_toStartOf="parent"
@@ -62,21 +74,22 @@
 			tools:text="2.5% today" />
 
 		<TextView
-			android:id="@+id/currency"
+			android:id="@+id/prefix_currency"
 			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyCurrency"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="$"
 			android:layout_marginTop="15dp"
+			android:layout_marginEnd="2dp"
 			app:layout_constraintEnd_toStartOf="@id/current_price"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="$" />
 
 		<TextView
 			android:id="@+id/current_price"
 			style="@style/TextAppearance.Vexl.Heading6.GraphPrice"
-			android:layout_marginTop="15dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="15dp"
 			android:layout_marginEnd="24dp"
 			android:layout_marginBottom="13dp"
 			android:textColor="@color/yellow_100"
@@ -85,6 +98,17 @@
 			app:layout_constraintTop_toTopOf="parent"
 			tools:text="31241" />
 
+		<TextView
+			android:id="@+id/suffix_currency"
+			style="@style/Widget.Cleevio.Marketplace.TextView.CryptocurrencyCurrency"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="2dp"
+			android:layout_marginTop="15dp"
+			app:layout_constraintStart_toEndOf="@id/current_price"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="Kč" />
+
 		<androidx.constraintlayout.widget.Barrier
 			android:id="@+id/chart_barrier"
 			android:layout_width="wrap_content"
@@ -92,26 +116,133 @@
 			app:barrierDirection="bottom"
 			app:constraint_referenced_ids="current_price, crypto_change_percentage" />
 
-		<ImageView
+		<com.github.mikephil.charting.charts.LineChart
 			android:id="@+id/large_chart"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="30dp"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_margin="20dp"
 			android:src="@drawable/large_chart"
 			android:visibility="gone"
+			app:layout_constraintDimensionRatio="H,3:1"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/chart_barrier" />
+
+		<com.google.android.material.progressindicator.CircularProgressIndicator
+			android:id="@+id/progress"
+			android:layout_width="120dp"
+			android:layout_height="120dp"
+			android:layout_marginHorizontal="16dp"
+			android:indeterminate="true"
+			android:visibility="gone"
+			app:indicatorColor="@color/yellow_100"
+			app:showDelay="500"
+			app:layout_constraintTop_toTopOf="@id/large_chart"
+			app:layout_constraintBottom_toBottomOf="@id/large_chart"
+			app:layout_constraintStart_toStartOf="@id/large_chart"
+			app:layout_constraintEnd_toEndOf="@id/large_chart"
+			tools:visibility="visible" />
+
+		<TextView
+			android:id="@+id/first_date"
+			style="@style/TextAppearance.Vexl.DescriptionMicro"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="10dp"
+			android:paddingBottom="4dp"
+			android:textColor="@color/currency_radio_button_text_color_selector"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/large_chart"
+			tools:text="0:00" />
+
+		<TextView
+			android:id="@+id/second_date"
+			style="@style/TextAppearance.Vexl.DescriptionMicro"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:paddingBottom="4dp"
+			android:textColor="@color/currency_radio_button_text_color_selector"
+			app:layout_constraintEnd_toStartOf="@id/third_date"
+			app:layout_constraintStart_toEndOf="@id/first_date"
+			app:layout_constraintTop_toBottomOf="@id/large_chart"
+			tools:text="0:00" />
+
+		<TextView
+			android:id="@+id/third_date"
+			style="@style/TextAppearance.Vexl.DescriptionMicro"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:paddingBottom="4dp"
+			android:textColor="@color/currency_radio_button_text_color_selector"
+			app:layout_constraintEnd_toStartOf="@id/forth_date"
+			app:layout_constraintStart_toEndOf="@id/second_date"
+			app:layout_constraintTop_toBottomOf="@id/large_chart"
+			tools:text="0:00" />
+
+		<TextView
+			android:id="@+id/forth_date"
+			style="@style/TextAppearance.Vexl.DescriptionMicro"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:paddingBottom="4dp"
+			android:textColor="@color/currency_radio_button_text_color_selector"
+			app:layout_constraintEnd_toStartOf="@id/fifth_date"
+			app:layout_constraintStart_toEndOf="@id/third_date"
+			app:layout_constraintTop_toBottomOf="@id/large_chart"
+			tools:text="0:00" />
+
+		<TextView
+			android:id="@+id/fifth_date"
+			style="@style/TextAppearance.Vexl.DescriptionMicro"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:paddingBottom="4dp"
+			android:textColor="@color/currency_radio_button_text_color_selector"
+			app:layout_constraintEnd_toStartOf="@id/sixth_date"
+			app:layout_constraintStart_toEndOf="@id/forth_date"
+			app:layout_constraintTop_toBottomOf="@id/large_chart"
+			tools:text="0:00" />
+
+		<TextView
+			android:id="@+id/sixth_date"
+			style="@style/TextAppearance.Vexl.DescriptionMicro"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:paddingBottom="4dp"
+			android:textColor="@color/currency_radio_button_text_color_selector"
+			app:layout_constraintEnd_toStartOf="@id/seventh_date"
+			app:layout_constraintStart_toEndOf="@id/fifth_date"
+			app:layout_constraintTop_toBottomOf="@id/large_chart"
+			tools:text="0:00" />
+
+		<TextView
+			android:id="@+id/seventh_date"
+			style="@style/TextAppearance.Vexl.DescriptionMicro"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="16dp"
+			android:paddingBottom="4dp"
+			android:textColor="@color/currency_radio_button_text_color_selector"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/large_chart"
+			tools:text="0:00" />
 
 		<View
 			android:id="@+id/chart_divider"
 			style="@style/Widget.Cleevio.Marketplace.CurrencyHorizontalDivider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:layout_marginTop="12dp"
+			android:layout_marginVertical="8dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/large_chart" />
+			app:layout_constraintTop_toBottomOf="@id/first_date" />
 
 		<RadioGroup
 			android:id="@+id/price_chart_period_radiogroup"

@@ -15,7 +15,8 @@ val marketplaceModule = module {
 
 	viewModel {
 		CurrencyPriceChartViewModel(
-			cryptoCurrencyRepository = get()
+			cryptoCurrencyRepository = get(),
+			encryptedPreferenceRepository = get()
 		)
 	}
 

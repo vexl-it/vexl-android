@@ -55,7 +55,11 @@ fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
 	)
 }
 
-fun ChatMessageRequest.fromNetwork(recipientPublicKey: String, inboxPublicKey: String, senderPublicKey: String): ChatMessage {
+fun ChatMessageRequest.fromNetwork(
+	recipientPublicKey: String,
+	inboxPublicKey: String,
+	senderPublicKey: String
+): ChatMessage {
 	return ChatMessage(
 		uuid = this.uuid,
 		inboxPublicKey = inboxPublicKey,

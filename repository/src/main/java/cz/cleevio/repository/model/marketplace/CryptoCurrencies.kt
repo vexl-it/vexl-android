@@ -6,6 +6,8 @@ import java.time.ZonedDateTime
 
 data class CryptoCurrencies(
 	val priceUsd: BigDecimal,
+	val priceCzk: BigDecimal,
+	val priceEur: BigDecimal,
 	val priceChangePercentage24h: BigDecimal,
 	val priceChangePercentage7d: BigDecimal,
 	val priceChangePercentage14d: BigDecimal,
@@ -19,6 +21,8 @@ data class CryptoCurrencies(
 fun CryptoCurrenciesResponse.fromNetwork(): CryptoCurrencies {
 	return CryptoCurrencies(
 		priceUsd = this.priceUsd,
+		priceCzk = this.priceCzk,
+		priceEur = this.priceEur,
 		priceChangePercentage24h = this.priceChangePercentage24h,
 		priceChangePercentage7d = this.priceChangePercentage7d,
 		priceChangePercentage14d = this.priceChangePercentage14d,
