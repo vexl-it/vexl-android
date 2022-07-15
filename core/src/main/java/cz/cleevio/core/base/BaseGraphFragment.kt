@@ -8,7 +8,6 @@ import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 abstract class BaseGraphFragment(fragment: Int) : BaseFragment(fragment) {
 
