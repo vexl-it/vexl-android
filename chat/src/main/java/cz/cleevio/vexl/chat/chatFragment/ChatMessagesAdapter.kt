@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
+import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealBinding
 
 class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
 	override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.uuid == newItem.uuid
@@ -26,7 +27,7 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 			}
 			MessageType.ANON_REQUEST -> {
 				AnonViewHolder(
-					ItemChatMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+					ItemChatMessageIdentityRevealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 				)
 			}
 			else -> {
@@ -70,20 +71,20 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 	}
 
 	inner class AnonViewHolder constructor(
-		private val binding: ItemChatMessageBinding
+		private val binding: ItemChatMessageIdentityRevealBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatMessage) {
 
-			if (item.isMine) {
-				binding.sentMessage.text = item.text
-				binding.receivedMessage.isVisible = false
-				binding.sentMessage.isVisible = true
-			} else {
-				binding.receivedMessage.text = item.text
-				binding.receivedMessage.isVisible = true
-				binding.sentMessage.isVisible = false
-			}
+//			if (item.isMine) {
+//				binding.sentMessage.text = item.text
+//				binding.receivedMessage.isVisible = false
+//				binding.sentMessage.isVisible = true
+//			} else {
+//				binding.receivedMessage.text = item.text
+//				binding.receivedMessage.isVisible = true
+//				binding.sentMessage.isVisible = false
+//			}
 
 		}
 	}

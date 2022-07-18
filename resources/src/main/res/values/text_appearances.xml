@@ -541,6 +541,14 @@
 		<item name="android:letterSpacing">-0.02</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Chat.RequestIdentity.SubHeading" parent="">
+		<item name="android:textSize">20sp</item>
+		<item name="lineHeight">24.9sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_demi_bold</item>
+		<item name="fontFamily">@font/tt_satoshi_demi_bold</item>
+		<item name="android:letterSpacing">-0.04</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Offer.ActiveOffers" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textColor">@color/white</item>
 		<item name="android:textSize">18sp</item>
