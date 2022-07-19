@@ -86,6 +86,16 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun updateUser(user: User) {
+		userDao.insert(
+			UserEntity(
+				username = user.username,
+				avatar = user.avatar,
+				publicKey = user.publicKey
+			)
+		)
+	}
+
 	override suspend fun markUserFinishedOnboarding(user: User) {
 		userDao.update(
 			UserEntity(
