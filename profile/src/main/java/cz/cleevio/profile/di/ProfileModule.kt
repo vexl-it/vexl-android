@@ -1,5 +1,6 @@
 package cz.cleevio.profile.di
 
+import cz.cleevio.profile.editNameFragment.EditNameViewModel
 import cz.cleevio.profile.groupFragment.GroupViewModel
 import cz.cleevio.profile.profileFragment.ProfileViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,6 +20,13 @@ val profileModule = module {
 	viewModel {
 		GroupViewModel(
 			groupRepository = get(),
+		)
+	}
+
+	viewModel {
+		EditNameViewModel(
+			userRepository = get(),
+			navMainGraphModel = get()
 		)
 	}
 }

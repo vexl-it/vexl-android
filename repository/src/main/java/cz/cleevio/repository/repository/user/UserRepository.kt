@@ -23,6 +23,8 @@ interface UserRepository {
 
 	suspend fun createUser(user: User)
 
+	suspend fun updateUser(user: User)
+
 	suspend fun markUserFinishedOnboarding(user: User)
 
 	suspend fun getUserId(): Long?
@@ -38,6 +40,8 @@ interface UserRepository {
 	//----------------------------------
 
 	suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable>
+
+	suspend fun updateUser(username: String, avatar: String? = null, avatarImageExtension: String? = null): Resource<User>
 
 	suspend fun deleteMe(): Resource<Unit>
 }

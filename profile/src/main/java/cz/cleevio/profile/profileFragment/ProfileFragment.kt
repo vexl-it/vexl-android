@@ -4,10 +4,13 @@ import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.widget.BlockUserBottomSheetDialog
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
+import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentProfileBinding
 import lightbase.core.extensions.listenForInsets
@@ -70,8 +73,9 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileEditName.setOnClickListener {
-			Toast.makeText(requireContext(), "Edit name not implemented", Toast.LENGTH_SHORT)
-				.show()
+			findNavController().navigate(
+				ProfileFragmentDirections.actionProfileFragmentToEditNameFragment()
+			)
 		}
 
 		binding.profileSetPin.setOnClickListener {
@@ -95,11 +99,24 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileLogout.setOnClickListener {
-			Timber.tag("ASDX").d("Logout clicked")
-			profileViewModel.logout {
-				//todo: move to onboarding?
-				Timber.tag("ASDX").d("Logout successful")
-			}
+			showBottomDialog(
+				DeleteAccountBottomSheetDialog {
+					if (it) {
+						profileViewModel.logout(
+							{
+								profileViewModel.navigateToOnboarding()
+							},
+							{
+								profileViewModel.navigateToOnboarding()
+							}
+						)
+					}
+				}
+			)
 		}
+	}
+
+	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
+		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
 	}
 }

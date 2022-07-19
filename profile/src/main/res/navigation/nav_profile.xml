@@ -12,6 +12,9 @@
 		android:name="cz.cleevio.profile.profileFragment.ProfileFragment"
 		android:label="ProfileFragment"
 		tools:layout="@layout/fragment_profile">
+		<action
+			android:id="@+id/action_profileFragment_to_editNameFragment"
+			app:destination="@id/editNameFragment" />
 
 		<action
 			android:id="@+id/action_profileFragment_to_groupFragment"
@@ -24,5 +27,12 @@
 		android:name="cz.cleevio.profile.groupFragment.GroupFragment"
 		android:label="GroupFragment"
 		tools:layout="@layout/fragment_group" />
+
+	<fragment
+		android:id="@+id/editNameFragment"
+		android:name="cz.cleevio.profile.editNameFragment.EditNameFragment"
+		android:label="EditNameFragment"
+		tools:layout="@layout/fragment_edit_name"/>
+
 
 </navigation>

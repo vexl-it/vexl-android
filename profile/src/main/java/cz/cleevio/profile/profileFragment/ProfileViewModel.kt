@@ -48,4 +48,10 @@ class ProfileViewModel constructor(
 			}
 		}
 	}
+
+	fun navigateToOnboarding() {
+		navMainGraphModel.navigateToGraph(
+			NavMainGraphModel.NavGraph.Onboarding
+		)
+	}
 }

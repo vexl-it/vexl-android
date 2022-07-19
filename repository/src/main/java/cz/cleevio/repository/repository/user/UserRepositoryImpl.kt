@@ -7,6 +7,7 @@ import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.*
+import cz.cleevio.network.response.user.UserResponse
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
@@ -85,6 +86,16 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun updateUser(user: User) {
+		userDao.insert(
+			UserEntity(
+				username = user.username,
+				avatar = user.avatar,
+				publicKey = user.publicKey
+			)
+		)
+	}
+
 	override suspend fun markUserFinishedOnboarding(user: User) {
 		userDao.update(
 			UserEntity(
@@ -141,6 +152,39 @@ class UserRepositoryImpl constructor(
 				it?.fromNetwork(username)
 			},
 			request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
+		)
+	}
+
+	override suspend fun updateUser(username: String, avatar: String?, avatarImageExtension: String?): Resource<User> {
+		return tryOnline(
+			doOnSuccess = {
+				it?.let {
+					updateUser(it)
+				}
+			},
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = {
+				if (avatar != null && avatarImageExtension != null) {
+					userRestApi.putUserMe(
+						UserRequest(
+							username = username,
+							avatar = UserAvatar(
+								data = avatar,
+								extension = avatarImageExtension
+							)
+						)
+					)
+				} else {
+					userRestApi.putUserMe(
+						UserRequest(
+							username = username,
+							avatar = null
+						)
+					)
+				}
+			}
 		)
 	}
 
