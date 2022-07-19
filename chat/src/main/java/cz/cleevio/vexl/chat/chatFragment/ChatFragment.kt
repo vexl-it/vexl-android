@@ -5,6 +5,7 @@ import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.showSnackbar
 import cz.cleevio.core.utils.viewBinding
@@ -30,6 +31,31 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
 				adapter.submitList(messages)
+			}
+		}
+		repeatScopeOnStart {
+			viewModel.hasPendingIdentityRevealRequests.collect { pending ->
+				if (pending) {
+					// TODO finish the correct graphics (I'm afraid it will have to be custom view, that graphics is too complicated for snackbar)
+					showSnackbar(
+						container = binding.container,
+						message = getString(R.string.chat_message_identity_reveal_request),
+						duration = Snackbar.LENGTH_INDEFINITE,
+						buttonText = R.string.chat_message_identity_reveal_pending_tap,
+						action = {
+							showBottomDialog(
+								RevealIdentityBottomSheetDialog(
+									onApprove = {
+										viewModel.resolveIdentityRevealRequest(true)
+									},
+									onReject = {
+										viewModel.resolveIdentityRevealRequest(false)
+									}
+								)
+							)
+						}
+					)
+				}
 			}
 		}
 	}
@@ -72,7 +98,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey,
 				onSendSuccess = {
 					showSnackbar(
-						message = getString(R.string.chat_identity_reveal_sent)
+						container = binding.container,
+						message = getString(R.string.chat_identity_reveal_sent),
+						duration = Snackbar.LENGTH_INDEFINITE,
+						buttonText = R.string.chat_message_identity_reveal_pending_ok,
+						action = {}
 					)
 				}
 			))

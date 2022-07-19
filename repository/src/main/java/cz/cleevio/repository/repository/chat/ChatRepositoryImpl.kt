@@ -17,10 +17,7 @@ import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.offer.fromCache
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.*
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
@@ -437,6 +434,24 @@ class ChatRepositoryImpl constructor(
 		}
 
 		return result.toList()
+	}
+
+	override fun getPendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<Boolean> {
+		return chatMessageDao.listPendingIdentityRevealsBySenders(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.isNotEmpty()
+		}
+	}
+
+	override fun solvePendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String) {
+		chatMessageDao.solvePendingIdentityRevealsBySenders(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		)
 	}
 
 	override suspend fun deleteMessage(communicationRequest: CommunicationRequest) {

@@ -51,6 +51,31 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	)
 	fun listAllPendingCommunicationMessages(): List<ChatMessageEntity>
 
+	@Query(
+		"SELECT * " +
+			"FROM ChatMessageEntity " +
+			"WHERE type == 'ANON_REQUEST' " +
+			"AND inboxPublicKey == :inboxPublicKey " +
+			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			"AND isMine == 0 " +
+			"AND isProcessed == 0 " +
+			"ORDER BY time"
+	)
+	fun listPendingIdentityRevealsBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<List<ChatMessageEntity>>
+
+	@Query(
+		"UPDATE ChatMessageEntity " +
+			"SET isProcessed = 1 " +
+			"WHERE type == 'ANON_REQUEST' " +
+			"AND inboxPublicKey == :inboxPublicKey " +
+			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			"AND isMine == 0 " +
+			"AND isProcessed == 0 "
+	)
+	fun solvePendingIdentityRevealsBySenders(inboxPublicKey: String, firstKey: String, secondKey: String)
+
 	@Query("DELETE FROM ChatMessageEntity")
 	fun deleteAll()
 

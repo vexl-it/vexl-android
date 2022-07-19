@@ -5,6 +5,7 @@ import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.CommunicationRequest
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 
 interface ChatRepository {
@@ -52,4 +53,7 @@ interface ChatRepository {
 	suspend fun getMyInboxKeys(): List<String>
 
 	suspend fun getKeyPairByMyPublicKey(myPublicKey: String): KeyPair?
+
+	fun getPendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<Boolean>
+	fun solvePendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String)
 }

@@ -3,9 +3,11 @@ package cz.cleevio.vexl.chat.chatFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.ChatUser
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -13,6 +15,7 @@ import lightbase.core.baseClasses.BaseViewModel
 
 class ChatViewModel constructor(
 	private val chatRepository: ChatRepository,
+	private val userRepository: UserRepository,
 	val communicationRequest: CommunicationRequest
 ) : BaseViewModel() {
 
@@ -23,6 +26,14 @@ class ChatViewModel constructor(
 
 	val messages = communicationRequest.message.let { message ->
 		chatRepository.getMessages(
+			inboxPublicKey = message.inboxPublicKey,
+			firstKey = message.senderPublicKey,
+			secondKey = message.recipientPublicKey
+		)
+	}
+
+	val hasPendingIdentityRevealRequests = communicationRequest.message.let { message ->
+		chatRepository.getPendingIdentityRevealRequest(
 			inboxPublicKey = message.inboxPublicKey,
 			firstKey = message.senderPublicKey,
 			secondKey = message.recipientPublicKey
@@ -72,6 +83,41 @@ class ChatViewModel constructor(
 			)
 
 			_messageSentSuccessfully.emit(result.status == Status.Success)
+		}
+	}
+
+	fun resolveIdentityRevealRequest(approved: Boolean) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val user = userRepository.getUser()?.let {
+				ChatUser(
+					name = it.username,
+					image = it.avatar
+				)
+			}
+			val response = chatRepository.sendMessage(
+				senderPublicKey = senderPublicKey,
+				receiverPublicKey = receiverPublicKey,
+				message = ChatMessage(
+					inboxPublicKey = communicationRequest.message.inboxPublicKey,
+					senderPublicKey = senderPublicKey,
+					recipientPublicKey = receiverPublicKey,
+					type = MessageType.ANON_REQUEST_RESPONSE,
+					deanonymizedUser = user,
+					isMine = true,
+					isProcessed = false
+				),
+				messageType = if (approved) "APPROVE_REVEAL" else "DECLINE_REVEAL"
+			)
+
+			when (response.status) {
+				is Status.Success -> {
+					chatRepository.solvePendingIdentityRevealRequest(
+						inboxPublicKey = communicationRequest.message.inboxPublicKey,
+						firstKey = senderPublicKey,
+						secondKey = receiverPublicKey
+					)
+				}
+			}
 		}
 	}
 

@@ -266,6 +266,13 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_message_identity_reveal_subheader">Let’s reveal identities!</string>
     <string name="chat_message_identity_reveal_request_sent">Identity reveal request sent</string>
     <string name="chat_message_identity_reveal_request">Identity reveal request</string>
+    <string name="chat_message_identity_reveal_pending">Pending...</string>
+    <string name="chat_message_identity_reveal_pending_ok">Got it!</string>
+    <string name="chat_message_identity_reveal_pending_tap">Tap to reveal or decline</string>
+    <string name="chat_message_identity_confirmation_title">Are you sure you want to reveal your identity?</string>
+    <string name="chat_message_identity_confirmation_description">If you reveal identity you will see the identity of your counterparty too.</string>
+    <string name="chat_message_identity_confirmation_yes">Yes</string>
+    <string name="chat_message_identity_confirmation_no">No</string>
     <string name="chat_message_identity_request_title">Send reveal identity request</string>
     <string name="chat_message_identity_request_subtitle">By sending request you agree with revealing of your own identity too.</string>
     <string name="chat_message_identity_request_send">Send request</string>
