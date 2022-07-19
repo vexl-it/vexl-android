@@ -12,8 +12,8 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		"SELECT * " +
 			"FROM ChatMessageEntity " +
 			"WHERE inboxPublicKey == :inboxPublicKey" +
-			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
-			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
 			"ORDER BY time"
 	)
 	fun listAllBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<List<ChatMessageEntity>>
@@ -22,8 +22,8 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		"SELECT * " +
 			"FROM ChatMessageEntity " +
 			"WHERE inboxPublicKey == :inboxPublicKey" +
-			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
-			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
 			"ORDER BY time DESC " +
 			"LIMIT 1"
 	)
@@ -56,8 +56,8 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"FROM ChatMessageEntity " +
 			"WHERE type == 'ANON_REQUEST' " +
 			"AND inboxPublicKey == :inboxPublicKey " +
-			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
-			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
 			"AND isMine == 0 " +
 			"AND isProcessed == 0 " +
 			"ORDER BY time"
@@ -69,8 +69,8 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"SET isProcessed = 1 " +
 			"WHERE type == 'ANON_REQUEST' " +
 			"AND inboxPublicKey == :inboxPublicKey " +
-			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
-			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) " +
+			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
 			"AND isMine == 0 " +
 			"AND isProcessed == 0 "
 	)
@@ -83,8 +83,8 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		"DELETE " +
 			"FROM ChatMessageEntity " +
 			"WHERE inboxPublicKey == :inboxPublicKey" +
-			" AND (senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
-			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey) "
+			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) "
 	)
 	fun deleteByKeys(inboxPublicKey: String, firstKey: String, secondKey: String)
 }
