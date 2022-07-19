@@ -67,6 +67,10 @@
     <string name="profile_report_issue">Report issue</string>
     <string name="profile_request_data">Request known data</string>
     <string name="profile_logout">Delete account</string>
+
+    <!-- Profile Edit Name -->
+
+    <!-- Profile Edit Avatar -->
     <string name="profile_czech_crown">Czech crown</string>
     <string name="profile_logout_info">Can’t find logout? There’s no such a thing.
 But you can delete account.</string>

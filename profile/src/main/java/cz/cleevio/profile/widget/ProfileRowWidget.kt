@@ -29,10 +29,13 @@ class ProfileRowWidget constructor(
 		setText(binding.profileRowTitle, styledAttributes.getString(cz.cleevio.core.R.styleable.ProfileRow_title))
 		setText(binding.profileRowSubtitle, styledAttributes.getString(cz.cleevio.core.R.styleable.ProfileRow_subtitle))
 
+		binding.profileRowTitle.setTextColor(ContextCompat.getColor(context, styledAttributes.getResourceId(cz.cleevio.core.R.styleable.ProfileRow_text_color, R.color.gray_4)))
+
 		val iconResource = styledAttributes.getResourceId(cz.cleevio.core.R.styleable.ProfileRow_icon, ICON_NOT_FOUND)
 		if (iconResource != ICON_NOT_FOUND) {
 			binding.profileRowIcon.setImageResource(iconResource)
 		}
+		binding.profileRowIcon.setColorFilter(ContextCompat.getColor(context, styledAttributes.getResourceId(cz.cleevio.core.R.styleable.ProfileRow_icon_color, R.color.gray_4)))
 		binding.profileRowIcon.isVisible = iconResource != ICON_NOT_FOUND
 
 		binding.profileRowLine.isVisible = styledAttributes.getBoolean(cz.cleevio.core.R.styleable.ProfileRow_line_visibility, false)
