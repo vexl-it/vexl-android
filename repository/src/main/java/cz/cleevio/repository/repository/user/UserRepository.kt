@@ -23,6 +23,8 @@ interface UserRepository {
 
 	suspend fun createUser(user: User)
 
+	suspend fun updateUser(user: User)
+
 	suspend fun markUserFinishedOnboarding(user: User)
 
 	suspend fun getUserId(): Long?
