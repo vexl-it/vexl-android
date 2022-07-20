@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="20dp"
+	android:layout_marginBottom="20dp">
+
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/chat_contact_icon"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:background="@color/white"
+		android:backgroundTint="@color/gray_1"
+		android:scaleType="fitCenter"
+		android:src="@drawable/ic_prohibit"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.IdentityReveal.Rejected.Image" />
+
+	<View
+		android:id="@+id/start_divider"
+		style="@style/Widget.Cleevio.Chat.RevealIdentity.HorizontalDivider"
+		android:layout_width="0dp"
+		android:layout_height="1dp"
+		android:layout_marginEnd="12dp"
+		app:layout_constraintBottom_toBottomOf="@id/identity_reveal_heading"
+		app:layout_constraintEnd_toStartOf="@id/identity_reveal_heading"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@id/identity_reveal_heading" />
+
+	<TextView
+		android:id="@+id/identity_reveal_heading"
+		style="@style/Widget.Cleevio.Chat.RevealIdentity.Heading"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="@string/chat_message_identity_reveal_header"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/chat_contact_icon" />
+
+	<View
+		android:id="@+id/end_divider"
+		style="@style/Widget.Cleevio.Chat.RevealIdentity.HorizontalDivider"
+		android:layout_width="0dp"
+		android:layout_height="1dp"
+		android:layout_marginStart="12dp"
+		app:layout_constraintBottom_toBottomOf="@id/identity_reveal_heading"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/identity_reveal_heading"
+		app:layout_constraintTop_toTopOf="@id/identity_reveal_heading" />
+
+	<TextView
+		android:id="@+id/identity_reveal_description"
+		style="@style/Widget.Cleevio.Chat.RevealIdentity.SubHeading"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="@string/chat_message_identity_reveal_reject"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/identity_reveal_heading" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

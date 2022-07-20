@@ -50,6 +50,7 @@ class IdentityRequestBottomSheetDialog constructor(
 						image = it.avatar
 					)
 				}
+				val messageType = MessageType.REQUEST_REVEAL
 				val response = chatRepository.sendMessage(
 					senderPublicKey = senderPublicKey,
 					receiverPublicKey = receiverPublicKey,
@@ -57,12 +58,12 @@ class IdentityRequestBottomSheetDialog constructor(
 						inboxPublicKey = inboxPublicKey,
 						senderPublicKey = senderPublicKey,
 						recipientPublicKey = receiverPublicKey,
-						type = MessageType.ANON_REQUEST,
+						type = messageType,
 						deanonymizedUser = user,
 						isMine = true,
 						isProcessed = false
 					),
-					messageType = "REQUEST_REVEAL"
+					messageType = messageType.name
 				)
 				when (response.status) {
 					is Status.Success -> {

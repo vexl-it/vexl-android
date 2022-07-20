@@ -25,10 +25,12 @@ class RevealIdentityBottomSheetDialog(
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		binding.confirmBtn.setOnClickListener {
+		binding.approveBtn.setOnClickListener {
 			onApprove()
+			dismiss()
 		}
-		binding.backBtn.setOnClickListener {
+		binding.rejectBtn.setOnClickListener {
+			onReject()
 			dismiss()
 		}
 	}

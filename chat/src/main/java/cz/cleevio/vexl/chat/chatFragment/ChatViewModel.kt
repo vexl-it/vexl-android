@@ -65,7 +65,7 @@ class ChatViewModel constructor(
 	fun sendMessage(message: String) {
 
 		viewModelScope.launch(Dispatchers.IO) {
-			val messageType = MessageType.TEXT
+			val messageType = MessageType.MESSAGE
 
 			val result = chatRepository.sendMessage(
 				senderPublicKey = senderPublicKey,
@@ -79,7 +79,7 @@ class ChatViewModel constructor(
 					isMine = true,
 					isProcessed = false
 				),
-				messageType = "MESSAGE"
+				messageType = messageType.name
 			)
 
 			_messageSentSuccessfully.emit(result.status == Status.Success)
@@ -88,12 +88,15 @@ class ChatViewModel constructor(
 
 	fun resolveIdentityRevealRequest(approved: Boolean) {
 		viewModelScope.launch(Dispatchers.IO) {
+			val messageType = if (approved) MessageType.APPROVE_REVEAL else MessageType.DISAPPROVE_REVEAL
+
 			val user = userRepository.getUser()?.let {
 				ChatUser(
 					name = it.username,
 					image = it.avatar
 				)
 			}
+
 			val response = chatRepository.sendMessage(
 				senderPublicKey = senderPublicKey,
 				receiverPublicKey = receiverPublicKey,
@@ -101,12 +104,12 @@ class ChatViewModel constructor(
 					inboxPublicKey = communicationRequest.message.inboxPublicKey,
 					senderPublicKey = senderPublicKey,
 					recipientPublicKey = receiverPublicKey,
-					type = MessageType.ANON_REQUEST_RESPONSE,
+					type = messageType,
 					deanonymizedUser = user,
 					isMine = true,
 					isProcessed = false
 				),
-				messageType = if (approved) "APPROVE_REVEAL" else "DECLINE_REVEAL"
+				messageType = messageType.name
 			)
 
 			when (response.status) {

@@ -7,7 +7,6 @@ data class ChatMessageRequest constructor(
 	val uuid: String,
 	val text: String? = null,
 	val image: String? = null,
-	val type: String,
 	val time: Long = System.currentTimeMillis(),
 	val deanonymizedUser: ChatUserRequest? = null
 )

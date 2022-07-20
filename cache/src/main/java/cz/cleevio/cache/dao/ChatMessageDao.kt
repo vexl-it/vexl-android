@@ -34,7 +34,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		"SELECT DISTINCT senderPublicKey " +
 			"FROM ChatMessageEntity " +
 			"WHERE senderPublicKey != inboxPublicKey " +
-			" AND type NOT IN ('COMMUNICATION_REQUEST')"
+			" AND type NOT IN ('REQUEST_MESSAGING')"
 		//TODO: change to this
 		// " AND type NOT IN ('COMMUNICATION_REQUEST', 'COMMUNICATION_REQUEST_DENIED')"
 	)
@@ -44,7 +44,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	@Query(
 		"SELECT * " +
 			"FROM ChatMessageEntity " +
-			"WHERE type == 'COMMUNICATION_REQUEST' " +
+			"WHERE type == 'REQUEST_MESSAGING' " +
 			"AND isMine == 0 " +
 			"AND isProcessed == 0 " +
 			"ORDER BY time"
@@ -54,7 +54,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	@Query(
 		"SELECT * " +
 			"FROM ChatMessageEntity " +
-			"WHERE type == 'ANON_REQUEST' " +
+			"WHERE type == 'REQUEST_REVEAL' " +
 			"AND inboxPublicKey == :inboxPublicKey " +
 			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
@@ -67,7 +67,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	@Query(
 		"UPDATE ChatMessageEntity " +
 			"SET isProcessed = 1 " +
-			"WHERE type == 'ANON_REQUEST' " +
+			"WHERE type == 'REQUEST_REVEAL' " +
 			"AND inboxPublicKey == :inboxPublicKey " +
 			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +

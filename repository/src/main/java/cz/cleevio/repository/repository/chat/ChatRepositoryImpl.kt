@@ -415,7 +415,7 @@ class ChatRepositoryImpl constructor(
 					secondKey = contactPublicKey
 				)?.fromCache()
 
-				if (latestMessage != null && latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
+				if (latestMessage != null && latestMessage.type != MessageType.REQUEST_MESSAGING) {
 					//todo: check if we know user's identity. Maybe go over all messages from this user
 					// and look for type ANON_REQUEST_RESPONSE?
 					result.add(

@@ -47,7 +47,7 @@
 	</com.google.android.material.card.MaterialCardView>
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/back_btn"
+		android:id="@+id/reject_btn"
 		style="@style/Widget.Vexl.Chat.IdentityRequestButton.Decline"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
@@ -57,13 +57,13 @@
 		android:layout_marginBottom="4dp"
 		android:text="@string/chat_message_identity_confirmation_no"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/confirm_btn"
+		app:layout_constraintEnd_toStartOf="@id/approve_btn"
 		app:layout_constraintHorizontal_weight="0.5"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/reveal_identity_wrapper" />
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/confirm_btn"
+		android:id="@+id/approve_btn"
 		style="@style/Widget.Vexl.Chat.IdentityRequestButton.Accept"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_weight="0.5"
-		app:layout_constraintStart_toEndOf="@id/back_btn"
+		app:layout_constraintStart_toEndOf="@id/reject_btn"
 		app:layout_constraintTop_toBottomOf="@id/reveal_identity_wrapper" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
