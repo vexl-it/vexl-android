@@ -560,7 +560,7 @@
 
 	<style name="TextAppearance.Vexl.InputText" parent="TextAppearance.MaterialComponents.Subtitle1">
 		<item name="android:textSize">16sp</item>
-		<item name="android:textColor">@color/text_primary</item>
+		<item name="android:textColor">@color/white</item>
 		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
 		<item name="fontFamily">@font/tt_satoshi_regular</item>
 	</style>
