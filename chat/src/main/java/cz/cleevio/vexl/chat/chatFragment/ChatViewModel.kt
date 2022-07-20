@@ -33,7 +33,7 @@ class ChatViewModel constructor(
 	}
 
 	val hasPendingIdentityRevealRequests = communicationRequest.message.let { message ->
-		chatRepository.getPendingIdentityRevealRequest(
+		chatRepository.getPendingIdentityRequest(
 			inboxPublicKey = message.inboxPublicKey,
 			firstKey = message.senderPublicKey,
 			secondKey = message.recipientPublicKey
@@ -114,7 +114,7 @@ class ChatViewModel constructor(
 
 			when (response.status) {
 				is Status.Success -> {
-					chatRepository.solvePendingIdentityRevealRequest(
+					chatRepository.solveIdentityRevealRequest(
 						inboxPublicKey = communicationRequest.message.inboxPublicKey,
 						firstKey = senderPublicKey,
 						secondKey = receiverPublicKey

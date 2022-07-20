@@ -51,6 +51,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	)
 	fun listAllPendingCommunicationMessages(): List<ChatMessageEntity>
 
+	@Suppress("FunctionMaxLength")
 	@Query(
 		"SELECT * " +
 			"FROM ChatMessageEntity " +
@@ -62,8 +63,13 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"AND isProcessed == 0 " +
 			"ORDER BY time"
 	)
-	fun listPendingIdentityRevealsBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<List<ChatMessageEntity>>
+	fun listPendingIdentityRevealsBySenders(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<List<ChatMessageEntity>>
 
+	@Suppress("FunctionMaxLength")
 	@Query(
 		"UPDATE ChatMessageEntity " +
 			"SET isProcessed = 1 " +

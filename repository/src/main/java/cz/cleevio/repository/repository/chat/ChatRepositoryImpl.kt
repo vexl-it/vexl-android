@@ -436,7 +436,11 @@ class ChatRepositoryImpl constructor(
 		return result.toList()
 	}
 
-	override fun getPendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<Boolean> {
+	override fun getPendingIdentityRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean> {
 		return chatMessageDao.listPendingIdentityRevealsBySenders(
 			inboxPublicKey = inboxPublicKey,
 			firstKey = firstKey,
@@ -446,7 +450,11 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
-	override fun solvePendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String) {
+	override fun solveIdentityRevealRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	) {
 		chatMessageDao.solvePendingIdentityRevealsBySenders(
 			inboxPublicKey = inboxPublicKey,
 			firstKey = firstKey,

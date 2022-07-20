@@ -54,6 +54,15 @@ interface ChatRepository {
 
 	suspend fun getKeyPairByMyPublicKey(myPublicKey: String): KeyPair?
 
-	fun getPendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<Boolean>
-	fun solvePendingIdentityRevealRequest(inboxPublicKey: String, firstKey: String, secondKey: String)
+	fun getPendingIdentityRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean>
+
+	fun solveIdentityRevealRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	)
 }
