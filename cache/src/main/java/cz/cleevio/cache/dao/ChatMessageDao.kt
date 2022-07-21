@@ -77,7 +77,6 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"AND inboxPublicKey == :inboxPublicKey " +
 			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
-			"AND isMine == 0 " +
 			"AND isProcessed == 0 "
 	)
 	fun solvePendingIdentityRevealsBySenders(inboxPublicKey: String, firstKey: String, secondKey: String)

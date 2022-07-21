@@ -3,6 +3,7 @@ package cz.cleevio.repository.repository.chat
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.dao.*
+import cz.cleevio.cache.entity.ChatUserEntity
 import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.entity.RequestedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -18,11 +19,13 @@ import cz.cleevio.repository.model.offer.fromCache
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
 	private val notificationDao: NotificationDao,
 	private val chatMessageDao: ChatMessageDao,
+	private val chatUserDao: ChatUserDao,
 	private val myOfferDao: MyOfferDao,
 	private val requestedOfferDao: RequestedOfferDao,
 	private val offerDao: OfferDao,
@@ -175,21 +178,58 @@ class ChatRepositoryImpl constructor(
 				mapper = { it?.messages?.map { message -> message.fromNetwork(keyPair.publicKey) } },
 				//save messages to DB
 				doOnSuccess = { messages ->
-					messages?.map { it.toCache() }?.let {
-						chatMessageDao.replaceAll(it)
-					}
-
-					//special handling for DELETE_CHAT
-					messages
-						?.filter { it.type == MessageType.DELETE_CHAT }
-						?.forEach { deleteMessage ->
-							//delete all messages from and for this user
-							chatMessageDao.deleteByKeys(
-								inboxPublicKey = deleteMessage.inboxPublicKey,
-								firstKey = deleteMessage.senderPublicKey,
-								secondKey = deleteMessage.recipientPublicKey
-							)
+					CoroutineScope(Dispatchers.IO).launch {
+						messages?.map { it.toCache() }?.let {
+							chatMessageDao.replaceAll(it)
 						}
+
+						//special handling for DELETE_CHAT
+						messages
+							?.filter { it.type == MessageType.DELETE_CHAT }
+							?.forEach { deleteMessage ->
+								//delete all messages from and for this user
+								chatMessageDao.deleteByKeys(
+									inboxPublicKey = deleteMessage.inboxPublicKey,
+									firstKey = deleteMessage.senderPublicKey,
+									secondKey = deleteMessage.recipientPublicKey
+								)
+							}
+
+						//special handling for APPROVE_MESSAGING - create anonymized user for the other user
+						messages
+							?.filter {
+								it.type == MessageType.APPROVE_MESSAGING
+								//								|| it.type == MessageType.REQUEST_MESSAGING TODO now, or after confirm?
+							}?.forEach { message ->
+								// create anonymous identity
+								chatUserDao.replace(
+									ChatUserEntity(
+										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
+										inboxKey = message.inboxPublicKey,
+										name = (1..6)    // TODO FIXME fix with correct random name version
+											.map { ('a'..'z').random() }
+											.joinToString(""),
+										avatar = null,
+										deAnonymized = false
+									)
+								)
+							}
+
+						//special handling for REQUEST_REVEAL and APPROVE_REVEAL - deanonymize the other user
+						messages
+							?.filter {
+								it.type == MessageType.REQUEST_REVEAL || it.type == MessageType.APPROVE_REVEAL
+							}?.forEach { message ->
+								message.deanonymizedUser?.let { user ->
+									chatUserDao.deAnonymizeUser(
+										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
+										inboxKey = message.inboxPublicKey,
+										name = user.name!!, // There has to be some name
+										avatar = user.image
+									)
+								}
+							}
+					}
 				}
 			)
 			if (messagesResponse.status is Status.Error) {
@@ -360,6 +400,18 @@ class ChatRepositoryImpl constructor(
 				mapper = { },
 				doOnSuccess = {
 					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
+					// create anonymous identity
+					chatUserDao.replace(
+						ChatUserEntity(
+							contactPublicKey = message.recipientPublicKey, // recipient's key, because of it's outgoing message
+							inboxKey = message.inboxPublicKey,
+							name = (1..6)    // TODO FIXME fix with correct random name version
+								.map { ('a'..'z').random() }
+								.joinToString(""),
+							avatar = null,
+							deAnonymized = false
+						)
+					)
 				}
 			)
 
