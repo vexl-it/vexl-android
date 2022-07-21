@@ -340,6 +340,12 @@ class ContactRepositoryImpl constructor(
 		}
 	}
 
+	override fun getGroupsContactKeys(): List<ContactKey> {
+		return contactKeyDao.getGroupLevelKeys().map {
+			it.fromCache()
+		}
+	}
+
 	private suspend fun loadMyContactsKeys(
 		page: Int,
 		limit: Int,
@@ -384,7 +390,7 @@ class ContactRepositoryImpl constructor(
 		mapper = { }
 	)
 
-	override suspend fun getCommonFriends(contactsPublicKeys: Set<String>): Map<String, List<BaseContact>> {
+	override suspend fun getCommonFriends(contactsPublicKeys: Collection<String>): Map<String, List<BaseContact>> {
 		val facebookContacts = contactApi.getCommonContacts(
 			hash = encryptedPreference.facebookHash,
 			signature = encryptedPreference.facebookSignature,

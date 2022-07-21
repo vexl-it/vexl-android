@@ -65,6 +65,10 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().groupDao()
+	}
+
+	single {
 		TransactionProvider(get())
 	}
 

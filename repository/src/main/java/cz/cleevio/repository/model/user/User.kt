@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 data class User constructor(
 	val id: Long?,
 	val username: String,
-	val avatar: String,
+	val avatar: String?,
 	val publicKey: String,
 	val finishedOnboarding: Boolean
 ) : Parcelable

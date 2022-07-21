@@ -22,7 +22,7 @@
 			android:background="@color/black"
 			android:padding="16dp">
 
-			<cz.cleevio.core.widget.CreateTitleWidget
+			<cz.cleevio.core.widget.ScreenTitleWidget
 				android:id="@+id/new_offer_title"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"

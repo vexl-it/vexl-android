@@ -2,15 +2,14 @@ package cz.cleevio.profile.profileFragment
 
 import android.widget.Toast
 import androidx.core.view.updatePadding
+import androidx.navigation.fragment.findNavController
 import coil.load
 import cz.cleevio.core.base.BaseGraphFragment
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentProfileBinding
-import lightbase.core.baseClasses.BaseFragment
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -56,6 +55,12 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			binding.container.updatePadding(
 				top = insets.top,
 				bottom = insets.bottom
+			)
+		}
+
+		binding.profileGroups.setOnClickListener {
+			findNavController().navigate(
+				ProfileFragmentDirections.actionProfileFragmentToGroupFragment()
 			)
 		}
 

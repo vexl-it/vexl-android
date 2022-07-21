@@ -9,10 +9,12 @@ data class ContactKeyEntity(
 	val id: Long = 0,
 	val publicKey: String,
 	val contactLevel: ContactLevel,
+	val groupUuid: String? = null,
 )
 
 enum class ContactLevel {
 	FIRST,
 	SECOND,
+	GROUP,
 	NOT_SPECIFIED
 }

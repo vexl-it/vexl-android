@@ -141,6 +141,19 @@ val networkModule = module {
 	}
 
 	single {
+		provideRetrofit(
+			scope = this,
+			interceptors = listOf(
+				get(named(AUTH_INTERCEPTOR)),
+				get(named(NETWORK_INTERCEPTOR)),
+				get(named(HTTP_LOGGING_INTERCEPTOR))
+			),
+			tokenAuthenticator = get(),
+			baseUrl = BuildConfig.CONTACT_API_BASE_URL
+		).create(GroupApi::class.java)
+	}
+
+	single {
 		OkHttpClient.Builder()
 			.addInterceptor(get<NetworkInterceptor>())
 			.authenticator(get<TokenAuthenticator>())

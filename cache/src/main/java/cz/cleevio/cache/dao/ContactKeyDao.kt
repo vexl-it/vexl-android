@@ -17,8 +17,14 @@ interface ContactKeyDao {
 	@Query("SELECT * FROM ContactKeyEntity where contactLevel = :contactLevel")
 	fun getKeysByLevel(contactLevel: ContactLevel): List<ContactKeyEntity>
 
+	@Query("SELECT * FROM ContactKeyEntity where groupUuid = :groupUuid")
+	fun getKeysByGroup(groupUuid: String): List<ContactKeyEntity>
+
 	fun getFirstLevelKeys() =
 		getKeysByLevel(ContactLevel.FIRST)
+
+	fun getGroupLevelKeys() =
+		getKeysByLevel(ContactLevel.GROUP)
 
 	@Query("SELECT * FROM ContactKeyEntity")
 	fun getAllKeys(): List<ContactKeyEntity>

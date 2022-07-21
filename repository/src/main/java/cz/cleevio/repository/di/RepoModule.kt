@@ -5,6 +5,8 @@ import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.chat.ChatRepositoryImpl
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.contact.ContactRepositoryImpl
+import cz.cleevio.repository.repository.group.GroupRepository
+import cz.cleevio.repository.repository.group.GroupRepositoryImpl
 import cz.cleevio.repository.repository.marketplace.CryptoCurrencyRepository
 import cz.cleevio.repository.repository.marketplace.CryptoCurrencyRepositoryImpl
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -32,7 +34,8 @@ val repoModule = module {
 			transactionProvider = get(),
 			requestedOfferDao = get(),
 			contactDao = get(),
-			offerCommonFriendCrossRefDao = get()
+			offerCommonFriendCrossRefDao = get(),
+			chatRepository = get(),
 		)
 	}
 
@@ -61,6 +64,14 @@ val repoModule = module {
 			requestedOfferDao = get(),
 			offerDao = get(),
 			encryptedPreferenceRepository = get()
+		)
+	}
+
+	single<GroupRepository> {
+		GroupRepositoryImpl(
+			groupApi = get(),
+			groupDao = get(),
+			contactKeyDao = get()
 		)
 	}
 

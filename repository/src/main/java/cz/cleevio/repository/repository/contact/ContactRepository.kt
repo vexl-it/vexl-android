@@ -22,6 +22,8 @@ interface ContactRepository {
 
 	fun getFirstLevelContactKeys(): List<ContactKey>
 
+	fun getGroupsContactKeys(): List<ContactKey>
+
 	suspend fun deleteMyUser(): Resource<Unit>
 
 	suspend fun deleteMyFacebookUser(): Resource<Unit>
@@ -36,5 +38,5 @@ interface ContactRepository {
 
 	suspend fun generateContactsTmp(): Resource<Unit>
 	suspend fun generateFacebookContactsTmp(): Resource<Unit>
-	suspend fun getCommonFriends(contactsPublicKeys: Set<String>): Map<String, List<BaseContact>>
+	suspend fun getCommonFriends(contactsPublicKeys: Collection<String>): Map<String, List<BaseContact>>
 }

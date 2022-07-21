@@ -25,6 +25,8 @@ val marketplaceModule = module {
 			navMainGraphModel = get(),
 			offerRepository = get(),
 			userRepository = get(),
+			chatRepository = get(),
+			groupRepository = get(),
 		)
 	}
 

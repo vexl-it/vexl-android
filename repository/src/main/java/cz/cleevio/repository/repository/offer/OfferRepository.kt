@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface OfferRepository {
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
-	suspend fun createOffer(offerList: List<NewOffer>, expiration: Long): Resource<Offer>
+	suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair): Resource<Offer>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
 	suspend fun updateOffer(offerId: String, offerList: List<NewOffer>): Resource<Offer>
@@ -23,6 +23,7 @@ interface OfferRepository {
 
 	suspend fun deleteOfferById(offerId: String): Resource<Unit>
 
+	//not needed right now?
 	suspend fun refreshOffer(offerId: String): Resource<List<Offer>>
 
 	suspend fun saveMyOfferIdAndKeys(
