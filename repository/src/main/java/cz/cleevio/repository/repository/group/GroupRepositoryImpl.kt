@@ -24,7 +24,8 @@ class GroupRepositoryImpl constructor(
 	val contactKeyDao: ContactKeyDao
 ) : GroupRepository {
 
-	override fun getGroupsFlow(): Flow<List<Group>> = groupDao.getAllGroupsFlow().map { list -> list.map { it.fromEntity() } }
+	override fun getGroupsFlow(): Flow<List<Group>> = groupDao
+		.getAllGroupsFlow().map { list -> list.map { it.fromEntity() } }
 
 	override suspend fun createGroup(
 		name: String,

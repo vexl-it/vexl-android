@@ -67,7 +67,7 @@ class OfferRepositoryImpl constructor(
 				}
 				is Status.Error -> {
 					//do we need other flow for errors?
-					return (Resource.error(inboxResponse.errorIdentification))
+					return Resource.error(inboxResponse.errorIdentification)
 				}
 			}
 

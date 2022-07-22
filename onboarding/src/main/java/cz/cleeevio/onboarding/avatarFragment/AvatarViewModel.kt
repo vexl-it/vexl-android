@@ -46,10 +46,12 @@ class AvatarViewModel constructor(
 
 			val response = userRepository.registerUser(
 				username = username,
-				avatar = if (profileUri != null) UserAvatar(
-					data = getAvatarData(profileUri, contentResolver),
-					extension = IMAGE_EXTENSION
-				) else null
+				avatar = if (profileUri != null) {
+					UserAvatar(
+						data = getAvatarData(profileUri, contentResolver),
+						extension = IMAGE_EXTENSION
+					)
+				} else null
 			)
 			//create inbox for user
 			val inboxResponse = chatRepository.createInbox(

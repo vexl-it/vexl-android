@@ -4,11 +4,10 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import cz.cleevio.core.R
 
-
 object RandomUtils {
 
 	const val NAME_REPEAT_COUNT = 3
-	val options: List<String> = mutableListOf(
+	val options: List<String> = listOf(
 		"bo",
 		"da",
 		"ga", "ge",
@@ -23,6 +22,11 @@ object RandomUtils {
 		"za", "zo"
 	)
 
+	val imageOptions: List<Int> = listOf(
+		R.drawable.ic_baseline_person_128,
+		R.drawable.ic_baseline_person_128,
+	)
+
 	fun generateName(): String {
 		var name = options.random()
 		repeat(NAME_REPEAT_COUNT) {
@@ -32,8 +36,5 @@ object RandomUtils {
 	}
 
 	//todo: expand when we receive icons
-	fun selectRandomImage(context: Context): Drawable? {
-		return context.getDrawable(R.drawable.ic_baseline_person_128)
-	}
-
+	fun selectRandomImage(context: Context): Drawable? = context.getDrawable(imageOptions.random())
 }

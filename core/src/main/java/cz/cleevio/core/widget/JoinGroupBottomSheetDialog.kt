@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
-
 class JoinGroupBottomSheetDialog constructor(
 	private val groupCode: Long,
 	private val groupName: String,
