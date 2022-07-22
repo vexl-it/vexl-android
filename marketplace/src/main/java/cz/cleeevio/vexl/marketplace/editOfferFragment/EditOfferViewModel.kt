@@ -6,11 +6,9 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.utils.OfferUtils
-import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
-import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -50,7 +48,6 @@ class EditOfferViewModel constructor(
 	fun updateOffer(offerId: String, params: OfferParams, onSuccess: () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 
-			val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
 			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = offerId)
 			if (offerKeys == null) {
 				_errorFlow.emit(
@@ -60,34 +57,13 @@ class EditOfferViewModel constructor(
 				)
 				return@launch
 			}
-
-			//load all public keys for specified level of friends
-			val contactsPublicKeys = when (params.friendLevel.value) {
-				FriendLevel.NONE -> emptyList()
-				FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys()
-				FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
-				else -> emptyList()
-			}.map {
-				it.key // get just the keys
-			}.toMutableSet() // remove duplicities
-
-			//also add user's key
-			encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
-				contactsPublicKeys.add(myPublicKey)
-			}
-
-			val commonFriends = contactRepository.getCommonFriends(contactsPublicKeys)
-
-			contactsPublicKeys.forEach { key ->
-				val encryptedOffer = OfferUtils.encryptOffer(
-					locationHelper = locationHelper,
-					params = params,
-					commonFriends = commonFriends[key].orEmpty(), // TODO orEmpty should not happen, list in map is not nullable
-					contactKey = key,
-					offerKeys = offerKeys
-				)
-				encryptedOfferList.add(encryptedOffer)
-			}
+			val encryptedOfferList = OfferUtils.prepareEncryptedOffers(
+				offerKeys = offerKeys,
+				params = params,
+				contactRepository = contactRepository,
+				encryptedPreferenceRepository = encryptedPreferenceRepository,
+				locationHelper = locationHelper
+			)
 
 			//send all in single request to BE
 			val response = offerRepository.updateOffer(
@@ -96,16 +72,8 @@ class EditOfferViewModel constructor(
 			)
 			when (response.status) {
 				is Status.Success -> {
-					val updateResponse = offerRepository.refreshOffer(offerId)
-					when (updateResponse.status) {
-						is Status.Success -> {
-							withContext(Dispatchers.Main) {
-								onSuccess()
-							}
-						}
-						is Status.Error -> {
-							_errorFlow.emit(Resource.error(updateResponse.errorIdentification))
-						}
+					withContext(Dispatchers.Main) {
+						onSuccess()
 					}
 				}
 				is Status.Error -> {

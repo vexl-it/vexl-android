@@ -20,7 +20,7 @@
 			android:layout_height="match_parent"
 			android:background="@color/black">
 
-			<cz.cleevio.core.widget.CreateTitleWidget
+			<cz.cleevio.core.widget.ScreenTitleWidget
 				android:id="@+id/new_offer_title"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"

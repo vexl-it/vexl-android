@@ -6,18 +6,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleeevio.vexl.marketplace.R
 import cz.cleeevio.vexl.marketplace.databinding.FragmentMarketplaceBinding
 import cz.cleevio.core.base.BaseGraphFragment
-import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
-import cz.cleevio.repository.repository.chat.ChatRepository
 import lightbase.core.extensions.listenForInsets
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
-
-	private val chatRepository: ChatRepository by inject()
 
 	private val binding by viewBinding(FragmentMarketplaceBinding::bind)
 	private val marketplaceViewModel by viewModel<MarketplaceViewModel>()
@@ -27,6 +21,13 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 	override fun onResume() {
 		super.onResume()
 		viewModel.syncMarketData()
+	}
+
+	override fun onStart() {
+		super.onStart()
+
+		marketplaceViewModel.syncAllMessages()
+		marketplaceViewModel.syncMyGroupsData()
 	}
 
 	override fun initView() {
@@ -73,9 +74,5 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 
 		marketplaceViewModel.syncOffers()
 		marketplaceViewModel.loadMe()
-
-		repeatScopeOnStart {
-			chatRepository.syncAllMessages()
-		}
 	}
 }

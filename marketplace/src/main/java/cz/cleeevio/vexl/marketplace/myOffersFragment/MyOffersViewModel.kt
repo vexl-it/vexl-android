@@ -22,7 +22,7 @@ class MyOffersViewModel constructor(
 	private val _offersCount = MutableSharedFlow<Int>(replay = 1)
 	val offersCount = _offersCount.asSharedFlow()
 
-	init {
+	fun loadData() {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.getOffersFlow().map { list ->
 				list.filter { it.offerType == offerType.name && it.isMine }

@@ -13,6 +13,16 @@
 		android:label="ProfileFragment"
 		tools:layout="@layout/fragment_profile">
 
+		<action
+			android:id="@+id/action_profileFragment_to_groupFragment"
+			app:destination="@id/groupFragment" />
+
 	</fragment>
+
+	<fragment
+		android:id="@+id/groupFragment"
+		android:name="cz.cleevio.profile.groupFragment.GroupFragment"
+		android:label="GroupFragment"
+		tools:layout="@layout/fragment_group" />
 
 </navigation>

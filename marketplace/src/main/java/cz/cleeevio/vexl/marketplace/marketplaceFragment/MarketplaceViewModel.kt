@@ -3,6 +3,8 @@ package cz.cleeevio.vexl.marketplace.marketplaceFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +16,8 @@ class MarketplaceViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel,
 	val offerRepository: OfferRepository,
 	val userRepository: UserRepository,
+	val chatRepository: ChatRepository,
+	val groupRepository: GroupRepository,
 ) : BaseViewModel() {
 
 	fun syncOffers() {
@@ -38,4 +42,17 @@ class MarketplaceViewModel constructor(
 		}
 	}
 
+	fun syncAllMessages() {
+		viewModelScope.launch(Dispatchers.IO) {
+			chatRepository.syncAllMessages()
+		}
+	}
+
+	fun syncMyGroupsData() {
+		viewModelScope.launch(Dispatchers.IO) {
+			groupRepository.syncMyGroups()
+
+			groupRepository.syncAllGroupsMembers()
+		}
+	}
 }

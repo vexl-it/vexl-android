@@ -9,7 +9,7 @@ data class UserEntity constructor(
 	//todo: remove later
 	val extId: Long = 0,
 	val username: String,
-	val avatar: String,
+	val avatar: String?,
 	val publicKey: String,
 	val finishedOnboarding: Boolean = false
 ) {

@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
+import cz.cleevio.network.request.user.UserAvatar
 import cz.cleevio.repository.model.user.User
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
@@ -41,23 +42,27 @@ class AvatarViewModel constructor(
 		contentResolver: ContentResolver
 	) {
 		viewModelScope.launch(Dispatchers.IO) {
-			profileImageUri.value?.let {
-				val response = userRepository.registerUser(
-					username,
-					getAvatarData(it, contentResolver),
-					IMAGE_EXTENSION
-				)
-				//create inbox for user
-				val inboxResponse = chatRepository.createInbox(
-					publicKey = encryptedPreference.userPublicKey
-				)
-				when (inboxResponse.status) {
-					Status.Success -> {
-						_user.emit(response.data)
-					}
-					Status.Error -> {
-						//todo: add error handling?
-					}
+			val profileUri = profileImageUri.value
+
+			val response = userRepository.registerUser(
+				username = username,
+				avatar = if (profileUri != null) {
+					UserAvatar(
+						data = getAvatarData(profileUri, contentResolver),
+						extension = IMAGE_EXTENSION
+					)
+				} else null
+			)
+			//create inbox for user
+			val inboxResponse = chatRepository.createInbox(
+				publicKey = encryptedPreference.userPublicKey
+			)
+			when (inboxResponse.status) {
+				Status.Success -> {
+					_user.emit(response.data)
+				}
+				Status.Error -> {
+					//todo: add error handling?
 				}
 			}
 		}

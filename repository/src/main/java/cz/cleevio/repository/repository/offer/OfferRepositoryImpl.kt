@@ -13,6 +13,7 @@ import cz.cleevio.network.request.offer.CreateOfferRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.offer.*
+import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.flow.map
 
 class OfferRepositoryImpl constructor(
@@ -23,20 +24,59 @@ class OfferRepositoryImpl constructor(
 	private val locationDao: LocationDao,
 	private val contactDao: ContactDao,
 	private val offerCommonFriendCrossRefDao: OfferCommonFriendCrossRefDao,
-	private val transactionProvider: TransactionProvider
+	private val transactionProvider: TransactionProvider,
+	private val chatRepository: ChatRepository,
 ) : OfferRepository {
 
-	override suspend fun createOffer(offerList: List<NewOffer>, expiration: Long): Resource<Offer> = tryOnline(
-		request = {
-			offerApi.postOffers(
-				CreateOfferRequest(
-					offerPrivateList = offerList.map { it.toNetwork() },
-					expiration = expiration
+	override suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair): Resource<Offer> {
+		//create offer
+		val offerCreateResource = tryOnline(
+			request = {
+				offerApi.postOffers(
+					CreateOfferRequest(
+						offerPrivateList = offerList.map { it.toNetwork() },
+						expiration = expiration
+					)
 				)
+			},
+			mapper = { it?.fromNetwork() }
+		)
+
+		offerCreateResource.data?.let { offer ->
+			//save keys and info into my offers
+			saveMyOfferIdAndKeys(
+				offerId = offer.offerId,
+				privateKey = offerKeys.privateKey,
+				publicKey = offerKeys.publicKey,
+				offerType = offer.offerType,
+				isInboxCreated = false
 			)
-		},
-		mapper = { it?.fromNetwork() }
-	)
+
+			//create inbox
+			val inboxResponse = chatRepository.createInbox(offerKeys.publicKey)
+			when (inboxResponse.status) {
+				is Status.Success -> {
+					//update info in my offers
+					saveMyOfferIdAndKeys(
+						offerId = offer.offerId,
+						privateKey = offerKeys.privateKey,
+						publicKey = offerKeys.publicKey,
+						offerType = offer.offerType,
+						isInboxCreated = true
+					)
+				}
+				is Status.Error -> {
+					//do we need other flow for errors?
+					return Resource.error(inboxResponse.errorIdentification)
+				}
+			}
+
+			//save offer into DB
+			updateOffers(listOf(offer))
+		}
+
+		return offerCreateResource
+	}
 
 	override suspend fun updateOffer(offerId: String, offerList: List<NewOffer>): Resource<Offer> = tryOnline(
 		request = {
@@ -47,7 +87,12 @@ class OfferRepositoryImpl constructor(
 				)
 			)
 		},
-		mapper = { it?.fromNetwork() }
+		mapper = { it?.fromNetwork() },
+		doOnSuccess = {
+			it?.let { offer ->
+				updateOffers(listOf(offer))
+			}
+		}
 	)
 
 	override suspend fun loadOffersForMe(): Resource<List<Offer>> = tryOnline(

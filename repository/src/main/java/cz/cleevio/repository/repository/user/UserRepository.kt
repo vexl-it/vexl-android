@@ -1,6 +1,7 @@
 package cz.cleevio.repository.repository.user
 
 import cz.cleevio.network.data.Resource
+import cz.cleevio.network.request.user.UserAvatar
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +33,7 @@ interface UserRepository {
 
 	suspend fun getUserFullname(): UserProfile?
 
-	suspend fun registerUser(username: String, avatar: String, avatarImageExtension: String): Resource<User>
+	suspend fun registerUser(username: String, avatar: UserAvatar?): Resource<User>
 
 	//----------------------------------
 

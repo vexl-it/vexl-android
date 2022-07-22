@@ -67,9 +67,34 @@
     <string name="profile_report_issue">Report issue</string>
     <string name="profile_request_data">Request known data</string>
     <string name="profile_logout">Delete account</string>
+    <string name="profile_czech_crown">Czech crown</string>
+    <string name="profile_logout_info">Can’t find logout? There’s no such a thing.
+But you can delete account.</string>
+    <string name="profile_vexl_support">If you like Vexl, support it’s improvement by sending some Bitcoins as donation!</string>
+    <string name="profile_refuse_to_snap_chat">Refuse users to snap the chat</string>
+    <string name="profile_private_settings_title">Private settings</string>
+    <string name="profile_private_settings_subtitle">Unlock to access your identity and contacts</string>
+
+    <!-- Profile Edit Name -->
+    <string name="profile_edit_name_title">Edit name</string>
+    <string name="profile_edit_name_subtitle">Space for additional copy. You can lorem
+ipsum dolor sit ametum roma von carpa di.</string>
+    <string name="profile_edit_name_action">Save</string>
+
+    <!-- Profile Edit Avatar -->
+    <string name="profile_edit_avatar_title">Change profile picture</string>
+    <string name="profile_edit_avatar_action">Upload new photo</string>
+
+    <!-- Profile Delete Account -->
+    <string name="profile_delete_account_title">Delete account?</string>
+    <string name="profile_delete_account_subtitle">Do you really want to delete your account? You will never be able to undo this action.</string>
+    <string name="profile_delete_account_no">Nope</string>
+    <string name="profile_delete_account_yes_delete">Yes, delete</string>
+    <string name="profile_delete_account_yes">Yes</string>
+    <string name="profile_delete_account_title_sure">You sure?</string>
 
     <!-- JoinVexl -->
-    <string name="profile_join_vexl_title">Join vexl</string>
+    <string name="profile_join_vexl_title">Join Vexl</string>
     <string name="profile_join_vexl_button_title">Got it</string>
 
     <!-- Donate -->
@@ -106,9 +131,9 @@
     <string name="marketplace_currency_1_year">1 year</string>
     <string name="marketplace_buy">Buy</string>
     <string name="marketplace_sell">Sell</string>
-    <string name="marketplace_my_offers">My Offers</string>
+    <string name="marketplace_my_offers">My offers</string>
     <string name="marketplace_detail_friend_first">Friend</string>
-    <string name="marketplace_detail_friend_second">Friend of Friend</string>
+    <string name="marketplace_detail_friend_second">Friend of a Friend</string>
     <string name="marketplace_detail_user_sell">%s is selling</string>
     <string name="marketplace_detail_user_buy">%s is buying</string>
     <string name="marketplace_detail_up_to">Up to</string>
@@ -159,12 +184,12 @@
     <string name="widget_payment_cash">Cash</string>
     <string name="widget_payment_revolut">Revolut</string>
     <string name="widget_payment_bank">Bank</string>
-    <string name="filter_payment_method_title">Payment Method</string>
+    <string name="filter_payment_method_title">Payment method</string>
     <string name="widget_friend_first_degree">1st degree</string>
     <string name="widget_friend_second_degree">2nd degree</string>
-    <string name="filter_friend_level_description">Trade with your friends only. \nOr with friends of your friends.</string>
+    <string name="filter_friend_level_description">Trade with your friends only. \nTrade with friends of your friends.</string>
     <string name="widget_btc_network_lighting">Lightning</string>
-    <string name="widget_btc_network_on_chain">On Chain</string>
+    <string name="widget_btc_network_on_chain">On chain</string>
     <string name="widget_offer_description">Description</string>
     <string name="widget_offer_description_hint">Enter offer description</string>
     <string name="widget_offer_description_counter">%d/%d</string>
@@ -199,17 +224,17 @@
     <string name="chat_request_my_offer">My Offer</string>
 
     <!-- Chat messaging -->
-    <string name="chat_btns_reveal_identity">Reveal Identity</string>
-    <string name="chat_btns_my_offer">My Offer</string>
-    <string name="chat_btns_common_friends">Common Friends</string>
+    <string name="chat_btns_reveal_identity">Reveal identity</string>
+    <string name="chat_btns_my_offer">My offer</string>
+    <string name="chat_btns_common_friends">Common friends</string>
     <string name="chat_common_friends_facebook_contact">Via Facebook</string>
-    <string name="chat_btns_delete_chat">Delete Chat</string>
-    <string name="chat_btns_block_user">Block User</string>
+    <string name="chat_btns_delete_chat">Delete chat</string>
+    <string name="chat_btns_block_user">Block user</string>
     <string name="chat_message_input_placeholder">Type something</string>
     <string name="chat_delete_chat_title">Delete chat?</string>
     <string name="chat_delete_chat_description">Are you done trading? Closing chat means that you are finished with the trade. Closing the chat deletes all chat history. </string>
     <string name="chat_delete_chat_back">Back</string>
-    <string name="chat_delete_chat_delete">Delete Chat</string>
+    <string name="chat_delete_chat_delete">Delete chat</string>
     <string name="chat_delete_chat_confirm_title">You sure?</string>
     <string name="chat_delete_chat_confirm_description">This action is permament. Are you sure you wish to delete the chat?</string>
     <string name="chat_delete_chat_confirm_back">Nope</string>
@@ -222,9 +247,38 @@
     <string name="chat_block_user_confirm_description">Do you really want to block this user? You will never be able to undo this action. Choose wisely.</string>
     <string name="chat_block_user_confirm_nope">Nope</string>
     <string name="chat_block_user_confirm_action">Yes, block</string>
+    <string name="chat_message_identity_reveal_header">Identity reveal request</string>
+    <string name="chat_message_identity_reveal_subheader">Let’s reveal identities!</string>
+    <string name="chat_message_identity_reveal_request_sent">Identity reveal request sent</string>
+    <string name="chat_message_identity_reveal_request">Identity reveal request</string>
+    <string name="chat_message_identity_reveal_pending">Pending...</string>
+    <string name="chat_message_identity_reveal_pending_ok">Got it!</string>
+    <string name="chat_message_identity_reveal_pending_tap">Tap to reveal or decline</string>
+    <string name="chat_message_identity_confirmation_title">Are you sure you want to reveal your identity?</string>
+    <string name="chat_message_identity_confirmation_description">If you reveal identity you will see the identity of your counterparty too.</string>
+    <string name="chat_message_identity_confirmation_yes">Yes</string>
+    <string name="chat_message_identity_confirmation_no">No</string>
     <string name="chat_message_identity_request_title">Send reveal identity request</string>
     <string name="chat_message_identity_request_subtitle">By sending request you agree with revealing of your own identity too.</string>
     <string name="chat_message_identity_request_send">Send request</string>
     <string name="chat_message_identity_request_back">Back</string>
+    <string name="chat_message_identity_reveal_reject">You have declined</string>
+    <string name="chat_message_identity_reveal_approved">Identity revealed!</string>
     <string name="chat_identity_reveal_sent">Identity reveal request sent</string>
+
+    <!-- Groups -->
+    <string name="groups_join_button">Join New Group</string>
+    <string name="groups_title">Groups</string>
+    <string name="groups_leave_button">Leave</string>
+    <string name="groups_enter_code">Enter code manually</string>
+    <string name="groups_scan_code">Scan QR code to join a group</string>
+    <string name="groups_enter_code_description">Fill the activation code below</string>
+    <string name="groups_leave_group_title">Leave group?</string>
+    <string name="groups_leave_group_description">You won’t be able to see it’s offers and chats with memebers.</string>
+    <string name="groups_leave_group_no">Nope</string>
+    <string name="groups_leave_group_yes">Yes, leave</string>
+    <string name="groups_join_title">Join %s group?</string>
+    <string name="groups_join_description">When you join %s group, you’ll see offers from other participants.</string>
+    <string name="groups_join_no">Nope</string>
+    <string name="groups_join_yes">Yes</string>
 </resources>

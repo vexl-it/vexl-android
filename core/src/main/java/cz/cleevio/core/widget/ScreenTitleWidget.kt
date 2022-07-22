@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 import cz.cleevio.core.databinding.WidgetCreateTitleBinding
 import lightbase.core.extensions.layoutInflater
 
-class CreateTitleWidget @JvmOverloads constructor(
+class ScreenTitleWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0

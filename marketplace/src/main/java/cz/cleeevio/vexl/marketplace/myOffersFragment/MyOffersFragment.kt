@@ -90,4 +90,10 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 			}
 		)
 	}
+
+	override fun onResume() {
+		super.onResume()
+
+		viewModel.loadData()
+	}
 }
