@@ -22,7 +22,6 @@ import cz.cleevio.cache.entity.*
 		ChatMessageEntity::class,
 		NotificationEntity::class,
 		GroupEntity::class,
-		ChatUserEntity::class
 		ChatUserIdentityEntity::class
 	],
 	version = 1,
