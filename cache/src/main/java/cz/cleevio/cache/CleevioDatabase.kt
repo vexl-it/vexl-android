@@ -23,6 +23,7 @@ import cz.cleevio.cache.entity.*
 		NotificationEntity::class,
 		GroupEntity::class,
 		ChatUserEntity::class
+		ChatUserIdentityEntity::class
 	],
 	version = 1,
 	// Export is true only if you want to create new json schema for testing purpose

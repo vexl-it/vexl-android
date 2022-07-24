@@ -3,7 +3,7 @@ package cz.cleevio.repository.repository.chat
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.dao.*
-import cz.cleevio.cache.entity.ChatUserEntity
+import cz.cleevio.cache.entity.ChatUserIdentityEntity
 import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.entity.RequestedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -203,7 +203,7 @@ class ChatRepositoryImpl constructor(
 							}?.forEach { message ->
 								// create anonymous identity
 								chatUserDao.replace(
-									ChatUserEntity(
+									ChatUserIdentityEntity(
 										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
 										inboxKey = message.inboxPublicKey,
 										name = (1..6)    // TODO FIXME fix with correct random name version
@@ -402,7 +402,7 @@ class ChatRepositoryImpl constructor(
 					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
 					// create anonymous identity
 					chatUserDao.replace(
-						ChatUserEntity(
+						ChatUserIdentityEntity(
 							contactPublicKey = message.recipientPublicKey, // recipient's key, because of it's outgoing message
 							inboxKey = message.inboxPublicKey,
 							name = (1..6)    // TODO FIXME fix with correct random name version
@@ -468,8 +468,6 @@ class ChatRepositoryImpl constructor(
 				)?.fromCache()
 
 				if (latestMessage != null && latestMessage.type != MessageType.REQUEST_MESSAGING) {
-					//todo: check if we know user's identity. Maybe go over all messages from this user
-					// and look for type ANON_REQUEST_RESPONSE?
 					result.add(
 						ChatListUser(
 							message = latestMessage,
@@ -478,7 +476,8 @@ class ChatRepositoryImpl constructor(
 									it.offer.offerPublicKey == latestMessage.senderPublicKey
 							}.map {
 								it.offer.fromCache(it.locations, it.commonFriends)
-							}.first()
+							}.first(),
+							user = chatUserDao.getUserIdentity(latestMessage.inboxPublicKey, contactPublicKey)?.fromCache()
 						)
 					)
 				}
@@ -486,6 +485,12 @@ class ChatRepositoryImpl constructor(
 		}
 
 		return result.toList()
+	}
+
+	override fun getChatUserIdentityFlow(inboxKey: String, contactPublicKey: String): Flow<ChatUserIdentity?> {
+		return chatUserDao.getUserIdentityFlow(inboxKey, contactPublicKey).map {
+			it?.fromCache()
+		}
 	}
 
 	override fun getPendingIdentityRequest(

@@ -4,6 +4,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -31,6 +32,17 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
 				adapter.submitList(messages)
+			}
+		}
+		repeatScopeOnStart {
+			viewModel.chatUserIdentity.collect { chatUserIdentity ->
+				binding.profileImage.load(chatUserIdentity?.avatar) {
+					crossfade(true)
+					fallback(R.drawable.ic_baseline_person_128)
+					error(R.drawable.ic_baseline_person_128)
+					placeholder(R.drawable.ic_baseline_person_128)
+				}
+				binding.username.text = chatUserIdentity?.name
 			}
 		}
 		repeatScopeOnStart {

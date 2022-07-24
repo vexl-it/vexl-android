@@ -24,6 +24,17 @@ class ChatViewModel constructor(
 	val _messageSentSuccessfully = MutableSharedFlow<Boolean>(replay = 1)
 	val messageSentSuccessfully = _messageSentSuccessfully.asSharedFlow()
 
+	val chatUserIdentity = communicationRequest.let { communicationRequest ->
+		chatRepository.getChatUserIdentityFlow(
+			inboxKey = communicationRequest.message.inboxPublicKey,
+			contactPublicKey = if (communicationRequest.message.isMine) {
+				communicationRequest.message.recipientPublicKey
+			} else {
+				communicationRequest.message.senderPublicKey
+			}
+		)
+	}
+
 	val messages = communicationRequest.message.let { message ->
 		chatRepository.getMessages(
 			inboxPublicKey = message.inboxPublicKey,

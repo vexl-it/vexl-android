@@ -5,7 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(indices = [Index(value = ["inboxKey", "contactPublicKey"], unique = true)])
-data class ChatUserEntity(
+data class ChatUserIdentityEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
 	val contactPublicKey: String,
