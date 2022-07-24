@@ -25,5 +25,4 @@ object UsernameUtils {
 		}
 		return name.replaceFirstChar(Char::titlecase)
 	}
-
 }
