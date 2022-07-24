@@ -16,6 +16,7 @@ import cz.cleevio.network.request.chat.*
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.offer.fromCache
+import cz.cleevio.repository.repository.UsernameUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -199,16 +200,13 @@ class ChatRepositoryImpl constructor(
 						messages
 							?.filter {
 								it.type == MessageType.APPROVE_MESSAGING
-								//								|| it.type == MessageType.REQUEST_MESSAGING TODO now, or after confirm?
 							}?.forEach { message ->
 								// create anonymous identity
 								chatUserDao.replace(
 									ChatUserIdentityEntity(
 										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
 										inboxKey = message.inboxPublicKey,
-										name = (1..6)    // TODO FIXME fix with correct random name version
-											.map { ('a'..'z').random() }
-											.joinToString(""),
+										name = UsernameUtils.generateName(),
 										avatar = null,
 										deAnonymized = false
 									)
@@ -405,9 +403,7 @@ class ChatRepositoryImpl constructor(
 						ChatUserIdentityEntity(
 							contactPublicKey = message.recipientPublicKey, // recipient's key, because of it's outgoing message
 							inboxKey = message.inboxPublicKey,
-							name = (1..6)    // TODO FIXME fix with correct random name version
-								.map { ('a'..'z').random() }
-								.joinToString(""),
+							name = UsernameUtils.generateName(),
 							avatar = null,
 							deAnonymized = false
 						)
