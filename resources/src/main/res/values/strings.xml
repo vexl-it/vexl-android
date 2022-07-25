@@ -67,10 +67,6 @@
     <string name="profile_report_issue">Report issue</string>
     <string name="profile_request_data">Request known data</string>
     <string name="profile_logout">Delete account</string>
-
-    <!-- Profile Edit Name -->
-
-    <!-- Profile Edit Avatar -->
     <string name="profile_czech_crown">Czech crown</string>
     <string name="profile_logout_info">Can’t find logout? There’s no such a thing.
 But you can delete account.</string>
@@ -113,6 +109,12 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="user_profile_currency_eur">Euro</string>
     <string name="user_profile_currency_usd">United states dollar</string>
     <string name="user_profile_currency_dismissButton">Done</string>
+
+    <!-- Report issue -->
+    <string name="user_profile_report_issue_subject">Vexl: Issue report</string>
+    <string name="user_profile_report_issue_text">I\'m contacting you due to ...</string>
+    <string name="user_profile_report_issue_email">test@test.com</string>
+    <string name="user_profile_report_issue_error_no_app_found">No email application found</string>
 
     <!-- Menu -->
     <string name="menu_marketplace">Marketplace</string>

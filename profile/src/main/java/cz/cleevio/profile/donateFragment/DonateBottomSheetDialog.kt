@@ -1,4 +1,4 @@
-package cz.cleevio.core.widget
+package cz.cleevio.profile.donateFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,38 +7,31 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.BottomSheetDialogDeleteAccountBinding
+import cz.cleevio.core.databinding.BottomSheetDialogDonateBinding
 
-class DeleteAccountBottomSheetDialog(
-	private val onDismissCallback: ((Boolean) -> Unit)? = null
+class DonateBottomSheetDialog(
+	private val onDonateClicked: ((Boolean) -> Unit)? = null
 ) : BottomSheetDialogFragment() {
 
-	private lateinit var binding: BottomSheetDialogDeleteAccountBinding
-
-	private var phase: Int = 0
+	private lateinit var binding: BottomSheetDialogDonateBinding
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		binding = BottomSheetDialogDeleteAccountBinding.inflate(layoutInflater, container, false)
+		binding = BottomSheetDialogDonateBinding.inflate(layoutInflater, container, false)
 		return binding.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
-			if (phase == 0) {
-				binding.title.text = resources.getString(R.string.profile_delete_account_title_sure)
-				binding.confirmBtn.text = resources.getString(R.string.profile_delete_account_yes)
-				phase = 1
-			} else {
-				onDismissCallback?.invoke(true)
-				dismiss()
-			}
+			onDonateClicked?.invoke(true)
+			dismiss()
 		}
 		binding.backBtn.setOnClickListener {
-			onDismissCallback?.invoke(false)
+			onDonateClicked?.invoke(false)
 			dismiss()
 		}
 	}
