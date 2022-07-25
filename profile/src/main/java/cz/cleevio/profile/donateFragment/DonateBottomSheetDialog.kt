@@ -1,4 +1,4 @@
-package cz.cleevio.core.widget
+package cz.cleevio.profile.donateFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.BottomSheetDialogDeleteAccountBinding
 
-class DeleteAccountBottomSheetDialog(
-	private val onDismissCallback: ((Boolean) -> Unit)? = null
+class DonateBottomSheetDialog(
+	private val onDonateClicked: ((Boolean) -> Unit)? = null
 ) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogDeleteAccountBinding

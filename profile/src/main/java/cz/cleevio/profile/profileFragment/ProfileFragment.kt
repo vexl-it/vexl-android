@@ -1,5 +1,6 @@
 package cz.cleevio.profile.profileFragment
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
@@ -59,6 +60,21 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				top = insets.top,
 				bottom = insets.bottom
 			)
+		}
+
+		binding.profileDonate.setOnClickListener {
+			Toast.makeText(requireContext(), "Donate not implemented", Toast.LENGTH_SHORT)
+				.show()
+		}
+
+		binding.profileQrCode.setOnClickListener {
+			Toast.makeText(requireContext(), "Join not implemented", Toast.LENGTH_SHORT)
+				.show()
+		}
+
+		binding.profilePrivateSettings.setOnClickListener {
+			Toast.makeText(requireContext(), "Profile private settings not implemented", Toast.LENGTH_SHORT)
+				.show()
 		}
 
 		binding.profileGroups.setOnClickListener {
