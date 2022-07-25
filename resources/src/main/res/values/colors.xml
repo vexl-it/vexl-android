@@ -76,8 +76,8 @@
 	<color name="onboarding_code_activation_button_text_color">@color/white</color>
 	<color name="onboarding_code_activation_input_color">@color/carbon</color>
 
-	<color name="background_splash_screen_start_color">@color/dark_yellow</color>
-	<color name="background_splash_screen_end_color">@color/yellow</color>
+	<color name="background_splash_screen_start_color">#F8C471</color>
+	<color name="background_splash_screen_end_color">#FFDC81</color>
 	<color name="background_date_picker">@color/background</color>
 	<color name="background_button_contained_disabled">@color/primary_light</color>
 	<color name="background_button_contained">@color/primary</color>

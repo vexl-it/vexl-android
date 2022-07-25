@@ -1,16 +1,20 @@
 package cz.cleevio.profile.editNameFragment
 
 import android.widget.Toast
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentEditNameBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import lightbase.core.baseClasses.BaseFragment
+import lightbase.core.extensions.dpValueToPx
+import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
@@ -39,15 +43,27 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 
 		binding.editNameInput.editText?.doAfterTextChanged {
 			if (it?.toString()?.isBlank() == true) {
-				binding.editNameInput.editText?.error = "Error"
+				binding.editNameInput.editText?.error = "New name cannot be blank"
 			} else {
 				binding.editNameInput.editText?.error = null
-				viewModel.newName = it?.toString() ?: ""
 			}
+			viewModel.newName = it?.toString() ?: ""
 		}
 
-		binding.editNameSaveBtn.setOnClickListener {
+		binding.editNameSaveBtn.setDebouncedOnClickListener {
 			viewModel.editName()
 		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(
+				top = insets.top,
+				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
+			)
+		}
+
+	}
+
+	private companion object {
+		const val BOTTOM_EXTRA_PADDING = 40
 	}
 }

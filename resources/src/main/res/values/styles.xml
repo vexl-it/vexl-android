@@ -273,8 +273,6 @@
 		<item name="android:foreground">@drawable/ripple_mask_12</item>
 		<item name="android:paddingTop">18dp</item>
 		<item name="android:paddingBottom">16dp</item>
-		<item name="android:paddingStart">28.5dp</item>
-		<item name="android:paddingEnd">28.5dp</item>
 		<item name="android:layout_margin">16dp</item>
 		<item name="android:clickable">true</item>
 		<item name="android:focusable">true</item>

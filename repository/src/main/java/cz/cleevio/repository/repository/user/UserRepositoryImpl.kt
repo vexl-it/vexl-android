@@ -7,6 +7,7 @@ import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.*
+import cz.cleevio.network.response.user.UserResponse
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
