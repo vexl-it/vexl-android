@@ -7,7 +7,6 @@ import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.*
-import cz.cleevio.network.response.user.UserResponse
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
@@ -77,16 +76,6 @@ class UserRepositoryImpl constructor(
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified
 
 	override suspend fun createUser(user: User) {
-		userDao.insert(
-			UserEntity(
-				username = user.username,
-				avatar = user.avatar,
-				publicKey = user.publicKey
-			)
-		)
-	}
-
-	override suspend fun updateUser(user: User) {
 		userDao.insert(
 			UserEntity(
 				username = user.username,
@@ -192,4 +181,14 @@ class UserRepositoryImpl constructor(
 		request = { userRestApi.deleteUserMe() },
 		mapper = { }
 	)
+
+	private fun updateUser(user: User) {
+		userDao.insert(
+			UserEntity(
+				username = user.username,
+				avatar = user.avatar,
+				publicKey = user.publicKey
+			)
+		)
+	}
 }

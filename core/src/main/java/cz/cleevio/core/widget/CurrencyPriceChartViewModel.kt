@@ -8,7 +8,6 @@ import cz.cleevio.core.model.CryptoCurrency.Companion.getExactName
 import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.DateTimeRange
-import cz.cleevio.core.utils.getChartTimeRange
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import cz.cleevio.repository.repository.marketplace.CryptoCurrencyRepository
@@ -48,7 +47,7 @@ class CurrencyPriceChartViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			dateTimeRange = timeRange
 
-			val chartTimeRange = getChartTimeRange(timeRange)
+			//val chartTimeRange = getChartTimeRange(timeRange)
 			val mockedResponse = getMockedMarketResponse()
 /*
 			val response = cryptoCurrencyRepository.getMarketChartData(
@@ -104,7 +103,7 @@ class CurrencyPriceChartViewModel constructor(
 		}
 	}
 
-	@Suppress("MagicNumber", "UnderscoresInNumericLiterals")
+	@Suppress("UnderscoresInNumericLiterals", "MagicNumber", "LongMethod", "StringLiteralDuplication")
 	private fun getMockedMarketResponse(): List<List<Double>> {
 		val firstDataList: List<List<Double>> = listOf(
 			listOf(1657801227342.0, 19752.917470136545),
