@@ -71,7 +71,7 @@
 				android:inputType="text"
 				android:maxLines="1"
 				android:textColor="@color/white"
-				app:endIconDrawable="@drawable/ic_cross"
+				app:endIconDrawable="@drawable/ic_edit_text_delete"
 				app:endIconMode="clear_text"
 				app:endIconTint="@null"
 				app:hintEnabled="false"

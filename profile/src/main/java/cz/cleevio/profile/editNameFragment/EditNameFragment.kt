@@ -6,6 +6,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentEditNameBinding
@@ -45,11 +46,11 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 				binding.editNameInput.editText?.error = "New name cannot be blank"
 			} else {
 				binding.editNameInput.editText?.error = null
-				viewModel.newName = it?.toString() ?: ""
 			}
+			viewModel.newName = it?.toString() ?: ""
 		}
 
-		binding.editNameSaveBtn.setOnClickListener {
+		binding.editNameSaveBtn.setDebouncedOnClickListener {
 			viewModel.editName()
 		}
 
