@@ -4,8 +4,11 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.showSnackbar
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -29,6 +32,42 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
 				adapter.submitList(messages)
+			}
+		}
+		repeatScopeOnStart {
+			viewModel.chatUserIdentity.collect { chatUserIdentity ->
+				binding.profileImage.load(chatUserIdentity?.avatar) {
+					crossfade(true)
+					fallback(R.drawable.ic_baseline_person_128)
+					error(R.drawable.ic_baseline_person_128)
+					placeholder(R.drawable.ic_baseline_person_128)
+				}
+				binding.username.text = chatUserIdentity?.name
+			}
+		}
+		repeatScopeOnStart {
+			viewModel.hasPendingIdentityRevealRequests.collect { pending ->
+				if (pending) {
+					// TODO finish the correct graphics (I'm afraid it will have to be custom view, that graphics is too complicated for snackbar)
+					showSnackbar(
+						container = binding.container,
+						message = getString(R.string.chat_message_identity_reveal_request),
+						duration = Snackbar.LENGTH_INDEFINITE,
+						buttonText = R.string.chat_message_identity_reveal_pending_tap,
+						action = {
+							showBottomDialog(
+								RevealIdentityBottomSheetDialog(
+									onApprove = {
+										viewModel.resolveIdentityRevealRequest(true)
+									},
+									onReject = {
+										viewModel.resolveIdentityRevealRequest(false)
+									}
+								)
+							)
+						}
+					)
+				}
 			}
 		}
 	}
@@ -65,7 +104,20 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer?.commonFriends.orEmpty()))
 		}
 		binding.revealIdentityBtn.setOnClickListener {
-			showBottomDialog(IdentityRequestBottomSheetDialog())
+			showBottomDialog(IdentityRequestBottomSheetDialog(
+				senderPublicKey = viewModel.senderPublicKey,
+				receiverPublicKey = viewModel.receiverPublicKey,
+				inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey,
+				onSendSuccess = {
+					showSnackbar(
+						container = binding.container,
+						message = getString(R.string.chat_identity_reveal_sent),
+						duration = Snackbar.LENGTH_INDEFINITE,
+						buttonText = R.string.chat_message_identity_reveal_pending_ok,
+						action = {}
+					)
+				}
+			))
 		}
 		binding.deleteChatBtn.setOnClickListener {
 			showBottomDialog(

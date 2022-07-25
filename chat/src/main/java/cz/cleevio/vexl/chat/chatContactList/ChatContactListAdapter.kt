@@ -29,7 +29,7 @@ class ChatContactListAdapter constructor(
 				error(R.drawable.ic_baseline_person_128)
 				placeholder(R.drawable.ic_baseline_person_128)
 			}
-			binding.chatContactName.text = item.user?.username
+			binding.chatContactName.text = item.user?.name
 			binding.chatLastMessage.text = item.message.text
 
 			binding.container.setOnClickListener {

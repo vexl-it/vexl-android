@@ -19,6 +19,7 @@ val chatModule = module {
 	viewModel { (communicationRequest: CommunicationRequest) ->
 		ChatViewModel(
 			communicationRequest = communicationRequest,
+			userRepository = get(),
 			chatRepository = get()
 		)
 	}

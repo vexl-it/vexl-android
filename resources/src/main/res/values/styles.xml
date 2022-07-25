@@ -612,6 +612,20 @@
 		<item name="android:background">@drawable/background_chat_sent_message</item>
 	</style>
 
+	<style name="Widget.Cleevio.Chat.RevealIdentity.Heading" parent="">
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Description</item>
+	</style>
+
+	<style name="Widget.Cleevio.Chat.RevealIdentity.SubHeading" parent="">
+		<item name="android:textColor">@color/white</item>
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.RequestIdentity.SubHeading</item>
+	</style>
+
+	<style name="Widget.Cleevio.Chat.RevealIdentity.HorizontalDivider" parent="Widget.Cleevio.Vexl.HorizontalDivider">
+		<item name="android:background">@color/gray_3</item>
+	</style>
+
 
 	<style name="Widget.Vexl.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 		<item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Cleevio.Vexl.TextInput</item>

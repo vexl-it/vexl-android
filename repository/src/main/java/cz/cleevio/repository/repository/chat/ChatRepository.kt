@@ -4,7 +4,9 @@ import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.CommunicationRequest
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 
 interface ChatRepository {
@@ -52,4 +54,18 @@ interface ChatRepository {
 	suspend fun getMyInboxKeys(): List<String>
 
 	suspend fun getKeyPairByMyPublicKey(myPublicKey: String): KeyPair?
+
+	fun getPendingIdentityRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean>
+
+	fun solveIdentityRevealRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	)
+
+	fun getChatUserIdentityFlow(inboxKey: String, contactPublicKey: String): Flow<ChatUserIdentity?>
 }

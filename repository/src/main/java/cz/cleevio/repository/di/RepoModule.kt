@@ -63,7 +63,8 @@ val repoModule = module {
 			myOfferDao = get(),
 			requestedOfferDao = get(),
 			offerDao = get(),
-			encryptedPreferenceRepository = get()
+			encryptedPreferenceRepository = get(),
+			chatUserDao = get()
 		)
 	}
 

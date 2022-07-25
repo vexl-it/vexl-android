@@ -41,7 +41,7 @@ class RequestOfferViewModel constructor(
 					senderPublicKey = encryptedPreferenceRepository.userPublicKey,
 					recipientPublicKey = offerPublicKey,
 					text = text,
-					type = MessageType.COMMUNICATION_REQUEST,
+					type = MessageType.REQUEST_MESSAGING,
 					time = System.currentTimeMillis(),
 					isMine = true,
 					isProcessed = false

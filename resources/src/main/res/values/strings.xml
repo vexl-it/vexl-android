@@ -285,4 +285,5 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="groups_join_description">When you join %s group, you’ll see offers from other participants.</string>
     <string name="groups_join_no">Nope</string>
     <string name="groups_join_yes">Yes</string>
+    <string name="groups_scan_not_found">Nenalezen kód skupiny</string>
 </resources>

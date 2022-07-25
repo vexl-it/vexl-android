@@ -3,6 +3,7 @@ package cz.cleevio.repository.repository.chat
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.dao.*
+import cz.cleevio.cache.entity.ChatUserIdentityEntity
 import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.entity.RequestedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -15,17 +16,17 @@ import cz.cleevio.network.request.chat.*
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.offer.fromCache
+import cz.cleevio.repository.repository.UsernameUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
 	private val notificationDao: NotificationDao,
 	private val chatMessageDao: ChatMessageDao,
+	private val chatUserDao: ChatUserDao,
 	private val myOfferDao: MyOfferDao,
 	private val requestedOfferDao: RequestedOfferDao,
 	private val offerDao: OfferDao,
@@ -178,21 +179,55 @@ class ChatRepositoryImpl constructor(
 				mapper = { it?.messages?.map { message -> message.fromNetwork(keyPair.publicKey) } },
 				//save messages to DB
 				doOnSuccess = { messages ->
-					messages?.map { it.toCache() }?.let {
-						chatMessageDao.replaceAll(it)
-					}
-
-					//special handling for DELETE_CHAT
-					messages
-						?.filter { it.type == MessageType.DELETE_CHAT }
-						?.forEach { deleteMessage ->
-							//delete all messages from and for this user
-							chatMessageDao.deleteByKeys(
-								inboxPublicKey = deleteMessage.inboxPublicKey,
-								firstKey = deleteMessage.senderPublicKey,
-								secondKey = deleteMessage.recipientPublicKey
-							)
+					CoroutineScope(Dispatchers.IO).launch {
+						messages?.map { it.toCache() }?.let {
+							chatMessageDao.replaceAll(it)
 						}
+
+						//special handling for DELETE_CHAT
+						messages
+							?.filter { it.type == MessageType.DELETE_CHAT }
+							?.forEach { deleteMessage ->
+								//delete all messages from and for this user
+								chatMessageDao.deleteByKeys(
+									inboxPublicKey = deleteMessage.inboxPublicKey,
+									firstKey = deleteMessage.senderPublicKey,
+									secondKey = deleteMessage.recipientPublicKey
+								)
+							}
+
+						//special handling for APPROVE_MESSAGING - create anonymized user for the other user
+						messages
+							?.filter {
+								it.type == MessageType.APPROVE_MESSAGING
+							}?.forEach { message ->
+								// create anonymous identity
+								chatUserDao.replace(
+									ChatUserIdentityEntity(
+										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
+										inboxKey = message.inboxPublicKey,
+										name = UsernameUtils.generateName(),
+										avatar = null,
+										deAnonymized = false
+									)
+								)
+							}
+
+						//special handling for REQUEST_REVEAL and APPROVE_REVEAL - deanonymize the other user
+						messages
+							?.filter {
+								it.type == MessageType.REQUEST_REVEAL || it.type == MessageType.APPROVE_REVEAL
+							}?.forEach { message ->
+								message.deanonymizedUser?.let { user ->
+									chatUserDao.deAnonymizeUser(
+										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
+										inboxKey = message.inboxPublicKey,
+										name = user.name!!, // There has to be some name
+										avatar = user.image
+									)
+								}
+							}
+					}
 				}
 			)
 			if (messagesResponse.status is Status.Error) {
@@ -363,6 +398,16 @@ class ChatRepositoryImpl constructor(
 				mapper = { },
 				doOnSuccess = {
 					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
+					// create anonymous identity
+					chatUserDao.replace(
+						ChatUserIdentityEntity(
+							contactPublicKey = message.recipientPublicKey, // recipient's key, because of it's outgoing message
+							inboxKey = message.inboxPublicKey,
+							name = UsernameUtils.generateName(),
+							avatar = null,
+							deAnonymized = false
+						)
+					)
 				}
 			)
 
@@ -418,9 +463,7 @@ class ChatRepositoryImpl constructor(
 					secondKey = contactPublicKey
 				)?.fromCache()
 
-				if (latestMessage != null && latestMessage.type != MessageType.COMMUNICATION_REQUEST) {
-					//todo: check if we know user's identity. Maybe go over all messages from this user
-					// and look for type ANON_REQUEST_RESPONSE?
+				if (latestMessage != null && latestMessage.type != MessageType.REQUEST_MESSAGING) {
 					result.add(
 						ChatListUser(
 							message = latestMessage,
@@ -429,7 +472,8 @@ class ChatRepositoryImpl constructor(
 									it.offer.offerPublicKey == latestMessage.senderPublicKey
 							}.map {
 								it.offer.fromCache(it.locations, it.commonFriends)
-							}.first()
+							}.first(),
+							user = chatUserDao.getUserIdentity(latestMessage.inboxPublicKey, contactPublicKey)?.fromCache()
 						)
 					)
 				}
@@ -437,6 +481,38 @@ class ChatRepositoryImpl constructor(
 		}
 
 		return result.toList()
+	}
+
+	override fun getChatUserIdentityFlow(inboxKey: String, contactPublicKey: String): Flow<ChatUserIdentity?> {
+		return chatUserDao.getUserIdentityFlow(inboxKey, contactPublicKey).map {
+			it?.fromCache()
+		}
+	}
+
+	override fun getPendingIdentityRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean> {
+		return chatMessageDao.listPendingIdentityRevealsBySenders(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.isNotEmpty()
+		}
+	}
+
+	override fun solveIdentityRevealRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	) {
+		chatMessageDao.solvePendingIdentityRevealsBySenders(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		)
 	}
 
 	override suspend fun deleteMessage(communicationRequest: CommunicationRequest) {

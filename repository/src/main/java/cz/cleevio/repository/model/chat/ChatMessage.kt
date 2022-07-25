@@ -34,12 +34,15 @@ data class ChatUser constructor(
 ) : Parcelable
 
 enum class MessageType {
-	TEXT, IMAGE, ANON_REQUEST, ANON_REQUEST_RESPONSE, COMMUNICATION_REQUEST,
-	COMMUNICATION_REQUEST_RESPONSE,
-
-	// TODO: change to this
-	// COMMUNICATION_REQUEST_APPROVED, COMMUNICATION_REQUEST_DENIED,
-	DELETE_CHAT, BROKEN
+	MESSAGE,
+	REQUEST_REVEAL,
+	APPROVE_REVEAL,
+	DISAPPROVE_REVEAL,
+	REQUEST_MESSAGING,
+	APPROVE_MESSAGING,
+	DISAPPROVE_MESSAGING,
+	DELETE_CHAT,
+	BROKEN
 }
 
 fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
@@ -51,7 +54,8 @@ fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
 	return chatMessage?.fromNetwork(
 		recipientPublicKey = inboxPublicKey,
 		inboxPublicKey = inboxPublicKey,
-		senderPublicKey = senderPublicKey
+		senderPublicKey = senderPublicKey,
+		messageType = this.messageType
 	) ?: ChatMessage(
 		uuid = "broken", type = MessageType.BROKEN, time = System.currentTimeMillis(),
 		inboxPublicKey = "", senderPublicKey = "", recipientPublicKey = "",
@@ -62,7 +66,8 @@ fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
 fun ChatMessageRequest.fromNetwork(
 	recipientPublicKey: String,
 	inboxPublicKey: String,
-	senderPublicKey: String
+	senderPublicKey: String,
+	messageType: String
 ): ChatMessage {
 	return ChatMessage(
 		uuid = this.uuid,
@@ -71,7 +76,7 @@ fun ChatMessageRequest.fromNetwork(
 		recipientPublicKey = recipientPublicKey,
 		text = this.text,
 		image = this.image,
-		type = MessageType.valueOf(this.type),
+		type = MessageType.valueOf(messageType),
 		time = this.time,
 		deanonymizedUser = this.deanonymizedUser?.fromNetwork(),
 		isMine = false,
@@ -84,7 +89,6 @@ fun ChatMessage.toNetwork(): String {
 		uuid = this.uuid,
 		text = this.text,
 		image = this.image,
-		type = this.type.name,
 		time = this.time,
 		deanonymizedUser = this.deanonymizedUser?.toNetwork()
 	)
