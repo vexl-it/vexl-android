@@ -138,7 +138,7 @@
 						android:layout_width="0dp"
 						android:layout_height="wrap_content"
 						app:title="DEBUG: Groups"
-						app:icon="@drawable/ic_profile_edit_name"
+						app:icon="@drawable/ic_profile_edit"
 						app:line_visibility="true"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +151,7 @@
 						app:title="@string/profile_change_picture"
 						app:icon="@drawable/ic_profile_image"
 						app:line_visibility="true"
-						app:layout_constraintTop_toBottomOf="@id/profile_change_picture"
+						app:layout_constraintTop_toBottomOf="@id/profile_groups"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toStartOf="parent" />
 

@@ -618,8 +618,8 @@
 		<item name="boxBackgroundColor">@color/gray_1</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.InputText</item>
 		<item name="placeholderTextAppearance">@style/TextAppearance.Vexl.InputPlaceholderText</item>
-		<item name="boxStrokeColor">@color/stroke_color_input_states</item>
-		<item name="boxStrokeWidth">@dimen/stroke_width_input</item>
+		<item name="boxStrokeColor">@color/white</item>
+		<item name="boxStrokeWidth">0dp</item>
 	</style>
 
 </resources>
