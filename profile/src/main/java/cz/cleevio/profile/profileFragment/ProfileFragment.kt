@@ -1,6 +1,7 @@
 package cz.cleevio.profile.profileFragment
 
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
@@ -8,15 +9,16 @@ import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.sendEmailToSupport
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.core.widget.BlockUserBottomSheetDialog
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentProfileBinding
+import cz.cleevio.profile.donateFragment.DonateBottomSheetDialog
+import cz.cleevio.profile.joinFragment.JoinBottomSheetDialog
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
@@ -63,13 +65,19 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileDonate.setOnClickListener {
-			Toast.makeText(requireContext(), "Donate not implemented", Toast.LENGTH_SHORT)
-				.show()
+			showBottomDialog(
+				DonateBottomSheetDialog {
+					if (it) {
+						startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://seznam.cz")))
+					}
+				}
+			)
 		}
 
 		binding.profileQrCode.setOnClickListener {
-			Toast.makeText(requireContext(), "Join not implemented", Toast.LENGTH_SHORT)
-				.show()
+			showBottomDialog(
+				JoinBottomSheetDialog()
+			)
 		}
 
 		binding.profilePrivateSettings.setOnClickListener {
@@ -94,11 +102,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			)
 		}
 
-		binding.profileSetPin.setOnClickListener {
-			Toast.makeText(requireContext(), "Pin not implemented", Toast.LENGTH_SHORT)
-				.show()
-		}
-
 		binding.profileContacts.setOnClickListener {
 			Toast.makeText(requireContext(), "Contact import not implemented", Toast.LENGTH_SHORT)
 				.show()
@@ -107,6 +110,40 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		binding.profileFacebook.setOnClickListener {
 			Toast.makeText(requireContext(), "Facebook import not implemented", Toast.LENGTH_SHORT)
 				.show()
+		}
+
+		binding.profileSetPin.setOnClickListener {
+			Toast.makeText(requireContext(), "Pin not implemented", Toast.LENGTH_SHORT)
+				.show()
+		}
+
+		binding.profileSetCurrency.setOnClickListener {
+			Toast.makeText(requireContext(), "Currency changer not implemented", Toast.LENGTH_SHORT)
+				.show()
+		}
+
+		binding.profileAllowScreenshots.setOnClickListener {
+			Toast.makeText(requireContext(), "Allow screenshots not implemented", Toast.LENGTH_SHORT)
+				.show()
+		}
+
+		binding.profileTermsAndConditions.setOnClickListener {
+			Toast.makeText(requireContext(), "TAC not implemented", Toast.LENGTH_SHORT)
+				.show()
+		}
+
+		binding.profileFaq.setOnClickListener {
+			Toast.makeText(requireContext(), "FAQ not implemented", Toast.LENGTH_SHORT)
+				.show()
+		}
+
+		binding.profileReportIssue.setOnClickListener {
+			sendEmailToSupport(
+				email = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_email),
+				subject = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_subject),
+				body = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_text)
+
+			)
 		}
 
 		binding.profileRequestData.setOnClickListener {
