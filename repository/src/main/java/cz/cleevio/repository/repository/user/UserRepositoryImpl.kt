@@ -144,8 +144,51 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun updateUser(username: String, avatar: String?, avatarImageExtension: String?): Resource<User> {
+		return tryOnline(
+			doOnSuccess = {
+				it?.let {
+					updateUser(it)
+				}
+			},
+			mapper = {
+				it?.fromNetwork()
+			},
+			request = {
+				if (avatar != null && avatarImageExtension != null) {
+					userRestApi.putUserMe(
+						UserRequest(
+							username = username,
+							avatar = UserAvatar(
+								data = avatar,
+								extension = avatarImageExtension
+							)
+						)
+					)
+				} else {
+					userRestApi.putUserMe(
+						UserRequest(
+							username = username,
+							avatar = null
+						)
+					)
+				}
+			}
+		)
+	}
+
 	override suspend fun deleteMe(): Resource<Unit> = tryOnline(
 		request = { userRestApi.deleteUserMe() },
 		mapper = { }
 	)
+
+	private fun updateUser(user: User) {
+		userDao.insert(
+			UserEntity(
+				username = user.username,
+				avatar = user.avatar,
+				publicKey = user.publicKey
+			)
+		)
+	}
 }

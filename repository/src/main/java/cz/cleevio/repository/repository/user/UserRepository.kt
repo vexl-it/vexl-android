@@ -39,5 +39,7 @@ interface UserRepository {
 
 	suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable>
 
+	suspend fun updateUser(username: String, avatar: String? = null, avatarImageExtension: String? = null): Resource<User>
+
 	suspend fun deleteMe(): Resource<Unit>
 }

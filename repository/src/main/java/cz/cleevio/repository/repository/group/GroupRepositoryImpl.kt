@@ -17,7 +17,6 @@ import cz.cleevio.repository.model.group.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
 class GroupRepositoryImpl constructor(
 	val groupApi: GroupApi,
 	val groupDao: GroupDao,

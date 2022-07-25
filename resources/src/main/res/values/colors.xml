@@ -57,6 +57,7 @@
 	<color name="yellow_100">#FCCD6C</color>
 	<color name="yellow_100_opacity_0">#00FCCD6C</color>
 	<color name="yellow_darker">#957A44</color>
+	<color name="grey_0">#131313</color>
 
 	<!-- PIN -->
 	<color name="pin_bubble_color">@color/gray_20</color>
@@ -86,6 +87,7 @@
 	<color name="background_switch_thumb_off">@color/primary_light</color>
 	<color name="background_switch_track_on">@color/rose</color>
 	<color name="background_switch_track_off">@color/rose</color>
+	<color name="background_profile_card">@color/grey_0</color>
 	<color name="border_color_button_outlined_disabled">#4DFFFFFF</color>
 	<color name="border_color_button_outlined">@color/primary_light</color>
 	<color name="icon_color_bottom_nav_menu_active">@color/primary</color>

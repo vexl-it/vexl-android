@@ -613,4 +613,13 @@
 	</style>
 
 
+	<style name="Widget.Vexl.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Cleevio.Vexl.TextInput</item>
+		<item name="boxBackgroundColor">@color/gray_1</item>
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.InputText</item>
+		<item name="placeholderTextAppearance">@style/TextAppearance.Vexl.InputPlaceholderText</item>
+		<item name="boxStrokeColor">@color/white</item>
+		<item name="boxStrokeWidth">0dp</item>
+	</style>
+
 </resources>

@@ -5,6 +5,15 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:background="@drawable/background_main_chart"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHeight_percent="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
 	<cz.cleevio.core.widget.CurrencyPriceChartWidget
 		android:id="@+id/price_chart"
 		android:layout_width="match_parent"
@@ -15,6 +24,7 @@
 
 	<androidx.core.widget.NestedScrollView
 		android:id="@+id/nested_scroll_view"
+		style="@style/Widget.Vexl.MainCardView"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:fillViewport="true"
@@ -25,7 +35,6 @@
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="@color/black"
 			android:padding="16dp">
 
 			<cz.cleevio.core.widget.FilterTitleWidget
