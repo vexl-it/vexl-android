@@ -44,11 +44,17 @@
 		android:label="CameraFragment"
 		tools:layout="@layout/fragment_camera">
 
-		<!--		<action-->
-		<!--			android:id="@+id/action_groupFragment_to_cameraFragment"-->
-		<!--			app:destination="@id/groupFragment" />-->
+		<action
+			android:id="@+id/action_cameraFragment_to_joinGroupCodeFragment"
+			app:destination="@id/joinGroupCode" />
 
 	</fragment>
+
+	<fragment
+		android:id="@+id/joinGroupCode"
+		android:name="cz.cleevio.profile.joinGroupFragment.JoinGroupCodeFragment"
+		android:label="JoinGroupCode"
+		tools:layout="@layout/fragment_join_group_code" />
 
 	<fragment
 		android:id="@+id/editNameFragment"

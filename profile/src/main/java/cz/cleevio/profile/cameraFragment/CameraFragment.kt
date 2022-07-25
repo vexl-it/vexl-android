@@ -24,6 +24,9 @@ import org.koin.core.component.KoinComponent
 import timber.log.Timber
 import java.io.IOException
 
+const val CODE_LENGTH = 6
+const val DEBUG_LOGO = "https://design.chaincamp.cz/assets/img/logos/chaincamp-symbol-purple-rgb.svg?h=8b40a6ef383113c8e50e13f52566cade"
+
 class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 
 	private lateinit var cameraSource: CameraSource
@@ -48,7 +51,10 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 		}
 
 		binding.cameraEnterCode.setOnClickListener {
-			//TODO: open input code screen
+			//open input code screen
+			findNavController().navigate(
+				CameraFragmentDirections.actionCameraFragmentToJoinGroupCodeFragment()
+			)
 		}
 	}
 
@@ -110,7 +116,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 	private fun processRawValue(rawValue: String) {
 		try {
 			//check that raw value is 6 numbers
-			if (rawValue.isNotBlank() && rawValue.filter { it.isDigit() }.length == 6) {
+			if (rawValue.isNotBlank() && rawValue.filter { it.isDigit() }.length == CODE_LENGTH) {
 				found = true
 				requireActivity().runOnUiThread {
 					cameraSource.stop()
@@ -119,7 +125,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 					showBottomDialog(
 						JoinGroupBottomSheetDialog(
 							groupName = "TODO: $rawValue",
-							groupLogo = "https://design.chaincamp.cz/assets/img/logos/chaincamp-symbol-purple-rgb.svg?h=8b40a6ef383113c8e50e13f52566cade",
+							groupLogo = DEBUG_LOGO,
 							groupCode = rawValue.toLong(),
 						)
 					)

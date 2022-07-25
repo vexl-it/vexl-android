@@ -13,6 +13,7 @@ object UsernameUtils {
 		"na", "no",
 		"ro", "ri", "ru",
 		"sa", "se", "su",
+		"shi", "she", "sha", "sho",
 		"ta", "te", "to",
 		"yu",
 		"za", "zo"
