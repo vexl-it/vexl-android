@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="128dp"
+	android:height="128dp"
+	android:viewportWidth="128"
+	android:viewportHeight="128">
+	<stroke
+		android:width="1dp"
+		android:color="#AFAFAF"
+		android:dashWidth="10dp"
+		android:dashGap="6dp" />
+	<padding
+		android:bottom="7dp"
+		android:left="7dp"
+		android:right="7dp"
+		android:top="7dp" />
+	<corners android:radius="29dp" />
+</shape>

@@ -13,10 +13,10 @@
 		android:layout_height="0dp"
 		android:layout_marginHorizontal="8dp"
 		android:layout_marginTop="20dp"
-		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toTopOf="@id/continue_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintVertical_chainStyle="spread_inside">
 
 		<androidx.core.widget.NestedScrollView
@@ -79,14 +79,14 @@
 					android:layout_gravity="center"
 					android:layout_marginTop="40dp"
 					android:layout_marginBottom="64dp"
-					android:scaleType="fitCenter"
-					android:src="@drawable/profile_picture_import"
+					android:scaleType="centerCrop"
+					android:src="@drawable/ic_profile_avatar_placeholder"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintDimensionRatio="1:1"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toBottomOf="@id/avatar_description"
-					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.RoundedComponent" />
+					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 

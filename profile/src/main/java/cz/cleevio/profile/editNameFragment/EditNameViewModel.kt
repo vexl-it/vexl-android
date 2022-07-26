@@ -11,8 +11,7 @@ import kotlinx.coroutines.launch
 
 
 class EditNameViewModel constructor(
-	private val userRepository: UserRepository,
-	val navMainGraphModel: NavMainGraphModel,
+	private val userRepository: UserRepository
 ) : BaseViewModel() {
 
 	private val _wasSuccessful = Channel<Boolean>(Channel.CONFLATED)

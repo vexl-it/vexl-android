@@ -83,6 +83,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
 
     <!-- Profile Edit Avatar -->
     <string name="profile_edit_avatar_title">Change profile picture</string>
+    <string name="profile_edit_avatar_subtitle">Space for additional copy. You can lorem ipsum dolor sit ametum roma von.</string>
     <string name="profile_edit_avatar_action">Upload new photo</string>
 
     <!-- Profile Delete Account -->

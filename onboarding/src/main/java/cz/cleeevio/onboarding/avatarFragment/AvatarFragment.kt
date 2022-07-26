@@ -53,9 +53,11 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		binding.avatarTitle.text = getString(R.string.avatar_welcome, args.username)
 
 		binding.avatarImage.setOnClickListener {
-			findNavController().navigate(
-				AvatarFragmentDirections.proceedToTakePhotoFragment()
-			)
+			lifecycleScope.launchWhenResumed {
+				findNavController().navigate(
+					AvatarFragmentDirections.proceedToTakePhotoFragment()
+				)
+			}
 		}
 
 		binding.continueBtn.setOnClickListener {

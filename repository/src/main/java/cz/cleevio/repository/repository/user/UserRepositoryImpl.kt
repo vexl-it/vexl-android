@@ -146,7 +146,7 @@ class UserRepositoryImpl constructor(
 	}
 
 	override suspend fun updateUser(
-		username: String, avatar: String?, avatarImageExtension: String?
+		username: String?, avatar: String?, avatarImageExtension: String?
 	): Resource<User> {
 		return tryOnline(
 			doOnSuccess = {
@@ -161,7 +161,7 @@ class UserRepositoryImpl constructor(
 				if (avatar != null && avatarImageExtension != null) {
 					userRestApi.putUserMe(
 						UserRequest(
-							username = username,
+							username = username ?: getUser()?.username ?: "",
 							avatar = UserAvatar(
 								data = avatar,
 								extension = avatarImageExtension
@@ -171,7 +171,7 @@ class UserRepositoryImpl constructor(
 				} else {
 					userRestApi.putUserMe(
 						UserRequest(
-							username = username,
+							username = username ?: getUser()?.username ?: "",
 							avatar = null
 						)
 					)

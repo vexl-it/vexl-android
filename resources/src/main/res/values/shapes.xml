@@ -28,6 +28,11 @@
 		<item name="cornerSize">12dp</item>
 	</style>
 
+	<style name="ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">29dp</item>
+	</style>
+
 	<style name="ShapeAppearanceOverlay.Cleevio.Vexl.IdentityReveal.Rejected.Image" parent="">
 		<item name="cornerFamily">rounded</item>
 		<item name="cornerSize">12dp</item>

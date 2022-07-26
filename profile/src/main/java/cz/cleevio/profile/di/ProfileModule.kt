@@ -1,5 +1,6 @@
 package cz.cleevio.profile.di
 
+import cz.cleevio.profile.editAvatarFragment.EditAvatarViewModel
 import cz.cleevio.profile.editNameFragment.EditNameViewModel
 import cz.cleevio.profile.groupFragment.GroupViewModel
 import cz.cleevio.profile.profileFragment.ProfileViewModel
@@ -25,6 +26,12 @@ val profileModule = module {
 
 	viewModel {
 		EditNameViewModel(
+			userRepository = get()
+		)
+	}
+
+	viewModel {
+		EditAvatarViewModel(
 			userRepository = get(),
 			navMainGraphModel = get()
 		)
