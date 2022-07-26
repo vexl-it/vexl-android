@@ -119,6 +119,12 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="user_profile_report_issue_subtitle">Feel free to get in touch with our support.</string>
     <string name="user_profile_report_issue_confirm">Got it</string>
 
+    <!-- Request known data -->
+    <string name="user_profile_request_data_title">Request known data</string>
+    <string name="user_profile_request_data_subtitle">Download package with everything we know about you.</string>
+    <string name="user_profile_request_confirm_button">Download</string>
+    <string name="user_profile_request_dismiss_button">Back</string>
+
     <!-- Menu -->
     <string name="menu_marketplace">Marketplace</string>
     <string name="menu_chat">Chat</string>
