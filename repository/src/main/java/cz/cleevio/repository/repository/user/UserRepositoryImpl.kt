@@ -145,7 +145,9 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun updateUser(username: String, avatar: String?, avatarImageExtension: String?): Resource<User> {
+	override suspend fun updateUser(
+		username: String, avatar: String?, avatarImageExtension: String?
+	): Resource<User> {
 		return tryOnline(
 			doOnSuccess = {
 				it?.let {
@@ -183,9 +185,10 @@ class UserRepositoryImpl constructor(
 		mapper = { }
 	)
 
-	private fun updateUser(user: User) {
-		userDao.insert(
+	private suspend fun updateUser(user: User) {
+		userDao.update(
 			UserEntity(
+				id = getUserId() ?: 0,
 				username = user.username,
 				avatar = user.avatar,
 				publicKey = user.publicKey

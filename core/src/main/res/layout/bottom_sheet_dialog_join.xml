@@ -37,7 +37,7 @@
 				android:layout_marginBottom="12dp"
 				android:gravity="center"
 				android:text="@string/profile_join_vexl_title"
-				android:textAppearance="@style/TextAppearance.Vexl.SubScreenHeading"
+				android:textAppearance="@style/TextAppearance.Vexl.Profile.DialogHeading"
 				android:textColor="@color/black"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"

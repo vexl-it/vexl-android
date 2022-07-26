@@ -17,6 +17,7 @@ import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentProfileBinding
 import cz.cleevio.profile.donateFragment.DonateBottomSheetDialog
 import cz.cleevio.profile.joinFragment.JoinBottomSheetDialog
+import cz.cleevio.profile.reportFragment.ReportBottomSheetDialog
 import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -138,11 +139,8 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileReportIssue.setOnClickListener {
-			sendEmailToSupport(
-				email = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_email),
-				subject = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_subject),
-				body = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_text)
-
+			showBottomDialog(
+				ReportBottomSheetDialog()
 			)
 		}
 

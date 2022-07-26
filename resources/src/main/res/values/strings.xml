@@ -113,8 +113,11 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <!-- Report issue -->
     <string name="user_profile_report_issue_subject">Vexl: Issue report</string>
     <string name="user_profile_report_issue_text">I\'m contacting you due to ...</string>
-    <string name="user_profile_report_issue_email">test@test.com</string>
+    <string name="user_profile_report_issue_email">support@vexl.it</string>
     <string name="user_profile_report_issue_error_no_app_found">No email application found</string>
+    <string name="user_profile_report_issue_title">Something went wrong?</string>
+    <string name="user_profile_report_issue_subtitle">Feel free to get in touch with our support.</string>
+    <string name="user_profile_report_issue_confirm">Got it</string>
 
     <!-- Menu -->
     <string name="menu_marketplace">Marketplace</string>
@@ -288,4 +291,5 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="groups_join_no">Nope</string>
     <string name="groups_join_yes">Yes</string>
     <string name="groups_scan_not_found">Nenalezen kód skupiny</string>
+    <string name="groups_code_not_found">Neplatný kód</string>
 </resources>
