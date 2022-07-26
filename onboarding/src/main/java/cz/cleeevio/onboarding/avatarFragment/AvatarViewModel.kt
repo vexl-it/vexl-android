@@ -1,12 +1,6 @@
 package cz.cleeevio.onboarding.avatarFragment
 
 import android.content.ContentResolver
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
-import android.util.Base64
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.base.BaseAvatarViewModel

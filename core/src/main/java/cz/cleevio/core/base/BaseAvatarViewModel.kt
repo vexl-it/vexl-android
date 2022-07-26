@@ -8,14 +8,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.network.data.Status
-import cz.cleevio.network.request.user.UserAvatar
-import cz.cleevio.repository.model.user.User
-import cz.cleevio.repository.repository.chat.ChatRepository
-import cz.cleevio.repository.repository.user.UserRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
