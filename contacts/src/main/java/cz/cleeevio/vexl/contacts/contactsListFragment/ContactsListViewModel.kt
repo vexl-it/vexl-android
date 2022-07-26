@@ -86,6 +86,7 @@ class ContactsListViewModel constructor(
 
 	fun syncContacts(contentResolver: ContentResolver, openedFromScreen: OpenedFromScreen) {
 		viewModelScope.launch(Dispatchers.IO) {
+			_progressFlow.emit(true)
 			val response = contactRepository.syncContacts(contentResolver)
 			when (response.status) {
 				is Status.Success -> {
@@ -101,6 +102,7 @@ class ContactsListViewModel constructor(
 					//do nothing?
 				}
 			}
+			_progressFlow.emit(false)
 		}
 	}
 

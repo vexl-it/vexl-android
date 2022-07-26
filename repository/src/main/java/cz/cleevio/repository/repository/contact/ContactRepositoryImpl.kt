@@ -112,6 +112,7 @@ class ContactRepositoryImpl constructor(
 		}
 		cursor?.close()
 
+		Timber.tag("ContactSync").d("Contacts moved from cursor to list")
 		val result = contactList
 			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
 			.apply {

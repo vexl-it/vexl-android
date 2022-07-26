@@ -8,13 +8,17 @@ import timber.log.Timber
 import java.util.*
 
 class PhoneNumberUtils constructor(
-	private val telephonyManager: TelephonyManager
+	telephonyManager: TelephonyManager
 ) {
 	private val phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
 
+	//alternative is telephonyManager.simCountryIso
+	private val defaultRegion = "+" + telephonyManager.networkCountryIso.uppercase(Locale.getDefault())
+
 	fun isPhoneValid(phoneNumber: String): Boolean {
-		return phoneNumber.parsePhoneNumber(phoneUtil) != null &&
-			phoneUtil.isValidNumber(phoneNumber.parsePhoneNumber(phoneUtil))
+		return phoneNumber.parsePhoneNumber(phoneUtil)?.let {
+			phoneUtil.isValidNumber(it)
+		} ?: false
 	}
 
 	fun getFormattedPhoneNumber(phoneNumber: String): String {
@@ -24,9 +28,7 @@ class PhoneNumberUtils constructor(
 
 	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
 		return try {
-			//alternative is telephonyManager.networkCountryIso
-			//phoneUtil.parse(this, telephonyManager.simCountryIso.uppercase(Locale.getDefault()))
-			phoneUtil.parse(this, "+" + telephonyManager.networkCountryIso.uppercase(Locale.getDefault()))
+			phoneUtil.parse(this, defaultRegion)
 		} catch (e: NumberParseException) {
 			Timber.e("NumberParseException was thrown: $e")
 			null
