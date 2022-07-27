@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.databinding.WidgetFilterTitleBinding
 import cz.cleevio.core.model.OfferType
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class FilterTitleWidget @JvmOverloads constructor(
 	context: Context,

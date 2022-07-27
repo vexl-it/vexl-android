@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="Widget.LightBase.Camera.TextView.PhotoOptions.Title" parent="">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Camera.TextView.PhotoOptions.Title</item>
+	</style>
+
+	<style name="Widget.LightBase.Camera.TextView.PhotoOptions.Option" parent="">
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:background">?attr/selectableItemBackground</item>
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Camera.TextView.PhotoOptions.Option</item>
+		<item name="android:gravity">center_vertical</item>
+	</style>
+
+	<style name="Widget.LightBase.Camera.ImageView.PhotoOptions.Close" parent="">
+		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+		<item name="android:clickable">true</item>
+		<item name="android:contentDescription">@string/photo_options_close</item>
+		<item name="android:focusable">true</item>
+		<item name="android:padding">4dp</item>
+		<item name="tint">?android:attr/textColorPrimary</item>
+	</style>
+
+	<style name="Widget.LightBase.Camera.ImageButton.PhotoPreview.Close" parent="">
+		<item name="android:layout_width">56dp</item>
+		<item name="android:layout_height">56dp</item>
+		<item name="android:layout_marginStart">16dp</item>
+		<item name="android:layout_marginTop">16dp</item>
+		<item name="android:background">@drawable/background_black_semitransparent</item>
+		<item name="android:foreground">@drawable/ripple_mask_rounded</item>
+		<item name="android:padding">12dp</item>
+		<item name="android:src">@drawable/ic_baseline_clear_24</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+	</style>
+
+	<style name="Widget.LightBase.Camera.TextRecognition.Button.Recognize" parent="" />
+
+	<style name="Widget.LightBase.Camera.TextRecognition.Button.TryAgain" parent="" />
+
+	<style name="Widget.LightBase.Camera.TextRecognition.Button.Confirm" parent="" />
+
+</resources>

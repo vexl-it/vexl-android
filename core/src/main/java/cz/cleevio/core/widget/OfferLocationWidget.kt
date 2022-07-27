@@ -9,7 +9,7 @@ import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferLocationBinding
 import cz.cleevio.core.model.LocationValue
 import cz.cleevio.repository.model.offer.Location
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
 class OfferLocationWidget @JvmOverloads constructor(

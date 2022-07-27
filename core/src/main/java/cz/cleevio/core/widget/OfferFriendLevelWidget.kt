@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFriendLevelBinding
 import cz.cleevio.core.model.FriendLevelValue
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class OfferFriendLevelWidget @JvmOverloads constructor(
 	context: Context,

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<dimen name="corner_radius_dialog_progress_indicator">16dp</dimen>
+	<dimen name="elevation_dialog_progress_indicator">0dp</dimen>
+	<dimen name="size_dialog_progress_indicator">64dp</dimen>
+	<dimen name="thickness_track_dialog_progress_indicator">4dp</dimen>
+
+	<dimen name="padding_snackbar_icon">12dp</dimen>
+
+	<dimen name="country_picker_corner_radius">16dp</dimen>
+	<dimen name="country_picker_peek_height">500dp</dimen>
+	<dimen name="country_picker_flag_size">28dp</dimen>
+
+</resources>

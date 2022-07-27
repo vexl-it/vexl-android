@@ -6,7 +6,7 @@ import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
-import lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 abstract class BaseGraphFragment(fragment: Int) : BaseFragment(fragment) {

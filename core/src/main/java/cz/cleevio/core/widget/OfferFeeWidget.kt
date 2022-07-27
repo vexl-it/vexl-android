@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFeeBinding
 import cz.cleevio.core.model.FeeValue
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
 class OfferFeeWidget @JvmOverloads constructor(

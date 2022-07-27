@@ -6,9 +6,9 @@ import cz.cleeevio.onboarding.R
 import cz.cleeevio.onboarding.databinding.FragmentInitPhoneBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import lightbase.core.baseClasses.BaseFragment
-import lightbase.core.extensions.dpValueToPx
-import lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 const val BOTTOM_EXTRA_PADDING = 40

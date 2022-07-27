@@ -9,7 +9,6 @@ import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.sendEmailToSupport
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
@@ -18,7 +17,7 @@ import cz.cleevio.profile.databinding.FragmentProfileBinding
 import cz.cleevio.profile.donateFragment.DonateBottomSheetDialog
 import cz.cleevio.profile.joinFragment.JoinBottomSheetDialog
 import cz.cleevio.profile.reportFragment.ReportBottomSheetDialog
-import lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {

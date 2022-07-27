@@ -11,11 +11,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import cz.cleevio.core.R
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import lightbase.core.baseClasses.BaseFragment
-import lightbase.core.extensions.showToast
 
 fun Fragment.getDrawable(id: Int): Drawable? =
 	ContextCompat.getDrawable(this.requireContext(), id)

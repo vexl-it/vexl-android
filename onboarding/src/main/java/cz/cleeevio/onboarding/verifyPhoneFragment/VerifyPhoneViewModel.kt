@@ -11,6 +11,7 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import lightbase.core.baseClasses.BaseViewModel
 
 class VerifyPhoneViewModel constructor(
 	val phoneNumber: String,

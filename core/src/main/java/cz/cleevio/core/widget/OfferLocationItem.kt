@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferLocationItemBinding
 import cz.cleevio.repository.model.offer.Location
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
 
 class OfferLocationItem @JvmOverloads constructor(

@@ -7,7 +7,7 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat.getColor
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferStateBinding
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class OfferStateWidget @JvmOverloads constructor(
 	context: Context,

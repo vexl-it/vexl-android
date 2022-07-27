@@ -10,12 +10,12 @@ import cz.cleeevio.onboarding.databinding.FragmentAvatarBinding
 import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import kotlinx.coroutines.launch
 import lightbase.camera.ui.takePhotoFragment.TakePhotoFragment
 import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
-import lightbase.core.baseClasses.BaseFragment
-import lightbase.core.extensions.dpValueToPx
-import lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {

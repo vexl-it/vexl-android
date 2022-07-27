@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="?android:selectableItemBackground"
+	android:clickable="true"
+	android:focusable="true">
+
+	<ImageView
+		android:id="@+id/flag"
+		android:layout_width="@dimen/country_picker_flag_size"
+		android:layout_height="@dimen/country_picker_flag_size"
+		android:layout_margin="16dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="ContentDescription"
+		tools:src="@drawable/flag_cz" />
+
+	<TextView
+		android:id="@+id/dialCode"
+		style="@style/Widget.LightBase.CountryPickerDialog.TextView.DialCode"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toEndOf="@id/flag"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="+420" />
+
+	<TextView
+		android:id="@+id/name"
+		style="@style/Widget.LightBase.CountryPickerDialog.TextView.Name"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/dialCode"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Czechia" />
+</androidx.constraintlayout.widget.ConstraintLayout>

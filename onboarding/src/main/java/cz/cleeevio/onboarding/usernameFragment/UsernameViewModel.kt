@@ -3,11 +3,11 @@ package cz.cleeevio.onboarding.usernameFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.repository.model.user.UsernameAvailable
 import cz.cleevio.repository.repository.user.UserRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import lightbase.core.baseClasses.BaseViewModel
 
 class UsernameViewModel constructor(
 	private val userRepository: UserRepository

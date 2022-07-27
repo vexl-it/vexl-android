@@ -3,18 +3,15 @@ package cz.cleevio.profile.editNameFragment
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentEditNameBinding
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import lightbase.core.baseClasses.BaseFragment
-import lightbase.core.extensions.dpValueToPx
-import lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {

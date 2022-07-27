@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<declare-styleable name="PinView">
+		<attr name="PinView_size" format="integer" />
+		<attr name="PinView_onlyNumbers" format="boolean" />
+	</declare-styleable>
+
+	<declare-styleable name="PinIndicator">
+		<attr name="PinIndicator_size" format="integer" />
+		<attr name="PinIndicator_useFilledGraphics" format="boolean" />
+	</declare-styleable>
+
+	<declare-styleable name="NumpadView">
+		<attr name="showBubbles" format="boolean" />
+	</declare-styleable>
+
+</resources>

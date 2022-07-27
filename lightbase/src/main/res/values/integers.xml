@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<integer name="pin_numpad_error_length">1000</integer>
+	<integer name="pin_pincode_size">6</integer>
+	<integer name="pin_pincode_max_tries">5</integer>
+
+</resources>

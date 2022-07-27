@@ -11,8 +11,8 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatRequestBinding
-import lightbase.core.baseClasses.BaseFragment
-import lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {

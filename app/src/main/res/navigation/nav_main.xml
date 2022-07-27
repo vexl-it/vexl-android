@@ -5,11 +5,7 @@
 	android:id="@+id/nav_main"
 	app:startDestination="@id/splashFragment">
 
-	<include app:graph="@navigation/nav_photo_bottom_sheet" />
-
 	<include app:graph="@navigation/nav_camera" />
-
-	<include app:graph="@navigation/nav_country_picker" />
 
 	<include app:graph="@navigation/nav_onboarding" />
 
@@ -19,70 +15,7 @@
 
 	<include app:graph="@navigation/nav_profile" />
 
-	<include app:graph="@navigation/nav_import_contacts" />
-
 	<include app:graph="@navigation/nav_chat" />
-
-	<fragment
-		android:id="@+id/pinFragment"
-		android:name="cz.cleevio.pin.PinFragment"
-		android:label="PinFragment"
-		tools:layout="@layout/fragment_pin" />
-
-	<fragment
-		android:id="@+id/crossroadFragment"
-		android:name="cz.cleevio.lightspeedskeleton.ui.crossroadFragment.CrossroadFragment"
-		android:label="CrossroadFragment"
-		tools:layout="@layout/fragment_crossroad">
-		<action
-			android:id="@+id/action_crossroadFragment_to_pinFragment"
-			app:destination="@id/pinFragment" />
-		<action
-			android:id="@+id/action_crossroadFragment_to_UITemplatesFragment"
-			app:destination="@id/UITemplatesFragment" />
-		<action
-			android:id="@+id/action_crossroadFragment_to_nav_camera"
-			app:destination="@id/nav_camera">
-
-			<argument
-				android:name="projectName"
-				app:argType="string" />
-
-		</action>
-		<action
-			android:id="@+id/action_crossroadFragment_to_nav_photo_bottom_sheet"
-			app:destination="@id/nav_photo_bottom_sheet" />
-		<action
-			android:id="@+id/action_crossroadFragment_to_imageHelperFragment"
-			app:destination="@id/imageHelperFragment" />
-		<action
-			android:id="@+id/action_crossroadFragment_to_listTemplateFragment"
-			app:destination="@id/listTemplateFragment" />
-	</fragment>
-
-	<fragment
-		android:id="@+id/UITemplatesFragment"
-		android:name="cz.cleevio.lightspeedskeleton.ui.uiTemplatesFragment.UITemplatesFragment"
-		android:label="UITemplatesFragment"
-		tools:layout="@layout/fragment_ui_templates" />
-
-	<include app:graph="@navigation/nav_photo_bottom_sheet" />
-
-	<include app:graph="@navigation/nav_camera" />
-
-	<include app:graph="@navigation/nav_barcode_scanner" />
-
-	<fragment
-		android:id="@+id/imageHelperFragment"
-		android:name="cz.cleevio.lightspeedskeleton.ui.imageHelperFragment.ImageHelperFragment"
-		android:label="ImageHelperFragment"
-		tools:layout="@layout/fragment_image_helper" />
-
-	<fragment
-		android:id="@+id/listTemplateFragment"
-		android:name="cz.cleevio.lightspeedskeleton.ui.listTemplateFragment.ListTemplateFragment"
-		android:label="ListTemplateFragment"
-		tools:layout="@layout/fragment_list_template" />
 
 	<fragment
 		android:id="@+id/splashFragment"
@@ -103,6 +36,7 @@
 		app:destination="@id/nav_contacts"
 		app:popUpTo="@id/nav_contacts"
 		app:popUpToInclusive="true" />
+
 	<action
 		android:id="@+id/action_global_to_onboarding"
 		app:destination="@id/nav_onboarding"
@@ -126,17 +60,5 @@
 		app:destination="@id/nav_chat"
 		app:popUpTo="@id/nav_chat"
 		app:popUpToInclusive="true" />
-
-	<action
-		android:id="@+id/action_global_to_import_contacts"
-		app:destination="@id/nav_import_contacts"
-		app:popUpTo="@id/nav_import_contacts"
-		app:popUpToInclusive="true">
-
-		<argument
-			android:name="openedFromScreen"
-			app:argType="cz.cleeevio.vexl.contacts.importContactsFragment.OpenedFromScreen" />
-
-	</action>
 
 </navigation>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="TextAppearance.LightBase.Camera.TextView.PhotoOptions.Title" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:gravity">center</item>
+		<item name="android:textColor">?android:attr/textColorPrimary</item>
+		<item name="android:textSize">20sp</item>
+	</style>
+
+	<style name="TextAppearance.LightBase.Camera.TextView.PhotoOptions.Option" parent="TextAppearance.MaterialComponents.Body2">
+		<item name="android:textColor">?android:attr/textColorPrimary</item>
+		<item name="android:textSize">14sp</item>
+	</style>
+
+	<style name="TextAppearance.LightBase.Camera.TextRecognition.Result.Title" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:textColor">@color/text_recognition_result_text_color</item>
+		<item name="android:textSize">14sp</item>
+	</style>
+
+	<style name="TextAppearance.LightBase.Camera.TextRecognition.Result.Value" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:textColor">@color/text_recognition_result_text_color</item>
+		<item name="android:textSize">20sp</item>
+	</style>
+
+</resources>

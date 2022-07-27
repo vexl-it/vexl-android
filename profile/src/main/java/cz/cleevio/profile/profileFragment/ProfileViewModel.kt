@@ -6,12 +6,12 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import lightbase.core.baseClasses.BaseViewModel
 
 
 class ProfileViewModel constructor(

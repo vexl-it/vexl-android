@@ -8,7 +8,6 @@ buildscript {
     ext.corountines = "1.6.1"
     ext.fragment = "1.4.1"
     ext.koin = "3.0.2"  // has to be updated in LightBase first
-    ext.lightbase = "0.0.52"
     ext.lifecycle = "2.4.1"
     ext.moshi = '1.13.0'
     ext.navigation = "2.4.2"
@@ -21,6 +20,7 @@ buildscript {
     ext.firebase_bom = "29.2.1"
     ext.flexbox_version = '3.0.0'
     ext.mp_android_chart_version = 'v3.1.0'
+    ext.camera = "1.1.0-alpha07"
 
     ext.desugar = '1.1.5'
 

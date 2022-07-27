@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.databinding.WidgetOfferPaymentMethodBinding
 import cz.cleevio.core.model.PaymentMethodValue
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class OfferPaymentMethodWidget @JvmOverloads constructor(
 	context: Context,

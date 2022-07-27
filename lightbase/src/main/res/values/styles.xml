@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="Widget.LightBase.Camera.TextView.PhotoOptions.Title" parent="">
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Camera.TextView.PhotoOptions.Title</item>
+	</style>
+
+	<style name="Widget.LightBase.Camera.TextView.PhotoOptions.Option" parent="">
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:background">?attr/selectableItemBackground</item>
+		<item name="android:textAppearance">@style/TextAppearance.LightBase.Camera.TextView.PhotoOptions.Option</item>
+		<item name="android:gravity">center_vertical</item>
+	</style>
+
+	<style name="Widget.LightBase.Camera.ImageView.PhotoOptions.Close" parent="">
+		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+		<item name="android:clickable">true</item>
+		<item name="android:contentDescription">@string/photo_options_close</item>
+		<item name="android:focusable">true</item>
+		<item name="android:padding">4dp</item>
+		<item name="tint">?android:attr/textColorPrimary</item>
+	</style>
+
+	<style name="Widget.LightBase.Camera.ImageButton.PhotoPreview.Close" parent="">
+		<item name="android:layout_width">56dp</item>
+		<item name="android:layout_height">56dp</item>
+		<item name="android:layout_marginStart">16dp</item>
+		<item name="android:layout_marginTop">16dp</item>
+		<item name="android:background">@drawable/background_black_semitransparent</item>
+		<item name="android:foreground">@drawable/ripple_mask_rounded</item>
+		<item name="android:padding">12dp</item>
+		<item name="android:src">@drawable/ic_baseline_clear_24</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+	</style>
+
+	<style name="Widget.LightBase.Dialog.CircleProgresIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
+		<item name="android:layout_gravity">center</item>
+		<item name="android:indeterminate">true</item>
+		<item name="trackThickness">@dimen/thickness_track_dialog_progress_indicator</item>
+		<item name="trackColor">@color/trackColorDialogProgressIndicator</item>
+		<item name="indicatorColor">@color/indicatorColorDialogProgressIndicator</item>
+	</style>
+
+	<style name="Widget.LightBase.CountryPickerDialog" parent="Widget.MaterialComponents.BottomSheet">
+		<item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.CountryPicker.BottomSheet</item>
+		<item name="behavior_peekHeight">@dimen/country_picker_peek_height</item>
+		<item name="behavior_skipCollapsed">true</item>
+		<item name="android:windowIsFloating">false</item>
+	</style>
+
+	<style name="Widget.LightBase.CountryPickerDialog.TextView.Title" parent="">
+		<item name="android:layout_margin">16dp</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:text">@string/country_picker_title</item>
+		<item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
+		<item name="android:textColor">@color/country_picker_title_text_color</item>
+	</style>
+
+	<style name="Widget.LightBase.CountryPickerDialog.TextView.Name" parent="">
+		<item name="android:layout_marginStart">8dp</item>
+		<item name="android:layout_marginEnd">16dp</item>
+		<item name="android:textAppearance">?attr/textAppearanceBody2</item>
+		<item name="android:textColor">@color/country_picker_name_text_color</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<style name="Widget.LightBase.CountryPickerDialog.TextView.DialCode" parent="">
+		<item name="android:layout_marginStart">8dp</item>
+		<item name="android:minWidth">54dp</item>
+		<item name="android:textAppearance">?attr/textAppearanceBody2</item>
+		<item name="android:textColor">@color/country_picker_dial_code_text_color</item>
+	</style>
+
+	<style name="Widget.LightBase.CountryPickerDialog.CircularProgress" parent="Widget.MaterialComponents.CircularProgressIndicator">
+		<item name="android:indeterminate">true</item>
+	</style>
+
+	<style name="Widget.LightBase.CountryPickerDialog.Search.Input" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
+
+</resources>

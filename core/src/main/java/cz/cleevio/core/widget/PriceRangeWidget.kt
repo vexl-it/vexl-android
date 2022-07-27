@@ -7,7 +7,7 @@ import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetPriceRangeBinding
 import cz.cleevio.core.model.PriceRangeValue
 import cz.cleevio.core.utils.formatCurrency
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class PriceRangeWidget @JvmOverloads constructor(
 	context: Context,

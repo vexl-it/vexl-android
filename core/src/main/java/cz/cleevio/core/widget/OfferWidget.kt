@@ -8,7 +8,7 @@ import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.offer.Offer
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
 

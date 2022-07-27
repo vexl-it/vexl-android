@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_camera"
+	app:startDestination="@id/takePhotoFragment">
+
+	<fragment
+		android:id="@+id/takePhotoFragment"
+		android:name="lightbase.camera.ui.takePhotoFragment.TakePhotoFragment"
+		android:label="TakePhotoFragment"
+		tools:layout="@layout/fragment_take_photo">
+
+		<argument
+			android:name="projectName"
+			app:argType="string"
+			android:defaultValue="" />
+
+		<argument
+			android:name="cameraOrientation"
+			android:defaultValue="0"
+			app:argType="integer" />
+
+		<argument
+			android:name="closeBtnVisible"
+			android:defaultValue="true"
+			app:argType="boolean" />
+
+		<argument
+			android:name="closeIconResId"
+			android:defaultValue="0"
+			app:argType="reference" />
+	</fragment>
+</navigation>

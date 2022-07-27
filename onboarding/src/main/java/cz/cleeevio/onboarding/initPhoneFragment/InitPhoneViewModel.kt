@@ -7,11 +7,11 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.user.ConfirmPhone
 import cz.cleevio.repository.repository.user.UserRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import lightbase.core.baseClasses.BaseViewModel
 import timber.log.Timber
 
 class InitPhoneViewModel constructor(
