@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -63,6 +64,9 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
 		binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
 		setUpAllowScreenshotsSwitch()
+
+		// TODO change visibility once the functionality will be revealed
+		binding.profileSectionWrapperFive.isVisible = false
 
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
