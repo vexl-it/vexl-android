@@ -2,6 +2,8 @@ package cz.cleevio.profile.profileFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.Currency
+import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -65,5 +67,9 @@ class ProfileViewModel constructor(
 
 	fun updateAllowScreenshotsSettings() {
 		encryptedPreferenceRepository.areScreenshotsAllowed = !encryptedPreferenceRepository.areScreenshotsAllowed
+	}
+
+	fun setCurrency(currency: Currency) {
+		encryptedPreferenceRepository.selectedCurrency = currency.name
 	}
 }

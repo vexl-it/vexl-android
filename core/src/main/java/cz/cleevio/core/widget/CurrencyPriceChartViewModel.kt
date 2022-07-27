@@ -31,8 +31,6 @@ class CurrencyPriceChartViewModel constructor(
 	var dateTimeRange: DateTimeRange? = null
 
 	init {
-		// TODO move into currency selector in onboarding
-		encryptedPreferenceRepository.selectedCurrency = Currency.USD.name
 		encryptedPreferenceRepository.selectedCryptoCurrency = CryptoCurrency.BITCOIN.getExactName()
 	}
 

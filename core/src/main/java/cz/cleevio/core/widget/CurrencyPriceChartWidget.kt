@@ -6,10 +6,12 @@ import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
 import cz.cleevio.core.model.CryptoCurrency
 import cz.cleevio.core.model.Currency
+import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.utils.marketGraph.MarketChartUtils
@@ -28,17 +30,18 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), KoinComponent {
 
+	private val graphUtils: MarketChartUtils by inject()
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository by inject()
+
 	private lateinit var binding: WidgetCurrencyPriceChartBinding
 	private lateinit var currentCryptoCurrencyPrice: CryptoCurrencies
 	private var marketChartData: MarketChartEntry? = null
-	private var currency: Currency = Currency.USD
+	private var currency: Currency = encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency()
 	private var cryptoCurrency: CryptoCurrency = CryptoCurrency.BITCOIN
 	private var packed = true
 	private var dateTimeRange: DateTimeRange? = DateTimeRange.DAY
 
 	var onPriceChartPeriodClicked: ((DateTimeRange) -> Unit)? = null
-
-	private val graphUtils: MarketChartUtils by inject()
 
 	init {
 		setupUI()

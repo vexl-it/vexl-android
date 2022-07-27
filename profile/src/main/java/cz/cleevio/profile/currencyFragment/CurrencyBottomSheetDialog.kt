@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import cz.cleevio.core.R
 import cz.cleevio.core.databinding.BottomSheetDialogCurrencyBinding
 import cz.cleevio.core.databinding.BottomSheetDialogJoinBinding
 import cz.cleevio.core.databinding.BottomSheetDialogReportBinding
 import cz.cleevio.core.model.Currency
+import cz.cleevio.core.utils.DateTimeRange
 import cz.cleevio.core.utils.sendEmailToSupport
 
 class CurrencyBottomSheetDialog(
+	private val currentCurrency: Currency,
 	private val onCurrencyConfirmed: ((Currency) -> Unit)? = null
 ) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogCurrencyBinding
+	private var currency: Currency = Currency.CZK
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -29,10 +33,26 @@ class CurrencyBottomSheetDialog(
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		when (currentCurrency) {
+			Currency.CZK -> binding.currencyRadioGroup.check(R.id.currency_czk)
+			Currency.EUR -> binding.currencyRadioGroup.check(R.id.currency_eur)
+			Currency.USD -> binding.currencyRadioGroup.check(R.id.currency_usd)
+		}
 
+		binding.currencyRadioGroup.setOnCheckedChangeListener { _, id ->
+			currency =
+				when (id) {
+					R.id.currency_czk -> Currency.CZK
+					R.id.currency_eur -> Currency.EUR
+					R.id.currency_usd -> Currency.USD
+					else -> {
+						Currency.CZK
+					}
+				}
+		}
 
 		binding.confirmBtn.setOnClickListener {
-			onCurrencyConfirmed?.invoke(Currency.CZK)
+			onCurrencyConfirmed?.invoke(currency)
 			dismiss()
 		}
 	}

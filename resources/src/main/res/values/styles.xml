@@ -534,7 +534,7 @@
 		<item name="android:paddingStart">13dp</item>
 		<item name="android:paddingEnd">13dp</item>
 		<item name="android:layout_height">36dp</item>
-		<item name="android:textColor">@color/currency_radio_button_text_color_selector</item>
+		<item name="android:textColor">@color/tabbed_radio_button_text_color_selector</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.DescriptionBold</item>
 	</style>
 
@@ -546,6 +546,16 @@
 		<item name="android:layout_height">40dp</item>
 		<item name="android:textColor">@color/chat_radio_button_text_color_selector</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmallBold</item>
+	</style>
+
+	<style name="Widget.Cleevio.Vexl.CurrencyRadioBtn" parent="">
+		<item name="android:paddingTop">8dp</item>
+		<item name="android:paddingBottom">8dp</item>
+		<item name="android:paddingStart">13dp</item>
+		<item name="android:paddingEnd">13dp</item>
+		<item name="android:layout_height">36dp</item>
+		<item name="android:textColor">@color/currency_radio_button_text_color_selector</item>
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.DescriptionBold</item>
 	</style>
 
 	<style name="Widget.Vexl.Chat.ActionButton" parent="">
