@@ -10,8 +10,6 @@ import android.util.Base64
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.utils.NavMainGraphModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
