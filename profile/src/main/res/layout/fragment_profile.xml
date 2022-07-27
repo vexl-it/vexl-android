@@ -59,14 +59,19 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 
-			<ImageView
+			<com.google.android.material.imageview.ShapeableImageView
 				android:id="@+id/profile_user_photo"
 				android:layout_width="128dp"
 				android:layout_height="128dp"
+				android:layout_gravity="center"
 				android:layout_marginTop="10dp"
+				android:scaleType="centerCrop"
+				android:src="@drawable/ic_profile_avatar_placeholder"
+				app:layout_constraintDimensionRatio="1:1"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/profile_donate" />
+				app:layout_constraintTop_toBottomOf="@id/profile_donate"
+				app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage" />
 
 			<TextView
 				android:id="@+id/profile_user_name"

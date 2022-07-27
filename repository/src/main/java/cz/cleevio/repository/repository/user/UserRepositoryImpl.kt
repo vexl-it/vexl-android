@@ -160,7 +160,7 @@ class UserRepositoryImpl constructor(
 				if (avatar != null && avatarImageExtension != null) {
 					userRestApi.putUserMe(
 						UserRequest(
-							username = username ?: getUser()?.username ?: "",
+							username = null,
 							avatar = UserAvatar(
 								data = avatar,
 								extension = avatarImageExtension
