@@ -45,6 +45,8 @@ android {
 dependencies {
     api project(':repository')
     api project(':cryptography')
+    api project(':lightbase')
+    api project(':camera')
 
     api 'androidx.appcompat:appcompat:1.4.1'
     api 'androidx.core:core-ktx:1.7.0'
@@ -61,15 +63,9 @@ dependencies {
     api "com.google.android.material:material:$material"
     api "com.jakewharton.timber:timber:$timber"
 
-    api "cz.cleevio.gitlab.lightspeed.lightbase:core:$lightbase"
-    api "cz.cleevio.gitlab.lightspeed.lightbase:pin:$lightbase"
-    api "cz.cleevio.gitlab.lightspeed.lightbase:countryPicker:$lightbase"
-    api "cz.cleevio.gitlab.lightspeed.lightbase:camera:$lightbase"
-    api "cz.cleevio.gitlab.lightspeed.lightbase:onboarding:$lightbase"
-    api "cz.cleevio.gitlab.lightspeed.lightbase:security:$lightbase"
-
     api "io.insert-koin:koin-core:$koin"
     api "io.insert-koin:koin-android:$koin"
+    api "io.coil-kt:coil:1.1.1"
 
     implementation "com.github.PhilJay:MPAndroidChart:$mp_android_chart_version"
     implementation 'com.lyft.kronos:kronos-android:0.0.1-alpha11'

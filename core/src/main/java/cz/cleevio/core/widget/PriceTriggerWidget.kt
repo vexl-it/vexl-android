@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetTriggerPriceBinding
 import cz.cleevio.core.model.PriceTriggerValue
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 import java.math.BigDecimal
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.databinding.WidgetCreateTitleBinding
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class ScreenTitleWidget @JvmOverloads constructor(
 	context: Context,

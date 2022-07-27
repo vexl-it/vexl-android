@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.databinding.WidgetOfferBtcNetworkWidgetBinding
 import cz.cleevio.core.model.BtcNetworkValue
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class OfferBtcNetworkType @JvmOverloads constructor(
 	context: Context,

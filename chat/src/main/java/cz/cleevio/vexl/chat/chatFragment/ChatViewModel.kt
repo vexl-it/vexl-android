@@ -8,10 +8,10 @@ import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import lightbase.core.baseClasses.BaseViewModel
 
 class ChatViewModel constructor(
 	private val chatRepository: ChatRepository,

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<public name="camera_take_show" type="string" />
+	<public name="camera_error_permanent_ban_camera" type="string" />
+	<public name="camera_open_settings" type="string" />
+	<public name="camera_close_camera" type="string" />
+	<public name="photo_options_take_a_picture" type="string" />
+	<public name="photo_options_photo_library" type="string" />
+	<public name="photo_options_close" type="string" />
+	<public name="photo_options_select_photo" type="string" />
+	<public name="nav_barcode_scanner" type="navigation" />
+	<public name="nav_photo_bottom_sheet" type="navigation" />
+	<public name="nav_camera" type="navigation" />
+</resources>

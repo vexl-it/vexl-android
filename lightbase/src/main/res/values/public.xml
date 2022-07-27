@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<public name="camera_take_show" type="string" />
+	<public name="camera_error_permanent_ban_camera" type="string" />
+	<public name="camera_open_settings" type="string" />
+	<public name="camera_close_camera" type="string" />
+	<public name="photo_options_take_a_picture" type="string" />
+	<public name="photo_options_photo_library" type="string" />
+	<public name="photo_options_close" type="string" />
+	<public name="photo_options_select_photo" type="string" />
+	<public name="nav_barcode_scanner" type="navigation" />
+	<public name="nav_photo_bottom_sheet" type="navigation" />
+	<public name="nav_camera" type="navigation" />
+
+	<public name="code_validation_item_height" type="dimen" />
+	<public name="code_validation_item_spacing" type="dimen" />
+
+	<public name="white" type="color" />
+	<public name="input_color" type="color" />
+
+	<public name="pin_numpad_error_length" type="integer" />
+	<public name="pin_pincode_size" type="integer" />
+	<public name="pin_pincode_max_tries" type="integer" />
+
+	<public name="pin_bubble_color" type="color" />
+	<public name="pin_filled_color" type="color" />
+	<public name="pin_filled_semitransparent_color" type="color" />
+	<public name="pin_error_color" type="color" />
+
+	<public name="pin_remove_last_number" type="string" />
+	<public name="pin_open_fingerprint_dialog" type="string" />
+
+	<public name="pincode_dot_size" type="dimen" />
+	<public name="numpad_number_spacing" type="dimen" />
+
+	<public name="country_picker_title_text_color" type="color" />
+	<public name="country_picker_name_text_color" type="color" />
+	<public name="country_picker_dial_code_text_color" type="color" />
+	<public name="country_picker_close_icon_tint_color" type="color" />
+	<public name="country_picker_input_clear_icon_tint_color" type="color" />
+	<public name="country_picker_corner_radius" type="dimen" />
+	<public name="country_picker_peek_height" type="dimen" />
+	<public name="country_picker_flag_size" type="dimen" />
+	<public name="country_picker_title" type="string" />
+	<public name="country_picker_search_hint" type="string" />
+
+	<public name="no_fingerprint_on_this_device" type="string" />
+	<public name="add_fingerprint_settings" type="string" />
+	<public name="fingerprint_setup" type="string" />
+	<public name="fingerprint_validation" type="string" />
+	<public name="put_finger_on_sensor" type="string" />
+	<public name="too_many_attempts" type="string" />
+	<public name="wait_30_seconds" type="string" />
+	<public name="skip_fingerprint_title" type="string" />
+	<public name="skip_fingerprint_subtitle" type="string" />
+	<public name="back" type="string" />
+
+</resources>

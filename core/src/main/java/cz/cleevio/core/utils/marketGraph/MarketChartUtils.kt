@@ -10,8 +10,8 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import cz.cleevio.core.R
 import cz.cleevio.core.model.MarketChartEntry
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import kotlinx.coroutines.flow.MutableStateFlow
-import lightbase.core.extensions.dpValueToPx
 
 class MarketChartUtils constructor(
 	private val context: Context

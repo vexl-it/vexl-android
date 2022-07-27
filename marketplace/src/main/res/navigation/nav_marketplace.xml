@@ -7,7 +7,7 @@
 
 	<fragment
 		android:id="@+id/marketplaceFragment"
-		android:name="cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment"
+		android:name="cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment"
 		android:label="MarketplaceFragment"
 		tools:layout="@layout/fragment_marketplace">
 
@@ -31,7 +31,7 @@
 
 	<fragment
 		android:id="@+id/filtersFragment"
-		android:name="cz.cleeevio.vexl.marketplace.filtersFragment.FiltersFragment"
+		android:name="cz.cleevio.vexl.marketplace.filtersFragment.FiltersFragment"
 		android:label="FiltersFragment"
 		tools:layout="@layout/fragment_filters">
 
@@ -43,7 +43,7 @@
 
 	<fragment
 		android:id="@+id/newOfferFragment"
-		android:name="cz.cleeevio.vexl.marketplace.newOfferFragment.NewOfferFragment"
+		android:name="cz.cleevio.vexl.marketplace.newOfferFragment.NewOfferFragment"
 		android:label="NewOfferFragment"
 		tools:layout="@layout/fragment_new_offer">
 
@@ -55,7 +55,7 @@
 
 	<fragment
 		android:id="@+id/myOffersFragment"
-		android:name="cz.cleeevio.vexl.marketplace.myOffersFragment.MyOffersFragment"
+		android:name="cz.cleevio.vexl.marketplace.myOffersFragment.MyOffersFragment"
 		android:label="MyOffersFragment"
 		tools:layout="@layout/fragment_new_offer">
 
@@ -81,7 +81,7 @@
 
 	<fragment
 		android:id="@+id/requestOfferFragment"
-		android:name="cz.cleeevio.vexl.marketplace.requestOfferFragment.RequestOfferFragment"
+		android:name="cz.cleevio.vexl.marketplace.requestOfferFragment.RequestOfferFragment"
 		android:label="RequestOfferFragment"
 		tools:layout="@layout/fragment_request_offer">
 
@@ -93,7 +93,7 @@
 
 	<fragment
 		android:id="@+id/editOfferFragment"
-		android:name="cz.cleeevio.vexl.marketplace.editOfferFragment.EditOfferFragment"
+		android:name="cz.cleevio.vexl.marketplace.editOfferFragment.EditOfferFragment"
 		android:label="EditOfferFragment"
 		tools:layout="@layout/fragment_edit_offer">
 

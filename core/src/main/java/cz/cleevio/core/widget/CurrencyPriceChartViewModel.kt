@@ -11,11 +11,11 @@ import cz.cleevio.core.utils.DateTimeRange
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import cz.cleevio.repository.repository.marketplace.CryptoCurrencyRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import lightbase.core.baseClasses.BaseViewModel
 
 class CurrencyPriceChartViewModel constructor(
 	private val cryptoCurrencyRepository: CryptoCurrencyRepository,

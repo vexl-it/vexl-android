@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="reticle_ripple">#9AFFFFFF</color>
+	<color name="reticle_background">#99000000</color>
+	<color name="reticle_stroke">#40000000</color>
+
+	<color name="text_recognition_result_text_color">#FFFFFF</color>
+	<color name="text_recognition_result_background">#A8000000</color>
+</resources>

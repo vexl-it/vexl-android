@@ -10,7 +10,7 @@ import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatContactListBinding
-import lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 

@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.profile.databinding.WidgetProfileRowBinding
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class ProfileRowWidget constructor(
 	context: Context,

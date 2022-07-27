@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="16dp">
+
+	<com.google.android.material.card.MaterialCardView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:background="@color/backgroundDialogProgressIndicator"
+		app:cardElevation="@dimen/elevation_dialog_progress_indicator"
+		app:contentPadding="16dp"
+		app:shapeAppearanceOverlay="@style/ShapeAppearance.LightBase.Dialog.CircleProgresIndicator">
+
+		<com.google.android.material.progressindicator.CircularProgressIndicator
+			android:id="@+id/progressbar"
+			style="@style/Widget.LightBase.Dialog.CircleProgresIndicator"
+			android:layout_width="@dimen/size_dialog_progress_indicator"
+			android:layout_height="@dimen/size_dialog_progress_indicator"
+			android:layout_margin="16dp" />
+	</com.google.android.material.card.MaterialCardView>
+</FrameLayout>

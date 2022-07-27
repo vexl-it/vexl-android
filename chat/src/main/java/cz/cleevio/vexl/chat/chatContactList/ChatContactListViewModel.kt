@@ -4,13 +4,13 @@ import androidx.lifecycle.viewModelScope
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import lightbase.core.baseClasses.BaseViewModel
 
 class ChatContactListViewModel constructor(
 	private val chatRepository: ChatRepository

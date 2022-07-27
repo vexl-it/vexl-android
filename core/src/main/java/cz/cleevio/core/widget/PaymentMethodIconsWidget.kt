@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetPaymentMethodIconsBinding
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class PaymentMethodIconsWidget @JvmOverloads constructor(
 	context: Context,

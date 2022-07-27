@@ -3,10 +3,10 @@ package cz.cleevio.profile.groupFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.repository.group.GroupRepository
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import lightbase.core.baseClasses.BaseViewModel
 
 class GroupViewModel constructor(
 	val groupRepository: GroupRepository

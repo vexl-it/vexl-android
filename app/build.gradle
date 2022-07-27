@@ -134,13 +134,13 @@ android {
 
 dependencies {
     implementation project(':core')
-    implementation project(':pin')
     implementation project(':onboarding')
     implementation project(':contacts')
     implementation project(':profile')
     implementation project(':marketplace')
     implementation project(':cryptography')
     implementation project(':chat')
+    implementation project(':camera')
 
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'

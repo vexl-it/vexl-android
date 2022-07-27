@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetTriggerDeleteBinding
 import cz.cleevio.core.model.DeleteOfferValue
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 import java.util.*
 

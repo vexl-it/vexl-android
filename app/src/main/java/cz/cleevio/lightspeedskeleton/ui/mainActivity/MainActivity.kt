@@ -11,16 +11,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import cz.cleeevio.vexl.contacts.importContactsFragment.OpenedFromScreen
-import cz.cleeevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.network.NetworkError
 import cz.cleevio.profile.profileFragment.ProfileFragment
 import cz.cleevio.vexl.chat.chatContactList.ChatContactListFragment
+import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
+import cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
 import kotlinx.coroutines.launch
-import lightbase.core.extensions.showSnackbar
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -82,14 +81,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							navController.setGraph(
 								R.navigation.nav_profile
 							)
-						NavMainGraphModel.NavGraph.ImportContacts -> {
-							val bundle = Bundle()
-							bundle.putParcelable("openedFromScreen", OpenedFromScreen.PROFILE)
-							navController.setGraph(
-								graphResId = R.navigation.nav_import_contacts,
-								startDestinationArgs = bundle
-							)
-						}
 					}
 				}
 			}

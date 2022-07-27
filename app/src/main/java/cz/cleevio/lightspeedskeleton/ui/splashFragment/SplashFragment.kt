@@ -3,8 +3,8 @@ package cz.cleevio.lightspeedskeleton.ui.splashFragment
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.lightspeedskeleton.R
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import kotlinx.coroutines.delay
-import lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 

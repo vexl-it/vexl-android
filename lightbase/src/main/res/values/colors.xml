@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<color name="indicatorColorDialogProgressIndicator">@android:color/holo_green_light</color>
+	<color name="trackColorDialogProgressIndicator">@android:color/holo_green_dark</color>
+	<color name="backgroundDialogProgressIndicator">@android:color/white</color>
+
+	<color name="country_picker_title_text_color">#000000</color>
+	<color name="country_picker_name_text_color">#000000</color>
+	<color name="country_picker_dial_code_text_color">#000000</color>
+	<color name="country_picker_close_icon_tint_color">#000000</color>
+	<color name="country_picker_input_icon_tint_color">#333333</color>
+
+
+	<color name="pin_bubble_color">#1ACFD2D3</color>
+	<color name="pin_filled_color">#33aa99</color>
+	<color name="pin_filled_semitransparent_color">#3433aa99</color>
+	<color name="pin_error_color">#ff00aa</color>
+</resources>

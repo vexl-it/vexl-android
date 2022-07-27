@@ -14,7 +14,7 @@ import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.utils.marketGraph.MarketChartUtils
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
-import lightbase.core.extensions.layoutInflater
+import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import timber.log.Timber

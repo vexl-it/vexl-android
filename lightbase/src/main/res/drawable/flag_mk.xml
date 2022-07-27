@@ -1,0 +1,39 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="16dp"
+	android:height="16dp"
+	android:viewportWidth="16"
+	android:viewportHeight="16">
+	<path
+		android:fillColor="#FFDA44"
+		android:pathData="M8,16C12.4183,16 16,12.4183 16,8C16,3.5817 12.4183,0 8,0C3.5817,0 0,3.5817 0,8C0,12.4183 3.5817,16 8,16Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M9.2164,15.9082C10.5176,15.7097 11.7153,15.1973 12.7307,14.4514L7.9998,8.0002L9.2164,15.9082Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M6.7831,0.0922C5.482,0.2907 4.2844,0.803 3.2689,1.5489L7.9998,8.0002L6.7831,0.0922Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M3.2689,14.4514C4.2843,15.1973 5.482,15.7097 6.7831,15.9082L7.9998,8.0002L3.2689,14.4514Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M1.5486,3.2692C0.8026,4.2847 0.2903,5.4824 0.0918,6.7835L7.9998,8.0002L1.5486,3.2692Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M0.0918,9.2168C0.2903,10.5179 0.8027,11.7156 1.5486,12.7311L7.9998,8.0002L0.0918,9.2168Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M15.9078,6.7835C15.7093,5.4824 15.197,4.2848 14.451,3.2693L7.9998,8.0002L15.9078,6.7835Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M12.7307,1.5489C11.7152,0.803 10.5176,0.2907 9.2164,0.0922L7.9998,8.0002L12.7307,1.5489Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M14.4511,12.7311C15.197,11.7156 15.7093,10.5179 15.9079,9.2168L7.9998,8.0002L14.4511,12.7311Z" />
+	<path
+		android:fillColor="#D80027"
+		android:pathData="M7.9998,10.7828C9.5366,10.7828 10.7824,9.537 10.7824,8.0002C10.7824,6.4634 9.5366,5.2176 7.9998,5.2176C6.463,5.2176 5.2172,6.4634 5.2172,8.0002C5.2172,9.537 6.463,10.7828 7.9998,10.7828Z" />
+	<path
+		android:fillColor="#FFDA44"
+		android:pathData="M8,10.087C9.1526,10.087 10.087,9.1526 10.087,8C10.087,6.8474 9.1526,5.913 8,5.913C6.8474,5.913 5.913,6.8474 5.913,8C5.913,9.1526 6.8474,10.087 8,10.087Z" />
+</vector>

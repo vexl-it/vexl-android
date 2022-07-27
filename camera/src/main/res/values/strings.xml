@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="camera_take_show">Take a shot</string>
+	<string name="camera_error_permanent_ban_camera">Access to camera was permanently denied</string>
+	<string name="camera_open_settings">Open settings</string>
+	<string name="camera_close_camera">Close camera</string>
+
+	<string name="photo_options_take_a_picture">Take a picture</string>
+	<string name="photo_options_photo_library">Photo library</string>
+	<string name="photo_options_close">Close</string>
+	<string name="photo_options_select_photo">Select photo</string>
+
+	<string name="text_recognition_title">Recognized value</string>
+	<string name="text_recognition_recognize">Recognize</string>
+	<string name="text_recognition_confirm">Confirm</string>
+	<string name="text_recognition_try_again">Try again</string>
+
+</resources>
