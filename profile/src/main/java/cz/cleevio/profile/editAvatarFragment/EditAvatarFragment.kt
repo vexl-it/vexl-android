@@ -7,21 +7,18 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.profile.R
-import lightbase.core.baseClasses.BaseFragment
-import lightbase.core.extensions.dpValueToPx
-import lightbase.core.extensions.listenForInsets
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import cz.cleevio.profile.databinding.FragmentEditAvatarBinding
-import kotlinx.coroutines.delay
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import kotlinx.coroutines.launch
 import lightbase.camera.ui.takePhotoFragment.TakePhotoFragment
 import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
-import timber.log.Timber
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 

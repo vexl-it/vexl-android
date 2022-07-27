@@ -9,11 +9,11 @@ import android.provider.MediaStore
 import android.util.Base64
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
-import lightbase.core.baseClasses.BaseViewModel
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 
