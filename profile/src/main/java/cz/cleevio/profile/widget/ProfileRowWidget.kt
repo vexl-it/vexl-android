@@ -20,6 +20,9 @@ class ProfileRowWidget constructor(
 
 	private lateinit var binding: WidgetProfileRowBinding
 
+	val switch
+	get() = binding.profileRowSwitch
+
 	init {
 		setupUI()
 
@@ -39,6 +42,7 @@ class ProfileRowWidget constructor(
 		binding.profileRowIcon.isVisible = iconResource != ICON_NOT_FOUND
 
 		binding.profileRowLine.isVisible = styledAttributes.getBoolean(cz.cleevio.core.R.styleable.ProfileRow_line_visibility, false)
+		binding.profileRowSwitch.isVisible = styledAttributes.getBoolean(cz.cleevio.core.R.styleable.ProfileRow_switch_visibility, false)
 	}
 
 	private fun setupUI() {

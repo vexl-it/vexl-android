@@ -11,4 +11,5 @@ interface EncryptedPreferenceRepository {
 	var facebookHash: String
 	var selectedCurrency: String
 	var selectedCryptoCurrency: String
+	var areScreenshotsAllowed: Boolean
 }

@@ -638,4 +638,10 @@
 		<item name="boxStrokeWidth">0dp</item>
 	</style>
 
+	<style name="Widget.Vexl.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+		<item name="trackTint">@color/track_color_switch_states</item>
+		<item name="thumbTint">@color/thumb_color_switch_states</item>
+		<item name="android:switchMinWidth">58dp</item>
+	</style>
+
 </resources>

@@ -137,23 +137,23 @@
 						android:id="@+id/profile_groups"
 						android:layout_width="0dp"
 						android:layout_height="wrap_content"
-						app:title="DEBUG: Groups"
 						app:icon="@drawable/ic_profile_edit"
-						app:line_visibility="true"
-						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintStart_toStartOf="parent" />
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						app:line_visibility="true"
+						app:title="DEBUG: Groups" />
 
 					<cz.cleevio.profile.widget.ProfileRowWidget
 						android:id="@+id/profile_change_picture"
 						android:layout_width="0dp"
 						android:layout_height="wrap_content"
-						app:title="@string/profile_change_picture"
 						app:icon="@drawable/ic_profile_image"
-						app:line_visibility="true"
-						app:layout_constraintTop_toBottomOf="@id/profile_groups"
 						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintStart_toStartOf="parent" />
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/profile_groups"
+						app:line_visibility="true"
+						app:title="@string/profile_change_picture" />
 
 					<cz.cleevio.profile.widget.ProfileRowWidget
 						android:id="@+id/profile_edit_name"
@@ -261,6 +261,7 @@
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toBottomOf="@id/profile_set_currency"
 						app:subtitle="@string/profile_refuse_to_snap_chat"
+						app:switch_visibility="true"
 						app:title="@string/profile_allow_screenshots" />
 
 				</androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,6 +75,12 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putStringToEP(KEY_SELECTED_CRYPTO_CURRENCY, value)
 		}
 
+	override var areScreenshotsAllowed: Boolean
+		get() = getBooleanFromEP(ARE_SCREENSHOTS_ALLOWED, true)
+		set(value) {
+			putBooleanToEP(ARE_SCREENSHOTS_ALLOWED, value)
+		}
+
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()
 
@@ -119,5 +125,6 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_FACEBOOK_HASH = "facebook_hash"
 		private const val KEY_SELECTED_CURRENCY = "selected_currency"
 		private const val KEY_SELECTED_CRYPTO_CURRENCY = "selected_crypto_currency"
+		private const val ARE_SCREENSHOTS_ALLOWED = "are_screenshots_allowed"
 	}
 }

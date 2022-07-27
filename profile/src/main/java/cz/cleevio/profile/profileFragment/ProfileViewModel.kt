@@ -1,6 +1,7 @@
 package cz.cleevio.profile.profileFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -8,8 +9,10 @@ import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -18,10 +21,15 @@ class ProfileViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
-	val navMainGraphModel: NavMainGraphModel,
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
+
+	private val _isRequesting = Channel<Boolean>(Channel.CONFLATED)
+	val isRequesting = _isRequesting.receiveAsFlow()
+
 	private val _contactsNumber = MutableStateFlow<Int>(35)
 	val contactsNumber = _contactsNumber.asStateFlow()
 
@@ -53,5 +61,11 @@ class ProfileViewModel constructor(
 		navMainGraphModel.navigateToGraph(
 			NavMainGraphModel.NavGraph.Onboarding
 		)
+	}
+
+	fun updateAllowScreenshotsSettings() {
+		encryptedPreferenceRepository.areScreenshotsAllowed = !encryptedPreferenceRepository.areScreenshotsAllowed
+
+		_isRequesting.trySend(encryptedPreferenceRepository.areScreenshotsAllowed)
 	}
 }

@@ -2,6 +2,7 @@ package cz.cleevio.profile.profileFragment
 
 import android.content.Intent
 import android.net.Uri
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
@@ -53,12 +54,25 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				)
 			}
 		}
+
+		repeatScopeOnStart {
+			profileViewModel.isRequesting.collect {
+				if (it) {
+					requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+				} else {
+					requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+				}
+			}
+		}
 	}
 
 	override fun initView() {
 		priceChartWidget = binding.priceChart
 
 		super.initView()
+
+		setUpAllowScreenshotsSwitch()
+
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
@@ -126,8 +140,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileAllowScreenshots.setOnClickListener {
-			Toast.makeText(requireContext(), "Allow screenshots not implemented", Toast.LENGTH_SHORT)
-				.show()
+			binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
+			binding.profileAllowScreenshots.switch.isChecked = !binding.profileAllowScreenshots.switch.isChecked
+			profileViewModel.updateAllowScreenshotsSettings()
+
+			setUpAllowScreenshotsSwitch()
 		}
 
 		binding.profileTermsAndConditions.setOnClickListener {
@@ -172,5 +189,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
 		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
+	}
+
+	private fun setUpAllowScreenshotsSwitch() {
+		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener { _, _ ->
+			profileViewModel.updateAllowScreenshotsSettings()
+		}
 	}
 }
