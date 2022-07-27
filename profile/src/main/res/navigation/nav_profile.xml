@@ -17,6 +17,10 @@
 			app:destination="@id/editNameFragment" />
 
 		<action
+			android:id="@+id/action_profileFragment_to_editAvatarFragment"
+			app:destination="@id/editAvatarFragment" />
+
+		<action
 			android:id="@+id/action_profileFragment_to_groupFragment"
 			app:destination="@id/groupFragment" />
 
@@ -32,7 +36,18 @@
 		android:id="@+id/editNameFragment"
 		android:name="cz.cleevio.profile.editNameFragment.EditNameFragment"
 		android:label="EditNameFragment"
-		tools:layout="@layout/fragment_edit_name"/>
+		tools:layout="@layout/fragment_edit_name" />
+
+	<fragment
+		android:id="@+id/editAvatarFragment"
+		android:name="cz.cleevio.profile.editAvatarFragment.EditAvatarFragment"
+		android:label="EditAvatarFragment"
+		tools:layout="@layout/fragment_edit_avatar">
+
+		<action
+			android:id="@+id/proceed_to_takePhotoFragment"
+			app:destination="@id/nav_camera" />
+	</fragment>
 
 
 </navigation>

@@ -7,7 +7,6 @@ import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.user.*
-import cz.cleevio.network.response.user.UserResponse
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
@@ -146,7 +145,7 @@ class UserRepositoryImpl constructor(
 	}
 
 	override suspend fun updateUser(
-		username: String, avatar: String?, avatarImageExtension: String?
+		username: String?, avatar: String?, avatarImageExtension: String?
 	): Resource<User> {
 		return tryOnline(
 			doOnSuccess = {
@@ -161,7 +160,7 @@ class UserRepositoryImpl constructor(
 				if (avatar != null && avatarImageExtension != null) {
 					userRestApi.putUserMe(
 						UserRequest(
-							username = username,
+							username = username ?: getUser()?.username ?: "",
 							avatar = UserAvatar(
 								data = avatar,
 								extension = avatarImageExtension
@@ -171,7 +170,7 @@ class UserRepositoryImpl constructor(
 				} else {
 					userRestApi.putUserMe(
 						UserRequest(
-							username = username,
+							username = username ?: getUser()?.username ?: "",
 							avatar = null
 						)
 					)

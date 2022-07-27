@@ -1,30 +1,34 @@
-package cz.cleevio.profile.editNameFragment
+package cz.cleevio.profile.editAvatarFragment
 
+import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.core.base.BaseAvatarViewModel
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.repository.repository.user.UserRepository
-import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 
-class EditNameViewModel constructor(
-	private val userRepository: UserRepository
-) : BaseViewModel() {
+class EditAvatarViewModel constructor(
+	private val userRepository: UserRepository,
+	navMainGraphModel: NavMainGraphModel
+) : BaseAvatarViewModel(navMainGraphModel) {
+
+	val userFlow = userRepository.getUserFlow()
 
 	private val _wasSuccessful = Channel<Boolean>(Channel.CONFLATED)
 	val wasSuccessful = _wasSuccessful.receiveAsFlow()
 
-	var newName: String = ""
-
-	fun editName() {
+	fun editAvatar(contentResolver: ContentResolver) {
 		viewModelScope.launch(Dispatchers.IO) {
-			if (newName.isNotBlank()) {
+			val profileUri = profileImageUri.value
+
+			if (profileUri != null) {
 				userRepository.updateUser(
-					username = newName,
-					avatar = null
+					avatar = super.getAvatarData(profileUri, contentResolver),
+					avatarImageExtension = IMAGE_EXTENSION
 				).let {
 					_wasSuccessful.send(it.isSuccess())
 				}
