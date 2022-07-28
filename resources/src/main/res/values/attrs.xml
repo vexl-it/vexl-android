@@ -8,5 +8,6 @@
 		<attr name="icon_color" format="reference" />
 		<attr name="icon_size" format="dimension" />
 		<attr name="line_visibility" format="boolean" />
+		<attr name="switch_visibility" format="boolean" />
 	</declare-styleable>
 </resources>

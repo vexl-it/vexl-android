@@ -33,7 +33,7 @@
 			android:textColor="@color/gray_4"
 			android:textSize="18sp"
 			app:layout_constraintBottom_toTopOf="@+id/profile_row_subtitle"
-			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/profile_row_switch"
 			app:layout_constraintStart_toEndOf="@id/profile_row_icon"
 			app:layout_constraintTop_toTopOf="parent"
 			tools:text="Contacts Imported" />
@@ -49,10 +49,22 @@
 			android:textColor="@color/gray_3"
 			android:textSize="12sp"
 			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/profile_row_switch"
 			app:layout_constraintStart_toEndOf="@id/profile_row_icon"
 			app:layout_constraintTop_toBottomOf="@id/profile_row_title"
 			tools:text="35 friends" />
+
+		<com.google.android.material.switchmaterial.SwitchMaterial
+			android:id="@+id/profile_row_switch"
+			style="@style/Widget.Vexl.Switch"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="16dp"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:ignore="HardcodedText"
+			tools:visibility="visible" />
 
 		<View
 			android:id="@+id/profile_row_line"

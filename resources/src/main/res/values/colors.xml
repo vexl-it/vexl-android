@@ -83,10 +83,10 @@
 	<color name="background_button_contained">@color/primary</color>
 	<color name="background_input">@color/white</color>
 	<color name="background_snackbar">@color/white</color>
-	<color name="background_switch_thumb_on">@color/primary</color>
-	<color name="background_switch_thumb_off">@color/primary_light</color>
-	<color name="background_switch_track_on">@color/rose</color>
-	<color name="background_switch_track_off">@color/rose</color>
+	<color name="background_switch_thumb_on">@color/white</color>
+	<color name="background_switch_thumb_off">@color/white</color>
+	<color name="background_switch_track_on">@color/yellow_100</color>
+	<color name="background_switch_track_off">@color/gray_1</color>
 	<color name="background_profile_card">@color/grey_0</color>
 	<color name="border_color_button_outlined_disabled">#4DFFFFFF</color>
 	<color name="border_color_button_outlined">@color/primary_light</color>

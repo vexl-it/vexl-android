@@ -7,11 +7,13 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentEditAvatarBinding
+import coil.load
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -41,8 +43,14 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.userFlow.collect { user ->
 				setAvatarPlaceholderVisible(isVisible = (user?.avatar == null) && (viewModel.profileImageUri.value == null))
-				user?.avatar?.let {
-					binding.editAvatarImage.setImageURI(Uri.parse(it))
+
+				user?.avatar?.let { avatar ->
+					binding.editAvatarImage.load(avatar) {
+						crossfade(true)
+						fallback(R.drawable.ic_profile_avatar_placeholder)
+						error(R.drawable.ic_profile_avatar_placeholder)
+						placeholder(R.drawable.ic_profile_avatar_placeholder)
+					}
 				}
 			}
 		}

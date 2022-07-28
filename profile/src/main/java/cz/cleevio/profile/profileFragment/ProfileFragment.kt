@@ -2,6 +2,7 @@ package cz.cleevio.profile.profileFragment
 
 import android.content.Intent
 import android.net.Uri
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
@@ -9,7 +10,6 @@ import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.sendEmailToSupport
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
@@ -59,6 +59,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		priceChartWidget = binding.priceChart
 
 		super.initView()
+
+		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
+		binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
+		setUpAllowScreenshotsSwitch()
+
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
@@ -126,8 +131,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileAllowScreenshots.setOnClickListener {
-			Toast.makeText(requireContext(), "Allow screenshots not implemented", Toast.LENGTH_SHORT)
-				.show()
+			binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
+			profileViewModel.updateAllowScreenshotsSettings()
+			binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
+
+			setUpAllowScreenshotsSwitch()
 		}
 
 		binding.profileTermsAndConditions.setOnClickListener {
@@ -172,5 +180,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
 		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
+	}
+
+	private fun setUpAllowScreenshotsSwitch() {
+		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener { _, _ ->
+			binding.profileAllowScreenshots.callOnClick()
+		}
 	}
 }
