@@ -11,9 +11,9 @@ import cz.cleevio.profile.R
 import cz.cleevio.profile.cameraFragment.CODE_LENGTH
 import cz.cleevio.profile.cameraFragment.DEBUG_LOGO
 import cz.cleevio.profile.databinding.FragmentJoinGroupCodeBinding
-import lightbase.core.baseClasses.BaseFragment
-import lightbase.core.extensions.listenForInsets
-import lightbase.core.extensions.showToast
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.extensions.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class JoinGroupCodeFragment : BaseFragment(R.layout.fragment_join_group_code) {

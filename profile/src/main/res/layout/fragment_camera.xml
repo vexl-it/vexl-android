@@ -107,7 +107,6 @@
 			android:foreground="?attr/selectableItemBackground"
 			android:paddingHorizontal="16dp"
 			android:paddingVertical="8dp"
-			app:drawableStartCompat="@drawable/ic_profile_edit_name"
 			app:drawableTint="@color/black"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

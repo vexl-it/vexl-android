@@ -1,7 +1,7 @@
 package cz.cleevio.profile.joinGroupFragment
 
 import cz.cleevio.repository.repository.group.GroupRepository
-import lightbase.core.baseClasses.BaseViewModel
+import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 
 
 class JoinGroupCodeViewModel constructor(
