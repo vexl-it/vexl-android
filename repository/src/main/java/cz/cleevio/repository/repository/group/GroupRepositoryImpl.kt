@@ -32,7 +32,7 @@ class GroupRepositoryImpl constructor(
 
 	override suspend fun createGroup(
 		name: String,
-		logo: String,
+		logo: ImageRequest,
 		expiration: Long,
 		closureAt: Long
 	): Resource<Group> = tryOnline(

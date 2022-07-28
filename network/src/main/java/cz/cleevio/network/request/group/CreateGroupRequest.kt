@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CreateGroupRequest constructor(
 	val name: String,
-	val logo: String,
+	val logo: ImageRequest,
 	val expiration: Long,
 	val closureAt: Long,
 )
