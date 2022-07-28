@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogLeaveGroupBinding
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.group.GroupRepository
+import cz.cleevio.repository.repository.offer.OfferRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class LeaveGroupBottomSheetDialog constructor(
 ) : BottomSheetDialogFragment() {
 
 	private val groupRepository: GroupRepository by inject()
+	private val offerRepository: OfferRepository by inject()
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
 	private lateinit var binding: BottomSheetDialogLeaveGroupBinding
@@ -40,6 +42,9 @@ class LeaveGroupBottomSheetDialog constructor(
 				val response = groupRepository.leaveGroup(groupUuid)
 				when (response.status) {
 					is Status.Success -> {
+						response.data?.let {
+							offerRepository.deleteOfferForPublicKeys(it)
+						}
 						withContext(Dispatchers.Main) {
 							dismiss()
 							findNavController().popBackStack()

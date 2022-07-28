@@ -11,7 +11,8 @@ data class Group constructor(
 	val createdAt: Long = 0,
 	val expirationAt: Long,
 	val closureAt: Long,
-	val code: Long = 0
+	val code: Long = 0,
+	val memberCount: Long = 0,
 )
 
 fun GroupCreatedResponse.fromNetwork(): Group = Group(
@@ -28,7 +29,8 @@ fun GroupResponse.fromNetwork(): Group = Group(
 	createdAt = this.createdAt,
 	expirationAt = this.expirationAt,
 	closureAt = this.closureAt,
-	code = this.code
+	code = this.code,
+	memberCount = this.memberCount
 )
 
 fun Group.toEntity(): GroupEntity = GroupEntity(

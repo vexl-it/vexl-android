@@ -45,7 +45,8 @@ val repoModule = module {
 			contactKeyDao = get(),
 			contactApi = get(),
 			phoneNumberUtils = get(),
-			encryptedPreference = get()
+			encryptedPreference = get(),
+			notificationDao = get()
 		)
 	}
 
@@ -58,6 +59,7 @@ val repoModule = module {
 	single<ChatRepository> {
 		ChatRepositoryImpl(
 			chatApi = get(),
+			contactApi = get(),
 			notificationDao = get(),
 			chatMessageDao = get(),
 			myOfferDao = get(),
@@ -72,7 +74,8 @@ val repoModule = module {
 		GroupRepositoryImpl(
 			groupApi = get(),
 			groupDao = get(),
-			contactKeyDao = get()
+			contactKeyDao = get(),
+			myOfferDao = get()
 		)
 	}
 

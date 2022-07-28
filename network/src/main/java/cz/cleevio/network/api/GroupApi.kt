@@ -5,6 +5,7 @@ import cz.cleevio.network.request.group.JoinGroupRequest
 import cz.cleevio.network.request.group.LeaveGroupRequest
 import cz.cleevio.network.request.group.NewMemberRequest
 import cz.cleevio.network.response.group.GroupCreatedResponse
+import cz.cleevio.network.response.group.GroupResponse
 import cz.cleevio.network.response.group.GroupsResponse
 import cz.cleevio.network.response.group.NewMembersResponse
 import okhttp3.ResponseBody
@@ -19,11 +20,11 @@ interface GroupApi {
 		@Body leaveGroupRequest: LeaveGroupRequest
 	): Response<ResponseBody>
 
-	//get groups by UUIDs
+	//get groups by code
 	@GET("groups")
 	suspend fun getGroups(
-		@Query(value = "groupUuids") groupUuids: List<String>
-	): Response<GroupsResponse>
+		@Query(value = "code") code: String
+	): Response<GroupResponse>
 
 	//create new group
 	@POST("groups")

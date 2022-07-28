@@ -8,11 +8,13 @@ import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.entity.RequestedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ChatApi
+import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.chat.*
+import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.offer.fromCache
@@ -24,6 +26,7 @@ import kotlinx.coroutines.launch
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
+	private val contactApi: ContactApi,
 	private val notificationDao: NotificationDao,
 	private val chatMessageDao: ChatMessageDao,
 	private val chatUserDao: ChatUserDao,
@@ -114,6 +117,34 @@ class ChatRepositoryImpl constructor(
 				//exit on error
 				return
 			}
+		}
+
+		//user token in contact ms
+		val user = tryOnline(
+			request = {
+				contactApi.putUsers(
+					firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
+				)
+			},
+			mapper = { it }
+		)
+		if (user.status is Status.Error) {
+			//exit on error
+			return
+		}
+
+		//facebook user token in contact ms
+		val facebookUser = tryOnline(
+			request = {
+				contactApi.putUsers(
+					firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
+				)
+			},
+			mapper = { it }
+		)
+		if (facebookUser.status is Status.Error) {
+			//exit on error
+			return
 		}
 
 		//in case of no error, mark firebase token as uploaded

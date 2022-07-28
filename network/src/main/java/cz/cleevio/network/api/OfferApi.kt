@@ -1,6 +1,7 @@
 package cz.cleevio.network.api
 
 import cz.cleevio.network.request.offer.CreateOfferRequest
+import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.network.response.BasePagedResponse
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
@@ -39,4 +40,9 @@ interface OfferApi {
 		@Query("limit") limit: Int,
 		@Query("modifiedAt") modifiedAt: String
 	): Response<BasePagedResponse<OfferUnifiedResponse>>
+
+	@DELETE("offers/private-part")
+	suspend fun deleteOffersPrivatePart(
+		@Body deletePrivatePartRequest: DeletePrivatePartRequest
+	): Response<ResponseBody>
 }

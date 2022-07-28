@@ -2,8 +2,9 @@ package cz.cleevio.network.api
 
 import cz.cleevio.network.interceptors.AuthInterceptor
 import cz.cleevio.network.request.contact.ContactRequest
-import cz.cleevio.network.request.contact.ContactUserRequest
+import cz.cleevio.network.request.contact.CreateUserRequest
 import cz.cleevio.network.request.contact.DeleteContactRequest
+import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.network.response.BasePagedResponse
 import cz.cleevio.network.response.contact.*
 import okhttp3.ResponseBody
@@ -43,8 +44,15 @@ interface ContactApi {
 	suspend fun postUsers(
 		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
 		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
-		@Body contactUserRequest: ContactUserRequest
-	): Response<ContactUserResponse>
+		@Body createUserRequest: CreateUserRequest
+	): Response<Unit>
+
+	@PUT("users")
+	suspend fun putUsers(
+		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
+		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
+		@Body firebaseTokenUpdateRequest: FirebaseTokenUpdateRequest
+	): Response<Unit>
 
 	@DELETE("users/me")
 	suspend fun deleteUserMe(
