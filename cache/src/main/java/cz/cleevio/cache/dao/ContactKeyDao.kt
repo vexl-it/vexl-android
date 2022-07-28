@@ -37,4 +37,7 @@ interface ContactKeyDao {
 		clearTable()
 		insertContacts(keys)
 	}
+
+	@Query("SELECT * FROM ContactKeyEntity where (publicKey == :publicKey AND groupUuid != :groupUuid)")
+	fun findKeyOutsideThisGroup(publicKey: String, groupUuid: String): ContactKeyEntity?
 }

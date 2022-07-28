@@ -10,6 +10,7 @@ import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.offer.CreateOfferRequest
+import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.offer.*
@@ -115,6 +116,18 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun deleteOfferById(offerId: String): Resource<Unit> = deleteMyOffers(
 		listOf(offerId)
+	)
+
+	override suspend fun deleteOfferForPublicKeys(deletePrivatePartRequest: DeletePrivatePartRequest): Resource<Unit> = tryOnline(
+		request = {
+			offerApi.deleteOffersPrivatePart(
+				deletePrivatePartRequest = deletePrivatePartRequest
+			)
+		},
+		mapper = { },
+		doOnSuccess = {
+			syncOffers()
+		}
 	)
 
 	override suspend fun refreshOffer(offerId: String): Resource<List<Offer>> = tryOnline(

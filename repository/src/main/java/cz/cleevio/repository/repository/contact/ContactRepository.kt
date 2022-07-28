@@ -12,9 +12,9 @@ interface ContactRepository {
 
 	suspend fun uploadAllMissingFBContacts(identifiers: List<String>): Resource<ContactImport>
 
-	suspend fun registerUser(): Resource<ContactUser>
+	suspend fun registerUser(): Resource<Unit>
 
-	suspend fun registerFacebookUser(): Resource<ContactUser>
+	suspend fun registerFacebookUser(): Resource<Unit>
 
 	suspend fun syncMyContactsKeys(): Boolean
 

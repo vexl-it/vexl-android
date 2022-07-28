@@ -3,13 +3,16 @@ package cz.cleevio.repository.repository.group
 import com.cleevio.vexl.cryptography.ShaCryptoLib
 import cz.cleevio.cache.dao.ContactKeyDao
 import cz.cleevio.cache.dao.GroupDao
-import cz.cleevio.cache.entity.ContactKeyEntity
-import cz.cleevio.cache.entity.ContactLevel
+import cz.cleevio.cache.dao.MyOfferDao
 import cz.cleevio.network.api.GroupApi
 import cz.cleevio.network.data.Resource
+import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.group.*
+import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.response.group.NewMembersResponse
+import cz.cleevio.repository.model.contact.ContactKey
+import cz.cleevio.repository.model.contact.toCache
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.model.group.fromEntity
 import cz.cleevio.repository.model.group.fromNetwork
@@ -20,7 +23,8 @@ import kotlinx.coroutines.flow.map
 class GroupRepositoryImpl constructor(
 	val groupApi: GroupApi,
 	val groupDao: GroupDao,
-	val contactKeyDao: ContactKeyDao
+	val contactKeyDao: ContactKeyDao,
+	val myOfferDao: MyOfferDao,
 ) : GroupRepository {
 
 	override fun getGroupsFlow(): Flow<List<Group>> = groupDao
@@ -96,20 +100,51 @@ class GroupRepositoryImpl constructor(
 		}
 	)
 
-	override suspend fun leaveGroup(groupUuid: String): Resource<Unit> = tryOnline(
-		request = {
-			groupApi.putGroupsLeave(
-				LeaveGroupRequest(groupUuid = ShaCryptoLib.hash(groupUuid))
-			)
-		},
-		mapper = { },
-		doOnSuccess = {
-			groupDao.deleteByUuid(
-				groupUuid
-			)
-			syncMyGroups()
+	override suspend fun leaveGroup(groupUuid: String): Resource<DeletePrivatePartRequest> {
+		val response = tryOnline(
+			request = {
+				groupApi.putGroupsLeave(
+					LeaveGroupRequest(groupUuid = ShaCryptoLib.hash(groupUuid))
+				)
+			},
+			mapper = {}
+		)
+		return when (response.status) {
+			is Status.Success -> {
+				//delete also offers created for members of group you just left
+
+				//get all offers IDs
+				val offers = myOfferDao.listAll().map { it.extId }
+
+				//get all publicKeys for group
+				val groupKeys = contactKeyDao.getKeysByGroup(groupUuid)
+
+				//check that those public keys are not in other contacts
+				val validKeys = groupKeys
+					.filter {
+						//we want to keep only public keys that are not used outside this group
+						contactKeyDao.findKeyOutsideThisGroup(it.publicKey, groupUuid) == null
+					}
+					//and we need only public key to send to BE
+					.map { it.publicKey }
+
+				val result = DeletePrivatePartRequest(
+					offerId = offers,
+					publicKey = validKeys
+				)
+
+				groupDao.deleteByUuid(
+					groupUuid
+				)
+				syncMyGroups()
+
+				Resource.success(data = result)
+			}
+			else -> {
+				Resource.error(errorIdentification = response.errorIdentification)
+			}
 		}
-	)
+	}
 
 	override suspend fun syncAllGroupsMembers(): Resource<Unit> {
 		//load all groups from DB
@@ -134,7 +169,7 @@ class GroupRepositoryImpl constructor(
 			doOnSuccess = {
 				it?.let { contactKeyList ->
 					contactKeyDao.insertContacts(
-						contactKeyList
+						contactKeyList.map { it.toCache() }
 					)
 				}
 			}
@@ -143,10 +178,10 @@ class GroupRepositoryImpl constructor(
 		return Resource.success(Unit)
 	}
 
-	override suspend fun syncNewMembersInGroup(groupUuid: String): Resource<Unit> {
+	override suspend fun syncNewMembersInGroup(groupUuid: String): Resource<List<ContactKey>> {
 		//get keys for group
 		val keyContacts = contactKeyDao.getKeysByGroup(groupUuid)
-		tryOnline(
+		val response = tryOnline(
 			request = {
 				//get new group members for
 				groupApi.postGroupsMembersNew(
@@ -166,24 +201,29 @@ class GroupRepositoryImpl constructor(
 			doOnSuccess = {
 				it?.let { contactKeyList ->
 					contactKeyDao.insertContacts(
-						contactKeyList
+						contactKeyList.map { it.toCache() }
 					)
 				}
 			}
 		)
 
-		return Resource.success(Unit)
+		return response
 	}
+
+	override suspend fun getGroupInfoByCode(code: String): Resource<Group> = tryOnline(
+		request = { groupApi.getGroups(code) },
+		mapper = { it?.fromNetwork() }
+	)
 }
 
-fun NewMembersResponse.toContactKey(): MutableList<ContactKeyEntity> {
-	val result: MutableList<ContactKeyEntity> = mutableListOf()
+fun NewMembersResponse.toContactKey(): List<ContactKey> {
+	val result: MutableList<ContactKey> = mutableListOf()
 	this.newMembers.forEach { groupData ->
 		groupData.publicKeys.forEach { publicKey ->
 			result.add(
-				ContactKeyEntity(
-					publicKey = publicKey,
-					contactLevel = ContactLevel.GROUP,
+				ContactKey(
+					key = publicKey,
+					level = cz.cleevio.repository.model.contact.ContactLevel.GROUP,
 					groupUuid = groupData.groupUuid
 				)
 			)

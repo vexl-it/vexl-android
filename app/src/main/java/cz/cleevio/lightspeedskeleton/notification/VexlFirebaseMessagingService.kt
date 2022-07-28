@@ -8,7 +8,9 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
+import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.group.GroupRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +22,7 @@ import timber.log.Timber
 class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 
 	private val chatRepository: ChatRepository by inject()
+	private val groupRepository: GroupRepository by inject()
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
 	override fun onNewToken(token: String) {
@@ -36,6 +39,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val message = remoteMessage.data[NOTIFICATION_BODY]
 		val type = remoteMessage.data[NOTIFICATION_TYPE] ?: NOTIFICATION_TYPE_DEFAULT
 		val inbox = remoteMessage.data[NOTIFICATION_INBOX]
+		val uuid = remoteMessage.data[NOTIFICATION_UUID]
 
 		Timber.tag("FIREBASE").d("$inbox")
 
@@ -44,6 +48,25 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		inbox?.let { inboxPublicKey ->
 			coroutineScope.launch {
 				chatRepository.syncMessages(inboxPublicKey)
+			}
+		}
+
+		uuid?.let { groupUuid ->
+			coroutineScope.launch {
+				//todo: check if we have any offers created for this group
+
+				//if we do, continue
+				val response = groupRepository.syncNewMembersInGroup(groupUuid)
+				//TODO: encrypt all offers for these new members and send it to BE
+				//fixme: when BE has new EP ready for adding extra private-parts to offer
+				when (response.status) {
+					is Status.Success -> {
+						//just debug
+						response.data?.map {
+							Timber.d("newMember: $it")
+						}
+					}
+				}
 			}
 		}
 
@@ -101,6 +124,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		private const val NOTIFICATION_TITLE = "title"
 		private const val NOTIFICATION_BODY = "body"
 		private const val NOTIFICATION_INBOX = "inbox"
+		private const val NOTIFICATION_UUID = "uuid"
 
 		const val NOTIFICATION_TYPE_DEFAULT = "UNKNOWN"
 		private const val CODE = 102_487

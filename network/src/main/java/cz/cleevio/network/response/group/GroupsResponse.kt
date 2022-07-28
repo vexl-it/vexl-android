@@ -16,4 +16,5 @@ data class GroupResponse constructor(
 	val expirationAt: Long,
 	val closureAt: Long,
 	val code: Long,
+	val memberCount: Long
 )
