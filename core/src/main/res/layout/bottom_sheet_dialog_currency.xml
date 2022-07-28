@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/currency_wrapper"
+		style="@style/Widget.Vexl.CardView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp">
+
+			<TextView
+				android:id="@+id/title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="12dp"
+				android:text="@string/user_profile_currency_title"
+				android:textAppearance="@style/TextAppearance.Vexl.Profile.DialogHeading"
+				android:textColor="@color/black"
+				app:layout_constraintBottom_toTopOf="@id/currency_radio_group"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<RadioGroup
+				android:id="@+id/currency_radio_group"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="16dp"
+				android:orientation="vertical"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent">
+
+				<RadioButton
+					android:id="@+id/currency_czk"
+					style="@style/Widget.Cleevio.Vexl.CurrencyRadioBtn"
+					android:layout_height="wrap_content"
+					android:buttonTint="@color/yellow"
+					android:text="@string/user_profile_currency_czk"
+					android:textAppearance="@style/TextAppearance.Vexl.Profile.Description"
+					tools:checked="true" />
+
+				<RadioButton
+					android:id="@+id/currency_eur"
+					style="@style/Widget.Cleevio.Vexl.CurrencyRadioBtn"
+					android:layout_height="wrap_content"
+					android:buttonTint="@color/yellow"
+					android:text="@string/user_profile_currency_eur"
+					android:textAppearance="@style/TextAppearance.Vexl.Profile.Description" />
+
+				<RadioButton
+					android:id="@+id/currency_usd"
+					style="@style/Widget.Cleevio.Vexl.CurrencyRadioBtn"
+					android:layout_height="wrap_content"
+					android:buttonTint="@color/yellow"
+					android:text="@string/user_profile_currency_usd"
+					android:textAppearance="@style/TextAppearance.Vexl.Profile.Description" />
+
+			</RadioGroup>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</com.google.android.material.card.MaterialCardView>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/confirm_btn"
+		style="@style/Widget.Vexl.Profile.DonateButton.Accept"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="4dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginEnd="8dp"
+		android:layout_marginBottom="30dp"
+		android:text="@string/user_profile_currency_dismissButton"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/currency_wrapper" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

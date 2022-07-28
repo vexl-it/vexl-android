@@ -255,7 +255,7 @@
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toBottomOf="@id/profile_set_pin"
 						app:line_visibility="true"
-						app:title="@string/profile_czech_crown" />
+						app:title="@string/profile_currency" />
 
 					<cz.cleevio.profile.widget.ProfileRowWidget
 						android:id="@+id/profile_allow_screenshots"

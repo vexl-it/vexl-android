@@ -16,4 +16,5 @@ interface EncryptedPreferenceRepository {
 	var areScreenshotsAllowed: Boolean
 
 	val areScreenshotsAllowedFlow: MutableStateFlow<Boolean>
+	val selectedCurrencyFlow: MutableStateFlow<String>
 }
