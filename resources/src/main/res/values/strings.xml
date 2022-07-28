@@ -4,6 +4,7 @@
     <!-- General -->
     <string name="general_eur_sign">€</string>
     <string name="general_usd_sign">$</string>
+    <string name="general_czk_sign">Kč</string>
     <string name="general_continue">Continue</string>
     <string name="general_more">More</string>
     <string name="general_close">Close</string>

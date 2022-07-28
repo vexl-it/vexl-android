@@ -34,7 +34,7 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository by inject()
 
 	private lateinit var binding: WidgetCurrencyPriceChartBinding
-	private lateinit var currentCryptoCurrencyPrice: CryptoCurrencies
+	private var currentCryptoCurrencyPrice: CryptoCurrencies? = null
 	private var marketChartData: MarketChartEntry? = null
 	private var currency: Currency = encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency()
 	private var cryptoCurrency: CryptoCurrency = CryptoCurrency.BITCOIN
@@ -47,13 +47,13 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	fun setupCryptoCurrencies(currentCryptoCurrencyPrice: CryptoCurrencies) {
+	fun setupCryptoCurrencies(currentCryptoCurrencyPrice: CryptoCurrencies?) {
 		this.currentCryptoCurrencyPrice = currentCryptoCurrencyPrice
 		binding.currentPrice.text =
 			when (currency) {
-				Currency.CZK -> currentCryptoCurrencyPrice.priceCzk.formatAsPrice()
-				Currency.EUR -> currentCryptoCurrencyPrice.priceEur.formatAsPrice()
-				else -> currentCryptoCurrencyPrice.priceUsd.formatAsPrice()
+				Currency.CZK -> currentCryptoCurrencyPrice?.priceCzk?.formatAsPrice()
+				Currency.EUR -> currentCryptoCurrencyPrice?.priceEur?.formatAsPrice()
+				else -> currentCryptoCurrencyPrice?.priceUsd?.formatAsPrice()
 			}
 
 		updatePercentageData()
@@ -67,6 +67,14 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	fun setupMarketData(marketChartEntry: MarketChartEntry) {
 		this.marketChartData = marketChartEntry
 		updateChartData()
+	}
+
+	fun updateCurrency(currency: Currency) {
+		this.currency = currency
+		updateCurrencyView()
+		if (currentCryptoCurrencyPrice != null) {
+			setupCryptoCurrencies(currentCryptoCurrencyPrice)
+		}
 	}
 
 	@Suppress("MagicNumber")
@@ -218,15 +226,15 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 	private fun getValue(btnId: Int): BigDecimal {
 		return when (btnId) {
-			R.id.period_1_day -> currentCryptoCurrencyPrice.priceChangePercentage24h
-			R.id.period_1_week -> currentCryptoCurrencyPrice.priceChangePercentage7d
-			R.id.period_1_month -> currentCryptoCurrencyPrice.priceChangePercentage30d
-			R.id.period_3_month -> currentCryptoCurrencyPrice.priceChangePercentage60d
-			R.id.period_6_month -> currentCryptoCurrencyPrice.priceChangePercentage200d
-			R.id.period_1_year -> currentCryptoCurrencyPrice.priceChangePercentage1y
+			R.id.period_1_day -> currentCryptoCurrencyPrice?.priceChangePercentage24h ?: BigDecimal.ZERO
+			R.id.period_1_week -> currentCryptoCurrencyPrice?.priceChangePercentage7d ?: BigDecimal.ZERO
+			R.id.period_1_month -> currentCryptoCurrencyPrice?.priceChangePercentage30d ?: BigDecimal.ZERO
+			R.id.period_3_month -> currentCryptoCurrencyPrice?.priceChangePercentage60d ?: BigDecimal.ZERO
+			R.id.period_6_month -> currentCryptoCurrencyPrice?.priceChangePercentage200d ?: BigDecimal.ZERO
+			R.id.period_1_year -> currentCryptoCurrencyPrice?.priceChangePercentage1y ?: BigDecimal.ZERO
 			else -> {
 				Timber.e("Unknown currency price period radio ID! '$id'")
-				currentCryptoCurrencyPrice.priceChangePercentage24h
+				currentCryptoCurrencyPrice?.priceChangePercentage24h ?: BigDecimal.ZERO
 			}
 		}
 	}
@@ -247,24 +255,8 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 				resources.getColor(R.color.yellow_100, null)
 			}
 		binding.currentPrice.setTextColor(textColor)
-
-		if (currency == Currency.CZK) {
-			binding.prefixCurrency.isVisible = false
-			binding.suffixCurrency.isVisible = true
-
-			binding.suffixCurrency.setTextColor(textColor)
-		} else {
-			binding.prefixCurrency.isVisible = true
-			binding.suffixCurrency.isVisible = false
-
-			binding.prefixCurrency.setTextColor(textColor)
-			binding.prefixCurrency.text =
-				if (currency == Currency.EUR) {
-					resources.getString(R.string.general_eur_sign)
-				} else {
-					resources.getString(R.string.general_usd_sign)
-				}
-		}
+		binding.suffixCurrency.setTextColor(textColor)
+		binding.prefixCurrency.setTextColor(textColor)
 
 		binding.currencyName.text =
 			if (cryptoCurrency == CryptoCurrency.BITCOIN) {
@@ -288,6 +280,26 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		} else {
 			binding.largeChart.isVisible = false
 			binding.chartProgress.isVisible = false
+		}
+	}
+
+	private fun updateCurrencyView() {
+		when (currency) {
+			Currency.CZK -> {
+				binding.prefixCurrency.isVisible = false
+				binding.suffixCurrency.isVisible = true
+				binding.suffixCurrency.text = resources.getString(R.string.general_czk_sign)
+			}
+			Currency.EUR -> {
+				binding.prefixCurrency.isVisible = true
+				binding.suffixCurrency.isVisible = false
+				binding.prefixCurrency.text = resources.getString(R.string.general_eur_sign)
+			}
+			Currency.USD -> {
+				binding.prefixCurrency.isVisible = true
+				binding.suffixCurrency.isVisible = false
+				binding.prefixCurrency.text = resources.getString(R.string.general_usd_sign)
+			}
 		}
 	}
 

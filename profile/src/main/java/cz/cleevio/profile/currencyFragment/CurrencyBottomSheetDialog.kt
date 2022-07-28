@@ -19,7 +19,7 @@ class CurrencyBottomSheetDialog(
 ) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogCurrencyBinding
-	private var currency: Currency = Currency.CZK
+	private var currency: Currency? = null
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -52,7 +52,7 @@ class CurrencyBottomSheetDialog(
 		}
 
 		binding.confirmBtn.setOnClickListener {
-			onCurrencyConfirmed?.invoke(currency)
+			onCurrencyConfirmed?.invoke(currency ?: currentCurrency)
 			dismiss()
 		}
 	}

@@ -33,6 +33,11 @@ abstract class BaseGraphFragment(fragment: Int) : BaseFragment(fragment) {
 				priceChartWidget?.setupTimeRange(viewModel.dateTimeRange)
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.encryptedPreferenceRepository.selectedCurrencyFlow.collect { currency ->
+				priceChartWidget?.updateCurrency(currency.mapStringToCurrency())
+			}
+		}
 	}
 
 	@CallSuper
