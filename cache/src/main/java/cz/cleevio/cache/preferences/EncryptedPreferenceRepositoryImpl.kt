@@ -83,7 +83,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			areScreenshotsAllowedFlow.tryEmit(value)
 		}
 
-	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
+	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()
