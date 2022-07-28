@@ -21,14 +21,14 @@ class ProfileViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
-	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
 
-	private val _isRequesting = Channel<Boolean>(Channel.CONFLATED)
-	val isRequesting = _isRequesting.receiveAsFlow()
+	val areScreenshotsAllowed
+	get() = encryptedPreferenceRepository.areScreenshotsAllowed
 
 	private val _contactsNumber = MutableStateFlow<Int>(35)
 	val contactsNumber = _contactsNumber.asStateFlow()
@@ -65,7 +65,5 @@ class ProfileViewModel constructor(
 
 	fun updateAllowScreenshotsSettings() {
 		encryptedPreferenceRepository.areScreenshotsAllowed = !encryptedPreferenceRepository.areScreenshotsAllowed
-
-		_isRequesting.trySend(encryptedPreferenceRepository.areScreenshotsAllowed)
 	}
 }

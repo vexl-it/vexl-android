@@ -8,6 +8,7 @@ val viewModelsModule = module {
 
 	single {
 		MainViewModel(
+			encryptedPreferenceRepository = get(),
 			navMainGraphModel = get(),
 		)
 	}

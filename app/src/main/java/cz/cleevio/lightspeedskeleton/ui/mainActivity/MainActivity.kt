@@ -1,6 +1,7 @@
 package cz.cleevio.lightspeedskeleton.ui.mainActivity
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
@@ -81,6 +82,18 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							navController.setGraph(
 								R.navigation.nav_profile
 							)
+					}
+				}
+			}
+		}
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.encryptedPreferenceRepository.areScreenshotsAllowedFlow.collect {
+					if (it) {
+						window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+					} else {
+						window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
 					}
 				}
 			}

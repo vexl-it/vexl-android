@@ -3,6 +3,7 @@ package cz.cleevio.cache.preferences
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Suppress("Unused")
 class EncryptedPreferenceRepositoryImpl constructor(
@@ -79,7 +80,10 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		get() = getBooleanFromEP(ARE_SCREENSHOTS_ALLOWED, true)
 		set(value) {
 			putBooleanToEP(ARE_SCREENSHOTS_ALLOWED, value)
+			areScreenshotsAllowedFlow.tryEmit(value)
 		}
+
+	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()

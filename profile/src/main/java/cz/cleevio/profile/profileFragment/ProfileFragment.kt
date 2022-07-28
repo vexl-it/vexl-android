@@ -10,7 +10,6 @@ import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.sendEmailToSupport
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
@@ -54,16 +53,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				)
 			}
 		}
-
-		repeatScopeOnStart {
-			profileViewModel.isRequesting.collect {
-				if (it) {
-					requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
-				} else {
-					requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-				}
-			}
-		}
 	}
 
 	override fun initView() {
@@ -71,6 +60,8 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 		super.initView()
 
+		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
+		binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
 		setUpAllowScreenshotsSwitch()
 
 		listenForInsets(binding.container) { insets ->
@@ -141,8 +132,8 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 		binding.profileAllowScreenshots.setOnClickListener {
 			binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
-			binding.profileAllowScreenshots.switch.isChecked = !binding.profileAllowScreenshots.switch.isChecked
 			profileViewModel.updateAllowScreenshotsSettings()
+			binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
 
 			setUpAllowScreenshotsSwitch()
 		}
@@ -193,7 +184,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 	private fun setUpAllowScreenshotsSwitch() {
 		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener { _, _ ->
-			profileViewModel.updateAllowScreenshotsSettings()
+			binding.profileAllowScreenshots.callOnClick()
 		}
 	}
 }
