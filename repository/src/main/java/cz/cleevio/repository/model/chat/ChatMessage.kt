@@ -1,6 +1,8 @@
 package cz.cleevio.repository.model.chat
 
 import android.os.Parcelable
+import com.cleevio.vexl.cryptography.EciesCryptoLib
+import com.cleevio.vexl.cryptography.model.KeyPair
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import cz.cleevio.cache.entity.ChatMessageEntity
@@ -45,15 +47,18 @@ enum class MessageType {
 	BROKEN
 }
 
-fun MessageResponse.fromNetwork(inboxPublicKey: String): ChatMessage {
+fun MessageResponse.fromNetwork(inboxKeyPair: KeyPair): ChatMessage {
+	//decrypt message string
+	val decrypted = EciesCryptoLib.decrypt(inboxKeyPair, this.message)
+
 	//take message field and convert it from String to class
 	val moshi = Moshi.Builder().build()
 	val jsonAdapter: JsonAdapter<ChatMessageRequest> = moshi.adapter(ChatMessageRequest::class.java)
 
-	val chatMessage = jsonAdapter.fromJson(this.message)
+	val chatMessage = jsonAdapter.fromJson(decrypted)
 	return chatMessage?.fromNetwork(
-		recipientPublicKey = inboxPublicKey,
-		inboxPublicKey = inboxPublicKey,
+		recipientPublicKey = inboxKeyPair.publicKey,
+		inboxPublicKey = inboxKeyPair.publicKey,
 		senderPublicKey = senderPublicKey,
 		messageType = this.messageType
 	) ?: ChatMessage(
@@ -84,7 +89,7 @@ fun ChatMessageRequest.fromNetwork(
 	)
 }
 
-fun ChatMessage.toNetwork(): String {
+fun ChatMessage.toNetwork(receiverPublicKey: String): String {
 	val request = ChatMessageRequest(
 		uuid = this.uuid,
 		text = this.text,
@@ -97,7 +102,10 @@ fun ChatMessage.toNetwork(): String {
 	val jsonAdapter: JsonAdapter<ChatMessageRequest> = moshi.adapter(ChatMessageRequest::class.java)
 
 	val string = jsonAdapter.toJson(request)
-	return string ?: ""
+	val result = string?.let {
+		EciesCryptoLib.encrypt(receiverPublicKey, it)
+	}
+	return result ?: ""
 }
 
 fun ChatUser.toNetwork(): ChatUserRequest {

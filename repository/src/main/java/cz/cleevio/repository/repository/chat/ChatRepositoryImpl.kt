@@ -176,7 +176,7 @@ class ChatRepositoryImpl constructor(
 						)
 					)
 				},
-				mapper = { it?.messages?.map { message -> message.fromNetwork(keyPair.publicKey) } },
+				mapper = { it?.messages?.map { message -> message.fromNetwork(keyPair) } },
 				//save messages to DB
 				doOnSuccess = { messages ->
 					CoroutineScope(Dispatchers.IO).launch {
@@ -293,8 +293,10 @@ class ChatRepositoryImpl constructor(
 			request = {
 				chatApi.postInboxesMessages(
 					sendMessageRequest = SendMessageRequest(
-						senderPublicKey = senderPublicKey, receiverPublicKey = receiverPublicKey,
-						message = message.toNetwork(), messageType = messageType
+						senderPublicKey = senderPublicKey,
+						receiverPublicKey = receiverPublicKey,
+						message = message.toNetwork(receiverPublicKey),
+						messageType = messageType
 					)
 				)
 			},
@@ -349,7 +351,7 @@ class ChatRepositoryImpl constructor(
 				chatApi.postInboxesApprovalRequest(
 					ApprovalRequest(
 						publicKey = publicKey,
-						message = message.toNetwork()
+						message = message.toNetwork(publicKey)
 					)
 				)
 			},
@@ -390,7 +392,7 @@ class ChatRepositoryImpl constructor(
 							publicKey = senderKeyPair.publicKey,
 							publicKeyToConfirm = publicKeyToConfirm,
 							signature = signature,
-							message = message.toNetwork(),
+							message = message.toNetwork(publicKeyToConfirm),
 							approve = approve
 						)
 					)
