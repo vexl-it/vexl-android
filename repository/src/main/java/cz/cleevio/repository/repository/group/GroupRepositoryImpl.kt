@@ -1,6 +1,5 @@
 package cz.cleevio.repository.repository.group
 
-import com.cleevio.vexl.cryptography.ShaCryptoLib
 import cz.cleevio.cache.dao.ContactKeyDao
 import cz.cleevio.cache.dao.GroupDao
 import cz.cleevio.cache.dao.MyOfferDao
@@ -144,6 +143,9 @@ class GroupRepositoryImpl constructor(
 				syncMyGroups()
 
 				Resource.success(data = result)
+			}
+			is Status.Error -> {
+				Resource.error(errorIdentification = response.errorIdentification)
 			}
 			else -> {
 				Resource.error(errorIdentification = response.errorIdentification)
