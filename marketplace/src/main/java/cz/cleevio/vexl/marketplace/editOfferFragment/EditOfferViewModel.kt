@@ -35,6 +35,12 @@ class EditOfferViewModel constructor(
 	private val _offer = MutableStateFlow<Offer?>(null)
 	val offer = _offer.asStateFlow()
 
+	fun loadMyContactsKeys() {
+		viewModelScope.launch(Dispatchers.IO) {
+			contactRepository.syncMyContactsKeys()
+		}
+	}
+
 	fun loadOfferFromCacheById(offerId: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.getOffersFlow().collect { offers ->

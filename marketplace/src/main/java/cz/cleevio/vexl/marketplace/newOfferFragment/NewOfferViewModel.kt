@@ -29,6 +29,12 @@ class NewOfferViewModel constructor(
 	private val _newOfferRequest = MutableSharedFlow<Resource<Offer>>()
 	val newOfferRequest = _newOfferRequest.asSharedFlow()
 
+	fun loadMyContactsKeys() {
+		viewModelScope.launch(Dispatchers.IO) {
+			contactRepository.syncMyContactsKeys()
+		}
+	}
+
 	fun createOffer(params: OfferParams) {
 		viewModelScope.launch(Dispatchers.IO) {
 

@@ -128,6 +128,8 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			)
 		}
 
+		viewModel.loadMyContactsKeys()
+
 		viewModel.loadOfferFromCacheById(args.offerId)
 
 		binding.newOfferTitle.setListeners(

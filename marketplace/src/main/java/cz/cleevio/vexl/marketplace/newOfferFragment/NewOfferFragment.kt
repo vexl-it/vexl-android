@@ -50,6 +50,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			)
 		}
 
+		viewModel.loadMyContactsKeys()
+
 		binding.newOfferTitle.setTypeAndTitle(
 			when (args.offerType) {
 				OfferType.BUY -> getString(R.string.offer_create_buy_title)
