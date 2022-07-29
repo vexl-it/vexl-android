@@ -40,7 +40,8 @@ fun Group.toEntity(): GroupEntity = GroupEntity(
 	createdAt = this.createdAt,
 	expirationAt = this.expirationAt,
 	closureAt = this.closureAt,
-	code = this.code
+	code = this.code,
+	memberCount = this.memberCount
 )
 
 fun GroupEntity.fromEntity(): Group = Group(
@@ -50,5 +51,6 @@ fun GroupEntity.fromEntity(): Group = Group(
 	createdAt = this.createdAt,
 	expirationAt = this.expirationAt,
 	closureAt = this.closureAt,
-	code = this.code
+	code = this.code,
+	memberCount = this.memberCount
 )

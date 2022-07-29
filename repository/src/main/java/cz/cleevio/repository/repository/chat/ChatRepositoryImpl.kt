@@ -33,6 +33,7 @@ class ChatRepositoryImpl constructor(
 	private val myOfferDao: MyOfferDao,
 	private val requestedOfferDao: RequestedOfferDao,
 	private val offerDao: OfferDao,
+	private val userDao: UserDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : ChatRepository {
 
@@ -120,31 +121,34 @@ class ChatRepositoryImpl constructor(
 		}
 
 		//user token in contact ms
-		val user = tryOnline(
-			request = {
-				contactApi.putUsers(
-					firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
-				)
-			},
-			mapper = { it }
-		)
-		if (user.status is Status.Error) {
-			//exit on error
-			return
-		}
+		//do only if we are already onboarded
+		if (userDao.getUser()?.finishedOnboarding == true) {
+			val user = tryOnline(
+				request = {
+					contactApi.putUsers(
+						firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
+					)
+				},
+				mapper = { it }
+			)
+			if (user.status is Status.Error) {
+				//exit on error
+				return
+			}
 
-		//facebook user token in contact ms
-		val facebookUser = tryOnline(
-			request = {
-				contactApi.putUsers(
-					firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
-				)
-			},
-			mapper = { it }
-		)
-		if (facebookUser.status is Status.Error) {
-			//exit on error
-			return
+			//facebook user token in contact ms
+			val facebookUser = tryOnline(
+				request = {
+					contactApi.putUsers(
+						firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
+					)
+				},
+				mapper = { it }
+			)
+			if (facebookUser.status is Status.Error) {
+				//exit on error
+				return
+			}
 		}
 
 		//in case of no error, mark firebase token as uploaded
