@@ -1,4 +1,4 @@
-package cz.cleevio.profile.joinGroupFragment
+package cz.cleevio.profile.cameraFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.network.data.Status
@@ -10,9 +10,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-
-class JoinGroupCodeViewModel constructor(
-	val groupRepository: GroupRepository
+class CameraViewModel constructor(
+	private val groupRepository: GroupRepository
 ) : BaseViewModel() {
 
 	private val _groupLoaded = MutableSharedFlow<Group>(replay = 1)

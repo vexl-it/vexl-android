@@ -1,9 +1,6 @@
 package cz.cleevio.network.api
 
-import cz.cleevio.network.request.group.CreateGroupRequest
-import cz.cleevio.network.request.group.JoinGroupRequest
-import cz.cleevio.network.request.group.LeaveGroupRequest
-import cz.cleevio.network.request.group.NewMemberRequest
+import cz.cleevio.network.request.group.*
 import cz.cleevio.network.response.group.GroupCreatedResponse
 import cz.cleevio.network.response.group.GroupResponse
 import cz.cleevio.network.response.group.GroupsResponse
@@ -49,8 +46,8 @@ interface GroupApi {
 	suspend fun getGroupsMe(): Response<GroupsResponse>
 
 	//return mine expired groups
-	@GET("groups/expired")
+	@POST("groups/expired")
 	suspend fun getGroupsExpired(
-		@Query(value = "groupUuids") groupUuids: List<String>
+		@Body expiredGroupsRequest: ExpiredGroupsRequest
 	): Response<GroupsResponse>
 }

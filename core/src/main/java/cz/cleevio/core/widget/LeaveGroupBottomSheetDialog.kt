@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogLeaveGroupBinding
 import cz.cleevio.network.data.Status
@@ -43,11 +42,12 @@ class LeaveGroupBottomSheetDialog constructor(
 				when (response.status) {
 					is Status.Success -> {
 						response.data?.let {
-							offerRepository.deleteOfferForPublicKeys(it)
+							if (it.offerId.isNotEmpty() && it.publicKey.isNotEmpty()) {
+								offerRepository.deleteOfferForPublicKeys(it)
+							}
 						}
 						withContext(Dispatchers.Main) {
 							dismiss()
-							findNavController().popBackStack()
 						}
 					}
 					is Status.Error -> {

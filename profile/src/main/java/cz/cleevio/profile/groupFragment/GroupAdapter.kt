@@ -33,8 +33,9 @@ class GroupAdapter constructor(
 
 		fun bind(item: Group) {
 			binding.groupName.text = item.name
-			//todo: add members count when we have it
-			binding.groupMembers.text = "TODO: ${item.code.toString()}"
+			binding.groupMembers.text = binding.groupMembers.context.getString(
+				R.string.groups_item_members, item.memberCount.toString()
+			)
 			binding.groupLogo.load(item.logoUrl) {
 				crossfade(true)
 				//todo: ask for placeholders?
