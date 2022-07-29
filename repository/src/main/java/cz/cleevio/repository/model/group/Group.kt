@@ -1,9 +1,12 @@
 package cz.cleevio.repository.model.group
 
+import android.os.Parcelable
 import cz.cleevio.cache.entity.GroupEntity
 import cz.cleevio.network.response.group.GroupCreatedResponse
 import cz.cleevio.network.response.group.GroupResponse
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Group constructor(
 	val groupUuid: String,
 	val name: String,
@@ -13,7 +16,7 @@ data class Group constructor(
 	val closureAt: Long,
 	val code: Long = 0,
 	val memberCount: Long = 0,
-)
+) : Parcelable
 
 fun GroupCreatedResponse.fromNetwork(): Group = Group(
 	groupUuid = this.uuid,

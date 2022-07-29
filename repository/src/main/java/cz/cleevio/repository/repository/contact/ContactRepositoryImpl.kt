@@ -393,10 +393,25 @@ class ContactRepositoryImpl constructor(
 		}
 	}
 
-	override fun getGroupsContactKeys(): List<ContactKey> {
+	override fun getSecondLevelContactKeys(): List<ContactKey> {
+		return contactKeyDao.getSecondLevelKeys().map {
+			it.fromCache()
+		}
+	}
+
+	override fun getAllGroupsContactKeys(): List<ContactKey> {
 		return contactKeyDao.getGroupLevelKeys().map {
 			it.fromCache()
 		}
+	}
+
+	override fun getGroupsContactKeys(groupUuids: List<String>): List<ContactKey> {
+		val listOfList = groupUuids.map {
+			contactKeyDao.getKeysByGroup(it).map { entity ->
+				entity.fromCache()
+			}
+		}
+		return listOfList.flatten()
 	}
 
 	private suspend fun loadMyContactsKeys(

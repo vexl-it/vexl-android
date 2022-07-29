@@ -5,8 +5,9 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.MessageType
-import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.model.offer.OfferWithGroup
 import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ import java.util.*
 
 
 class RequestOfferViewModel constructor(
+	val groupRepository: GroupRepository,
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
@@ -26,7 +28,7 @@ class RequestOfferViewModel constructor(
 	private val _isRequesting = MutableStateFlow<Boolean>(false)
 	val isRequesting = _isRequesting.asStateFlow()
 
-	private val _offer = MutableStateFlow<Offer?>(null)
+	private val _offer = MutableStateFlow<OfferWithGroup?>(null)
 	val offer = _offer.asStateFlow()
 
 	fun sendRequest(text: String, offerPublicKey: String, offerId: String, onSuccess: suspend () -> Unit) {
@@ -67,7 +69,9 @@ class RequestOfferViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.getOffersFlow().collect { offers ->
 				_offer.emit(
-					offers.firstOrNull { it.offerId == offerId }
+					offers.firstOrNull { it.offerId == offerId }?.let {
+						OfferWithGroup(it, groupRepository.findGroupByUuidInDB(it.groupUuid))
+					}
 				)
 			}
 		}

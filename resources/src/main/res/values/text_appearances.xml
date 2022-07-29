@@ -518,6 +518,14 @@
 		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Marketplace.GroupInfo" parent="TextAppearance.Vexl.Description">
+		<item name="android:textSize">14sp</item>
+		<item name="lineHeight">17.43sp</item>
+		<item name="android:letterSpacing">-0.03</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Marketplace.Filter.Subtitle" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textSize">20sp</item>
 		<item name="android:textColor">@color/yellow_100</item>

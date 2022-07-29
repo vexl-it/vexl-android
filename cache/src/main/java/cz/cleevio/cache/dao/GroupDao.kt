@@ -11,6 +11,9 @@ interface GroupDao : BaseDao<GroupEntity> {
 	@Query("SELECT * FROM GroupEntity")
 	fun getAllGroups(): List<GroupEntity>
 
+	@Query("SELECT * FROM GroupEntity WHERE groupUuid == :groupUuid")
+	fun getOneByUuid(groupUuid: String): GroupEntity?
+
 	@Query("SELECT * FROM GroupEntity")
 	fun getAllGroupsFlow(): Flow<List<GroupEntity>>
 

@@ -23,6 +23,9 @@ interface ContactKeyDao {
 	fun getFirstLevelKeys() =
 		getKeysByLevel(ContactLevel.FIRST)
 
+	fun getSecondLevelKeys() =
+		getKeysByLevel(ContactLevel.SECOND)
+
 	fun getGroupLevelKeys() =
 		getKeysByLevel(ContactLevel.GROUP)
 

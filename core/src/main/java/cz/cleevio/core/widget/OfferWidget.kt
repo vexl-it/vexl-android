@@ -5,12 +5,14 @@ import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
@@ -29,8 +31,23 @@ class OfferWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null) {
+	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null, group: Group? = null) {
 		binding.card.offerDescription.text = item.offerDescription
+
+		group?.let {
+			binding.card.groupInfo.text = resources.getString(R.string.offer_widget_groups_info, group.name)
+			binding.card.groupInfo.isVisible = true
+
+			//todo: later take sticker from group?
+			binding.card.groupSticker.load(R.drawable.ic_sticker) {
+				crossfade(true)
+				fallback(R.drawable.ic_sticker)
+				error(R.drawable.ic_sticker)
+				placeholder(R.drawable.ic_sticker)
+			}
+			binding.groupSticker.isVisible = true
+		}
+
 		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).toInt()}k"
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
 		binding.card.offerType.text = if (item.offerType == "SELL") {
@@ -63,6 +80,21 @@ class OfferWidget @JvmOverloads constructor(
 		binding.userType.text = if (mode == Mode.MY_OFFER) {
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
 		} else {
+			when {
+				item.friendLevel == FriendLevel.FIRST_DEGREE.name -> {
+					resources.getString(R.string.marketplace_detail_friend_first)
+				}
+				item.friendLevel == FriendLevel.SECOND_DEGREE.name -> {
+					resources.getString(R.string.marketplace_detail_friend_second)
+				}
+				group != null -> {
+					resources.getString(R.string.offer_widget_groups, group.name)
+				}
+				//fallback
+				else -> {
+					""
+				}
+			}
 			if (item.friendLevel == FriendLevel.FIRST_DEGREE.name) {
 				resources.getString(R.string.marketplace_detail_friend_first)
 			} else {

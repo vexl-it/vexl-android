@@ -18,6 +18,7 @@ object OfferUtils {
 
 	const val NO_GROUP = "NONE"
 
+	//TODO: OfferParams je treba rozsirit o groupUuids vsech vybranych skupin
 	suspend fun prepareEncryptedOffers(
 		offerKeys: KeyPair,
 		params: OfferParams,
@@ -30,7 +31,12 @@ object OfferUtils {
 		//load all public keys for specified level of friends
 		val contactsPublicKeys = when (params.friendLevel.value) {
 			FriendLevel.NONE -> emptyList()
-			FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys() + contactRepository.getGroupsContactKeys()
+			//TODO: tady je treba brat v potaz jake skupiny uzivatel vybral, getAllGroupsContactKeys vraci vsechny skupiny
+			//TODO: je treba nahradit funkci getGroupsContactKeys(params.listOfUuids). listOfUuids je by mel prijit uvnitr OfferParams
+			FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys() + contactRepository.getAllGroupsContactKeys()
+			//TODO: tady je treba brat v potaz jake skupiny uzivatel vybral, getContactKeys vraci vsechny klice (vsechny skupiny)
+			//TODO: zrejme nahradit kombinaci 3 funkci, asi takhle:
+			//TODO: contactRepository.getFirstLevelContactKeys() + getSecondLevelContactKeys() + getGroupsContactKeys(params.listOfUuids)
 			FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
 			else -> emptyList()
 		}

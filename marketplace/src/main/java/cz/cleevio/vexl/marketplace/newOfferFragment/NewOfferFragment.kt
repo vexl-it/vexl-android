@@ -23,12 +23,24 @@ import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+//TODO: !!! DULEZITE !!!
+//TODO: vsechny zmeny ktere se budou delat tady v NewOfferFragment a taky v NewOfferViewModel je treba udelat
+//TODO: i uvnitr EditOfferFragment a EditOfferViewModel.
+//TODO: UI zmeny je treba udelat i uvnitr FiltersFramgent (funkcionalita filtru jeste neni udelana, takze tam staci UI)
+//TODO: !!! DULEZITE !!!
+
+
+//TODO: upravit fragment_new_offer, dat tam recycler s Grid managerem podle figmy
+//TODO: https://www.figma.com/file/xDQNDwtoq8R0Aj1s4cKZTt/Vexl-App-V1.0-UI?node-id=2562%3A16719
 class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 	private val binding by viewBinding(FragmentNewOfferBinding::bind)
 	override val viewModel by viewModel<NewOfferViewModel>()
 
 	private val args by navArgs<NewOfferFragmentArgs>()
+
+	//TODO: vytvorit tady novy adapter ktery bude zobrazovat skupiny v gridu podle figmy
+	//TODO: https://www.figma.com/file/xDQNDwtoq8R0Aj1s4cKZTt/Vexl-App-V1.0-UI?node-id=2562%3A16719
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
@@ -50,6 +62,13 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 						binding.progress.isVisible = false
 					}
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.groups.collect { groups ->
+				//TODO: tady je treba submitnout skupiny do adapteru
+				//TODO: napojeni flow do DB je hotove
 			}
 		}
 

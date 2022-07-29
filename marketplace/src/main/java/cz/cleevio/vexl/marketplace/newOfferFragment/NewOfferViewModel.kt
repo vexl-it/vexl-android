@@ -12,6 +12,7 @@ import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
+import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
@@ -24,6 +25,7 @@ class NewOfferViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
+	private val groupRepository: GroupRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	private val locationHelper: LocationHelper
 ) : BaseViewModel() {
@@ -34,6 +36,8 @@ class NewOfferViewModel constructor(
 
 	private val _newOfferRequest = MutableSharedFlow<Resource<Offer>>()
 	val newOfferRequest = _newOfferRequest.asSharedFlow()
+
+	val groups = groupRepository.getGroupsFlow()
 
 	private val _queryForSuggestions = MutableStateFlow<Pair<OfferLocationItem?, String>>(Pair(null, ""))
 
@@ -56,6 +60,7 @@ class NewOfferViewModel constructor(
 
 			_newOfferRequest.emit(Resource.loading())
 			val offerKeys = KeyPairCryptoLib.generateKeyPair()
+			//TODO: sifrovani pro klice uzivatelu a skupiny se deje uvnitr tehle utils funkce
 			val encryptedOfferList = OfferUtils.prepareEncryptedOffers(
 				offerKeys = offerKeys,
 				params = params,

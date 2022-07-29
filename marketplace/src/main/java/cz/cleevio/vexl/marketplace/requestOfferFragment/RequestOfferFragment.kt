@@ -45,16 +45,16 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 
 		repeatScopeOnStart {
 			viewModel.offer.collect {
-				it?.let { offer ->
-					val contacts = offer.commonFriends.map { friend -> friend.contact }
-					binding.offerWidget.bind(offer)
+				it?.let { offerWithGroup ->
+					val contacts = offerWithGroup.commonFriends.map { friend -> friend.contact }
+					binding.offerWidget.bind(item = offerWithGroup.offer, group = offerWithGroup.group)
 					binding.commonFriendsNumber.text =
 						if (contacts.isEmpty()) {
 							getString(R.string.request_common_friends_empty_state)
 						} else {
-							getString(R.string.request_common_friends, offer.commonFriends.size)
+							getString(R.string.request_common_friends, offerWithGroup.offer.commonFriends.size)
 						}
-					commonFriendsAdapter.submitList(contacts)
+					commonFriendsAdapter.submitList(offerWithGroup.offer.commonFriends.map { friend -> friend.contact })
 					binding.commonFriendsList.isVisible = contacts.isNotEmpty()
 				}
 			}
@@ -68,8 +68,8 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		viewModel.loadOfferById(args.offerId)
 
 		binding.requestOfferBtn.setOnClickListener {
-			val offerPublicKey = viewModel.offer.value?.offerPublicKey
-			val offerId = viewModel.offer.value?.offerId
+			val offerPublicKey = viewModel.offer.value?.offer?.offerPublicKey
+			val offerId = viewModel.offer.value?.offer?.offerId
 			val messageText = binding.requestText.text.toString()
 
 			if (offerPublicKey.isNullOrBlank() || messageText.isBlank() || offerId.isNullOrBlank()) {

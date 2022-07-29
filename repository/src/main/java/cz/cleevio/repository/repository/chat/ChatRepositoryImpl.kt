@@ -19,6 +19,8 @@ import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.contact.CommonFriend
+import cz.cleevio.repository.model.group.fromEntity
+import cz.cleevio.repository.model.group.fromEntity
 import cz.cleevio.repository.model.offer.fromCache
 import cz.cleevio.repository.model.offer.fromCacheWithoutFriendsMapping
 import cz.cleevio.repository.repository.UsernameUtils
@@ -39,7 +41,8 @@ class ChatRepositoryImpl constructor(
 	private val offerDao: OfferDao,
 	private val userDao: UserDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
-	private val contactRepository: ContactRepository
+	private val contactRepository: ContactRepository,
+	private val groupDao: GroupDao
 ) : ChatRepository {
 
 	//map PublicKey -> Signature
@@ -525,7 +528,8 @@ class ChatRepositoryImpl constructor(
 					result.add(
 						CommunicationRequest(
 							message = message,
-							offer = offer
+							offer = offer,
+							group = groupDao.getOneByUuid(offer.groupUuid)?.fromEntity()
 						)
 					)
 				}

@@ -29,4 +29,6 @@ interface GroupRepository {
 	suspend fun syncNewMembersInGroup(groupUuid: String): Resource<List<ContactKey>>
 
 	suspend fun getGroupInfoByCode(code: String): Resource<Group>
+
+	suspend fun findGroupByUuidInDB(groupUuid: String): Group?
 }
