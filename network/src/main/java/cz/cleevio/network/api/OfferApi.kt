@@ -41,7 +41,7 @@ interface OfferApi {
 		@Query("modifiedAt") modifiedAt: String
 	): Response<BasePagedResponse<OfferUnifiedResponse>>
 
-	@DELETE("offers/private-part")
+	@HTTP(method = "DELETE", path = "offers/private-part", hasBody = true)
 	suspend fun deleteOffersPrivatePart(
 		@Body deletePrivatePartRequest: DeletePrivatePartRequest
 	): Response<ResponseBody>

@@ -71,7 +71,12 @@ class GroupRepositoryImpl constructor(
 		if (allGroups.isNotEmpty()) {
 			//find expired groups
 			val myExpiredGroups = tryOnline(
-				request = { groupApi.getGroupsExpired(allGroups.map { it.groupUuid }) },
+				request = {
+					groupApi.getGroupsExpired(
+						expiredGroupsRequest = ExpiredGroupsRequest(
+							uuids = allGroups.map { it.groupUuid })
+					)
+				},
 				mapper = { response -> response?.groupResponse?.map { it.fromNetwork() } ?: emptyList() }
 			)
 
@@ -104,7 +109,7 @@ class GroupRepositoryImpl constructor(
 		val response = tryOnline(
 			request = {
 				groupApi.putGroupsLeave(
-					LeaveGroupRequest(groupUuid = ShaCryptoLib.hash(groupUuid))
+					LeaveGroupRequest(groupUuid = groupUuid)
 				)
 			},
 			mapper = {}
