@@ -32,6 +32,7 @@ import timber.log.Timber
 import java.io.IOException
 
 const val CODE_LENGTH = 6
+const val PERMANENTLY_DENIED_DURATION = 5000
 
 class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 
@@ -51,7 +52,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 					scanQrCode()
 				},
 				denied = {
-					//findNavController().popBackStack()
+
 				},
 				permanentlyDenied = {
 					showSnackbar(
@@ -62,9 +63,9 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 						action = {
 							requireActivity().openAppSettings()
 						},
-						duration = 5000,
+						duration = PERMANENTLY_DENIED_DURATION,
 						onDismissCallback = {
-							//findNavController().popBackStack()
+
 						}
 					)
 				})
