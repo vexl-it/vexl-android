@@ -1,9 +1,11 @@
 package cz.cleevio.profile.cameraFragment
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.util.SparseArray
 import android.view.SurfaceHolder
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.util.forEach
 import androidx.core.util.isNotEmpty
 import androidx.core.view.updatePadding
@@ -13,19 +15,24 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.JoinGroupBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentCameraBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.extensions.openAppSettings
+import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import cz.cleevio.vexl.lightbase.core.extensions.showToast
+import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 import timber.log.Timber
 import java.io.IOException
 
 const val CODE_LENGTH = 6
-const val DEBUG_LOGO = "https://design.chaincamp.cz/assets/img/logos/chaincamp-symbol-purple-rgb.svg?h=8b40a6ef383113c8e50e13f52566cade"
+const val PERMANENTLY_DENIED_DURATION = 5000
 
 class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 
@@ -33,18 +40,55 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 	private var surfaceCallback: SurfaceHolder.Callback? = null
 	private var found: Boolean = false //block double trigger
 
-	override val hasMenu: Boolean = true
-
 	private val binding by viewBinding(FragmentCameraBinding::bind)
+	override val viewModel by viewModel<CameraViewModel>()
 
-	override fun bindObservers() = Unit
+	private val requestCameraPermissions =
+		registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+			PermissionResolver.resolve(
+				requireActivity(),
+				permissions,
+				allGranted = {
+					scanQrCode()
+				},
+				denied = {
+
+				},
+				permanentlyDenied = {
+					showSnackbar(
+						binding.container,
+						getString(lightbase.camera.R.string.camera_error_permanent_ban_camera),
+						anchorView = binding.container,
+						buttonText = lightbase.camera.R.string.camera_open_settings,
+						action = {
+							requireActivity().openAppSettings()
+						},
+						duration = PERMANENTLY_DENIED_DURATION,
+						onDismissCallback = {
+
+						}
+					)
+				})
+		}
+
+	override fun bindObservers() {
+		repeatScopeOnStart {
+			viewModel.groupLoaded.collect { group ->
+				showBottomDialog(
+					JoinGroupBottomSheetDialog(
+						groupName = group.name,
+						groupLogo = group.logoUrl ?: "",
+						groupCode = group.code,
+					)
+				)
+			}
+		}
+	}
 
 	override fun initView() {
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(top = insets.top)
 		}
-
-		scanQrCode()
 
 		binding.close.setOnClickListener {
 			findNavController().popBackStack()
@@ -55,6 +99,10 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 			findNavController().navigate(
 				CameraFragmentDirections.actionCameraFragmentToJoinGroupCodeFragment()
 			)
+		}
+
+		binding.container.post {
+			requestCameraPermissions.launch(arrayOf(Manifest.permission.CAMERA))
 		}
 	}
 
@@ -121,14 +169,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 				requireActivity().runOnUiThread {
 					cameraSource.stop()
 					Timber.tag("ASDX").d("$rawValue")
-					//todo: somehow load group name and logo from code
-					showBottomDialog(
-						JoinGroupBottomSheetDialog(
-							groupName = "TODO: $rawValue",
-							groupLogo = DEBUG_LOGO,
-							groupCode = rawValue.toLong(),
-						)
-					)
+					viewModel.loadGroupByCode(rawValue)
 				}
 			} else {
 				requireActivity().runOnUiThread {

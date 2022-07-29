@@ -2,6 +2,7 @@ package cz.cleevio.repository.repository.offer
 
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.network.data.Resource
+import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.repository.model.offer.MyOffer
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
@@ -22,6 +23,8 @@ interface OfferRepository {
 	suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit>
 
 	suspend fun deleteOfferById(offerId: String): Resource<Unit>
+
+	suspend fun deleteOfferForPublicKeys(deletePrivatePartRequest: DeletePrivatePartRequest): Resource<Unit>
 
 	//not needed right now?
 	suspend fun refreshOffer(offerId: String): Resource<List<Offer>>

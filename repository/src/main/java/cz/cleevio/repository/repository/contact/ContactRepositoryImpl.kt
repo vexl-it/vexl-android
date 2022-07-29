@@ -9,18 +9,21 @@ import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.dao.ContactKeyDao
+import cz.cleevio.cache.dao.NotificationDao
 import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.ContactKeyEntity
 import cz.cleevio.cache.entity.ContactLevel
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ContactApi
+import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.ContactRequest
-import cz.cleevio.network.request.contact.ContactUserRequest
+import cz.cleevio.network.request.contact.CreateUserRequest
 import cz.cleevio.network.response.contact.ContactLevelApi
 import cz.cleevio.repository.PhoneNumberUtils
+import cz.cleevio.repository.R
 import cz.cleevio.repository.model.contact.*
 import timber.log.Timber
 
@@ -29,7 +32,8 @@ class ContactRepositoryImpl constructor(
 	private val contactKeyDao: ContactKeyDao,
 	private val contactApi: ContactApi,
 	private val phoneNumberUtils: PhoneNumberUtils,
-	private val encryptedPreference: EncryptedPreferenceRepository
+	private val encryptedPreference: EncryptedPreferenceRepository,
+	private val notificationDao: NotificationDao,
 ) : ContactRepository {
 
 	override fun getPhoneContacts(): List<Contact> = contactDao
@@ -279,31 +283,37 @@ class ContactRepositoryImpl constructor(
 		return Resource.success(getFacebookContacts())
 	}
 
-	override suspend fun registerUser(): Resource<ContactUser> = tryOnline(
-		request = {
-			contactApi.postUsers(
-				contactUserRequest = ContactUserRequest(
-					publicKey = encryptedPreference.userPublicKey,
-					hash = encryptedPreference.hash
-				)
+	override suspend fun registerUser(): Resource<Unit> {
+		return notificationDao.getOne()?.let { notificationDataStorage ->
+			tryOnline(
+				request = {
+					contactApi.postUsers(
+						createUserRequest = CreateUserRequest(
+							firebaseToken = notificationDataStorage.token
+						)
+					)
+				},
+				mapper = { }
 			)
-		},
-		mapper = { it?.fromNetwork() }
-	)
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
+	}
 
-	override suspend fun registerFacebookUser(): Resource<ContactUser> = tryOnline(
-		request = {
-			contactApi.postUsers(
-				hash = encryptedPreference.facebookHash,
-				signature = encryptedPreference.facebookSignature,
-				contactUserRequest = ContactUserRequest(
-					publicKey = encryptedPreference.userPublicKey,
-					hash = encryptedPreference.facebookHash
-				)
+	override suspend fun registerFacebookUser(): Resource<Unit> {
+		return notificationDao.getOne()?.let { notificationDataStorage ->
+			tryOnline(
+				request = {
+					contactApi.postUsers(
+						hash = encryptedPreference.facebookHash,
+						signature = encryptedPreference.facebookSignature,
+						createUserRequest = CreateUserRequest(
+							firebaseToken = notificationDataStorage.token
+						)
+					)
+				},
+				mapper = { }
 			)
-		},
-		mapper = { it?.fromNetwork() }
-	)
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
+	}
 
 	override suspend fun syncMyContactsKeys(): Boolean {
 		val first = loadMyContactsKeys(0, Int.MAX_VALUE, ContactLevelApi.FIRST)

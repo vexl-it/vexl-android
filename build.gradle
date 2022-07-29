@@ -64,7 +64,6 @@ detekt {
             "network/src/main/java",
             "onboarding/src/main/java",
             "pin/src/main/java",
-            "repository/src/main/java",
             "resources/src/main/java"
     )
 

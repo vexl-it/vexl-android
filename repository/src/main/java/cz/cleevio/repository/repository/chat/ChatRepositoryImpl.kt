@@ -8,11 +8,13 @@ import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.entity.RequestedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ChatApi
+import cz.cleevio.network.api.ContactApi
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.chat.*
+import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.offer.fromCache
@@ -24,12 +26,14 @@ import kotlinx.coroutines.launch
 
 class ChatRepositoryImpl constructor(
 	private val chatApi: ChatApi,
+	private val contactApi: ContactApi,
 	private val notificationDao: NotificationDao,
 	private val chatMessageDao: ChatMessageDao,
 	private val chatUserDao: ChatUserDao,
 	private val myOfferDao: MyOfferDao,
 	private val requestedOfferDao: RequestedOfferDao,
 	private val offerDao: OfferDao,
+	private val userDao: UserDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : ChatRepository {
 
@@ -93,6 +97,7 @@ class ChatRepositoryImpl constructor(
 			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
 			.shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, replay = 1)
 
+	@Suppress("ReturnCount")
 	override suspend fun saveFirebasePushToken(token: String) {
 		//save token into DB on error
 		notificationDao.replace(NotificationEntity(token = token, uploaded = false))
@@ -111,6 +116,37 @@ class ChatRepositoryImpl constructor(
 				mapper = { it }
 			)
 			if (response.status is Status.Error) {
+				//exit on error
+				return
+			}
+		}
+
+		//user token in contact ms
+		//do only if we are already onboarded
+		if (userDao.getUser()?.finishedOnboarding == true) {
+			val user = tryOnline(
+				request = {
+					contactApi.putUsers(
+						firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
+					)
+				},
+				mapper = { it }
+			)
+			if (user.status is Status.Error) {
+				//exit on error
+				return
+			}
+
+			//facebook user token in contact ms
+			val facebookUser = tryOnline(
+				request = {
+					contactApi.putUsers(
+						firebaseTokenUpdateRequest = FirebaseTokenUpdateRequest(firebaseToken = token)
+					)
+				},
+				mapper = { it }
+			)
+			if (facebookUser.status is Status.Error) {
 				//exit on error
 				return
 			}

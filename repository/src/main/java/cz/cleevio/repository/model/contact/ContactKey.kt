@@ -15,3 +15,11 @@ fun ContactKeyEntity.fromCache(): ContactKey {
 		groupUuid = this.groupUuid
 	)
 }
+
+fun ContactKey.toCache(): ContactKeyEntity {
+	return ContactKeyEntity(
+		publicKey = this.key,
+		contactLevel = this.level.toCache(),
+		groupUuid = this.groupUuid
+	)
+}
