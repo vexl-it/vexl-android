@@ -97,6 +97,7 @@ class ChatRepositoryImpl constructor(
 			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
 			.shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, replay = 1)
 
+	@Suppress("ReturnCount")
 	override suspend fun saveFirebasePushToken(token: String) {
 		//save token into DB on error
 		notificationDao.replace(NotificationEntity(token = token, uploaded = false))

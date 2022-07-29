@@ -118,7 +118,8 @@ class OfferRepositoryImpl constructor(
 		listOf(offerId)
 	)
 
-	override suspend fun deleteOfferForPublicKeys(deletePrivatePartRequest: DeletePrivatePartRequest): Resource<Unit> = tryOnline(
+	override suspend fun deleteOfferForPublicKeys(deletePrivatePartRequest: DeletePrivatePartRequest)
+		: Resource<Unit> = tryOnline(
 		request = {
 			offerApi.deleteOffersPrivatePart(
 				deletePrivatePartRequest = deletePrivatePartRequest
