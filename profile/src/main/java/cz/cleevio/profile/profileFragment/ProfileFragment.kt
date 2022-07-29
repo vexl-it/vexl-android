@@ -1,29 +1,38 @@
 package cz.cleevio.profile.profileFragment
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
-import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
+import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.currencyFragment.CurrencyBottomSheetDialog
+import cz.cleevio.profile.databinding.BottomSheetDialogProfileFacebookContactsListBinding
 import cz.cleevio.profile.databinding.FragmentProfileBinding
 import cz.cleevio.profile.donateFragment.DonateBottomSheetDialog
 import cz.cleevio.profile.joinFragment.JoinBottomSheetDialog
+import cz.cleevio.profile.profileContactsListFragment.ProfileContactsListFragment
+import cz.cleevio.profile.profileFacebookContactsListFragment.ProfileFacebookContactsListFragment
+import cz.cleevio.profile.profileFacebookContactsListFragment.ProfileFacebookContactsListViewModel
 import cz.cleevio.profile.reportFragment.ReportBottomSheetDialog
-import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.profile.requestDataFragment.RequestDataBottomSheetDialog
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
@@ -31,6 +40,19 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 	private val binding by viewBinding(FragmentProfileBinding::bind)
 
 	override var priceChartWidget: CurrencyPriceChartWidget? = null
+
+	private val requestContactsPermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+		PermissionResolver.resolve(requireActivity(), permissions,
+			allGranted = {
+				profileViewModel.updateHasReadContactPermissions(true)
+			},
+			denied = {
+				profileViewModel.updateHasReadContactPermissions(false)
+			},
+			permanentlyDenied = {
+				profileViewModel.updateHasReadContactPermissions(false)
+			})
+	}
 
 	override fun bindObservers() {
 		super.bindObservers()
@@ -54,6 +76,20 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				binding.profileContacts.setSubtitle(
 					getString(R.string.profile_import_contacts_subtitle, it.toString())
 				)
+			}
+		}
+
+		repeatScopeOnStart {
+			profileViewModel.hasPermissionsEvent.collect { hasPermisson ->
+				if (hasPermisson) {
+					Timber.tag("ASDX").d("Permission granted")
+					showBottomDialog(
+						ProfileContactsListFragment(OpenedFromScreen.PROFILE)
+					)
+				} else {
+					Timber.tag("ASDX").d("Permission rejected")
+					showPermissionDeniedDialog()
+				}
 			}
 		}
 	}
@@ -117,13 +153,13 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileContacts.setOnClickListener {
-			Toast.makeText(requireContext(), "Contact import not implemented", Toast.LENGTH_SHORT)
-				.show()
+			checkReadContactsPermissions()
 		}
 
 		binding.profileFacebook.setOnClickListener {
-			Toast.makeText(requireContext(), "Facebook import not implemented", Toast.LENGTH_SHORT)
-				.show()
+			showBottomDialog(
+				ProfileFacebookContactsListFragment()
+			)
 		}
 
 		binding.profileSetPin.setOnClickListener {
@@ -188,6 +224,14 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 	}
 
+	override fun onResume() {
+		super.onResume()
+
+		binding.profileContacts.setOnClickListener {
+			checkReadContactsPermissions()
+		}
+	}
+
 	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
 		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
 	}
@@ -196,5 +240,22 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener { _, _ ->
 			binding.profileAllowScreenshots.callOnClick()
 		}
+	}
+
+	private fun checkReadContactsPermissions() {
+		requestContactsPermissions.launch(arrayOf(Manifest.permission.READ_CONTACTS))
+	}
+
+	private fun showPermissionDeniedDialog() {
+		MaterialAlertDialogBuilder(requireContext())
+			.setTitle(R.string.import_contacts_request_title)
+			.setMessage(R.string.import_contacts_request_description)
+			.setNegativeButton(R.string.import_contacts_not_allow) { dialog, _ ->
+				dialog.dismiss()
+			}
+			.setPositiveButton(R.string.import_contacts_allow) { _, _ ->
+				checkReadContactsPermissions()
+			}
+			.show()
 	}
 }

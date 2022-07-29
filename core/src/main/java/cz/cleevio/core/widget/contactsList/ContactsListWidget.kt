@@ -1,10 +1,10 @@
-package cz.cleevio.vexl.contacts.widgets.contactsList
+package cz.cleevio.core.widget.contactsList
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import cz.cleevio.core.databinding.WidgetContactsImportListBinding
 import cz.cleevio.repository.model.contact.BaseContact
-import cz.cleevio.vexl.contacts.databinding.WidgetContactsImportListBinding
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
 

@@ -1,4 +1,4 @@
-package cz.cleevio.vexl.contacts.widgets.contactsList
+package cz.cleevio.core.widget.contactsList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import cz.cleevio.core.R
+import cz.cleevio.core.databinding.ItemContactBinding
 import cz.cleevio.repository.model.contact.BaseContact
-import cz.cleevio.vexl.contacts.R
-import cz.cleevio.vexl.contacts.databinding.ItemContactBinding
 
 class ContactsListAdapter(
 	private val onContactImportSwitched: (BaseContact, Boolean) -> Unit

@@ -9,7 +9,7 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentContactsListBinding
-import cz.cleevio.vexl.contacts.importContactsFragment.OpenedFromScreen
+import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
