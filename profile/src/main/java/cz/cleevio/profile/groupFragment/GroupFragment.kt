@@ -7,7 +7,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.core.widget.JoinGroupBottomSheetDialog
 import cz.cleevio.core.widget.LeaveGroupBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentGroupBinding
@@ -59,21 +58,27 @@ class GroupFragment : BaseFragment(R.layout.fragment_group) {
 			})
 		}
 
-		//connect button and input field
+		//debug only: connect button and input field
+//		binding.joinGroupBtn.setOnClickListener {
+//			val stringCode = binding.joinGroup.text.toString()
+//			try {
+//				val code = stringCode.toLong()
+//				showBottomDialog(
+//					JoinGroupBottomSheetDialog(
+//						groupName = "TODO: no name",
+//						groupLogo = "https://design.chaincamp.cz/assets/img/logos/chaincamp-symbol-purple-rgb.svg?h=8b40a6ef383113c8e50e13f52566cade",
+//						groupCode = code,
+//					)
+//				)
+//			} catch (ex: NumberFormatException) {
+//				Toast.makeText(requireActivity(), "Code is not valid number", Toast.LENGTH_SHORT).show()
+//			}
+//		}
+
 		binding.joinGroupBtn.setOnClickListener {
-			val stringCode = binding.joinGroup.text.toString()
-			try {
-				val code = stringCode.toLong()
-				showBottomDialog(
-					JoinGroupBottomSheetDialog(
-						groupName = "TODO: no name",
-						groupLogo = "https://design.chaincamp.cz/assets/img/logos/chaincamp-symbol-purple-rgb.svg?h=8b40a6ef383113c8e50e13f52566cade",
-						groupCode = code,
-					)
-				)
-			} catch (ex: NumberFormatException) {
-				Toast.makeText(requireActivity(), "Code is not valid number", Toast.LENGTH_SHORT).show()
-			}
+			findNavController().navigate(
+				GroupFragmentDirections.actionGroupFragmentToCameraFragment()
+			)
 		}
 	}
 

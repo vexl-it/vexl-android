@@ -7,7 +7,7 @@ import cz.cleevio.repository.repository.UsernameUtils
 
 object RandomUtils {
 
-	val imageOptions: List<Int> = listOf(
+	private val imageOptions: List<Int> = listOf(
 		R.drawable.ic_baseline_person_128,
 		R.drawable.ic_baseline_person_128,
 	)

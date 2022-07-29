@@ -1,6 +1,7 @@
 package cz.cleevio.profile.groupFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
@@ -38,7 +39,12 @@ class GroupViewModel constructor(
 	//debug only - works
 	fun leaveGroup(group: Group) {
 		viewModelScope.launch(Dispatchers.IO) {
-			groupRepository.leaveGroup(groupUuid = group.groupUuid)
+			val response = groupRepository.leaveGroup(groupUuid = group.groupUuid)
+			when (response.status) {
+				is Status.Success -> {
+					//offer
+				}
+			}
 		}
 	}
 

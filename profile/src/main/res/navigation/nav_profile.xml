@@ -30,7 +30,31 @@
 		android:id="@+id/groupFragment"
 		android:name="cz.cleevio.profile.groupFragment.GroupFragment"
 		android:label="GroupFragment"
-		tools:layout="@layout/fragment_group" />
+		tools:layout="@layout/fragment_group">
+
+		<action
+			android:id="@+id/action_groupFragment_to_cameraFragment"
+			app:destination="@id/cameraFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/cameraFragment"
+		android:name="cz.cleevio.profile.cameraFragment.CameraFragment"
+		android:label="CameraFragment"
+		tools:layout="@layout/fragment_camera">
+
+		<action
+			android:id="@+id/action_cameraFragment_to_joinGroupCodeFragment"
+			app:destination="@id/joinGroupCode" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/joinGroupCode"
+		android:name="cz.cleevio.profile.joinGroupFragment.JoinGroupCodeFragment"
+		android:label="JoinGroupCode"
+		tools:layout="@layout/fragment_join_group_code" />
 
 	<fragment
 		android:id="@+id/editNameFragment"
