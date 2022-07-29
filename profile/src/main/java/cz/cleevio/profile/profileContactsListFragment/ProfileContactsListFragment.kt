@@ -1,25 +1,18 @@
 package cz.cleevio.profile.profileContactsListFragment
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.profile.databinding.BottomSheetDialogProfileContactsListBinding
-import cz.cleevio.profile.databinding.FragmentProfileBinding
 import cz.cleevio.repository.model.contact.BaseContact
-import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ProfileContactsListFragment(val openedFromScreen: OpenedFromScreen) : BottomSheetDialogFragment() {
 

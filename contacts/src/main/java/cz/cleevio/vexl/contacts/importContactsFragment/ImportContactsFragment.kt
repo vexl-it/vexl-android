@@ -41,18 +41,6 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	}
 
 	override fun bindObservers() {
-		viewLifecycleOwner.lifecycleScope.launch {
-			viewModel.user.collect { user ->
-				binding.username.text = user?.username
-				binding.avatarImage.load(user?.avatar) {
-					crossfade(true)
-					fallback(R.drawable.ic_baseline_person_128)
-					error(R.drawable.ic_baseline_person_128)
-					placeholder(R.drawable.ic_baseline_person_128)
-				}
-			}
-		}
-
 		repeatScopeOnStart {
 			viewModel.hasPermissionsEvent.collect { hasPermisson ->
 				if (hasPermisson) {

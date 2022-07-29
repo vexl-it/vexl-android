@@ -11,8 +11,6 @@ class ImportContactsViewModel constructor(
 	private val contactRepository: ContactRepository
 ) : BaseViewModel() {
 
-	val user = userRepository.getUserFlow()
-
 	private val hasPermissionsChannel = Channel<Boolean>(Channel.CONFLATED)
 	val hasPermissionsEvent = hasPermissionsChannel.receiveAsFlow()
 
