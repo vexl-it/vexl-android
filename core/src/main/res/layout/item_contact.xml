@@ -5,46 +5,56 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_marginTop="8dp"
-	android:layout_marginBottom="8dp">
+	android:layout_marginBottom="8dp"
+	android:background="@color/white">
 
 	<com.google.android.material.imageview.ShapeableImageView
 		android:id="@+id/contact_image"
 		android:layout_width="48dp"
 		android:layout_height="48dp"
-		android:scaleType="fitCenter"
+		android:scaleType="centerCrop"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.RoundedComponent"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage"
 		tools:src="@drawable/ic_profile_avatar_placeholder" />
 
 	<TextView
 		android:id="@+id/contact_name"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintHorizontal_bias="0"
+		android:ellipsize="end"
+		android:lines="1"
+		android:textAppearance="@style/TextAppearance.Vexl.Profile.Description"
 		app:layout_constraintBottom_toTopOf="@id/contact_identifier"
 		app:layout_constraintEnd_toStartOf="@id/contact_import_checkbox"
+		app:layout_constraintHorizontal_bias="0"
 		app:layout_constraintStart_toEndOf="@id/contact_image"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="Cody Fisher" />
 
 	<TextView
 		android:id="@+id/contact_identifier"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintHorizontal_bias="0"
+		android:ellipsize="end"
+		android:lines="1"
+		android:textAppearance="@style/TextAppearance.Vexl.Profile.Description"
+		android:textColor="@color/gray_4"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toStartOf="@id/contact_import_checkbox"
+		app:layout_constraintHorizontal_bias="0"
 		app:layout_constraintStart_toEndOf="@id/contact_image"
 		app:layout_constraintTop_toBottomOf="@id/contact_name"
 		tools:text="(219) 555-0114" />
 
-	<com.google.android.material.checkbox.MaterialCheckBox
+	<androidx.appcompat.widget.AppCompatCheckBox
 		android:id="@+id/contact_import_checkbox"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		android:button="@drawable/checkbox_selector"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />

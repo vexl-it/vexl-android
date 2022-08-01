@@ -1,4 +1,4 @@
-package cz.cleevio.vexl.contacts.importContactsFragment
+package cz.cleevio.core.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

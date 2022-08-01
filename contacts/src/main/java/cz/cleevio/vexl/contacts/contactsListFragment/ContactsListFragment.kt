@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.contacts.contactsListFragment
 
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.NavMainGraphModel
@@ -9,8 +10,11 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentContactsListBinding
-import cz.cleevio.vexl.contacts.importContactsFragment.OpenedFromScreen
+import cz.cleevio.core.model.OpenedFromScreen
+import cz.cleevio.vexl.contacts.importContactsFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
@@ -23,7 +27,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {
-				binding.contactsListWidget.setupData(it)
+				binding.contactsListWidget.setupData(it, OpenedFromScreen.ONBOARDING)
 			}
 		}
 		repeatScopeOnStart {
@@ -60,11 +64,18 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 	}
 
 	override fun initView() {
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(
+				top = insets.top,
+				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
+			)
+		}
+
 		binding.contactsListWidget.setupListeners(
 			onContactImportSwitched = { contact: BaseContact, selected: Boolean ->
 				viewModel.contactSelected(contact, selected)
 			},
-			onUnselectAllClicked = {
+			onDeselectAllClicked = {
 				viewModel.unselectAll()
 			}
 		)

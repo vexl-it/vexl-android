@@ -22,10 +22,10 @@ class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 		}
 
 		binding.termsSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-			binding.termsContinueBtn.isEnabled = isChecked
+			binding.welcomeContinueBtn.isEnabled = isChecked
 		}
 
-		binding.termsContinueBtn.setOnClickListener {
+		binding.welcomeContinueBtn.setOnClickListener {
 			findNavController().navigate(
 				TermsFragmentDirections.proceedToInitPhoneFragment()
 			)

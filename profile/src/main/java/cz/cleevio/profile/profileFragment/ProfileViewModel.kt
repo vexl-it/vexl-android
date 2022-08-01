@@ -35,6 +35,13 @@ class ProfileViewModel constructor(
 	private val _contactsNumber = MutableStateFlow<Int>(35)
 	val contactsNumber = _contactsNumber.asStateFlow()
 
+	private val hasPermissionsChannel = Channel<Boolean>(Channel.CONFLATED)
+	val hasPermissionsEvent = hasPermissionsChannel.receiveAsFlow()
+
+	fun updateHasReadContactPermissions(hasPermissions: Boolean) {
+		hasPermissionsChannel.trySend(hasPermissions)
+	}
+
 	fun logout(onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val userDelete = userRepository.deleteMe()
@@ -72,4 +79,6 @@ class ProfileViewModel constructor(
 	fun setCurrency(currency: Currency) {
 		encryptedPreferenceRepository.selectedCurrency = currency.name
 	}
+
+
 }

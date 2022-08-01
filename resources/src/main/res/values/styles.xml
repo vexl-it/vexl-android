@@ -280,9 +280,9 @@
 
 	<style name="Widget.Vexl.BlackButton" parent="Widget.Vexl.Button">
 		<item name="android:textAppearance">@style/TextAppearance.Cleevio.DarkTextButton</item>
-		<item name="android:background">@drawable/background_button_black_13</item>
 		<item name="android:clickable">true</item>
 		<item name="android:focusable">true</item>
+		<item name="android:radius">8dp</item>
 	</style>
 
 	<style name="Widget.Vexl.GrayButton" parent="Widget.Vexl.Button">
@@ -375,6 +375,10 @@
 	<style name="Widget.Vexl.Chat.ActionButton.GotIt" parent="Widget.Vexl.Chat.Button.Positive" />
 
 	<style name="Widget.Vexl.Profile.DonateButton.Accept" parent="Widget.Vexl.Chat.Button.Positive" />
+
+	<style name="Widget.Vexl.Profile.ImportContacts.Accept" parent="Widget.Vexl.Chat.Button.Positive" />
+
+	<style name="Widget.Vexl.Profile.ImportContacts.Decline" parent="Widget.Vexl.Chat.Button.Negative" />
 
 	<style name="Widget.Vexl.Chat.ActionButton.BlockUser.Back" parent="Widget.Vexl.ChatRequestButton">
 		<item name="android:background">@drawable/background_button_dark_red_13</item>
@@ -493,7 +497,7 @@
 		<item name="android:textColorPrimary">@color/text_primary</item>
 		<item name="android:textColorHint">@color/text_secondary</item>
 		<item name="android:tint">@color/primary</item>
-		<item name="android:background">#EEEEEE</item>
+		<item name="android:background">@drawable/background_rounded_search_view</item>
 	</style>
 
 	<style name="Widget.Cleevio.Marketplace.TextView.CryptocurrencyPrice" parent="">

@@ -17,7 +17,7 @@
 
 			<argument
 				android:name="openedFromScreen"
-				app:argType="cz.cleevio.vexl.contacts.importContactsFragment.OpenedFromScreen" />
+				app:argType="cz.cleevio.core.model.OpenedFromScreen" />
 
 		</action>
 
@@ -31,7 +31,7 @@
 
 		<argument
 			android:name="openedFromScreen"
-			app:argType="cz.cleevio.vexl.contacts.importContactsFragment.OpenedFromScreen" />
+			app:argType="cz.cleevio.core.model.OpenedFromScreen" />
 
 		<action
 			android:id="@+id/proceed_to_importFacebookContactsFragment"

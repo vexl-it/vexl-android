@@ -22,6 +22,11 @@
     <!-- Onboarding -->
 
     <!-- Welcome -->
+    <string name="welcome_title">Welcome! Ready to get started?</string>
+    <string name="welcome_terms_agreement">I agree to Terms of Use</string>
+    <string name="welcome_terms_agreement_link">Terms of Use</string>
+    <string name="welcome_terms_agreement_url">https://google.com</string>
+    <string name="welcome_button">Continue</string>
 
     <!-- Register Phone -->
     <string name="verify_phone_title">We\'ve just sent you a code</string>
@@ -35,11 +40,13 @@
     <!-- Register Phone Contacts -->
     <string name="import_contacts_import">Import contacts</string>
     <string name="import_contacts_deselect">Deselect All</string>
+    <string name="import_contacts_select">Select All</string>
+    <string name="import_contacts_empty">There are no contacts to import</string>
     <string name="import_contacts_skip">Skip for now</string>
     <string name="import_contacts_allow">Allow</string>
     <string name="import_contacts_not_allow">Don’t allow</string>
-    <string name="import_contacts_title">Looking cute,\nlet’s find you some friends.</string>
-    <string name="import_contacts_subtitle">vexl doesn’t see your contacts</string>
+    <string name="import_contacts_title">Let’s find you\nfriends now!</string>
+    <string name="import_contacts_subtitle">Vexl doesn’t see your contacts</string>
     <string name="import_contacts_request_title">Allow contacts</string>
     <string name="import_contacts_request_description">Vexl needs access to your contacts in order to work. Don\'t worry we won’t ever see them</string>
     <string name="import_contacts_secondary_request_title">Really?</string>
@@ -47,6 +54,8 @@
     <string name="import_facebook_contacts_title">Expand your network with Facebook</string>
     <string name="import_facebook_contacts_import">Import Facebook contacts</string>
     <string name="import_contacts_finish_title">Setting everything up...</string>
+    <string name="import_contacts_update_button">Update</string>
+    <string name="import_contacts_back_button">Back</string>
 
     <!-- Errors -->
     <string name="error_username_not_available">The username is unavailable</string>
@@ -302,4 +311,6 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="groups_scan_not_found">Group code not found</string>
     <string name="groups_code_not_found">Invalid code</string>
     <string name="groups_enter_code_hint">Activation code</string>
+    <string name="offer_widget_groups">From %s group</string>
+    <string name="offer_widget_groups_info">%s offer</string>
 </resources>

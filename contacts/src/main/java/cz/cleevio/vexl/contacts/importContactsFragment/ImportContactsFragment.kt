@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.contacts.R
@@ -40,18 +41,6 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	}
 
 	override fun bindObservers() {
-		viewLifecycleOwner.lifecycleScope.launch {
-			viewModel.user.collect { user ->
-				binding.username.text = user?.username
-				binding.avatarImage.load(user?.avatar) {
-					crossfade(true)
-					fallback(R.drawable.ic_baseline_person_128)
-					error(R.drawable.ic_baseline_person_128)
-					placeholder(R.drawable.ic_baseline_person_128)
-				}
-			}
-		}
-
 		repeatScopeOnStart {
 			viewModel.hasPermissionsEvent.collect { hasPermisson ->
 				if (hasPermisson) {

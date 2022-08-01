@@ -327,6 +327,15 @@
 		<item name="fontFamily">@font/pp_monument_extended_bold</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Heading6.ImportContacts" parent="">
+		<item name="android:textSize">28sp</item>
+		<item name="lineHeight">32sp</item>
+		<item name="fontWeight">700</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="android:fontFamily">@font/pp_monument_extended_bold</item>
+		<item name="fontFamily">@font/pp_monument_extended_bold</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.ParagraphSmallBold" parent="TextAppearance.Vexl.ParagraphSmall">
 		<item name="lineHeight">16sp</item>
 	</style>
@@ -361,6 +370,26 @@
 		<item name="android:textSize">12sp</item>
 		<item name="lineHeight">15.12sp</item>
 		<item name="android:letterSpacing">-0.03</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Description.ImportContacts" parent="">
+		<item name="android:textSize">16sp</item>
+		<item name="lineHeight">19.92sp</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="fontWeight">500</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Description.Welcome" parent="">
+		<item name="android:textSize">18sp</item>
+		<item name="lineHeight">26sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="fontWeight">500</item>
+		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
+		<item name="fontFamily">@font/tt_satoshi_regular</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Offer.UserType" parent="TextAppearance.Vexl.DescriptionMicro">
