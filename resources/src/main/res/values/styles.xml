@@ -376,6 +376,10 @@
 
 	<style name="Widget.Vexl.Profile.DonateButton.Accept" parent="Widget.Vexl.Chat.Button.Positive" />
 
+	<style name="Widget.Vexl.Profile.ImportContacts.Accept" parent="Widget.Vexl.Chat.Button.Positive" />
+
+	<style name="Widget.Vexl.Profile.ImportContacts.Decline" parent="Widget.Vexl.Chat.Button.Negative" />
+
 	<style name="Widget.Vexl.Chat.ActionButton.BlockUser.Back" parent="Widget.Vexl.ChatRequestButton">
 		<item name="android:background">@drawable/background_button_dark_red_13</item>
 		<item name="android:textColor">@color/light_red</item>

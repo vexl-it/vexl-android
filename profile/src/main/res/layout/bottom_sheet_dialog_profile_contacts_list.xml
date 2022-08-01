@@ -10,21 +10,59 @@
 		android:id="@+id/contacts_list_widget"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toTopOf="@id/import_contacts_btn"
+		app:layout_constraintBottom_toTopOf="@id/empty_contacts_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/import_contacts_btn"
-		style="@style/Widget.Vexl.Button"
+		android:id="@+id/empty_contacts_btn"
+		style="@style/Widget.Vexl.Profile.ImportContacts.Decline"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="16dp"
-		android:text="@string/import_contacts_import"
+		android:layout_marginStart="8dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginEnd="4dp"
+		android:layout_marginBottom="30dp"
+		android:visibility="gone"
+		android:text="@string/import_contacts_back_button"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/back_btn"
+		style="@style/Widget.Vexl.Profile.ImportContacts.Decline"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:visibility="gone"
+		android:layout_marginTop="8dp"
+		android:layout_marginEnd="4dp"
+		android:layout_marginBottom="30dp"
+		android:text="@string/import_contacts_back_button"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/confirm_btn"
+		app:layout_constraintHorizontal_weight="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/contacts_list_widget" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/confirm_btn"
+		style="@style/Widget.Vexl.Profile.ImportContacts.Accept"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:visibility="gone"
+		android:layout_marginStart="4dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginEnd="8dp"
+		android:layout_marginBottom="30dp"
+		android:text="@string/import_contacts_update_button"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_weight="0.5"
+		app:layout_constraintStart_toEndOf="@id/back_btn"
+		app:layout_constraintTop_toBottomOf="@id/contacts_list_widget" />
 
 	<com.google.android.material.progressindicator.CircularProgressIndicator
 		android:id="@+id/progress"

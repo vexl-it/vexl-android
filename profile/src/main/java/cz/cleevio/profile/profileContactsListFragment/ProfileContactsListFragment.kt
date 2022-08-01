@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.resources.R
 import cz.cleevio.profile.databinding.BottomSheetDialogProfileContactsListBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,6 +40,9 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {
 				binding.contactsListWidget.setupData(it, openedFromScreen)
+				binding.emptyContactsBtn.isInvisible = it.isNotEmpty()
+				binding.backBtn.isVisible = it.isNotEmpty()
+				binding.confirmBtn.isVisible = it.isNotEmpty()
 			}
 		}
 		repeatScopeOnStart {
@@ -53,7 +58,16 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 		repeatScopeOnStart {
 			viewModel.progressFlow.collect { show ->
 				binding.contactsListWidget.isVisible = !show
-				binding.importContactsBtn.isVisible = !show
+
+				if (!show) {
+					binding.emptyContactsBtn.isVisible = viewModel.notSyncedContacts.replayCache.isEmpty()
+					binding.backBtn.isVisible = viewModel.notSyncedContacts.replayCache.isNotEmpty()
+					binding.confirmBtn.isVisible = viewModel.notSyncedContacts.replayCache.isNotEmpty()
+				} else {
+					binding.emptyContactsBtn.isInvisible = true
+					binding.backBtn.isInvisible = true
+					binding.confirmBtn.isInvisible = true
+				}
 
 				if (show) {
 					binding.progress.show()
@@ -74,7 +88,15 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 			}
 		)
 
-		binding.importContactsBtn.setOnClickListener {
+		binding.emptyContactsBtn.setOnClickListener {
+			dismiss()
+		}
+
+		binding.backBtn.setOnClickListener {
+			dismiss()
+		}
+
+		binding.confirmBtn.setOnClickListener {
 			viewModel.uploadAllMissingContacts()
 		}
 
