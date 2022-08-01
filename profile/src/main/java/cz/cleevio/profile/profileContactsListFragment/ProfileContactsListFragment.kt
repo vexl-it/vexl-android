@@ -60,9 +60,9 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 				binding.contactsListWidget.isVisible = !show
 
 				if (!show) {
-					binding.emptyContactsBtn.isVisible = viewModel.notSyncedContacts.replayCache.isEmpty()
-					binding.backBtn.isVisible = viewModel.notSyncedContacts.replayCache.isNotEmpty()
-					binding.confirmBtn.isVisible = viewModel.notSyncedContacts.replayCache.isNotEmpty()
+					binding.emptyContactsBtn.isVisible = viewModel.notSyncedContacts.replayCache.firstOrNull().isNullOrEmpty()
+					binding.backBtn.isVisible = !viewModel.notSyncedContacts.replayCache.firstOrNull().isNullOrEmpty()
+					binding.confirmBtn.isVisible = !viewModel.notSyncedContacts.replayCache.firstOrNull().isNullOrEmpty()
 				} else {
 					binding.emptyContactsBtn.isInvisible = true
 					binding.backBtn.isInvisible = true
