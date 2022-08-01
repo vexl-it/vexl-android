@@ -2,13 +2,13 @@ package cz.cleevio.lightspeedskeleton
 
 import android.app.Application
 import com.cleevio.vexl.cryptography.EciesCryptoLib
-import cz.cleeevio.onboarding.di.onboardingModule
 import cz.cleevio.cache.di.cacheModule
 import cz.cleevio.core.di.coreModule
 import cz.cleevio.core.utils.CustomDebugTree
 import cz.cleevio.lightspeedskeleton.di.appModule
 import cz.cleevio.lightspeedskeleton.di.viewModelsModule
 import cz.cleevio.network.di.networkModule
+import cz.cleevio.onboarding.di.onboardingModule
 import cz.cleevio.profile.di.profileModule
 import cz.cleevio.repository.di.repoModule
 import cz.cleevio.vexl.chat.di.chatModule

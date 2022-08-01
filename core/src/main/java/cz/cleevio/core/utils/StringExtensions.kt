@@ -1,5 +1,8 @@
 package cz.cleevio.core.utils
 
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import java.text.Normalizer
 import java.util.*
 
@@ -20,3 +23,12 @@ fun String.toValidPhoneNumber(): String {
 
 fun String.isPhoneValid(): Boolean =
 	this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
+
+@Suppress("DEPRECATION")
+fun fromHtml(text: String): Spanned {
+	return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+		Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+	} else {
+		Html.fromHtml(text)
+	}
+}

@@ -1,4 +1,4 @@
-package cz.cleeevio.onboarding.avatarFragment
+package cz.cleevio.onboarding.avatarFragment
 
 import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope

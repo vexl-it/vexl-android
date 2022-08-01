@@ -1,4 +1,4 @@
-package cz.cleeevio.onboarding.extensions
+package cz.cleevio.onboarding.extensions
 
 import android.annotation.SuppressLint
 import android.app.Activity

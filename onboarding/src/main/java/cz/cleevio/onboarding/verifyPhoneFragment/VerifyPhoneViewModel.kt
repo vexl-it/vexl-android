@@ -1,4 +1,4 @@
-package cz.cleeevio.onboarding.verifyPhoneFragment
+package cz.cleevio.onboarding.verifyPhoneFragment
 
 import androidx.lifecycle.viewModelScope
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib

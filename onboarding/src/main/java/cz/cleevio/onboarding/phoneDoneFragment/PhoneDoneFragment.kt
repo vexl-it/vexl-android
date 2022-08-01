@@ -1,11 +1,11 @@
-package cz.cleeevio.onboarding.phoneDoneFragment
+package cz.cleevio.onboarding.phoneDoneFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import cz.cleeevio.onboarding.R
-import cz.cleeevio.onboarding.databinding.FragmentPhoneDoneBinding
-import cz.cleeevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.onboarding.R
+import cz.cleevio.onboarding.databinding.FragmentPhoneDoneBinding
+import cz.cleevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel

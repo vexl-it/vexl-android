@@ -1,4 +1,4 @@
-package cz.cleeevio.onboarding.phoneDoneFragment
+package cz.cleevio.onboarding.phoneDoneFragment
 
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 

@@ -28,6 +28,29 @@
     <string name="welcome_terms_agreement_url">https://google.com</string>
     <string name="welcome_button">Continue</string>
 
+    <!-- Terms of Use -->
+    <string name="terms_of_use_title">Terms\nof Use</string>
+    <string name="terms_of_use_faq_button">Don’t have a time to read all this? Take a look on Frequently Asked Questions.</string>
+    <string name="terms_of_user_terms_bookmark">Terms of Use</string>
+    <string name="terms_of_user_policy_bookmark">Privacy Policy</string>
+    <string name="terms_of_user_and_policy_markdown">1. Welcome
+We would like to thank you for your choice to use  Vexl. We know that you are eager to go ahead and start using it right away, but we kindly ask you to spare a few minutes to read through the Terms of Service first. We value your time, so we promise that we will keep it as brief as possible. If you agree with everything that you read here, you may then go ahead and start using Vexl.
+
+2. Parties
+Let\'s start with introductions, so you know, who hides under the terms “we” and “you” frequently used throughout this document.
+
+We are a commercial company Vexl s.r.o. with a registered office at Kundratka 2359/17a, Libeň, 180 00 Prague 8, Czech Republic. While this is probably sufficient information for you,  law dictates that we must  also mention that our Id. No. is  172 70 642 and we are registered in the commercial register kept by the Commercial court in Prague under file No. 369216.
+
+By “you” we mean anybody, whether you are an individual or legal person, who uses Vexl in any way. 
+
+It probably goes without saying, but your legal capacity must not be limited to the extent that it could prevent you from accepting these Terms of Service and using Vexl. To make things simpler, let\'s just agree that you must be at least 18 years old to use Vexl.
+
+
+3. About Vexl
+To put it simply, Vexl is a service (which includes an application) that allows users interested in buying or selling Bitcoin to connect with each other to discuss their offers and agree upon trades. What is more, Vexl accomplishes that while collecting and storing almost no information about the users. Once the users are connected they may discuss the potential trade via private and secure (end-to-end encrypted) chat.
+
+**Important notice:** Vexl itself does not offer any instruments to facilitate Bitcoin transactions between the users. We do not monitor whether any trades took place between any of our users. The only objective of Vexl is to provide the users a safe and simple to use platform for finding and contacting each other and for discussing the terms of the trade.</string>
+
     <!-- Register Phone -->
     <string name="verify_phone_title">We\'ve just sent you a code</string>
     <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
