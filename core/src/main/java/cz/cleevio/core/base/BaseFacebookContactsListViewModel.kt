@@ -63,6 +63,15 @@ open class BaseFacebookContactsListViewModel constructor(
 		}
 	}
 
+	fun selectAll() {
+		viewModelScope.launch {
+			notSyncedContactsList.forEach { contact ->
+				contact.markedForUpload = true
+			}
+			emitContacts(notSyncedContactsList)
+		}
+	}
+
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.uploadAllMissingFBContacts(

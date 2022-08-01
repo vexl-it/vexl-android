@@ -23,7 +23,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {
-				binding.contactsListWidget.setupData(it)
+				binding.contactsListWidget.setupData(it, OpenedFromScreen.ONBOARDING)
 			}
 		}
 		repeatScopeOnStart {
@@ -64,7 +64,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 			onContactImportSwitched = { contact: BaseContact, selected: Boolean ->
 				viewModel.contactSelected(contact, selected)
 			},
-			onUnselectAllClicked = {
+			onDeselectAllClicked = {
 				viewModel.unselectAll()
 			}
 		)

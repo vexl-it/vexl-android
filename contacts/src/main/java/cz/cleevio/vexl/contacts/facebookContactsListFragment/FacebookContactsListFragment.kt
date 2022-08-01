@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.contacts.facebookContactsListFragment
 
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
@@ -17,7 +18,7 @@ class FacebookContactsListFragment : BaseFragment(R.layout.fragment_facebook_con
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {
-				binding.contactsListWidget.setupData(it)
+				binding.contactsListWidget.setupData(it, OpenedFromScreen.ONBOARDING)
 			}
 		}
 		repeatScopeOnStart {
@@ -35,7 +36,7 @@ class FacebookContactsListFragment : BaseFragment(R.layout.fragment_facebook_con
 			onContactImportSwitched = { contact: BaseContact, selected: Boolean ->
 				viewModel.contactSelected(contact, selected)
 			},
-			onUnselectAllClicked = {
+			onDeselectAllClicked = {
 				viewModel.unselectAll()
 			}
 		)

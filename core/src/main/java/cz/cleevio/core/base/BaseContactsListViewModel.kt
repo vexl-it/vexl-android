@@ -124,6 +124,15 @@ open class BaseContactsListViewModel constructor(
 		}
 	}
 
+	fun selectAll() {
+		viewModelScope.launch {
+			notSyncedContactsList.forEach { contact ->
+				contact.markedForUpload = true
+			}
+			emitContacts(notSyncedContactsList)
+		}
+	}
+
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)

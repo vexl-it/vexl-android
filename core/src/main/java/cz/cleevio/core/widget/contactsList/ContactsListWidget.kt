@@ -3,7 +3,10 @@ package cz.cleevio.core.widget.contactsList
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
+import cz.cleevio.resources.R
 import cz.cleevio.core.databinding.WidgetContactsImportListBinding
+import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
@@ -27,20 +30,28 @@ class ContactsListWidget @JvmOverloads constructor(
 
 	fun setupListeners(
 		onContactImportSwitched: (BaseContact, Boolean) -> Unit,
-		onUnselectAllClicked: () -> Unit
+		onDeselectAllClicked: () -> Unit
 	) {
 		adapter = ContactsListAdapter(onContactImportSwitched)
 		binding.contactsList.adapter = adapter
 
 		binding.deselectAllBtn.setOnClickListener {
-			onUnselectAllClicked()
+			onDeselectAllClicked()
 		}
 	}
 
 	fun setupData(
-		contacts: List<BaseContact>
+		contacts: List<BaseContact>,
+		openedFromScreen: OpenedFromScreen
 	) {
 		adapter.submitList(contacts)
+		binding.contactsList.isVisible = contacts.isNotEmpty()
+		binding.emptyListInfo.isVisible = contacts.isEmpty()
+		binding.deselectAllBtn.text =
+			if (openedFromScreen == OpenedFromScreen.ONBOARDING) {
+				resources.getString(R.string.import_contacts_deselect)
+			} else {
+				resources.getString(R.string.import_contacts_select)
+			}
 	}
-
 }

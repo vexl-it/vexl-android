@@ -14,7 +14,7 @@ import cz.cleevio.profile.databinding.BottomSheetDialogProfileContactsListBindin
 import cz.cleevio.repository.model.contact.BaseContact
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileContactsListFragment(val openedFromScreen: OpenedFromScreen) : BottomSheetDialogFragment() {
+class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogProfileContactsListBinding
 	private val viewModel by viewModel<ProfileContactsListViewModel>()
@@ -34,12 +34,10 @@ class ProfileContactsListFragment(val openedFromScreen: OpenedFromScreen) : Bott
 		bindObservers()
 	}
 
-
-
 	private fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {
-				binding.contactsListWidget.setupData(it)
+				binding.contactsListWidget.setupData(it, openedFromScreen)
 			}
 		}
 		repeatScopeOnStart {
@@ -64,7 +62,6 @@ class ProfileContactsListFragment(val openedFromScreen: OpenedFromScreen) : Bott
 				}
 			}
 		}
-
 	}
 
 	private fun initView() {
@@ -72,8 +69,8 @@ class ProfileContactsListFragment(val openedFromScreen: OpenedFromScreen) : Bott
 			onContactImportSwitched = { contact: BaseContact, selected: Boolean ->
 				viewModel.contactSelected(contact, selected)
 			},
-			onUnselectAllClicked = {
-				viewModel.unselectAll()
+			onDeselectAllClicked = {
+				viewModel.selectAll()
 			}
 		)
 
@@ -83,6 +80,4 @@ class ProfileContactsListFragment(val openedFromScreen: OpenedFromScreen) : Bott
 
 		viewModel.syncContacts(requireActivity().contentResolver, openedFromScreen)
 	}
-
-
 }

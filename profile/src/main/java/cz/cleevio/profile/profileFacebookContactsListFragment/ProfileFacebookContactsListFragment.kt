@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogJoinGroupBinding
+import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.profile.databinding.BottomSheetDialogProfileFacebookContactsListBinding
 import cz.cleevio.profile.databinding.FragmentProfileBinding
@@ -36,7 +37,7 @@ class ProfileFacebookContactsListFragment : BottomSheetDialogFragment() {
 	private fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {
-				binding.contactsListWidget.setupData(it)
+				binding.contactsListWidget.setupData(it, openedFromScreen = OpenedFromScreen.PROFILE)
 			}
 		}
 		repeatScopeOnStart {
@@ -52,8 +53,8 @@ class ProfileFacebookContactsListFragment : BottomSheetDialogFragment() {
 			onContactImportSwitched = { contact: BaseContact, selected: Boolean ->
 				viewModel.contactSelected(contact, selected)
 			},
-			onUnselectAllClicked = {
-				viewModel.unselectAll()
+			onDeselectAllClicked = {
+				viewModel.selectAll()
 			}
 		)
 
