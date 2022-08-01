@@ -16,11 +16,11 @@
 			android:layout_margin="16dp">
 
 			<androidx.appcompat.widget.SearchView
-				android:id="@+id/name_name_input"
+				android:id="@+id/search_name_input"
 				style="@style/Widget.Vexl.SearchView"
 				android:layout_width="0dp"
 				android:layout_height="@dimen/search_view_height"
-				app:defaultQueryHint="Search"
+				app:queryHint="Search"
 				app:layout_constraintBottom_toTopOf="@id/contacts_barrier"
 				app:layout_constraintEnd_toStartOf="@id/deselect_all_btn"
 				app:layout_constraintStart_toStartOf="parent"
@@ -39,10 +39,9 @@
 				android:textAllCaps="false"
 				android:textColor="@color/white"
 				app:backgroundTint="@color/black"
-
 				app:layout_constraintBottom_toTopOf="@id/contacts_barrier"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toEndOf="@id/name_name_input"
+				app:layout_constraintStart_toEndOf="@id/search_name_input"
 				app:layout_constraintTop_toTopOf="parent" />
 
 			<androidx.constraintlayout.widget.Barrier
@@ -50,7 +49,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				app:barrierDirection="bottom"
-				app:constraint_referenced_ids="name_name_input, deselect_all_btn" />
+				app:constraint_referenced_ids="search_name_input, deselect_all_btn" />
 
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/contacts_list"

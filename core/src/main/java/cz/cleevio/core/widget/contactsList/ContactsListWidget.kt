@@ -3,6 +3,7 @@ package cz.cleevio.core.widget.contactsList
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import cz.cleevio.resources.R
 import cz.cleevio.core.databinding.WidgetContactsImportListBinding
@@ -19,6 +20,7 @@ class ContactsListWidget @JvmOverloads constructor(
 
 	private lateinit var binding: WidgetContactsImportListBinding
 	private lateinit var adapter: ContactsListAdapter
+	private var _contacts: List<BaseContact> = emptyList()
 
 	init {
 		setupUI()
@@ -35,6 +37,26 @@ class ContactsListWidget @JvmOverloads constructor(
 		adapter = ContactsListAdapter(onContactImportSwitched)
 		binding.contactsList.adapter = adapter
 
+		binding.searchNameInput.setOnClickListener {
+			binding.searchNameInput.isIconified = false
+		}
+
+		binding.searchNameInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+			override fun onQueryTextSubmit(query: String): Boolean {
+				val filteredContacts = _contacts.filter { it.name.lowercase().contains(query.lowercase()) }
+				adapter.submitList(filteredContacts)
+
+				return false
+			}
+
+			override fun onQueryTextChange(newText: String): Boolean {
+				val filteredContacts = _contacts.filter { it.name.lowercase().contains(newText.lowercase()) }
+				adapter.submitList(filteredContacts)
+
+				return false
+			}
+		})
+
 		binding.deselectAllBtn.setOnClickListener {
 			onDeselectAllClicked()
 		}
@@ -44,7 +66,15 @@ class ContactsListWidget @JvmOverloads constructor(
 		contacts: List<BaseContact>,
 		openedFromScreen: OpenedFromScreen
 	) {
-		adapter.submitList(contacts)
+		val query = binding.searchNameInput.query.toString().lowercase()
+		if (query.isNotEmpty() && query.isNotBlank()) {
+			val filteredContacts = _contacts.filter { it.name.lowercase().contains(query) }
+			adapter.submitList(filteredContacts)
+		} else {
+			adapter.submitList(contacts)
+		}
+
+		_contacts = contacts
 		binding.contactsList.isVisible = contacts.isNotEmpty()
 		binding.emptyListInfo.isVisible = contacts.isEmpty()
 		binding.deselectAllBtn.text =
