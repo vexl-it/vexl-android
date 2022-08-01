@@ -4,11 +4,11 @@ import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.BuildConfig
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentUsernameBinding
 import cz.cleevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
-import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets

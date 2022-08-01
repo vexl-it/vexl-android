@@ -4,13 +4,13 @@ import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import cz.cleevio.onboarding.R
-import cz.cleevio.onboarding.databinding.FragmentVerifyPhoneBinding
-import cz.cleevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.network.data.ErrorIdentification.Companion.CODE_ENTITY_NOT_EXIST_404
 import cz.cleevio.network.data.Status
+import cz.cleevio.onboarding.R
+import cz.cleevio.onboarding.databinding.FragmentVerifyPhoneBinding
+import cz.cleevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
