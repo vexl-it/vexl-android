@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.model.OpenedFromScreen
@@ -14,6 +15,7 @@ import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.resources.R
 import cz.cleevio.profile.databinding.BottomSheetDialogProfileContactsListBinding
 import cz.cleevio.repository.model.contact.BaseContact
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen) : BottomSheetDialogFragment() {
@@ -79,6 +81,12 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 	}
 
 	private fun initView() {
+		listenForInsets(binding.container) { insets ->
+			binding.contactsListWidget.updatePadding(
+				bottom = insets.bottomWithIME
+			)
+		}
+
 		binding.contactsListWidget.setupListeners(
 			onContactImportSwitched = { contact: BaseContact, selected: Boolean ->
 				viewModel.contactSelected(contact, selected)
