@@ -100,65 +100,64 @@ open class BaseContactsListViewModel constructor(
 			} else {
 				//do nothing?
 			}
+			_progressFlow.emit(false)
 		}
-		_progressFlow.emit(false)
 	}
-}
 
-fun contactSelected(contact: BaseContact, selected: Boolean) {
-	viewModelScope.launch {
-		notSyncedContactsList.find {
-			contact.id == it.id
-		}?.markedForUpload = selected
-		emitContacts(notSyncedContactsList)
-	}
-}
-
-fun unselectAll() {
-	viewModelScope.launch {
-		notSyncedContactsList.forEach { contact ->
-			contact.markedForUpload = false
+	fun contactSelected(contact: BaseContact, selected: Boolean) {
+		viewModelScope.launch {
+			notSyncedContactsList.find {
+				contact.id == it.id
+			}?.markedForUpload = selected
+			emitContacts(notSyncedContactsList)
 		}
-		emitContacts(notSyncedContactsList)
 	}
-}
 
-fun selectAll() {
-	viewModelScope.launch {
-		notSyncedContactsList.forEach { contact ->
-			contact.markedForUpload = true
-		}
-		emitContacts(notSyncedContactsList)
-	}
-}
-
-fun uploadAllMissingContacts() {
-	viewModelScope.launch(Dispatchers.IO) {
-		_progressFlow.emit(true)
-		val response = contactRepository.uploadAllMissingContacts(
-			notSyncedContactsList.filter {
-				it.markedForUpload
+	fun unselectAll() {
+		viewModelScope.launch {
+			notSyncedContactsList.forEach { contact ->
+				contact.markedForUpload = false
 			}
-		)
-		_progressFlow.emit(false)
-		when (response.status) {
-			is Status.Success -> response.data?.let { data ->
-				_uploadSuccessful.emit(data.imported)
+			emitContacts(notSyncedContactsList)
+		}
+	}
+
+	fun selectAll() {
+		viewModelScope.launch {
+			notSyncedContactsList.forEach { contact ->
+				contact.markedForUpload = true
 			}
-			is Status.Error -> _uploadSuccessful.emit(false)
-			else -> {
-				//do nothing?
+			emitContacts(notSyncedContactsList)
+		}
+	}
+
+	fun uploadAllMissingContacts() {
+		viewModelScope.launch(Dispatchers.IO) {
+			_progressFlow.emit(true)
+			val response = contactRepository.uploadAllMissingContacts(
+				notSyncedContactsList.filter {
+					it.markedForUpload
+				}
+			)
+			_progressFlow.emit(false)
+			when (response.status) {
+				is Status.Success -> response.data?.let { data ->
+					_uploadSuccessful.emit(data.imported)
+				}
+				is Status.Error -> _uploadSuccessful.emit(false)
+				else -> {
+					//do nothing?
+				}
 			}
 		}
 	}
-}
 
-private suspend fun emitContacts(contacts: List<Contact>) {
-	// Copying because of two lists with the same references :-(
-	val newList = ArrayList<Contact>()
-	contacts.forEach { contact ->
-		newList.add(contact.copy())
+	private suspend fun emitContacts(contacts: List<Contact>) {
+		// Copying because of two lists with the same references :-(
+		val newList = ArrayList<Contact>()
+		contacts.forEach { contact ->
+			newList.add(contact.copy())
+		}
+		_notSyncedContacts.emit(newList)
 	}
-	_notSyncedContacts.emit(newList)
-}
 }
