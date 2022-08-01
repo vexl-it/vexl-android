@@ -1,4 +1,4 @@
-package cz.cleeevio.onboarding.initPhoneFragment
+package cz.cleevio.onboarding.initPhoneFragment
 
 import androidx.lifecycle.viewModelScope
 import com.cleevio.vexl.cryptography.KeyPairCryptoLib

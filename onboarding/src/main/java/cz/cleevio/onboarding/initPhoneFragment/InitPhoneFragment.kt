@@ -1,9 +1,9 @@
-package cz.cleeevio.onboarding.initPhoneFragment
+package cz.cleevio.onboarding.initPhoneFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import cz.cleeevio.onboarding.R
-import cz.cleeevio.onboarding.databinding.FragmentInitPhoneBinding
+import cz.cleevio.onboarding.R
+import cz.cleevio.onboarding.databinding.FragmentInitPhoneBinding
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment

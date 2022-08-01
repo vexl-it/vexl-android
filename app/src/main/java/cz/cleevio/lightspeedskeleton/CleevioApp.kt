@@ -2,7 +2,7 @@ package cz.cleevio.lightspeedskeleton
 
 import android.app.Application
 import com.cleevio.vexl.cryptography.EciesCryptoLib
-import cz.cleeevio.onboarding.di.onboardingModule
+import cz.cleevio.onboarding.di.onboardingModule
 import cz.cleevio.cache.di.cacheModule
 import cz.cleevio.core.di.coreModule
 import cz.cleevio.core.utils.CustomDebugTree

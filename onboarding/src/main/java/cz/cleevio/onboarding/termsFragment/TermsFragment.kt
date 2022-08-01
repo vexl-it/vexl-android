@@ -1,9 +1,8 @@
-package cz.cleeevio.onboarding.termsFragment
+package cz.cleevio.onboarding.termsFragment
 
 import androidx.core.view.updatePadding
-import androidx.navigation.fragment.findNavController
-import cz.cleeevio.onboarding.R
-import cz.cleeevio.onboarding.databinding.FragmentTermsBinding
+import cz.cleevio.onboarding.R
+import cz.cleevio.onboarding.databinding.FragmentTermsBinding
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -21,14 +20,5 @@ class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
 
-		binding.termsSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-			binding.welcomeContinueBtn.isEnabled = isChecked
-		}
-
-		binding.welcomeContinueBtn.setOnClickListener {
-			findNavController().navigate(
-				TermsFragmentDirections.proceedToInitPhoneFragment()
-			)
-		}
 	}
 }

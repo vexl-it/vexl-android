@@ -1,12 +1,12 @@
-package cz.cleeevio.onboarding.verifyPhoneFragment
+package cz.cleevio.onboarding.verifyPhoneFragment
 
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import cz.cleeevio.onboarding.R
-import cz.cleeevio.onboarding.databinding.FragmentVerifyPhoneBinding
-import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
+import cz.cleevio.onboarding.R
+import cz.cleevio.onboarding.databinding.FragmentVerifyPhoneBinding
+import cz.cleevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.network.data.ErrorIdentification.Companion.CODE_ENTITY_NOT_EXIST_404

@@ -3,13 +3,28 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_onboarding"
-	app:startDestination="@+id/termsFragment">
+	app:startDestination="@+id/welcomeFragment">
 
 	<include app:graph="@navigation/nav_camera" />
 
 	<fragment
+		android:id="@+id/welcomeFragment"
+		android:name="cz.cleevio.onboarding.welcomeFragment.WelcomeFragment"
+		android:label="WelcomeFragment"
+		tools:layout="@layout/fragment_welcome">
+
+		<action
+			android:id="@+id/proceed_to_initPhoneFragment"
+			app:destination="@id/initPhoneFragment" />
+
+		<action
+			android:id="@+id/proceed_to_termsFragment"
+			app:destination="@id/termsFragment" />
+	</fragment>
+
+	<fragment
 		android:id="@+id/termsFragment"
-		android:name="cz.cleeevio.onboarding.termsFragment.TermsFragment"
+		android:name="cz.cleevio.onboarding.termsFragment.TermsFragment"
 		android:label="TermsFragment"
 		tools:layout="@layout/fragment_terms">
 
@@ -21,7 +36,7 @@
 
 	<fragment
 		android:id="@+id/initPhoneFragment"
-		android:name="cz.cleeevio.onboarding.initPhoneFragment.InitPhoneFragment"
+		android:name="cz.cleevio.onboarding.initPhoneFragment.InitPhoneFragment"
 		android:label="InitPhoneFragment"
 		tools:layout="@layout/fragment_init_phone">
 
@@ -46,7 +61,7 @@
 
 	<fragment
 		android:id="@+id/verifyPhoneFragment"
-		android:name="cz.cleeevio.onboarding.verifyPhoneFragment.VerifyPhoneFragment"
+		android:name="cz.cleevio.onboarding.verifyPhoneFragment.VerifyPhoneFragment"
 		android:label="VerifyPhoneFragment"
 		tools:layout="@layout/fragment_verify_phone">
 
@@ -69,7 +84,7 @@
 
 	<fragment
 		android:id="@+id/phoneDoneFragment"
-		android:name="cz.cleeevio.onboarding.phoneDoneFragment.PhoneDoneFragment"
+		android:name="cz.cleevio.onboarding.phoneDoneFragment.PhoneDoneFragment"
 		android:label="PhoneDoneFragment"
 		tools:layout="@layout/fragment_phone_done">
 
@@ -81,7 +96,7 @@
 
 	<fragment
 		android:id="@+id/usernameFragment"
-		android:name="cz.cleeevio.onboarding.usernameFragment.UsernameFragment"
+		android:name="cz.cleevio.onboarding.usernameFragment.UsernameFragment"
 		android:label="UsernameFragment"
 		tools:layout="@layout/fragment_username">
 
@@ -93,7 +108,7 @@
 
 	<fragment
 		android:id="@+id/avatarFragment"
-		android:name="cz.cleeevio.onboarding.avatarFragment.AvatarFragment"
+		android:name="cz.cleevio.onboarding.avatarFragment.AvatarFragment"
 		android:label="AvatarFragment"
 		tools:layout="@layout/fragment_avatar">
 

@@ -1,11 +1,12 @@
-package cz.cleeevio.onboarding.di
+package cz.cleevio.onboarding.di
 
-import cz.cleeevio.onboarding.avatarFragment.AvatarViewModel
-import cz.cleeevio.onboarding.initPhoneFragment.InitPhoneViewModel
-import cz.cleeevio.onboarding.phoneDoneFragment.PhoneDoneViewModel
-import cz.cleeevio.onboarding.termsFragment.TermsViewModel
-import cz.cleeevio.onboarding.usernameFragment.UsernameViewModel
-import cz.cleeevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
+import cz.cleevio.onboarding.avatarFragment.AvatarViewModel
+import cz.cleevio.onboarding.initPhoneFragment.InitPhoneViewModel
+import cz.cleevio.onboarding.phoneDoneFragment.PhoneDoneViewModel
+import cz.cleevio.onboarding.termsFragment.TermsViewModel
+import cz.cleevio.onboarding.usernameFragment.UsernameViewModel
+import cz.cleevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
+import cz.cleevio.onboarding.welcomeFragment.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -13,6 +14,10 @@ val onboardingModule = module {
 
 	viewModel {
 		TermsViewModel()
+	}
+
+	viewModel {
+		WelcomeViewModel()
 	}
 
 	viewModel {

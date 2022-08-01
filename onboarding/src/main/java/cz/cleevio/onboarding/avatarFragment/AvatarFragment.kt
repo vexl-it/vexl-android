@@ -1,13 +1,13 @@
-package cz.cleeevio.onboarding.avatarFragment
+package cz.cleevio.onboarding.avatarFragment
 
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import cz.cleeevio.onboarding.R
-import cz.cleeevio.onboarding.databinding.FragmentAvatarBinding
-import cz.cleeevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
+import cz.cleevio.onboarding.R
+import cz.cleevio.onboarding.databinding.FragmentAvatarBinding
+import cz.cleevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
