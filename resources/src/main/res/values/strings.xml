@@ -26,6 +26,7 @@
     <string name="welcome_terms_agreement">I agree to Terms of Use</string>
     <string name="welcome_terms_agreement_link">Terms of Use</string>
     <string name="welcome_terms_agreement_url">https://google.com</string>
+    <string name="welcome_button">Continue</string>
 
     <!-- Register Phone -->
     <string name="verify_phone_title">We\'ve just sent you a code</string>
@@ -51,6 +52,7 @@
     <string name="import_facebook_contacts_title">Expand your network with Facebook</string>
     <string name="import_facebook_contacts_import">Import Facebook contacts</string>
     <string name="import_contacts_finish_title">Setting everything up...</string>
+    <string name="import_contacts_empty_list">All contacts imported</string>
 
     <!-- Errors -->
     <string name="error_username_not_available">The username is unavailable</string>

@@ -63,26 +63,28 @@
 		android:id="@+id/terms_switch_text"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
+		android:layout_marginStart="32dp"
 		android:layout_marginTop="8dp"
-		android:drawableStart="@drawable/ic_notepad"
+		android:layout_marginBottom="16dp"
+		android:drawablePadding="8dp"
 		android:text="@string/welcome_terms_agreement"
 		android:textAppearance="@style/TextAppearance.Vexl.Description.Welcome"
-		app:layout_constraintBottom_toBottomOf="@id/terms_switch"
-		app:layout_constraintStart_toEndOf="@id/terms_switch"
-		app:layout_constraintTop_toBottomOf="@id/welcome_wrapper" />
-
-	<androidx.appcompat.widget.SwitchCompat
-		android:id="@+id/terms_switch"
-
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="40dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginBottom="50dp"
+		app:drawableStartCompat="@drawable/ic_notepad"
 		app:layout_constraintBottom_toTopOf="@id/welcome_continue_btn"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/welcome_wrapper" />
+
+	<com.google.android.material.switchmaterial.SwitchMaterial
+		android:id="@+id/terms_switch"
+		style="@style/Widget.Vexl.Switch"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="38dp"
+		app:layout_constraintBottom_toBottomOf="@id/terms_switch_text"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="1"
+		app:layout_constraintStart_toEndOf="@id/terms_switch_text"
+		app:layout_constraintTop_toTopOf="@id/terms_switch_text" />
 
 	<Button
 		android:id="@+id/welcome_continue_btn"
@@ -90,9 +92,9 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="8dp"
-		android:layout_marginBottom="44dp"
+		android:layout_marginBottom="16dp"
 		android:enabled="false"
-		android:text="Continue"
+		android:text="@string/welcome_button"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
