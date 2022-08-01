@@ -19,7 +19,6 @@ class ContactsListAdapter(
 
 	override fun areContentsTheSame(oldItem: BaseContact, newItem: BaseContact): Boolean =
 		oldItem.id == newItem.id && oldItem.markedForUpload == newItem.markedForUpload
-
 }) {
 
 	inner class ViewHolder constructor(
@@ -41,7 +40,6 @@ class ContactsListAdapter(
 				contactImportCheckbox.setOnCheckedChangeListener { _, isChecked -> onContactImportSwitched(item, isChecked) }
 			}
 		}
-
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -52,6 +50,4 @@ class ContactsListAdapter(
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		holder.bind(getItem(position))
 	}
-
-
 }

@@ -442,7 +442,7 @@ naming:
   FunctionMaxLength:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-    maximumFunctionNameLength: 30
+    maximumFunctionNameLength: 40
   FunctionMinLength:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]

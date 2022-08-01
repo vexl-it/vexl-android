@@ -58,7 +58,8 @@ open class BaseContactsListViewModel constructor(
 
 			Timber.tag("ContactSync").d("Checking done, we have ${notSyncedIdentifiers.data?.size} not synced contacts")
 
-			//now we take list all contacts from phone and keep only contacts that BE returned (keeping only NOT imported contacts)
+			//now we take list all contacts from phone and keep
+			// only contacts that BE returned (keeping only NOT imported contacts)
 			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
 				notSyncedContactsList = hashedContacts.filter { contact ->
 					notSyncedPhoneNumbers.contains(
@@ -88,78 +89,76 @@ open class BaseContactsListViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
 			val response = contactRepository.syncContacts(contentResolver)
-			when (response.status) {
-				is Status.Success -> {
-					response.data?.let { localContacts ->
-						if (openedFromScreen == OpenedFromScreen.ONBOARDING) {
-							skipCheckingAndJustDisplayAllContacts(localContacts)
-						} else {
-							checkNotSyncedContacts(localContacts)
-						}
+			if (response.status == Status.Success) {
+				response.data?.let { localContacts ->
+					if (openedFromScreen == OpenedFromScreen.ONBOARDING) {
+						skipCheckingAndJustDisplayAllContacts(localContacts)
+					} else {
+						checkNotSyncedContacts(localContacts)
 					}
 				}
-				else -> {
-					//do nothing?
-				}
-			}
-			_progressFlow.emit(false)
-		}
-	}
-
-	fun contactSelected(contact: BaseContact, selected: Boolean) {
-		viewModelScope.launch {
-			notSyncedContactsList.find {
-				contact.id == it.id
-			}?.markedForUpload = selected
-			emitContacts(notSyncedContactsList)
-		}
-	}
-
-	fun unselectAll() {
-		viewModelScope.launch {
-			notSyncedContactsList.forEach { contact ->
-				contact.markedForUpload = false
-			}
-			emitContacts(notSyncedContactsList)
-		}
-	}
-
-	fun selectAll() {
-		viewModelScope.launch {
-			notSyncedContactsList.forEach { contact ->
-				contact.markedForUpload = true
-			}
-			emitContacts(notSyncedContactsList)
-		}
-	}
-
-	fun uploadAllMissingContacts() {
-		viewModelScope.launch(Dispatchers.IO) {
-			_progressFlow.emit(true)
-			val response = contactRepository.uploadAllMissingContacts(
-				notSyncedContactsList.filter {
-					it.markedForUpload
-				}
-			)
-			_progressFlow.emit(false)
-			when (response.status) {
-				is Status.Success -> response.data?.let { data ->
-					_uploadSuccessful.emit(data.imported)
-				}
-				is Status.Error -> _uploadSuccessful.emit(false)
-				else -> {
-					//do nothing?
-				}
+			} else {
+				//do nothing?
 			}
 		}
+		_progressFlow.emit(false)
 	}
+}
 
-	private suspend fun emitContacts(contacts: List<Contact>) {
-		// Copying because of two lists with the same references :-(
-		val newList = ArrayList<Contact>()
-		contacts.forEach { contact ->
-			newList.add(contact.copy())
-		}
-		_notSyncedContacts.emit(newList)
+fun contactSelected(contact: BaseContact, selected: Boolean) {
+	viewModelScope.launch {
+		notSyncedContactsList.find {
+			contact.id == it.id
+		}?.markedForUpload = selected
+		emitContacts(notSyncedContactsList)
 	}
+}
+
+fun unselectAll() {
+	viewModelScope.launch {
+		notSyncedContactsList.forEach { contact ->
+			contact.markedForUpload = false
+		}
+		emitContacts(notSyncedContactsList)
+	}
+}
+
+fun selectAll() {
+	viewModelScope.launch {
+		notSyncedContactsList.forEach { contact ->
+			contact.markedForUpload = true
+		}
+		emitContacts(notSyncedContactsList)
+	}
+}
+
+fun uploadAllMissingContacts() {
+	viewModelScope.launch(Dispatchers.IO) {
+		_progressFlow.emit(true)
+		val response = contactRepository.uploadAllMissingContacts(
+			notSyncedContactsList.filter {
+				it.markedForUpload
+			}
+		)
+		_progressFlow.emit(false)
+		when (response.status) {
+			is Status.Success -> response.data?.let { data ->
+				_uploadSuccessful.emit(data.imported)
+			}
+			is Status.Error -> _uploadSuccessful.emit(false)
+			else -> {
+				//do nothing?
+			}
+		}
+	}
+}
+
+private suspend fun emitContacts(contacts: List<Contact>) {
+	// Copying because of two lists with the same references :-(
+	val newList = ArrayList<Contact>()
+	contacts.forEach { contact ->
+		newList.add(contact.copy())
+	}
+	_notSyncedContacts.emit(newList)
+}
 }

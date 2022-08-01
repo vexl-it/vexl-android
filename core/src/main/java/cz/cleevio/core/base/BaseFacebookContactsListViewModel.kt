@@ -88,7 +88,6 @@ open class BaseFacebookContactsListViewModel constructor(
 				is Status.Error -> _uploadSuccessful.emit(false)
 			}
 		}
-
 	}
 
 	private suspend fun emitContacts(contacts: List<FacebookContact>) {
@@ -99,5 +98,4 @@ open class BaseFacebookContactsListViewModel constructor(
 		}
 		_notSyncedContacts.emit(newList)
 	}
-
 }

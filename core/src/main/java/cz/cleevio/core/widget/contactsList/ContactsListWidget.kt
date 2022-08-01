@@ -5,10 +5,10 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
-import cz.cleevio.resources.R
 import cz.cleevio.core.databinding.WidgetContactsImportListBinding
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.repository.model.contact.BaseContact
+import cz.cleevio.resources.R
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
 
