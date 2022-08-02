@@ -96,9 +96,9 @@
 
 	<Button
 		android:id="@+id/welcome_continue_btn"
-		style="@style/Widget.Vexl.Button"
+		style="@style/Widget.Vexl.Button.BottomScreen"
 		android:layout_width="0dp"
-		android:layout_height="@dimen/primary_button_height"
+		android:layout_height="@dimen/bottom_screen_button_height"
 		android:layout_marginBottom="16dp"
 		android:enabled="false"
 		android:text="@string/welcome_button"
