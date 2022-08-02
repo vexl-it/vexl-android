@@ -185,8 +185,9 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileTermsAndConditions.setOnClickListener {
-			Toast.makeText(requireContext(), "TAC not implemented", Toast.LENGTH_SHORT)
-				.show()
+			findNavController().navigate(
+				ProfileFragmentDirections.actionProfileFragmentToTermsFragment()
+			)
 		}
 
 		binding.profileFaq.setOnClickListener {

@@ -21,6 +21,11 @@ import org.commonmark.node.ListItem
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
+const val SIZE_OF_HEADERS = 1.2f
+const val SIZE_OF_BULLETS = 25
+const val SIZE_OF_HEADING_BREAK = 0
+const val LINE_SPACING = 40
+
 val coreModule = module {
 
 	single {
@@ -70,12 +75,14 @@ private fun provideMarkwon(context: Context) = Markwon.builder(context)
 		override fun configureTheme(builder: MarkwonTheme.Builder) {
 			val primaryColor = ContextCompat.getColor(context, R.color.white)
 			builder
-				.headingBreakHeight(0)
+				.headingBreakHeight(SIZE_OF_HEADING_BREAK)
 				.headingTypeface(Typeface.DEFAULT)
-				.headingTextSizeMultipliers(floatArrayOf(1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f))
+				.headingTextSizeMultipliers(
+					floatArrayOf(SIZE_OF_HEADERS, SIZE_OF_HEADERS, SIZE_OF_HEADERS, SIZE_OF_HEADERS, SIZE_OF_HEADERS, SIZE_OF_HEADERS)
+				)
 				.listItemColor(primaryColor)
 				.linkColor(primaryColor)
-				.bulletWidth(25)
+				.bulletWidth(SIZE_OF_BULLETS)
 		}
 
 		override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
@@ -84,7 +91,7 @@ private fun provideMarkwon(context: Context) = Markwon.builder(context)
 			) { _, _ ->
 				LastLineSpacingSpan(
 					// Spacing for bottom of paragraph markdown
-					40
+					LINE_SPACING
 				)
 			}
 		}
