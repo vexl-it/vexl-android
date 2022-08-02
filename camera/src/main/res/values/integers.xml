@@ -2,4 +2,6 @@
 <resources>
 	<integer name="text_recognition_reticle_percentage_width">80</integer>
 	<integer name="text_recognition_reticle_percentage_height">20</integer>
+	<integer name="transition_duration_to_next_screen">300</integer>
+	<integer name="screen_transition_duration">300</integer>
 </resources>

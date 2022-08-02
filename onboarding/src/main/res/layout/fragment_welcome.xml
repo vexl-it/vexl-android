@@ -4,7 +4,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/container"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:transitionGroup="true">
 
 	<com.google.android.material.card.MaterialCardView
 		android:id="@+id/welcome_wrapper"
@@ -20,14 +21,18 @@
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="16dp">
+			android:layout_height="match_parent">
 
 			<ImageView
 				android:id="@+id/welcome_image"
-				android:layout_width="0dp"
-				android:layout_height="401dp"
-				android:src="@drawable/ic_welcome"
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_marginTop="100dp"
+				android:layout_marginBottom="64dp"
+				android:adjustViewBounds="true"
+				android:contentDescription="?content"
+				android:src="@drawable/ic_vexl_man"
+				app:layout_constraintBottom_toTopOf="@id/vexl_logo"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -35,26 +40,28 @@
 			<ImageView
 				android:id="@+id/vexl_logo"
 				android:layout_width="0dp"
-				android:layout_height="130dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="74dp"
+				android:layout_marginBottom="30dp"
+				android:adjustViewBounds="true"
+				android:contentDescription="?content"
 				android:src="@drawable/ic_vexl_logo"
+				app:layout_constraintBottom_toTopOf="@id/welcome_title"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/welcome_image" />
+				app:layout_constraintStart_toStartOf="parent" />
 
 			<TextView
 				android:id="@+id/welcome_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginVertical="8dp"
-				android:layout_marginTop="24dp"
+				android:layout_marginBottom="42dp"
 				android:gravity="center"
 				android:text="@string/welcome_title"
 				android:textAlignment="center"
 				android:textAppearance="@style/TextAppearance.Vexl.Description.Welcome"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/vexl_logo" />
+				app:layout_constraintStart_toStartOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -89,13 +96,13 @@
 
 	<Button
 		android:id="@+id/welcome_continue_btn"
-		style="@style/Widget.Vexl.Button"
+		style="@style/Widget.Vexl.Button.BottomScreen"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginHorizontal="8dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
 		android:layout_marginBottom="16dp"
 		android:enabled="false"
 		android:text="@string/welcome_button"
+		android:textAppearance="@style/TextAppearance.Vexl.Onboarding.Continue"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
