@@ -1,5 +1,6 @@
 package cz.cleevio.onboarding.welcomeFragment
 
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -8,6 +9,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.utils.setEnterTransitionSlideToLeft
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentWelcomeBinding
@@ -22,11 +24,12 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 	override fun bindObservers() = Unit
 
-	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
-		}
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setEnterTransitionSlideToLeft()
+	}
 
+	override fun initView() {
 		clickableLink()
 
 		binding.termsSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -37,6 +40,10 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 			findNavController().navigate(
 				WelcomeFragmentDirections.proceedToInitPhoneFragment()
 			)
+		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
 	}
 
