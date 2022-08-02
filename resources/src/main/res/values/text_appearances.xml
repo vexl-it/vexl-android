@@ -386,7 +386,7 @@
 		<item name="android:textSize">16sp</item>
 		<item name="lineHeight">19.92sp</item>
 		<item name="android:letterSpacing">-0.04</item>
-		<item name="android:textColor">@color/yellow_100</item>
+		<item name="android:textColor">@color/yellow_100_opacity_78</item>
 		<item name="fontWeight">500</item>
 		<item name="android:fontFamily">@font/tt_satoshi_regular</item>
 		<item name="fontFamily">@font/tt_satoshi_regular</item>

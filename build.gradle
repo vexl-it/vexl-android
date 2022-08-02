@@ -21,6 +21,7 @@ buildscript {
     ext.flexbox_version = '3.0.0'
     ext.mp_android_chart_version = 'v3.1.0'
     ext.camera = "1.1.0-alpha07"
+    ext.markwon = "4.6.0"
 
     ext.desugar = '1.1.5'
 

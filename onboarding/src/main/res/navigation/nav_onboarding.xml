@@ -26,13 +26,7 @@
 		android:id="@+id/termsFragment"
 		android:name="cz.cleevio.onboarding.termsFragment.TermsFragment"
 		android:label="TermsFragment"
-		tools:layout="@layout/fragment_terms">
-
-		<action
-			android:id="@+id/proceed_to_initPhoneFragment"
-			app:destination="@id/initPhoneFragment" />
-
-	</fragment>
+		tools:layout="@layout/fragment_terms" />
 
 	<fragment
 		android:id="@+id/initPhoneFragment"
@@ -119,7 +113,7 @@
 		<action
 			android:id="@+id/proceed_to_takePhotoFragment"
 			app:destination="@id/nav_camera" />
-		
+
 	</fragment>
 
 </navigation>
