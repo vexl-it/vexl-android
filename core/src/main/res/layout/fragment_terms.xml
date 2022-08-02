@@ -91,7 +91,7 @@
 					android:background="@drawable/background_tac_radio_group"
 					android:button="@null"
 					android:gravity="center"
-					android:text="@string/terms_of_user_terms_bookmark"
+					android:text="@string/terms_of_use_terms_bookmark"
 					android:textColor="@drawable/tac_text_color_selector" />
 
 				<RadioButton
@@ -105,7 +105,7 @@
 					android:background="@drawable/background_tac_radio_group"
 					android:button="@null"
 					android:gravity="center"
-					android:text="@string/terms_of_user_policy_bookmark"
+					android:text="@string/terms_of_use_policy_bookmark"
 					android:textColor="@drawable/tac_text_color_selector" />
 			</RadioGroup>
 

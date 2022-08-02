@@ -3,7 +3,7 @@ package cz.cleevio.onboarding.di
 import cz.cleevio.onboarding.avatarFragment.AvatarViewModel
 import cz.cleevio.onboarding.initPhoneFragment.InitPhoneViewModel
 import cz.cleevio.onboarding.phoneDoneFragment.PhoneDoneViewModel
-import cz.cleevio.onboarding.termsFragment.TermsViewModel
+import cz.cleevio.core.termsFragment.TermsViewModel
 import cz.cleevio.onboarding.usernameFragment.UsernameViewModel
 import cz.cleevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
 import cz.cleevio.onboarding.welcomeFragment.WelcomeViewModel

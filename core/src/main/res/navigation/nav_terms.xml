@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_terms"
+	app:startDestination="@+id/termsFragment">
+
+	<fragment
+		android:id="@+id/termsFragment"
+		android:name="cz.cleevio.core.termsFragment.TermsFragment"
+		android:label="TermsFragment"
+		tools:layout="@layout/fragment_terms" />
+
+</navigation>

@@ -7,6 +7,8 @@
 
 	<include app:graph="@navigation/nav_camera" />
 
+	<include app:graph="@navigation/nav_terms" />
+
 	<fragment
 		android:id="@+id/welcomeFragment"
 		android:name="cz.cleevio.onboarding.welcomeFragment.WelcomeFragment"
@@ -19,14 +21,8 @@
 
 		<action
 			android:id="@+id/proceed_to_termsFragment"
-			app:destination="@id/termsFragment" />
+			app:destination="@id/nav_terms" />
 	</fragment>
-
-	<fragment
-		android:id="@+id/termsFragment"
-		android:name="cz.cleevio.onboarding.termsFragment.TermsFragment"
-		android:label="TermsFragment"
-		tools:layout="@layout/fragment_terms" />
 
 	<fragment
 		android:id="@+id/initPhoneFragment"

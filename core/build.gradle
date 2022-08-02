@@ -47,6 +47,7 @@ dependencies {
     api project(':cryptography')
     api project(':lightbase')
     api project(':camera')
+    api project(':resources')
 
     api 'androidx.appcompat:appcompat:1.4.1'
     api 'androidx.core:core-ktx:1.7.0'

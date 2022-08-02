@@ -1,17 +1,16 @@
-package cz.cleevio.onboarding.termsFragment
+package cz.cleevio.core.termsFragment
 
 import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.onboarding.R
-import cz.cleevio.onboarding.databinding.FragmentTermsBinding
+import cz.cleevio.core.R
+import cz.cleevio.core.databinding.FragmentTermsBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import io.noties.markwon.Markwon
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 
