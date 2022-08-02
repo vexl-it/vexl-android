@@ -47,6 +47,7 @@ dependencies {
     api project(':cryptography')
     api project(':lightbase')
     api project(':camera')
+    api project(':resources')
 
     api 'androidx.appcompat:appcompat:1.4.1'
     api 'androidx.core:core-ktx:1.7.0'
@@ -68,6 +69,7 @@ dependencies {
     api "io.insert-koin:koin-core:$koin"
     api "io.insert-koin:koin-android:$koin"
     api "io.coil-kt:coil:1.1.1"
+    api "io.noties.markwon:core:$markwon"
 
     implementation "com.github.PhilJay:MPAndroidChart:$mp_android_chart_version"
     implementation 'com.lyft.kronos:kronos-android:0.0.1-alpha11'

@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.termsFragment
+package cz.cleevio.core.termsFragment
 
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 

@@ -31,25 +31,24 @@
     <!-- Terms of Use -->
     <string name="terms_of_use_title">Terms\nof Use</string>
     <string name="terms_of_use_faq_button">Don’t have a time to read all this? Take a look on Frequently Asked Questions.</string>
-    <string name="terms_of_user_terms_bookmark">Terms of Use</string>
-    <string name="terms_of_user_policy_bookmark">Privacy Policy</string>
-    <string name="terms_of_user_and_policy_markdown">1. Welcome
-We would like to thank you for your choice to use  Vexl. We know that you are eager to go ahead and start using it right away, but we kindly ask you to spare a few minutes to read through the Terms of Service first. We value your time, so we promise that we will keep it as brief as possible. If you agree with everything that you read here, you may then go ahead and start using Vexl.
+    <string name="terms_of_use_terms_bookmark">Terms of Use</string>
+    <string name="terms_of_use_policy_bookmark">Privacy Policy</string>
+    <string name="terms_of_use_markdown"># Just testing markdown
 
-2. Parties
-Let\'s start with introductions, so you know, who hides under the terms “we” and “you” frequently used throughout this document.
+[link](https://google.com)
 
-We are a commercial company Vexl s.r.o. with a registered office at Kundratka 2359/17a, Libeň, 180 00 Prague 8, Czech Republic. While this is probably sufficient information for you,  law dictates that we must  also mention that our Id. No. is  172 70 642 and we are registered in the commercial register kept by the Commercial court in Prague under file No. 369216.
+## Team
 
-By “you” we mean anybody, whether you are an individual or legal person, who uses Vexl in any way. 
+* **Name Surname** - work position
+* **Name Surname** - work position</string>
+    <string name="terms_of_use_policy_markdown"># Replace with real data
 
-It probably goes without saying, but your legal capacity must not be limited to the extent that it could prevent you from accepting these Terms of Service and using Vexl. To make things simpler, let\'s just agree that you must be at least 18 years old to use Vexl.
+[link](https://google.com)
 
+## Team
 
-3. About Vexl
-To put it simply, Vexl is a service (which includes an application) that allows users interested in buying or selling Bitcoin to connect with each other to discuss their offers and agree upon trades. What is more, Vexl accomplishes that while collecting and storing almost no information about the users. Once the users are connected they may discuss the potential trade via private and secure (end-to-end encrypted) chat.
-
-**Important notice:** Vexl itself does not offer any instruments to facilitate Bitcoin transactions between the users. We do not monitor whether any trades took place between any of our users. The only objective of Vexl is to provide the users a safe and simple to use platform for finding and contacting each other and for discussing the terms of the trade.</string>
+* **Name Surname** - work position
+* **Name Surname** - work position</string>
 
     <!-- Register Phone -->
     <string name="verify_phone_title">We\'ve just sent you a code</string>
@@ -103,7 +102,7 @@ To put it simply, Vexl is a service (which includes an application) that allows 
     <string name="profile_currency">Currency</string>
     <string name="profile_logout_info">Can’t find logout? There’s no such a thing.
 But you can delete account.</string>
-    <string name="profile_vexl_support">If you like Vexl, support it’s improvement by sending some Bitcoins as donation!</string>
+    <string name="profile_vexl_support">If you like Vexl, support it’s improvement by sending some Bitcoin as donation!</string>
     <string name="profile_refuse_to_snap_chat">Refuse users to snap the chat</string>
     <string name="profile_private_settings_title">Private settings</string>
     <string name="profile_private_settings_subtitle">Unlock to access your identity and contacts</string>
