@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.welcomeFragment
+package cz.cleevio.onboarding.ui.welcomeFragment
 
 import android.os.Bundle
 import android.text.SpannableString
@@ -9,6 +9,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.setEnterTransitionSlideToLeft
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
@@ -37,7 +38,7 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 		}
 
 		binding.welcomeContinueBtn.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				WelcomeFragmentDirections.proceedToInitPhoneFragment()
 			)
 		}
@@ -55,7 +56,9 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 		val clickableSpan: ClickableSpan = object : ClickableSpan() {
 			override fun onClick(widget: View) {
-				findNavController().navigate(WelcomeFragmentDirections.proceedToTermsFragment())
+				findNavController().safeNavigateWithTransition(
+					WelcomeFragmentDirections.proceedToTermsFragment()
+				)
 			}
 
 			override fun updateDrawState(ds: TextPaint) {

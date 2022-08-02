@@ -1,10 +1,10 @@
-package cz.cleevio.core.termsFragment
+package cz.cleevio.onboarding.ui.termsFragment
 
-import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.FragmentTermsBinding
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -32,9 +32,9 @@ class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 		}
 
 		binding.termsFaqButton.setOnClickListener {
-			// TODO add FAQ implementation
-			Toast.makeText(requireContext(), "FAQ not implemented", Toast.LENGTH_SHORT)
-				.show()
+			findNavController().safeNavigateWithTransition(
+				TermsFragmentDirections.proceedToFaq()
+			)
 		}
 
 		binding.termsPrivacyRadioGroup.setOnCheckedChangeListener { _, id ->

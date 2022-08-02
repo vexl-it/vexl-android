@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.initPhoneFragment
+package cz.cleevio.onboarding.ui.initPhoneFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController

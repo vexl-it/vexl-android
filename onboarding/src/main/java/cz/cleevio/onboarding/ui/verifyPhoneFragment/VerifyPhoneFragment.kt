@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.verifyPhoneFragment
+package cz.cleevio.onboarding.ui.verifyPhoneFragment
 
 import android.widget.Toast
 import androidx.core.view.updatePadding
@@ -10,7 +10,7 @@ import cz.cleevio.network.data.ErrorIdentification.Companion.CODE_ENTITY_NOT_EXI
 import cz.cleevio.network.data.Status
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentVerifyPhoneBinding
-import cz.cleevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
+import cz.cleevio.onboarding.ui.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets

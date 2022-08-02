@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_fag"
+	app:startDestination="@id/FAQParentFragment2">
+
+	<fragment
+		android:id="@+id/FAQParentFragment2"
+		android:name="cz.cleevio.onboarding.ui.faqParentFragment.FAQParentFragment"
+		android:label="FAQParentFragment"
+		tools:layout="@layout/fragment_faq_parent" />
+
+</navigation>
