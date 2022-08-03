@@ -19,7 +19,6 @@ import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 
 	private val binding by viewBinding(FragmentAnonymizeUserBinding::bind)

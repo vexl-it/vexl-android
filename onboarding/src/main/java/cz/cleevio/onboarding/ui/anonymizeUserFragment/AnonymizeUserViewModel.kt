@@ -1,12 +1,10 @@
 package cz.cleevio.onboarding.ui.anonymizeUserFragment
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.RandomUtils
-import cz.cleevio.onboarding.R
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +51,7 @@ class AnonymizeUserViewModel constructor(
 		) : UIState()
 	}
 
-	companion object{
+	companion object {
 		private const val DELAY = 500L
 	}
 }
