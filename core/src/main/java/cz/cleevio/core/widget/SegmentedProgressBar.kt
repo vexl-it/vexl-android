@@ -48,10 +48,10 @@ class SegmentedProgressBar @JvmOverloads constructor(
 				view.backgroundTintList = ColorStateList.valueOf(activeColor)
 			}
 
-			view.layoutParams = LayoutParams(0, context.dpValueToPx(4).toInt()).apply {
+			view.layoutParams = LayoutParams(0, context.dpValueToPx(BAR_HEIGHT).toInt()).apply {
 				weight = 1f
-				marginStart = context.dpValueToPx(2).toInt()
-				marginEnd = context.dpValueToPx(2).toInt()
+				marginStart = context.dpValueToPx(BAR_SPACING).toInt()
+				marginEnd = context.dpValueToPx(BAR_SPACING).toInt()
 
 				when (index) {
 					0 -> marginStart = 0
@@ -66,5 +66,10 @@ class SegmentedProgressBar @JvmOverloads constructor(
 	fun setProgress(progress: Int) {
 		activeSegments = progress
 		setupBars()
+	}
+
+	private companion object {
+		private const val BAR_HEIGHT = 4
+		private const val BAR_SPACING = 2
 	}
 }
