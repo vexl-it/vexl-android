@@ -1,17 +1,29 @@
 package cz.cleevio.onboarding.ui.verifyPhoneFragment
 
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.core.utils.showKeyboard
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.network.data.ErrorIdentification.Companion.CODE_ENTITY_NOT_EXIST_404
 import cz.cleevio.network.data.Status
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentVerifyPhoneBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.hideKeyboard
+import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,31 +33,21 @@ import java.util.concurrent.TimeUnit
 class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
 	private val args by navArgs<VerifyPhoneFragmentArgs>()
-
 	override val viewModel by viewModel<VerifyPhoneViewModel> { parametersOf(args.phoneNumber, args.verificationId) }
 	private val binding by viewBinding(FragmentVerifyPhoneBinding::bind)
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.verificationChannel.collect { resource ->
-				when (resource.status) {
-					is Status.Loading -> {
-						//todo: switch button to loading state
-					}
-					is Status.Success -> {
-						if (resource.data?.phoneVerified == true) {
-							//todo: switch button to verified state
-							Toast.makeText(requireContext(), "Verification successful", Toast.LENGTH_SHORT)
-								.show()
-							delay(TimeUnit.SECONDS.toMillis(1))
-							findNavController().navigate(
-								VerifyPhoneFragmentDirections.proceedToPhoneDoneFragment()
-							)
-						} else {
-							//todo: switch button to default state
-						}
+				if (resource.status is Status.Success) {
+					if (resource.data?.phoneVerified == true) {
+						delay(TimeUnit.SECONDS.toMillis(1))
+						findNavController().safeNavigateWithTransition(
+							VerifyPhoneFragmentDirections.proceedToPhoneDoneFragment()
+						)
 					}
 				}
+				binding.progressbar.isVisible = resource.status == Status.Loading
 			}
 		}
 
@@ -66,25 +68,48 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(
-				top = insets.top,
-				bottom = insets.bottomWithIME
-			)
+		binding.close.setOnClickListener {
+			findNavController().popBackStack()
 		}
+
+		binding.verifyPhoneInput.requestFocus()
+		binding.verifyPhoneInput.showKeyboard()
 
 		binding.continueBtn.setOnClickListener {
+			binding.root.hideKeyboard()
 			val verificationCode = binding.verifyPhoneInput.text.toString()
-			if (verificationCode.isNotBlank()) {
-				viewModel.sendVerificationCode(verificationCode)
-			} else {
-				//todo: show toast or something
-			}
+			viewModel.sendVerificationCode(verificationCode)
 		}
 
-		binding.verifyPhoneSubtitle.text = getString(R.string.verify_phone_subtitle, args.phoneNumber)
+		setupPhoneNumber()
 
-		//debug
-		binding.verifyPhoneInput.setText("111111")
+		binding.verifyPhoneInput.doAfterTextChanged {
+			binding.continueBtn.isEnabled = it.toString().isNotEmpty()
+		}
+
+		listenForInsets(binding.parent) { insets ->
+			binding.container.updatePadding(top = insets.top)
+		}
+
+		val defaultButtonMargin = binding.continueBtn.marginBottom
+		listenForIMEInset(binding.container) { bottomInset ->
+			binding.continueBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = bottomInset + defaultButtonMargin
+			}
+		}
+	}
+
+	private fun setupPhoneNumber() {
+		val phoneText = getString(R.string.verify_phone_subtitle, args.phoneNumber)
+		val prefix = args.phoneNumber?.split(" ")?.first() ?: ""
+		val spannableStringBuilder = SpannableStringBuilder(phoneText)
+		spannableStringBuilder.setSpan(
+			ForegroundColorSpan(Color.BLACK),
+			phoneText.indexOf(prefix),
+			phoneText.indexOf(prefix) + (args.phoneNumber?.length ?: 0),
+			Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+		)
+
+		binding.verifyPhoneSubtitle.text = spannableStringBuilder
 	}
 }

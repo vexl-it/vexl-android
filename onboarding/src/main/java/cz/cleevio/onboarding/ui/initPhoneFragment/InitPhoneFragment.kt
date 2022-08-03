@@ -14,6 +14,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.showKeyboard
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
@@ -38,7 +39,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.phoneNumberSuccess.collect { initPhoneSuccess ->
-				findNavController().navigate(
+				findNavController().safeNavigateWithTransition(
 					InitPhoneFragmentDirections.proceedToVerifyPhoneFragment(
 						initPhoneSuccess.phoneNumber, initPhoneSuccess.confirmPhone.verificationId
 					)

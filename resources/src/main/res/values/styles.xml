@@ -347,8 +347,8 @@
 
 	<style name="Widget.Vexl.Onboarding.BottomButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.RequestButton</item>
-		<item name="android:textColor">@color/black</item>
-		<item name="android:backgroundTint">@color/button</item>
+		<item name="android:textColor">@color/background_button_primary_texts</item>
+		<item name="android:backgroundTint">@color/background_button_primary</item>
 		<item name="android:insetLeft">0dp</item>
 		<item name="android:insetRight">0dp</item>
 		<item name="android:insetTop">0dp</item>

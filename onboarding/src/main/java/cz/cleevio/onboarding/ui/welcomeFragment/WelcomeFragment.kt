@@ -35,11 +35,6 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 		binding.termsSwitch.setOnCheckedChangeListener { _, isChecked ->
 			binding.welcomeContinueBtn.isEnabled = isChecked
-			binding.welcomeContinueBtn.alpha = if (isChecked) {
-				BUTTON_FULL_ALPHA
-			} else {
-				BUTTON_DISABLED_ALPHA
-			}
 		}
 
 		binding.welcomeContinueBtn.setOnClickListener {
@@ -77,10 +72,5 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 		binding.termsSwitchText.text = str
 		binding.termsSwitchText.movementMethod = LinkMovementMethod.getInstance()
-	}
-
-	private companion object {
-		private const val BUTTON_FULL_ALPHA = 1f
-		private const val BUTTON_DISABLED_ALPHA = 0.5f
 	}
 }

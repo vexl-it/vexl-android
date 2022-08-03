@@ -52,8 +52,10 @@
 * **Name Surname** - work position</string>
 
     <!-- Register Phone -->
+    <string name="init_phone_hint">Phone number</string>
     <string name="verify_phone_title">We\'ve just sent you a code</string>
     <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
+    <string name="verify_phone_hint">Activation code</string>
 
     <!-- Register Name and Avatar -->
     <string name="avatar_title">What do you look like?</string>
