@@ -47,6 +47,7 @@ class ProfileViewModel constructor(
 			val userDelete = userRepository.deleteMe()
 			val contactUserDelete = contactRepository.deleteMyUser()
 			val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
+			userRepository.deleteLocalUser()
 			//todo: delete also all offers, when we have system for keeping offer IDs
 			val offerDelete = offerRepository.deleteMyOffers(emptyList())
 

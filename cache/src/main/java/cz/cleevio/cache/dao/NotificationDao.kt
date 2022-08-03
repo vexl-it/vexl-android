@@ -10,10 +10,10 @@ import cz.cleevio.cache.entity.NotificationEntity
 interface NotificationDao : BaseDao<NotificationEntity> {
 
 	@Query("SELECT * FROM NotificationEntity LIMIT 1")
-	fun getOne(): NotificationEntity?
+	suspend fun getOne(): NotificationEntity?
 
 	@Query("DELETE FROM NotificationEntity")
-	fun deleteAll()
+	suspend fun deleteAll()
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	override suspend fun replace(item: NotificationEntity)

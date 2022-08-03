@@ -179,6 +179,9 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun deleteLocalUser() =
+		userDao.deleteAll()
+
 	override suspend fun deleteMe(): Resource<Unit> = tryOnline(
 		request = { userRestApi.deleteUserMe() },
 		mapper = { }
