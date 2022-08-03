@@ -6,104 +6,137 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<ImageButton
+		android:id="@+id/close"
+		style="@style/Widget.Vexl.CloseButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:contentDescription="?content"
+		android:src="@drawable/ic_chevron_left_24_white"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<cz.cleevio.core.widget.SegmentedProgressBar
+		android:layout_width="108dp"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		app:active_color="@color/white"
+		app:active_count="2"
+		app:inactive_color="@color/gray_3"
+		app:layout_constraintBottom_toBottomOf="@id/close"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/close"
+		app:size="4" />
+
 	<com.google.android.material.card.MaterialCardView
-		android:id="@+id/avatar_wrapper"
 		style="@style/Widget.Vexl.CardView"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginHorizontal="8dp"
-		android:layout_marginTop="20dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginBottom="12dp"
+		android:background="@color/white"
+		app:cardCornerRadius="20dp"
+		app:cardElevation="4dp"
 		app:layout_constraintBottom_toTopOf="@id/continue_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_chainStyle="spread_inside">
+		app:layout_constraintTop_toBottomOf="@id/close">
 
-		<androidx.core.widget.NestedScrollView
-			android:id="@+id/nested_scroll_view"
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/parent"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:fillViewport="true"
-			app:layout_behavior="@string/appbar_scrolling_view_behavior">
+			android:layout_height="match_parent">
 
-			<androidx.constraintlayout.widget.ConstraintLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+			<TextView
+				android:id="@+id/avatar_title"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="20dp"
+				android:layout_marginTop="24dp"
+				android:text="@string/user_avatar_title"
+				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 
-				<TextView
-					android:id="@+id/avatar_title"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="20dp"
-					android:drawableStart="@drawable/ic_wave"
-					android:drawablePadding="6.5dp"
-					android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-					android:textSize="42sp"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent"
-					tools:text="hey ondrasek" />
+			<com.google.android.material.imageview.ShapeableImageView
+				android:id="@+id/create_avatar_image"
+				android:layout_width="140dp"
+				android:layout_height="140dp"
+				android:layout_gravity="center"
+				android:scaleType="centerCrop"
+				android:src="@drawable/ic_profile_avatar_placeholder"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintDimensionRatio="1:1"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage" />
 
-				<TextView
-					android:id="@+id/avatar_subtitle"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="20dp"
-					android:text="@string/avatar_title"
-					android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-					android:textSize="42sp"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/avatar_title" />
+			<ImageView
+				android:id="@+id/create_avatar_corner_icon"
+				android:layout_width="36dp"
+				android:layout_height="36dp"
+				android:layout_marginTop="-12dp"
+				android:layout_marginEnd="-12dp"
+				android:contentDescription="?attr/endIconContentDescription"
+				android:src="@drawable/ic_edit_avatar_onboarding"
+				android:visibility="gone"
+				app:layout_constraintEnd_toEndOf="@id/create_avatar_image"
+				app:layout_constraintTop_toTopOf="@id/create_avatar_image"
+				tools:visibility="visible" />
 
-				<TextView
-					android:id="@+id/avatar_description"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="20dp"
-					android:layout_marginTop="28dp"
-					android:drawableStart="@drawable/ic_eye"
-					android:drawablePadding="10dp"
-					android:drawableTint="@color/black"
-					android:text="@string/avatar_description"
-					android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-					android:textSize="16sp"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/avatar_subtitle" />
+			<ImageView
+				android:id="@+id/create_avatar_middle_icon"
+				android:layout_width="52dp"
+				android:layout_height="52dp"
+				android:contentDescription="?attr/endIconContentDescription"
+				android:src="@drawable/ic_edit_avatar_onboarding"
+				app:layout_constraintBottom_toBottomOf="@id/create_avatar_image"
+				app:layout_constraintEnd_toEndOf="@id/create_avatar_image"
+				app:layout_constraintStart_toStartOf="@id/create_avatar_image"
+				app:layout_constraintTop_toTopOf="@id/create_avatar_image" />
 
-				<com.google.android.material.imageview.ShapeableImageView
-					android:id="@+id/avatar_image"
-					android:layout_width="190dp"
-					android:layout_height="190dp"
-					android:layout_gravity="center"
-					android:layout_marginTop="40dp"
-					android:layout_marginBottom="64dp"
-					android:scaleType="centerCrop"
-					android:src="@drawable/ic_profile_avatar_placeholder"
-					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintDimensionRatio="1:1"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/avatar_description"
-					app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage" />
+			<View
+				android:id="@+id/clickable_wrapper"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:background="@drawable/background_rounded"
+				android:backgroundTint="@android:color/transparent"
+				android:foreground="?attr/selectableItemBackground"
+				app:layout_constraintBottom_toBottomOf="@id/create_avatar_image"
+				app:layout_constraintEnd_toEndOf="@id/create_avatar_image"
+				app:layout_constraintStart_toStartOf="@id/create_avatar_image"
+				app:layout_constraintTop_toBottomOf="@id/avatar_title"
+				app:layout_constraintTop_toTopOf="@id/create_avatar_image" />
 
-			</androidx.constraintlayout.widget.ConstraintLayout>
-
-		</androidx.core.widget.NestedScrollView>
-
+		</androidx.constraintlayout.widget.ConstraintLayout>
 	</com.google.android.material.card.MaterialCardView>
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/continue_btn"
-		style="@style/Widget.Vexl.Button"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_margin="16dp"
-		android:text="@string/general_continue"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
+		android:layout_width="0dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginBottom="16dp"
+		android:enabled="false"
+		android:text="@string/profile_edit_name_action"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<com.google.android.material.progressindicator.CircularProgressIndicator
+		android:id="@+id/progressbar"
+		style="@style/Widget.LightBase.Dialog.CircleProgressIndicator"
+		android:layout_width="@dimen/size_dialog_progress_indicator"
+		android:layout_height="@dimen/size_dialog_progress_indicator"
+		android:visibility="gone"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/avatar_wrapper" />
+		app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

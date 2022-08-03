@@ -80,8 +80,10 @@
 
 			<ImageView
 				android:id="@+id/edit_avatar_corner_icon"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="36dp"
+				android:layout_height="36dp"
+				android:layout_marginTop="-12dp"
+				android:layout_marginEnd="-12dp"
 				android:contentDescription="?attr/endIconContentDescription"
 				android:src="@drawable/ic_edit_avatar_profile"
 				android:visibility="gone"

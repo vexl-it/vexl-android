@@ -1,17 +1,18 @@
 package cz.cleevio.onboarding.ui.avatarFragment
 
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentAvatarBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
-import kotlinx.coroutines.launch
 import lightbase.camera.ui.takePhotoFragment.TakePhotoFragment
 import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,13 +24,15 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 	override val viewModel by viewModel<AvatarViewModel>()
 
 	override fun bindObservers() {
-		viewLifecycleOwner.lifecycleScope.launch {
+		repeatScopeOnStart {
 			viewModel.profileImageUri.collect { profileImageUri ->
-				binding.avatarImage.setImageURI(profileImageUri)
+				setAvatarPlaceholderVisible(profileImageUri != null)
+				binding.createAvatarImage.setImageURI(profileImageUri)
+				binding.continueBtn.isEnabled = profileImageUri != null
 			}
 		}
 
-		viewLifecycleOwner.lifecycleScope.launch {
+		repeatScopeOnStart {
 			viewModel.user.collect {
 				it?.let {
 					viewModel.navMainGraphModel.navigateToGraph(
@@ -41,21 +44,16 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(
-				top = insets.top,
-				bottom = insets.bottomWithIME
-			)
+		binding.close.setOnClickListener {
+			findNavController().popBackStack()
 		}
 
-		binding.avatarTitle.text = getString(R.string.avatar_welcome, args.username)
+		binding.avatarTitle.text = getString(R.string.user_avatar_title, args.username)
 
-		binding.avatarImage.setOnClickListener {
-			lifecycleScope.launchWhenResumed {
-				findNavController().navigate(
-					AvatarFragmentDirections.proceedToTakePhotoFragment()
-				)
-			}
+		binding.createAvatarImage.setOnClickListener {
+			findNavController().safeNavigateWithTransition(
+				AvatarFragmentDirections.proceedToTakePhotoFragment()
+			)
 		}
 
 		binding.continueBtn.setOnClickListener {
@@ -63,11 +61,23 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		}
 
 		setupPhotoListener()
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(
+				top = insets.top,
+				bottom = insets.bottom
+			)
+		}
 	}
 
 	private fun setupPhotoListener() {
 		setFragmentResultListener(TakePhotoFragment.RESULT_CAMERA_RESULT) { _, bundle ->
 			viewModel.processTakingPhotoResult(TakePhotoResult.fromBundle(bundle))
 		}
+	}
+
+	private fun setAvatarPlaceholderVisible(isVisible: Boolean) {
+		binding.createAvatarCornerIcon.isVisible = isVisible
+		binding.createAvatarMiddleIcon.isVisible = !isVisible
 	}
 }
