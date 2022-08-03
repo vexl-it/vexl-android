@@ -64,7 +64,6 @@
 				app:layout_constraintStart_toStartOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</com.google.android.material.card.MaterialCardView>
 
 	<TextView
@@ -72,8 +71,8 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="32dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginBottom="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginBottom="24dp"
 		android:drawablePadding="20dp"
 		android:textAppearance="@style/TextAppearance.Vexl.Description.Welcome"
 		app:drawableStartCompat="@drawable/ic_notepad"
