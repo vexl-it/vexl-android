@@ -50,6 +50,7 @@ suspend fun <E, O> tryOnline(
 					}
 				//fixme: hack to prevent crash in case of missing response body
 			} catch (e: EOFException) {
+				Timber.e(e)
 				//return some constant that means error, fixme: BE is supposed to check why there is no body
 				null
 			}

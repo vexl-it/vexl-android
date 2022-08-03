@@ -13,6 +13,7 @@ class PagerAdapter constructor(
 
 	override fun getItemCount(): Int = NUMBER_OF_PAGES
 
+	@Suppress("MagicNumber")
 	override fun createFragment(position: Int): Fragment {
 		val fragment = FaqPageFragment()
 

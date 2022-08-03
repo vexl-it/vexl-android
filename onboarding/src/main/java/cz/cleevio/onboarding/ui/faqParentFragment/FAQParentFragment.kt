@@ -12,12 +12,11 @@ import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 
 	private val binding by viewBinding(FragmentFaqParentBinding::bind)
-
 	override val hasMenu = true
 
-	override fun bindObservers() = Unit
-
 	private var adapter: PagerAdapter? = null
+
+	override fun bindObservers() = Unit
 
 	override fun initView() {
 		setupAdapter()
@@ -27,15 +26,17 @@ class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 		}
 
 		binding.faqParentLeftBtn.setOnClickListener {
-			when (binding.faqViewpager.currentItem) {
-				0 -> findNavController().popBackStack()
-				else -> binding.faqViewpager.setCurrentItem(binding.faqViewpager.currentItem - 1, true)
+			if (binding.faqViewpager.currentItem == 0) {
+				findNavController().popBackStack()
+			} else {
+				binding.faqViewpager.setCurrentItem(binding.faqViewpager.currentItem - 1, true)
 			}
 		}
 		binding.faqParentRightBtn.setOnClickListener {
-			when (binding.faqViewpager.currentItem) {
-				(adapter?.itemCount ?: 0) - 1 -> findNavController().popBackStack()
-				else -> binding.faqViewpager.setCurrentItem(binding.faqViewpager.currentItem + 1, true)
+			if (binding.faqViewpager.currentItem == (adapter?.itemCount ?: 0) - 1) {
+				findNavController().popBackStack()
+			} else {
+				binding.faqViewpager.setCurrentItem(binding.faqViewpager.currentItem + 1, true)
 			}
 		}
 
@@ -57,11 +58,11 @@ class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 						binding.faqParentRightBtn.text = getString(R.string.next)
 					}
 					(adapter?.itemCount ?: 0) - 1 -> {
-						binding.faqParentLeftBtn.text = getString(R.string.back)
+						binding.faqParentLeftBtn.text = getString(R.string.general_back)
 						binding.faqParentRightBtn.text = getString(R.string.general_done)
 					}
 					else -> {
-						binding.faqParentLeftBtn.text = getString(R.string.back)
+						binding.faqParentLeftBtn.text = getString(R.string.general_back)
 						binding.faqParentRightBtn.text = getString(R.string.next)
 					}
 				}

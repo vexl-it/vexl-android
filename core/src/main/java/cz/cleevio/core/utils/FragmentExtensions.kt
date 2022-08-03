@@ -20,6 +20,7 @@ import cz.cleevio.vexl.lightbase.core.extensions.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 fun Fragment.getDrawable(id: Int): Drawable? =
 	ContextCompat.getDrawable(this.requireContext(), id)
@@ -78,6 +79,7 @@ fun Fragment.sendEmailToSupport(
 	try {
 		startActivity(intent)
 	} catch (e: ActivityNotFoundException) {
+		Timber.e(e)
 		(this as BaseFragment).showToast(
 			text = resources.getString(R.string.user_profile_report_issue_error_no_app_found),
 			length = Toast.LENGTH_LONG

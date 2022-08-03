@@ -1,9 +1,9 @@
 package cz.cleevio.onboarding.di
 
-import cz.cleevio.onboarding.ui.termsFragment.TermsViewModel
 import cz.cleevio.onboarding.ui.avatarFragment.AvatarViewModel
 import cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneViewModel
 import cz.cleevio.onboarding.ui.phoneDoneFragment.PhoneDoneViewModel
+import cz.cleevio.onboarding.ui.termsFragment.TermsViewModel
 import cz.cleevio.onboarding.ui.usernameFragment.UsernameViewModel
 import cz.cleevio.onboarding.ui.verifyPhoneFragment.VerifyPhoneViewModel
 import cz.cleevio.onboarding.ui.welcomeFragment.WelcomeViewModel
