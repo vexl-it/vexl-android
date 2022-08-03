@@ -22,6 +22,9 @@
 		<action
 			android:id="@+id/proceed_to_termsFragment"
 			app:destination="@id/nav_terms" />
+		<action
+			android:id="@+id/action_welcomeFragment_to_anonymizeUserFragment"
+			app:destination="@id/anonymizeUserFragment" />
 
 	</fragment>
 
@@ -112,4 +115,11 @@
 			app:destination="@id/nav_camera" />
 
 	</fragment>
+
+	<fragment
+		android:id="@+id/anonymizeUserFragment"
+		android:name="cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserFragment"
+		android:label="AnonymizeUserFragment"
+		tools:layout="@layout/fragment_anonymize_user" />
+
 </navigation>

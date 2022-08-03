@@ -2,4 +2,6 @@
 <resources>
 	<integer name="screen_animation_duration">300</integer>
 	<integer name="snackbar_max_lines">5</integer>
+	<integer name="anonymize_duration">500</integer>
+
 </resources>

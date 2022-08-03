@@ -64,6 +64,8 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 			binding.continueBtn.isEnabled = it.toString().isNotEmpty()
 		}
 
+		binding.usernameInput.setText("Antonín Panenka")
+
 		listenForInsets(binding.parent) { insets ->
 			binding.container.updatePadding(top = insets.top)
 		}

@@ -66,6 +66,11 @@
     <string name="avatar_welcome">Hey %s</string>
     <string name="verify_phone_done_title">Phone verified.\nLet’s setup your profile.</string>
     <string name="user_avatar_title">Hey %s!\nWhat do you look like?</string>
+    <string name="anonymize_user_title">This is your identity</string>
+    <string name="anonymize_user_title2">Identity anonymized!</string>
+    <string name="anonymize_user_note">Nobody will see your identity until your allow it</string>
+    <string name="anonymize_user_note2">This is how other users will see you until you reveal your real identity.</string>
+    <string name="anonymize_user_btn">Anonymize</string>
 
     <!-- Register Phone Contacts -->
     <string name="import_contacts_import">Import contacts</string>

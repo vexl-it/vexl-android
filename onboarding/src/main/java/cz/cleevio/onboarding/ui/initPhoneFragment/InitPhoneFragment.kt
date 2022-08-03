@@ -84,6 +84,8 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 
 		binding.initPhoneInput.addTextChangedListener(textWatcher)
 
+		binding.initPhoneInput.setText("+420620000000")
+
 		listenForInsets(binding.parent) { insets ->
 			binding.container.updatePadding(top = insets.top)
 		}
