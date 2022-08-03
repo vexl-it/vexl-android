@@ -22,6 +22,7 @@
 	<dimen name="stroke_width_input">2dp</dimen>
 	<dimen name="snackbar_icon_padding">12dp</dimen>
 	<dimen name="search_view_height">48dp</dimen>
+	<dimen name="input_corner_size">10dp</dimen>
 
 	<dimen name="small12">1dp</dimen>
 	<dimen name="small25">2dp</dimen>

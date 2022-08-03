@@ -98,4 +98,7 @@
 	<style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray" parent="">
 		<item name="colorPrimary">@color/gray_4</item>
 	</style>
+	<style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined.Dark" parent="">
+		<item name="colorPrimary">@color/black</item>
+	</style>
 </resources>

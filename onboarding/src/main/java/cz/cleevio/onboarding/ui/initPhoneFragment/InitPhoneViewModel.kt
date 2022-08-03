@@ -22,14 +22,19 @@ class InitPhoneViewModel constructor(
 	private val _phoneNumberSuccess = Channel<InitPhoneSuccess>(Channel.CONFLATED)
 	val phoneNumberSuccess = _phoneNumberSuccess.receiveAsFlow()
 
+	private val _loading = Channel<Boolean>()
+	val loading = _loading.receiveAsFlow()
+
 	init {
 		loadKeys()
 	}
 
 	fun sendPhoneNumber(phoneNumber: String) {
 		viewModelScope.launch(Dispatchers.IO) {
+			_loading.send(true)
 			val response = userRepository.authStepOne(phoneNumber)
 			Timber.tag("ASDX").d("${response.data}")
+			_loading.send(false)
 
 			when (response.status) {
 				is Status.Success -> response.data?.let { confirmPhone ->

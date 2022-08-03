@@ -10,7 +10,6 @@ import cz.cleevio.network.data.ErrorIdentification.Companion.CODE_ENTITY_NOT_EXI
 import cz.cleevio.network.data.Status
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentVerifyPhoneBinding
-import cz.cleevio.onboarding.ui.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -70,7 +69,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
-				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
+				bottom = insets.bottomWithIME
 			)
 		}
 

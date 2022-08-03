@@ -35,7 +35,7 @@
 		<item name="android:focusable">true</item>
 	</style>
 
-	<style name="Widget.LightBase.Dialog.CircleProgresIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
+	<style name="Widget.LightBase.Dialog.CircleProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
 		<item name="android:layout_gravity">center</item>
 		<item name="android:indeterminate">true</item>
 		<item name="trackThickness">@dimen/thickness_track_dialog_progress_indicator</item>

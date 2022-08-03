@@ -45,4 +45,6 @@ dependencies {
     implementation project(':core')
     implementation project(':cryptography')
     implementation project(':camera')
+
+    implementation 'io.michaelrocks:libphonenumber-android:8.12.52'
 }

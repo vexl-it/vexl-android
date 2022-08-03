@@ -475,6 +475,9 @@
 	<style name="Widget.Vexl.CloseButton" parent="">
 		<item name="android:padding">7dp</item>
 		<item name="android:background">@drawable/background_button_gray_13</item>
+		<item name="android:foreground">@drawable/ripple_mask_13</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
 	</style>
 
 	<style name="Widget.Vexl.CloseButton.Light" parent="">
