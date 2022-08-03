@@ -22,5 +22,5 @@ interface UserDao : BaseDao<UserEntity> {
 	override fun insert(item: UserEntity)
 
 	@Query("DELETE FROM UserEntity")
-	fun deleteAll()
+	suspend fun deleteAll()
 }

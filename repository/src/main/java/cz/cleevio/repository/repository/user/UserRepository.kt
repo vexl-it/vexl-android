@@ -43,5 +43,7 @@ interface UserRepository {
 		username: String? = null, avatar: String? = null, avatarImageExtension: String? = null
 	): Resource<User>
 
+	suspend fun deleteLocalUser()
+
 	suspend fun deleteMe(): Resource<Unit>
 }
