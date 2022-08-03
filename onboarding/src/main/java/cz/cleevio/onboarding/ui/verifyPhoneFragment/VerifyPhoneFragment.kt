@@ -90,8 +90,6 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 			binding.container.updatePadding(top = insets.top)
 		}
 
-		binding.verifyPhoneInput.setText("111111")
-
 		val defaultButtonMargin = binding.continueBtn.marginBottom
 		listenForIMEInset(binding.container) { bottomInset ->
 			binding.continueBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {

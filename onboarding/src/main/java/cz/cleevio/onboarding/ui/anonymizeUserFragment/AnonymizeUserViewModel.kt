@@ -1,9 +1,12 @@
 package cz.cleevio.onboarding.ui.anonymizeUserFragment
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.RandomUtils
+import cz.cleevio.onboarding.R
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +17,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AnonymizeUserViewModel constructor(
-	private val userRepository: UserRepository
+	val navMainGraphModel: NavMainGraphModel,
+	userRepository: UserRepository
 ) : BaseViewModel() {
 
 	private val _uiState: MutableStateFlow<UIState> = MutableStateFlow(UIState.Normal)
@@ -26,7 +30,9 @@ class AnonymizeUserViewModel constructor(
 		viewModelScope.launch(Dispatchers.Default) {
 			val newName = RandomUtils.generateName()
 			val newAvatar = RandomUtils.selectRandomImage(context)
-			delay(500)  //wait until animation is covering the ui
+
+			//wait until animation is covering the ui
+			delay(DELAY)
 			_uiState.emit(
 				UIState.Anonymized(
 					NameWithAvatar(newName, newAvatar)
@@ -45,5 +51,9 @@ class AnonymizeUserViewModel constructor(
 		data class Anonymized constructor(
 			val nameWithAvatar: NameWithAvatar
 		) : UIState()
+	}
+
+	companion object{
+		private const val DELAY = 500L
 	}
 }

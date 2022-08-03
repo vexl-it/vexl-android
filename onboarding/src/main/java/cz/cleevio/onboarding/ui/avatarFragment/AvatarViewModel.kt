@@ -11,8 +11,10 @@ import cz.cleevio.repository.model.user.User
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class AvatarViewModel constructor(
@@ -25,11 +27,15 @@ class AvatarViewModel constructor(
 	private val _user = MutableStateFlow<User?>(null)
 	val user = _user.asStateFlow()
 
+	private val _loading = Channel<Boolean>()
+	val loading = _loading.receiveAsFlow()
+
 	fun registerUser(
 		username: String,
 		contentResolver: ContentResolver
 	) {
 		viewModelScope.launch(Dispatchers.IO) {
+			_loading.send(true)
 			val profileUri = profileImageUri.value
 
 			val response = userRepository.registerUser(
@@ -53,6 +59,8 @@ class AvatarViewModel constructor(
 					//todo: add error handling?
 				}
 			}
+
+			_loading.send(false)
 		}
 	}
 }

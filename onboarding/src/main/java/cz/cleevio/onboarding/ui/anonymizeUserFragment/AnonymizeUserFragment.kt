@@ -6,11 +6,11 @@ import android.animation.ObjectAnimator
 import android.content.res.Resources
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import coil.load
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
@@ -73,7 +73,9 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 				startSlideAnimation()
 				viewModel.anonymizeUser(requireContext())
 			} else {
-				Toast.makeText(requireContext(), "Dale", Toast.LENGTH_SHORT).show()
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.Contacts
+				)
 			}
 		}
 
@@ -94,7 +96,7 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 	private fun startSlideAnimation() {
 		val firstPartAnimation = ObjectAnimator.ofFloat(
 			binding.slideEffect,
-			"x",
+			TRANSITION_X,
 			Resources.getSystem().displayMetrics.widthPixels.toFloat(),
 			0f
 		).apply {
@@ -104,7 +106,7 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 
 		val secondPartAnimation = ObjectAnimator.ofFloat(
 			binding.slideEffect,
-			"x",
+			TRANSITION_X,
 			0f,
 			-Resources.getSystem().displayMetrics.widthPixels.toFloat()
 		).apply {
@@ -129,5 +131,9 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 		})
 
 		animationSet.start()
+	}
+
+	private companion object {
+		private const val TRANSITION_X = "x"
 	}
 }

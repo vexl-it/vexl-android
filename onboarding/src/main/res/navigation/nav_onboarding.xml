@@ -22,9 +22,6 @@
 		<action
 			android:id="@+id/proceed_to_termsFragment"
 			app:destination="@id/nav_terms" />
-		<action
-			android:id="@+id/action_welcomeFragment_to_anonymizeUserFragment"
-			app:destination="@id/anonymizeUserFragment" />
 
 	</fragment>
 
@@ -113,6 +110,9 @@
 		<action
 			android:id="@+id/proceed_to_takePhotoFragment"
 			app:destination="@id/nav_camera" />
+		<action
+			android:id="@+id/proceed_to_anonymize_user"
+			app:destination="@id/anonymizeUserFragment" />
 
 	</fragment>
 

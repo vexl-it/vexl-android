@@ -60,7 +60,8 @@ val onboardingModule = module {
 
 	viewModel {
 		AnonymizeUserViewModel(
-			userRepository = get()
+			userRepository = get(),
+			navMainGraphModel = get()
 		)
 	}
 }
