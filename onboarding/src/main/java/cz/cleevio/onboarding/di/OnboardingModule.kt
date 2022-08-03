@@ -1,5 +1,6 @@
 package cz.cleevio.onboarding.di
 
+import cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserViewModel
 import cz.cleevio.onboarding.ui.avatarFragment.AvatarViewModel
 import cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneViewModel
 import cz.cleevio.onboarding.ui.phoneDoneFragment.PhoneDoneViewModel
@@ -53,6 +54,13 @@ val onboardingModule = module {
 			userRepository = get(),
 			chatRepository = get(),
 			encryptedPreference = get(),
+			navMainGraphModel = get()
+		)
+	}
+
+	viewModel {
+		AnonymizeUserViewModel(
+			userRepository = get(),
 			navMainGraphModel = get()
 		)
 	}

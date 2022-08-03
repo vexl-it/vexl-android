@@ -5,7 +5,6 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
@@ -35,10 +34,17 @@ class AvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		repeatScopeOnStart {
 			viewModel.user.collect {
 				it?.let {
-					viewModel.navMainGraphModel.navigateToGraph(
-						NavMainGraphModel.NavGraph.Contacts
+					findNavController().safeNavigateWithTransition(
+						AvatarFragmentDirections.proceedToAnonymizeUser()
 					)
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.loading.collect { loading ->
+				binding.continueBtn.isEnabled = !loading
+				binding.progressbar.isVisible = loading
 			}
 		}
 	}

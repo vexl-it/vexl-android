@@ -110,6 +110,16 @@
 		<action
 			android:id="@+id/proceed_to_takePhotoFragment"
 			app:destination="@id/nav_camera" />
+		<action
+			android:id="@+id/proceed_to_anonymize_user"
+			app:destination="@id/anonymizeUserFragment" />
 
 	</fragment>
+
+	<fragment
+		android:id="@+id/anonymizeUserFragment"
+		android:name="cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserFragment"
+		android:label="AnonymizeUserFragment"
+		tools:layout="@layout/fragment_anonymize_user" />
+
 </navigation>

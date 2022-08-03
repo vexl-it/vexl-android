@@ -148,7 +148,6 @@ private fun String.toFlagEmoji(): String {
 		}
 
 		return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))
-
 	} catch (e: Exception) {
 		Timber.e(e)
 		return ""

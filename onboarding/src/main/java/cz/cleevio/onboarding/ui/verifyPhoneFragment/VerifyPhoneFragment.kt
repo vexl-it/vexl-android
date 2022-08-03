@@ -39,12 +39,10 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.verificationChannel.collect { resource ->
-				if (resource.status is Status.Success) {
-					if (resource.data?.phoneVerified == true) {
-						findNavController().safeNavigateWithTransition(
-							VerifyPhoneFragmentDirections.proceedToPhoneDoneFragment()
-						)
-					}
+				if (resource.status is Status.Success && resource.data?.phoneVerified == true) {
+					findNavController().safeNavigateWithTransition(
+						VerifyPhoneFragmentDirections.proceedToPhoneDoneFragment()
+					)
 				}
 				binding.progressbar.isVisible = resource.status == Status.Loading
 			}
