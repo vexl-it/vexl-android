@@ -3,24 +3,19 @@ package cz.cleevio.vexl.contacts.importContactsFragment
 import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentImportContactsBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-
-const val BOTTOM_EXTRA_PADDING = 40
 
 class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 
@@ -45,7 +40,7 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 			viewModel.hasPermissionsEvent.collect { hasPermisson ->
 				if (hasPermisson) {
 					Timber.tag("ASDX").d("Permission granted")
-					findNavController().navigate(
+					findNavController().safeNavigateWithTransition(
 						ImportContactsFragmentDirections.proceedToContactsListFragment(
 							openedFromScreen = OpenedFromScreen.ONBOARDING
 						)
@@ -62,7 +57,7 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
-				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
+				bottom = insets.bottom
 			)
 		}
 	}
@@ -74,7 +69,7 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	override fun onResume() {
 		super.onResume()
 
-		binding.importContactsBtn.setOnClickListener {
+		binding.importBtn.setOnClickListener {
 			checkReadContactsPermissions()
 		}
 	}

@@ -1,84 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<com.google.android.material.imageview.ShapeableImageView
-		android:id="@+id/avatar_image"
-		android:layout_width="132dp"
-		android:layout_height="132dp"
-		android:layout_gravity="center"
-		android:layout_marginTop="100dp"
-		android:layout_marginBottom="64dp"
-		android:scaleType="fitCenter"
-		app:layout_constraintDimensionRatio="1:1"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.RoundedComponent"
-		tools:src="@drawable/ic_baseline_person_128" />
-
-	<TextView
-		android:id="@+id/username"
+	<ImageButton
+		android:id="@+id/close"
+		style="@style/Widget.Vexl.CloseButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginHorizontal="20dp"
-		android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-		android:textSize="42sp"
+		android:layout_margin="16dp"
+		android:clickable="false"
+		android:contentDescription="?content"
+		android:src="@drawable/ic_chevron_left_24_white"
+		android:visibility="invisible"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<cz.cleevio.core.widget.SegmentedProgressBar
+		android:layout_width="108dp"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		app:active_color="@color/white"
+		app:active_count="3"
+		app:inactive_color="@color/gray_3"
+		app:layout_constraintBottom_toBottomOf="@id/close"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/close"
+		app:size="4" />
+
+	<com.google.android.material.card.MaterialCardView
+		style="@style/Widget.Vexl.CardView"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginBottom="12dp"
+		android:background="@color/white"
+		app:cardCornerRadius="20dp"
+		app:cardElevation="4dp"
+		app:layout_constraintBottom_toTopOf="@id/import_from_fb_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/avatar_image"
-		tools:text="ondrasek" />
+		app:layout_constraintTop_toBottomOf="@id/close">
 
-	<TextView
-		android:id="@+id/import_contacts_title"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="12dp"
-		android:layout_marginTop="51dp"
-		android:layout_marginEnd="8dp"
-		android:text="@string/import_facebook_contacts_title"
-		android:textAlignment="center"
-		android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-		android:textSize="42sp"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/username" />
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/parent"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-	<TextView
-		android:id="@+id/avatar_description"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginHorizontal="20dp"
-		android:layout_marginTop="28dp"
-		android:drawableStart="@drawable/ic_eye"
-		android:drawablePadding="10dp"
-		android:drawableTint="@color/black"
-		android:text="@string/import_contacts_subtitle"
-		android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-		android:textSize="16sp"
-		app:layout_constraintBottom_toTopOf="@id/import_contacts_btn"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent" />
+			<ImageView
+				android:id="@+id/welcome_image"
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_marginTop="56dp"
+				android:layout_marginBottom="56dp"
+				android:adjustViewBounds="true"
+				android:contentDescription="?content"
+				android:src="@drawable/facebook_image"
+				app:layout_constraintBottom_toTopOf="@id/vexl_logo"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<TextView
+				android:id="@+id/vexl_logo"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="12dp"
+				android:gravity="center"
+				android:paddingHorizontal="32dp"
+				android:text="@string/import_facebook_contacts_title"
+				android:textAppearance="@style/TextAppearance.Vexl.Facebook.Title"
+				app:layout_constraintBottom_toTopOf="@id/welcome_title"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<TextView
+				android:id="@+id/welcome_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="38dp"
+				android:drawablePadding="8dp"
+				android:gravity="center"
+				android:text="@string/import_contacts_subtitle"
+				android:textAlignment="center"
+				android:textAppearance="@style/TextAppearance.Vexl.Facebook.Subtitle"
+				app:drawableStartCompat="@drawable/ic_eye"
+				app:drawableTint="@color/gray_3"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</com.google.android.material.card.MaterialCardView>
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/import_contacts_btn"
-		style="@style/Widget.Vexl.Button"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:id="@+id/import_from_fb_btn"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
+		android:layout_width="0dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginBottom="8dp"
 		android:text="@string/import_facebook_contacts_import"
-		app:layout_constraintBottom_toTopOf="@id/import_contacts_skip_btn"
+		app:layout_constraintBottom_toTopOf="@id/skip_import"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/import_contacts_skip_btn"
-		style="@style/Widget.Vexl.GrayButton"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:id="@+id/skip_import"
+		style="@style/Widget.Vexl.Onboarding.BottomButton.Secondary"
+		android:layout_width="0dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginBottom="16dp"
 		android:text="@string/import_contacts_skip"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"

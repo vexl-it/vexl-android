@@ -6,8 +6,8 @@
 	app:startDestination="@+id/profileFragment">
 
 	<include app:graph="@navigation/nav_camera" />
-
 	<include app:graph="@navigation/nav_terms" />
+	<include app:graph="@navigation/nav_faq" />
 
 	<fragment
 		android:id="@+id/profileFragment"
@@ -29,6 +29,10 @@
 		<action
 			android:id="@+id/action_profileFragment_to_termsFragment"
 			app:destination="@id/nav_terms" />
+
+		<action
+			android:id="@+id/action_profileFragment_to_faqFragment"
+			app:destination="@id/nav_faq" />
 
 	</fragment>
 

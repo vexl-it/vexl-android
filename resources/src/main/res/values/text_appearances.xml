@@ -754,4 +754,38 @@
 		<item name="android:letterSpacing">-0.04</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Facebook.Title" parent="TextAppearance.Vexl.Terms.Title">
+		<item name="android:textSize">28sp</item>
+		<item name="android:textColor">@color/black</item>
+		<item name="lineHeight">32dp</item>
+		<item name="android:fontFamily">@font/pp_monument_700</item>
+		<item name="fontFamily">@font/pp_monument_700</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Facebook.Subtitle" parent="TextAppearance.Vexl.Terms.Title">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="lineHeight">20dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Contact.Item.Title" parent="TextAppearance.Vexl.Terms.Title">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/black</item>
+		<item name="lineHeight">26dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+		<item name="android:letterSpacing">-0.02</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Contact.Item.Subtitle" parent="TextAppearance.Vexl.Terms.Title">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/gray_4</item>
+		<item name="lineHeight">17dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
+		<item name="android:letterSpacing">-0.03</item>
+	</style>
+
 </resources>

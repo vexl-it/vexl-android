@@ -1,19 +1,21 @@
 package cz.cleevio.vexl.contacts.contactsListFragment
 
+import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentContactsListBinding
-import cz.cleevio.core.model.OpenedFromScreen
-import cz.cleevio.vexl.contacts.importContactsFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -64,11 +66,8 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(
-				top = insets.top,
-				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
-			)
+		binding.close.setOnClickListener {
+			findNavController().popBackStack()
 		}
 
 		binding.contactsListWidget.setupListeners(
@@ -85,6 +84,18 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 		}
 
 		viewModel.syncContacts(requireActivity().contentResolver, args.openedFromScreen)
-	}
 
+		listenForInsets(binding.importContactsBtn) { insets ->
+			binding.container.updatePadding(
+				top = insets.top
+			)
+		}
+
+		val originMargin = binding.importContactsBtn.marginBottom
+		listenForIMEInset(binding.container) { inset ->
+			binding.importContactsBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = inset + originMargin
+			}
+		}
+	}
 }

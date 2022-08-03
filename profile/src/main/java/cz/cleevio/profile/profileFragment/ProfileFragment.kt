@@ -15,18 +15,17 @@ import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.currencyFragment.CurrencyBottomSheetDialog
-import cz.cleevio.profile.databinding.BottomSheetDialogProfileFacebookContactsListBinding
 import cz.cleevio.profile.databinding.FragmentProfileBinding
 import cz.cleevio.profile.donateFragment.DonateBottomSheetDialog
 import cz.cleevio.profile.joinFragment.JoinBottomSheetDialog
 import cz.cleevio.profile.profileContactsListFragment.ProfileContactsListFragment
 import cz.cleevio.profile.profileFacebookContactsListFragment.ProfileFacebookContactsListFragment
-import cz.cleevio.profile.profileFacebookContactsListFragment.ProfileFacebookContactsListViewModel
 import cz.cleevio.profile.reportFragment.ReportBottomSheetDialog
 import cz.cleevio.profile.requestDataFragment.RequestDataBottomSheetDialog
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -185,14 +184,15 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileTermsAndConditions.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToTermsFragment()
 			)
 		}
 
 		binding.profileFaq.setOnClickListener {
-			Toast.makeText(requireContext(), "FAQ not implemented", Toast.LENGTH_SHORT)
-				.show()
+			findNavController().safeNavigateWithTransition(
+				ProfileFragmentDirections.actionProfileFragmentToFaqFragment()
+			)
 		}
 
 		binding.profileReportIssue.setOnClickListener {
