@@ -99,7 +99,7 @@
 		android:layout_width="0dp"
 		android:layout_height="@dimen/bottom_screen_button_height"
 		android:layout_marginHorizontal="8dp"
-		android:layout_marginBottom="16dp"
+		android:layout_marginBottom="8dp"
 		android:enabled="false"
 		android:text="@string/welcome_button"
 		android:textAppearance="@style/TextAppearance.Vexl.Onboarding.Continue"

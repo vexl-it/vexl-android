@@ -6,21 +6,46 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<ImageButton
+		android:id="@+id/close"
+		style="@style/Widget.Vexl.CloseButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:contentDescription="?content"
+		android:src="@drawable/ic_chevron_left_24_white"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<cz.cleevio.core.widget.SegmentedProgressBar
+		android:layout_width="108dp"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		app:active_color="@color/white"
+		app:active_count="3"
+		app:inactive_color="@color/gray_3"
+		app:layout_constraintBottom_toBottomOf="@id/close"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/close"
+		app:size="4" />
+
 	<cz.cleevio.core.widget.contactsList.ContactsListWidget
 		android:id="@+id/contacts_list_widget"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="4dp"
 		app:layout_constraintBottom_toTopOf="@id/import_contacts_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toBottomOf="@id/close" />
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/import_contacts_btn"
-		style="@style/Widget.Vexl.Button"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_margin="16dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_margin="8dp"
 		android:text="@string/import_contacts_import"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -34,11 +59,11 @@
 		android:indeterminate="true"
 		android:visibility="gone"
 		app:indicatorColor="@color/yellow_100"
-		app:showDelay="500"
-		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:showDelay="500"
 		tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
