@@ -1,31 +1,30 @@
 package cz.cleevio.onboarding.ui.phoneDoneFragment
 
-import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.onboarding.R
-import cz.cleevio.onboarding.databinding.FragmentPhoneDoneBinding
-import cz.cleevio.onboarding.ui.verifyPhoneFragment.VerifyPhoneViewModel
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PhoneDoneFragment : BaseFragment(R.layout.fragment_phone_done) {
 
-	override val viewModel by viewModel<VerifyPhoneViewModel>()
-	private val binding by viewBinding(FragmentPhoneDoneBinding::bind)
+	override val viewModel by viewModel<PhoneDoneViewModel>()
 
-	override fun bindObservers() = Unit
+	override fun bindObservers() {
+		repeatScopeOnStart {
+			viewModel.goToNextScreen.collect {
+				if (it) {
+					findNavController().safeNavigateWithTransition(
+						PhoneDoneFragmentDirections.proceedToUsernameFragment(),
+						clearBackStackUntil = R.id.phoneDoneFragment
+					)
+				}
+			}
+		}
+	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
-		}
-
-		binding.continueBtn.setOnClickListener {
-			findNavController().navigate(
-				PhoneDoneFragmentDirections.proceedToUsernameFragment()
-			)
-		}
+		viewModel.startTimer()
 	}
 }

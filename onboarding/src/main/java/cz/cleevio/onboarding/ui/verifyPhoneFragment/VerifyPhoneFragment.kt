@@ -41,7 +41,6 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 			viewModel.verificationChannel.collect { resource ->
 				if (resource.status is Status.Success) {
 					if (resource.data?.phoneVerified == true) {
-						delay(TimeUnit.SECONDS.toMillis(1))
 						findNavController().safeNavigateWithTransition(
 							VerifyPhoneFragmentDirections.proceedToPhoneDoneFragment()
 						)
