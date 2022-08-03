@@ -36,8 +36,6 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 						binding.continueBtn.text = getString(R.string.anonymize_user_btn)
 						binding.anonymizeUserNote.text = getString(R.string.anonymize_user_note)
 						binding.anonymizeUserTitle.text = getString(R.string.anonymize_user_title)
-//					TODO	binding.anonymizeUserName.text = data.name
-//					TODO	binding.anonymizeUserImage.setImageDrawable(data.avatar)
 					}
 					is AnonymizeUserViewModel.UIState.Anonymized -> {
 						binding.continueBtn.isEnabled = true
