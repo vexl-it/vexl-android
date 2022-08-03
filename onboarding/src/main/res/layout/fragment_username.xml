@@ -6,18 +6,43 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<com.google.android.material.card.MaterialCardView
-		android:id="@+id/name_wrapper"
-		style="@style/Widget.Vexl.CardView"
-		android:layout_width="match_parent"
+	<ImageButton
+		android:id="@+id/close"
+		style="@style/Widget.Vexl.CloseButton"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:contentDescription="?content"
+		android:src="@drawable/ic_chevron_left_24_white"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<cz.cleevio.core.widget.SegmentedProgressBar
+		android:layout_width="108dp"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		app:active_color="@color/white"
+		app:active_count="2"
+		app:inactive_color="@color/gray_3"
+		app:layout_constraintBottom_toBottomOf="@id/close"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/close"
+		app:size="4" />
+
+	<com.google.android.material.card.MaterialCardView
+		style="@style/Widget.Vexl.CardView"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
 		android:layout_marginHorizontal="8dp"
-		android:layout_marginTop="20dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginBottom="12dp"
+		android:background="@color/white"
+		app:cardCornerRadius="20dp"
+		app:cardElevation="4dp"
 		app:layout_constraintBottom_toTopOf="@id/continue_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_chainStyle="spread_inside">
+		app:layout_constraintTop_toBottomOf="@id/close">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:id="@+id/parent"
@@ -25,64 +50,73 @@
 			android:layout_height="wrap_content">
 
 			<TextView
-				android:id="@+id/name_name_title"
-				android:layout_width="match_parent"
+				android:id="@+id/username_title"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="20dp"
-				android:text="What do your friends call you?"
+				android:layout_marginTop="24dp"
+				android:text="@string/username_title"
 				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-				android:textSize="42sp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 
-			<TextView
-				android:id="@+id/name_name_description"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginHorizontal="20dp"
-				android:layout_marginTop="28dp"
-				android:drawableStart="@drawable/ic_eye"
-				android:drawablePadding="10dp"
-				android:drawableTint="@color/black"
-				android:text="Nobody will see your name until you allow it"
-				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
-				android:textSize="16sp"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/name_name_title" />
-
 			<com.google.android.material.textfield.TextInputEditText
-				android:id="@+id/name_name_input"
-				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:id="@+id/username_input"
+				android:layout_width="0dp"
+				android:layout_height="56dp"
+				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="24dp"
-				android:imeOptions="actionDone"
-				android:inputType="text"
-				android:maxLines="1"
-				android:textColor="@color/gray_4"
-				app:layout_constraintBottom_toBottomOf="parent"
+				android:background="@drawable/background_input_light"
+				android:hint="@string/username_hint"
+				android:inputType="textCapWords"
+				android:paddingHorizontal="16dp"
+				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Input"
+				android:textColorHint="@color/gray_3"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/name_name_description"
-				tools:text="Ondrasek" />
+				app:layout_constraintTop_toBottomOf="@id/username_title"
+				tools:text="Pavel Jindřička" />
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="18dp"
+				android:layout_marginTop="16dp"
+				android:drawablePadding="8dp"
+				android:text="@string/username_info"
+				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Note"
+				app:drawableStartCompat="@drawable/ic_eye"
+				app:drawableTint="@color/gray_3"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/username_input" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</com.google.android.material.card.MaterialCardView>
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/continue_btn"
-		style="@style/Widget.Vexl.Button"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_margin="16dp"
-		android:text="Continue"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
+		android:layout_width="0dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginBottom="16dp"
+		android:enabled="false"
+		android:text="@string/profile_edit_name_action"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<com.google.android.material.progressindicator.CircularProgressIndicator
+		android:id="@+id/progressbar"
+		style="@style/Widget.LightBase.Dialog.CircleProgressIndicator"
+		android:layout_width="@dimen/size_dialog_progress_indicator"
+		android:layout_height="@dimen/size_dialog_progress_indicator"
+		android:visibility="gone"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/name_wrapper" />
+		app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

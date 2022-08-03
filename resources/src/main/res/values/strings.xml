@@ -58,6 +58,9 @@
     <string name="verify_phone_hint">Activation code</string>
 
     <!-- Register Name and Avatar -->
+    <string name="username_title">What do your friends call you?</string>
+    <string name="username_info">Nobody will see your name until you allow it</string>
+    <string name="username_hint">Name or nickname</string>
     <string name="avatar_title">What do you look like?</string>
     <string name="avatar_description">Nobody will see your face until you allow it</string>
     <string name="avatar_welcome">Hey %s</string>

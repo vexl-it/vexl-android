@@ -81,7 +81,7 @@
 				android:layout_marginTop="24dp"
 				android:background="@drawable/background_input_light"
 				android:hint="@string/verify_phone_hint"
-				android:inputType="phone"
+				android:inputType="numberDecimal"
 				android:paddingHorizontal="16dp"
 				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Input"
 				android:textColorHint="@color/gray_3"
