@@ -1,19 +1,17 @@
-<?xml version="1.0" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <SmellBaseline>
-	<ManuallySuppressedIssues></ManuallySuppressedIssues>
-	<CurrentIssues>
-		<ID>LongMethod:NavigationExtension.kt$fun BottomNavigationView.setupWithNavController( navGraphIds: List&lt;Int&gt;, fragmentManager: FragmentManager, containerId: Int, intent: Intent,
-			destinationChangedListener: NavController.OnDestinationChangedListener ): LiveData&lt;NavController&gt;
-		</ID>
-		<ID>ReturnCount:TokenAuthenticator.kt$TokenAuthenticator$override fun authenticate(route: Route?, response: Response): Request?</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getIntFromEP(key: String, defaultValue: Int): Int</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getLongFromEP(key: String, defaultValue: Long): Long</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getNullableStringFromEP(key: String): String?</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getNullableStringFromEP(key: String, defaultValue: String?): String?</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getStringFromEP(key: String, defaultValue: String): String</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun putIntToEP(key: String, value: Int)</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun putLongToEP(key: String, value: Long)</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun putStringToEP(key: String, value: String?)</ID>
-		<ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun removeFromEP(key: String)</ID>
-	</CurrentIssues>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexMethod:CurrencyPriceChartWidget.kt$CurrencyPriceChartWidget$private fun getValue(btnId: Int): BigDecimal</ID>
+    <ID>ComplexMethod:PagerAdapter.kt$PagerAdapter$@Suppress("MagicNumber") override fun createFragment(position: Int): Fragment</ID>
+    <ID>ReturnCount:TokenAuthenticator.kt$TokenAuthenticator$override fun authenticate(route: Route?, response: Response): Request?</ID>
+    <ID>StringLiteralDuplication:BaseContactsListViewModel.kt$BaseContactsListViewModel$"ContactSync"</ID>
+    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getIntFromEP(key: String, defaultValue: Int): Int</ID>
+    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getLongFromEP(key: String, defaultValue: Long): Long</ID>
+    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getNullableStringFromEP(key: String): String?</ID>
+    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getNullableStringFromEP(key: String, defaultValue: String?): String?</ID>
+    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun putIntToEP(key: String, value: Int)</ID>
+    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun putLongToEP(key: String, value: Long)</ID>
+    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun removeFromEP(key: String)</ID>
+  </CurrentIssues>
 </SmellBaseline>

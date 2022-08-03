@@ -11,7 +11,7 @@
 
 	<fragment
 		android:id="@+id/welcomeFragment"
-		android:name="cz.cleevio.onboarding.welcomeFragment.WelcomeFragment"
+		android:name="cz.cleevio.onboarding.ui.welcomeFragment.WelcomeFragment"
 		android:label="WelcomeFragment"
 		tools:layout="@layout/fragment_welcome">
 
@@ -22,11 +22,12 @@
 		<action
 			android:id="@+id/proceed_to_termsFragment"
 			app:destination="@id/nav_terms" />
+
 	</fragment>
 
 	<fragment
 		android:id="@+id/initPhoneFragment"
-		android:name="cz.cleevio.onboarding.initPhoneFragment.InitPhoneFragment"
+		android:name="cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneFragment"
 		android:label="InitPhoneFragment"
 		tools:layout="@layout/fragment_init_phone">
 
@@ -51,7 +52,7 @@
 
 	<fragment
 		android:id="@+id/verifyPhoneFragment"
-		android:name="cz.cleevio.onboarding.verifyPhoneFragment.VerifyPhoneFragment"
+		android:name="cz.cleevio.onboarding.ui.verifyPhoneFragment.VerifyPhoneFragment"
 		android:label="VerifyPhoneFragment"
 		tools:layout="@layout/fragment_verify_phone">
 
@@ -74,7 +75,7 @@
 
 	<fragment
 		android:id="@+id/phoneDoneFragment"
-		android:name="cz.cleevio.onboarding.phoneDoneFragment.PhoneDoneFragment"
+		android:name="cz.cleevio.onboarding.ui.phoneDoneFragment.PhoneDoneFragment"
 		android:label="PhoneDoneFragment"
 		tools:layout="@layout/fragment_phone_done">
 
@@ -86,7 +87,7 @@
 
 	<fragment
 		android:id="@+id/usernameFragment"
-		android:name="cz.cleevio.onboarding.usernameFragment.UsernameFragment"
+		android:name="cz.cleevio.onboarding.ui.usernameFragment.UsernameFragment"
 		android:label="UsernameFragment"
 		tools:layout="@layout/fragment_username">
 
@@ -98,7 +99,7 @@
 
 	<fragment
 		android:id="@+id/avatarFragment"
-		android:name="cz.cleevio.onboarding.avatarFragment.AvatarFragment"
+		android:name="cz.cleevio.onboarding.ui.avatarFragment.AvatarFragment"
 		android:label="AvatarFragment"
 		tools:layout="@layout/fragment_avatar">
 
@@ -111,5 +112,4 @@
 			app:destination="@id/nav_camera" />
 
 	</fragment>
-
 </navigation>

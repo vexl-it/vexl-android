@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ImageView
+		android:id="@+id/faq_image"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_marginHorizontal="64dp"
+		android:layout_marginVertical="16dp"
+		android:adjustViewBounds="true"
+		android:contentDescription="?content"
+		android:src="@drawable/ic_vexl_man"
+		app:layout_constraintBottom_toTopOf="@id/faq_title"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/faq_title"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="8dp"
+		android:paddingHorizontal="16dp"
+		android:textAppearance="@style/TextAppearance.Vexl.Onboarding.Faq.Title"
+		app:layout_constraintBottom_toTopOf="@id/faq_subtitle"
+		tools:text="What is Vexl?" />
+
+	<TextView
+		android:id="@+id/faq_subtitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="24dp"
+		android:paddingHorizontal="16dp"
+		android:textAppearance="@style/TextAppearance.Vexl.Onboarding.Faq.Subtitle"
+		app:layout_constraintBottom_toBottomOf="parent"
+		tools:text="Vexl is a platform where you can trade Bitcoin within your real world social network - your friends and friends of their friends - while staying completely anonymous - if you wish." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

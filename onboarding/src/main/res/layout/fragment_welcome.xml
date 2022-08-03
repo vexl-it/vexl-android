@@ -94,12 +94,14 @@
 		app:layout_constraintStart_toEndOf="@id/terms_switch_text"
 		app:layout_constraintTop_toTopOf="@id/terms_switch_text" />
 
-	<Button
+	<com.google.android.material.button.MaterialButton
 		android:id="@+id/welcome_continue_btn"
-		style="@style/Widget.Vexl.Button.BottomScreen"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
 		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
 		android:layout_marginBottom="16dp"
+		android:alpha="0.5"
 		android:enabled="false"
 		android:text="@string/welcome_button"
 		android:textAppearance="@style/TextAppearance.Vexl.Onboarding.Continue"

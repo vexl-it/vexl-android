@@ -1,12 +1,12 @@
 package cz.cleevio.onboarding.di
 
-import cz.cleevio.core.termsFragment.TermsViewModel
-import cz.cleevio.onboarding.avatarFragment.AvatarViewModel
-import cz.cleevio.onboarding.initPhoneFragment.InitPhoneViewModel
-import cz.cleevio.onboarding.phoneDoneFragment.PhoneDoneViewModel
-import cz.cleevio.onboarding.usernameFragment.UsernameViewModel
-import cz.cleevio.onboarding.verifyPhoneFragment.VerifyPhoneViewModel
-import cz.cleevio.onboarding.welcomeFragment.WelcomeViewModel
+import cz.cleevio.onboarding.ui.avatarFragment.AvatarViewModel
+import cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneViewModel
+import cz.cleevio.onboarding.ui.phoneDoneFragment.PhoneDoneViewModel
+import cz.cleevio.onboarding.ui.termsFragment.TermsViewModel
+import cz.cleevio.onboarding.ui.usernameFragment.UsernameViewModel
+import cz.cleevio.onboarding.ui.verifyPhoneFragment.VerifyPhoneViewModel
+import cz.cleevio.onboarding.ui.welcomeFragment.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

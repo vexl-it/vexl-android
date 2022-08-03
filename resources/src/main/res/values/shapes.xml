@@ -18,6 +18,10 @@
 		<item name="cornerSizeTopRight">@dimen/default_corner_size</item>
 	</style>
 
+	<style name="ShapeAppearanceOverlay.Vexl.BottomButton" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+		<item name="cornerSize">@dimen/bottom_button_corner_size</item>
+	</style>
+
 	<style name="ShapeAppearanceOverlay.Cleevio.RoundedComponent" parent="">
 		<item name="cornerFamily">rounded</item>
 		<item name="cornerSize">50%</item>

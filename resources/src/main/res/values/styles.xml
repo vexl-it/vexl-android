@@ -282,7 +282,6 @@
 		<item name="android:textAppearance">@style/TextAppearance.Cleevio.Button</item>
 		<item name="android:background">@drawable/background_button_blue_12</item>
 		<item name="android:foreground">@drawable/ripple_mask_12</item>
-		<item name="android:layout_margin">8dp</item>
 		<item name="android:clickable">true</item>
 		<item name="android:focusable">true</item>
 	</style>
@@ -344,6 +343,48 @@
 		<item name="android:textColor">@color/yellow_100</item>
 		<item name="android:layout_margin">16dp</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmall</item>
+	</style>
+
+	<style name="Widget.Vexl.Onboarding.BottomButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.RequestButton</item>
+		<item name="android:textColor">@color/black</item>
+		<item name="android:backgroundTint">@color/button</item>
+		<item name="android:insetLeft">0dp</item>
+		<item name="android:insetRight">0dp</item>
+		<item name="android:insetTop">0dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:insetBottom">0dp</item>
+		<item name="rippleColor">@color/black</item>
+		<item name="android:elevation">0dp</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Vexl.BottomButton</item>
+	</style>
+
+	<style name="Widget.Vexl.Onboarding.BottomButton.Left" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.RequestButton</item>
+		<item name="android:textColor">@color/yellow_100</item>
+		<item name="android:backgroundTint">@color/yellow_20</item>
+		<item name="android:insetLeft">0dp</item>
+		<item name="android:insetRight">0dp</item>
+		<item name="android:insetTop">0dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:insetBottom">0dp</item>
+		<item name="rippleColor">@color/white</item>
+		<item name="android:elevation">0dp</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Vexl.BottomButton</item>
+	</style>
+
+	<style name="Widget.Vexl.Onboarding.BottomButton.Right" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.RequestButton</item>
+		<item name="android:textColor">@color/black</item>
+		<item name="android:backgroundTint">@color/button</item>
+		<item name="android:insetLeft">0dp</item>
+		<item name="android:insetRight">0dp</item>
+		<item name="android:insetTop">0dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:insetBottom">0dp</item>
+		<item name="rippleColor">@color/black</item>
+		<item name="android:elevation">0dp</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Vexl.BottomButton</item>
 	</style>
 
 	<style name="Widget.Vexl.ChatRequestButton" parent="">
@@ -434,6 +475,11 @@
 	<style name="Widget.Vexl.CloseButton" parent="">
 		<item name="android:padding">7dp</item>
 		<item name="android:background">@drawable/background_button_gray_13</item>
+	</style>
+
+	<style name="Widget.Vexl.CloseButton.Light" parent="">
+		<item name="android:padding">7dp</item>
+		<item name="android:background">@drawable/background_button_gray_7</item>
 	</style>
 
 	<style name="Widget.Vexl.CardView" parent="Widget.MaterialComponents.CardView">

@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.welcomeFragment
+package cz.cleevio.onboarding.ui.welcomeFragment
 
 import android.os.Bundle
 import android.text.SpannableString
@@ -9,6 +9,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.setEnterTransitionSlideToLeft
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
@@ -34,10 +35,15 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 		binding.termsSwitch.setOnCheckedChangeListener { _, isChecked ->
 			binding.welcomeContinueBtn.isEnabled = isChecked
+			binding.welcomeContinueBtn.alpha = if (isChecked) {
+				BUTTON_FULL_ALPHA
+			} else {
+				BUTTON_DISABLED_ALPHA
+			}
 		}
 
 		binding.welcomeContinueBtn.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				WelcomeFragmentDirections.proceedToInitPhoneFragment()
 			)
 		}
@@ -55,7 +61,9 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 		val clickableSpan: ClickableSpan = object : ClickableSpan() {
 			override fun onClick(widget: View) {
-				findNavController().navigate(WelcomeFragmentDirections.proceedToTermsFragment())
+				findNavController().safeNavigateWithTransition(
+					WelcomeFragmentDirections.proceedToTermsFragment()
+				)
 			}
 
 			override fun updateDrawState(ds: TextPaint) {
@@ -69,5 +77,10 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 		binding.termsSwitchText.text = str
 		binding.termsSwitchText.movementMethod = LinkMovementMethod.getInstance()
+	}
+
+	private companion object {
+		private const val BUTTON_FULL_ALPHA = 1f
+		private const val BUTTON_DISABLED_ALPHA = 0.5f
 	}
 }

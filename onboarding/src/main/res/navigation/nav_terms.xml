@@ -5,10 +5,16 @@
 	android:id="@+id/nav_terms"
 	app:startDestination="@+id/termsFragment">
 
+	<include app:graph="@navigation/nav_fag" />
+
 	<fragment
 		android:id="@+id/termsFragment"
-		android:name="cz.cleevio.core.termsFragment.TermsFragment"
+		android:name="cz.cleevio.onboarding.ui.termsFragment.TermsFragment"
 		android:label="TermsFragment"
-		tools:layout="@layout/fragment_terms" />
+		tools:layout="@layout/fragment_terms">
+		<action
+			android:id="@+id/proceed_to_faq"
+			app:destination="@id/nav_fag" />
 
+	</fragment>
 </navigation>

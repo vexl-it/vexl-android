@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.usernameFragment
+package cz.cleevio.onboarding.ui.usernameFragment
 
 import android.widget.Toast
 import androidx.core.view.updatePadding
@@ -8,7 +8,7 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.BuildConfig
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentUsernameBinding
-import cz.cleevio.onboarding.initPhoneFragment.BOTTOM_EXTRA_PADDING
+import cz.cleevio.onboarding.ui.initPhoneFragment.BOTTOM_EXTRA_PADDING
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets

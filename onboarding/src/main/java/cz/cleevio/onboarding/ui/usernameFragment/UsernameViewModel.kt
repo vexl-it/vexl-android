@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.usernameFragment
+package cz.cleevio.onboarding.ui.usernameFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.repository.model.user.UsernameAvailable
