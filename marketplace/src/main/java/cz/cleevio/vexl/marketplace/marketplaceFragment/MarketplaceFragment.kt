@@ -2,8 +2,11 @@ package cz.cleevio.vexl.marketplace.marketplaceFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionManager
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleevio.core.base.BaseGraphFragment
+import cz.cleevio.core.utils.safeNavigate
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -47,7 +50,7 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 				)
 			},
 			navigateToNewOffer = { offerType ->
-				findNavController().navigate(
+				findNavController().safeNavigateWithTransition(
 					MarketplaceFragmentDirections.proceedToNewOfferFragment(offerType)
 				)
 			},
@@ -57,11 +60,15 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 				)
 			},
 			requestOffer = { offerId ->
-				findNavController().navigate(
+				findNavController().safeNavigateWithTransition(
 					MarketplaceFragmentDirections.proceedToRequestOfferFragment(offerId = offerId)
 				)
 			}
 		)
+
+		priceChartWidget?.onLayoutChanged = {
+			TransitionManager.beginDelayedTransition(binding.container)
+		}
 
 		TabLayoutMediator(binding.marketplaceTabLayout, binding.marketplaceViewpager) { tab, position ->
 			when (position) {

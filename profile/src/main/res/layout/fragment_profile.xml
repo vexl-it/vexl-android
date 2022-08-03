@@ -41,20 +41,30 @@
 
 			<ImageView
 				android:id="@+id/profile_donate"
-				android:layout_width="32dp"
-				android:layout_height="32dp"
-				android:layout_marginStart="16dp"
-				android:layout_marginTop="16dp"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:layout_marginStart="12dp"
+				android:layout_marginTop="12dp"
+				android:background="@drawable/ripple_mask_13"
+				android:clickable="true"
+				android:contentDescription="?content"
+				android:focusable="true"
+				android:padding="4dp"
 				android:src="@drawable/ic_profile_donate"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 
 			<ImageView
 				android:id="@+id/profile_qr_code"
-				android:layout_width="32dp"
-				android:layout_height="32dp"
-				android:layout_marginTop="16dp"
-				android:layout_marginEnd="16dp"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:layout_marginTop="12dp"
+				android:layout_marginEnd="12dp"
+				android:background="@drawable/ripple_mask_13"
+				android:clickable="true"
+				android:contentDescription="?content"
+				android:focusable="true"
+				android:padding="4dp"
 				android:src="@drawable/ic_profile_qrcode"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -143,9 +153,9 @@
 						android:layout_width="0dp"
 						android:layout_height="wrap_content"
 						app:icon="@drawable/ic_profile_image"
-						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
 						app:line_visibility="true"
 						app:title="@string/profile_change_picture" />
 
@@ -160,7 +170,6 @@
 						app:title="@string/profile_edit_name" />
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
-
 			</com.google.android.material.card.MaterialCardView>
 
 			<com.google.android.material.card.MaterialCardView

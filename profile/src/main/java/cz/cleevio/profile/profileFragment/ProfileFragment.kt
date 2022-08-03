@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionManager
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -126,6 +127,10 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			showBottomDialog(
 				JoinBottomSheetDialog()
 			)
+		}
+
+		priceChartWidget?.onLayoutChanged = {
+			TransitionManager.beginDelayedTransition(binding.container)
 		}
 
 		binding.profilePrivateSettings.setOnClickListener {

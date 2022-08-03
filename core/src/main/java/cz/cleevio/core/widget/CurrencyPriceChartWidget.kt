@@ -42,6 +42,7 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 	private var dateTimeRange: DateTimeRange? = DateTimeRange.DAY
 
 	var onPriceChartPeriodClicked: ((DateTimeRange) -> Unit)? = null
+	var onLayoutChanged: (() -> Unit)? = null
 
 	init {
 		setupUI()
@@ -264,6 +265,8 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 			} else {
 				""
 			}
+
+		onLayoutChanged?.invoke()
 	}
 
 	private fun updateModifyingCellsVisibility() {

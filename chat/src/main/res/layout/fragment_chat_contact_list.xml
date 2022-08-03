@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@drawable/background_main_chart"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+	android:background="@drawable/background_main_chart">
 
 	<cz.cleevio.core.widget.CurrencyPriceChartWidget
 		android:id="@+id/price_chart"
@@ -43,10 +43,14 @@
 			style="@style/Widget.Vexl.FriendRequestsButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:clickable="true"
+			android:contentDescription="?content"
+			android:focusable="true"
+			android:foreground="@drawable/ripple_mask_13"
 			android:src="@drawable/ic_users_notification_off"
 			app:layout_constraintBottom_toBottomOf="@id/title"
-			app:layout_constraintStart_toEndOf="@id/title"
 			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/title"
 			app:layout_constraintTop_toTopOf="@id/title" />
 
 		<RadioGroup
@@ -93,11 +97,11 @@
 			android:layout_marginEnd="16dp"
 			android:indeterminate="true"
 			android:visibility="gone"
-			app:showDelay="200"
 			app:indicatorColor="@color/yellow_100"
-			app:layout_constraintTop_toTopOf="@+id/chat_type_radiogroup"
 			app:layout_constraintBottom_toBottomOf="@id/chat_type_radiogroup"
 			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/chat_type_radiogroup"
+			app:showDelay="200"
 			tools:visibility="visible" />
 
 		<androidx.recyclerview.widget.RecyclerView
@@ -111,8 +115,8 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/chat_type_radiogroup"
-			tools:listitem="@layout/item_chat_contact"
-			tools:itemCount="10" />
+			tools:itemCount="10"
+			tools:listitem="@layout/item_chat_contact" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
