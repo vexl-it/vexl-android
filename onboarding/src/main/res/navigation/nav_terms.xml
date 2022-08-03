@@ -5,7 +5,7 @@
 	android:id="@+id/nav_terms"
 	app:startDestination="@+id/termsFragment">
 
-	<include app:graph="@navigation/nav_fag" />
+	<include app:graph="@navigation/nav_faq" />
 
 	<fragment
 		android:id="@+id/termsFragment"
@@ -14,7 +14,7 @@
 		tools:layout="@layout/fragment_terms">
 		<action
 			android:id="@+id/proceed_to_faq"
-			app:destination="@id/nav_fag" />
+			app:destination="@id/nav_faq" />
 
 	</fragment>
 </navigation>

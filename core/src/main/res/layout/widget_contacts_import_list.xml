@@ -31,7 +31,7 @@
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/deselect_all_btn"
 				style="@style/Widget.Vexl.BlackButton"
-				android:layout_width="0dp"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:paddingHorizontal="9dp"
 				android:paddingVertical="4dp"
