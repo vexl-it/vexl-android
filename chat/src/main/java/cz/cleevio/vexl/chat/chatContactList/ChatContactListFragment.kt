@@ -3,6 +3,7 @@ package cz.cleevio.vexl.chat.chatContactList
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
@@ -72,6 +73,10 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 			}
 		)
 		binding.recycler.adapter = adapter
+
+		priceChartWidget?.onLayoutChanged = {
+			TransitionManager.beginDelayedTransition(binding.container)
+		}
 
 		binding.newRequestsBtn.setOnClickListener {
 			findNavController().navigate(

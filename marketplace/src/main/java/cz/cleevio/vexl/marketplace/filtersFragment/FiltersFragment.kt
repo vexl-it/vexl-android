@@ -3,6 +3,7 @@ package cz.cleevio.vexl.marketplace.filtersFragment
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
@@ -39,6 +40,10 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 				findNavController().popBackStack()
 			}
 		)
+
+		priceChartWidget?.onLayoutChanged = {
+			TransitionManager.beginDelayedTransition(binding.container)
+		}
 
 		binding.applyBtn.setOnClickListener {
 			//TODO: somehow apply filters? Save to DB?

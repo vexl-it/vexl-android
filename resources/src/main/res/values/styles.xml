@@ -342,7 +342,9 @@
 		<item name="tint">@color/yellow_100</item>
 		<item name="android:textColor">@color/yellow_100</item>
 		<item name="android:layout_margin">16dp</item>
-		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmall</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:foreground">@drawable/ripple_mask_13</item>
 	</style>
 
 	<style name="Widget.Vexl.Onboarding.BottomButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
@@ -628,6 +630,9 @@
 		<item name="android:layout_height">40dp</item>
 		<item name="android:textColor">@color/chat_radio_button_text_color_selector</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmallBold</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:foreground">@drawable/ripple_mask_8</item>
 	</style>
 
 	<style name="Widget.Cleevio.Vexl.CurrencyRadioBtn" parent="">
@@ -668,6 +673,7 @@
 		<item name="android:layout_marginStart">18dp</item>
 		<item name="android:layout_marginEnd">18dp</item>
 		<item name="android:layout_marginBottom">20dp</item>
+		<item name="colorControlHighlight">@color/white</item>
 		<item name="android:padding">10dp</item>
 		<item name="android:background">@drawable/bottom_nav_background</item>
 	</style>
@@ -679,6 +685,7 @@
 		<item name="tabPaddingBottom">26dp</item>
 		<item name="tabTextAppearance">@style/TextAppearance.Vexl.Marketplace.MainTab</item>
 		<item name="tabSelectedTextColor">@color/white</item>
+		<item name="tabRippleColor">@color/yellow_20</item>
 	</style>
 
 	<style name="Widget.Cleevio.Vexl.Marketplace.FilterChip" parent="">
@@ -688,6 +695,7 @@
 		<item name="iconEndPadding">9dp</item>
 		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Vexl.Marketplace.Chip</item>
 		<item name="chipBackgroundColor">@color/gray_1</item>
+		<item name="rippleColor">@color/white</item>
 		<item name="android:checkable">false</item>
 	</style>
 

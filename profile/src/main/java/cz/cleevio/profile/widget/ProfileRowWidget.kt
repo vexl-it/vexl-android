@@ -50,7 +50,7 @@ class ProfileRowWidget constructor(
 
 		isClickable = true
 		isFocusable = true
-		foreground = ContextCompat.getDrawable(context, R.drawable.ripple_mask_16)
+		foreground = ContextCompat.getDrawable(context, R.drawable.ripple_mask_16_light)
 	}
 
 	private fun setText(view: TextView, value: String?) {

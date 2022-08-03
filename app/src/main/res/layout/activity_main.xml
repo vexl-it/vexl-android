@@ -28,7 +28,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:visibility="gone"
-		app:itemBackground="@drawable/bottom_nav_item_background"
+		app:itemBackground="@drawable/bottom_nav_item_background_ripple"
 		app:itemIconTint="@color/bottom_nav_item_icon_selector"
 		app:labelVisibilityMode="unlabeled"
 		app:layout_constraintBottom_toBottomOf="parent"
