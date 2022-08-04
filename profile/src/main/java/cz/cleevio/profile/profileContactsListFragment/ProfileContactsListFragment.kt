@@ -12,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.resources.R
 import cz.cleevio.profile.databinding.BottomSheetDialogProfileContactsListBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -40,7 +39,7 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 
 	private fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.notSyncedContacts.collect {
+			viewModel.contactsToBeShowed.collect {
 				binding.contactsListWidget.setupData(it, openedFromScreen)
 				binding.emptyContactsBtn.isInvisible = it.isNotEmpty()
 				binding.backBtn.isVisible = it.isNotEmpty()
@@ -62,9 +61,9 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 				binding.contactsListWidget.isVisible = !show
 
 				if (!show) {
-					binding.emptyContactsBtn.isVisible = viewModel.notSyncedContacts.replayCache.firstOrNull().isNullOrEmpty()
-					binding.backBtn.isVisible = !viewModel.notSyncedContacts.replayCache.firstOrNull().isNullOrEmpty()
-					binding.confirmBtn.isVisible = !viewModel.notSyncedContacts.replayCache.firstOrNull().isNullOrEmpty()
+					binding.emptyContactsBtn.isVisible = viewModel.contactsToBeShowed.replayCache.firstOrNull().isNullOrEmpty()
+					binding.backBtn.isVisible = !viewModel.contactsToBeShowed.replayCache.firstOrNull().isNullOrEmpty()
+					binding.confirmBtn.isVisible = !viewModel.contactsToBeShowed.replayCache.firstOrNull().isNullOrEmpty()
 				} else {
 					binding.emptyContactsBtn.isInvisible = true
 					binding.backBtn.isInvisible = true

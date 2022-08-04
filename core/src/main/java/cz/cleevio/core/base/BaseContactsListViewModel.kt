@@ -23,10 +23,10 @@ open class BaseContactsListViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
-	private var notSyncedContactsList: List<Contact> = emptyList()
+	private var contactsToBeShowedList: List<Contact> = emptyList()
 
-	private val _notSyncedContacts = MutableSharedFlow<List<Contact>>(replay = 1)
-	val notSyncedContacts = _notSyncedContacts.asSharedFlow()
+	private val _contactsToBeShowed = MutableSharedFlow<List<Contact>>(replay = 1)
+	val contactsToBeShowed = _contactsToBeShowed.asSharedFlow()
 
 	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
 	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
@@ -51,25 +51,31 @@ open class BaseContactsListViewModel constructor(
 
 			//BE returns list of contacts that user didn't import previously
 			Timber.tag("ContactSync").d("Checking all contacts with the API")
-			val notSyncedIdentifiers = contactRepository.checkAllContacts(
+			val contacts = contactRepository.checkAllContacts(
 				//send only hashed phone numbers as identifiers
 				hashedContacts.map { it.hashedPhoneNumber }
 			)
 
-			Timber.tag("ContactSync").d("Checking done, we have ${notSyncedIdentifiers.data?.size} not synced contacts")
+			Timber.tag("ContactSync").d("Checking done, we have ${contacts.data?.size} not synced contacts")
 
-			//now we take list all contacts from phone and keep
+			// now we take list all contacts from phone and keep
 			// only contacts that BE returned (keeping only NOT imported contacts)
-			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
-				notSyncedContactsList = hashedContacts.filter { contact ->
-					notSyncedPhoneNumbers.contains(
-						contact.hashedPhoneNumber
-					)
+			contacts.data?.let { notSyncedPhoneNumbers ->
+				val newList = ArrayList<Contact>()
+
+				hashedContacts.forEach { contact ->
+					if (notSyncedPhoneNumbers.contains(contact.hashedPhoneNumber)) {
+						newList.add(contact.apply { markedForUpload = false }.copy())
+					} else {
+						newList.add(contact.apply { markedForUpload = true }.copy())
+					}
 				}
 
-				Timber.tag("ContactSync").d("All done, emitting contacts")
+				contactsToBeShowedList = newList
+
+					Timber.tag("ContactSync").d("All done, emitting contacts")
 				//we emit those contacts to UI and show it to user
-				emitContacts(notSyncedContactsList)
+				emitContacts(contactsToBeShowedList)
 			}
 			_progressFlow.emit(false)
 		}
@@ -78,7 +84,7 @@ open class BaseContactsListViewModel constructor(
 	//get all contacts from phone as input
 	private fun skipCheckingAndJustDisplayAllContacts(localContacts: List<Contact>) {
 		viewModelScope.launch(Dispatchers.IO) {
-			notSyncedContactsList = localContacts
+			contactsToBeShowedList = localContacts
 
 			Timber.tag("ContactSync").d("All done, emitting contacts")
 			emitContacts(localContacts)
@@ -106,28 +112,28 @@ open class BaseContactsListViewModel constructor(
 
 	fun contactSelected(contact: BaseContact, selected: Boolean) {
 		viewModelScope.launch {
-			notSyncedContactsList.find {
+			contactsToBeShowedList.find {
 				contact.id == it.id
 			}?.markedForUpload = selected
-			emitContacts(notSyncedContactsList)
+			emitContacts(contactsToBeShowedList)
 		}
 	}
 
 	fun unselectAll() {
 		viewModelScope.launch {
-			notSyncedContactsList.forEach { contact ->
+			contactsToBeShowedList.forEach { contact ->
 				contact.markedForUpload = false
 			}
-			emitContacts(notSyncedContactsList)
+			emitContacts(contactsToBeShowedList)
 		}
 	}
 
 	fun selectAll() {
 		viewModelScope.launch {
-			notSyncedContactsList.forEach { contact ->
+			contactsToBeShowedList.forEach { contact ->
 				contact.markedForUpload = true
 			}
-			emitContacts(notSyncedContactsList)
+			emitContacts(contactsToBeShowedList)
 		}
 	}
 
@@ -135,7 +141,7 @@ open class BaseContactsListViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
 			val response = contactRepository.uploadAllMissingContacts(
-				notSyncedContactsList.filter {
+				contactsToBeShowedList.filter {
 					it.markedForUpload
 				}
 			)
@@ -158,6 +164,6 @@ open class BaseContactsListViewModel constructor(
 		contacts.forEach { contact ->
 			newList.add(contact.copy())
 		}
-		_notSyncedContacts.emit(newList)
+		_contactsToBeShowed.emit(newList)
 	}
 }
