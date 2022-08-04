@@ -36,7 +36,7 @@
 
     <!-- Register Phone -->
     <string name="init_phone_title">Zadej své telefonní číslo</string>
-    <string name="init_phone_note">Tvůj telefon bude 100% anonymní</string>
+    <string name="init_phone_note">Tvůj telefon bude 100\% anonymní</string>
     <string name="init_phone_hint">Telefonní číslo</string>
     <string name="verify_phone_title">Poslali jsme ti kód</string>
     <string name="verify_phone_subtitle">Zadej ho níže a ověř %s</string>
