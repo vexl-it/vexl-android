@@ -188,7 +188,7 @@
     <string name="widget_fee_without">Bez poplatku</string>
     <string name="widget_fee_ok">S poplatkem</string>
     <string name="widget_fee_percent">%s%%</string>
-    <string name="widget_location_online">Online OK</string>
+    <string name="widget_location_online">Online</string>
     <string name="widget_location_in_person">Pouze osobně</string>
     <string name="widget_trigger_price_title">Aktivní při ceně</string>
     <string name="widget_trigger_title">Spouštěče</string>
@@ -220,6 +220,7 @@
     <string name="widget_offer_description">Popis</string>
     <string name="widget_offer_description_hint">Popiš svou nabídku</string>
     <string name="widget_offer_description_counter">%d/%d</string>
+    <string name="widget_offer_currency">Měna</string>
     <string name="filter_advanced_title">Pokročilé</string>
     <string name="filter_type_title">Typ</string>
     <string name="filter_friend_level_title">Úroveň přítele</string>

@@ -227,7 +227,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="widget_fee_without">Without fee</string>
     <string name="widget_fee_ok">With fee</string>
     <string name="widget_fee_percent">%s%%</string>
-    <string name="widget_location_online">Online OK</string>
+    <string name="widget_location_online">Online</string>
     <string name="widget_location_in_person">Only in person</string>
     <string name="widget_trigger_price_title">Active when price is</string>
     <string name="widget_trigger_title">Triggers</string>
@@ -259,6 +259,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="widget_offer_description">Description</string>
     <string name="widget_offer_description_hint">Enter offer description</string>
     <string name="widget_offer_description_counter">%d/%d</string>
+    <string name="widget_offer_currency">Currency</string>
     <string name="filter_advanced_title">Advanced</string>
     <string name="filter_type_title">Type</string>
     <string name="filter_friend_level_title">Friend level</string>
@@ -269,6 +270,9 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="widget_location_km"> +- %d km</string>
     <string name="widget_location_hint">City</string>
     <string name="create_create_offer">Create offer</string>
+    <string name="currency_usd">USD</string>
+    <string name="currency_eur">EUR</string>
+    <string name="currency_czk">CZK</string>
 
     <!-- Offer Request -->
     <string name="request_title">Offer</string>
