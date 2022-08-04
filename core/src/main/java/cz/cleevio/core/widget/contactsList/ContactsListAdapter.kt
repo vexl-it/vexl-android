@@ -27,6 +27,8 @@ class ContactsListAdapter(
 
 		fun bind(item: BaseContact) {
 			binding.run {
+				contactImportCheckbox.setOnCheckedChangeListener(null)
+
 				contactImage.load(item.photoUri) {
 					crossfade(true)
 					fallback(R.drawable.ic_baseline_person_128)
