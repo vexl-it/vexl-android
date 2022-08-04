@@ -1,10 +1,12 @@
 package cz.cleevio.lightspeedskeleton.ui.mainActivity
 
 import android.os.Bundle
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,6 +20,7 @@ import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.network.NetworkError
 import cz.cleevio.profile.profileFragment.ProfileFragment
 import cz.cleevio.vexl.chat.chatContactList.ChatContactListFragment
+import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
 import kotlinx.coroutines.launch
@@ -48,6 +51,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		) as NavHostFragment
 		navController = navHostFragment.navController
 		navController.addOnDestinationChangedListener(this)
+
+		binding.bottomNavigation.setOnApplyWindowInsetsListener(null)
+		listenForInsets(binding.container) { insets ->
+			binding.bottomNavigation.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = insets.bottom
+			}
+		}
 
 		binding.bottomNavigation.setupWithNavController(navController)
 	}

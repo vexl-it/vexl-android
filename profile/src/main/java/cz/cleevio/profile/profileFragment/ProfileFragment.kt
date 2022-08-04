@@ -106,13 +106,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		// TODO change visibility once the functionality will be revealed
 		binding.profileSectionWrapperFive.isVisible = false
 
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(
-				top = insets.top,
-				bottom = insets.bottom
-			)
-		}
-
 		binding.profileDonate.setOnClickListener {
 			showBottomDialog(
 				DonateBottomSheetDialog {
@@ -227,6 +220,10 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 					}
 				}
 			)
+		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(top = insets.top)
 		}
 	}
 

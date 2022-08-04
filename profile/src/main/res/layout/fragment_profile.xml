@@ -37,7 +37,9 @@
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
-			android:padding="16dp">
+			android:clipToPadding="false"
+			android:paddingTop="16dp"
+			android:paddingBottom="100dp">
 
 			<ImageView
 				android:id="@+id/profile_donate"
@@ -480,7 +482,5 @@
 				app:layout_constraintTop_toBottomOf="@id/profile_section_wrapper_vexl_support" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
