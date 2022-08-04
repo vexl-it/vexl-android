@@ -18,12 +18,18 @@ class PriceTriggerWidget @JvmOverloads constructor(
 
 	private lateinit var binding: WidgetTriggerPriceBinding
 
+	var onFocusChangeListener: ((Boolean) -> Unit)? = null
+
 	init {
 		setupUI()
 	}
 
 	private fun setupUI() {
 		binding = WidgetTriggerPriceBinding.inflate(layoutInflater, this)
+
+		binding.priceEdit.setOnFocusChangeListener { _, hasFocus ->
+			onFocusChangeListener?.invoke(hasFocus)
+		}
 	}
 
 	fun setupData(currentCryptoPrice: Float) {

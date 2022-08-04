@@ -22,8 +22,14 @@ class OfferLocationItem @JvmOverloads constructor(
 	private var radius: Int = 1
 	private var fragmentManager: FragmentManager? = null
 
+	var onFocusChangeListener: ((Boolean, Int) -> Unit)? = null
+
 	init {
 		setupUI()
+
+		binding.locationItemText.setOnFocusChangeListener { _, hasFocus ->
+			onFocusChangeListener?.invoke(hasFocus, binding.locationItemText.y.toInt())
+		}
 
 		binding.locationItemClose.setOnClickListener {
 			onCloseListener?.invoke(this)

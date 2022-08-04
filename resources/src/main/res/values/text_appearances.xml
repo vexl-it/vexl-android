@@ -442,6 +442,7 @@
 
 	<style name="TextAppearance.Vexl.Marketplace.MainTab" parent="TextAppearance.Vexl.Heading1">
 		<item name="android:textColor">@color/gray_2</item>
+		<item name="android:textSize">30sp</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Marketplace.OfferDescription" parent="TextAppearance.Vexl.Description">
@@ -515,17 +516,17 @@
 		<item name="android:textSize">24sp</item>
 		<item name="android:textColor">@color/white</item>
 		<item name="lineHeight">30.24sp</item>
-		<item name="android:fontFamily">@font/tt_satoshi_400</item>
-		<item name="fontFamily">@font/tt_satoshi_400</item>
-		<item name="android:letterSpacing">-0.03</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
+		<item name="android:letterSpacing">-0.02</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Marketplace.Offer.Description.Counter" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textSize">16sp</item>
 		<item name="android:textColor">@color/white</item>
 		<item name="lineHeight">16sp</item>
-		<item name="android:fontFamily">@font/tt_satoshi_400</item>
-		<item name="fontFamily">@font/tt_satoshi_400</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
 		<item name="android:letterSpacing">-0.04</item>
 	</style>
 
@@ -534,8 +535,8 @@
 		<item name="android:textColor">@color/gray_3</item>
 		<item name="lineHeight">26sp</item>
 		<item name="android:letterSpacing">-0.02</item>
-		<item name="android:fontFamily">@font/tt_satoshi_400</item>
-		<item name="fontFamily">@font/tt_satoshi_400</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Marketplace.Filter.Section.Description.Gray" parent="TextAppearance.MaterialComponents.Body1">

@@ -43,7 +43,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 		binding.feeBar.value = FEE_MIN_VALUE
 		binding.feeBar.valueFrom = FEE_MIN_VALUE
 		binding.feeBar.valueTo = FEE_MAX_VALUE
-		binding.feeBar.addOnChangeListener { slider, value, fromUser ->
+		binding.feeBar.addOnChangeListener { _, value, _ ->
 			updateFeeValue(value)
 		}
 
@@ -66,7 +66,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 
 	private fun updateFeeValue(value: Float) {
 		feeValue = value
-		binding.feeValue.text = context.getString(R.string.widget_fee_percent, feeValue.toString())
+		binding.feeValue.text = context.getString(R.string.widget_fee_percent, feeValue.toInt().toString())
 	}
 
 	fun getFeeValue(): FeeValue = FeeValue(
