@@ -29,7 +29,7 @@ android {
         manifestPlaceholders = [enableCrashReporting: buildUseCrashlytics]
 
         // Add new languages here
-        resConfigs "en", "cs"
+        resConfigs "en", "cs", "sk"
 
         // Room schema
         javaCompileOptions {

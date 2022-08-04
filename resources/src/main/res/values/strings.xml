@@ -52,6 +52,8 @@
 * **Name Surname** - work position</string>
 
     <!-- Register Phone -->
+    <string name="init_phone_title">What’s your phone number?</string>
+    <string name="init_phone_note">Your number will be anonymous</string>
     <string name="init_phone_hint">Phone number</string>
     <string name="verify_phone_title">We\'ve just sent you a code</string>
     <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
@@ -65,6 +67,9 @@
     <string name="avatar_description">Nobody will see your face until you allow it</string>
     <string name="avatar_welcome">Hey %s</string>
     <string name="verify_phone_done_title">Phone verified.\nLet’s setup your profile.</string>
+    <string name="image_picker_title">Camera</string>
+    <string name="image_picker_camera">Photo Album</string>
+    <string name="image_picker_gallery">Select the source of your avatar</string>
     <string name="user_avatar_title">Hey %s!\nWhat do you look like?</string>
     <string name="anonymize_user_title">This is your identity</string>
     <string name="anonymize_user_title2">Identity anonymized!</string>
@@ -365,7 +370,6 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="faq_screen_seven_title">How do I contact Vexl?</string>
     <string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
 
-    <!-- Init phone -->
-    <string name="init_phone_title">What’s your phone number?</string>
-    <string name="init_phone_note">Nobody will see your name until you allow it</string>
+    <!-- Permissions -->
+    <string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
 </resources>
