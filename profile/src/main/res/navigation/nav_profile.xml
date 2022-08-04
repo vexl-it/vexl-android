@@ -79,7 +79,18 @@
 		tools:layout="@layout/fragment_edit_avatar">
 
 		<action
+			android:id="@+id/proceed_to_bottom_sheet_dialog"
+			app:destination="@id/photoOptionsBottomSheetDialog" />
+
+		<action
 			android:id="@+id/proceed_to_takePhotoFragment"
 			app:destination="@id/nav_camera" />
 	</fragment>
+
+	<dialog
+		android:id="@+id/photoOptionsBottomSheetDialog"
+		android:name="lightbase.camera.ui.photoBottomSheet.PhotoOptionsBottomSheetDialog"
+		android:label="PhotoOptionsBottomSheetDialog"
+		tools:layout="@layout/bottom_sheet_photo_options" />
+
 </navigation>

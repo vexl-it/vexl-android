@@ -67,9 +67,9 @@
     <string name="avatar_description">Nobody will see your face until you allow it</string>
     <string name="avatar_welcome">Hey %s</string>
     <string name="verify_phone_done_title">Phone verified.\nLet’s setup your profile.</string>
-    <string name="image_picker_title">Camera</string>
-    <string name="image_picker_camera">Photo Album</string>
-    <string name="image_picker_gallery">Select the source of your avatar</string>
+    <string name="image_picker_camera">Camera</string>
+    <string name="image_picker_gallery">Photo Album</string>
+    <string name="image_picker_title">Select the source of your avatar</string>
     <string name="user_avatar_title">Hey %s!\nWhat do you look like?</string>
     <string name="anonymize_user_title">This is your identity</string>
     <string name="anonymize_user_title2">Identity anonymized!</string>

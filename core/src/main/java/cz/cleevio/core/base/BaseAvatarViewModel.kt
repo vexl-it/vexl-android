@@ -14,11 +14,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
+import lightbase.camera.utils.ImageHelper
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 
 abstract class BaseAvatarViewModel constructor(
-	val navMainGraphModel: NavMainGraphModel
+	val navMainGraphModel: NavMainGraphModel,
+	val imageHelper: ImageHelper
 ) : BaseViewModel() {
 
 	private val _profileImageUri = MutableStateFlow<Uri?>(null)
@@ -61,6 +63,12 @@ abstract class BaseAvatarViewModel constructor(
 		} else {
 			val source = ImageDecoder.createSource(contentResolver, avatarUri)
 			ImageDecoder.decodeBitmap(source)
+		}
+	}
+
+	fun updateProfileUri(uri: Uri) {
+		viewModelScope.launch {
+			_profileImageUri.emit(uri)
 		}
 	}
 

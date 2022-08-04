@@ -34,6 +34,11 @@
 
 	<style name="ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage" parent="">
 		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">32dp</item>
+	</style>
+
+	<style name="ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage.Small" parent="">
+		<item name="cornerFamily">rounded</item>
 		<item name="cornerSize">12dp</item>
 	</style>
 

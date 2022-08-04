@@ -2,53 +2,78 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:paddingBottom="16dp">
+	android:layout_height="wrap_content">
 
-	<androidx.appcompat.widget.AppCompatImageView
-		android:id="@+id/close"
-		style="@style/Widget.LightBase.Camera.ImageView.PhotoOptions.Close"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="24dp"
-		android:layout_marginEnd="12dp"
-		android:src="@drawable/ic_baseline_clear_24"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
-
-	<TextView
-		android:id="@+id/title"
-		style="@style/Widget.LightBase.Camera.TextView.PhotoOptions.Title"
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/pick_image_source"
+		style="@style/Widget.Vexl.CardView"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:paddingHorizontal="16dp"
-		android:text="@string/photo_options_select_photo"
-		app:layout_constraintBottom_toBottomOf="@id/close"
-		app:layout_constraintEnd_toStartOf="@id/close"
+		android:layout_height="0dp"
+		android:layout_margin="8dp"
+		app:layout_constraintDimensionRatio="4:3"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@id/close" />
+		app:layout_constraintTop_toTopOf="parent">
 
-	<TextView
-		android:id="@+id/profileTakeAPhoto"
-		style="@style/Widget.LightBase.Camera.TextView.PhotoOptions.Option"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="16dp"
-		android:drawablePadding="16dp"
-		android:padding="16dp"
-		android:text="@string/photo_options_take_a_picture"
-		app:drawableStartCompat="@drawable/ic_baseline_photo_camera_28"
-		app:layout_constraintTop_toBottomOf="@id/title" />
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-	<TextView
-		android:id="@+id/profilePhotoLibrary"
-		style="@style/Widget.LightBase.Camera.TextView.PhotoOptions.Option"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:drawablePadding="16dp"
-		android:padding="16dp"
-		android:text="@string/photo_options_photo_library"
-		app:drawableStartCompat="@drawable/ic_baseline_insert_photo_28"
-		app:layout_constraintTop_toBottomOf="@id/profileTakeAPhoto" />
+			<androidx.appcompat.widget.AppCompatImageView
+				android:id="@+id/close"
+				style="@style/Widget.Vexl.CloseButton.Light"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="12dp"
+				android:clickable="true"
+				android:contentDescription="?content"
+				android:focusable="true"
+				android:foreground="@drawable/ripple_mask_13_dark"
+				android:src="@drawable/ic_close"
+				app:layout_constraintBottom_toBottomOf="@id/title"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="@id/title"
+				app:tint="@color/gray_1" />
 
+			<TextView
+				android:id="@+id/title"
+				style="@style/TextAppearance.Vexl.PhotoPick.Title"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="24dp"
+				android:paddingHorizontal="16dp"
+				android:text="@string/image_picker_title"
+				app:layout_constraintEnd_toStartOf="@id/close"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<TextView
+				android:id="@+id/profileTakeAPhoto"
+				style="@style/TextAppearance.Vexl.PhotoPick.Item"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:background="?attr/selectableItemBackground"
+				android:clickable="true"
+				android:drawablePadding="16dp"
+				android:focusable="true"
+				android:padding="16dp"
+				android:text="@string/image_picker_camera"
+				app:layout_constraintTop_toBottomOf="@id/title" />
+
+			<TextView
+				android:id="@+id/profilePhotoLibrary"
+				style="@style/TextAppearance.Vexl.PhotoPick.Item"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="?attr/selectableItemBackground"
+				android:clickable="true"
+				android:drawablePadding="16dp"
+				android:focusable="true"
+				android:padding="16dp"
+				android:text="@string/image_picker_gallery"
+				app:layout_constraintTop_toBottomOf="@id/profileTakeAPhoto" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
