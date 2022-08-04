@@ -66,7 +66,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 
 	private fun updateFeeValue(value: Float) {
 		feeValue = value
-		binding.feeValue.text = context.getString(R.string.widget_fee_percent, feeValue.toString())
+		binding.feeValue.text = context.getString(R.string.widget_fee_percent, feeValue.toInt().toString())
 	}
 
 	fun getFeeValue(): FeeValue = FeeValue(

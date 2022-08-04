@@ -12,6 +12,7 @@ object CurrencyUtils {
 		locale.let {
 			NumberFormat.getCurrencyInstance(it).apply {
 				currency = Currency.getInstance(currencyCode)
+				maximumFractionDigits = 0
 			}
 		}
 }

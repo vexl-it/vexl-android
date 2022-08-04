@@ -41,8 +41,8 @@ class PriceRangeWidget @JvmOverloads constructor(
 		this.topLimit = topLimit
 		binding.rangeText.text = resources.getString(
 			R.string.price_range,
-			bottomLimit.formatCurrency("USD", resources.configuration.locale),
-			topLimit.formatCurrency("USD", resources.configuration.locale)
+			(bottomLimit.toInt()).formatCurrency("USD", resources.configuration.locale),
+			(topLimit.toInt()).formatCurrency("USD", resources.configuration.locale)
 		)
 	}
 
