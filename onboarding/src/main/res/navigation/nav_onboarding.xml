@@ -23,6 +23,10 @@
 			android:id="@+id/proceed_to_termsFragment"
 			app:destination="@id/nav_terms" />
 
+		<action
+			android:id="@+id/proceed_to_avatarFragment"
+			app:destination="@id/createAvatarFragment" />
+
 	</fragment>
 
 	<fragment
@@ -93,14 +97,14 @@
 
 		<action
 			android:id="@+id/proceed_to_avatarFragment"
-			app:destination="@id/avatarFragment" />
+			app:destination="@id/createAvatarFragment" />
 
 	</fragment>
 
 	<fragment
-		android:id="@+id/avatarFragment"
-		android:name="cz.cleevio.onboarding.ui.avatarFragment.AvatarFragment"
-		android:label="AvatarFragment"
+		android:id="@+id/createAvatarFragment"
+		android:name="cz.cleevio.onboarding.ui.createAvatarFragment.CreateAvatarFragment"
+		android:label="CreateAvatarFragment"
 		tools:layout="@layout/fragment_avatar">
 
 		<argument
@@ -113,6 +117,9 @@
 		<action
 			android:id="@+id/proceed_to_anonymize_user"
 			app:destination="@id/anonymizeUserFragment" />
+		<action
+			android:id="@+id/proceed_to_bottom_sheet_dialog"
+			app:destination="@id/photoOptionsBottomSheetDialog" />
 
 	</fragment>
 
@@ -121,5 +128,11 @@
 		android:name="cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserFragment"
 		android:label="AnonymizeUserFragment"
 		tools:layout="@layout/fragment_anonymize_user" />
+
+	<dialog
+		android:id="@+id/photoOptionsBottomSheetDialog"
+		android:name="lightbase.camera.ui.photoBottomSheet.PhotoOptionsBottomSheetDialog"
+		android:label="PhotoOptionsBottomSheetDialog"
+		tools:layout="@layout/bottom_sheet_photo_options" />
 
 </navigation>

@@ -9,29 +9,26 @@
 
 	<androidx.core.widget.NestedScrollView
 		android:id="@+id/nested_scroll_view"
-		style="@style/Widget.Vexl.MainCardView"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:fillViewport="true"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
-			android:paddingHorizontal="24dp"
-			android:paddingTop="33dp">
+			android:paddingHorizontal="24dp">
 
 			<ImageView
 				android:id="@+id/edit_avatar_close"
-				android:layout_width="34dp"
-				android:layout_height="34dp"
-				android:layout_marginTop="28dp"
-				android:layout_marginEnd="24dp"
+				android:layout_width="38dp"
+				android:layout_height="38dp"
+				android:layout_marginTop="24dp"
 				android:background="@drawable/background_rounded"
+				android:contentDescription="?content"
 				android:foreground="?attr/selectableItemBackground"
-				android:padding="4dp"
+				android:padding="8dp"
 				android:src="@drawable/ic_cross"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -40,8 +37,7 @@
 				android:id="@+id/edit_avatar_title"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginVertical="24dp"
-				android:layout_marginTop="33dp"
+				android:layout_marginTop="24dp"
 				android:layout_marginEnd="16dp"
 				android:text="@string/profile_edit_avatar_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.Section.Title"
@@ -54,7 +50,7 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginVertical="16dp"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="24dp"
 				android:layout_marginEnd="16dp"
 				android:text="@string/profile_edit_avatar_subtitle"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.Section.Description.Gray"
@@ -82,14 +78,12 @@
 				android:id="@+id/edit_avatar_corner_icon"
 				android:layout_width="36dp"
 				android:layout_height="36dp"
-				android:layout_marginTop="-12dp"
-				android:layout_marginEnd="-12dp"
+				android:layout_marginTop="-10dp"
+				android:layout_marginEnd="-10dp"
 				android:contentDescription="?attr/endIconContentDescription"
 				android:src="@drawable/ic_edit_avatar_profile"
 				android:visibility="gone"
-				app:layout_constraintBottom_toTopOf="@id/edit_avatar_image"
 				app:layout_constraintEnd_toEndOf="@id/edit_avatar_image"
-				app:layout_constraintStart_toEndOf="@id/edit_avatar_image"
 				app:layout_constraintTop_toTopOf="@id/edit_avatar_image"
 				tools:visibility="visible" />
 
@@ -117,14 +111,15 @@
 				app:layout_constraintTop_toTopOf="@id/edit_avatar_image" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</androidx.core.widget.NestedScrollView>
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/edit_avatar_save_btn"
-		style="@style/Widget.Vexl.Button"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginBottom="16dp"
 		android:elevation="0dp"
 		android:text="@string/profile_edit_avatar_action"
 		android:textAllCaps="false"

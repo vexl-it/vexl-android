@@ -1,4 +1,4 @@
-package cz.cleevio.profile.editAvatarFragment
+package cz.cleevio.onboarding.ui.createAvatarFragment
 
 import android.Manifest
 import android.net.Uri
@@ -8,26 +8,30 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.request.CachePolicy
-import cz.cleevio.core.utils.*
-import cz.cleevio.profile.R
-import cz.cleevio.profile.cameraFragment.PERMANENTLY_DENIED_DURATION
-import cz.cleevio.profile.databinding.FragmentEditAvatarBinding
+import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.core.utils.showSnackbar
+import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.onboarding.R
+import cz.cleevio.onboarding.databinding.FragmentAvatarBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.openAppSettings
 import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import lightbase.camera.ui.photoBottomSheet.PhotoClickOptions
-import lightbase.camera.ui.photoBottomSheet.PhotoOptionsBottomSheetDialog
+import lightbase.camera.ui.photoBottomSheet.PhotoOptionsBottomSheetDialog.Companion.RESULT_PHOTO_OPTIONS_RESULT
 import lightbase.camera.ui.takePhotoFragment.TakePhotoFragment
 import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
+class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 
-	override val viewModel by viewModel<EditAvatarViewModel>()
-	private val binding by viewBinding(FragmentEditAvatarBinding::bind)
+	private val args by navArgs<CreateAvatarFragmentArgs>()
+	private val binding by viewBinding(FragmentAvatarBinding::bind)
+	override val viewModel by viewModel<CreateAvatarViewModel>()
 
 	private var permissionOption: PhotoClickOptions? = null
 	private var currentPhotoPath: Uri? = null
@@ -48,7 +52,7 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 					when (permissionOption) {
 						PhotoClickOptions.TAKE_A_PICTURE -> {
 							findNavController().safeNavigateWithTransition(
-								EditAvatarFragmentDirections.proceedToTakePhotoFragment()
+								CreateAvatarFragmentDirections.proceedToTakePhotoFragment()
 							)
 						}
 						PhotoClickOptions.PICK_FROM_PHOTO_LIBRARY -> {
@@ -96,39 +100,12 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.wasSuccessful.collect {
-				if (it) {
-					findNavController().popBackStack()
-				} else {
-					// TODO finish later
-					Toast.makeText(requireContext(), "You cannot upload empty image", Toast.LENGTH_SHORT)
-						.show()
-				}
-			}
-		}
-
-		repeatScopeOnStart {
-			viewModel.userFlow.collect { user ->
-				setAvatarPlaceholderVisible(isVisible = (user?.avatar == null) && (viewModel.profileImageUri.value == null))
-
-				user?.avatar?.let { avatar ->
-					binding.editAvatarImage.load(avatar) {
-						crossfade(true)
-						fallback(R.drawable.ic_profile_avatar_placeholder)
-						error(R.drawable.ic_profile_avatar_placeholder)
-						placeholder(R.drawable.ic_profile_avatar_placeholder)
-					}
-				}
-			}
-		}
-
-		repeatScopeOnStart {
 			viewModel.profileImageUri.collect { profileImageUri ->
 				setAvatarPlaceholderVisible(profileImageUri != null)
 				currentPhotoPath = profileImageUri
 
 				profileImageUri?.let {
-					binding.editAvatarImage.load(it) {
+					binding.createAvatarImage.load(it) {
 						crossfade(true)
 						diskCachePolicy(CachePolicy.DISABLED)
 						memoryCachePolicy(CachePolicy.DISABLED)
@@ -136,29 +113,40 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 				}
 			}
 		}
+
+		repeatScopeOnStart {
+			viewModel.user.collect {
+				it?.let {
+					findNavController().safeNavigateWithTransition(
+						CreateAvatarFragmentDirections.proceedToAnonymizeUser()
+					)
+				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.loading.collect { loading ->
+				binding.continueBtn.isEnabled = !loading
+				binding.progressbar.isVisible = loading
+			}
+		}
 	}
 
 	override fun initView() {
-		binding.editAvatarClose.setOnClickListener {
+		binding.close.setOnClickListener {
 			findNavController().popBackStack()
 		}
-		binding.editAvatarCornerIcon.setOnClickListener {
-			binding.clickableWrapper.callOnClick()
-		}
-		binding.editAvatarImage.setOnClickListener {
-			binding.clickableWrapper.callOnClick()
-		}
-		binding.clickableWrapper.setOnClickListener {
+
+		binding.avatarTitle.text = getString(R.string.user_avatar_title, args.username)
+
+		binding.createAvatarImage.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
-				EditAvatarFragmentDirections.proceedToBottomSheetDialog()
+				CreateAvatarFragmentDirections.proceedToBottomSheetDialog()
 			)
 		}
-		binding.editAvatarSaveBtn.setDebouncedOnClickListener {
-			viewModel.editAvatar(requireContext().contentResolver)
-		}
 
-		setFragmentResultListener(PhotoOptionsBottomSheetDialog.RESULT_PHOTO_OPTIONS_RESULT) { _, bundle ->
-			when (bundle.getSerializable(PhotoOptionsBottomSheetDialog.RESULT_PHOTO_OPTIONS_RESULT) as? PhotoClickOptions) {
+		setFragmentResultListener(RESULT_PHOTO_OPTIONS_RESULT) { _, bundle ->
+			when (bundle.getSerializable(RESULT_PHOTO_OPTIONS_RESULT) as? PhotoClickOptions) {
 				PhotoClickOptions.PICK_FROM_PHOTO_LIBRARY -> {
 					permissionOption = PhotoClickOptions.PICK_FROM_PHOTO_LIBRARY
 					requestCameraPermissions.launch(
@@ -180,14 +168,18 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 			}
 		}
 
+		binding.continueBtn.setOnClickListener {
+			viewModel.registerUser(args.username, requireContext().contentResolver)
+		}
+
+		setupPhotoListener()
+
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
 				top = insets.top,
 				bottom = insets.bottom
 			)
 		}
-
-		setupPhotoListener()
 	}
 
 	private fun setupPhotoListener() {
@@ -197,11 +189,11 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 	}
 
 	private fun setAvatarPlaceholderVisible(isVisible: Boolean) {
-		binding.editAvatarCornerIcon.isVisible = !isVisible
-		binding.editAvatarMiddleIcon.isVisible = isVisible
+		binding.createAvatarCornerIcon.isVisible = isVisible
+		binding.createAvatarMiddleIcon.isVisible = !isVisible
 	}
 
-	private companion object {
-		const val BOTTOM_EXTRA_PADDING = 40
+	companion object {
+		const val PERMANENTLY_DENIED_DURATION = 5000
 	}
 }

@@ -1,7 +1,7 @@
 package cz.cleevio.onboarding.di
 
 import cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserViewModel
-import cz.cleevio.onboarding.ui.avatarFragment.AvatarViewModel
+import cz.cleevio.onboarding.ui.createAvatarFragment.CreateAvatarViewModel
 import cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneViewModel
 import cz.cleevio.onboarding.ui.phoneDoneFragment.PhoneDoneViewModel
 import cz.cleevio.onboarding.ui.termsFragment.TermsViewModel
@@ -50,11 +50,12 @@ val onboardingModule = module {
 	}
 
 	viewModel {
-		AvatarViewModel(
+		CreateAvatarViewModel(
 			userRepository = get(),
 			chatRepository = get(),
 			encryptedPreference = get(),
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			imageHelper = get()
 		)
 	}
 

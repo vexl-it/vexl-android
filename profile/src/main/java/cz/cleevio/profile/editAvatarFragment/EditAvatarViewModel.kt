@@ -9,12 +9,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import lightbase.camera.utils.ImageHelper
 
 
 class EditAvatarViewModel constructor(
 	private val userRepository: UserRepository,
-	navMainGraphModel: NavMainGraphModel
-) : BaseAvatarViewModel(navMainGraphModel) {
+	navMainGraphModel: NavMainGraphModel,
+	imageHelper: ImageHelper
+) : BaseAvatarViewModel(navMainGraphModel, imageHelper) {
 
 	val userFlow = userRepository.getUserFlow()
 

@@ -34,15 +34,11 @@ val networkModule = module {
 	fun provideRetrofit(
 		baseUrl: String,
 		scope: Scope,
-		interceptors: List<Interceptor>,
-		tokenAuthenticator: TokenAuthenticator?
+		interceptors: List<Interceptor>
 	): Retrofit {
 		val builder = OkHttpClient.Builder()
 		interceptors.forEach {
 			builder.addInterceptor(it)
-		}
-		tokenAuthenticator?.let {
-			builder.authenticator(it)
 		}
 		builder.connectTimeout(NETWORK_REQUEST_TIMEOUT, TimeUnit.SECONDS)
 		builder.readTimeout(NETWORK_REQUEST_TIMEOUT, TimeUnit.SECONDS)
@@ -62,19 +58,6 @@ val networkModule = module {
 		get<Retrofit>().create(RestApi::class.java)
 	}
 
-	//should be removed OR changed to use User microservice
-	single {
-		provideRetrofit(
-			scope = this,
-			interceptors = listOf(
-				get(named(NETWORK_INTERCEPTOR)),
-				get(named(HTTP_LOGGING_INTERCEPTOR))
-			),
-			tokenAuthenticator = null,
-			baseUrl = BuildConfig.API_BASE_URL
-		).create(TokenRestApi::class.java)
-	}
-
 	single {
 		provideRetrofit(
 			scope = this,
@@ -83,7 +66,6 @@ val networkModule = module {
 				get(named(NETWORK_INTERCEPTOR)),
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
-			tokenAuthenticator = get(),
 			baseUrl = BuildConfig.USER_API_BASE_URL
 		).create(UserApi::class.java)
 	}
@@ -96,7 +78,6 @@ val networkModule = module {
 				get(named(NETWORK_INTERCEPTOR)),
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
-			tokenAuthenticator = get(),
 			baseUrl = BuildConfig.CONTACT_API_BASE_URL
 		).create(ContactApi::class.java)
 	}
@@ -109,7 +90,6 @@ val networkModule = module {
 				get(named(NETWORK_INTERCEPTOR)),
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
-			tokenAuthenticator = get(),
 			baseUrl = BuildConfig.OFFER_API_BASE_URL
 		).create(OfferApi::class.java)
 	}
@@ -122,7 +102,6 @@ val networkModule = module {
 				get(named(NETWORK_INTERCEPTOR)),
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
-			tokenAuthenticator = get(),
 			baseUrl = BuildConfig.CHAT_API_BASE_URL
 		).create(ChatApi::class.java)
 	}
@@ -135,7 +114,6 @@ val networkModule = module {
 				get(named(NETWORK_INTERCEPTOR)),
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
-			tokenAuthenticator = get(),
 			baseUrl = BuildConfig.USER_API_BASE_URL
 		).create(CryptocurrencyApi::class.java)
 	}
@@ -148,7 +126,6 @@ val networkModule = module {
 				get(named(NETWORK_INTERCEPTOR)),
 				get(named(HTTP_LOGGING_INTERCEPTOR))
 			),
-			tokenAuthenticator = get(),
 			baseUrl = BuildConfig.CONTACT_API_BASE_URL
 		).create(GroupApi::class.java)
 	}
@@ -156,7 +133,6 @@ val networkModule = module {
 	single {
 		OkHttpClient.Builder()
 			.addInterceptor(get<NetworkInterceptor>())
-			.authenticator(get<TokenAuthenticator>())
 			.apply {
 				if (BuildConfig.DEBUG) {
 					addInterceptor(get<HttpLoggingInterceptor>())
@@ -238,13 +214,6 @@ val networkModule = module {
 			level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
 		}
 	} bind Interceptor::class
-
-	single {
-		TokenAuthenticator(
-			networkCache = get(),
-			tokenRestApi = get()
-		)
-	}
 
 	single {
 		NetworkError()

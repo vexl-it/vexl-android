@@ -1,4 +1,4 @@
-package cz.cleevio.onboarding.ui.avatarFragment
+package cz.cleevio.onboarding.ui.createAvatarFragment
 
 import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
@@ -16,13 +16,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import lightbase.camera.utils.ImageHelper
 
-class AvatarViewModel constructor(
+class CreateAvatarViewModel constructor(
 	private val userRepository: UserRepository,
 	private val chatRepository: ChatRepository,
 	private val encryptedPreference: EncryptedPreferenceRepository,
-	navMainGraphModel: NavMainGraphModel
-) : BaseAvatarViewModel(navMainGraphModel) {
+	navMainGraphModel: NavMainGraphModel,
+	imageHelper: ImageHelper
+) : BaseAvatarViewModel(navMainGraphModel, imageHelper) {
 
 	private val _user = MutableStateFlow<User?>(null)
 	val user = _user.asStateFlow()

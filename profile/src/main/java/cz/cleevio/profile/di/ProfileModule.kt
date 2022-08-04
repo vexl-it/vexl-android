@@ -38,7 +38,8 @@ val profileModule = module {
 	viewModel {
 		EditAvatarViewModel(
 			userRepository = get(),
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			imageHelper = get()
 		)
 	}
 
