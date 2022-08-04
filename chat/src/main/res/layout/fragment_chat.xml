@@ -133,12 +133,70 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/buttons_scroll"
-		app:layout_constraintBottom_toTopOf="@id/submit_message_wrapper"
+		app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_wrapper"
 		app:layout_constraintVertical_weight="1"
 		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 		app:stackFromEnd="true"
 		tools:itemCount="15"
 		tools:listitem="@layout/item_chat_message" />
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/identity_reveal_requested_wrapper"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:padding="16dp"
+		app:layout_constraintBottom_toTopOf="@id/submit_message_wrapper"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent">
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/profile_icon"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginTop="8dp"
+			android:background="@color/white"
+			android:scaleType="fitCenter"
+			android:src="@drawable/ic_default_avatar"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintDimensionRatio="1:1"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.AvatarImage" />
+
+		<TextView
+			android:id="@+id/identity_reveal_requested_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/chat_message_identity_reveal_request"
+			app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_description"
+			app:layout_constraintEnd_toStartOf="@id/identity_reveal_requested_button"
+			app:layout_constraintStart_toEndOf="@id/profile_icon"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/identity_reveal_requested_description"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/chat_message_identity_reveal_pending_tap"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/identity_reveal_requested_button"
+			app:layout_constraintStart_toEndOf="@id/profile_icon"
+			app:layout_constraintTop_toBottomOf="@id/identity_reveal_requested_title" />
+
+		<ImageButton
+			android:id="@+id/identity_reveal_requested_button"
+			android:layout_width="37dp"
+			android:layout_height="37dp"
+			android:layout_margin="4dp"
+			android:background="@drawable/background_button_chat_send"
+			android:backgroundTint="@null"
+			android:src="@drawable/ic_send"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/submit_message_wrapper"

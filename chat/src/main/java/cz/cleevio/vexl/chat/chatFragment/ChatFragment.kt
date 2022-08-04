@@ -47,27 +47,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		repeatScopeOnStart {
 			viewModel.hasPendingIdentityRevealRequests.collect { pending ->
-				if (pending) {
-					// TODO finish the correct graphics (I'm afraid it will have to be custom view, that graphics is too complicated for snackbar)
-					showSnackbar(
-						container = binding.container,
-						message = getString(R.string.chat_message_identity_reveal_request),
-						duration = Snackbar.LENGTH_INDEFINITE,
-						buttonText = R.string.chat_message_identity_reveal_pending_tap,
-						action = {
-							showBottomDialog(
-								RevealIdentityBottomSheetDialog(
-									onApprove = {
-										viewModel.resolveIdentityRevealRequest(true)
-									},
-									onReject = {
-										viewModel.resolveIdentityRevealRequest(false)
-									}
-								)
-							)
-						}
-					)
-				}
+				binding.identityRevealRequestedWrapper.isVisible = pending
 			}
 		}
 	}
@@ -81,6 +61,19 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 		binding.sendMessageButton.setOnClickListener {
 			sendMessage()
+		}
+
+		binding.identityRevealRequestedButton.setOnClickListener {
+			showBottomDialog(
+				RevealIdentityBottomSheetDialog(
+					onApprove = {
+						viewModel.resolveIdentityRevealRequest(true)
+					},
+					onReject = {
+						viewModel.resolveIdentityRevealRequest(false)
+					}
+				)
+			)
 		}
 
 		binding.messageEdit.setOnEditorActionListener { v, actionId, event ->
