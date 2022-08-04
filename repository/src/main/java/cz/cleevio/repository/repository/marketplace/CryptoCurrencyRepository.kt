@@ -8,5 +8,5 @@ interface CryptoCurrencyRepository {
 
 	suspend fun getCryptocurrencyPrice(crypto: String): Resource<CryptoCurrencies>
 
-	suspend fun getMarketChartData(from: String, to: String, currency: String): Resource<MarketChartEntries>
+	suspend fun getMarketChartData(duration: String, currency: String): Resource<MarketChartEntries>
 }

@@ -20,12 +20,12 @@ class CryptoCurrencyRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun getMarketChartData(from: String, to: String, currency: String): Resource<MarketChartEntries> {
+	override suspend fun getMarketChartData(duration: String, currency: String): Resource<MarketChartEntries> {
 		return tryOnline(
 			mapper = {
 				MarketChartEntries(it?.prices ?: emptyList())
 			},
-			request = { cryptocurrencyApi.getMarketChartData(from, to, currency) }
+			request = { cryptocurrencyApi.getMarketChartData(duration, currency) }
 		)
 	}
 }
