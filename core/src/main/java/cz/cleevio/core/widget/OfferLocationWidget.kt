@@ -68,6 +68,12 @@ class OfferLocationWidget @JvmOverloads constructor(
 		}
 	}
 
+	fun setupFocusChangeListener(onFocusChangeListener: (Boolean, Int) -> Unit) {
+		items.forEach {
+			it.onFocusChangeListener = onFocusChangeListener
+		}
+	}
+
 	private fun checkAddButtonVisibility() {
 		binding.locationAddNewLocation.isVisible = visibleItems.size < LOCATION_ITEMS_LIMIT
 	}

@@ -50,9 +50,9 @@
     <string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí.</string>
     <string name="avatar_welcome">Nazdar %s</string>
     <string name="verify_phone_done_title">Telefon ověřen.\nČas nastavit tvůj profil.</string>
-    <string name="image_picker_title">Foťák</string>
-    <string name="image_picker_camera">Knihovna</string>
-    <string name="image_picker_gallery">Vyber si, odkud chceš obrázek nahrát</string>
+    <string name="image_picker_camera">Foťák</string>
+    <string name="image_picker_gallery">Knihovna</string>
+    <string name="image_picker_title">Vyber si, odkud chceš obrázek nahrát</string>
     <string name="user_avatar_title">Nazdar %s\nJak vypadáš?</string>
     <string name="anonymize_user_title">Toto je tvá identita</string>
     <string name="anonymize_user_note">Bez tvého svolení nikdo tvoji identitu neuvidí.</string>

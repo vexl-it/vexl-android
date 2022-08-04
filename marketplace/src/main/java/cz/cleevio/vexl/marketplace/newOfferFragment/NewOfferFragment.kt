@@ -1,5 +1,6 @@
 package cz.cleevio.vexl.marketplace.newOfferFragment
 
+import android.content.res.Resources
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -14,6 +15,7 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.network.data.Status
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
@@ -43,13 +45,6 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(
-				top = insets.top,
-				bottom = insets.bottomWithIME
-			)
-		}
-
 		viewModel.loadMyContactsKeys()
 
 		binding.newOfferTitle.setTypeAndTitle(
@@ -75,15 +70,40 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		binding.newOfferLocation.setFragmentManager(parentFragmentManager)
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
-		binding.newOfferBtn.setText(
-			when (args.offerType) {
-				OfferType.BUY -> getString(R.string.offer_create_buy_btn)
-				OfferType.SELL -> getString(R.string.offer_create_sell_btn)
+		binding.newOfferPriceTrigger.onFocusChangeListener = { hasFocus ->
+			if (hasFocus) {
+				binding.nestedScrollView.smoothScrollTo(
+					binding.newOfferPriceTrigger.x.toInt(),
+					binding.newOfferPriceTrigger.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
+				)
 			}
-		)
+		}
+
+		binding.newOfferDeleteTrigger.onFocusChangeListener = { hasFocus ->
+			if (hasFocus) {
+				binding.nestedScrollView.smoothScrollTo(
+					binding.newOfferDeleteTrigger.x.toInt(),
+					binding.newOfferDeleteTrigger.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
+				)
+			}
+		}
+
+		binding.newOfferLocation.setupFocusChangeListener { hasFocus, y ->
+			if (hasFocus) {
+				binding.nestedScrollView.smoothScrollTo(
+					binding.newOfferLocation.x.toInt(),
+					y + binding.newOfferLocation.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
+				)
+			}
+		}
+
+		binding.newOfferBtn.text = when (args.offerType) {
+			OfferType.BUY -> getString(R.string.offer_create_buy_btn)
+			OfferType.SELL -> getString(R.string.offer_create_sell_btn)
+		}
 		binding.newOfferBtn.setOnClickListener {
 			val description = binding.newOfferDescription.text.toString()
-			if (description.isNullOrBlank()) {
+			if (description.isBlank()) {
 				Toast.makeText(requireActivity(), "Missing description", Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
@@ -135,9 +155,20 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			binding.progress.isVisible = true
 			viewModel.createOffer(params)
 		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(
+				top = insets.top
+			)
+		}
+
+		listenForIMEInset(binding.nestedScrollView) { inset ->
+			binding.container.updatePadding(bottom = inset)
+		}
 	}
 
 	companion object {
 		const val MAX_INPUT_LENGTH = 140
+		private const val DISPLAY_THIRD = 3
 	}
 }

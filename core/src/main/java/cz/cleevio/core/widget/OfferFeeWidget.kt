@@ -43,7 +43,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 		binding.feeBar.value = FEE_MIN_VALUE
 		binding.feeBar.valueFrom = FEE_MIN_VALUE
 		binding.feeBar.valueTo = FEE_MAX_VALUE
-		binding.feeBar.addOnChangeListener { slider, value, fromUser ->
+		binding.feeBar.addOnChangeListener { _, value, _ ->
 			updateFeeValue(value)
 		}
 

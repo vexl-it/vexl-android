@@ -22,8 +22,14 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 
 	private var fragmentManager: FragmentManager? = null
 
+	var onFocusChangeListener: ((Boolean) -> Unit)? = null
+
 	init {
 		setupUI()
+
+		binding.deleteInput.setOnFocusChangeListener { _, hasFocus ->
+			onFocusChangeListener?.invoke(hasFocus)
+		}
 
 		binding.deleteInput.setText("30")
 

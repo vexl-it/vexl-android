@@ -23,10 +23,10 @@
 			android:layout_height="wrap_content"
 			android:background="@null"
 			android:backgroundTint="@null"
-			app:tint="@color/gray_3"
 			android:src="@drawable/ic_close_x"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3" />
 
 		<androidx.constraintlayout.widget.Barrier
 			android:id="@+id/price_trigger_barrier"
@@ -40,6 +40,7 @@
 			style="@style/Widget.Vexl.Filters.FilterCardView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/price_trigger_barrier">
@@ -95,20 +96,20 @@
 					app:layout_constraintTop_toTopOf="parent" />
 
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Yellow"
 					android:id="@+id/price_edit"
+					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:paddingTop="18dp"
-					android:paddingBottom="16dp"
-					android:paddingStart="26dp"
-					android:paddingEnd="26dp"
 					android:imeOptions="actionDone"
 					android:inputType="numberDecimal|numberSigned"
 					android:maxLines="1"
 					android:minWidth="100dp"
+					android:paddingStart="26dp"
+					android:paddingTop="18dp"
+					android:paddingEnd="26dp"
+					android:paddingBottom="16dp"
 					android:textColor="@color/yellow_100"
+					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Yellow"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toEndOf="@id/price_divider"
