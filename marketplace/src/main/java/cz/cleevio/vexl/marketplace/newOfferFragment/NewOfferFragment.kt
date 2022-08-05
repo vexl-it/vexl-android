@@ -97,6 +97,10 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			}
 		}
 
+		binding.newOfferCurrency.onCurrencyPicked = {
+			binding.newOfferRange.setupWithCurrency(it)
+		}
+
 		binding.newOfferBtn.text = when (args.offerType) {
 			OfferType.BUY -> getString(R.string.offer_create_buy_btn)
 			OfferType.SELL -> getString(R.string.offer_create_sell_btn)
@@ -149,7 +153,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				friendLevel = friendLevel,
 				offerType = args.offerType.name,
 				expiration = expiration,
-				active = true
+				active = true,
+				currency = binding.newOfferRange.currentCurrency.name
 			)
 			binding.newOfferBtn.isVisible = false
 			binding.progress.isVisible = true

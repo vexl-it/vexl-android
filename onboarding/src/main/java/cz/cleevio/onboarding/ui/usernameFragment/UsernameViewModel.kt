@@ -21,12 +21,12 @@ class UsernameViewModel constructor(
 
 	fun checkUsernameAvailability(username: String) {
 		viewModelScope.launch(Dispatchers.IO) {
-			_loading.send(true)
-			val response = userRepository.isUsernameAvailable(username)
-			_loading.send(false)
-			response.data?.let {
-				_usernameAvailable.send(it)
-			}
+//			_loading.send(true)
+//			val response = userRepository.isUsernameAvailable(username)
+//			_loading.send(false)
+//			response.data?.let {
+			_usernameAvailable.send(UsernameAvailable(true, username))
+//			}
 		}
 	}
 }
