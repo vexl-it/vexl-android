@@ -7,6 +7,7 @@ import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.ChipViewUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.OfferWidget
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -26,7 +27,7 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 
 	lateinit var adapter: OffersAdapter
 	private val onInteractWithOffer: (String) -> Unit = { offerId ->
-		findNavController().navigate(
+		findNavController().safeNavigateWithTransition(
 			MyOffersFragmentDirections.proceedToEditOfferFragment(offerId)
 		)
 	}
@@ -78,7 +79,7 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 			OfferType.SELL -> getString(R.string.offer_create_sell_title)
 		}
 		binding.myOffersNew.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				MyOffersFragmentDirections.proceedToNewOfferFragment(args.offerType)
 			)
 		}

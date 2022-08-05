@@ -11,32 +11,31 @@
 			android:id="@+id/state_active"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textAppearance="@style/TextAppearance.Vexl.Offer.State.Active"
-			android:paddingHorizontal="16dp"
 			android:drawablePadding="8dp"
-			app:layout_constraintTop_toTopOf="parent"
+			android:textAppearance="@style/TextAppearance.Vexl.Offer.State.Active"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
 			tools:drawableStart="@drawable/ic_ellipse_green"
-			tools:textColor="@color/green_100"
-			tools:text="Active" />
+			tools:text="Active"
+			tools:textColor="@color/green_100" />
 
 		<com.google.android.material.card.MaterialCardView
 			android:id="@+id/state_delete"
 			style="@style/Widget.Vexl.Offer.StateCardView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintEnd_toEndOf="parent">
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:drawablePadding="6dp"
+				android:padding="8dp"
 				android:text="@string/widget_offer_state_delete"
 				android:textAppearance="@style/TextAppearance.Vexl.Offer.State.Btn"
-				app:drawableStartCompat="@drawable/ic_delete"
-				android:drawablePadding="6dp"
-				android:padding="8dp" />
+				app:drawableStartCompat="@drawable/ic_delete" />
 		</com.google.android.material.card.MaterialCardView>
 
 		<com.google.android.material.card.MaterialCardView
@@ -45,17 +44,17 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginHorizontal="8dp"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintEnd_toStartOf="@id/state_delete">
+			app:layout_constraintEnd_toStartOf="@id/state_delete"
+			app:layout_constraintTop_toTopOf="parent">
 
 			<TextView
 				android:id="@+id/state_pause_text"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:drawableStartCompat="@drawable/ic_pause"
 				android:drawablePadding="6dp"
 				android:padding="8dp"
-				android:textAppearance="@style/TextAppearance.Vexl.Offer.State.Btn" />
+				android:textAppearance="@style/TextAppearance.Vexl.Offer.State.Btn"
+				app:drawableStartCompat="@drawable/ic_pause" />
 
 		</com.google.android.material.card.MaterialCardView>
 
