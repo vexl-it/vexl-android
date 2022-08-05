@@ -51,6 +51,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				binding.identityRevealRequestedWrapper.isVisible = pending
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.canRequestIdentity.collect { canRequestIdentity ->
+				binding.revealIdentityBtn.isEnabled = canRequestIdentity
+			}
+		}
 	}
 
 	override fun initView() {

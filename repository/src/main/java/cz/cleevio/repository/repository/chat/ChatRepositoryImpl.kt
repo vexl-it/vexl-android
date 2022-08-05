@@ -558,6 +558,20 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
+	override fun canRequestIdentity(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean> {
+		return chatMessageDao.listPendingAndApprovedIdentityReveals(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.isEmpty()
+		}
+	}
+
 	override fun solveIdentityRevealRequest(
 		inboxPublicKey: String,
 		firstKey: String,
