@@ -12,12 +12,11 @@ import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class VerifyPhoneViewModel constructor(
@@ -32,8 +31,14 @@ class VerifyPhoneViewModel constructor(
 	private val _verificationChannel = Channel<Resource<ConfirmCode>>(Channel.CONFLATED)
 	val verificationChannel: Flow<Resource<ConfirmCode>> = _verificationChannel.receiveAsFlow()
 
+	private val _countDownState: MutableStateFlow<CountDownState> =
+		MutableStateFlow(CountDownState.Counting(COUNTDOWN_LENGTH))
+	val countdownState: StateFlow<CountDownState> = _countDownState.asStateFlow()
+
 	private val _errorFlow = MutableSharedFlow<ErrorIdentification>()
 	val errorFlow = _errorFlow.asSharedFlow()
+
+	private val countDownTimer = CoroutineScope(viewModelScope.coroutineContext)
 
 	fun sendVerificationCode(verificationCode: String) {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -89,5 +94,30 @@ class VerifyPhoneViewModel constructor(
 
 	fun resetKeys() {
 		userUtils.resetKeys()
+	}
+
+	fun restartCountDown() {
+		countDownTimer.launch {
+			// TODO call backend for new sms
+
+			repeat((COUNTDOWN_LENGTH / COUNTDOWN_STEP)) {
+				_countDownState.emit(CountDownState.Counting(COUNTDOWN_LENGTH - it * COUNTDOWN_STEP))
+				delay(COUNTDOWN_STEP.toLong())
+			}
+			_countDownState.emit(CountDownState.Finished)
+		}
+	}
+
+	sealed class CountDownState {
+		data class Counting(
+			val timeLeftInMillis: Int
+		) : CountDownState()
+
+		object Finished : CountDownState()
+	}
+
+	companion object {
+		private const val COUNTDOWN_LENGTH = 30_000
+		private const val COUNTDOWN_STEP = 500
 	}
 }

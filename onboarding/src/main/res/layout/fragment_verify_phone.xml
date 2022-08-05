@@ -91,19 +91,20 @@
 				tools:text="12346" />
 
 			<TextView
+				android:id="@+id/verify_phone_note"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="18dp"
-				android:layout_marginTop="16dp"
-				android:drawablePadding="8dp"
-				android:text="@string/init_phone_note"
+				android:foreground="?attr/selectableItemBackground"
+				android:clickable="true"
+				android:focusable="true"
+				android:gravity="center"
+				android:paddingVertical="16dp"
 				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Note"
-				android:visibility="gone"
-				app:drawableStartCompat="@drawable/ic_eye"
-				app:drawableTint="@color/gray_3"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/verify_phone_input" />
+				app:layout_constraintTop_toBottomOf="@id/verify_phone_input"
+				tools:text="@string/init_phone_note" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</com.google.android.material.card.MaterialCardView>

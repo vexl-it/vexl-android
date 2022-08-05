@@ -1,6 +1,7 @@
 package cz.cleevio.onboarding.ui.verifyPhoneFragment
 
 import android.graphics.Color
+import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -29,12 +30,18 @@ import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.milliseconds
 
 class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
 	private val args by navArgs<VerifyPhoneFragmentArgs>()
 	override val viewModel by viewModel<VerifyPhoneViewModel> { parametersOf(args.phoneNumber, args.verificationId) }
 	private val binding by viewBinding(FragmentVerifyPhoneBinding::bind)
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		viewModel.restartCountDown()
+	}
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
@@ -62,6 +69,26 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 				//todo: any other expected errors?
 			}
 		}
+
+		repeatScopeOnStart {
+			viewModel.countdownState.collect {
+				when (it) {
+					is VerifyPhoneViewModel.CountDownState.Counting -> {
+						binding.verifyPhoneNote.text = getString(
+							R.string.verify_phone_info_countdown,
+							it.timeLeftInMillis.milliseconds.inWholeSeconds
+						)
+						binding.verifyPhoneNote.isEnabled = false
+					}
+					VerifyPhoneViewModel.CountDownState.Finished -> {
+						binding.verifyPhoneNote.text = getString(
+							R.string.verify_phone_info_btn
+						)
+						binding.verifyPhoneNote.isEnabled = true
+					}
+				}
+			}
+		}
 	}
 
 	override fun initView() {
@@ -82,6 +109,10 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
 		binding.verifyPhoneInput.doAfterTextChanged {
 			binding.continueBtn.isEnabled = it.toString().isNotEmpty()
+		}
+
+		binding.verifyPhoneNote.setOnClickListener {
+			viewModel.restartCountDown()
 		}
 
 		listenForInsets(binding.parent) { insets ->
