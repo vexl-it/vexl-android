@@ -19,6 +19,7 @@ import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
+import cz.cleevio.network.request.contact.CommonFriendsRequest
 import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.network.request.contact.CreateUserRequest
 import cz.cleevio.network.response.contact.ContactLevelApi
@@ -405,13 +406,17 @@ class ContactRepositoryImpl constructor(
 		val facebookContacts = contactApi.getCommonContacts(
 			hash = encryptedPreference.facebookHash,
 			signature = encryptedPreference.facebookSignature,
-			publicKeys = contactsPublicKeys
+			commonFriendsRequest = CommonFriendsRequest(
+				publicKeys = contactsPublicKeys
+			)
 		)
 
 		val phoneContacts = contactApi.getCommonContacts(
 			hash = encryptedPreference.hash,
 			signature = encryptedPreference.signature,
-			publicKeys = contactsPublicKeys
+			commonFriendsRequest = CommonFriendsRequest(
+				publicKeys = contactsPublicKeys
+			)
 		)
 
 		val commonFriendsMap = mutableMapOf<String, List<BaseContact>>()
