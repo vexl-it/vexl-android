@@ -135,15 +135,6 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable> {
-		return tryOnline(
-			mapper = {
-				it?.fromNetwork(username)
-			},
-			request = { userRestApi.postUserUsernameAvailable(UsernameAvailableRequest(username = username)) }
-		)
-	}
-
 	override suspend fun updateUser(
 		username: String?, avatar: String?, avatarImageExtension: String?
 	): Resource<User> {

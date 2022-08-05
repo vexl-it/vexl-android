@@ -3,7 +3,10 @@ package cz.cleevio.repository.repository.user
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.request.user.UserAvatar
 import cz.cleevio.repository.model.UserProfile
-import cz.cleevio.repository.model.user.*
+import cz.cleevio.repository.model.user.ConfirmCode
+import cz.cleevio.repository.model.user.ConfirmPhone
+import cz.cleevio.repository.model.user.Signature
+import cz.cleevio.repository.model.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -36,8 +39,6 @@ interface UserRepository {
 	suspend fun registerUser(username: String, avatar: UserAvatar?): Resource<User>
 
 	//----------------------------------
-
-	suspend fun isUsernameAvailable(username: String): Resource<UsernameAvailable>
 
 	suspend fun updateUser(
 		username: String? = null, avatar: String? = null, avatarImageExtension: String? = null

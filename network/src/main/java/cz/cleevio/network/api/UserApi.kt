@@ -1,7 +1,13 @@
 package cz.cleevio.network.api
 
-import cz.cleevio.network.request.user.*
-import cz.cleevio.network.response.user.*
+import cz.cleevio.network.request.user.ConfirmChallengeRequest
+import cz.cleevio.network.request.user.ConfirmCodeRequest
+import cz.cleevio.network.request.user.ConfirmPhoneRequest
+import cz.cleevio.network.request.user.UserRequest
+import cz.cleevio.network.response.user.ConfirmCodeResponse
+import cz.cleevio.network.response.user.ConfirmPhoneResponse
+import cz.cleevio.network.response.user.SignatureResponse
+import cz.cleevio.network.response.user.UserResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -22,11 +28,6 @@ interface UserApi {
 	suspend fun postUserConfirmChallenge(
 		@Body confirmChallengeRequest: ConfirmChallengeRequest
 	): Response<SignatureResponse>
-
-	@POST("user/username/availability")
-	suspend fun postUserUsernameAvailable(
-		@Body usernameAvailableRequest: UsernameAvailableRequest
-	): Response<UsernameAvailableResponse>
 
 	@GET("user/me")
 	suspend fun getUserMe(): Response<UserResponse>
