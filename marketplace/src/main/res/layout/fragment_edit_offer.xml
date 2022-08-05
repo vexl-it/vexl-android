@@ -82,6 +82,7 @@
 				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="12dp"
 				android:background="@drawable/background_input_gray"
+				android:gravity="top"
 				android:maxLength="140"
 				android:minLines="3"
 				android:textAppearance="@style/TextAppearance.Vexl.Filter.NewOffer.Gray"
