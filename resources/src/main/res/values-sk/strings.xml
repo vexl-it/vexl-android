@@ -42,6 +42,8 @@
     <string name="verify_phone_title">Poslali jsme ti kód</string>
     <string name="verify_phone_subtitle">Zadej ho níže a ověř %s</string>
     <string name="verify_phone_hint">Aktivační kód</string>
+    <string name="verify_phone_info_countdown">Neobdržel jsi kód? Zkus poslat znova za %s s</string>
+    <string name="verify_phone_info_btn">Neobdržel jsi kód? Zkus poslat znova</string>
 
     <!-- Register Name and Avatar -->
     <string name="username_title">Jak ti kamarádi říkají?</string>
