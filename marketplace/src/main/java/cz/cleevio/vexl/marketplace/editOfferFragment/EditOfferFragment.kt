@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.marketplace.editOfferFragment
 
 import android.content.res.Resources
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -14,9 +15,10 @@ import cz.cleevio.core.widget.*
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
+import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentEditOfferBinding
 import cz.cleevio.vexl.marketplace.newOfferFragment.NewOfferFragment
@@ -54,6 +56,31 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			viewModel.offer.collect {
 				it?.let { offer ->
 					setupOffer(offer)
+				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.suggestions.collect { (editText, queries) ->
+				if (queries.isEmpty()) return@collect
+				if (queries.map { it.city }.contains((editText as? AutoCompleteTextView)?.text.toString()))
+					return@collect
+
+				(editText as? AutoCompleteTextView)?.setAdapter(null)
+				val adapter = LocationSuggestionAdapter(queries, requireActivity())
+
+				(editText as? AutoCompleteTextView)?.dropDownVerticalOffset =
+					requireContext().dpValueToPx(SUGGESTION_PADDING).toInt()
+				(editText as? AutoCompleteTextView)?.setDropDownBackgroundResource(R.drawable.background_rounded)
+				(editText as? AutoCompleteTextView)?.setAdapter(adapter)
+				(editText as? AutoCompleteTextView)?.showDropDown()
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.queryForSuggestions.collect { (view, query) ->
+				view?.let {
+					viewModel.getDebouncedSuggestions(query, it)
 				}
 			}
 		}
@@ -173,6 +200,10 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			binding.amountRange.setupWithCurrency(it)
 		}
 
+		binding.newOfferLocation.setupOnTextChanged { query, view ->
+			viewModel.getSuggestions(query, view)
+		}
+
 		binding.descriptionCounter.text = getString(R.string.widget_offer_description_counter, 0, MAX_INPUT_LENGTH)
 		binding.newOfferDescription.addTextChangedListener {
 			binding.descriptionCounter.text = getString(
@@ -185,7 +216,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 
 		binding.newOfferBtn.setOnClickListener {
 			val description = binding.newOfferDescription.text.toString()
-			if (description.isNullOrBlank()) {
+			if (description.isBlank()) {
 				Toast.makeText(requireActivity(), "Missing description", Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
@@ -242,17 +273,15 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
-				top = insets.top
+				top = insets.top,
+				bottom = insets.bottomWithIME
 			)
-		}
-
-		listenForIMEInset(binding.nestedScrollView) { inset ->
-			binding.container.updatePadding(bottom = inset)
 		}
 	}
 
 	companion object {
 		const val MAX_INPUT_LENGTH = 140
 		private const val DISPLAY_THIRD = 3
+		private const val SUGGESTION_PADDING = 8
 	}
 }

@@ -46,11 +46,4 @@ interface OfferApi {
 	suspend fun deleteOffersPrivatePart(
 		@Body deletePrivatePartRequest: DeletePrivatePartRequest
 	): Response<ResponseBody>
-
-	@GET("suggest")
-	suspend fun getSuggestions(
-		@Query("count") count: Int,
-		@Query("phrase") phrase: String,
-		@Query("lang") languages: String
-	): Response<LocationSuggestionResponse>
 }

@@ -2,6 +2,7 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
@@ -71,6 +72,12 @@ class OfferLocationWidget @JvmOverloads constructor(
 	fun setupFocusChangeListener(onFocusChangeListener: (Boolean, Int) -> Unit) {
 		items.forEach {
 			it.onFocusChangeListener = onFocusChangeListener
+		}
+	}
+
+	fun setupOnTextChanged(onTextChanged: (String, View) -> Unit) {
+		items.forEach {
+			it.onTextChanged = onTextChanged
 		}
 	}
 

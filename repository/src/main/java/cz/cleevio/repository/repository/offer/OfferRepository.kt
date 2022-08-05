@@ -3,6 +3,7 @@ package cz.cleevio.repository.repository.offer
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.request.offer.DeletePrivatePartRequest
+import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.MyOffer
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
@@ -49,5 +50,5 @@ interface OfferRepository {
 
 	suspend fun getMyOffersWithoutInbox(): List<MyOffer>
 
-	suspend fun getLocationSuggestions(count: Int, query: String, language: String): Resource<List<String>>
+	suspend fun getLocationSuggestions(count: Int, query: String, language: String): Resource<List<LocationSuggestion>>
 }

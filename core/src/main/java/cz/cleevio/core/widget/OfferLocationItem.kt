@@ -2,6 +2,7 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentManager
@@ -24,7 +25,7 @@ class OfferLocationItem @JvmOverloads constructor(
 	private var fragmentManager: FragmentManager? = null
 
 	var onFocusChangeListener: ((Boolean, Int) -> Unit)? = null
-	var onTextChanged: ((String) -> Unit)? = null
+	var onTextChanged: ((String, View) -> Unit)? = null
 
 	init {
 		setupUI()
@@ -38,7 +39,7 @@ class OfferLocationItem @JvmOverloads constructor(
 		}
 
 		binding.locationItemText.doAfterTextChanged {
-			onTextChanged?.invoke(it.toString())
+			onTextChanged?.invoke(it.toString(), binding.locationItemText)
 		}
 
 		binding.locationItemRadius.setOnClickListener {

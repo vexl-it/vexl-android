@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.marketplace.newOfferFragment
 
 import android.content.res.Resources
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -15,8 +16,9 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.network.data.Status
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,6 +41,31 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 						binding.newOfferBtn.isVisible = true
 						binding.progress.isVisible = false
 					}
+				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.suggestions.collect { (editText, queries) ->
+				if (queries.isEmpty()) return@collect
+				if (queries.map { it.city }.contains((editText as? AutoCompleteTextView)?.text.toString()))
+					return@collect
+
+				(editText as? AutoCompleteTextView)?.setAdapter(null)
+				val adapter = LocationSuggestionAdapter(queries, requireActivity())
+
+				(editText as? AutoCompleteTextView)?.dropDownVerticalOffset =
+					requireContext().dpValueToPx(SUGGESTION_PADDING).toInt()
+				(editText as? AutoCompleteTextView)?.setDropDownBackgroundResource(R.drawable.background_rounded)
+				(editText as? AutoCompleteTextView)?.setAdapter(adapter)
+				(editText as? AutoCompleteTextView)?.showDropDown()
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.queryForSuggestions.collect { (view, query) ->
+				view?.let {
+					viewModel.getDebouncedSuggestions(query, it)
 				}
 			}
 		}
@@ -95,6 +122,10 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 					y + binding.newOfferLocation.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
 				)
 			}
+		}
+
+		binding.newOfferLocation.setupOnTextChanged { query, view ->
+			viewModel.getSuggestions(query, view)
 		}
 
 		binding.newOfferCurrency.onCurrencyPicked = {
@@ -163,17 +194,15 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
-				top = insets.top
+				top = insets.top,
+				bottom = insets.bottomWithIME
 			)
-		}
-
-		listenForIMEInset(binding.nestedScrollView) { inset ->
-			binding.container.updatePadding(bottom = inset)
 		}
 	}
 
 	companion object {
 		const val MAX_INPUT_LENGTH = 140
 		private const val DISPLAY_THIRD = 3
+		private const val SUGGESTION_PADDING = 8
 	}
 }
