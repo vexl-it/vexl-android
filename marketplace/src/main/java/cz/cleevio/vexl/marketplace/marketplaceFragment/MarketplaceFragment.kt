@@ -5,7 +5,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleevio.core.base.BaseGraphFragment
-import cz.cleevio.core.utils.safeNavigate
 import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
@@ -55,7 +54,7 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 				)
 			},
 			navigateToMyOffers = { offerType ->
-				findNavController().navigate(
+				findNavController().safeNavigateWithTransition(
 					MarketplaceFragmentDirections.proceedToMyOffersFragment(offerType)
 				)
 			},
