@@ -365,6 +365,8 @@
 
 	<style name="TextAppearance.Vexl.ParagraphSmallBold" parent="TextAppearance.Vexl.ParagraphSmall">
 		<item name="lineHeight">16sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Chat.User" parent="">
@@ -431,6 +433,8 @@
 
 	<style name="TextAppearance.Vexl.Offer.UserType" parent="TextAppearance.Vexl.DescriptionMicro">
 		<item name="lineHeight">14.94sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
 		<item name="android:textColor">@color/gray_4</item>
 	</style>
 
