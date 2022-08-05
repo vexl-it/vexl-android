@@ -54,6 +54,13 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.canRequestIdentity.collect { canRequestIdentity ->
 				binding.revealIdentityBtn.isEnabled = canRequestIdentity
+				binding.revealIdentityBtn.setBackgroundColor(
+					if (canRequestIdentity) {
+						requireContext().getColor(R.color.gray_1)
+					} else {
+						requireContext().getColor(R.color.gray_2)
+					}
+				)
 			}
 		}
 	}
