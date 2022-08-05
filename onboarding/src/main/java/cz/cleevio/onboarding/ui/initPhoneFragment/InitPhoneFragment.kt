@@ -59,6 +59,10 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 	override fun initView() {
 		phoneNumberUtil = PhoneNumberUtil.createInstance(requireContext())
 
+		binding.close.setOnClickListener {
+			findNavController().popBackStack()
+		}
+
 		binding.initPhoneInput.requestFocus()
 		binding.initPhoneInput.showKeyboard()
 
