@@ -3,6 +3,7 @@ package cz.cleevio.cache.dao
 import androidx.room.Dao
 import androidx.room.Query
 import cz.cleevio.cache.entity.ChatMessageEntity
+import cz.cleevio.cache.entity.MessageKeyPair
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -30,15 +31,17 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 	fun getLatestBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): ChatMessageEntity?
 
 	//get all unique public keys of persons you have talked with
+	//we want all different sender x recipient unique combinations
 	@Query(
-		"SELECT DISTINCT senderPublicKey " +
+		"SELECT senderPublicKey, recipientPublicKey " +
 			"FROM ChatMessageEntity " +
-			"WHERE senderPublicKey != inboxPublicKey " +
-			" AND type NOT IN ('REQUEST_MESSAGING')"
-		//TODO: change to this
-		// " AND type NOT IN ('COMMUNICATION_REQUEST', 'COMMUNICATION_REQUEST_DENIED')"
+			"WHERE " +
+			"inboxPublicKey = :inboxPublicKey " +
+			" AND NOT (type == 'REQUEST_MESSAGING' AND isMine=0)" +
+			" AND NOT (type == 'DISAPPROVE_MESSAGING' AND isMine=1)" +
+			"GROUP BY senderPublicKey, recipientPublicKey"
 	)
-	fun getAllContactKeys(): List<String>
+	fun getAllContactKeys(inboxPublicKey: String): List<MessageKeyPair>
 
 	@Suppress("FunctionMaxLength")
 	@Query(
