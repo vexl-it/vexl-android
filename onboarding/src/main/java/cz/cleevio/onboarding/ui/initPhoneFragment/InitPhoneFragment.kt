@@ -23,6 +23,7 @@ import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.hideKeyboard
 import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.lightbase.core.extensions.showToast
 import io.michaelrocks.libphonenumber.android.NumberParseException
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -62,6 +63,11 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		binding.initPhoneInput.showKeyboard()
 
 		binding.termsContinueBtn.setOnClickListener {
+			if (binding.initPhoneInput.text.toString().length != resources.getInteger(R.integer.phone_input_length)) {
+				showToast(getString(R.string.init_phone_length_not_valid))
+				return@setOnClickListener
+			}
+
 			binding.root.hideKeyboard()
 			val phoneNumber = binding.initPhoneInput.text.toString()
 			viewModel.sendPhoneNumber(phoneNumber)
@@ -83,6 +89,8 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		}
 
 		binding.initPhoneInput.addTextChangedListener(textWatcher)
+
+		binding.initPhoneInput.setText(PREFILLED_PREFIX)
 
 		listenForInsets(binding.parent) { insets ->
 			binding.container.updatePadding(top = insets.top)
@@ -128,6 +136,10 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		} ?: return null
 
 		return phoneNumberUtil.getRegionCodeForCountryCode(phoneNumber.countryCode)
+	}
+
+	private companion object {
+		private const val PREFILLED_PREFIX = "+420"
 	}
 }
 
