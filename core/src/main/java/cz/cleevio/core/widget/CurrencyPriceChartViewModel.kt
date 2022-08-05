@@ -44,18 +44,12 @@ class CurrencyPriceChartViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			dateTimeRange = timeRange
 
-			//val chartTimeRange = getChartTimeRange(timeRange)
-			val mockedResponse = getMockedMarketResponse()
-/*
 			val response = cryptoCurrencyRepository.getMarketChartData(
-				from = chartTimeRange.first,
-				to = chartTimeRange.second,
+				duration = timeRange.toString(),
 				currency = encryptedPreferenceRepository.selectedCurrency
 			)
 
- */
-			// TODO Revert later
-			mockedResponse.let { marketRates ->
+			response.data?.entries?.let { marketRates ->
 				val entries = marketRates.map { entries ->
 					Entry(
 						entries[0].toFloat(),

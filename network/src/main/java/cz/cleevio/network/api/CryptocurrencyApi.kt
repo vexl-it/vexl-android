@@ -16,8 +16,7 @@ interface CryptocurrencyApi {
 
 	@GET("cryptocurrencies/bitcoin/market_chart")
 	suspend fun getMarketChartData(
-		@Query("from") from: String,
-		@Query("to") to: String,
+		@Query("duration") duration: String,
 		@Query("currency") currency: String
 	): Response<MarketChartResponse>
 }
