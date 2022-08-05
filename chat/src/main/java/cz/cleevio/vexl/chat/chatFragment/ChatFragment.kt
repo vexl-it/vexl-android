@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.chat.chatFragment
 
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
