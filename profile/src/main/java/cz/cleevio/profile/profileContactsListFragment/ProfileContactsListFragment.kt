@@ -47,7 +47,7 @@ class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen
 			}
 		}
 		repeatScopeOnStart {
-			viewModel.uploadSuccessful.collect {
+			viewModel.successful.collect {
 				when (openedFromScreen) {
 					OpenedFromScreen.PROFILE -> {
 						viewModel.navMainGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.Profile)

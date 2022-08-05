@@ -10,6 +10,8 @@ interface ContactRepository {
 
 	suspend fun uploadAllMissingContacts(contacts: List<Contact>): Resource<ContactImport>
 
+	suspend fun deleteContacts(contacts: List<Contact>): Resource<Unit>
+
 	suspend fun uploadAllMissingFBContacts(identifiers: List<String>): Resource<ContactImport>
 
 	suspend fun registerUser(): Resource<Unit>

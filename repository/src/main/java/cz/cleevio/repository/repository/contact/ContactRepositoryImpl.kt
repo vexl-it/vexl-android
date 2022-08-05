@@ -22,6 +22,7 @@ import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.contact.CommonFriendsRequest
 import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.network.request.contact.CreateUserRequest
+import cz.cleevio.network.request.contact.DeleteContactRequest
 import cz.cleevio.network.response.contact.ContactLevelApi
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.R
@@ -147,6 +148,16 @@ class ContactRepositoryImpl constructor(
 		Timber.tag("ContactSync").d("Replacing ${contactList.size} contacts in the database DONE")
 	}
 
+	private suspend fun deleteContactsFromDB(contactList: List<Contact>) {
+		Timber.tag("DeleteContacts").d("Replacing ${contactList.size} contacts in the database")
+		contactList.forEach { contact ->
+			contactDao.delete(
+				contact.toDao()
+			)
+		}
+		Timber.tag("DeleteContacts").d("Replacing ${contactList.size} contacts in the database DONE")
+	}
+
 	override suspend fun checkAllContacts(hashedPhoneNumbers: List<String>) = tryOnline(
 		request = { contactApi.postContactNotImported(ContactRequest(hashedPhoneNumbers)) },
 		mapper = { it?.newContacts.orEmpty() }
@@ -175,6 +186,36 @@ class ContactRepositoryImpl constructor(
 			doOnSuccess = {
 				//save contacts to DB including the hashed number
 				saveContactsToDB(hashedContacts)
+			}
+		)
+	}
+
+	override suspend fun deleteContacts(contacts: List<Contact>): Resource<Unit> {
+		Timber.tag("DeleteContacts").d("Starting hashing ${contacts.size} contacts before uploading")
+		// hash phone numbers if we are here from onboarding.
+		// that means that we have skipped hashing before `not-imported` EP
+		val hashedContacts = contacts.map {
+			if (it.hashedPhoneNumber.isBlank()) {
+				it.copy(hashedPhoneNumber = HmacCryptoLib.digest(HMAC_PASSWORD, it.phoneNumber))
+			} else {
+				it
+			}
+		}
+
+		//take those hashed phone numbers as identifiers
+		val identifiers = hashedContacts.map {
+			it.hashedPhoneNumber
+		}
+		Timber.tag("DeleteContacts").d("Hashing is DONE")
+		return tryOnline(
+			//send identifiers to BE
+			request =
+			{ contactApi.deleteContact(deleteContactRequest = DeleteContactRequest(identifiers)) },
+			mapper = { },
+			doOnSuccess =
+			{
+				//delete contacts from DB including the hashed number
+				deleteContactsFromDB(hashedContacts)
 			}
 		)
 	}

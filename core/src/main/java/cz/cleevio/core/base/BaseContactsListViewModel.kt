@@ -14,8 +14,10 @@ import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -30,11 +32,17 @@ open class BaseContactsListViewModel constructor(
 	private val _contactsToBeShowed = MutableSharedFlow<List<Contact>>(replay = 1)
 	val contactsToBeShowed = _contactsToBeShowed.asSharedFlow()
 
-	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
-	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
-
 	private val _progressFlow = MutableSharedFlow<Boolean>(replay = 1)
 	val progressFlow = _progressFlow.asSharedFlow()
+
+	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
+	private val _deleteSuccessful = MutableSharedFlow<Boolean>(replay = 1)
+
+	val successful: Flow<Boolean> = _uploadSuccessful.combine(
+		_deleteSuccessful
+	) { upload, delete ->
+		upload and delete
+	}
 
 	//get all contacts from phone as input
 	private fun checkNotSyncedContacts(localContacts: List<Contact>) {
@@ -72,7 +80,6 @@ open class BaseContactsListViewModel constructor(
 						newList.add(contact.apply { markedForUpload = true }.copy())
 					}
 				}
-
 				contactsToBeShowedList = newList
 
 				Timber.tag("ContactSync").d("All done, emitting contacts")
@@ -143,14 +150,31 @@ open class BaseContactsListViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
 			val contactsToBeUploaded = contactsToBeShowedList.filter { it.markedForUpload }
-			val response = contactRepository.uploadAllMissingContacts(contactsToBeUploaded)
+			val contactsToBeDeleted = contactsToBeShowedList.filter { !it.markedForUpload }
+			val uploadResponse = contactRepository.uploadAllMissingContacts(contactsToBeUploaded)
+			val deleteResponse = contactRepository.deleteContacts(contactsToBeDeleted)
 			_progressFlow.emit(false)
-			when (response.status) {
-				is Status.Success -> response.data?.let { data ->
+			when (uploadResponse.status) {
+				is Status.Success -> uploadResponse.data?.let { data ->
 					_uploadSuccessful.emit(data.imported)
 					encryptedPreferenceRepository.numberOfImportedContacts = contactsToBeUploaded.size
 				}
 				is Status.Error -> _uploadSuccessful.emit(false)
+				else -> {
+					//do nothing?
+				}
+			}
+			when (deleteResponse.status) {
+				is Status.Success -> deleteResponse.data?.let {
+					_deleteSuccessful.emit(true)
+					// Added due to if we try to import empty list of contacts it fails
+					// but if we deleted all of them we need to propagate the number of imported contacts into the profile section
+					// Otherwise if there was nothing to delete, it's a bug and the number should not be propagated
+					if (contactsToBeUploaded.isEmpty() && contactsToBeDeleted.isNotEmpty()) {
+						encryptedPreferenceRepository.numberOfImportedContacts = 0
+					}
+				}
+				is Status.Error -> _deleteSuccessful.emit(false)
 				else -> {
 					//do nothing?
 				}

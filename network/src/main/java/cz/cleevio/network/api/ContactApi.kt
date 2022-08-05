@@ -29,8 +29,7 @@ interface ContactApi {
 		@Query("level") levelApi: ContactLevelApi
 	): Response<BasePagedResponse<ContactResponse>>
 
-	//todo: should this be ever used?
-	@DELETE("contact")
+	@HTTP(method = "DELETE", path = "contacts", hasBody = true)
 	suspend fun deleteContact(
 		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
 		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
