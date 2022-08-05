@@ -56,9 +56,7 @@ class RequestOfferViewModel constructor(
 				is Status.Error -> {
 					//any special handling?
 				}
-				else -> {
-					//nothing
-				}
+				else -> Unit
 			}
 
 			_isRequesting.emit(false)

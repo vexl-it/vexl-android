@@ -160,9 +160,7 @@ open class BaseContactsListViewModel constructor(
 					encryptedPreferenceRepository.numberOfImportedContacts = contactsToBeUploaded.size
 				}
 				is Status.Error -> _uploadSuccessful.emit(false)
-				else -> {
-					//do nothing?
-				}
+				else -> Unit
 			}
 			when (deleteResponse.status) {
 				is Status.Success -> deleteResponse.data?.let {
@@ -175,9 +173,7 @@ open class BaseContactsListViewModel constructor(
 					}
 				}
 				is Status.Error -> _deleteSuccessful.emit(false)
-				else -> {
-					//do nothing?
-				}
+				else -> Unit
 			}
 		}
 	}
