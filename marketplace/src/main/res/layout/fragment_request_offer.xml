@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:background="@color/black"
-	xmlns:tools="http://schemas.android.com/tools">
+	tools:background="@color/black">
 
 	<androidx.core.widget.NestedScrollView
 		android:id="@+id/nested_scroll_view"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:fillViewport="true"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+		app:layout_constraintTop_toTopOf="parent">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
@@ -25,10 +25,10 @@
 				android:id="@+id/offer_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="16dp"
 				android:text="@string/request_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Request.Title"
-				android:layout_marginTop="16dp"
-				android:layout_marginStart="16dp"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,17 +39,17 @@
 				android:layout_height="wrap_content"
 				android:layout_margin="16dp"
 				android:src="@drawable/ic_close_x"
-				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintEnd_toEndOf="parent" />
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 
 			<cz.cleevio.core.widget.OfferWidget
 				android:id="@+id/offer_widget"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="16dp"
-				app:layout_constraintTop_toBottomOf="@+id/offer_title"
+				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toEndOf="parent" />
+				app:layout_constraintTop_toBottomOf="@+id/offer_title" />
 
 			<com.google.android.material.card.MaterialCardView
 				android:id="@+id/common_friends_placeholder"
@@ -58,9 +58,9 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="16dp"
 				app:cardBackgroundColor="@color/gray_1"
-				app:layout_constraintTop_toBottomOf="@+id/offer_widget"
+				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toEndOf="parent">
+				app:layout_constraintTop_toBottomOf="@+id/offer_widget">
 
 				<androidx.constraintlayout.widget.ConstraintLayout
 					android:layout_width="match_parent"
@@ -72,9 +72,9 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Request.Friends"
-						tools:text="@string/request_common_friends"
+						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toTopOf="parent"
-						app:layout_constraintStart_toStartOf="parent" />
+						tools:text="@string/request_common_friends" />
 
 					<androidx.recyclerview.widget.RecyclerView
 						android:id="@+id/common_friends_list"
@@ -84,8 +84,8 @@
 						android:orientation="horizontal"
 						app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintTop_toBottomOf="@id/common_friends_number"
 						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/common_friends_number"
 						tools:listitem="@layout/item_request_offer_common_friend"
 						tools:text="@string/request_common_friends" />
 
@@ -101,25 +101,26 @@
 				android:layout_marginTop="8dp"
 				android:padding="8dp"
 				app:cardBackgroundColor="@color/gray_1"
-				app:layout_constraintTop_toBottomOf="@+id/common_friends_placeholder"
+				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toEndOf="parent">
+				app:layout_constraintTop_toBottomOf="@+id/common_friends_placeholder">
 
 				<com.google.android.material.textfield.TextInputEditText
 					android:id="@+id/request_text"
 					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="16dp"
 					android:layout_marginHorizontal="8dp"
-					android:minLines="4"
+					android:layout_marginTop="16dp"
+					android:gravity="top"
 					android:hint="@string/request_text_hint"
+					android:minLines="4"
 					android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Request.Text"
 					android:textColor="@color/gray_4"
-					app:layout_constraintTop_toBottomOf="@id/new_offer_title"
-					app:layout_constraintStart_toStartOf="parent"
+					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/new_offer_title"
 					tools:text="This long long description capped at 120 chars" />
 
 			</androidx.cardview.widget.CardView>

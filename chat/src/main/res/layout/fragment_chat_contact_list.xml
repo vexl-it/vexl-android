@@ -67,7 +67,7 @@
 				android:id="@+id/all_radio"
 				style="@style/Widget.Cleevio.Vexl.Chat.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
+				android:background="@drawable/chat_radio_selector"
 				android:button="@android:color/transparent"
 				android:checked="true"
 				android:text="@string/chat_filter_all" />
@@ -76,7 +76,8 @@
 				android:id="@+id/buyers_radio"
 				style="@style/Widget.Cleevio.Vexl.Chat.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
+				android:layout_marginStart="4dp"
+				android:background="@drawable/chat_radio_selector"
 				android:button="@android:color/transparent"
 				android:text="@string/chat_filter_buyers" />
 
@@ -84,7 +85,8 @@
 				android:id="@+id/sellers_radio"
 				style="@style/Widget.Cleevio.Vexl.Chat.TabbedRadioBtn"
 				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
+				android:layout_marginStart="4dp"
+				android:background="@drawable/chat_radio_selector"
 				android:button="@android:color/transparent"
 				android:text="@string/chat_filter_sellers" />
 
