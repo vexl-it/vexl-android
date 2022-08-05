@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
 import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.isPhoneValid
@@ -13,26 +14,35 @@ import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 open class BaseContactsListViewModel constructor(
 	private val contactRepository: ContactRepository,
-	val navMainGraphModel: NavMainGraphModel
+	val navMainGraphModel: NavMainGraphModel,
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : BaseViewModel() {
 
-	private var notSyncedContactsList: List<Contact> = emptyList()
+	private var contactsToBeShowedList: List<Contact> = emptyList()
 
-	private val _notSyncedContacts = MutableSharedFlow<List<Contact>>(replay = 1)
-	val notSyncedContacts = _notSyncedContacts.asSharedFlow()
-
-	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
-	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
+	private val _contactsToBeShowed = MutableSharedFlow<List<Contact>>(replay = 1)
+	val contactsToBeShowed = _contactsToBeShowed.asSharedFlow()
 
 	private val _progressFlow = MutableSharedFlow<Boolean>(replay = 1)
 	val progressFlow = _progressFlow.asSharedFlow()
+
+	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
+	private val _deleteSuccessful = MutableSharedFlow<Boolean>(replay = 1)
+
+	val successful: Flow<Boolean> = _uploadSuccessful.combine(
+		_deleteSuccessful
+	) { upload, delete ->
+		upload and delete
+	}
 
 	//get all contacts from phone as input
 	private fun checkNotSyncedContacts(localContacts: List<Contact>) {
@@ -51,25 +61,30 @@ open class BaseContactsListViewModel constructor(
 
 			//BE returns list of contacts that user didn't import previously
 			Timber.tag("ContactSync").d("Checking all contacts with the API")
-			val notSyncedIdentifiers = contactRepository.checkAllContacts(
+			val contacts = contactRepository.checkAllContacts(
 				//send only hashed phone numbers as identifiers
 				hashedContacts.map { it.hashedPhoneNumber }
 			)
 
-			Timber.tag("ContactSync").d("Checking done, we have ${notSyncedIdentifiers.data?.size} not synced contacts")
+			Timber.tag("ContactSync").d("Checking done, we have ${contacts.data?.size} not synced contacts")
 
-			//now we take list all contacts from phone and keep
+			// now we take list all contacts from phone and keep
 			// only contacts that BE returned (keeping only NOT imported contacts)
-			notSyncedIdentifiers.data?.let { notSyncedPhoneNumbers ->
-				notSyncedContactsList = hashedContacts.filter { contact ->
-					notSyncedPhoneNumbers.contains(
-						contact.hashedPhoneNumber
-					)
+			contacts.data?.let { notSyncedPhoneNumbers ->
+				val newList = ArrayList<Contact>()
+
+				hashedContacts.forEach { contact ->
+					if (notSyncedPhoneNumbers.contains(contact.hashedPhoneNumber)) {
+						newList.add(contact.apply { markedForUpload = false }.copy())
+					} else {
+						newList.add(contact.apply { markedForUpload = true }.copy())
+					}
 				}
+				contactsToBeShowedList = newList
 
 				Timber.tag("ContactSync").d("All done, emitting contacts")
 				//we emit those contacts to UI and show it to user
-				emitContacts(notSyncedContactsList)
+				emitContacts(contactsToBeShowedList)
 			}
 			_progressFlow.emit(false)
 		}
@@ -78,7 +93,7 @@ open class BaseContactsListViewModel constructor(
 	//get all contacts from phone as input
 	private fun skipCheckingAndJustDisplayAllContacts(localContacts: List<Contact>) {
 		viewModelScope.launch(Dispatchers.IO) {
-			notSyncedContactsList = localContacts
+			contactsToBeShowedList = localContacts
 
 			Timber.tag("ContactSync").d("All done, emitting contacts")
 			emitContacts(localContacts)
@@ -106,48 +121,59 @@ open class BaseContactsListViewModel constructor(
 
 	fun contactSelected(contact: BaseContact, selected: Boolean) {
 		viewModelScope.launch {
-			notSyncedContactsList.find {
+			contactsToBeShowedList.find {
 				contact.id == it.id
 			}?.markedForUpload = selected
-			emitContacts(notSyncedContactsList)
+			emitContacts(contactsToBeShowedList)
 		}
 	}
 
 	fun unselectAll() {
 		viewModelScope.launch {
-			notSyncedContactsList.forEach { contact ->
+			contactsToBeShowedList.forEach { contact ->
 				contact.markedForUpload = false
 			}
-			emitContacts(notSyncedContactsList)
+			emitContacts(contactsToBeShowedList)
 		}
 	}
 
 	fun selectAll() {
 		viewModelScope.launch {
-			notSyncedContactsList.forEach { contact ->
+			contactsToBeShowedList.forEach { contact ->
 				contact.markedForUpload = true
 			}
-			emitContacts(notSyncedContactsList)
+			emitContacts(contactsToBeShowedList)
 		}
 	}
 
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
-			val response = contactRepository.uploadAllMissingContacts(
-				notSyncedContactsList.filter {
-					it.markedForUpload
-				}
-			)
+			val contactsToBeUploaded = contactsToBeShowedList.filter { it.markedForUpload }
+			val contactsToBeDeleted = contactsToBeShowedList.filter { !it.markedForUpload }
+			val uploadResponse = contactRepository.uploadAllMissingContacts(contactsToBeUploaded)
+			val deleteResponse = contactRepository.deleteContacts(contactsToBeDeleted)
 			_progressFlow.emit(false)
-			when (response.status) {
-				is Status.Success -> response.data?.let { data ->
+			when (uploadResponse.status) {
+				is Status.Success -> uploadResponse.data?.let { data ->
 					_uploadSuccessful.emit(data.imported)
+					encryptedPreferenceRepository.numberOfImportedContacts = contactsToBeUploaded.size
 				}
 				is Status.Error -> _uploadSuccessful.emit(false)
-				else -> {
-					//do nothing?
+				else -> Unit
+			}
+			when (deleteResponse.status) {
+				is Status.Success -> deleteResponse.data?.let {
+					_deleteSuccessful.emit(true)
+					// Added due to if we try to import empty list of contacts it fails
+					// but if we deleted all of them we need to propagate the number of imported contacts into the profile section
+					// Otherwise if there was nothing to delete, it's a bug and the number should not be propagated
+					if (contactsToBeUploaded.isEmpty() && contactsToBeDeleted.isNotEmpty()) {
+						encryptedPreferenceRepository.numberOfImportedContacts = 0
+					}
 				}
+				is Status.Error -> _deleteSuccessful.emit(false)
+				else -> Unit
 			}
 		}
 	}
@@ -158,6 +184,6 @@ open class BaseContactsListViewModel constructor(
 		contacts.forEach { contact ->
 			newList.add(contact.copy())
 		}
-		_notSyncedContacts.emit(newList)
+		_contactsToBeShowed.emit(newList)
 	}
 }

@@ -65,7 +65,8 @@ val profileModule = module {
 	viewModel {
 		ProfileContactsListViewModel(
 			contactRepository = get(),
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			encryptedPreferenceRepository = get()
 		)
 	}
 }

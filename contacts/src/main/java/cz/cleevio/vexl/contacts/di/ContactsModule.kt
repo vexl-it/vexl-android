@@ -20,7 +20,8 @@ val contactsModule = module {
 	viewModel {
 		ContactsListViewModel(
 			contactRepository = get(),
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			encryptedPreferenceRepository = get()
 		)
 	}
 

@@ -28,12 +28,12 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.notSyncedContacts.collect {
+			viewModel.contactsToBeShowed.collect {
 				binding.contactsListWidget.setupData(it, OpenedFromScreen.ONBOARDING)
 			}
 		}
 		repeatScopeOnStart {
-			viewModel.uploadSuccessful.collect {
+			viewModel.successful.collect {
 				when (args.openedFromScreen) {
 					OpenedFromScreen.UNKNOWN -> {
 						findNavController().navigate(

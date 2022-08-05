@@ -53,9 +53,7 @@ class LeaveGroupBottomSheetDialog constructor(
 					is Status.Error -> {
 						//todo: handle error?
 					}
-					else -> {
-						//nothing
-					}
+					else -> Unit
 				}
 			}
 		}

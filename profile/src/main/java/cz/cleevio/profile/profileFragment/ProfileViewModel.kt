@@ -30,9 +30,9 @@ class ProfileViewModel constructor(
 	val userFlow = userRepository.getUserFlow()
 
 	val areScreenshotsAllowed
-	get() = encryptedPreferenceRepository.areScreenshotsAllowed
+		get() = encryptedPreferenceRepository.areScreenshotsAllowed
 
-	private val _contactsNumber = MutableStateFlow<Int>(35)
+	private val _contactsNumber = MutableStateFlow<Int>(0)
 	val contactsNumber = _contactsNumber.asStateFlow()
 
 	private val hasPermissionsChannel = Channel<Boolean>(Channel.CONFLATED)
@@ -80,6 +80,5 @@ class ProfileViewModel constructor(
 	fun setCurrency(currency: Currency) {
 		encryptedPreferenceRepository.selectedCurrency = currency.name
 	}
-
 
 }

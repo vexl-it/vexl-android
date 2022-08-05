@@ -52,9 +52,7 @@ class JoinGroupBottomSheetDialog constructor(
 					is Status.Error -> {
 						//todo: handle error?
 					}
-					else -> {
-						//nothing
-					}
+					else -> Unit
 				}
 			}
 		}
