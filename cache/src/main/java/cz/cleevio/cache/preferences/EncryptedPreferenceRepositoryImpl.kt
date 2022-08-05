@@ -84,8 +84,16 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			areScreenshotsAllowedFlow.tryEmit(value)
 		}
 
+	override var numberOfImportedContacts: Int
+		get() = getIntFromEP(NUMBER_OF_CONTACTS_IMPORTED, 0)
+		set(value) {
+			putIntToEP(NUMBER_OF_CONTACTS_IMPORTED, value)
+			numberOfImportedContactsFlow.tryEmit(value)
+		}
+
 	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 	override val selectedCurrencyFlow: MutableStateFlow<String> = MutableStateFlow(selectedCurrency)
+	override val numberOfImportedContactsFlow: MutableStateFlow<Int> = MutableStateFlow(numberOfImportedContacts)
 
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()
@@ -132,5 +140,6 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_SELECTED_CURRENCY = "selected_currency"
 		private const val KEY_SELECTED_CRYPTO_CURRENCY = "selected_crypto_currency"
 		private const val ARE_SCREENSHOTS_ALLOWED = "are_screenshots_allowed"
+		private const val NUMBER_OF_CONTACTS_IMPORTED = "number_of_contacts_imported"
 	}
 }

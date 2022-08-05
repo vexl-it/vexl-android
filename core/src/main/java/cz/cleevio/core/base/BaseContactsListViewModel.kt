@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
 import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.isPhoneValid
@@ -20,7 +21,8 @@ import timber.log.Timber
 
 open class BaseContactsListViewModel constructor(
 	private val contactRepository: ContactRepository,
-	val navMainGraphModel: NavMainGraphModel
+	val navMainGraphModel: NavMainGraphModel,
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
 ) : BaseViewModel() {
 
 	private var contactsToBeShowedList: List<Contact> = emptyList()
@@ -73,7 +75,7 @@ open class BaseContactsListViewModel constructor(
 
 				contactsToBeShowedList = newList
 
-					Timber.tag("ContactSync").d("All done, emitting contacts")
+				Timber.tag("ContactSync").d("All done, emitting contacts")
 				//we emit those contacts to UI and show it to user
 				emitContacts(contactsToBeShowedList)
 			}
@@ -140,15 +142,13 @@ open class BaseContactsListViewModel constructor(
 	fun uploadAllMissingContacts() {
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
-			val response = contactRepository.uploadAllMissingContacts(
-				contactsToBeShowedList.filter {
-					it.markedForUpload
-				}
-			)
+			val contactsToBeUploaded = contactsToBeShowedList.filter { it.markedForUpload }
+			val response = contactRepository.uploadAllMissingContacts(contactsToBeUploaded)
 			_progressFlow.emit(false)
 			when (response.status) {
 				is Status.Success -> response.data?.let { data ->
 					_uploadSuccessful.emit(data.imported)
+					encryptedPreferenceRepository.numberOfImportedContacts = contactsToBeUploaded.size
 				}
 				is Status.Error -> _uploadSuccessful.emit(false)
 				else -> {

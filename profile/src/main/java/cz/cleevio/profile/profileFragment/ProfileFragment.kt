@@ -80,8 +80,8 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		repeatScopeOnStart {
-			profileViewModel.hasPermissionsEvent.collect { hasPermisson ->
-				if (hasPermisson) {
+			profileViewModel.hasPermissionsEvent.collect { hasPermission ->
+				if (hasPermission) {
 					Timber.tag("ASDX").d("Permission granted")
 					showBottomDialog(
 						ProfileContactsListFragment(OpenedFromScreen.PROFILE)
@@ -90,6 +90,12 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 					Timber.tag("ASDX").d("Permission rejected")
 					showPermissionDeniedDialog()
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			profileViewModel.encryptedPreferenceRepository.numberOfImportedContactsFlow.collect { contacts ->
+				binding.profileContacts.setSubtitle(resources.getString(R.string.profile_import_contacts_subtitle, contacts.toString()))
 			}
 		}
 	}
