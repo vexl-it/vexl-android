@@ -6,15 +6,15 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-
 	<HorizontalScrollView
 		android:id="@+id/filters_wrapper"
 		android:layout_width="0dp"
-		android:layout_height="0dp"
+		android:layout_height="38dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
 		android:clipToPadding="false"
+		android:paddingStart="8dp"
 		android:scrollbars="none"
-		android:layout_margin="16dp"
-		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toStartOf="@id/buttons_barrier"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +22,7 @@
 		<com.google.android.material.chip.ChipGroup
 			android:id="@+id/filters"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_height="38dp"
 			app:singleLine="true" />
 
 	</HorizontalScrollView>
@@ -34,36 +34,34 @@
 		app:barrierDirection="start"
 		app:constraint_referenced_ids="add_offer_btn, my_offers_btn" />
 
-	<ImageButton
+	<ImageView
 		android:id="@+id/add_offer_btn"
-		style="@style/Widget.Vexl.AddOfferButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_width="38dp"
+		android:layout_height="38dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="8dp"
+		android:background="@drawable/background_button_dark_yellow_13"
+		android:clickable="true"
 		android:contentDescription="?content"
+		android:focusable="true"
+		android:foreground="@drawable/ripple_mask_13_dark"
+		android:padding="8dp"
 		android:src="@drawable/ic_plus"
-		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/filters_wrapper"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		app:tint="@color/yellow_100" />
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/my_offers_btn"
 		style="@style/Widget.Vexl.AddOfferButton"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_height="38dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="8dp"
 		android:text="@string/marketplace_my_offers"
-		app:layout_constraintBottom_toTopOf="@id/filter_barrier"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/filters_wrapper"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:visibility="gone" />
-
-	<androidx.constraintlayout.widget.Barrier
-		android:id="@+id/filter_barrier"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		app:barrierDirection="bottom"
-		app:constraint_referenced_ids="filters_wrapper, add_offer_btn" />
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/offer_list"
@@ -74,7 +72,7 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/filter_barrier"
+		app:layout_constraintTop_toBottomOf="@id/filters_wrapper"
 		tools:listitem="@layout/widget_offer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
