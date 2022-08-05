@@ -55,6 +55,7 @@
     <string name="init_phone_title">What’s your phone number?</string>
     <string name="init_phone_note">Your number will be anonymous</string>
     <string name="init_phone_hint">Phone number</string>
+    <string name="init_phone_length_not_valid">Phone number not valid</string>
     <string name="verify_phone_title">We\'ve just sent you a code</string>
     <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
     <string name="verify_phone_hint">Activation code</string>

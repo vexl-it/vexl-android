@@ -69,6 +69,7 @@
 				android:background="@drawable/background_input_light"
 				android:hint="@string/init_phone_hint"
 				android:inputType="phone"
+				android:maxLength="@integer/phone_input_length"
 				android:paddingStart="60dp"
 				android:paddingEnd="16dp"
 				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Input"
