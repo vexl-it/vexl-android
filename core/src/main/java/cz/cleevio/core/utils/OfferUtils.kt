@@ -48,7 +48,14 @@ object OfferUtils {
 				it.key
 			}
 
-		val commonFriends = contactRepository.getCommonFriends(contactsPublicKeys.map { it.key })
+		val commonFriends = contactRepository.getCommonFriends(
+			contactsPublicKeys
+				.map { it.key }
+				.filter {
+					// we don't want to get common friends for our offer
+					it != encryptedPreferenceRepository.userPublicKey
+				}
+		)
 
 		//encrypt in loop for every contact
 		contactsPublicKeys.forEach { contactKey ->
