@@ -85,6 +85,7 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 	fun setValues(bottomLimit: Float, topLimit: Float) {
 		processLimits(bottomLimit = bottomLimit, topLimit = topLimit, currentCurrency)
+		binding.priceRangeSlider.setValues(bottomLimit, topLimit)
 	}
 
 	private companion object {
