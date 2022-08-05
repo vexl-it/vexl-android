@@ -145,11 +145,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@color/white"
-		android:paddingHorizontal="16dp"
-		android:paddingVertical="12dp"
 		app:layout_constraintBottom_toTopOf="@id/submit_message_wrapper"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent">
+		android:visibility="gone"
+		app:layout_constraintStart_toStartOf="parent"
+		tools:visibility="visible">
 
 		<com.google.android.material.imageview.ShapeableImageView
 			android:id="@+id/profile_icon"
@@ -172,6 +172,8 @@
 			android:text="@string/chat_message_identity_reveal_request"
 			android:layout_marginStart="12dp"
 			android:layout_marginBottom="2dp"
+			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
+			android:textColor="@color/black"
 			app:layout_constraintVertical_chainStyle="packed"
 			app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_description"
 			app:layout_constraintStart_toEndOf="@id/profile_icon"
@@ -183,6 +185,7 @@
 			android:layout_height="wrap_content"
 			android:text="@string/chat_message_identity_reveal_pending_tap"
 			android:layout_marginStart="12dp"
+			style="@style/TextAppearance.Vexl.Description"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toEndOf="@id/profile_icon"
 			app:layout_constraintTop_toBottomOf="@id/identity_reveal_requested_title" />
@@ -191,7 +194,7 @@
 			android:id="@+id/identity_reveal_requested_button"
 			android:layout_width="37dp"
 			android:layout_height="37dp"
-			android:layout_margin="4dp"
+			android:layout_margin="12dp"
 			android:background="@drawable/background_button_chat_identity_request_solve"
 			android:backgroundTint="@null"
 			android:src="@drawable/ic_arrow_right"
