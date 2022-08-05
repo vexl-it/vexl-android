@@ -257,4 +257,17 @@ class OfferRepositoryImpl constructor(
 	override suspend fun getMyOffersWithoutInbox(): List<MyOffer> =
 		myOfferDao.getMyOffersWithoutInbox()
 			.map { it.fromCache() }
+
+	override suspend fun getLocationSuggestions(count: Int, query: String, language: String): Resource<List<String>> = tryOnline(
+		request = {
+			offerApi.getSuggestions(count, query, language)
+		},
+		mapper = {
+			it?.result?.map { a ->
+				a.userData.municipality
+			}
+				?.distinct()
+				.orEmpty()
+		}
+	)
 }

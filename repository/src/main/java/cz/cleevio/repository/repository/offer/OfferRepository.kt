@@ -48,4 +48,6 @@ interface OfferRepository {
 	suspend fun getMyOffersCount(offerType: String): Int
 
 	suspend fun getMyOffersWithoutInbox(): List<MyOffer>
+
+	suspend fun getLocationSuggestions(count: Int, query: String, language: String): Resource<List<String>>
 }
