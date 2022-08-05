@@ -4,6 +4,7 @@ import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.dao.*
 import cz.cleevio.cache.entity.ChatUserIdentityEntity
+import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.cache.entity.NotificationEntity
 import cz.cleevio.cache.entity.RequestedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -489,19 +490,35 @@ class ChatRepositoryImpl constructor(
 
 	override suspend fun loadChatUsers(): List<ChatListUser> {
 		val result: MutableList<ChatListUser> = mutableListOf()
-		//go over all inboxes, find all messages, sort by time, take X latest?
-		val contactKeys = chatMessageDao.getAllContactKeys()
 		//get keys to all of my inboxes
 		val inboxKeys = getMyInboxKeys()
 		inboxKeys.forEach { inboxKey ->
-			contactKeys.forEach { contactPublicKey ->
+			//go over all inboxes, find all messages, sort by time, take X latest?
+			val contactMessageKeyPairs = chatMessageDao.getAllContactKeys(inboxKey)
+			val contactMessageKeysWithoutDuplicities = emptyList<MessageKeyPair>().toMutableList()
+			contactMessageKeyPairs.forEach {
+				// remove duplicities (where sender is recipient, and recipient is sender)
+				val redundant = MessageKeyPair(
+					senderPublicKey = it.recipientPublicKey,
+					recipientPublicKey = it.senderPublicKey
+				)
+				if (!contactMessageKeysWithoutDuplicities.contains(redundant)) {
+					contactMessageKeysWithoutDuplicities.add(it)
+				}
+			}
+			contactMessageKeysWithoutDuplicities.forEach { contactMessageKeyPair ->
 				val latestMessage = chatMessageDao.getLatestBySenders(
 					inboxPublicKey = inboxKey,
-					firstKey = inboxKey,
-					secondKey = contactPublicKey
+					firstKey = contactMessageKeyPair.senderPublicKey,
+					secondKey = contactMessageKeyPair.recipientPublicKey
 				)?.fromCache()
 
-				if (latestMessage != null && latestMessage.type != MessageType.REQUEST_MESSAGING) {
+				if (latestMessage != null) {
+					val contactPublicKey = if (latestMessage.isMine) {
+						latestMessage.recipientPublicKey
+					} else {
+						latestMessage.senderPublicKey
+					}
 					result.add(
 						ChatListUser(
 							message = latestMessage,
