@@ -12,6 +12,7 @@
 			android:id="@+id/heading"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:textAppearance="@style/TextAppearance.Vexl.Offer.Note"
 			android:text="@string/widget_trigger_delete_title"
 			android:textColor="@color/gray_3"
 			app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +40,7 @@
 			android:id="@+id/price_trigger_card"
 			style="@style/Widget.Vexl.Filters.FilterCardView"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="64dp"
 			android:layout_marginTop="12dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -47,23 +48,20 @@
 
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+				android:layout_height="match_parent">
 
 				<com.google.android.material.textfield.TextInputEditText
 					android:id="@+id/delete_input"
-					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:gravity="center"
 					android:imeOptions="actionDone"
 					android:inputType="number"
 					android:maxLines="1"
 					android:minWidth="100dp"
-					android:paddingStart="26dp"
-					android:paddingTop="18dp"
-					android:paddingEnd="26dp"
-					android:paddingBottom="16dp"
+					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Item"
 					android:textColor="@color/yellow_100"
-					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Yellow"
+					android:textCursorDrawable="@null"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintEnd_toStartOf="@id/delete_divider"
 					app:layout_constraintStart_toStartOf="parent"
@@ -83,8 +81,10 @@
 
 				<TextView
 					android:id="@+id/delete_timeframe"
-					android:layout_width="100dp"
-					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:drawablePadding="8dp"
+					android:gravity="center"
 					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe"
 					app:drawableEndCompat="@drawable/ic_chevron_down"
 					app:layout_constraintBottom_toBottomOf="parent"
@@ -94,9 +94,6 @@
 					tools:text="$32 500" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
-
 		</com.google.android.material.card.MaterialCardView>
-
 	</androidx.constraintlayout.widget.ConstraintLayout>
-
 </merge>

@@ -596,7 +596,11 @@
 	</style>
 
 	<style name="TextAppearance.Vexl.Trigger.Delete.Timeframe.Active" parent="TextAppearance.Vexl.Trigger.Delete">
+		<item name="android:textSize">18sp</item>
 		<item name="android:textColor">@color/black</item>
+		<item name="lineHeight">26dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Trigger.Delete.Timeframe.Inactive" parent="TextAppearance.Vexl.Trigger.Delete">
@@ -832,6 +836,55 @@
 		<item name="android:fontFamily">@font/tt_satoshi_500</item>
 		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
+
+	<style name="TextAppearance.Vexl.Location.Value" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/yellow_100</item>
+		<item name="lineHeight">26dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Location.Radius" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">26dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Trigger.Delete.Item" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">24sp</item>
+		<item name="android:textColor">@color/yellow_100</item>
+		<item name="lineHeight">30dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Trigger.Note" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">@color/gray_4</item>
+		<item name="lineHeight">15dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Offer.Note" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="lineHeight">22dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.EditName.Input" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">26dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
 
 
 </resources>

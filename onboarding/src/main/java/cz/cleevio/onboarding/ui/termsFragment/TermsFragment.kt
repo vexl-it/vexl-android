@@ -22,9 +22,6 @@ class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 	override fun bindObservers() = Unit
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
-		}
 		initMarkdownText(isTermsOfUse = true)
 
 		binding.tacClose.setOnClickListener {
@@ -33,7 +30,7 @@ class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 
 		binding.termsFaqButton.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
-				TermsFragmentDirections.proceedToFaq()
+				TermsFragmentDirections.proceedToFaq(continueToOnboarding = false)
 			)
 		}
 
@@ -45,6 +42,10 @@ class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 					initMarkdownText(isTermsOfUse = true)
 				}
 			}
+		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
 	}
 

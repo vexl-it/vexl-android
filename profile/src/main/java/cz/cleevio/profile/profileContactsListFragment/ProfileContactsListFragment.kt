@@ -17,7 +17,9 @@ import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileContactsListFragment(private val openedFromScreen: OpenedFromScreen) : BottomSheetDialogFragment() {
+class ProfileContactsListFragment constructor(
+	private val openedFromScreen: OpenedFromScreen
+) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogProfileContactsListBinding
 	private val viewModel by viewModel<ProfileContactsListViewModel>()

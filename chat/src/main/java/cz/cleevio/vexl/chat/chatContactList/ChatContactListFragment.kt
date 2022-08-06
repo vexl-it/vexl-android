@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -61,7 +62,7 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 
 		adapter = ChatContactListAdapter(
 			chatWithUser = { userWithMessage ->
-				findNavController().navigate(
+				findNavController().safeNavigateWithTransition(
 //				todo: fix `!!`
 					ChatContactListFragmentDirections.proceedToChatFragment(
 						communicationRequest = CommunicationRequest(
@@ -79,7 +80,7 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 		}
 
 		binding.newRequestsBtn.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				ChatContactListFragmentDirections.proceedToChatRequestFragment()
 			)
 		}

@@ -17,14 +17,13 @@
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_margin="16dp">
+			android:layout_height="match_parent">
 
 			<TextView
 				android:id="@+id/title"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="12dp"
+				android:layout_margin="16dp"
 				android:text="@string/profile_donate_title"
 				android:textAppearance="@style/TextAppearance.Vexl.MainScreenHeading"
 				android:textColor="@color/black"
@@ -36,7 +35,8 @@
 				android:id="@+id/subtitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="12dp"
+				android:layout_marginHorizontal="16dp"
+				android:layout_marginBottom="20dp"
 				android:text="@string/profile_donate_description"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.Description"
 				android:textColor="@color/gray_3"
@@ -50,13 +50,14 @@
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/back_btn"
-		style="@style/Widget.Vexl.Profile.DonateButton.Decline"
+		style="@style/Widget.Vexl.Onboarding.BottomButton.Secondary"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
+		android:layout_height="@dimen/bottom_screen_button_height"
 		android:layout_marginStart="8dp"
 		android:layout_marginTop="8dp"
 		android:layout_marginEnd="4dp"
 		android:layout_marginBottom="30dp"
+		android:foreground="@drawable/ripple_mask_13_dark"
 		android:text="@string/profile_donate_button_dismiss"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toStartOf="@id/confirm_btn"
@@ -66,15 +67,17 @@
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/confirm_btn"
-		style="@style/Widget.Vexl.Profile.DonateButton.Accept"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
+		android:layout_height="@dimen/bottom_screen_button_height"
 		android:layout_marginStart="4dp"
 		android:layout_marginTop="8dp"
 		android:layout_marginEnd="8dp"
 		android:layout_marginBottom="30dp"
-		android:drawableEnd="@drawable/ic_donate"
 		android:text="@string/profile_donate_button_donate"
+		app:icon="@drawable/ic_donate"
+		app:iconGravity="textEnd"
+		app:iconTint="@color/black"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_weight="0.5"

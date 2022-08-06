@@ -9,49 +9,56 @@
 		style="@style/Widget.Vexl.CardView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="8dp"
+		android:layout_marginHorizontal="16dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="16dp">
+			android:layout_height="wrap_content">
 
 			<TextView
 				android:id="@+id/title"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="16dp"
+				android:layout_marginTop="32dp"
 				android:layout_marginBottom="12dp"
 				android:text="@string/user_profile_report_issue_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.DialogHeading"
 				android:textColor="@color/black"
 				app:layout_constraintBottom_toTopOf="@id/subtitle"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 
 			<TextView
 				android:id="@+id/subtitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="24dp"
+				android:layout_marginTop="12dp"
+				android:paddingHorizontal="16dp"
 				android:text="@string/user_profile_report_issue_subtitle"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.Description"
 				android:textColor="@color/gray_3"
 				app:layout_constraintBottom_toTopOf="@id/email_wrapper"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/title" />
 
 			<androidx.cardview.widget.CardView
 				android:id="@+id/email_wrapper"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
+				android:layout_marginHorizontal="24dp"
+				android:layout_marginTop="24dp"
+				android:layout_marginBottom="32dp"
 				android:foreground="?attr/selectableItemBackground"
 				app:cardCornerRadius="12dp"
 				app:cardElevation="0dp"
-				app:layout_constraintBottom_toBottomOf="parent">
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/subtitle">
 
 				<androidx.constraintlayout.widget.ConstraintLayout
 					android:layout_width="match_parent"
@@ -84,17 +91,15 @@
 			</androidx.cardview.widget.CardView>
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</com.google.android.material.card.MaterialCardView>
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/confirm_btn"
-		style="@style/Widget.Vexl.Profile.DonateButton.Accept"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="4dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="16dp"
 		android:layout_marginTop="8dp"
-		android:layout_marginEnd="8dp"
 		android:layout_marginBottom="30dp"
 		android:text="@string/profile_join_vexl_button_title"
 		app:layout_constraintBottom_toBottomOf="parent"

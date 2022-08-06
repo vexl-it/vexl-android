@@ -55,7 +55,7 @@
     <string name="init_phone_title">What’s your phone number?</string>
     <string name="init_phone_note">Your number will be anonymous</string>
     <string name="init_phone_hint">Phone number</string>
-    <string name="init_phone_length_not_valid">Phone number not valid</string>
+    <string name="init_phone_length_not_valid">Phone number is invalid</string>
     <string name="verify_phone_title">We\'ve just sent you a code</string>
     <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
     <string name="verify_phone_hint">Activation code</string>
@@ -68,7 +68,7 @@
     <string name="username_hint">Name or nickname</string>
     <string name="avatar_title">What do you look like?</string>
     <string name="avatar_description">Nobody will see your face until you allow it</string>
-    <string name="avatar_welcome">Hey %s</string>
+    <string name="avatar_welcome">Hey, %s!</string>
     <string name="verify_phone_done_title">Phone verified.\nLet’s setup your profile.</string>
     <string name="image_picker_camera">Camera</string>
     <string name="image_picker_gallery">Photo Album</string>
@@ -270,7 +270,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="offer_update_sell_btn">Update sell offer</string>
     <string name="offer_create_buy_btn">Create buy offer</string>
     <string name="offer_update_buy_btn">Update buy offer</string>
-    <string name="widget_location_km"> +- %d km</string>
+    <string name="widget_location_km">\u00B1 %d km</string>
     <string name="widget_location_hint">City</string>
     <string name="create_create_offer">Create offer</string>
     <string name="currency_usd">USD</string>

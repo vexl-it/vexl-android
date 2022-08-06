@@ -30,6 +30,7 @@
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:hint="@string/widget_location_hint"
+					android:textAppearance="@style/TextAppearance.Vexl.Location.Value"
 					android:inputType="textCapWords"
 					android:paddingHorizontal="20dp"
 					android:textColor="@color/yellow_100"
@@ -55,15 +56,15 @@
 				<TextView
 					android:id="@+id/location_item_radius"
 					android:layout_width="80dp"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="10dp"
-					android:layout_marginVertical="8dp"
+					android:layout_height="match_parent"
+					android:gravity="center"
+					android:textAppearance="@style/TextAppearance.Vexl.Location.Radius"
 					android:textColor="@color/white"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toEndOf="@+id/location_item_separator"
 					app:layout_constraintTop_toTopOf="parent"
-					tools:text="+- 20 km" />
+					tools:text="\U+00B16 km" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -77,10 +78,7 @@
 			android:tint="@color/gray_2"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-
-			/>
+			app:layout_constraintTop_toTopOf="parent" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
-
 </merge>

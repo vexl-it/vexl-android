@@ -46,10 +46,6 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
-		}
-
 		adapter = ChatRequestAdapter()
 		binding.requestsRecyclerView.adapter = adapter
 		PagerSnapHelper().attachToRecyclerView(binding.requestsRecyclerView)
@@ -67,10 +63,15 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 			val currentRequest = getCurrentChatRequest()
 			viewModel.processCommunicationRequest(currentRequest, false)
 		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
+		}
 	}
 
 	private fun getCurrentChatRequest(): CommunicationRequest {
-		val currentIndex = (binding.requestsRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+		val currentIndex = (binding.requestsRecyclerView.layoutManager as LinearLayoutManager)
+			.findFirstCompletelyVisibleItemPosition()
 		return adapter.getItemAtIndex(currentIndex)
 	}
 }
