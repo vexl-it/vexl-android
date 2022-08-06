@@ -2,7 +2,6 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
@@ -69,7 +68,7 @@ class OfferLocationWidget @JvmOverloads constructor(
 		}
 	}
 
-	fun setupFocusChangeListener(onFocusChangeListener: (Boolean, Int) -> Unit) {
+	fun setupFocusChangeListener(onFocusChangeListener: (Boolean, OfferLocationItem) -> Unit) {
 		items.forEach {
 			it.onFocusChangeListener = onFocusChangeListener
 		}
@@ -80,6 +79,9 @@ class OfferLocationWidget @JvmOverloads constructor(
 			it.onTextChanged = onTextChanged
 		}
 	}
+
+	fun getPositionOfItem(offerLocationItem: OfferLocationItem) =
+		items.indexOf(offerLocationItem)
 
 	private fun checkAddButtonVisibility() {
 		binding.locationAddNewLocation.isVisible = visibleItems.size < LOCATION_ITEMS_LIMIT

@@ -130,6 +130,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferDescription.setText(offer.offerDescription)
 		binding.amountRange.setupWithCurrency(Currency.valueOf(offer.currency))
 		binding.amountRange.setValues(offer.amountBottomLimit.toFloat(), offer.amountTopLimit.toFloat())
+
 		binding.newOfferFee.setValues(
 			FeeValue(
 				type = FeeButtonSelected.valueOf(offer.feeState),
@@ -137,7 +138,6 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			)
 		)
 		binding.newOfferLocation.setValues(offer.location, LocationButtonSelected.valueOf(offer.locationState))
-		Timber.w("tagq " + offer.location)
 		binding.newOfferPaymentMethod.setValues(offer.paymentMethod.map { method ->
 			PaymentButtonSelected.valueOf(method.uppercase())
 		})
@@ -193,11 +193,15 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			}
 		}
 
-		binding.newOfferLocation.setupFocusChangeListener { hasFocus, y ->
+		binding.newOfferLocation.setupFocusChangeListener { hasFocus, locationItem ->
 			if (hasFocus) {
 				binding.nestedScrollView.smoothScrollTo(
 					binding.newOfferLocation.x.toInt(),
-					y + binding.newOfferLocation.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
+					locationItem.height *
+						binding.newOfferLocation.getPositionOfItem(locationItem) +
+						requireContext().dpValueToPx(OFFER_ITEM_PADDING).toInt() +
+						binding.newOfferLocation.y.toInt() -
+						Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
 				)
 			}
 		}
@@ -289,5 +293,6 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		const val MAX_INPUT_LENGTH = 140
 		private const val DISPLAY_THIRD = 3
 		private const val SUGGESTION_PADDING = 8
+		private const val OFFER_ITEM_PADDING = 32
 	}
 }

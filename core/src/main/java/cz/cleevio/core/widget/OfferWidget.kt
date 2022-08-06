@@ -2,7 +2,7 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
@@ -16,7 +16,7 @@ class OfferWidget @JvmOverloads constructor(
 	context: Context,
 	val attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
 	private lateinit var binding: WidgetOfferBinding
 
@@ -25,10 +25,10 @@ class OfferWidget @JvmOverloads constructor(
 	}
 
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null) {
-		binding.offerDescription.text = item.offerDescription
-		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
-		binding.priceCurrency.text = item.currency
-		binding.offerType.text = if (item.offerType == "SELL") {
+		binding.card.offerDescription.text = item.offerDescription
+		binding.card.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
+		binding.card.priceCurrency.text = item.currency
+		binding.card.offerType.text = if (item.offerType == "SELL") {
 			resources.getString(R.string.offer_to_sell)
 		} else {
 			resources.getString(R.string.offer_to_buy)
@@ -43,7 +43,7 @@ class OfferWidget @JvmOverloads constructor(
 			}
 		}
 
-		binding.location.text = item.location.joinToString(", ") { it.city }
+		binding.card.location.text = item.location.joinToString(", ") { it.city }
 
 		binding.userType.text = if (mode == Mode.MY_OFFER) {
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
@@ -55,12 +55,12 @@ class OfferWidget @JvmOverloads constructor(
 			}
 		}
 
-		binding.feeDescription.isVisible = item.feeState == "WITH_FEE"
-		binding.feeDescription.text =
+		binding.card.feeDescription.isVisible = item.feeState == "WITH_FEE"
+		binding.card.feeDescription.text =
 			resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
 
-		binding.paymentMethod.text = item.paymentMethod.joinToString(", ")
-		binding.paymentMethodIcons.bind(item.paymentMethod)
+		binding.card.paymentMethod.text = item.paymentMethod.joinToString(", ")
+		binding.card.paymentMethodIcons.bind(item.paymentMethod)
 
 		if (mode == Mode.MY_OFFER) {
 			binding.requestBtn.isVisible = false
@@ -103,7 +103,7 @@ class OfferWidget @JvmOverloads constructor(
 		val widgetMode = getMode()
 		binding.userInformationGroup.isVisible = widgetMode == Mode.MARKETPLACE
 		if (widgetMode == Mode.CHAT) {
-			binding.offerWrapper.run {
+			binding.card.offerWrapper.run {
 				setCardBackgroundColor(resources.getColor(R.color.gray_6, null))
 				cardElevation = 0.0f
 			}
