@@ -28,7 +28,6 @@
 			app:constraint_referenced_ids="three_methods_first, three_methods_second, three_methods_third"
 			tools:visibility="visible" />
 
-
 		<ImageView
 			android:id="@+id/one_method_first"
 			android:layout_width="wrap_content"

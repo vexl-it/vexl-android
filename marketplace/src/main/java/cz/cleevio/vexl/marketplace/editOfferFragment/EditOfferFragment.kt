@@ -1,7 +1,6 @@
 package cz.cleevio.vexl.marketplace.editOfferFragment
 
 import android.content.res.Resources
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -61,19 +60,25 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		}
 
 		repeatScopeOnStart {
-			viewModel.suggestions.collect { (editText, queries) ->
+			viewModel.suggestions.collect { (offerLocationItem, queries) ->
 				if (queries.isEmpty()) return@collect
-				if (queries.map { it.city }.contains((editText as? AutoCompleteTextView)?.text.toString()))
+				if (queries.map { it.city }.contains(offerLocationItem?.getEditText()?.text.toString())) {
+					offerLocationItem?.setLocation(queries.first())
 					return@collect
+				}
 
-				(editText as? AutoCompleteTextView)?.setAdapter(null)
-				val adapter = LocationSuggestionAdapter(queries, requireActivity())
+				offerLocationItem?.getEditText()?.let {
+					it.setAdapter(null)
+					val adapter = LocationSuggestionAdapter(queries, requireActivity())
 
-				(editText as? AutoCompleteTextView)?.dropDownVerticalOffset =
-					requireContext().dpValueToPx(SUGGESTION_PADDING).toInt()
-				(editText as? AutoCompleteTextView)?.setDropDownBackgroundResource(R.drawable.background_rounded)
-				(editText as? AutoCompleteTextView)?.setAdapter(adapter)
-				(editText as? AutoCompleteTextView)?.showDropDown()
+					it.dropDownVerticalOffset = requireContext().dpValueToPx(SUGGESTION_PADDING).toInt()
+					it.setDropDownBackgroundResource(R.drawable.background_rounded)
+					it.setAdapter(adapter)
+					it.showDropDown()
+					it.setOnItemClickListener { _, _, position, _ ->
+						offerLocationItem.setLocation(queries[position])
+					}
+				}
 			}
 		}
 
@@ -132,8 +137,9 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			)
 		)
 		binding.newOfferLocation.setValues(offer.location, LocationButtonSelected.valueOf(offer.locationState))
+		Timber.w("tagq " + offer.location)
 		binding.newOfferPaymentMethod.setValues(offer.paymentMethod.map { method ->
-			PaymentButtonSelected.valueOf(method)
+			PaymentButtonSelected.valueOf(method.uppercase())
 		})
 
 		binding.newOfferCurrency.selectCurrencyManually(Currency.valueOf(offer.currency))

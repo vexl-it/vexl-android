@@ -277,9 +277,9 @@ class OfferRepositoryImpl constructor(
 					BigDecimal(a.userData.longitude)
 				)
 			}
-				?.distinct()
-				?.filter { a -> a.city.contains(query, ignoreCase = true) }
 				?.filter { a -> a.city.isNotBlank() }
+				?.distinctBy { a -> a.city }
+				?.filter { a -> a.city.contains(query, ignoreCase = true) }
 				.orEmpty()
 		}
 	)

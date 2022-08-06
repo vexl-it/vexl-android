@@ -91,7 +91,7 @@ class OfferLocationWidget @JvmOverloads constructor(
 
 	fun getLocationValue(): LocationValue = LocationValue(
 		type = selectedButton,
-		values = visibleItems.map { it.getLocation() }
+		values = visibleItems.mapNotNull { it.getLocation() }
 	)
 
 	fun reset() {

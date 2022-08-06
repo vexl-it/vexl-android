@@ -27,7 +27,7 @@ class OfferWidget @JvmOverloads constructor(
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null) {
 		binding.offerDescription.text = item.offerDescription
 		binding.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
-		binding.priceCurrency.text = "USD"
+		binding.priceCurrency.text = item.currency
 		binding.offerType.text = if (item.offerType == "SELL") {
 			resources.getString(R.string.offer_to_sell)
 		} else {
@@ -43,8 +43,7 @@ class OfferWidget @JvmOverloads constructor(
 			}
 		}
 
-		// TODO convert to readable format
-		binding.location.text = "${item.location.first().latitude},\n${item.location.first().longitude}"
+		binding.location.text = item.location.joinToString(", ") { it.city }
 
 		binding.userType.text = if (mode == Mode.MY_OFFER) {
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
@@ -60,6 +59,7 @@ class OfferWidget @JvmOverloads constructor(
 		binding.feeDescription.text =
 			resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
 
+		binding.paymentMethod.text = item.paymentMethod.joinToString(", ")
 		binding.paymentMethodIcons.bind(item.paymentMethod)
 
 		if (mode == Mode.MY_OFFER) {

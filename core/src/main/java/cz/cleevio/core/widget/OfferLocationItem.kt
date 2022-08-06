@@ -23,7 +23,7 @@ class OfferLocationItem @JvmOverloads constructor(
 	private var onCloseListener: ((OfferLocationItem) -> Unit)? = null
 
 	private var radius: Int = 1
-	private lateinit var location: Location
+	private var location: Location? = null
 	private var fragmentManager: FragmentManager? = null
 
 	var onFocusChangeListener: ((Boolean, Int) -> Unit)? = null
@@ -50,6 +50,7 @@ class OfferLocationItem @JvmOverloads constructor(
 				bottomSheetDialog.setInitialValue(radius)
 				bottomSheetDialog.setOnDoneListener { result ->
 					radius = result
+					this.location?.radius = BigDecimal(radius)
 					updateRadiusText(radius)
 					bottomSheetDialog.dismiss()
 				}
@@ -78,7 +79,7 @@ class OfferLocationItem @JvmOverloads constructor(
 
 	fun getValue(): String = binding.locationItemText.text.toString()
 
-	fun getRadius(): Int = radius
+	private fun getRadius(): Int = radius
 
 	fun reset() {
 		radius = 1
@@ -86,7 +87,7 @@ class OfferLocationItem @JvmOverloads constructor(
 		binding.locationItemText.setText("")
 	}
 
-	fun getLocation(): Location = location
+	fun getLocation(): Location? = location
 
 	fun setFragmentManager(manager: FragmentManager) {
 		fragmentManager = manager
@@ -94,6 +95,7 @@ class OfferLocationItem @JvmOverloads constructor(
 
 	fun setValue(location: Location) {
 		radius = location.radius.toInt()
+		this.location = location
 		updateRadiusText(radius)
 		binding.locationItemText.setText(location.city)
 	}

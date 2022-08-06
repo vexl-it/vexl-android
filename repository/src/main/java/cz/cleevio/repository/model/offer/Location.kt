@@ -12,7 +12,7 @@ import java.math.BigDecimal
 data class Location constructor(
 	val longitude: BigDecimal,
 	val latitude: BigDecimal,
-	val radius: BigDecimal,
+	var radius: BigDecimal,
 	val city: String
 ) : Parcelable
 

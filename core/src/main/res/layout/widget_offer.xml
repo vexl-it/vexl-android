@@ -27,14 +27,13 @@
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:paddingStart="24dp"
-				android:paddingTop="24dp"
-				android:paddingEnd="24dp">
+				android:paddingTop="24dp">
 
 				<TextView
 					android:id="@+id/offer_description"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:paddingHorizontal="24dp"
 					android:textAppearance="@style/TextAppearance.Vexl.Marketplace.OfferDescription"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +44,9 @@
 					android:id="@+id/price_wrapper"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
 					android:layout_marginTop="24dp"
+					android:background="@color/gray_3"
 					app:layout_constraintEnd_toStartOf="@id/price_divider"
 					app:layout_constraintHorizontal_weight="1"
 					app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +69,7 @@
 					<TextView
 						android:id="@+id/price_limit"
 						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
+						android:layout_height="30dp"
 						android:letterSpacing="-0.04"
 						android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro"
 						android:textColor="@color/gray_3"
@@ -95,9 +96,10 @@
 
 					<TextView
 						android:id="@+id/offer_type"
-						android:layout_width="wrap_content"
+						android:layout_width="0dp"
 						android:layout_height="wrap_content"
-						android:layout_marginTop="10dp"
+						android:layout_marginTop="8dp"
+						android:gravity="center"
 						android:textAppearance="@style/TextAppearance.Vexl.DescriptionBold"
 						android:textColor="@color/gray_3"
 						app:layout_constraintEnd_toEndOf="parent"
@@ -123,24 +125,26 @@
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="24dp"
+					android:background="@color/yellow_100"
 					app:layout_constraintEnd_toStartOf="@id/payment_method_divider"
-					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintHorizontal_weight="0.7"
 					app:layout_constraintStart_toEndOf="@id/price_divider"
 					app:layout_constraintTop_toBottomOf="@id/offer_description">
 
 					<cz.cleevio.core.widget.PaymentMethodIconsWidget
 						android:id="@+id/payment_method_icons"
 						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						app:layout_constraintBottom_toTopOf="@id/payment_method"
+						android:layout_height="30dp"
 						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintStart_toStartOf="parent" />
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
 
 					<TextView
 						android:id="@+id/payment_method"
-						android:layout_width="wrap_content"
+						android:layout_width="0dp"
 						android:layout_height="wrap_content"
 						android:layout_marginTop="8dp"
+						android:gravity="center"
 						android:text="@string/marketplace_detail_payment"
 						android:textAppearance="@style/TextAppearance.Vexl.DescriptionBold"
 						android:textColor="@color/gray_3"
@@ -166,6 +170,8 @@
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="24dp"
+					android:layout_marginEnd="8dp"
+					android:background="@color/black_opacity_75"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintHorizontal_weight="1"
 					app:layout_constraintStart_toEndOf="@id/payment_method_divider"
@@ -184,9 +190,10 @@
 
 					<TextView
 						android:id="@+id/location"
-						android:layout_width="wrap_content"
+						android:layout_width="0dp"
 						android:layout_height="wrap_content"
 						android:layout_marginTop="8dp"
+						android:gravity="center"
 						android:textAppearance="@style/TextAppearance.Vexl.DescriptionBold"
 						android:textColor="@color/gray_3"
 						app:layout_constraintBottom_toBottomOf="parent"
@@ -199,7 +206,7 @@
 
 				<androidx.constraintlayout.widget.Barrier
 					android:id="@+id/fee_barrier"
-					android:layout_width="wrap_content"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:barrierDirection="bottom"
 					app:constraint_referenced_ids="price_wrapper, payment_method_wrapper, location_wrapper" />
@@ -219,7 +226,8 @@
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toBottomOf="@id/fee_barrier"
-					tools:text="Includes 4% fee for transaction" />
+					tools:text="Includes 4% fee for transaction"
+					tools:visibility="gone" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 		</com.google.android.material.card.MaterialCardView>
@@ -229,8 +237,8 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="42dp"
 			android:layout_marginTop="-2dp"
-			android:elevation="4dp"
 			android:contentDescription="?content"
+			android:elevation="4dp"
 			android:src="@drawable/offer_extension"
 			app:layout_constraintStart_toStartOf="@id/offer_wrapper"
 			app:layout_constraintTop_toBottomOf="@id/offer_wrapper" />
