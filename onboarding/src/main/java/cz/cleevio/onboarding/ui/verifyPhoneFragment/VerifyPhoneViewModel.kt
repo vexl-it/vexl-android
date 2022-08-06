@@ -100,7 +100,7 @@ class VerifyPhoneViewModel constructor(
 		countDownTimer.launch {
 			// TODO call backend for new sms
 
-			repeat((COUNTDOWN_LENGTH / COUNTDOWN_STEP)) {
+			repeat(COUNTDOWN_LENGTH / COUNTDOWN_STEP) {
 				_countDownState.emit(CountDownState.Counting(COUNTDOWN_LENGTH - it * COUNTDOWN_STEP))
 				delay(COUNTDOWN_STEP.toLong())
 			}

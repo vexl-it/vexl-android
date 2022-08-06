@@ -69,9 +69,8 @@ class OfferLocationItem @JvmOverloads constructor(
 		binding = WidgetOfferLocationItemBinding.inflate(layoutInflater, this)
 	}
 
-	fun getEditText(): AutoCompleteTextView {
-		return binding.locationItemText
-	}
+	fun getEditText(): AutoCompleteTextView =
+		binding.locationItemText
 
 	fun setOnCloseListener(listener: (OfferLocationItem) -> Unit) {
 		onCloseListener = listener
