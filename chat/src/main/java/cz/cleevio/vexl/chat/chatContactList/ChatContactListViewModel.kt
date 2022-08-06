@@ -25,7 +25,7 @@ class ChatContactListViewModel constructor(
 	private val _usersChattedWith = MutableStateFlow<List<ChatListUser>>(emptyList())
 	val usersChattedWith = _usersChattedWith.asStateFlow()
 
-	private val _showRefreshIndicator = MutableStateFlow<Boolean>(false)
+	private val _showRefreshIndicator = MutableStateFlow(false)
 	val showRefreshIndicator = _showRefreshIndicator.asStateFlow()
 
 	fun refreshChats() {
@@ -56,6 +56,8 @@ class ChatContactListViewModel constructor(
 					FilterType.BUYERS -> false // TODO find out how to do this
 					FilterType.SELLERS -> false // TODO find out how to do this
 				}
+			}.sortedByDescending {
+				it.message.time
 			}
 		)
 	}
