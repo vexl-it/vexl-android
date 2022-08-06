@@ -5,9 +5,8 @@
 	android:id="@+id/nav_onboarding"
 	app:startDestination="@+id/welcomeFragment">
 
-	<include app:graph="@navigation/nav_camera" />
-
 	<include app:graph="@navigation/nav_terms" />
+	<include app:graph="@navigation/nav_faq" />
 
 	<fragment
 		android:id="@+id/welcomeFragment"
@@ -16,123 +15,17 @@
 		tools:layout="@layout/fragment_welcome">
 
 		<action
-			android:id="@+id/proceed_to_initPhoneFragment"
-			app:destination="@id/initPhoneFragment" />
-
-		<action
 			android:id="@+id/proceed_to_termsFragment"
 			app:destination="@id/nav_terms" />
 
 		<action
-			android:id="@+id/proceed_to_avatarFragment"
-			app:destination="@id/createAvatarFragment" />
-
-	</fragment>
-
-	<fragment
-		android:id="@+id/initPhoneFragment"
-		android:name="cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneFragment"
-		android:label="InitPhoneFragment"
-		tools:layout="@layout/fragment_init_phone">
-
-		<action
-			android:id="@+id/proceed_to_verifyPhoneFragment"
-			app:destination="@id/verifyPhoneFragment">
+			android:id="@+id/proceed_to_faqFragment"
+			app:destination="@id/nav_faq">
 
 			<argument
-				android:name="phoneNumber"
-				android:defaultValue="null"
-				app:argType="string"
-				app:nullable="true" />
-
-			<argument
-				android:name="verificationId"
-				android:defaultValue="0L"
-				app:argType="long" />
+				android:name="continueToOnboarding"
+				app:argType="boolean" />
 
 		</action>
-
 	</fragment>
-
-	<fragment
-		android:id="@+id/verifyPhoneFragment"
-		android:name="cz.cleevio.onboarding.ui.verifyPhoneFragment.VerifyPhoneFragment"
-		android:label="VerifyPhoneFragment"
-		tools:layout="@layout/fragment_verify_phone">
-
-		<argument
-			android:name="phoneNumber"
-			android:defaultValue="null"
-			app:argType="string"
-			app:nullable="true" />
-
-		<argument
-			android:name="verificationId"
-			android:defaultValue="0L"
-			app:argType="long" />
-
-		<action
-			android:id="@+id/proceed_to_phoneDoneFragment"
-			app:destination="@id/phoneDoneFragment" />
-
-	</fragment>
-
-	<fragment
-		android:id="@+id/phoneDoneFragment"
-		android:name="cz.cleevio.onboarding.ui.phoneDoneFragment.PhoneDoneFragment"
-		android:label="PhoneDoneFragment"
-		tools:layout="@layout/fragment_phone_done">
-
-		<action
-			android:id="@+id/proceed_to_usernameFragment"
-			app:destination="@id/usernameFragment" />
-
-	</fragment>
-
-	<fragment
-		android:id="@+id/usernameFragment"
-		android:name="cz.cleevio.onboarding.ui.usernameFragment.UsernameFragment"
-		android:label="UsernameFragment"
-		tools:layout="@layout/fragment_username">
-
-		<action
-			android:id="@+id/proceed_to_avatarFragment"
-			app:destination="@id/createAvatarFragment" />
-
-	</fragment>
-
-	<fragment
-		android:id="@+id/createAvatarFragment"
-		android:name="cz.cleevio.onboarding.ui.createAvatarFragment.CreateAvatarFragment"
-		android:label="CreateAvatarFragment"
-		tools:layout="@layout/fragment_avatar">
-
-		<argument
-			android:name="username"
-			app:argType="string" />
-
-		<action
-			android:id="@+id/proceed_to_takePhotoFragment"
-			app:destination="@id/nav_camera" />
-		<action
-			android:id="@+id/proceed_to_anonymize_user"
-			app:destination="@id/anonymizeUserFragment" />
-		<action
-			android:id="@+id/proceed_to_bottom_sheet_dialog"
-			app:destination="@id/photoOptionsBottomSheetDialog" />
-
-	</fragment>
-
-	<fragment
-		android:id="@+id/anonymizeUserFragment"
-		android:name="cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserFragment"
-		android:label="AnonymizeUserFragment"
-		tools:layout="@layout/fragment_anonymize_user" />
-
-	<dialog
-		android:id="@+id/photoOptionsBottomSheetDialog"
-		android:name="lightbase.camera.ui.photoBottomSheet.PhotoOptionsBottomSheetDialog"
-		android:label="PhotoOptionsBottomSheetDialog"
-		tools:layout="@layout/bottom_sheet_photo_options" />
-
 </navigation>

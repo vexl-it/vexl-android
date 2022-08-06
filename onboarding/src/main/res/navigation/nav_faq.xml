@@ -3,12 +3,23 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/nav_faq"
-	app:startDestination="@id/FAQParentFragment2">
+	app:startDestination="@id/FAQParentFragment">
+
+	<include app:graph="@navigation/nav_onboarding_part2" />
 
 	<fragment
-		android:id="@+id/FAQParentFragment2"
+		android:id="@+id/FAQParentFragment"
 		android:name="cz.cleevio.onboarding.ui.faqParentFragment.FAQParentFragment"
 		android:label="FAQParentFragment"
-		tools:layout="@layout/fragment_faq_parent" />
+		tools:layout="@layout/fragment_faq_parent">
 
+		<argument
+			android:name="continueToOnboarding"
+			app:argType="boolean" />
+
+		<action
+			android:id="@+id/proceed_to_onboarding_part2"
+			app:destination="@id/nav_onboarding_part2" />
+
+	</fragment>
 </navigation>

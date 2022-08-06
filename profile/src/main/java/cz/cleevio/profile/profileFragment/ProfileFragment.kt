@@ -195,7 +195,9 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 		binding.profileFaq.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
-				ProfileFragmentDirections.actionProfileFragmentToFaqFragment()
+				ProfileFragmentDirections.actionProfileFragmentToFaqFragment(
+					continueToOnboarding = false
+				)
 			)
 		}
 
