@@ -18,8 +18,10 @@ import cz.cleevio.network.request.chat.*
 import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
+import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.offer.fromCache
 import cz.cleevio.repository.repository.UsernameUtils
+import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -35,7 +37,8 @@ class ChatRepositoryImpl constructor(
 	private val requestedOfferDao: RequestedOfferDao,
 	private val offerDao: OfferDao,
 	private val userDao: UserDao,
-	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	private val contactRepository: ContactRepository
 ) : ChatRepository {
 
 	//map PublicKey -> Signature
@@ -549,18 +552,34 @@ class ChatRepositoryImpl constructor(
 					} else {
 						latestMessage.senderPublicKey
 					}
-					result.add(
-						ChatListUser(
-							message = latestMessage,
-							offer = offerDao.getAllExtendedOffers().filter {
-								it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
-									it.offer.offerPublicKey == latestMessage.senderPublicKey
-							}.map {
-								it.offer.fromCache(it.locations, it.commonFriends)
-							}.first(),
-							user = chatUserDao.getUserIdentity(latestMessage.inboxPublicKey, contactPublicKey)?.fromCache()
-						)
+					val originalChatListUser = ChatListUser(
+						message = latestMessage,
+						offer = offerDao.getAllExtendedOffers().filter {
+							it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
+								it.offer.offerPublicKey == latestMessage.senderPublicKey
+						}.map {
+							it.offer.fromCache(it.locations, it.commonFriends)
+						}.first(),
+						user = chatUserDao.getUserIdentity(latestMessage.inboxPublicKey, contactPublicKey)?.fromCache()
 					)
+
+					if (originalChatListUser.offer.isMine) {
+						val myOfferCommonFriends = contactRepository.getCommonFriends(listOf(contactPublicKey))
+						result.add(
+							originalChatListUser.copy(
+								offer = originalChatListUser.offer.copy(
+									commonFriends = myOfferCommonFriends[contactPublicKey].orEmpty().map {
+										CommonFriend(
+											it.getHashedContact(),
+											it
+										)
+									}
+								)
+							)
+						)
+					} else {
+						result.add(originalChatListUser)
+					}
 				}
 			}
 		}
