@@ -32,8 +32,13 @@
 
 		<action
 			android:id="@+id/action_profileFragment_to_faqFragment"
-			app:destination="@id/nav_faq" />
+			app:destination="@id/nav_faq">
 
+			<argument
+				android:name="continueToOnboarding"
+				app:argType="boolean" />
+
+		</action>
 	</fragment>
 
 	<fragment

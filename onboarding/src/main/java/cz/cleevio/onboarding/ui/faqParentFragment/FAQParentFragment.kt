@@ -2,7 +2,9 @@ package cz.cleevio.onboarding.ui.faqParentFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentFaqParentBinding
@@ -13,6 +15,7 @@ class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 
 	private val binding by viewBinding(FragmentFaqParentBinding::bind)
 	override val hasMenu = true
+	private val args by navArgs<FAQParentFragmentArgs>()
 
 	private var adapter: PagerAdapter? = null
 
@@ -22,7 +25,7 @@ class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 		setupAdapter()
 
 		binding.close.setOnClickListener {
-			findNavController().popBackStack()
+			navigateNext()
 		}
 
 		binding.faqParentLeftBtn.setOnClickListener {
@@ -34,7 +37,7 @@ class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 		}
 		binding.faqParentRightBtn.setOnClickListener {
 			if (binding.faqViewpager.currentItem == (adapter?.itemCount ?: 0) - 1) {
-				findNavController().popBackStack()
+				navigateNext()
 			} else {
 				binding.faqViewpager.setCurrentItem(binding.faqViewpager.currentItem + 1, true)
 			}
@@ -70,5 +73,15 @@ class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 				super.onPageSelected(position)
 			}
 		})
+	}
+
+	private fun navigateNext() {
+		if (args.continueToOnboarding) {
+			findNavController().safeNavigateWithTransition(
+				FAQParentFragmentDirections.proceedToOnboardingPart2()
+			)
+		} else {
+			findNavController().popBackStack()
+		}
 	}
 }
