@@ -51,6 +51,14 @@ class ChatViewModel constructor(
 		)
 	}
 
+	val canRequestIdentity = communicationRequest.message.let { message ->
+		chatRepository.canRequestIdentity(
+			inboxPublicKey = message.inboxPublicKey,
+			firstKey = message.senderPublicKey,
+			secondKey = message.recipientPublicKey
+		)
+	}
+
 	//my public key
 	lateinit var senderPublicKey: String
 

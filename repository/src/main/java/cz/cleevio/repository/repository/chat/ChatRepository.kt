@@ -61,6 +61,12 @@ interface ChatRepository {
 		secondKey: String
 	): Flow<Boolean>
 
+	fun canRequestIdentity(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean>
+
 	fun solveIdentityRevealRequest(
 		inboxPublicKey: String,
 		firstKey: String,

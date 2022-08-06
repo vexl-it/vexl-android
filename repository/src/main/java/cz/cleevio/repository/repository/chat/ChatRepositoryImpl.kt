@@ -250,10 +250,10 @@ class ChatRepositoryImpl constructor(
 								)
 							}
 
-						//special handling for REQUEST_REVEAL and APPROVE_REVEAL - deanonymize the other user
+						//special handling for REQUEST_REVEAL - deanonymize the other user
 						messages
 							?.filter {
-								it.type == MessageType.REQUEST_REVEAL || it.type == MessageType.APPROVE_REVEAL
+								it.type == MessageType.REQUEST_REVEAL
 							}?.forEach { message ->
 								message.deanonymizedUser?.let { user ->
 									chatUserDao.deAnonymizeUser(
@@ -263,6 +263,36 @@ class ChatRepositoryImpl constructor(
 										avatar = user.image
 									)
 								}
+							}
+						//special handling for APPROVE_REVEAL - deanonymize the other user AND solve pending requests
+						messages
+							?.filter {
+								it.type == MessageType.APPROVE_REVEAL
+							}?.forEach { message ->
+								message.deanonymizedUser?.let { user ->
+									chatUserDao.deAnonymizeUser(
+										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
+										inboxKey = message.inboxPublicKey,
+										name = user.name!!, // There has to be some name
+										avatar = user.image
+									)
+									chatMessageDao.solvePendingIdentityRevealsBySenders(
+										inboxPublicKey = message.inboxPublicKey,
+										firstKey = message.senderPublicKey,
+										secondKey = message.recipientPublicKey
+									)
+								}
+							}
+						//special handling for DISAPPROVE_REVEAL - do nothing, just solve the requests
+						messages
+							?.filter {
+								it.type == MessageType.DISAPPROVE_REVEAL
+							}?.forEach { message ->
+								chatMessageDao.solvePendingIdentityRevealsBySenders(
+									inboxPublicKey = message.inboxPublicKey,
+									firstKey = message.senderPublicKey,
+									secondKey = message.recipientPublicKey
+								)
 							}
 					}
 				}
@@ -555,6 +585,20 @@ class ChatRepositoryImpl constructor(
 			secondKey = secondKey
 		).map {
 			it.isNotEmpty()
+		}
+	}
+
+	override fun canRequestIdentity(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean> {
+		return chatMessageDao.listPendingAndApprovedIdentityReveals(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.isEmpty()
 		}
 	}
 

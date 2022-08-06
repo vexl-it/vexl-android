@@ -72,6 +72,26 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		secondKey: String
 	): Flow<List<ChatMessageEntity>>
 
+	@Query(
+		"SELECT * " +
+			"FROM ChatMessageEntity " +
+			"WHERE  inboxPublicKey == :inboxPublicKey " +
+			" AND (" +
+			"	(senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
+			" 	OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)" +
+			" ) " +
+			" AND (" +
+			"	(type == 'REQUEST_REVEAL' AND isProcessed = 0) " +
+			"   OR type == 'APPROVE_REVEAL'" +
+			" )" +
+			"ORDER BY time DESC"
+	)
+	fun listPendingAndApprovedIdentityReveals(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<List<ChatMessageEntity>>
+
 	@Suppress("FunctionMaxLength")
 	@Query(
 		"UPDATE ChatMessageEntity " +
