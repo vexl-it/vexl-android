@@ -564,6 +564,9 @@ class ChatRepositoryImpl constructor(
 					)
 
 					if (originalChatListUser.offer.isMine) {
+						// For our own offer we don't have common friends, because when creating the offer we don't
+						// know who will contact us, and every conversation will have different common friends.
+						// So here we don't read that data from database, but ask API directly
 						val myOfferCommonFriends = contactRepository.getCommonFriends(listOf(contactPublicKey))
 						result.add(
 							originalChatListUser.copy(
