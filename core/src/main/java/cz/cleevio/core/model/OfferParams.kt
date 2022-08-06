@@ -2,7 +2,6 @@ package cz.cleevio.core.model
 
 data class OfferParams constructor(
 	val description: String,
-	//todo: should contain GPS?
 	val location: LocationValue,
 	val fee: FeeValue,
 	val priceRange: PriceRangeValue,

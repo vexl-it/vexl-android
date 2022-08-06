@@ -21,5 +21,6 @@ data class LocationEntity(
 	val offerId: Long,
 	val longitude: BigDecimal,
 	val latitude: BigDecimal,
-	val radius: BigDecimal
+	val radius: BigDecimal,
+	val city: String
 )

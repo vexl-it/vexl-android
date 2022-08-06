@@ -17,6 +17,7 @@ import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.offer.*
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.flow.map
+import java.math.BigDecimal
 
 class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
@@ -271,7 +272,9 @@ class OfferRepositoryImpl constructor(
 				LocationSuggestion(
 					a.userData.municipality,
 					a.userData.region,
-					a.userData.country
+					a.userData.country,
+					BigDecimal(a.userData.latitude),
+					BigDecimal(a.userData.longitude)
 				)
 			}
 				?.distinct()

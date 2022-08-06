@@ -75,7 +75,7 @@ class OfferLocationWidget @JvmOverloads constructor(
 		}
 	}
 
-	fun setupOnTextChanged(onTextChanged: (String, View) -> Unit) {
+	fun setupOnTextChanged(onTextChanged: (String, OfferLocationItem) -> Unit) {
 		items.forEach {
 			it.onTextChanged = onTextChanged
 		}
@@ -91,7 +91,6 @@ class OfferLocationWidget @JvmOverloads constructor(
 
 	fun getLocationValue(): LocationValue = LocationValue(
 		type = selectedButton,
-		//fixme: should use getValue() and then external API to convert to GPS coords
 		values = visibleItems.map { it.getLocation() }
 	)
 

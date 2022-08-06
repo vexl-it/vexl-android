@@ -2,13 +2,14 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.widget.AutoCompleteTextView
 import android.widget.FrameLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentManager
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferLocationItemBinding
 import cz.cleevio.repository.model.offer.Location
+import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
 
@@ -22,10 +23,11 @@ class OfferLocationItem @JvmOverloads constructor(
 	private var onCloseListener: ((OfferLocationItem) -> Unit)? = null
 
 	private var radius: Int = 1
+	private lateinit var location: Location
 	private var fragmentManager: FragmentManager? = null
 
 	var onFocusChangeListener: ((Boolean, Int) -> Unit)? = null
-	var onTextChanged: ((String, View) -> Unit)? = null
+	var onTextChanged: ((String, OfferLocationItem) -> Unit)? = null
 
 	init {
 		setupUI()
@@ -39,7 +41,7 @@ class OfferLocationItem @JvmOverloads constructor(
 		}
 
 		binding.locationItemText.doAfterTextChanged {
-			onTextChanged?.invoke(it.toString(), binding.locationItemText)
+			onTextChanged?.invoke(it.toString(), this)
 		}
 
 		binding.locationItemRadius.setOnClickListener {
@@ -66,6 +68,10 @@ class OfferLocationItem @JvmOverloads constructor(
 		binding = WidgetOfferLocationItemBinding.inflate(layoutInflater, this)
 	}
 
+	fun getEditText(): AutoCompleteTextView {
+		return binding.locationItemText
+	}
+
 	fun setOnCloseListener(listener: (OfferLocationItem) -> Unit) {
 		onCloseListener = listener
 	}
@@ -80,12 +86,7 @@ class OfferLocationItem @JvmOverloads constructor(
 		binding.locationItemText.setText("")
 	}
 
-	@Deprecated("Use getValue and getRadius instead")
-	fun getLocation(): Location = Location(
-		latitude = BigDecimal("50.0811704"),
-		longitude = BigDecimal("14.4084831"),
-		radius = BigDecimal("20")
-	)
+	fun getLocation(): Location = location
 
 	fun setFragmentManager(manager: FragmentManager) {
 		fragmentManager = manager
@@ -94,8 +95,15 @@ class OfferLocationItem @JvmOverloads constructor(
 	fun setValue(location: Location) {
 		radius = location.radius.toInt()
 		updateRadiusText(radius)
+		binding.locationItemText.setText(location.city)
+	}
 
-		//todo: we need to translate lat/lon to City name here
-		binding.locationItemText.setText("Placeholder: City")
+	fun setLocation(suggestion: LocationSuggestion) {
+		this.location = Location(
+			longitude = suggestion.longitude,
+			latitude = suggestion.latitude,
+			radius = BigDecimal(getRadius()),
+			suggestion.city
+		)
 	}
 }

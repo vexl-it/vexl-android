@@ -12,14 +12,16 @@ import java.math.BigDecimal
 data class Location constructor(
 	val longitude: BigDecimal,
 	val latitude: BigDecimal,
-	val radius: BigDecimal
+	val radius: BigDecimal,
+	val city: String
 ) : Parcelable
 
 fun LocationResponse.fromNetwork(): Location {
 	return Location(
 		longitude = this.longitude,
 		latitude = this.latitude,
-		radius = this.radius
+		radius = this.radius,
+		city = this.city
 	)
 }
 
@@ -27,7 +29,8 @@ fun LocationEntity.fromCache(): Location {
 	return Location(
 		longitude = this.longitude,
 		latitude = this.latitude,
-		radius = this.radius
+		radius = this.radius,
+		city = this.city
 	)
 }
 
@@ -36,6 +39,7 @@ fun Location.toCache(offerId: Long): LocationEntity {
 		offerId = offerId,
 		longitude = this.longitude,
 		latitude = this.latitude,
-		radius = this.radius
+		radius = this.radius,
+		city = this.city
 	)
 }

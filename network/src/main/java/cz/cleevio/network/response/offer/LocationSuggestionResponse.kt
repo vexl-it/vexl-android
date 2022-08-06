@@ -17,5 +17,7 @@ data class LocationSuggestionResult constructor(
 data class LocationSuggestionUserData constructor(
 	@Json(name = "municipality") val municipality: String,
 	@Json(name = "region") val region: String,
-	@Json(name = "country") val country: String
+	@Json(name = "country") val country: String,
+	@Json(name = "latitude") val latitude: Double,
+	@Json(name = "longitude") val longitude: Double
 )
