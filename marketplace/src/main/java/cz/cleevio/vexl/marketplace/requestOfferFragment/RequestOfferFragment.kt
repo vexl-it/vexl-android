@@ -1,7 +1,11 @@
 package cz.cleevio.vexl.marketplace.requestOfferFragment
 
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -9,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentRequestOfferBinding
@@ -49,13 +54,6 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(
-				top = insets.top,
-				bottom = insets.bottomWithIME
-			)
-		}
-
 		commonFriendsAdapter = CommonFriendAdapter()
 		binding.commonFriendsList.adapter = commonFriendsAdapter
 
@@ -104,6 +102,28 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		binding.close.setOnClickListener {
 			findNavController().popBackStack()
 		}
+
+		listenForInsets(binding.requestOfferBtn) { insets ->
+			binding.container.updatePadding(
+				top = insets.top
+			)
+		}
+
+		binding.requestText.setOnFocusChangeListener { _, hasFocus ->
+			if (hasFocus) {
+				binding.container.postDelayed({
+					binding.container.fullScroll(View.FOCUS_DOWN)
+					binding.requestText.requestFocus()
+				}, SCROLL_TO_BOTTOM_DELAY)
+			}
+		}
+
+		val buttonMargin = binding.requestOfferBtn.marginBottom
+		listenForIMEInset(binding.container) { insets ->
+			binding.requestOfferBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = insets + buttonMargin
+			}
+		}
 	}
 
 	private fun showRequesting() {
@@ -120,5 +140,9 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		binding.requestTextWrapper.isVisible = true
 		binding.requestOfferBtn.isVisible = true
 		binding.close.isVisible = true
+	}
+
+	private companion object {
+		private const val SCROLL_TO_BOTTOM_DELAY = 300L
 	}
 }

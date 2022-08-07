@@ -6,19 +6,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cz.cleevio.core.R
+import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.databinding.ItemChatRequestBinding
 
 class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.ViewHolder>(
 	object : DiffUtil.ItemCallback<CommunicationRequest>() {
-		override fun areItemsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean = oldItem.message.uuid == newItem.message.uuid
+		override fun areItemsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean =
+			oldItem.message.uuid == newItem.message.uuid
 
-		override fun areContentsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean = oldItem == newItem
+		override fun areContentsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean =
+			oldItem == newItem
 	}) {
 
-	fun getItemAtIndex(index: Int): CommunicationRequest {
-		return getItem(index)
-	}
+	fun getItemAtIndex(index: Int): CommunicationRequest = getItem(index)
 
 	inner class ViewHolder constructor(
 		private val binding: ItemChatRequestBinding
@@ -27,10 +28,20 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 		private lateinit var adapter: ChatRequestCommonFriendAdapter
 
 		fun bind(item: CommunicationRequest) {
-			binding.userName.text = if (item.offer?.offerType == "SELL") {
-				binding.userName.resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
+			if (item.offer?.offerType == "SELL") {
+				colorizeTransactionType(
+					binding.userName.resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend"),
+					"Unknown friend",
+					binding.userName,
+					R.color.pink_100
+				)
 			} else {
-				binding.userName.resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
+				colorizeTransactionType(
+					binding.userName.resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend"),
+					"Unknown friend",
+					binding.userName,
+					R.color.green_100
+				)
 			}
 			binding.userType.text = if (item.offer?.friendLevel == "FIRST") {
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_first)

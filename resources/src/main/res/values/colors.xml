@@ -21,6 +21,7 @@
 	<color name="edit_border">#AFAFAF</color>
 
 	<color name="black">#000000</color>
+	<color name="black_lighter">#101010</color>
 	<color name="black_opacity_75">#BF000000</color>
 	<color name="white">#FFFFFF</color>
 	<color name="white_opacity_50">#80FFFFFF</color>

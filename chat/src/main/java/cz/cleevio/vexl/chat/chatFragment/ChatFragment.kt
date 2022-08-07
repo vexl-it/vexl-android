@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import cz.cleevio.core.utils.BuySellColorizer
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.showSnackbar
 import cz.cleevio.core.utils.viewBinding
@@ -43,7 +44,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					error(R.drawable.ic_baseline_person_128)
 					placeholder(R.drawable.ic_baseline_person_128)
 				}
-				binding.username.text = chatUserIdentity?.name
+				setupColoredTitle(chatUserIdentity?.name ?: "")
 			}
 		}
 		repeatScopeOnStart {
@@ -67,10 +68,18 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	override fun initView() {
 		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top, bottom = insets.bottomWithIME)
+			binding.container.updatePadding(top = insets.top)
+			binding.submitMessageWrapper.updatePadding(
+				bottom = insets.bottom +
+					binding.submitMessageWrapper.paddingBottom
+			)
 		}
 
-		binding.username.text = getUserName(args.communicationRequest)
+		val name = args.communicationRequest.message.deanonymizedUser?.name ?: run {
+			resources.getString(R.string.marketplace_detail_friend_first)
+		}
+
+		setupColoredTitle(name)
 
 		binding.sendMessageButton.setOnClickListener {
 			sendMessage()
@@ -143,6 +152,24 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 	}
 
+	private fun setupColoredTitle(name: String) {
+		if (args.communicationRequest.offer?.offerType == "BUY") {
+			BuySellColorizer.colorizeTransactionType(
+				resources.getString(R.string.marketplace_detail_user_buy, name),
+				name,
+				binding.username,
+				R.color.green_100
+			)
+		} else {
+			BuySellColorizer.colorizeTransactionType(
+				resources.getString(R.string.marketplace_detail_user_sell, name),
+				name,
+				binding.username,
+				R.color.pink_100
+			)
+		}
+	}
+
 	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
 		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
 	}
@@ -167,5 +194,4 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			resources.getString(R.string.marketplace_detail_user_sell, name)
 		}
 	}
-
 }

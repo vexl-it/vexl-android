@@ -21,7 +21,7 @@ fun LocationResponse.fromNetwork(): Location {
 		longitude = this.longitude,
 		latitude = this.latitude,
 		radius = this.radius,
-		city = this.city
+		city = this.city ?: "Unknown"
 	)
 }
 

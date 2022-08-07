@@ -4,6 +4,7 @@
 	<dimen name="black_button_corner_size">13dp</dimen>
 	<dimen name="offer_button_corner_size">13dp</dimen>
 	<dimen name="bottom_button_corner_size">13dp</dimen>
+	<dimen name="chat_button_corner">8dp</dimen>
 	<dimen name="add_button_corner_size">10dp</dimen>
 	<dimen name="primary_button_height">64dp</dimen>
 	<dimen name="bottom_screen_button_height">59dp</dimen>

@@ -63,7 +63,6 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 		adapter = ChatContactListAdapter(
 			chatWithUser = { userWithMessage ->
 				findNavController().safeNavigateWithTransition(
-//				todo: fix `!!`
 					ChatContactListFragmentDirections.proceedToChatFragment(
 						communicationRequest = CommunicationRequest(
 							message = userWithMessage.message,
