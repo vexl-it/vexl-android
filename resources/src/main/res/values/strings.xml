@@ -303,7 +303,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_common_friends_facebook_contact">Via Facebook</string>
     <string name="chat_btns_delete_chat">Delete chat</string>
     <string name="chat_btns_block_user">Block user</string>
-    <string name="chat_message_input_placeholder">Type something</string>
+    <string name="chat_message_input_placeholder">Type something...</string>
     <string name="chat_delete_chat_title">Delete chat?</string>
     <string name="chat_delete_chat_description">Are you done trading? Closing chat means that you are finished with the trade. Closing the chat deletes all chat history. </string>
     <string name="chat_delete_chat_back">Back</string>

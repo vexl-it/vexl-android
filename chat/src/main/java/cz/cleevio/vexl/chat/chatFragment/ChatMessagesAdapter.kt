@@ -57,16 +57,14 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 		}
 	}
 
-	override fun getItemViewType(position: Int): Int {
-		return getItem(position).type.ordinal
-	}
+	override fun getItemViewType(position: Int): Int =
+		getItem(position).type.ordinal
 
 	inner class TextViewHolder constructor(
 		private val binding: ItemChatMessageBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatMessage) {
-
 			if (item.isMine) {
 				binding.sentMessage.text = item.text
 				binding.receivedMessage.isVisible = false
@@ -76,7 +74,6 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 				binding.receivedMessage.isVisible = true
 				binding.sentMessage.isVisible = false
 			}
-
 		}
 	}
 

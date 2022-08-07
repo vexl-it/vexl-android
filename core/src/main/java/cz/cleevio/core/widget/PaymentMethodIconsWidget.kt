@@ -49,9 +49,9 @@ class PaymentMethodIconsWidget @JvmOverloads constructor(
 
 	private fun getIcon(paymentType: String): Int {
 		return when (paymentType) {
-			"Revolut" -> R.drawable.ic_revolut
-			"Bank" -> R.drawable.ic_bank
-			"Cash" -> R.drawable.ic_cash
+			"REVOLUT" -> R.drawable.ic_revolut
+			"BANK" -> R.drawable.ic_bank
+			"CASH" -> R.drawable.ic_cash
 			else -> R.drawable.ic_map_pin // TODO error
 		}
 	}

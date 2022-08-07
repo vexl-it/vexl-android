@@ -136,7 +136,6 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/buttons_scroll"
 		app:layout_constraintVertical_weight="1"
-		app:stackFromEnd="true"
 		tools:itemCount="15"
 		tools:listitem="@layout/item_chat_message" />
 
@@ -244,12 +243,14 @@
 				android:id="@+id/message_edit"
 				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="18dp"
+				android:layout_height="45dp"
 				android:hint="@string/chat_message_input_placeholder"
 				android:imeOptions="actionSend"
-				android:inputType="text"
+				android:paddingTop="0dp"
+				android:paddingBottom="2dp"
+				android:inputType="textCapSentences"
 				android:minWidth="150dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Chat.Input"
 				android:textColor="@color/white"
 				android:textColorHint="@color/gray_4"
 				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
@@ -261,8 +262,8 @@
 
 			<ImageButton
 				android:id="@+id/send_message_button"
-				android:layout_width="45dp"
-				android:layout_height="45dp"
+				android:layout_width="37dp"
+				android:layout_height="37dp"
 				android:layout_marginEnd="4dp"
 				android:background="@drawable/background_button_chat_send"
 				android:backgroundTint="@null"

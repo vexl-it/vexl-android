@@ -70,7 +70,9 @@ class OfferWidget @JvmOverloads constructor(
 		binding.card.feeDescription.text =
 			resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
 
-		binding.card.paymentMethod.text = item.paymentMethod.joinToString(", ")
+		binding.card.paymentMethod.text = item.paymentMethod.joinToString(", ") {
+			it.lowercase().replaceFirstChar { a -> a.uppercase() }
+		}
 		binding.card.paymentMethodIcons.bind(item.paymentMethod)
 
 		if (mode == Mode.MY_OFFER) {

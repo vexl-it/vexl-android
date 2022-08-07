@@ -895,6 +895,29 @@
 		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Chat.Input" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">20dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Chat.Me" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/black</item>
+		<item name="lineHeight">20dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Chat.NotMe" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">20dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
 
 
 </resources>

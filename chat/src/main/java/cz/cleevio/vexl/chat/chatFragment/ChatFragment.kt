@@ -1,7 +1,9 @@
 package cz.cleevio.vexl.chat.chatFragment
 
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,10 +15,10 @@ import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.showSnackbar
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
-import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -67,14 +69,6 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top)
-			binding.submitMessageWrapper.updatePadding(
-				bottom = insets.bottom +
-					binding.submitMessageWrapper.paddingBottom
-			)
-		}
-
 		val name = args.communicationRequest.message.deanonymizedUser?.name ?: run {
 			resources.getString(R.string.marketplace_detail_friend_first)
 		}
@@ -150,6 +144,16 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				)
 			)
 		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(top = insets.top)
+		}
+
+		listenForIMEInset(binding.submitMessageWrapper) { insets ->
+			binding.submitMessageWrapper.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = insets
+			}
+		}
 	}
 
 	private fun setupColoredTitle(name: String) {
@@ -180,18 +184,6 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				viewModel.sendMessage(message)
 				binding.messageEdit.text?.clear()
 			}
-		}
-	}
-
-	private fun getUserName(communicationRequest: CommunicationRequest): String {
-		val name = communicationRequest.message.deanonymizedUser?.name ?: run {
-			resources.getString(R.string.marketplace_detail_friend_first)
-		}
-
-		return if (communicationRequest.offer?.offerType == "BUY") {
-			resources.getString(R.string.marketplace_detail_user_buy, name)
-		} else {
-			resources.getString(R.string.marketplace_detail_user_sell, name)
 		}
 	}
 }
