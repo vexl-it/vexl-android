@@ -24,17 +24,20 @@ class OfferFeeWidget @JvmOverloads constructor(
 		setupUI()
 
 		binding.feeRadiogroup.setOnCheckedChangeListener { _, id ->
-			selectedButton = when (id) {
+			when (id) {
 				R.id.fee_without -> {
-					FeeButtonSelected.WITHOUT_FEE
+					selectedButton = FeeButtonSelected.WITHOUT_FEE
+					setValues(FeeValue(FeeButtonSelected.WITHOUT_FEE, 0f))
+					binding.feeBar.value = 0f
 				}
 				R.id.fee_ok -> {
-					FeeButtonSelected.WITH_FEE
+					selectedButton = FeeButtonSelected.WITH_FEE
+					setValues(FeeValue(FeeButtonSelected.WITH_FEE, 1f))
+					binding.feeBar.value = 1f
 				}
 				else -> {
 					Timber.e("Unknown radio ID! '$id'")
-
-					FeeButtonSelected.NONE
+					selectedButton = FeeButtonSelected.NONE
 				}
 			}
 			drawSeekbarSection(selectedButton)
@@ -82,8 +85,14 @@ class OfferFeeWidget @JvmOverloads constructor(
 
 	fun setValues(data: FeeValue) {
 		selectedButton = data.type
+		if (selectedButton == FeeButtonSelected.WITH_FEE) {
+			binding.feeRadiogroup.check(R.id.fee_ok)
+		} else {
+			binding.feeRadiogroup.check(R.id.fee_without)
+		}
 		drawSeekbarSection(selectedButton)
 		updateFeeValue(data.value)
+		binding.feeBar.value = data.value
 	}
 
 	companion object {

@@ -94,7 +94,9 @@ object OfferUtils {
 			amountBottomLimit = eciesEncrypt(params.priceRange.bottomLimit.toString(), contactKey),
 			amountTopLimit = eciesEncrypt(params.priceRange.topLimit.toString(), contactKey),
 			locationState = eciesEncrypt(params.location.type.name, contactKey),
-			paymentMethod = params.paymentMethod.value.map { eciesEncrypt(it.name, contactKey) },
+			paymentMethod = params.paymentMethod.value.map {
+				eciesEncrypt(it.name.lowercase().replaceFirstChar { a -> a.uppercase() }, contactKey)
+			},
 			btcNetwork = params.btcNetwork.value.map { eciesEncrypt(it.name, contactKey) },
 			friendLevel = eciesEncrypt(params.friendLevel.value.name, contactKey),
 			offerType = eciesEncrypt(params.offerType, contactKey),

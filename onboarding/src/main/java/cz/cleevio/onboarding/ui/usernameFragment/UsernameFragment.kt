@@ -20,8 +20,7 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 
 	private val binding by viewBinding(FragmentUsernameBinding::bind)
 
-	override fun bindObservers() {
-	}
+	override fun bindObservers() = Unit
 
 	override fun initView() {
 		binding.usernameInput.requestFocus()

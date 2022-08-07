@@ -68,11 +68,20 @@ class OfferLocationWidget @JvmOverloads constructor(
 		}
 	}
 
-	fun setupFocusChangeListener(onFocusChangeListener: (Boolean, Int) -> Unit) {
+	fun setupFocusChangeListener(onFocusChangeListener: (Boolean, OfferLocationItem) -> Unit) {
 		items.forEach {
 			it.onFocusChangeListener = onFocusChangeListener
 		}
 	}
+
+	fun setupOnTextChanged(onTextChanged: (String, OfferLocationItem) -> Unit) {
+		items.forEach {
+			it.onTextChanged = onTextChanged
+		}
+	}
+
+	fun getPositionOfItem(offerLocationItem: OfferLocationItem) =
+		items.indexOf(offerLocationItem)
 
 	private fun checkAddButtonVisibility() {
 		binding.locationAddNewLocation.isVisible = visibleItems.size < LOCATION_ITEMS_LIMIT
@@ -84,8 +93,7 @@ class OfferLocationWidget @JvmOverloads constructor(
 
 	fun getLocationValue(): LocationValue = LocationValue(
 		type = selectedButton,
-		//fixme: should use getValue() and then external API to convert to GPS coords
-		values = visibleItems.map { it.getLocation() }
+		values = visibleItems.mapNotNull { it.getLocation() }
 	)
 
 	fun reset() {

@@ -15,8 +15,9 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.network.data.Status
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
+import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
+import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,6 +40,37 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 						binding.newOfferBtn.isVisible = true
 						binding.progress.isVisible = false
 					}
+				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.suggestions.collect { (offerLocationItem, queries) ->
+				if (queries.isEmpty()) return@collect
+				if (queries.map { it.city }.contains(offerLocationItem?.getEditText()?.text.toString())) {
+					offerLocationItem?.setLocation(queries.first())
+					return@collect
+				}
+
+				offerLocationItem?.getEditText()?.let {
+					it.setAdapter(null)
+					val adapter = LocationSuggestionAdapter(queries, requireActivity())
+
+					it.dropDownVerticalOffset = requireContext().dpValueToPx(SUGGESTION_PADDING).toInt()
+					it.setDropDownBackgroundResource(R.drawable.background_rounded)
+					it.setAdapter(adapter)
+					it.showDropDown()
+					it.setOnItemClickListener { _, _, position, _ ->
+						offerLocationItem.setLocation(queries[position])
+					}
+				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.queryForSuggestions.collect { (view, query) ->
+				view?.let {
+					viewModel.getDebouncedSuggestions(query, it)
 				}
 			}
 		}
@@ -88,13 +120,21 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			}
 		}
 
-		binding.newOfferLocation.setupFocusChangeListener { hasFocus, y ->
+		binding.newOfferLocation.setupFocusChangeListener { hasFocus, locationItem ->
 			if (hasFocus) {
 				binding.nestedScrollView.smoothScrollTo(
 					binding.newOfferLocation.x.toInt(),
-					y + binding.newOfferLocation.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
+					locationItem.height *
+						binding.newOfferLocation.getPositionOfItem(locationItem) +
+						requireContext().dpValueToPx(OFFER_ITEM_PADDING).toInt() +
+						binding.newOfferLocation.y.toInt() -
+						Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
 				)
 			}
+		}
+
+		binding.newOfferLocation.setupOnTextChanged { query, view ->
+			viewModel.getSuggestions(query, view)
 		}
 
 		binding.newOfferCurrency.onCurrencyPicked = {
@@ -163,17 +203,16 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(
-				top = insets.top
+				top = insets.top,
+				bottom = insets.bottomWithIME
 			)
-		}
-
-		listenForIMEInset(binding.nestedScrollView) { inset ->
-			binding.container.updatePadding(bottom = inset)
 		}
 	}
 
 	companion object {
 		const val MAX_INPUT_LENGTH = 140
 		private const val DISPLAY_THIRD = 3
+		private const val SUGGESTION_PADDING = 8
+		private const val OFFER_ITEM_PADDING = 32
 	}
 }

@@ -5,14 +5,12 @@
     <ID>ComplexMethod:CurrencyPriceChartWidget.kt$CurrencyPriceChartWidget$private fun getValue(btnId: Int): BigDecimal</ID>
     <ID>ComplexMethod:PagerAdapter.kt$PagerAdapter$@Suppress("MagicNumber") override fun createFragment(position: Int): Fragment</ID>
     <ID>ReturnCount:InitPhoneFragment.kt$@Suppress("MagicNumber") private fun String.toFlagEmoji(): String</ID>
-    <ID>ReturnCount:TokenAuthenticator.kt$TokenAuthenticator$override fun authenticate(route: Route?, response: Response): Request?</ID>
     <ID>StringLiteralDuplication:BaseContactsListViewModel.kt$BaseContactsListViewModel$"ContactSync"</ID>
     <ID>TooGenericExceptionCaught:InitPhoneFragment.kt$e: Exception</ID>
-    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getIntFromEP(key: String, defaultValue: Int): Int</ID>
+    <ID>UnusedPrivateMember:CurrencyPriceChartViewModel.kt$CurrencyPriceChartViewModel$@Suppress("UnderscoresInNumericLiterals", "MagicNumber", "LongMethod", "StringLiteralDuplication") private fun getMockedMarketResponse(): List&lt;List&lt;Double>></ID>
     <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getLongFromEP(key: String, defaultValue: Long): Long</ID>
     <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getNullableStringFromEP(key: String): String?</ID>
     <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun getNullableStringFromEP(key: String, defaultValue: String?): String?</ID>
-    <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun putIntToEP(key: String, value: Int)</ID>
     <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun putLongToEP(key: String, value: Long)</ID>
     <ID>UnusedPrivateMember:EncryptedPreferenceRepositoryImpl.kt$EncryptedPreferenceRepositoryImpl$private fun removeFromEP(key: String)</ID>
   </CurrentIssues>

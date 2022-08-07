@@ -5,6 +5,7 @@ import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.dao.*
 import cz.cleevio.cache.entity.MyOfferEntity
 import cz.cleevio.cache.entity.OfferCommonFriendCrossRef
+import cz.cleevio.network.LocationApi
 import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
@@ -16,9 +17,11 @@ import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.offer.*
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.flow.map
+import java.math.BigDecimal
 
 class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
+	private val locationApi: LocationApi,
 	private val myOfferDao: MyOfferDao,
 	private val offerDao: OfferDao,
 	private val requestedOfferDao: RequestedOfferDao,
@@ -257,4 +260,27 @@ class OfferRepositoryImpl constructor(
 	override suspend fun getMyOffersWithoutInbox(): List<MyOffer> =
 		myOfferDao.getMyOffersWithoutInbox()
 			.map { it.fromCache() }
+
+	override suspend fun getLocationSuggestions(
+		count: Int, query: String, language: String
+	): Resource<List<LocationSuggestion>> = tryOnline(
+		request = {
+			locationApi.getSuggestions(count, query, language)
+		},
+		mapper = {
+			it?.result?.map { a ->
+				LocationSuggestion(
+					a.userData.municipality,
+					a.userData.region,
+					a.userData.country,
+					BigDecimal(a.userData.latitude),
+					BigDecimal(a.userData.longitude)
+				)
+			}
+				?.filter { a -> a.city.isNotBlank() }
+				?.distinctBy { a -> a.city }
+				?.filter { a -> a.city.contains(query, ignoreCase = true) }
+				.orEmpty()
+		}
+	)
 }

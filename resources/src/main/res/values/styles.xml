@@ -604,10 +604,6 @@
 		<item name="android:background">@color/gray_4</item>
 	</style>
 
-	<style name="Widget.Cleevio.Marketplace.OfferVerticalDivider" parent="Widget.Cleevio.Vexl.VerticalDivider">
-		<item name="android:background">@color/gray_4</item>
-	</style>
-
 	<style name="Widget.Cleevio.Chat.MessagesHorizontalDivider" parent="Widget.Cleevio.Vexl.HorizontalDivider">
 		<item name="android:background">@color/white</item>
 	</style>
