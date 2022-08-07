@@ -44,12 +44,12 @@ class ProfileViewModel constructor(
 
 	fun logout(onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
 		viewModelScope.launch(Dispatchers.IO) {
+			val offerDelete = offerRepository.deleteMyOffers(emptyList())
 			val userDelete = userRepository.deleteMe()
 			val contactUserDelete = contactRepository.deleteMyUser()
 			val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
 			userRepository.deleteLocalUser()
 			//todo: delete also all offers, when we have system for keeping offer IDs
-			val offerDelete = offerRepository.deleteMyOffers(emptyList())
 
 			if (userDelete.status is Status.Success &&
 				contactUserDelete.status is Status.Success &&

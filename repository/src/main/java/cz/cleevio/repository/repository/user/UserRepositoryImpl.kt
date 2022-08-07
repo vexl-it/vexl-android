@@ -141,7 +141,8 @@ class UserRepositoryImpl constructor(
 		return tryOnline(
 			doOnSuccess = {
 				it?.let {
-					updateUser(it)
+					val isLocalUserOnboarded = userDao.getUser()?.finishedOnboarding == true
+					updateUser(it.copy(finishedOnboarding = isLocalUserOnboarded))
 				}
 			},
 			mapper = {
@@ -184,7 +185,8 @@ class UserRepositoryImpl constructor(
 				id = getUserId() ?: 0,
 				username = user.username,
 				avatar = user.avatar,
-				publicKey = user.publicKey
+				publicKey = user.publicKey,
+				finishedOnboarding = user.finishedOnboarding
 			)
 		)
 	}
