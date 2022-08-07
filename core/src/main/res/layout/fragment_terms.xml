@@ -3,30 +3,28 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/container"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="@color/black">
+	android:layout_height="match_parent">
 
 	<androidx.core.widget.NestedScrollView
 		android:id="@+id/nested_scroll_view"
-		style="@style/Widget.Vexl.MainCardView"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:fillViewport="true"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:paddingHorizontal="24dp"
-			android:paddingTop="33dp">
+			android:layout_height="0dp">
 
 			<ImageView
 				android:id="@+id/tac_close"
 				android:layout_width="38dp"
 				android:layout_height="38dp"
+				android:layout_marginTop="24dp"
+				android:layout_marginEnd="24dp"
 				android:background="@drawable/background_rounded"
+				android:contentDescription="?content"
 				android:foreground="?attr/selectableItemBackground"
 				android:padding="8dp"
 				android:src="@drawable/ic_cross"
@@ -37,6 +35,8 @@
 				android:id="@+id/terms_title"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="24dp"
+				android:layout_marginTop="24dp"
 				android:text="@string/terms_of_use_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.Section.Title"
 				app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +46,7 @@
 				android:id="@+id/terms_faq_button"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="24dp"
 				android:background="@drawable/background_rounded_tac"
 				android:clickable="true"
@@ -58,6 +59,7 @@
 				<ImageView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:contentDescription="?content"
 					android:src="@drawable/ic_play" />
 
 				<TextView
@@ -67,12 +69,14 @@
 					android:layout_weight="1"
 					android:text="@string/terms_of_use_faq_button"
 					android:textAppearance="@style/TextAppearance.Vexl.Description.TaC" />
+
 			</LinearLayout>
 
 			<RadioGroup
 				android:id="@+id/terms_privacy_radio_group"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="16dp"
 				android:background="@drawable/tac_radio_group_selector_line"
 				android:checkedButton="@+id/terms"
@@ -84,7 +88,7 @@
 					android:id="@+id/terms"
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
-					android:layout_marginLeft="1dp"
+					android:layout_marginStart="1dp"
 					android:layout_marginTop="1dp"
 					android:layout_marginBottom="1dp"
 					android:layout_weight="1"
@@ -99,7 +103,7 @@
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:layout_marginTop="1dp"
-					android:layout_marginRight="1dp"
+					android:layout_marginEnd="1dp"
 					android:layout_marginBottom="1dp"
 					android:layout_weight="1"
 					android:background="@drawable/background_tac_radio_group"
@@ -113,12 +117,12 @@
 				android:id="@+id/text"
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="40dp"
 				android:textColor="@color/white"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/terms_privacy_radio_group" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

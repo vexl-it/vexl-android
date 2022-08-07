@@ -1,88 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 
-	<cz.cleevio.core.widget.contactsList.ContactsListWidget
-		android:id="@+id/contacts_list_widget"
+	<LinearLayout
+		android:id="@+id/container"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toTopOf="@id/contacts_barrier"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 
-	<androidx.constraintlayout.widget.Barrier
-		android:id="@+id/contacts_barrier"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:barrierDirection="bottom"
-		app:constraint_referenced_ids="empty_contacts_btn, back_btn, confirm_btn" />
+		<cz.cleevio.core.widget.contactsList.ContactsListWidget
+			android:id="@+id/contacts_list_widget"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1" />
 
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/empty_contacts_btn"
-		style="@style/Widget.Vexl.Profile.ImportContacts.Decline"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginEnd="4dp"
-		android:text="@string/import_contacts_back_button"
-		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent" />
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
 
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/back_btn"
-		style="@style/Widget.Vexl.Profile.ImportContacts.Decline"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginEnd="4dp"
-		android:layout_marginBottom="60dp"
-		android:text="@string/import_contacts_back_button"
-		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/confirm_btn"
-		app:layout_constraintHorizontal_weight="0.5"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/contacts_list_widget" />
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/empty_contacts_btn"
+				style="@style/Widget.Vexl.Onboarding.BottomButton.Left"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/bottom_screen_button_height"
+				android:layout_marginStart="8dp"
+				android:layout_marginEnd="4dp"
+				android:text="@string/import_contacts_back_button"
+				android:visibility="gone"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/confirm_btn"
-		style="@style/Widget.Vexl.Profile.ImportContacts.Accept"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="4dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginEnd="8dp"
-		android:layout_marginBottom="60dp"
-		android:text="@string/import_contacts_update_button"
-		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_weight="0.5"
-		app:layout_constraintStart_toEndOf="@id/back_btn"
-		app:layout_constraintTop_toBottomOf="@id/contacts_list_widget" />
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/back_btn"
+				style="@style/Widget.Vexl.Onboarding.BottomButton.Left"
+				android:layout_width="0dp"
+				android:layout_height="@dimen/bottom_screen_button_height"
+				android:layout_marginStart="8dp"
+				android:layout_marginEnd="4dp"
+				android:text="@string/import_contacts_back_button"
+				android:visibility="gone"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toStartOf="@id/confirm_btn"
+				app:layout_constraintHorizontal_weight="0.5"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/confirm_btn"
+				style="@style/Widget.Vexl.Profile.ImportContacts.Accept"
+				android:layout_width="0dp"
+				android:layout_height="@dimen/bottom_screen_button_height"
+				android:layout_marginStart="4dp"
+				android:layout_marginEnd="8dp"
+				android:text="@string/import_contacts_update_button"
+				android:visibility="gone"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_weight="0.5"
+				app:layout_constraintStart_toEndOf="@id/back_btn"
+				app:layout_constraintTop_toTopOf="parent" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</LinearLayout>
 
 	<com.google.android.material.progressindicator.CircularProgressIndicator
 		android:id="@+id/progress"
 		android:layout_width="120dp"
 		android:layout_height="120dp"
+		android:layout_gravity="center"
 		android:layout_marginHorizontal="16dp"
 		android:indeterminate="true"
-		android:visibility="gone"
 		app:indicatorColor="@color/yellow_100"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
 		app:showDelay="500"
 		tools:visibility="visible" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

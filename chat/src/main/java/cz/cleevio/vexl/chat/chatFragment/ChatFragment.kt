@@ -1,21 +1,24 @@
 package cz.cleevio.vexl.chat.chatFragment
 
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import cz.cleevio.core.utils.BuySellColorizer
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.showSnackbar
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
-import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -43,7 +46,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					error(R.drawable.ic_baseline_person_128)
 					placeholder(R.drawable.ic_baseline_person_128)
 				}
-				binding.username.text = chatUserIdentity?.name
+				setupColoredTitle(chatUserIdentity?.name ?: "")
 			}
 		}
 		repeatScopeOnStart {
@@ -66,11 +69,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	}
 
 	override fun initView() {
-		listenForInsets(binding.container) { insets ->
-			binding.container.updatePadding(top = insets.top, bottom = insets.bottomWithIME)
+		val name = args.communicationRequest.message.deanonymizedUser?.name ?: run {
+			resources.getString(R.string.marketplace_detail_friend_first)
 		}
 
-		binding.username.text = getUserName(args.communicationRequest)
+		setupColoredTitle(name)
 
 		binding.sendMessageButton.setOnClickListener {
 			sendMessage()
@@ -141,6 +144,34 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				)
 			)
 		}
+
+		listenForInsets(binding.container) { insets ->
+			binding.container.updatePadding(top = insets.top)
+		}
+
+		listenForIMEInset(binding.submitMessageWrapper) { insets ->
+			binding.submitMessageWrapper.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = insets
+			}
+		}
+	}
+
+	private fun setupColoredTitle(name: String) {
+		if (args.communicationRequest.offer?.offerType == "BUY") {
+			BuySellColorizer.colorizeTransactionType(
+				resources.getString(R.string.marketplace_detail_user_buy, name),
+				name,
+				binding.username,
+				R.color.green_100
+			)
+		} else {
+			BuySellColorizer.colorizeTransactionType(
+				resources.getString(R.string.marketplace_detail_user_sell, name),
+				name,
+				binding.username,
+				R.color.pink_100
+			)
+		}
 	}
 
 	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
@@ -155,17 +186,4 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			}
 		}
 	}
-
-	private fun getUserName(communicationRequest: CommunicationRequest): String {
-		val name = communicationRequest.message.deanonymizedUser?.name ?: run {
-			resources.getString(R.string.marketplace_detail_friend_first)
-		}
-
-		return if (communicationRequest.offer?.offerType == "BUY") {
-			resources.getString(R.string.marketplace_detail_user_buy, name)
-		} else {
-			resources.getString(R.string.marketplace_detail_user_sell, name)
-		}
-	}
-
 }

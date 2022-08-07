@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	tools:background="@drawable/background_chat_screen_gradient">
+	android:background="@color/black_lighter">
 
 	<com.google.android.material.imageview.ShapeableImageView
 		android:id="@+id/profile_image"
 		android:layout_width="40dp"
 		android:layout_height="40dp"
+		android:layout_marginTop="16dp"
 		android:background="@color/white"
 		android:scaleType="fitCenter"
 		android:src="@drawable/ic_default_avatar"
-		app:layout_constraintDimensionRatio="1:1"
-		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.AvatarImage" />
 
@@ -26,8 +26,8 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="16dp"
+		android:contentDescription="?content"
 		android:src="@drawable/ic_close_x"
-		app:layout_constraintTop_toTopOf="@id/profile_image"
 		app:layout_constraintBottom_toBottomOf="@id/username"
 		app:layout_constraintStart_toStartOf="parent" />
 
@@ -36,6 +36,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="8dp"
+		android:textAppearance="@style/TextAppearance.Vexl.Chat.Item.Text"
 		android:textColor="@color/white"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
@@ -44,10 +45,10 @@
 
 	<View
 		android:id="@+id/header_divider"
-		style="@style/Widget.Cleevio.Chat.MessagesHorizontalDivider"
 		android:layout_width="match_parent"
 		android:layout_height="1dp"
 		android:layout_marginTop="12dp"
+		android:background="@color/white_opacity_15"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/username" />
@@ -72,8 +73,8 @@
 				style="@style/Widget.Vexl.Chat.ActionButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:icon="@drawable/ic_eye_open"
 				android:text="@string/chat_btns_reveal_identity"
+				app:icon="@drawable/ic_eye_open"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -83,8 +84,8 @@
 				style="@style/Widget.Vexl.Chat.ActionButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:icon="@drawable/ic_my_offer"
 				android:text="@string/chat_btns_my_offer"
+				app:icon="@drawable/ic_my_offer"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toEndOf="@id/reveal_identity_btn"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -94,8 +95,8 @@
 				style="@style/Widget.Vexl.Chat.ActionButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:icon="@drawable/ic_common_friends"
 				android:text="@string/chat_btns_common_friends"
+				app:icon="@drawable/ic_common_friends"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toEndOf="@id/my_offer_btn"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -105,8 +106,8 @@
 				style="@style/Widget.Vexl.Chat.ActionButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:icon="@drawable/ic_warning"
 				android:text="@string/chat_btns_delete_chat"
+				app:icon="@drawable/ic_warning"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toEndOf="@id/common_friends_btn"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -116,27 +117,25 @@
 				style="@style/Widget.Vexl.Chat.ActionButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:icon="@drawable/ic_block"
 				android:text="@string/chat_btns_block_user"
+				app:icon="@drawable/ic_block"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toEndOf="@id/delete_chat_btn"
 				app:layout_constraintTop_toTopOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</HorizontalScrollView>
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/chat_rv"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_wrapper"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/buttons_scroll"
-		app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_wrapper"
 		app:layout_constraintVertical_weight="1"
-		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-		app:stackFromEnd="true"
 		tools:itemCount="15"
 		tools:listitem="@layout/item_chat_message" />
 
@@ -145,9 +144,9 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@color/white"
+		android:visibility="gone"
 		app:layout_constraintBottom_toTopOf="@id/submit_message_wrapper"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:visibility="gone"
 		app:layout_constraintStart_toStartOf="parent"
 		tools:visibility="visible">
 
@@ -167,25 +166,25 @@
 
 		<TextView
 			android:id="@+id/identity_reveal_requested_title"
+			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/chat_message_identity_reveal_request"
 			android:layout_marginStart="12dp"
 			android:layout_marginBottom="2dp"
-			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
+			android:text="@string/chat_message_identity_reveal_request"
 			android:textColor="@color/black"
-			app:layout_constraintVertical_chainStyle="packed"
 			app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_description"
 			app:layout_constraintStart_toEndOf="@id/profile_icon"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_chainStyle="packed" />
 
 		<TextView
 			android:id="@+id/identity_reveal_requested_description"
+			style="@style/TextAppearance.Vexl.Description"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/chat_message_identity_reveal_pending_tap"
 			android:layout_marginStart="12dp"
-			style="@style/TextAppearance.Vexl.Description"
+			android:text="@string/chat_message_identity_reveal_pending_tap"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toEndOf="@id/profile_icon"
 			app:layout_constraintTop_toBottomOf="@id/identity_reveal_requested_title" />
@@ -197,6 +196,7 @@
 			android:layout_margin="12dp"
 			android:background="@drawable/background_button_chat_identity_request_solve"
 			android:backgroundTint="@null"
+			android:contentDescription="?content"
 			android:src="@drawable/ic_arrow_right"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -220,6 +220,7 @@
 			android:layout_height="45dp"
 			android:background="@drawable/background_button_chat_image"
 			android:backgroundTint="@null"
+			android:contentDescription="?content"
 			android:src="@drawable/ic_camera"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@id/message_wrapper"
@@ -230,7 +231,7 @@
 			android:id="@+id/message_wrapper"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
+			android:layout_marginStart="8dp"
 			android:background="@drawable/background_button_chat_image"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -241,16 +242,18 @@
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/message_edit"
 				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="18dp"
+				android:layout_height="45dp"
 				android:hint="@string/chat_message_input_placeholder"
 				android:imeOptions="actionSend"
-				android:inputType="text"
+				android:paddingTop="0dp"
+				android:paddingBottom="2dp"
+				android:inputType="textCapSentences"
 				android:minWidth="150dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Chat.Input"
 				android:textColor="@color/white"
 				android:textColorHint="@color/gray_4"
+				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toStartOf="@id/send_message_button"
 				app:layout_constraintHorizontal_weight="1"
@@ -261,16 +264,15 @@
 				android:id="@+id/send_message_button"
 				android:layout_width="37dp"
 				android:layout_height="37dp"
-				android:layout_margin="4dp"
+				android:layout_marginEnd="4dp"
 				android:background="@drawable/background_button_chat_send"
 				android:backgroundTint="@null"
+				android:contentDescription="?content"
 				android:src="@drawable/ic_send"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

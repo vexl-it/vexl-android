@@ -6,6 +6,7 @@
 	style="@style/Widget.Vexl.CardView"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:layout_marginHorizontal="8dp"
 	app:cardCornerRadius="@dimen/offer_button_corner_size"
 	app:layout_constraintEnd_toEndOf="parent"
 	app:layout_constraintStart_toStartOf="parent"

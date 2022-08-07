@@ -11,7 +11,7 @@
 		android:layout_height="0dp"
 		android:layout_margin="8dp"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHeight_percent=".75"
+		app:layout_constraintHeight_percent=".73"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
@@ -22,39 +22,38 @@
 
 			<ImageView
 				android:id="@+id/qr_code"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="40dp"
+				android:layout_width="128dp"
+				android:layout_height="128dp"
+				android:layout_marginTop="40dp"
+				android:contentDescription="?content"
 				android:src="@drawable/join_qr"
-				app:layout_constraintBottom_toTopOf="@id/title"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 
 			<TextView
 				android:id="@+id/title"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="12dp"
+				android:layout_marginTop="32dp"
 				android:gravity="center"
 				android:text="@string/profile_join_vexl_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.DialogHeading"
 				android:textColor="@color/black"
-				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/qr_code" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</com.google.android.material.card.MaterialCardView>
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/confirm_btn"
-		style="@style/Widget.Vexl.Profile.DonateButton.Accept"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="4dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
 		android:layout_marginTop="8dp"
-		android:layout_marginEnd="8dp"
 		android:layout_marginBottom="30dp"
 		android:text="@string/profile_join_vexl_button_title"
 		app:layout_constraintBottom_toBottomOf="parent"

@@ -138,19 +138,19 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileGroups.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToGroupFragment()
 			)
 		}
 
 		binding.profileChangePicture.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToEditAvatarFragment()
 			)
 		}
 
 		binding.profileEditName.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToEditNameFragment()
 			)
 		}

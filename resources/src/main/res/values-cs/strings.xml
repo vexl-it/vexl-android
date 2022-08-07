@@ -33,6 +33,22 @@
     <string name="terms_of_use_title">Podmínky použití</string>
     <string name="terms_of_use_terms_bookmark">Podmínky použití</string>
     <string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
+    <string name="terms_of_use_markdown"># Just testing markdown
+
+[link](https://google.com)
+
+## Team
+
+* **Name Surname** - work position
+* **Name Surname** - work position</string>
+    <string name="terms_of_use_policy_markdown"># Replace with real data
+
+[link](https://google.com)
+
+## Team
+
+* **Name Surname** - work position
+* **Name Surname** - work position</string>
 
     <!-- Register Phone -->
     <string name="init_phone_title">Zadej své telefonní číslo</string>
@@ -51,14 +67,16 @@
     <string name="username_hint">Tvoje jméno nebo přezdívka</string>
     <string name="avatar_title">Jak vypadáš?</string>
     <string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí.</string>
-    <string name="avatar_welcome">Nazdar %s</string>
+    <string name="avatar_welcome">Nazdar, %s!</string>
     <string name="verify_phone_done_title">Telefon ověřen.\nČas nastavit tvůj profil.</string>
     <string name="image_picker_camera">Foťák</string>
     <string name="image_picker_gallery">Knihovna</string>
     <string name="image_picker_title">Vyber si, odkud chceš obrázek nahrát</string>
     <string name="user_avatar_title">Nazdar %s\nJak vypadáš?</string>
     <string name="anonymize_user_title">Toto je tvá identita</string>
+    <string name="anonymize_user_title2">Identity anonymized!</string>
     <string name="anonymize_user_note">Bez tvého svolení nikdo tvoji identitu neuvidí.</string>
+    <string name="anonymize_user_note2">This is how other users will see you until you reveal your real identity.</string>
     <string name="anonymize_user_btn">Anonymizovat</string>
 
     <!-- Register Phone Contacts -->
@@ -102,12 +120,31 @@
     <string name="profile_request_data">Vyžádat uložená data</string>
     <string name="profile_logout">Smazat účet</string>
     <string name="profile_currency">Měna</string>
+    <string name="profile_logout_info">Can’t find logout? There’s no such a thing.
+But you can delete account.</string>
+    <string name="profile_vexl_support">If you like Vexl, support it’s improvement by sending some Bitcoin as donation!</string>
+    <string name="profile_refuse_to_snap_chat">Refuse users to snap the chat</string>
+    <string name="profile_private_settings_title">Private settings</string>
+    <string name="profile_private_settings_subtitle">Unlock to access your identity and contacts</string>
 
     <!-- Profile Edit Name -->
+    <string name="profile_edit_name_title">Edit name</string>
+    <string name="profile_edit_name_subtitle">Space for additional copy. You can lorem
+ipsum dolor sit ametum roma von carpa di.</string>
+    <string name="profile_edit_name_action">Save</string>
 
     <!-- Profile Edit Avatar -->
+    <string name="profile_edit_avatar_title">Change profile picture</string>
+    <string name="profile_edit_avatar_subtitle">Space for additional copy. You can lorem ipsum dolor sit ametum roma von.</string>
+    <string name="profile_edit_avatar_action">Upload new photo</string>
 
     <!-- Profile Delete Account -->
+    <string name="profile_delete_account_title">Delete account?</string>
+    <string name="profile_delete_account_subtitle">Do you really want to delete your account? You will never be able to undo this action.</string>
+    <string name="profile_delete_account_no">Nope</string>
+    <string name="profile_delete_account_yes_delete">Yes, delete</string>
+    <string name="profile_delete_account_yes">Yes</string>
+    <string name="profile_delete_account_title_sure">You sure?</string>
 
     <!-- JoinVexl -->
     <string name="profile_join_vexl_title">Připoj se k Vexlu</string>
@@ -137,6 +174,7 @@
 
     <!-- Request known data -->
     <string name="user_profile_request_data_title">Vyžádat uživatelská data</string>
+    <string name="user_profile_request_data_subtitle">Download package with everything we know about you.</string>
     <string name="user_profile_request_confirm_button">Stáhnout</string>
     <string name="user_profile_request_dismiss_button">Zpět</string>
 
@@ -231,9 +269,12 @@
     <string name="offer_update_sell_btn">Aktualizovat nabídku prodeje</string>
     <string name="offer_create_buy_btn">Vytvořit poptávku nákupu</string>
     <string name="offer_update_buy_btn">Aktualizovat poptávku nákupu</string>
-    <string name="widget_location_km"> +- %d km</string>
+    <string name="widget_location_km">\u00B1 %d km</string>
     <string name="widget_location_hint">Město</string>
     <string name="create_create_offer">Vytvořit nabídku</string>
+    <string name="currency_usd">USD</string>
+    <string name="currency_eur">EUR</string>
+    <string name="currency_czk">CZK</string>
 
     <!-- Offer Request -->
     <string name="request_title">Nabídka</string>
@@ -261,7 +302,7 @@
     <string name="chat_common_friends_facebook_contact">Přes Facebook</string>
     <string name="chat_btns_delete_chat">Vymazat chat</string>
     <string name="chat_btns_block_user">Zablokovat uživatele</string>
-    <string name="chat_message_input_placeholder">Napiš něco</string>
+    <string name="chat_message_input_placeholder">Napiš něco...</string>
     <string name="chat_delete_chat_title">Vymazat chat?</string>
     <string name="chat_delete_chat_description">Dovexlováno? Chat uzavři až po dokončení transakce, uzavřením se smaže celá historie chatu.</string>
     <string name="chat_delete_chat_back">Zpět</string>
@@ -320,6 +361,21 @@
     <string name="offer_widget_groups_info">%s nabídka</string>
 
     <!-- Faq -->
+    <string name="faq_screen_one_title">What is Vexl?</string>
+    <string name="faq_screen_one_subtitle">Vexl is a platform where you can trade Bitcoin within your real world social network - your friends and friends of their friends - while staying completely anonymous - if you wish.</string>
+    <string name="faq_screen_two_title">Who can see my contacts?</string>
+    <string name="faq_screen_two_subtitle">People whom you allow to see your identity can see the friends you have in common. That\'s it.</string>
+    <string name="faq_screen_three_title">How can I remain anonymous and still participate in Vexl? </string>
+    <string name="faq_screen_three_subtitle">By default, you participate in the network under your Vexl name and Vexl avatar that were given to you during the registration. You can only reveal your identity per a particular trade in our secure, end to end encrypted chat.</string>
+    <string name="faq_screen_four_title">How can I make sure that the person I am talking to is the person I want to talk to?</string>
+    <string name="faq_screen_four_subtitle">One challenge with truly anonymous communications systems like Vexl is that sometimes you do need to verify the identity of the person you’re talking to! In cases like these, it’s best to use a secure secondary channel of communication to confirm with the other person that you’re both who you say you are.</string>
+    <string name="faq_screen_five_title">How can I ensure that my communication and trades are private and encrypted? </string>
+    <string name="faq_screen_five_subtitle">Vexl is open source - anyone can look for any backdoor or malicious intentions. Also, here you can look at the report from an independent Security Audit . </string>
+    <string name="faq_screen_six_title">How can you ensure that my data is protected?</string>
+    <string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
+    <string name="faq_screen_seven_title">How do I contact Vexl?</string>
+    <string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
 
     <!-- Permissions -->
+    <string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
 </resources>

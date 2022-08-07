@@ -21,6 +21,7 @@
 	<color name="edit_border">#AFAFAF</color>
 
 	<color name="black">#000000</color>
+	<color name="black_lighter">#101010</color>
 	<color name="black_opacity_75">#BF000000</color>
 	<color name="white">#FFFFFF</color>
 	<color name="white_opacity_50">#80FFFFFF</color>
@@ -56,6 +57,7 @@
 	<color name="purple_1">#2C2C3E</color>
 	<color name="purple_6">#C3C3FF</color>
 	<color name="yellow_100">#FCCD6C</color>
+	<color name="yellow20">#322916</color>
 	<color name="yellow_100_opacity_0">#00FCCD6C</color>
 	<color name="yellow_100_opacity_78">#C7FCCD6C</color>
 	<color name="yellow_darker">#957A44</color>
@@ -115,8 +117,8 @@
 	<color name="text_color_cryptocurrency_price">@color/green_5_opacity_50</color>
 	<color name="text_color_cryptocurrency_background">@color/green_1</color>
 
-	<color name="main_navbar_selected_color">#322916</color>
-	<color name="edit_offer_btn_background">#322916</color>
+	<color name="main_navbar_selected_color">@color/yellow20</color>
+	<color name="edit_offer_btn_background">@color/yellow20</color>
 
 	<color name="yellow_btn_chat_send">#F8C471</color>
 </resources>

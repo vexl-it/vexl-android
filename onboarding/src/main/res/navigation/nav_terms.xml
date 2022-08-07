@@ -12,9 +12,15 @@
 		android:name="cz.cleevio.onboarding.ui.termsFragment.TermsFragment"
 		android:label="TermsFragment"
 		tools:layout="@layout/fragment_terms">
+
 		<action
 			android:id="@+id/proceed_to_faq"
-			app:destination="@id/nav_faq" />
+			app:destination="@id/nav_faq">
 
+			<argument
+				android:name="continueToOnboarding"
+				app:argType="boolean" />
+
+		</action>
 	</fragment>
 </navigation>

@@ -1,6 +1,9 @@
 package cz.cleevio.profile.editNameFragment
 
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
@@ -10,7 +13,7 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentEditNameBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
-import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
+import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,6 +32,13 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 					Toast.makeText(requireContext(), "Name edit not successful", Toast.LENGTH_SHORT)
 						.show()
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.oldName.collect {
+				it ?: return@collect
+				binding.editNameInput.editText?.setText(it.username)
 			}
 		}
 	}
@@ -51,16 +61,17 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 			viewModel.editName()
 		}
 
-		listenForInsets(binding.container) { insets ->
+		listenForInsets(binding.editNameInput) { insets ->
 			binding.container.updatePadding(
-				top = insets.top,
-				bottom = insets.bottomWithIME + requireContext().dpValueToPx(BOTTOM_EXTRA_PADDING).toInt()
+				top = insets.top
 			)
 		}
 
-	}
-
-	private companion object {
-		const val BOTTOM_EXTRA_PADDING = 40
+		val buttonMargin = binding.editNameSaveBtn.marginBottom
+		listenForIMEInset(binding.container) { inset ->
+			binding.editNameSaveBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = buttonMargin + inset
+			}
+		}
 	}
 }

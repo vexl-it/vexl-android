@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
+import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
@@ -33,13 +34,23 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			resources.getString(R.string.offer_to_buy)
 		}
-		binding.userName.text = if (mode == Mode.MY_OFFER) {
-			context.getString(R.string.offer_my_offer)
+		if (mode == Mode.MY_OFFER) {
+			binding.userName.text = context.getString(R.string.offer_my_offer)
 		} else {
 			if (item.offerType == "SELL") {
-				resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend")
+				colorizeTransactionType(
+					resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend "),
+					"Unknown friend",
+					binding.userName,
+					R.color.pink_100
+				)
 			} else {
-				resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend")
+				colorizeTransactionType(
+					resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend "),
+					"Unknown friend",
+					binding.userName,
+					R.color.green_100
+				)
 			}
 		}
 
@@ -59,7 +70,9 @@ class OfferWidget @JvmOverloads constructor(
 		binding.card.feeDescription.text =
 			resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
 
-		binding.card.paymentMethod.text = item.paymentMethod.joinToString(", ")
+		binding.card.paymentMethod.text = item.paymentMethod.joinToString(", ") {
+			it.lowercase().replaceFirstChar { a -> a.uppercase() }
+		}
 		binding.card.paymentMethodIcons.bind(item.paymentMethod)
 
 		if (mode == Mode.MY_OFFER) {
