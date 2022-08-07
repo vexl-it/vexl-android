@@ -26,12 +26,13 @@ class CurrencyWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	fun selectCurrencyManually(currency: Currency) {
+	fun selectCurrencyManually(currency: Currency?) {
 		binding.currencyRadiogroup.setOnCheckedChangeListener(null)
 		when (currency) {
 			Currency.CZK -> binding.currencyRadiogroup.check(R.id.currency_czk)
 			Currency.EUR -> binding.currencyRadiogroup.check(R.id.currency_eur)
 			Currency.USD -> binding.currencyRadiogroup.check(R.id.currency_usd)
+			else -> binding.currencyRadiogroup.clearCheck()
 		}
 		binding.currencyRadiogroup.setOnCheckedChangeListener(onCheckedChangeListener)
 	}
@@ -44,10 +45,17 @@ class CurrencyWidget @JvmOverloads constructor(
 				R.id.currency_czk -> onCurrencyPicked?.invoke(Currency.CZK)
 				R.id.currency_eur -> onCurrencyPicked?.invoke(Currency.EUR)
 				R.id.currency_usd -> onCurrencyPicked?.invoke(Currency.USD)
-				else -> onCurrencyPicked?.invoke(Currency.USD)
+				else -> binding.currencyRadiogroup.clearCheck()
 			}
 		}
 
+		binding.currencyRadiogroup.setOnCheckedChangeListener(onCheckedChangeListener)
+	}
+
+	fun reset() {
+		selectCurrencyManually(null)
+		binding.currencyRadiogroup.setOnCheckedChangeListener(null)
+		binding.currencyRadiogroup.clearCheck()
 		binding.currencyRadiogroup.setOnCheckedChangeListener(onCheckedChangeListener)
 	}
 }
