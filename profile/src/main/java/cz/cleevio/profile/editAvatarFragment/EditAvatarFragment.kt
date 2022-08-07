@@ -107,9 +107,9 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 			}
 		}
 
-		repeatScopeOnStart {
+		repeatScopeOnCreate {
 			viewModel.userFlow.collect { user ->
-				setAvatarPlaceholderVisible(isVisible = (user?.avatar == null) && (viewModel.profileImageUri.value == null))
+				setAvatarPlaceholderVisible(isVisible = user?.avatar != null)
 
 				user?.avatar?.let { avatar ->
 					binding.editAvatarImage.load(avatar) {
@@ -124,6 +124,7 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 
 		repeatScopeOnStart {
 			viewModel.profileImageUri.collect { profileImageUri ->
+				if (profileImageUri == null && viewModel.userFlow.value != null) return@collect
 				setAvatarPlaceholderVisible(profileImageUri != null)
 				currentPhotoPath = profileImageUri
 
@@ -197,8 +198,8 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 	}
 
 	private fun setAvatarPlaceholderVisible(isVisible: Boolean) {
-		binding.editAvatarCornerIcon.isVisible = !isVisible
-		binding.editAvatarMiddleIcon.isVisible = isVisible
+		binding.editAvatarCornerIcon.isVisible = isVisible
+		binding.editAvatarMiddleIcon.isVisible = !isVisible
 	}
 
 	private companion object {
