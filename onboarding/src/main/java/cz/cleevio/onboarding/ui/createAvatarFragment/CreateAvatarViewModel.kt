@@ -26,8 +26,8 @@ class CreateAvatarViewModel constructor(
 	imageHelper: ImageHelper
 ) : BaseAvatarViewModel(navMainGraphModel, imageHelper) {
 
-	private val _user = MutableStateFlow<User?>(null)
-	val user = _user.asStateFlow()
+	private val _user = Channel<User?>()
+	val user = _user.receiveAsFlow()
 
 	private val _loading = Channel<Boolean>()
 	val loading = _loading.receiveAsFlow()
@@ -55,7 +55,7 @@ class CreateAvatarViewModel constructor(
 			)
 			when (inboxResponse.status) {
 				Status.Success -> {
-					_user.emit(response.data)
+					_user.send(response.data)
 				}
 				Status.Error -> {
 					//todo: add error handling?

@@ -76,6 +76,7 @@ class UserRepositoryImpl constructor(
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified
 
 	override suspend fun createUser(user: User) {
+		userDao.deleteAll()
 		userDao.insert(
 			UserEntity(
 				username = user.username,

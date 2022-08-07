@@ -3,13 +3,13 @@ package cz.cleevio.vexl.contacts.importFacebookContactsFragment
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentImportFacebookContactsBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_facebook_contacts) {
 
@@ -19,7 +19,7 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.facebookPermissionApproved.collect {
-				findNavController().navigate(
+				findNavController().safeNavigateWithTransition(
 					ImportFacebookContactsFragmentDirections.proceedToFacebookContactsListFragment()
 				)
 			}
@@ -32,7 +32,7 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 		}
 
 		binding.skipImport.setOnClickListener {
-			findNavController().navigate(
+			findNavController().safeNavigateWithTransition(
 				ImportFacebookContactsFragmentDirections.proceedToFinishImportFragment()
 			)
 		}

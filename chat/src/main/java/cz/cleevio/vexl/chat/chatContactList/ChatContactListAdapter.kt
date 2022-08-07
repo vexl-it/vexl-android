@@ -28,9 +28,9 @@ class ChatContactListAdapter constructor(
 		fun bind(item: ChatListUser) {
 			binding.chatContactIcon.load(item.user?.avatar) {
 				crossfade(true)
-				fallback(R.drawable.ic_baseline_person_128)
-				error(R.drawable.ic_baseline_person_128)
-				placeholder(R.drawable.ic_baseline_person_128)
+				fallback(R.drawable.random_avatar_2)
+				error(R.drawable.random_avatar_2)
+				placeholder(R.drawable.random_avatar_2)
 			}
 
 			if (item.offer.offerType == "SELL") {

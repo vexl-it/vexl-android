@@ -42,9 +42,9 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			viewModel.chatUserIdentity.collect { chatUserIdentity ->
 				binding.profileImage.load(chatUserIdentity?.avatar) {
 					crossfade(true)
-					fallback(R.drawable.ic_baseline_person_128)
-					error(R.drawable.ic_baseline_person_128)
-					placeholder(R.drawable.ic_baseline_person_128)
+					fallback(R.drawable.random_avatar_5)
+					error(R.drawable.random_avatar_5)
+					placeholder(R.drawable.random_avatar_5)
 				}
 				setupColoredTitle(chatUserIdentity?.name ?: "")
 			}

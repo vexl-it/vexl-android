@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.contacts.importContactsFragment
 
 import android.Manifest
+import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
@@ -8,6 +9,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.core.utils.setEnterTransitionSlideToLeft
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentImportContactsBinding
@@ -22,7 +24,9 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	private val binding by viewBinding(FragmentImportContactsBinding::bind)
 	override val viewModel by viewModel<ImportContactsViewModel>()
 
-	private val requestContactsPermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+	private val requestContactsPermissions = registerForActivityResult(
+		ActivityResultContracts.RequestMultiplePermissions()
+	) { permissions ->
 		PermissionResolver.resolve(requireActivity(), permissions,
 			allGranted = {
 				viewModel.updateHasReadContactPermissions(true)
@@ -35,10 +39,15 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 			})
 	}
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setEnterTransitionSlideToLeft()
+	}
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.hasPermissionsEvent.collect { hasPermisson ->
-				if (hasPermisson) {
+			viewModel.hasPermissionsEvent.collect { hasPermission ->
+				if (hasPermission) {
 					Timber.tag("ASDX").d("Permission granted")
 					findNavController().safeNavigateWithTransition(
 						ImportContactsFragmentDirections.proceedToContactsListFragment(
