@@ -45,9 +45,15 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		repeatScopeOnStart {
 			viewModel.offer.collect {
 				it?.let { offer ->
+					val contacts = offer.commonFriends.map { friend -> friend.contact }
 					binding.offerWidget.bind(offer)
-					binding.commonFriendsNumber.text = getString(R.string.request_common_friends, offer.commonFriends.size)
-					commonFriendsAdapter.submitList(offer.commonFriends.map { friend -> friend.contact })
+					binding.commonFriendsNumber.text =
+						if (contacts.isEmpty()) {
+							getString(R.string.request_common_friends_empty_state)
+						} else {
+							getString(R.string.request_common_friends, offer.commonFriends.size)
+						}
+					commonFriendsAdapter.submitList(contacts)
 				}
 			}
 		}
