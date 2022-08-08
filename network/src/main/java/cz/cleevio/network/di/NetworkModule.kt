@@ -55,10 +55,6 @@ val networkModule = module {
 	}
 
 	single {
-		get<Retrofit>().create(RestApi::class.java)
-	}
-
-	single {
 		provideRetrofit(
 			scope = this,
 			interceptors = listOf(

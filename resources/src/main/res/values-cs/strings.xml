@@ -282,6 +282,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="request_text_hint">např. pojď zavexlit, kámo!</string>
     <string name="request_button">Odeslat žádost</string>
     <string name="request_common_friends">%d společných přátel</string>
+    <string name="request_common_friends_empty_state">Nemáte společné přátele</string>
 
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>

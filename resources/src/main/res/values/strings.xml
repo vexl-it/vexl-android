@@ -283,6 +283,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="request_text_hint">e.g. let\'s trade my friend...</string>
     <string name="request_button">Send request</string>
     <string name="request_common_friends">%d common friends</string>
+    <string name="request_common_friends_empty_state">You don\'t have common friends</string>
 
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>

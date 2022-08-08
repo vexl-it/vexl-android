@@ -104,10 +104,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 		super.initView()
 
-		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
-		binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
-		setUpAllowScreenshotsSwitch()
-
 		// TODO change visibility once the functionality will be revealed
 		binding.profileSectionWrapperFive.isVisible = false
 
@@ -236,6 +232,10 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 	override fun onResume() {
 		super.onResume()
+		
+		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
+		binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
+		setUpAllowScreenshotsSwitch()
 
 		binding.profileContacts.setOnClickListener {
 			checkReadContactsPermissions()

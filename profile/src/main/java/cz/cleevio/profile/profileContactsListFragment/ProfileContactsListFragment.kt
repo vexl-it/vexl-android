@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.BottomSheetDialogProfileContactsListBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -52,7 +53,7 @@ class ProfileContactsListFragment constructor(
 			viewModel.successful.collect {
 				when (openedFromScreen) {
 					OpenedFromScreen.PROFILE -> {
-						viewModel.navMainGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.Profile)
+						dismiss()
 					}
 					else -> findNavController().popBackStack()
 				}
