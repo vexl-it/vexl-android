@@ -35,14 +35,19 @@
 			app:layout_constraintTop_toTopOf="parent"
 			app:tabTextAppearance="@style/TextAppearance.Vexl.Marketplace.MainTab" />
 
-		<androidx.viewpager2.widget.ViewPager2
-			android:id="@+id/marketplace_viewpager"
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+			android:id="@+id/swipe_refresh"
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/marketplace_tab_layout" />
+			app:layout_constraintTop_toBottomOf="@+id/marketplace_tab_layout">
 
+			<androidx.viewpager2.widget.ViewPager2
+				android:id="@+id/marketplace_viewpager"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" />
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
