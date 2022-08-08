@@ -8,8 +8,12 @@ import cz.cleevio.repository.repository.UsernameUtils
 object RandomUtils {
 
 	private val imageOptions: List<Int> = listOf(
-		R.drawable.ic_baseline_person_128,
-		R.drawable.ic_baseline_person_128,
+		R.drawable.random_avatar_1,
+		R.drawable.random_avatar_2,
+		R.drawable.random_avatar_3,
+		R.drawable.random_avatar_4,
+		R.drawable.random_avatar_5,
+		R.drawable.random_avatar_6
 	)
 
 	fun generateName(): String = UsernameUtils.generateName()

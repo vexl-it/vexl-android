@@ -4,7 +4,8 @@
 	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@drawable/background_main_chart">
+	android:background="@drawable/background_main_chart"
+	android:transitionGroup="true">
 
 	<cz.cleevio.core.widget.CurrencyPriceChartWidget
 		android:id="@+id/price_chart"

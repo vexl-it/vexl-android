@@ -64,10 +64,9 @@ class JoinGroupBottomSheetDialog constructor(
 		binding.description.text = getString(R.string.groups_join_description, groupName)
 		binding.logo.load(groupLogo) {
 			crossfade(true)
-			//todo: ask for placeholders?
-			fallback(R.drawable.ic_baseline_person_128)
-			error(R.drawable.ic_baseline_person_128)
-			placeholder(R.drawable.ic_baseline_person_128)
+			fallback(R.drawable.random_avatar_4)
+			error(R.drawable.random_avatar_4)
+			placeholder(R.drawable.random_avatar_4)
 		}
 	}
 }

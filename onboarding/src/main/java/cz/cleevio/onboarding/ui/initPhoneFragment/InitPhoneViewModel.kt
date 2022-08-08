@@ -49,7 +49,7 @@ class InitPhoneViewModel constructor(
 		}
 	}
 
-	fun loadKeys() {
+	private fun loadKeys() {
 		viewModelScope.launch {
 			//check if keys already exists
 			if (encryptedPreferences.userPrivateKey.isBlank() || encryptedPreferences.userPublicKey.isBlank()) {

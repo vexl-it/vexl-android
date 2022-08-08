@@ -2,6 +2,7 @@ package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setExitTransitionZSharedAxis
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import kotlinx.coroutines.delay
@@ -14,7 +15,9 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
 	override val viewModel by viewModel<SplashViewModel>()
 
-	override fun initView() = Unit
+	override fun initView() {
+		setExitTransitionZSharedAxis()
+	}
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
@@ -36,7 +39,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		}
 
 		repeatScopeOnStart {
-			viewModel.contactKeysLoaded.collect { success ->
+			viewModel.contactKeysLoaded.collect {
 				viewModel.navMainGraphModel.navigateToGraph(
 					NavMainGraphModel.NavGraph.Main
 				)

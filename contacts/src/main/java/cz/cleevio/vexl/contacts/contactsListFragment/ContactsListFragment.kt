@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.contacts.R
@@ -36,7 +37,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 			viewModel.successful.collect {
 				when (args.openedFromScreen) {
 					OpenedFromScreen.UNKNOWN -> {
-						findNavController().navigate(
+						findNavController().safeNavigateWithTransition(
 							ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
 						)
 					}
@@ -44,7 +45,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 						viewModel.navMainGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.Profile)
 					}
 					OpenedFromScreen.ONBOARDING -> {
-						findNavController().navigate(
+						findNavController().safeNavigateWithTransition(
 							ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
 						)
 					}
@@ -56,11 +57,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 				binding.contactsListWidget.isVisible = !show
 				binding.importContactsBtn.isVisible = !show
 
-				if (show) {
-					binding.progress.show()
-				} else {
-					binding.progress.hide()
-				}
+				binding.progressbar.isVisible = show
 			}
 		}
 	}

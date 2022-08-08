@@ -94,9 +94,9 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 					MessageType.APPROVE_REVEAL -> {
 						binding.chatContactIcon.load(item.deanonymizedUser?.image) {
 							crossfade(true)
-							fallback(R.drawable.ic_baseline_person_128)
-							error(R.drawable.ic_baseline_person_128)
-							placeholder(R.drawable.ic_baseline_person_128)
+							fallback(R.drawable.random_avatar_6)
+							error(R.drawable.random_avatar_6)
+							placeholder(R.drawable.random_avatar_6)
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_approved)
 						binding.identityRevealDescription.text = item.deanonymizedUser?.name

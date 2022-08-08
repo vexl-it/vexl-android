@@ -1,11 +1,13 @@
 package cz.cleevio.vexl.marketplace.marketplaceFragment
 
+import android.os.Bundle
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.core.utils.setEnterTransitionZSharedAxis
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -19,6 +21,11 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 	private val marketplaceViewModel by viewModel<MarketplaceViewModel>()
 
 	override var priceChartWidget: CurrencyPriceChartWidget? = null
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setEnterTransitionZSharedAxis()
+	}
 
 	override fun onResume() {
 		super.onResume()
