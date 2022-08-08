@@ -33,7 +33,6 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		}
 	}
 
-	@OptIn(DelicateCoroutinesApi::class)
 	override fun onMessageReceived(remoteMessage: RemoteMessage) {
 		val title = remoteMessage.data[NOTIFICATION_TITLE]
 		val message = remoteMessage.data[NOTIFICATION_BODY]
