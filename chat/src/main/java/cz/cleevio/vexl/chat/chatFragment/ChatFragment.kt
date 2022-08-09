@@ -5,6 +5,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
@@ -177,7 +178,9 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	}
 
 	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
-		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
+		if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+			dialog.show(childFragmentManager, dialog.javaClass.simpleName)
+		}
 	}
 
 	private fun sendMessage() {

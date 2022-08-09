@@ -83,7 +83,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			override fun afterTextChanged(s: Editable?) {
 				val number = s.toString()
 				val countryIsoCode = getCountryIsoCode(number)
-				if (countryIsoCode == null) {
+				if (countryIsoCode.isNullOrEmpty()) {
 					setTextNormally(number)
 				} else {
 					setEmojiAndColorize(countryIsoCode, number)
