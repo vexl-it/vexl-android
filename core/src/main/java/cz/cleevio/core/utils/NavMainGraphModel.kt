@@ -2,6 +2,7 @@ package cz.cleevio.core.utils
 
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
+import timber.log.Timber
 
 class NavMainGraphModel {
 
@@ -20,8 +21,9 @@ class NavMainGraphModel {
 	private val navGraphChannel = Channel<NavGraph>(Channel.RENDEZVOUS)
 	val navGraphFlow = navGraphChannel.receiveAsFlow()
 
-	fun navigateToGraph(navGraph: NavGraph) {
-		navGraphChannel.trySend(navGraph)
+	suspend fun navigateToGraph(navGraph: NavGraph) {
+		navGraphChannel.send(navGraph)
+		Timber.d("Graph: ${navGraph}")
 	}
 
 	fun clearChannel() {

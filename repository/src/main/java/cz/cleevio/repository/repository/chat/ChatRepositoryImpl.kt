@@ -508,13 +508,16 @@ class ChatRepositoryImpl constructor(
 			myOfferId?.let { offerId ->
 				//find offer by offerId
 				val offerWithLocation = offerDao.getOfferById(offerId)
-				val offer = offerWithLocation.offer.fromCache(offerWithLocation.locations, offerWithLocation.commonFriends)
-				result.add(
-					CommunicationRequest(
-						message = message,
-						offer = offer
+				// Let it there
+				if (offerWithLocation != null) {
+					val offer = offerWithLocation.offer.fromCache(offerWithLocation.locations, offerWithLocation.commonFriends)
+					result.add(
+						CommunicationRequest(
+							message = message,
+							offer = offer
+						)
 					)
-				)
+				}
 			}
 		}
 
