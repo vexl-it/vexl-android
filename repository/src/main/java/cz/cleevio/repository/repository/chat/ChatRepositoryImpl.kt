@@ -20,6 +20,7 @@ import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.offer.fromCache
+import cz.cleevio.repository.model.offer.fromCacheWithoutFriendsMapping
 import cz.cleevio.repository.repository.UsernameUtils
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.CoroutineScope
@@ -508,9 +509,19 @@ class ChatRepositoryImpl constructor(
 			myOfferId?.let { offerId ->
 				//find offer by offerId
 				val offerWithLocation = offerDao.getOfferById(offerId)
+
+				val myOfferCommonFriends = contactRepository.getCommonFriends(listOf(message.senderPublicKey))
+
+				val commonFriends = myOfferCommonFriends[message.senderPublicKey].orEmpty().map {
+					CommonFriend(
+						it.getHashedContact(),
+						it
+					)
+				}
+
 				// Let it there
 				if (offerWithLocation != null) {
-					val offer = offerWithLocation.offer.fromCache(offerWithLocation.locations, offerWithLocation.commonFriends)
+					val offer = offerWithLocation.offer.fromCacheWithoutFriendsMapping(offerWithLocation.locations, commonFriends)
 					result.add(
 						CommunicationRequest(
 							message = message,

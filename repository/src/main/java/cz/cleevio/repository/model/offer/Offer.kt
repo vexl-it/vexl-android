@@ -103,6 +103,36 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 	)
 }
 
+fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, commonFriends: List<CommonFriend>): Offer {
+	return Offer(
+		databaseId = this.offerId,
+		offerId = this.externalOfferId,
+		location = locations.map { it.fromCache() },
+		userPublicKey = this.userPublicKey,
+		offerPublicKey = this.offerPublicKey,
+		offerDescription = this.offerDescription,
+		amountBottomLimit = this.amountBottomLimit,
+		amountTopLimit = this.amountTopLimit,
+		feeState = this.feeState,
+		feeAmount = this.feeAmount,
+		locationState = this.locationState,
+		paymentMethod = this.paymentMethod.split(",").map { it.trim() },
+		btcNetwork = this.btcNetwork.split(",").map { it.trim() },
+		friendLevel = this.friendLevel,
+		offerType = this.offerType,
+		activePriceState = this.activePriceState,
+		activePriceValue = this.activePriceValue,
+		active = this.active,
+		groupUuid = this.groupUuid,
+		currency = this.currency,
+		commonFriends = commonFriends,
+		createdAt = this.createdAt,
+		modifiedAt = this.modifiedAt,
+		isMine = this.isMine,
+		isRequested = this.isRequested
+	)
+}
+
 fun Offer.toCache(): OfferEntity {
 	return OfferEntity(
 		offerId = this.databaseId,
