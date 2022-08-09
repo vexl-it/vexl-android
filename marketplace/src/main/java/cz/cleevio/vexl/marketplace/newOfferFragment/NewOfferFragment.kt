@@ -7,6 +7,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
@@ -30,6 +31,14 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 	private val args by navArgs<NewOfferFragmentArgs>()
 
 	override fun bindObservers() {
+		repeatScopeOnStart {
+			viewModel.userFlow.collect {
+				it?.let { user ->
+					binding.newOfferFriendLevel.setUserAvatar(user.avatar)
+				}
+			}
+		}
+
 		repeatScopeOnStart {
 			viewModel.newOfferRequest.collect { resource ->
 				when (resource.status) {
@@ -139,6 +148,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 		binding.newOfferCurrency.onCurrencyPicked = {
 			binding.newOfferRange.setupWithCurrency(it)
+			binding.newOfferPriceTrigger.setCurrency(it)
 		}
 
 		binding.newOfferBtn.text = when (args.offerType) {
@@ -162,10 +172,12 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				return@setOnClickListener
 			}
 			val priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue()
+			/* It should not be required
 			if (priceTrigger.value == null) {
 				Toast.makeText(requireActivity(), "Invalid price trigger", Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
+			 */
 			val btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue()
 			if (btcNetwork.value.isEmpty()) {
 				Toast.makeText(requireActivity(), "Invalid type", Toast.LENGTH_SHORT).show()

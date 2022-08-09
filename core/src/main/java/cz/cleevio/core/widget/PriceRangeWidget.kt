@@ -18,7 +18,7 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 	private lateinit var binding: WidgetPriceRangeBinding
 
-	var currentCurrency = Currency.CZK
+	var currentCurrency = Currency.USD
 	var bottomLimit: Float = 0.0f
 	var topLimit: Float = 0.0f
 

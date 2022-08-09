@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetTriggerPriceBinding
+import cz.cleevio.core.model.Currency
+import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.core.model.PriceTriggerValue
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import timber.log.Timber
@@ -22,6 +24,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 
 	init {
 		setupUI()
+		setCurrency(Currency.USD)
 	}
 
 	private fun setupUI() {
@@ -37,6 +40,10 @@ class PriceTriggerWidget @JvmOverloads constructor(
 			R.string.widget_trigger_price_curr_crypto_price,
 			currentCryptoPrice
 		)
+	}
+
+	fun setCurrency(currentCurrency: Currency) {
+		binding.currency.text = currentCurrency.getCurrencySymbol(context)
 	}
 
 	private fun getTriggerType(): TriggerType = when (binding.priceTriggerType.checkedRadioButtonId) {
