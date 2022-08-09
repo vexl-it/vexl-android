@@ -55,6 +55,7 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 							getString(R.string.request_common_friends, offer.commonFriends.size)
 						}
 					commonFriendsAdapter.submitList(contacts)
+					binding.commonFriendsList.isVisible = contacts.isNotEmpty()
 				}
 			}
 		}

@@ -1,7 +1,10 @@
 package cz.cleevio.lightspeedskeleton.notification
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -12,7 +15,6 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.group.GroupRepository
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -72,10 +74,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val intent = Intent(applicationContext, MainActivity::class.java)
 		intent.putExtra(NOTIFICATION_TYPE, type)
 		intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
-		val pendingIntent = PendingIntent.getActivity(
-			applicationContext,
-			CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-		)
+		val pendingIntent = createPendingIntent(type)
 
 		if (title != null && message != null) {
 			coroutineScope.launch {
@@ -104,16 +103,48 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		title: String,
 		message: String,
 		pendingIntent: PendingIntent
-	): NotificationCompat.Builder? {
+	): NotificationCompat.Builder {
+		val notificationManager = NotificationManagerCompat.from(applicationContext)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			val notificationChannel = NotificationChannel(
+				applicationContext.getString(CHANNEL_ID),
+				applicationContext.getString(R.string.notification_channel_id),
+				NotificationManager.IMPORTANCE_HIGH
+			)
+			notificationChannel.setShowBadge(true)
+			notificationChannel.description = applicationContext.getString(R.string.notification_channel_id)
+			notificationManager.createNotificationChannel(notificationChannel)
+		}
+
 		return NotificationCompat.Builder(applicationContext, applicationContext.getString(CHANNEL_ID))
 			.setContentTitle(title)
 			.setContentText(message)
 			.setAutoCancel(true)
 			.setContentIntent(pendingIntent)
-			//todo: check icon
-			.setSmallIcon(R.drawable.ic_chat)
+			.setSmallIcon(R.drawable.ic_vexl_logo)
 			.setPriority(NotificationCompat.PRIORITY_MAX)
 			.setDefaults(NotificationCompat.DEFAULT_ALL)
+	}
+
+	private fun createPendingIntent(type: String): PendingIntent {
+		val intent = Intent(applicationContext, VexlBroadcastReceiver::class.java).apply {
+			putExtra(NOTIFICATION_TYPE, type)
+		}
+		return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+			PendingIntent.getBroadcast(
+				applicationContext,
+				CODE,
+				intent,
+				PendingIntent.FLAG_UPDATE_CURRENT
+			)
+		} else {
+			PendingIntent.getBroadcast(
+				applicationContext,
+				CODE,
+				intent,
+				PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+			)
+		}
 	}
 
 	companion object {
