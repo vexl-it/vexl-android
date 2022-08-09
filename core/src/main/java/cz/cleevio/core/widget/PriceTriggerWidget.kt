@@ -53,7 +53,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 		else -> TriggerType.NONE
 	}
 
-	private fun getTriggerValue(): BigDecimal? {
+	private fun getTriggerValue(): BigDecimal {
 		val currentValue = binding.priceEdit.text.toString()
 		if (currentValue.isNotBlank()) {
 			try {
