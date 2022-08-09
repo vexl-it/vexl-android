@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cz.cleevio.core.utils.NavMainGraphModel
@@ -39,18 +40,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private val viewModel by inject<MainViewModel>()
 	private val errorFlow: NetworkError by inject()
 
-	private lateinit var navController: NavController
+	private val navController by lazy {
+		Navigation.findNavController(this, R.id.navHostFragment)
+	}
 	private var bottomBarAnimator: ValueAnimator? = null
-
 	private var bottomInsetValue = 0
 
 	override fun onResume() {
 		super.onResume()
 
-		val navHostFragment = supportFragmentManager.findFragmentById(
-			R.id.navHostFragment
-		) as NavHostFragment
-		navController = navHostFragment.navController
 		navController.addOnDestinationChangedListener(this)
 
 		binding.bottomNavigation.setOnApplyWindowInsetsListener(null)
