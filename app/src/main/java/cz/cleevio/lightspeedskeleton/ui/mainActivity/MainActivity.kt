@@ -40,15 +40,17 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private val viewModel by inject<MainViewModel>()
 	private val errorFlow: NetworkError by inject()
 
-	private val navController by lazy {
-		Navigation.findNavController(this, R.id.navHostFragment)
-	}
+	private lateinit var navController: NavController
 	private var bottomBarAnimator: ValueAnimator? = null
 	private var bottomInsetValue = 0
 
 	override fun onResume() {
 		super.onResume()
 
+		val navHostFragment = supportFragmentManager.findFragmentById(
+			R.id.navHostFragment
+		) as NavHostFragment
+		navController = navHostFragment.navController
 		navController.addOnDestinationChangedListener(this)
 
 		binding.bottomNavigation.setOnApplyWindowInsetsListener(null)

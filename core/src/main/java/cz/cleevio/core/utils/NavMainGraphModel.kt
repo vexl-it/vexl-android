@@ -23,7 +23,7 @@ class NavMainGraphModel {
 
 	suspend fun navigateToGraph(navGraph: NavGraph) {
 		navGraphChannel.send(navGraph)
-		Timber.d("Graph: ${navGraph}")
+		Timber.d("Graph: $navGraph")
 	}
 
 	fun clearChannel() {
