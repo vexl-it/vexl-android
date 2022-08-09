@@ -60,14 +60,14 @@ class OfferWidget @JvmOverloads constructor(
 		binding.userType.text = if (mode == Mode.MY_OFFER) {
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
 		} else {
-			if (item.friendLevel == "FIRST") {
+			if (item.friendLevel == FriendLevel.FIRST_DEGREE.name) {
 				resources.getString(R.string.marketplace_detail_friend_first)
 			} else {
 				resources.getString(R.string.marketplace_detail_friend_second)
 			}
 		}
 
-		binding.card.feeDescription.isVisible = item.feeState == "WITH_FEE"
+		binding.card.feeDescription.isVisible = item.feeState == Fee.WITH_FEE.name
 		binding.card.feeDescription.text =
 			resources.getString(R.string.marketplace_detail_fee, item.feeAmount.formatAsPercentage())
 
@@ -164,6 +164,10 @@ class OfferWidget @JvmOverloads constructor(
 
 	enum class Mode {
 		MARKETPLACE, CHAT, MY_OFFER
+	}
+
+	enum class Fee {
+		WITHOUT_FEE, WITH_FEE
 	}
 
 	companion object {
