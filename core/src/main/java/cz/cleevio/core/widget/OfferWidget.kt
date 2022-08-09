@@ -46,7 +46,7 @@ class OfferWidget @JvmOverloads constructor(
 				error(R.drawable.ic_sticker)
 				placeholder(R.drawable.ic_sticker)
 			}
-			binding.groupSticker.isVisible = true
+			binding.card.groupSticker.isVisible = true
 		}
 
 		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).toInt()}k"
