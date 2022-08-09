@@ -225,6 +225,7 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 		}
 	}
 
+	@Suppress("ComplexMethod")
 	private fun getValue(btnId: Int): BigDecimal {
 		return when (btnId) {
 			R.id.period_1_day -> currentCryptoCurrencyPrice?.priceChangePercentage24h ?: BigDecimal.ZERO

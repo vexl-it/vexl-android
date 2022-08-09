@@ -32,12 +32,17 @@ object OfferUtils {
 		val contactsPublicKeys = when (params.friendLevel.value) {
 			FriendLevel.NONE -> emptyList()
 			//TODO: tady je treba brat v potaz jake skupiny uzivatel vybral, getAllGroupsContactKeys vraci vsechny skupiny
-			//TODO: je treba nahradit funkci getGroupsContactKeys(params.listOfUuids). listOfUuids je by mel prijit uvnitr OfferParams
-			FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys() + contactRepository.getAllGroupsContactKeys()
-			//TODO: tady je treba brat v potaz jake skupiny uzivatel vybral, getContactKeys vraci vsechny klice (vsechny skupiny)
+			//TODO: je treba nahradit funkci
+			// getGroupsContactKeys(params.listOfUuids). listOfUuids je by mel prijit uvnitr OfferParams
+			FriendLevel.FIRST_DEGREE ->
+				contactRepository.getFirstLevelContactKeys() + contactRepository.getAllGroupsContactKeys()
+			//TODO: tady je treba brat v potaz jake skupiny uzivatel vybral,
+			// getContactKeys vraci vsechny klice (vsechny skupiny)
 			//TODO: zrejme nahradit kombinaci 3 funkci, asi takhle:
-			//TODO: contactRepository.getFirstLevelContactKeys() + getSecondLevelContactKeys() + getGroupsContactKeys(params.listOfUuids)
-			FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
+			//TODO: contactRepository.getFirstLevelContactKeys() + getSecondLevelContactKeys()
+			// + getGroupsContactKeys(params.listOfUuids)
+			FriendLevel.SECOND_DEGREE ->
+				contactRepository.getContactKeys()
 			else -> emptyList()
 		}
 			.toMutableList()

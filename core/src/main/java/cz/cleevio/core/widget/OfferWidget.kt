@@ -31,6 +31,7 @@ class OfferWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
+	@Suppress("LongMethod, ComplexMethod")
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null, group: Group? = null) {
 		binding.card.offerDescription.text = item.offerDescription
 
