@@ -145,11 +145,11 @@ class OfferWidget @JvmOverloads constructor(
 		}
 
 		binding.card.offerDescription.setTextColor(
-			(if (isRequested) resources.getColor(R.color.gray_3, null) else resources.getColor(R.color.black, null))
+			if (isRequested) resources.getColor(R.color.gray_3, null) else resources.getColor(R.color.black, null)
 		)
 
 		binding.card.feeDescription.setTextColor(
-			(if (isRequested) resources.getColor(R.color.gray_3, null) else resources.getColor(R.color.black, null))
+			if (isRequested) resources.getColor(R.color.gray_3, null) else resources.getColor(R.color.black, null)
 		)
 
 		binding.arrowImage.setColorFilter(

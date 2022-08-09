@@ -136,7 +136,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			}
 		}
 
-
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				errorFlow.error.collect { error ->
