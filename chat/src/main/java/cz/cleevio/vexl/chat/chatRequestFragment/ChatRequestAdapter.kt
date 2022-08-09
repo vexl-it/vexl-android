@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cz.cleevio.core.R
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
+import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.databinding.ItemChatRequestBinding
 
@@ -43,7 +44,7 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 					R.color.green_100
 				)
 			}
-			binding.userType.text = if (item.offer?.friendLevel == "FIRST") {
+			binding.userType.text = if (item.offer?.friendLevel == FriendLevel.FIRST_DEGREE.name) {
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_first)
 			} else {
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_second)
