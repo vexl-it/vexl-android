@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -54,6 +55,7 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 							getString(R.string.request_common_friends, offer.commonFriends.size)
 						}
 					commonFriendsAdapter.submitList(contacts)
+					binding.commonFriendsList.isVisible = contacts.isNotEmpty()
 				}
 			}
 		}
@@ -118,14 +120,17 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		binding.requestText.setOnFocusChangeListener { _, hasFocus ->
 			if (hasFocus) {
 				binding.container.postDelayed({
-					binding.container.fullScroll(View.FOCUS_DOWN)
-					binding.requestText.requestFocus()
+					if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+						binding.container.fullScroll(View.FOCUS_DOWN)
+						binding.requestText.requestFocus()
+					}
 				}, SCROLL_TO_BOTTOM_DELAY)
 			}
 		}
 
 		val buttonMargin = binding.requestOfferBtn.marginBottom
-		listenForIMEInset(binding.container) { insets ->
+		listenForIMEInset(binding.container)
+		{ insets ->
 			binding.requestOfferBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
 				bottomMargin = insets + buttonMargin
 			}

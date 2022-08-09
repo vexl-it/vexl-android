@@ -48,6 +48,12 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 			binding.marketplaceOffersWrapper.updatePadding(bottom = insets.bottom)
 		}
 
+		binding.swipeRefresh.setOnRefreshListener {
+			marketplaceViewModel.syncOffers()
+			marketplaceViewModel.loadMe()
+			binding.swipeRefresh.isRefreshing = false
+		}
+
 		binding.marketplaceViewpager.adapter = MarketplacePagerAdapter(
 			fragment = this,
 			navigateToFilters = { offerType ->

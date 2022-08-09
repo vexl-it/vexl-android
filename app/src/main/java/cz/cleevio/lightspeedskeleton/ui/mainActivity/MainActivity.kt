@@ -44,17 +44,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
 	private var bottomInsetValue = 0
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-
-		binding = ActivityMainBinding.inflate(layoutInflater)
-		setContentView(binding.root)
-
-		window.setBackgroundDrawableResource(R.color.background)
-		// Going to Edge to Edge
-		WindowCompat.setDecorFitsSystemWindows(window, false)
-
-		bindObservers()
+	override fun onResume() {
+		super.onResume()
 
 		val navHostFragment = supportFragmentManager.findFragmentById(
 			R.id.navHostFragment
@@ -68,6 +59,19 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		}
 
 		binding.bottomNavigation.setupWithNavController(navController)
+	}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		binding = ActivityMainBinding.inflate(layoutInflater)
+		setContentView(binding.root)
+
+		window.setBackgroundDrawableResource(R.color.background)
+		// Going to Edge to Edge
+		WindowCompat.setDecorFitsSystemWindows(window, false)
+
+		bindObservers()
 	}
 
 	private fun bindObservers() {
@@ -131,7 +135,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 				}
 			}
 		}
-
 
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {

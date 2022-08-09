@@ -1,7 +1,7 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.repeatScopeOnResume
 import cz.cleevio.core.utils.setExitTransitionZSharedAxis
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -9,7 +9,7 @@ import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-const val SPLASH_DELAY = 1500L
+const val SPLASH_DELAY = 500L
 
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
@@ -20,7 +20,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	}
 
 	override fun bindObservers() {
-		repeatScopeOnStart {
+		repeatScopeOnResume {
 			viewModel.userFlow.collect { user ->
 				if (user != null && user.finishedOnboarding) {
 					Timber.i("Navigating to marketplace")
@@ -38,7 +38,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			}
 		}
 
-		repeatScopeOnStart {
+		repeatScopeOnResume {
 			viewModel.contactKeysLoaded.collect {
 				viewModel.navMainGraphModel.navigateToGraph(
 					NavMainGraphModel.NavGraph.Main

@@ -32,14 +32,22 @@ class OffersViewModel(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "BUY" && !it.isMine } }.collect {
-				_buyOffers.emit(it)
+			val sortedByDate = offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "BUY" && !it.isMine }.sortedByDescending { it.createdAt } }
+
+			sortedByDate.collect { offers ->
+				val notRequestedOffers = offers.filter { !it.isRequested }
+				val alreadyRequestedOffers = offers.filter { it.isRequested }
+				_buyOffers.emit(notRequestedOffers + alreadyRequestedOffers)
 			}
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {
-			offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "SELL" && !it.isMine } }.collect {
-				_sellOffers.emit(it)
+			val sortedByDate = offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "SELL" && !it.isMine }.sortedByDescending { it.createdAt } }
+
+			sortedByDate.collect { offers ->
+				val notRequestedOffers = offers.filter { !it.isRequested }
+				val alreadyRequestedOffers = offers.filter { it.isRequested }
+				_sellOffers.emit(notRequestedOffers + alreadyRequestedOffers)
 			}
 		}
 	}

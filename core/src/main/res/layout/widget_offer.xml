@@ -17,6 +17,7 @@
 		android:layout_height="wrap_content" />
 
 	<ImageView
+		android:id="@+id/arrow_image"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="42dp"
@@ -93,4 +94,12 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/card"
 		tools:visibility="invisible" />
+
+	<View
+		android:id="@+id/end_divider"
+		android:layout_width="0dp"
+		android:layout_height="24dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/profile_image" />
 </merge>
