@@ -30,6 +30,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 	private fun setupUI() {
 		binding = WidgetTriggerPriceBinding.inflate(layoutInflater, this)
 
+		binding.priceEdit.setText(BigDecimal.ZERO.toString())
 		binding.priceEdit.setOnFocusChangeListener { _, hasFocus ->
 			onFocusChangeListener?.invoke(hasFocus)
 		}
@@ -61,7 +62,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 				Timber.d("not a number $currentValue")
 			}
 		}
-		return null
+		return BigDecimal.ZERO
 	}
 
 	fun getPriceTriggerValue(): PriceTriggerValue = PriceTriggerValue(
