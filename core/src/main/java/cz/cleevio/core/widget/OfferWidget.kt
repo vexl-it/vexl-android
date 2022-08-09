@@ -3,6 +3,7 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
@@ -27,7 +28,7 @@ class OfferWidget @JvmOverloads constructor(
 
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null) {
 		binding.card.offerDescription.text = item.offerDescription
-		binding.card.priceLimit.text = "${item.amountTopLimit / BigDecimal(THOUSAND)}k"
+		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).toInt()}k"
 		binding.card.priceCurrency.text = item.currency
 		binding.card.offerType.text = if (item.offerType == "SELL") {
 			resources.getString(R.string.offer_to_sell)
@@ -88,19 +89,8 @@ class OfferWidget @JvmOverloads constructor(
 			} else {
 				context.getString(R.string.offer_request)
 			}
-			binding.requestBtn.setTextColor(
-				if (item.isRequested) {
-					context.getColor(R.color.white)
-				} else {
-					context.getColor(R.color.black)
-				}
-			)
-			binding.requestBtn.icon = if (item.isRequested) {
-				context.getDrawable(R.drawable.ic_succesfull_blue)
-			} else {
-				context.getDrawable(R.drawable.ic_eye)
-			}
-			binding.requestBtn.isEnabled = !item.isRequested
+
+			setUiColor(item.isRequested)
 		}
 		binding.requestBtn.setOnClickListener {
 			requestOffer?.invoke(item.offerId)
@@ -131,6 +121,45 @@ class OfferWidget @JvmOverloads constructor(
 		)
 		val value = a.getInt(R.styleable.OfferWidget_widget_mode, 0)
 		return Mode.values()[value]
+	}
+
+	private fun setUiColor(isRequested: Boolean) {
+		binding.requestBtn.setTextColor(
+			if (isRequested) {
+				context.getColor(R.color.white)
+			} else {
+				context.getColor(R.color.black)
+			}
+		)
+		binding.requestBtn.icon = if (isRequested) {
+			context.getDrawable(R.drawable.ic_succesfull_blue)
+		} else {
+			context.getDrawable(R.drawable.ic_eye)
+		}
+
+		binding.card.offerWrapper.run {
+			setCardBackgroundColor(
+				if (isRequested) resources.getColor(R.color.gray_1, null) else resources.getColor(R.color.gray_6, null)
+			)
+			cardElevation = 0.0f
+		}
+
+		binding.card.offerDescription.setTextColor(
+			(if (isRequested) resources.getColor(R.color.gray_3, null) else resources.getColor(R.color.black, null))
+		)
+
+		binding.card.feeDescription.setTextColor(
+			(if (isRequested) resources.getColor(R.color.gray_3, null) else resources.getColor(R.color.black, null))
+		)
+
+		binding.arrowImage.setColorFilter(
+			ContextCompat.getColor(
+				context,
+				if (isRequested) R.color.gray_1 else R.color.white
+			)
+		)
+
+		binding.requestBtn.isEnabled = !isRequested
 	}
 
 	enum class Mode {

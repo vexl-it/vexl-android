@@ -157,19 +157,21 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	}
 
 	private fun setupColoredTitle(name: String) {
+		val isRequested = args.communicationRequest.offer?.isRequested == true
+
 		if (args.communicationRequest.offer?.offerType == "BUY") {
 			BuySellColorizer.colorizeTransactionType(
 				resources.getString(R.string.marketplace_detail_user_buy, name),
 				name,
 				binding.username,
-				R.color.green_100
+				if (isRequested) R.color.gray_3 else R.color.green_100
 			)
 		} else {
 			BuySellColorizer.colorizeTransactionType(
 				resources.getString(R.string.marketplace_detail_user_sell, name),
 				name,
 				binding.username,
-				R.color.pink_100
+				if (isRequested) R.color.gray_3 else R.color.pink_100
 			)
 		}
 	}

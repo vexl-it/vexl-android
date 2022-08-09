@@ -17,6 +17,7 @@
 		android:layout_height="wrap_content" />
 
 	<ImageView
+		android:id="@+id/arrow_image"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="42dp"
