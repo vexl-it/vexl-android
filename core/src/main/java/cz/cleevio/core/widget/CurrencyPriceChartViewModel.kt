@@ -3,8 +3,6 @@ package cz.cleevio.core.widget
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.model.CryptoCurrency
-import cz.cleevio.core.model.CryptoCurrency.Companion.getExactName
 import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.DateTimeRange
 import cz.cleevio.network.data.Status

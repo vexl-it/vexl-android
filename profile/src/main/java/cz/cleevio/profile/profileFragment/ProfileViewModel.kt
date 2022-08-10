@@ -45,11 +45,16 @@ class ProfileViewModel constructor(
 
 	fun logout(onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
 		viewModelScope.launch(Dispatchers.IO) {
-			// TODO delete all offers that are connected to my person - please rather check
-			val offerDelete = offerRepository.deleteMyOffers(offerRepository.getMyOffersWithoutInbox().map { it.offerId })
+			var offerDeleteSuccess = true
+			val offerIds = offerRepository.getOffers().map { it.offerId }
+			if (offerIds.isNotEmpty()) {
+				offerDeleteSuccess = offerRepository.deleteMyOffers(offerIds).status == Status.Success
+			}
 			val userDelete = userRepository.deleteMe()
 			val contactUserDelete = contactRepository.deleteMyUser()
-			val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
+
+			// TODO update when FB user will be available
+			//val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
 
 			// TODO add removing for GroupDao if needed
 			// Delete also entities stored in the local database
@@ -61,8 +66,9 @@ class ProfileViewModel constructor(
 			//todo: delete also all offers, when we have system for keeping offer IDs
 			if (userDelete.status is Status.Success &&
 				contactUserDelete.status is Status.Success &&
-				contactFacebookDelete.status is Status.Success &&
-				offerDelete.status is Status.Success
+				// TODO update when FB user will be available
+				//contactFacebookDelete.status is Status.Success &&
+				offerDeleteSuccess
 			) {
 				withContext(Dispatchers.Main) {
 					onSuccess()
