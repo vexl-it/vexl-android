@@ -135,7 +135,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		val phoneNumber = try {
 			phoneNumberUtil.parse(validatedNumber, null)
 		} catch (e: NumberParseException) {
-			Timber.e(e, "error during parsing a number")
+			Timber.e(e, "error during parsing a number: $validatedNumber")
 			null
 		} ?: return null
 

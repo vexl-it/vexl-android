@@ -283,4 +283,13 @@ class OfferRepositoryImpl constructor(
 				.orEmpty()
 		}
 	)
+
+	override suspend fun clearOfferTables() {
+		requestedOfferDao.clearTable()
+		offerDao.clearTable()
+		offerCommonFriendCrossRefDao.clearTable()
+		myOfferDao.clearTable()
+		locationDao.clearTable()
+		contactDao.clearTable()
+	}
 }

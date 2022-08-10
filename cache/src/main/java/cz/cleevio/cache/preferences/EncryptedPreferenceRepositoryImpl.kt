@@ -72,7 +72,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		}
 
 	override var selectedCryptoCurrency: String
-		get() = getStringFromEP(KEY_SELECTED_CRYPTO_CURRENCY, "")
+		get() = getStringFromEP(KEY_SELECTED_CRYPTO_CURRENCY, "bitcoin")
 		set(value) {
 			putStringToEP(KEY_SELECTED_CRYPTO_CURRENCY, value)
 		}
@@ -94,6 +94,10 @@ class EncryptedPreferenceRepositoryImpl constructor(
 	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 	override val selectedCurrencyFlow: MutableStateFlow<String> = MutableStateFlow(selectedCurrency)
 	override val numberOfImportedContactsFlow: MutableStateFlow<Int> = MutableStateFlow(numberOfImportedContacts)
+
+	override fun clearPreferences() {
+		encryptedSharedPreferences.edit().clear().apply()
+	}
 
 	private fun removeFromEP(key: String) =
 		encryptedSharedPreferences.edit().remove(key).apply()

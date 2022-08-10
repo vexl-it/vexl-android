@@ -19,4 +19,6 @@ interface EncryptedPreferenceRepository {
 	val areScreenshotsAllowedFlow: MutableStateFlow<Boolean>
 	val selectedCurrencyFlow: MutableStateFlow<String>
 	val numberOfImportedContactsFlow: MutableStateFlow<Int>
+
+	fun clearPreferences()
 }

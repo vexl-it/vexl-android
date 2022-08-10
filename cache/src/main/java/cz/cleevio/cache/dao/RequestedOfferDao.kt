@@ -9,4 +9,7 @@ interface RequestedOfferDao : BaseDao<RequestedOfferEntity> {
 
 	@Query("SELECT * FROM RequestedOfferEntity")
 	fun listAll(): List<RequestedOfferEntity>
+
+	@Query("DELETE FROM RequestedOfferEntity")
+	suspend fun clearTable()
 }

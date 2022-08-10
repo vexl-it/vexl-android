@@ -38,4 +38,7 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 
 	@Query("DELETE FROM MyOfferEntity WHERE extId in (:offerIds)")
 	suspend fun deleteMyOffersById(offerIds: List<String>)
+
+	@Query("DELETE FROM MyOfferEntity")
+	suspend fun clearTable()
 }

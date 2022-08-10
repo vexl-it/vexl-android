@@ -22,4 +22,7 @@ interface ContactDao : BaseDao<ContactEntity> {
 
 	@Query("DELETE FROM ContactEntity where contactType = :contactType")
 	suspend fun clearTableByType(contactType: String)
+
+	@Query("DELETE FROM ContactEntity")
+	suspend fun clearTable()
 }

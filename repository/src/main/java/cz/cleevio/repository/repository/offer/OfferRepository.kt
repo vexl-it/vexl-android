@@ -51,4 +51,6 @@ interface OfferRepository {
 	suspend fun getMyOffersWithoutInbox(): List<MyOffer>
 
 	suspend fun getLocationSuggestions(count: Int, query: String, language: String): Resource<List<LocationSuggestion>>
+
+	suspend fun clearOfferTables()
 }

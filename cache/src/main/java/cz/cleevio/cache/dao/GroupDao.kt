@@ -16,4 +16,7 @@ interface GroupDao : BaseDao<GroupEntity> {
 
 	@Query("DELETE FROM GroupEntity WHERE groupUuid == :groupUuid")
 	suspend fun deleteByUuid(groupUuid: String)
+
+	@Query("DELETE FROM GroupEntity")
+	suspend fun clearTable()
 }

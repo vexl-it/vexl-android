@@ -39,7 +39,6 @@
 		<item name="android:layout_gravity">center</item>
 		<item name="android:indeterminate">true</item>
 		<item name="trackThickness">@dimen/thickness_track_dialog_progress_indicator</item>
-		<item name="trackColor">@color/trackColorDialogProgressIndicator</item>
 		<item name="indicatorColor">@color/indicatorColorDialogProgressIndicator</item>
 	</style>
 
