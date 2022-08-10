@@ -116,7 +116,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 					priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
 					paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
 					btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
-					friendLevel = binding.newOfferFriendLevel.getFriendLevel(),
+					friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue(),
 					offerType = offer.offerType,
 					expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
 					active = !offer.active
@@ -155,7 +155,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferBtcNetwork.setValues(offer.btcNetwork.map { btcNetwork ->
 			BtcNetworkButtonSelected.valueOf(btcNetwork)
 		})
-		binding.newOfferFriendLevel.setValues(FriendLevel.valueOf(offer.friendLevel))
+		binding.newOfferFriendLevel.setValues(setOf(FriendLevel.valueOf(offer.friendLevel)))
 
 		binding.newOfferBtn.text = when (OfferType.valueOf(offer.offerType)) {
 			OfferType.BUY -> getString(R.string.offer_update_buy_btn)
@@ -224,6 +224,8 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferLocation.setFragmentManager(parentFragmentManager)
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
+		// TODO localize messages
+		// TODO parse required params in one method also for new offer!
 		binding.newOfferBtn.setOnClickListener {
 			val description = binding.newOfferDescription.text.toString()
 			if (description.isBlank()) {
@@ -247,10 +249,10 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			}
 			val btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue()
 			if (btcNetwork.value.isEmpty()) {
-				Toast.makeText(requireActivity(), "Invalid type", Toast.LENGTH_SHORT).show()
+				Toast.makeText(requireActivity(), "Missing type", Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
-			val friendLevel = binding.newOfferFriendLevel.getFriendLevel()
+			val friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue()
 			if (friendLevel.value == FriendLevel.NONE) {
 				Toast.makeText(requireActivity(), "Invalid friend level", Toast.LENGTH_SHORT).show()
 				return@setOnClickListener

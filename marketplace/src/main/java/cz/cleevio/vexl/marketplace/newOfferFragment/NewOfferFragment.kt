@@ -7,7 +7,6 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.load
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
@@ -155,6 +154,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			OfferType.BUY -> getString(R.string.offer_create_buy_btn)
 			OfferType.SELL -> getString(R.string.offer_create_sell_btn)
 		}
+		// TODO localize messages
+		// TODO parse required params in one method also for edit offer!
 		binding.newOfferBtn.setOnClickListener {
 			val description = binding.newOfferDescription.text.toString()
 			if (description.isBlank()) {
@@ -180,10 +181,10 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			 */
 			val btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue()
 			if (btcNetwork.value.isEmpty()) {
-				Toast.makeText(requireActivity(), "Invalid type", Toast.LENGTH_SHORT).show()
+				Toast.makeText(requireActivity(), "Missing type", Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
-			val friendLevel = binding.newOfferFriendLevel.getFriendLevel()
+			val friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue()
 			if (friendLevel.value == FriendLevel.NONE) {
 				Toast.makeText(requireActivity(), "Invalid friend level", Toast.LENGTH_SHORT).show()
 				return@setOnClickListener

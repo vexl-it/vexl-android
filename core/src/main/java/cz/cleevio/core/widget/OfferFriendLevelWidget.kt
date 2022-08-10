@@ -3,6 +3,7 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import coil.load
 import cz.cleevio.core.R
@@ -17,18 +18,23 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 	private lateinit var binding: WidgetOfferFriendLevelBinding
-	private var selectedButton: FriendLevel = FriendLevel.NONE
+	private var selectedFriendLevels: MutableSet<FriendLevel> = mutableSetOf()
+	private var isMultichoiceEnabled: Boolean = false
 
 	init {
 		setupUI()
 
 		binding.friendFirstDegreeWrapper.setOnClickListener {
-			redrawWithSelection(FriendLevel.FIRST_DEGREE)
+			handleFriendLevelSelection(FriendLevel.FIRST_DEGREE)
 		}
 
 		binding.friendSecondDegreeWrapper.setOnClickListener {
-			redrawWithSelection(FriendLevel.SECOND_DEGREE)
+			handleFriendLevelSelection(FriendLevel.SECOND_DEGREE)
 		}
+	}
+
+	fun isMultichoiceEnabled(isEnabled: Boolean) {
+		isMultichoiceEnabled = isEnabled
 	}
 
 	fun setUserAvatar(avatar: String?) {
@@ -50,54 +56,91 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 		binding = WidgetOfferFriendLevelBinding.inflate(layoutInflater, this)
 	}
 
-	private fun redrawWithSelection(selection: FriendLevel) {
-		selectedButton = selection
-
-		when (selectedButton) {
-			FriendLevel.FIRST_DEGREE -> {
-				binding.friendFirstDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_2))
-				binding.friendSecondDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
-
-				binding.friendFirstDegreeCheck.isVisible = true
-				binding.friendSecondDegreeCheck.isVisible = false
-
-				binding.friendFirstDegreeText.setTextColor(resources.getColor(R.color.white))
-				binding.friendSecondDegreeText.setTextColor(resources.getColor(R.color.gray_3))
-			}
-			FriendLevel.SECOND_DEGREE -> {
-				binding.friendFirstDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
-				binding.friendSecondDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_2))
-
-				binding.friendFirstDegreeCheck.isVisible = false
-				binding.friendSecondDegreeCheck.isVisible = true
-
-				binding.friendFirstDegreeText.setTextColor(resources.getColor(R.color.gray_3))
-				binding.friendSecondDegreeText.setTextColor(resources.getColor(R.color.white))
-			}
-			else -> {
-				binding.friendFirstDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
-				binding.friendSecondDegreeWrapper.setCardBackgroundColor(resources.getColor(R.color.gray_1))
-
-				binding.friendFirstDegreeCheck.isVisible = false
-				binding.friendSecondDegreeCheck.isVisible = false
-
-				binding.friendFirstDegreeText.setTextColor(resources.getColor(R.color.gray_3))
-				binding.friendSecondDegreeText.setTextColor(resources.getColor(R.color.gray_3))
+	private fun handleFriendLevelSelection(level: FriendLevel) {
+		if (!isMultichoiceEnabled) {
+			selectedFriendLevels = mutableSetOf(level)
+			redrawWithSelection(level)
+		} else {
+			if (selectedFriendLevels.contains(level)) {
+				selectedFriendLevels.remove(level)
+				redrawWithUnselection(level)
+			} else {
+				selectedFriendLevels.add(level)
+				redrawWithSelection(level)
 			}
 		}
 	}
 
-	fun getFriendLevel(): FriendLevelValue = FriendLevelValue(
-		value = selectedButton
+	private fun redrawWithSelection(selection: FriendLevel) {
+		when (selection) {
+			FriendLevel.FIRST_DEGREE -> {
+				binding.friendFirstDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_2))
+				binding.friendFirstDegreeCheck.isVisible = true
+				binding.friendFirstDegreeText.setTextColor(ContextCompat.getColor(context, R.color.white))
+
+				if (!isMultichoiceEnabled) {
+					binding.friendSecondDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_1))
+					binding.friendSecondDegreeCheck.isVisible = false
+					binding.friendSecondDegreeText.setTextColor(ContextCompat.getColor(context, R.color.gray_3))
+				}
+			}
+			FriendLevel.SECOND_DEGREE -> {
+				binding.friendSecondDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_2))
+				binding.friendSecondDegreeCheck.isVisible = true
+				binding.friendSecondDegreeText.setTextColor(ContextCompat.getColor(context, R.color.white))
+
+				if (!isMultichoiceEnabled) {
+					binding.friendFirstDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_1))
+					binding.friendFirstDegreeCheck.isVisible = false
+					binding.friendFirstDegreeText.setTextColor(ContextCompat.getColor(context, R.color.gray_3))
+				}
+			}
+			else -> {
+				binding.friendFirstDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_1))
+				binding.friendFirstDegreeCheck.isVisible = false
+				binding.friendFirstDegreeText.setTextColor(ContextCompat.getColor(context, R.color.gray_3))
+
+				binding.friendSecondDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_1))
+				binding.friendSecondDegreeCheck.isVisible = false
+				binding.friendSecondDegreeText.setTextColor(ContextCompat.getColor(context, R.color.gray_3))
+			}
+		}
+	}
+
+	private fun redrawWithUnselection(unselection: FriendLevel) {
+		when (unselection) {
+			FriendLevel.FIRST_DEGREE -> {
+				binding.friendFirstDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_1))
+				binding.friendFirstDegreeCheck.isVisible = false
+				binding.friendFirstDegreeText.setTextColor(ContextCompat.getColor(context, R.color.gray_3))
+			}
+			FriendLevel.SECOND_DEGREE -> {
+				binding.friendSecondDegreeWrapper.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_1))
+				binding.friendSecondDegreeCheck.isVisible = false
+				binding.friendSecondDegreeText.setTextColor(ContextCompat.getColor(context, R.color.gray_3))
+			}
+			else -> {
+				// Do nothing
+			}
+		}
+	}
+
+	fun getSingleChoiceFriendLevelValue(): FriendLevelValue = FriendLevelValue(
+		value = selectedFriendLevels.firstOrNull() ?: FriendLevel.NONE
 	)
 
+	fun getMultichoiceFriendLevels(): Set<FriendLevel> = selectedFriendLevels
+
 	fun reset() {
+		selectedFriendLevels = mutableSetOf()
 		redrawWithSelection(FriendLevel.NONE)
 	}
 
-	fun setValues(button: FriendLevel) {
-		selectedButton = button
-		redrawWithSelection(selectedButton)
+	fun setValues(levels: Set<FriendLevel>) {
+		selectedFriendLevels = levels.toMutableSet()
+		levels.forEach { level ->
+			redrawWithSelection(level)
+		}
 	}
 }
 

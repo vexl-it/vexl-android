@@ -60,10 +60,10 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 				)
 			}
 		}
-
 		binding.filterLocation.setupOnTextChanged { query, view ->
 			filterViewModel.getSuggestions(query, view)
 		}
+		binding.filterLocation.setFragmentManager(parentFragmentManager)
 
 		binding.newOfferCurrency.onCurrencyPicked = {
 			binding.priceRangeWidget.setupWithCurrency(it)
@@ -72,21 +72,20 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 			binding.priceRangeWidget.isVisible = true
 			TransitionManager.beginDelayedTransition(binding.container)
 		}
-
 		binding.newOfferCurrency.selectCurrencyManually(null)
 
 		priceChartWidget?.onLayoutChanged = {
 			TransitionManager.beginDelayedTransition(binding.container)
 		}
 
+		binding.friendLevel.isMultichoiceEnabled(true)
+		// TODO binding.friendLevel.setValues(setOf(FriendLevel.FIRST_DEGREE, FriendLevel.SECOND_DEGREE))
+
 		binding.applyBtn.setOnClickListener {
 			//TODO: somehow apply filters? Save to DB?
-
 			//and go back to offers
 			findNavController().popBackStack()
 		}
-
-		binding.filterLocation.setFragmentManager(parentFragmentManager)
 	}
 
 	private fun resetAllInputs() {
