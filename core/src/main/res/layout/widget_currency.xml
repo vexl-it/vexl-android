@@ -28,7 +28,6 @@
 				android:layout_weight=".5"
 				android:background="@drawable/widget_location_radio_selector"
 				android:button="@android:color/transparent"
-				android:checked="true"
 				android:gravity="center"
 				android:text="@string/currency_czk" />
 
@@ -51,6 +50,7 @@
 				android:layout_weight=".5"
 				android:background="@drawable/widget_location_radio_selector"
 				android:button="@android:color/transparent"
+				android:checked="true"
 				android:gravity="center"
 				android:text="@string/currency_usd" />
 

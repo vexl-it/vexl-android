@@ -69,7 +69,6 @@
 						android:layout_height="wrap_content"
 						android:background="@drawable/filter_radio_selector"
 						android:button="@android:color/transparent"
-						android:checked="true"
 						android:text="@string/widget_trigger_price_below"
 						android:textColor="@drawable/filter_radio_text_selector" />
 
@@ -92,9 +91,20 @@
 					android:layout_height="0dp"
 					android:layout_margin="8dp"
 					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintEnd_toStartOf="@id/price_edit"
+					app:layout_constraintEnd_toStartOf="@id/currency"
 					app:layout_constraintStart_toEndOf="@id/price_trigger_type"
 					app:layout_constraintTop_toTopOf="parent" />
+
+				<TextView
+					android:id="@+id/currency"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="12dp"
+					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Item"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toEndOf="@id/price_divider"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:text="@string/general_usd_sign" />
 
 				<com.google.android.material.textfield.TextInputEditText
 					android:id="@+id/price_edit"
@@ -113,9 +123,9 @@
 					android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Yellow"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@id/price_divider"
+					app:layout_constraintStart_toEndOf="@id/currency"
 					app:layout_constraintTop_toTopOf="parent"
-					tools:text="$32 500" />
+					tools:text="32 500" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 

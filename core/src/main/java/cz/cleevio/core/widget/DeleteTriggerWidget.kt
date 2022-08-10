@@ -31,7 +31,7 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 			onFocusChangeListener?.invoke(hasFocus)
 		}
 
-		binding.deleteInput.setText("30")
+		binding.deleteInput.setText(DEFAULT_NUMBER.toString())
 
 		binding.deleteTimeframe.setOnClickListener {
 			fragmentManager?.let { manager ->
@@ -94,7 +94,7 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 	}
 
 	companion object {
-		const val DEFAULT_NUMBER = 30
+		const val DEFAULT_NUMBER = 14
 	}
 }
 

@@ -81,7 +81,7 @@
 
 				<TextView
 					android:id="@+id/delete_timeframe"
-					android:layout_width="wrap_content"
+					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:drawablePadding="8dp"
 					android:gravity="center"

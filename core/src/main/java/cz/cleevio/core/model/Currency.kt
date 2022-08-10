@@ -1,5 +1,8 @@
 package cz.cleevio.core.model
 
+import android.content.Context
+import cz.cleevio.core.R
+
 enum class Currency {
 	CZK,
 	USD,
@@ -12,6 +15,12 @@ enum class Currency {
 				EUR.name -> EUR
 				else -> USD
 			}
+		}
+
+		fun Currency.getCurrencySymbol(context: Context): String = when (this) {
+			CZK -> context.resources.getString(R.string.general_czk_sign)
+			USD -> context.resources.getString(R.string.general_usd_sign)
+			EUR -> context.resources.getString(R.string.general_eur_sign)
 		}
 	}
 }

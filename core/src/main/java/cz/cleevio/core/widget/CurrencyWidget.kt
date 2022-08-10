@@ -44,7 +44,7 @@ class CurrencyWidget @JvmOverloads constructor(
 				R.id.currency_czk -> onCurrencyPicked?.invoke(Currency.CZK)
 				R.id.currency_eur -> onCurrencyPicked?.invoke(Currency.EUR)
 				R.id.currency_usd -> onCurrencyPicked?.invoke(Currency.USD)
-				else -> onCurrencyPicked?.invoke(Currency.CZK)
+				else -> onCurrencyPicked?.invoke(Currency.USD)
 			}
 		}
 

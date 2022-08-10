@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFriendLevelBinding
 import cz.cleevio.core.model.FriendLevelValue
@@ -27,6 +28,21 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 
 		binding.friendSecondDegreeWrapper.setOnClickListener {
 			redrawWithSelection(FriendLevel.SECOND_DEGREE)
+		}
+	}
+
+	fun setUserAvatar(avatar: String?) {
+		binding.firstDegreeAvatar.load(avatar) {
+			crossfade(true)
+			fallback(R.drawable.random_avatar_3)
+			error(R.drawable.random_avatar_3)
+			placeholder(R.drawable.random_avatar_3)
+		}
+		binding.secondDegreeAvatar.load(avatar) {
+			crossfade(true)
+			fallback(R.drawable.random_avatar_3)
+			error(R.drawable.random_avatar_3)
+			placeholder(R.drawable.random_avatar_3)
 		}
 	}
 

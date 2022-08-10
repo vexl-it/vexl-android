@@ -136,11 +136,11 @@
 			android:indeterminate="true"
 			android:visibility="gone"
 			app:indicatorColor="@color/yellow_100"
-			app:showDelay="500"
-			app:layout_constraintTop_toTopOf="@id/large_chart"
 			app:layout_constraintBottom_toBottomOf="@id/large_chart"
-			app:layout_constraintStart_toStartOf="@id/large_chart"
 			app:layout_constraintEnd_toEndOf="@id/large_chart"
+			app:layout_constraintStart_toStartOf="@id/large_chart"
+			app:layout_constraintTop_toTopOf="@id/large_chart"
+			app:showDelay="500"
 			tools:visibility="visible" />
 
 		<TextView

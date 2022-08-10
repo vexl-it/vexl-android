@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetTriggerPriceBinding
+import cz.cleevio.core.model.Currency
+import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.core.model.PriceTriggerValue
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import timber.log.Timber
@@ -22,11 +24,13 @@ class PriceTriggerWidget @JvmOverloads constructor(
 
 	init {
 		setupUI()
+		setCurrency(Currency.USD)
 	}
 
 	private fun setupUI() {
 		binding = WidgetTriggerPriceBinding.inflate(layoutInflater, this)
 
+		binding.priceEdit.setText(BigDecimal.ZERO.toString())
 		binding.priceEdit.setOnFocusChangeListener { _, hasFocus ->
 			onFocusChangeListener?.invoke(hasFocus)
 		}
@@ -39,13 +43,17 @@ class PriceTriggerWidget @JvmOverloads constructor(
 		)
 	}
 
+	fun setCurrency(currentCurrency: Currency) {
+		binding.currency.text = currentCurrency.getCurrencySymbol(context)
+	}
+
 	private fun getTriggerType(): TriggerType = when (binding.priceTriggerType.checkedRadioButtonId) {
 		R.id.price_below -> TriggerType.PRICE_IS_BELOW
 		R.id.price_above -> TriggerType.PRICE_IS_ABOVE
 		else -> TriggerType.NONE
 	}
 
-	private fun getTriggerValue(): BigDecimal? {
+	private fun getTriggerValue(): BigDecimal {
 		val currentValue = binding.priceEdit.text.toString()
 		if (currentValue.isNotBlank()) {
 			try {
@@ -54,7 +62,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 				Timber.d("not a number $currentValue")
 			}
 		}
-		return null
+		return BigDecimal.ZERO
 	}
 
 	fun getPriceTriggerValue(): PriceTriggerValue = PriceTriggerValue(

@@ -68,9 +68,11 @@ class ProfileViewModel constructor(
 	}
 
 	fun navigateToOnboarding() {
-		navMainGraphModel.navigateToGraph(
-			NavMainGraphModel.NavGraph.Onboarding
-		)
+		viewModelScope.launch(Dispatchers.Default) {
+			navMainGraphModel.navigateToGraph(
+				NavMainGraphModel.NavGraph.Onboarding
+			)
+		}
 	}
 
 	fun updateAllowScreenshotsSettings() {

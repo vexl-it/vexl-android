@@ -48,10 +48,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="8dp"
+		android:layout_marginTop="20dp"
 		android:background="@color/white"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/user_type">
+		app:layout_constraintTop_toBottomOf="@id/profile_image">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
@@ -87,6 +88,19 @@
 					android:layout_height="wrap_content"
 					android:layout_margin="13dp">
 
+					<TextView
+						android:id="@+id/none_common_friends"
+						style="@style/TextAppearance.Vexl.ParagraphSmall"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/request_common_friends_empty_state"
+						android:textColor="@color/black"
+						android:visibility="gone"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+
 					<androidx.recyclerview.widget.RecyclerView
 						android:id="@+id/common_friends_list"
 						android:layout_width="match_parent"
@@ -107,6 +121,7 @@
 				android:id="@+id/offer_widget"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_margin="8dp"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"

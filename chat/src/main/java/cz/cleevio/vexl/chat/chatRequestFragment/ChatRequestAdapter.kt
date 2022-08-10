@@ -2,6 +2,7 @@ package cz.cleevio.vexl.chat.chatRequestFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -51,7 +52,10 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 			}
 			binding.requestMessage.text = item.message.text
 			binding.offerWidget.bind(item.offer!!)
-			adapter.submitList(item.offer?.commonFriends.orEmpty().map { it.contact })
+			val offerList = item.offer?.commonFriends.orEmpty().map { it.contact }
+			adapter.submitList(offerList)
+			binding.noneCommonFriends.isVisible = offerList.isEmpty()
+			binding.commonFriendsList.isVisible = offerList.isNotEmpty()
 		}
 
 		fun initAdapter() {

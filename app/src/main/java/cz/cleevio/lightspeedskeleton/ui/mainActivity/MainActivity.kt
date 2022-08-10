@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cz.cleevio.core.utils.NavMainGraphModel
@@ -41,7 +42,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
 	private lateinit var navController: NavController
 	private var bottomBarAnimator: ValueAnimator? = null
-
 	private var bottomInsetValue = 0
 
 	override fun onResume() {

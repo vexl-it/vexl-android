@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<array name="initial_slider_values">
-		<item>600</item>
-		<item>7000</item>
+		<item>0</item>
+		<item>10000</item>
 	</array>
 </resources>
