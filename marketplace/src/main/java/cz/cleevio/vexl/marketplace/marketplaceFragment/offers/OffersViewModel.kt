@@ -1,7 +1,6 @@
 package cz.cleevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.repository.model.offer.Filter
 import cz.cleevio.repository.model.offer.Offer
@@ -14,8 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class OffersViewModel(
-	private val offerRepository: OfferRepository,
-	private val preferences: EncryptedPreferenceRepository
+	private val offerRepository: OfferRepository
 ) : BaseViewModel() {
 
 	private val _buyOffers = MutableSharedFlow<List<Offer>>(replay = 1)
@@ -32,7 +30,7 @@ class OffersViewModel(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			val sortedByDate = offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "BUY" && !it.isMine }.sortedByDescending { it.createdAt } }
+			val sortedByDate = offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == OfferType.BUY.name && !it.isMine }.sortedByDescending { it.createdAt } }
 
 			sortedByDate.collect { offers ->
 				val notRequestedOffers = offers.filter { !it.isRequested }
@@ -42,7 +40,7 @@ class OffersViewModel(
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {
-			val sortedByDate = offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == "SELL" && !it.isMine }.sortedByDescending { it.createdAt } }
+			val sortedByDate = offerRepository.getOffersFlow().map { list -> list.filter { it.offerType == OfferType.SELL.name && !it.isMine }.sortedByDescending { it.createdAt } }
 
 			sortedByDate.collect { offers ->
 				val notRequestedOffers = offers.filter { !it.isRequested }

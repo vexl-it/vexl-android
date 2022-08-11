@@ -14,3 +14,4 @@ gen/
 .cxx
 local.properties
 secrets.properties
+/.idea/localizerSettings.xml

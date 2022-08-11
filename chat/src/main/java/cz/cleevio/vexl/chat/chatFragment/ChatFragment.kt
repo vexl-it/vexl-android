@@ -71,7 +71,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	override fun initView() {
 		val name = args.communicationRequest.message.deanonymizedUser?.name ?: run {
-			resources.getString(R.string.marketplace_detail_friend_first)
+			getString(R.string.marketplace_detail_friend_first)
 		}
 
 		setupColoredTitle(name)
@@ -162,14 +162,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 		if (args.communicationRequest.offer?.offerType == "BUY") {
 			BuySellColorizer.colorizeTransactionType(
-				resources.getString(R.string.marketplace_detail_user_buy, name),
+				getString(R.string.marketplace_detail_user_buy, name),
 				name,
 				binding.username,
 				if (isRequested) R.color.gray_3 else R.color.green_100
 			)
 		} else {
 			BuySellColorizer.colorizeTransactionType(
-				resources.getString(R.string.marketplace_detail_user_sell, name),
+				getString(R.string.marketplace_detail_user_sell, name),
 				name,
 				binding.username,
 				if (isRequested) R.color.gray_3 else R.color.pink_100

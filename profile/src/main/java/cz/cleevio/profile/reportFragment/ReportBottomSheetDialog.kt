@@ -27,9 +27,9 @@ class ReportBottomSheetDialog : BottomSheetDialogFragment() {
 
 		binding.emailWrapper.setOnClickListener {
 			sendEmailToSupport(
-				email = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_email),
-				subject = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_subject),
-				body = resources.getString(cz.cleevio.resources.R.string.user_profile_report_issue_text)
+				email = getString(cz.cleevio.resources.R.string.user_profile_report_issue_email),
+				subject = getString(cz.cleevio.resources.R.string.user_profile_report_issue_subject),
+				body = getString(cz.cleevio.resources.R.string.user_profile_report_issue_text)
 			)
 		}
 

@@ -59,9 +59,9 @@
 		android:layout_marginTop="16dp"
 		android:layout_marginEnd="8dp"
 		android:text="@string/marketplace_my_offers"
+		android:visibility="gone"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:visibility="gone" />
+		app:layout_constraintTop_toTopOf="parent" />
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/offer_list"

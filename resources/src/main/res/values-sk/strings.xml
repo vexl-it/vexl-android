@@ -90,7 +90,7 @@
     <string name="import_contacts_title">Najít kamarády</string>
     <string name="import_contacts_subtitle">Vexl nevidí tvoje kontakty</string>
     <string name="import_contacts_request_title">Povolit kontakty</string>
-    <string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům. Nemusíš ale mít obavy, nikdo je neuvidí.</string>
+    <string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům.\nNemusíš ale mít obavy, nikdo je neuvidí.</string>
     <string name="import_contacts_secondary_request_title">Opravdu?</string>
     <string name="import_contacts_secondary_request_description">Vexl potřebuje tvoje kontakty k tomu, aby tě anonymně spojil s ostatními vexláky.</string>
     <string name="import_facebook_contacts_title">Propoj s Facebookem a rozšiř svůj dosah</string>

@@ -135,7 +135,10 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		val phoneNumber = try {
 			phoneNumberUtil.parse(validatedNumber, null)
 		} catch (e: NumberParseException) {
-			Timber.e(e, "error during parsing a number: $validatedNumber")
+			// Do nothing with the exception.
+			// It's OK not to propagate it due to the number validation is triggered after each symbol.
+			// It's because we should be able to show the country flag.
+			// So it's not necessary to propagate that the number is incorrect after each symbol.
 			null
 		} ?: return null
 

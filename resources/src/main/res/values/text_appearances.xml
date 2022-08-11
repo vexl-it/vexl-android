@@ -132,10 +132,21 @@
 	</style>
 
 	<style name="TextAppearance.Cleevio.DialogTitle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+		<item name="android:textColor">@color/black</item>
+		<item name="android:textSize">17sp</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="lineHeight">22sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
+	</style>
+
+	<style name="TextAppearance.Cleevio.DialogBody" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
 		<item name="android:textSize">16sp</item>
-		<item name="android:textColor">@color/root_text_color</item>
-		<!--<item name="fontFamily">@font/barlow_semibold</item>
-		<item name="android:fontFamily">@font/barlow_semibold</item>-->
+		<item name="android:textColor">@color/black</item>
+		<item name="android:letterSpacing">-0.08</item>
+		<item name="lineHeight">18sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_400</item>
+		<item name="fontFamily">@font/tt_satoshi_400</item>
 	</style>
 
 	<style name="TextAppearance.Cleevio.TextInput.Text" parent="TextAppearance.MaterialComponents.Subtitle1">

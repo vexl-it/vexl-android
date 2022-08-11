@@ -81,7 +81,7 @@ fun Fragment.sendEmailToSupport(
 	} catch (e: ActivityNotFoundException) {
 		Timber.e(e)
 		(this as BaseFragment).showToast(
-			text = resources.getString(R.string.user_profile_report_issue_error_no_app_found),
+			text = getString(R.string.user_profile_report_issue_error_no_app_found),
 			length = Toast.LENGTH_LONG
 		)
 	}

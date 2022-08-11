@@ -25,7 +25,7 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.usersRequestingChat.collect { messages ->
-				binding.title.text = resources.getString(R.string.chat_request_main_title, messages.size.toString())
+				binding.title.text = getString(R.string.chat_request_main_title, messages.size.toString())
 				adapter.submitList(messages)
 
 				binding.declineBtn.isVisible = messages.isNotEmpty()
