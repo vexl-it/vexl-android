@@ -62,6 +62,8 @@
     <string name="verify_phone_hint">Activation code</string>
     <string name="verify_phone_info_countdown">Didn’t receive code? Resend in %s s</string>
     <string name="verify_phone_info_btn">Didn’t receive code? Resend</string>
+    <string name="verify_phone_code_sent">Code was sent!</string>
+    <string name="verify_phone_expired">Verification expired. Start your registration again, please</string>
 
     <!-- Register Name and Avatar -->
     <string name="username_title">What do your friends call you?</string>

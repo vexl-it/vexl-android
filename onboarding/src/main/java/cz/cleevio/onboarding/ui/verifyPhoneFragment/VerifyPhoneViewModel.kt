@@ -8,6 +8,7 @@ import cz.cleevio.core.utils.UserUtils
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
+import cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneSuccess
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
@@ -30,6 +31,9 @@ class VerifyPhoneViewModel constructor(
 
 	private val _verificationChannel = Channel<Resource<ConfirmCode>>(Channel.CONFLATED)
 	val verificationChannel: Flow<Resource<ConfirmCode>> = _verificationChannel.receiveAsFlow()
+
+	private val _phoneNumberSuccess = Channel<InitPhoneSuccess>(Channel.CONFLATED)
+	val phoneNumberSuccess = _phoneNumberSuccess.receiveAsFlow()
 
 	private val _countDownState: MutableStateFlow<CountDownState> =
 		MutableStateFlow(CountDownState.Counting(COUNTDOWN_LENGTH))
@@ -99,6 +103,19 @@ class VerifyPhoneViewModel constructor(
 	fun restartCountDown() {
 		countDownTimer.launch {
 			// TODO call backend for new sms
+
+			val response = userRepository.authStepOne(phoneNumber)
+			when (response.status) {
+				is Status.Success -> response.data?.let { confirmPhone ->
+					_phoneNumberSuccess.send(
+						InitPhoneSuccess(
+							phoneNumber = phoneNumber,
+							confirmPhone = confirmPhone
+						)
+					)
+				}
+			}
+
 
 			repeat(COUNTDOWN_LENGTH / COUNTDOWN_STEP) {
 				_countDownState.emit(CountDownState.Counting(COUNTDOWN_LENGTH - it * COUNTDOWN_STEP))
