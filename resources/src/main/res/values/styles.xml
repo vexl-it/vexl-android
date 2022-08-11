@@ -150,11 +150,24 @@
 		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Cleevio.Dialog</item>
 	</style>
 
-	<style name="Widget.Cleevio.DialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-		<item name="android:textColor">@color/text_color_button_text</item>
+	<style name="Widget.Cleevio.DialogButton.Positive" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+		<item name="android:textColor">@color/black</item>
+		<item name="rippleColor">@color/black</item>
+		<item name="android:textSize">17sp</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="lineHeight">22sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
+	</style>
+
+	<style name="Widget.Cleevio.DialogButton.Negative" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+		<item name="android:textColor">@color/ripple_color_text_button</item>
 		<item name="rippleColor">@color/ripple_color_text_button</item>
-		<!--<item name="fontFamily">@font/barlow_medium</item>
-		<item name="android:fontFamily">@font/barlow_medium</item>-->
+		<item name="android:textSize">17sp</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="lineHeight">22sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
 	</style>
 
 	<style name="Widget.Cleevio.CircularProgress" parent="Widget.MaterialComponents.CircularProgressIndicator">

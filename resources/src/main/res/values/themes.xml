@@ -70,9 +70,11 @@
 
 	<style name="ThemeOverlay.Cleevio.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
 		<item name="materialAlertDialogTitleTextStyle">@style/TextAppearance.Cleevio.DialogTitle</item>
-		<item name="buttonBarPositiveButtonStyle">@style/Widget.Cleevio.DialogButton</item>
-		<item name="buttonBarNeutralButtonStyle">@style/Widget.Cleevio.DialogButton</item>
-		<item name="buttonBarNegativeButtonStyle">@style/Widget.Cleevio.DialogButton</item>
+		<item name="materialAlertDialogBodyTextStyle">@style/TextAppearance.Cleevio.DialogBody</item>
+		<item name="buttonBarPositiveButtonStyle">@style/Widget.Cleevio.DialogButton.Positive</item>
+		<item name="buttonBarNeutralButtonStyle">@style/Widget.Cleevio.DialogButton.Positive</item>
+		<item name="buttonBarNegativeButtonStyle">@style/Widget.Cleevio.DialogButton.Negative</item>
+		<item name="android:background">@color/white</item>
 	</style>
 
 	<style name="ThemeOverlay.Cleevio.DatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
@@ -98,6 +100,7 @@
 	<style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray" parent="">
 		<item name="colorPrimary">@color/gray_4</item>
 	</style>
+
 	<style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined.Dark" parent="">
 		<item name="colorPrimary">@color/black</item>
 	</style>

@@ -2,6 +2,9 @@ package cz.cleevio.vexl.contacts.importContactsFragment
 
 import android.Manifest
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
@@ -84,15 +87,29 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	}
 
 	private fun showPermissionDeniedDialog() {
-		MaterialAlertDialogBuilder(requireContext())
-			.setTitle(R.string.import_contacts_request_title)
-			.setMessage(R.string.import_contacts_request_description)
+		val builder = MaterialAlertDialogBuilder(requireContext())
 			.setNegativeButton(R.string.import_contacts_not_allow) { dialog, _ ->
 				dialog.dismiss()
 			}
 			.setPositiveButton(R.string.import_contacts_allow) { _, _ ->
 				checkReadContactsPermissions()
 			}
-			.show()
+		builder.setCustomTitle(
+			TextView(requireContext()).apply {
+				maxLines = MAX_DIALOG_LINES
+				setPadding(DIALOG_PADDING, DIALOG_PADDING, DIALOG_PADDING, DIALOG_PADDING)
+				layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+				isSingleLine = false
+				text = resources.getString(R.string.import_contacts_request_description)
+				setTextAppearance(R.style.TextAppearance_Cleevio_DialogBody)
+			}
+		)
+
+		builder.show()
+	}
+
+	companion object {
+		const val DIALOG_PADDING = 30
+		const val MAX_DIALOG_LINES = 3
 	}
 }
