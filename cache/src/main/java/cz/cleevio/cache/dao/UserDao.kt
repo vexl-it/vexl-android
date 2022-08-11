@@ -23,4 +23,12 @@ interface UserDao : BaseDao<UserEntity> {
 
 	@Query("DELETE FROM UserEntity")
 	suspend fun deleteAll()
+
+	@Query(
+		"UPDATE UserEntity " +
+		"SET anonymousAvatarImageIndex = :anonymousAvatarImageIndex, " +
+		"anonymousUsername = :anonymousUsername " +
+		"WHERE id == :userId "
+	)
+	suspend fun updateAnonymousInfo(userId: Long, anonymousUsername: String, anonymousAvatarImageIndex: Int)
 }

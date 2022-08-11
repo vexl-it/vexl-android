@@ -9,7 +9,9 @@ import kotlinx.parcelize.Parcelize
 data class User constructor(
 	val id: Long?,
 	val username: String,
+	val anonymousUsername: String?,
 	val avatar: String?,
+	val anonymousAvatarImageIndex: Int?,
 	val publicKey: String,
 	val finishedOnboarding: Boolean
 ) : Parcelable
@@ -17,7 +19,9 @@ data class User constructor(
 fun UserResponse.fromNetwork() = User(
 	id = null,
 	username = username,
+	anonymousUsername = null,
 	avatar = avatar,
+	anonymousAvatarImageIndex = null,
 	publicKey = publicKey,
 	finishedOnboarding = false
 )
@@ -25,7 +29,9 @@ fun UserResponse.fromNetwork() = User(
 fun UserEntity.fromDao() = User(
 	id = id,
 	username = username,
+	anonymousUsername = anonymousUsername,
 	avatar = avatar,
+	anonymousAvatarImageIndex = anonymousAvatarImageIndex,
 	publicKey = publicKey,
 	finishedOnboarding = finishedOnboarding
 )

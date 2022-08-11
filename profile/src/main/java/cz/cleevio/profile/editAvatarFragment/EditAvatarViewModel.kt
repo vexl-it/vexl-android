@@ -41,4 +41,15 @@ class EditAvatarViewModel constructor(
 			}
 		}
 	}
+
+	fun deleteAvatar() {
+		viewModelScope.launch(Dispatchers.IO) {
+			userRepository.updateUser(
+				avatar = null,
+				avatarImageExtension = IMAGE_EXTENSION
+			).let {
+				_wasSuccessful.send(it.isSuccess())
+			}
+		}
+	}
 }

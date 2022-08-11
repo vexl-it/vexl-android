@@ -9,12 +9,14 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
+import coil.ImageLoader
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.OpenedFromScreen
+import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
@@ -59,12 +61,33 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		repeatScopeOnStart {
 			profileViewModel.userFlow.collect {
 				it?.let { user ->
+					// TODO show anonymous user name if there will be dirrefence for public/private profile
 					binding.profileUserName.text = user.username
-					binding.profileUserPhoto.load(user.avatar) {
-						crossfade(true)
-						fallback(R.drawable.random_avatar_3)
-						error(R.drawable.random_avatar_3)
-						placeholder(R.drawable.random_avatar_3)
+
+					if (user.avatar == null) {
+						val anonymousImageIndex = user.anonymousAvatarImageIndex
+						if (anonymousImageIndex != null) {
+							binding.profileUserPhoto.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
+								crossfade(true)
+								fallback(R.drawable.random_avatar_3)
+								error(R.drawable.random_avatar_3)
+								placeholder(R.drawable.random_avatar_3)
+							}
+						} else {
+							binding.profileUserPhoto.load(R.drawable.random_avatar_3, imageLoader = ImageLoader.invoke(requireContext())) {
+								crossfade(true)
+								fallback(R.drawable.random_avatar_3)
+								error(R.drawable.random_avatar_3)
+								placeholder(R.drawable.random_avatar_3)
+							}
+						}
+					} else {
+						binding.profileUserPhoto.load(user.avatar) {
+							crossfade(true)
+							fallback(R.drawable.random_avatar_3)
+							error(R.drawable.random_avatar_3)
+							placeholder(R.drawable.random_avatar_3)
+						}
 					}
 				}
 			}
@@ -232,7 +255,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 	override fun onResume() {
 		super.onResume()
-		
+
 		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
 		binding.profileAllowScreenshots.switch.isChecked = profileViewModel.areScreenshotsAllowed
 		setUpAllowScreenshotsSwitch()

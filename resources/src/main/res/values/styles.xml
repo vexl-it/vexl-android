@@ -282,7 +282,7 @@
 
 	<style name="Widget.Vexl.Button" parent="">
 		<item name="android:textAppearance">@style/TextAppearance.Cleevio.Button</item>
-		<item name="android:background">@drawable/background_button_blue_12</item>
+		<item name="android:background">@drawable/background_button_12</item>
 		<item name="android:foreground">@drawable/ripple_mask_12</item>
 		<item name="android:layout_margin">16dp</item>
 		<item name="android:paddingTop">18dp</item>
@@ -293,7 +293,7 @@
 
 	<style name="Widget.Vexl.Button.BottomScreen" parent="">
 		<item name="android:textAppearance">@style/TextAppearance.Cleevio.Button</item>
-		<item name="android:background">@drawable/background_button_blue_12</item>
+		<item name="android:background">@drawable/background_button_12</item>
 		<item name="android:foreground">@drawable/ripple_mask_12</item>
 		<item name="android:clickable">true</item>
 		<item name="android:focusable">true</item>

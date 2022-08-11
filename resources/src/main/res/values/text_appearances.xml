@@ -109,6 +109,11 @@
 
 	<style name="TextAppearance.Cleevio.DarkTextButton" parent="TextAppearance.Cleevio.TextButton">
 		<item name="android:textColor">@android:color/white</item>
+		<item name="android:textSize">16sp</item>
+		<item name="lineHeight">19.92dp</item>
+		<item name="android:letterSpacing">-0.04</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
 	<style name="TextAppearance.Cleevio.Caption" parent="TextAppearance.MaterialComponents.Caption">
