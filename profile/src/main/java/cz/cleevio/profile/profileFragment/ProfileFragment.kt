@@ -61,7 +61,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		repeatScopeOnStart {
 			profileViewModel.userFlow.collect {
 				it?.let { user ->
-					// TODO show anonymous user name if there will be dirrefence for public/private profile
+					// TODO show anonymous user name if there will be difference for public/private profile
 					binding.profileUserName.text = user.username
 
 					if (user.avatar == null) {

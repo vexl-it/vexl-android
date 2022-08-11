@@ -48,6 +48,7 @@ class EditAvatarViewModel constructor(
 				avatar = null,
 				avatarImageExtension = IMAGE_EXTENSION
 			).let {
+				userRepository.deleteUserAvatar()
 				_wasSuccessful.send(it.isSuccess())
 			}
 		}

@@ -191,6 +191,12 @@ class UserRepositoryImpl constructor(
 
 	}
 
+	override suspend fun deleteUserAvatar() {
+		userDao.getUser()?.id?.let {
+			userDao.deleteUserAvatar(it)
+		}
+	}
+
 	private suspend fun updateUser(user: User) {
 		userDao.update(
 			UserEntity(

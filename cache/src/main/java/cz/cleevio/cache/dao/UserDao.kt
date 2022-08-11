@@ -31,4 +31,11 @@ interface UserDao : BaseDao<UserEntity> {
 		"WHERE id == :userId "
 	)
 	suspend fun updateAnonymousInfo(userId: Long, anonymousUsername: String, anonymousAvatarImageIndex: Int)
+
+	@Query(
+		"UPDATE UserEntity " +
+			"SET avatar = null " +
+			"WHERE id == :userId "
+	)
+	suspend fun deleteUserAvatar(userId: Long)
 }

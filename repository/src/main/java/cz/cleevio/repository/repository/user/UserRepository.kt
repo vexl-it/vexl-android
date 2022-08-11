@@ -49,4 +49,6 @@ interface UserRepository {
 	suspend fun deleteMe(): Resource<Unit>
 
 	suspend fun storeAnonymousUserData(anonymousUsername: String, anonymousAvatarImageIndex: Int)
+
+	suspend fun deleteUserAvatar()
 }
