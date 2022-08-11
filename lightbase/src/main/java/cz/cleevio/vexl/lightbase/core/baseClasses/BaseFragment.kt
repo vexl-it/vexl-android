@@ -13,6 +13,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.vexl.lightbase.core.extensions.createProgressDialog
 import cz.cleevio.vexl.lightbase.core.extensions.getBottomNavigationViewHeight
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -139,6 +141,12 @@ abstract class BaseFragment constructor(
 			progressDialogIndicator?.show()
 		} else {
 			progressDialogIndicator?.dismiss()
+		}
+	}
+
+	protected fun showBottomDialog(dialog: BottomSheetDialogFragment) {
+		if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+			dialog.show(childFragmentManager, dialog.javaClass.simpleName)
 		}
 	}
 }

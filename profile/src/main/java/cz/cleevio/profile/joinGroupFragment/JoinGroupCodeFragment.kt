@@ -56,8 +56,4 @@ class JoinGroupCodeFragment : BaseFragment(R.layout.fragment_join_group_code) {
 			}
 		}
 	}
-
-	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
-		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
-	}
 }

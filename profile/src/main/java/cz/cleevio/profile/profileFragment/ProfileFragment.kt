@@ -265,10 +265,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 	}
 
-	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
-		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
-	}
-
 	private fun setUpAllowScreenshotsSwitch() {
 		binding.profileAllowScreenshots.switch.setOnCheckedChangeListener { _, _ ->
 			binding.profileAllowScreenshots.callOnClick()

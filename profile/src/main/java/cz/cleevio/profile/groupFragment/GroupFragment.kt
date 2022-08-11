@@ -82,8 +82,4 @@ class GroupFragment : BaseFragment(R.layout.fragment_group) {
 		}
 	}
 
-	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
-		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
-	}
-
 }

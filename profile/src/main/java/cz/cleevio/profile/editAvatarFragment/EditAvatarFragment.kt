@@ -7,10 +7,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import coil.load
 import coil.request.CachePolicy
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.DeletePhotoBottomSheetDialog
 import cz.cleevio.profile.R
@@ -172,11 +174,13 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 		}
 
 		binding.editAvatarDeletePhoto.setDebouncedOnClickListener {
-			DeletePhotoBottomSheetDialog { shouldDelete ->
-				if (shouldDelete) {
-					viewModel.deleteAvatar()
+			showBottomDialog(
+				DeletePhotoBottomSheetDialog { shouldDelete ->
+					if (shouldDelete) {
+						viewModel.deleteAvatar()
+					}
 				}
-			}
+			)
 		}
 
 		setFragmentResultListener(PhotoOptionsBottomSheetDialog.RESULT_PHOTO_OPTIONS_RESULT) { _, bundle ->

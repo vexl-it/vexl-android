@@ -181,10 +181,6 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 		}
 	}
 
-	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
-		dialog.show(childFragmentManager, dialog.javaClass.simpleName)
-	}
-
 	companion object {
 		private const val BARCODE_FPS = 15.0f
 	}
