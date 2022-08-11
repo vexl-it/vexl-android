@@ -16,6 +16,7 @@ object ChipViewUtils {
 		filter: String? = null,
 		@DrawableRes icon: Int? = null,
 		iconAtStart: Boolean = true,
+		activeState: Boolean = false,
 		listener: () -> (Unit) = {}
 	): Chip {
 		val newChip = Chip(context)
@@ -23,7 +24,8 @@ object ChipViewUtils {
 			context,
 			null,
 			0,
-			R.style.Widget_Cleevio_Vexl_Marketplace_FilterChip
+			if (activeState) R.style.Widget_Cleevio_Vexl_Marketplace_FilterChip_Activated
+			else R.style.Widget_Cleevio_Vexl_Marketplace_FilterChip
 		)
 		newChip.setChipDrawable(chipDrawable)
 
@@ -33,7 +35,10 @@ object ChipViewUtils {
 		}
 
 		filter?.let {
-			newChip.setTextAppearance(R.style.TextAppearance_Vexl_Marketplace_FilterChip)
+			newChip.setTextAppearance(
+				if (activeState) R.style.TextAppearance_Vexl_Marketplace_FilterChip_Activated
+				else R.style.TextAppearance_Vexl_Marketplace_FilterChip
+			)
 			newChip.text = filter
 		} ?: run {
 			newChip.textStartPadding = 0.0f

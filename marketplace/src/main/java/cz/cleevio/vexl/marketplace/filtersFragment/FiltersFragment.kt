@@ -7,21 +7,27 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
+import cz.cleevio.core.model.Currency
+import cz.cleevio.core.model.FeeValue
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.core.widget.CurrencyPriceChartWidget
+import cz.cleevio.core.widget.*
+import cz.cleevio.repository.model.offer.OfferFilter
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentFiltersBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 
 	private val binding by viewBinding(FragmentFiltersBinding::bind)
 	private val args by navArgs<FiltersFragmentArgs>()
-	private val filterViewModel by viewModel<FiltersViewModel>()
+	private val filterViewModel by viewModel<FiltersViewModel> {
+		parametersOf(args.offerType)
+	}
 
 	override var priceChartWidget: CurrencyPriceChartWidget? = null
 
@@ -79,11 +85,29 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		}
 
 		binding.friendLevel.isMultichoiceEnabled(true)
-		// TODO binding.friendLevel.setValues(setOf(FriendLevel.FIRST_DEGREE, FriendLevel.SECOND_DEGREE))
 
 		binding.applyBtn.setOnClickListener {
-			//TODO: somehow apply filters? Save to DB?
-			//and go back to offers
+			filterViewModel.saveOfferFilter(
+				location = binding.filterLocation.getLocationValue(),
+				paymentMethod = binding.paymentMethod.getPaymentValue(),
+				btcNetwork = binding.networkType.getBtcNetworkValue(),
+				friendLevels = binding.friendLevel.getMultichoiceFriendLevels(),
+				fee = if (binding.filterOfferFee.isVisible) {
+					binding.filterOfferFee.getFeeValue()
+				} else {
+					null
+				},
+				priceRange = if (binding.priceRangeWidget.isVisible) {
+					binding.priceRangeWidget.getPriceRangeValue()
+				} else {
+					null
+				},
+				currency = if (binding.priceRangeWidget.isVisible) {
+					binding.priceRangeWidget.currentCurrency.name
+				} else {
+					null
+				}
+			)
 			findNavController().popBackStack()
 		}
 	}
@@ -128,12 +152,64 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 				}
 			}
 		}
-
 		repeatScopeOnStart {
 			filterViewModel.queryForSuggestions.collect { (view, query) ->
 				view?.let {
 					filterViewModel.getDebouncedSuggestions(query, it)
 				}
+			}
+		}
+		repeatScopeOnStart {
+			filterViewModel.setupViewFlow.collect { offerFilter ->
+				setupFilterViews(offerFilter)
+			}
+		}
+	}
+
+	private fun setupFilterViews(offerFilter: OfferFilter) {
+		binding.filterLocation.reset()
+		binding.filterLocation.setValues(
+			offerFilter.locations ?: emptyList(),
+			offerFilter.locationType?.let { LocationButtonSelected.valueOf(it) } ?: LocationButtonSelected.NONE
+		)
+		offerFilter.paymentMethods?.let { methods ->
+			binding.paymentMethod.setValues(
+				methods.map { PaymentButtonSelected.valueOf(it) }
+			)
+		}
+		offerFilter.btcNetworks?.let { networks ->
+			binding.networkType.setValues(
+				networks.map { BtcNetworkButtonSelected.valueOf(it) }
+			)
+		}
+		offerFilter.friendLevels?.let { levels ->
+			binding.friendLevel.setValues(levels.map { FriendLevel.valueOf(it) }.toSet())
+		}
+		offerFilter.feeType?.let { type ->
+			offerFilter.feeValue?.let { feeValue ->
+				binding.filterOfferFee.setValues(
+					FeeValue(
+						type = FeeButtonSelected.valueOf(type),
+						value = feeValue
+					)
+				)
+				binding.filterOfferFee.isVisible = true
+			}
+		}
+		offerFilter.currency?.let {
+			val currency = Currency.valueOf(it)
+			binding.priceRangeWidget.setupWithCurrency(currency)
+			binding.newOfferCurrency.selectCurrencyManually(currency)
+		}
+		offerFilter.priceRangeTopLimit?.let { topLimit ->
+			offerFilter.priceRangeBottomLimit?.let { bottomLimit ->
+				binding.priceRangeWidget.setValues(
+					bottomLimit = bottomLimit,
+					topLimit = topLimit
+				)
+				binding.amountTitle.isVisible = true
+				binding.priceRangeWidget.isVisible = true
+				binding.filterOfferFee.isVisible = true
 			}
 		}
 	}

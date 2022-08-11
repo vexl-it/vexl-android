@@ -65,8 +65,9 @@ val marketplaceModule = module {
 		)
 	}
 
-	viewModel {
+	viewModel { (offerType: OfferType) ->
 		FiltersViewModel(
+			offerType = offerType,
 			offerRepository = get()
 		)
 	}

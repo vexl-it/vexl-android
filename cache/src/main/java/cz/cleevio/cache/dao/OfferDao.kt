@@ -1,6 +1,7 @@
 package cz.cleevio.cache.dao
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.cache.entity.OfferWithLocationsAndCommonFriends
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +23,9 @@ interface OfferDao {
 
 	@Query("SELECT * FROM OfferEntity")
 	fun getAllExtendedOffersFlow(): Flow<List<OfferWithLocationsAndCommonFriends>>
+
+	@RawQuery(observedEntities = arrayOf(OfferWithLocationsAndCommonFriends::class))
+	fun getFilteredOffersFlow(query: SupportSQLiteQuery): Flow<List<OfferWithLocationsAndCommonFriends>>
 
 	@Query("DELETE FROM OfferEntity")
 	suspend fun clearTable()

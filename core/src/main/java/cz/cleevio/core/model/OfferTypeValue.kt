@@ -5,5 +5,8 @@ data class OfferTypeValue(
 )
 
 enum class OfferType {
-	BUY, SELL
+	BUY,
+	SELL;
+
+	fun isBuy() = this == BUY
 }

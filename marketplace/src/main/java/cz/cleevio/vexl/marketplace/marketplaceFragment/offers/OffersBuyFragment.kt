@@ -15,10 +15,9 @@ class OffersBuyFragment constructor(
 	override fun bindObservers() {
 		super.bindObservers()
 		repeatScopeOnResume {
-			viewModel.buyOffers.collect { offers ->
+			viewModel.buyOffersFlow.collect { offers ->
 				adapter.submitList(offers)
 			}
 		}
 	}
-
 }

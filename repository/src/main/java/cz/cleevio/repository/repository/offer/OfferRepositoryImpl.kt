@@ -1,5 +1,6 @@
 package cz.cleevio.repository.repository.offer
 
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.dao.*
@@ -16,6 +17,8 @@ import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.offer.*
 import cz.cleevio.repository.repository.chat.ChatRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import java.math.BigDecimal
 
@@ -31,6 +34,10 @@ class OfferRepositoryImpl constructor(
 	private val transactionProvider: TransactionProvider,
 	private val chatRepository: ChatRepository,
 ) : OfferRepository {
+
+	override val buyOfferFilter = MutableStateFlow(OfferFilter())
+
+	override val sellOfferFilter = MutableStateFlow(OfferFilter())
 
 	override suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair): Resource<Offer> {
 		//create offer
@@ -175,20 +182,101 @@ class OfferRepositoryImpl constructor(
 			it.offer.fromCache(it.locations, it.commonFriends)
 		}
 
-	override suspend fun getOffersFlow() = offerDao.getAllExtendedOffersFlow().map { list ->
+	override fun getOffersFlow() = offerDao.getAllExtendedOffersFlow().map { list ->
 		list.map {
 			it.offer.fromCache(it.locations, it.commonFriends)
 		}
 	}
 
-	override suspend fun syncOffers() {
-		val newOffers = getNewOffers()
+	override fun getFilteredAndSortedOffersByTypeFlow(
+		offerTypeName: String,
+		offerFilter: OfferFilter
+	): Flow<List<Offer>> {
+		val queryBuilder = StringBuilder("SELECT * FROM OfferEntity WHERE offerType == $SQL_VALUE_PLACEHOLDER")
+		val values = arrayListOf<Any>()
+		values.add(offerTypeName)
 
-		when (newOffers.status) {
-			Status.Success -> {
-				overwriteOffers(newOffers.data.orEmpty())
+		if (offerFilter.locationType != null) {
+			queryBuilder.append(" AND locationState == $SQL_VALUE_PLACEHOLDER")
+			values.add(offerFilter.locationType)
+		}
+		if (offerFilter.paymentMethods?.isNotEmpty() == true) {
+			val paymentMethods = offerFilter.paymentMethods.toList().joinToString(
+				separator = SQL_VALUE_SEPARATOR,
+				transform = { SQL_VALUE_PLACEHOLDER }
+			)
+			queryBuilder.append(" AND paymentMethod in($paymentMethods)")
+			values.addAll(offerFilter.paymentMethods)
+		}
+		if (offerFilter.btcNetworks?.isNotEmpty() == true) {
+			val networks = offerFilter.btcNetworks.toList().joinToString(
+				separator = SQL_VALUE_SEPARATOR,
+				transform = { SQL_VALUE_PLACEHOLDER }
+			)
+			queryBuilder.append(" AND btcNetwork in($networks)")
+			values.addAll(offerFilter.btcNetworks)
+		}
+		if (offerFilter.friendLevels?.isNotEmpty() == true) {
+			val levels = offerFilter.friendLevels.joinToString(
+				separator = SQL_VALUE_SEPARATOR,
+				transform = { SQL_VALUE_PLACEHOLDER }
+			)
+			queryBuilder.append(" AND friendLevel in($levels)")
+			values.addAll(offerFilter.friendLevels)
+		}
+		if (offerFilter.feeType != null) {
+			queryBuilder.append(" AND feeState == $SQL_VALUE_PLACEHOLDER")
+			values.add(offerFilter.feeType)
+		}
+		if (offerFilter.feeValue != null) {
+			queryBuilder.append(" AND feeAmount == $SQL_VALUE_PLACEHOLDER")
+			values.add(offerFilter.feeValue)
+		}
+		if (offerFilter.currency != null) {
+			queryBuilder.append(" AND currency == $SQL_VALUE_PLACEHOLDER")
+			values.add(offerFilter.currency)
+		}
+		/* 	FIXME this query is not working if offer price range match second or other nested conditions then is the first one
+			It is filtered programatically at the bottom of this method
+			Maybe change query from AND/OR to BETWEEN
+
+		if (offerFilter.priceRangeBottomLimit != null && offerFilter.priceRangeTopLimit != null) {
+			queryBuilder.append(" AND (")
+			queryBuilder.append(" (amountTopLimit >= $SQL_VALUE_PLACEHOLDER AND amountTopLimit <= $SQL_VALUE_PLACEHOLDER)")
+			queryBuilder.append(" OR (amountBottomLimit >= $SQL_VALUE_PLACEHOLDER AND amountBottomLimit <= $SQL_VALUE_PLACEHOLDER)")
+			queryBuilder.append(" OR ($SQL_VALUE_PLACEHOLDER >= amountBottomLimit AND $SQL_VALUE_PLACEHOLDER <= amountTopLimit)")
+			queryBuilder.append(" OR ($SQL_VALUE_PLACEHOLDER >= amountBottomLimit AND $SQL_VALUE_PLACEHOLDER <= amountTopLimit)")
+			queryBuilder.append(" )")
+
+			values.add(offerFilter.priceRangeBottomLimit)
+			values.add(offerFilter.priceRangeTopLimit)
+			values.add(offerFilter.priceRangeBottomLimit)
+			values.add(offerFilter.priceRangeTopLimit)
+			values.add(offerFilter.priceRangeBottomLimit)
+			values.add(offerFilter.priceRangeBottomLimit)
+			values.add(offerFilter.priceRangeTopLimit)
+			values.add(offerFilter.priceRangeTopLimit)
+		}*/
+
+		queryBuilder.append(" ORDER BY createdAt DESC, isRequested ASC")
+		val simpleSQLiteQuery = SimpleSQLiteQuery(
+			queryBuilder.toString(),
+			values.toTypedArray()
+		)
+
+		return offerDao.getFilteredOffersFlow(simpleSQLiteQuery).map { list ->
+			list.map {
+				it.offer.fromCache(it.locations, it.commonFriends)
+			}.filter { offer ->
+				offerFilter.isOfferMatchPriceRange(offer.amountBottomLimit.toFloat(), offer.amountTopLimit.toFloat())
+					&& offerFilter.isOfferLocationInRadius(offer.location)
 			}
 		}
+	}
+
+	override suspend fun syncOffers() {
+		val newOffers = getNewOffers()
+		if (newOffers.isSuccess()) overwriteOffers(newOffers.data.orEmpty())
 	}
 
 	override suspend fun getMyOffersCount(offerType: String): Int =
@@ -291,5 +379,10 @@ class OfferRepositoryImpl constructor(
 		myOfferDao.clearTable()
 		locationDao.clearTable()
 		contactDao.clearTable()
+	}
+
+	companion object {
+		private const val SQL_VALUE_SEPARATOR = ","
+		private const val SQL_VALUE_PLACEHOLDER = "?"
 	}
 }
