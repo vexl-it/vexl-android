@@ -3,9 +3,9 @@ package cz.cleevio.profile.profileFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.Currency
-import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
@@ -23,6 +23,7 @@ class ProfileViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
+	private val chatRepository: ChatRepository,
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
@@ -44,17 +45,30 @@ class ProfileViewModel constructor(
 
 	fun logout(onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val offerDelete = offerRepository.deleteMyOffers(emptyList())
+			var offerDeleteSuccess = true
+			val offerIds = offerRepository.getOffers().map { it.offerId }
+			if (offerIds.isNotEmpty()) {
+				offerDeleteSuccess = offerRepository.deleteMyOffers(offerIds).status == Status.Success
+			}
 			val userDelete = userRepository.deleteMe()
 			val contactUserDelete = contactRepository.deleteMyUser()
-			val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
-			userRepository.deleteLocalUser()
-			//todo: delete also all offers, when we have system for keeping offer IDs
 
+			// TODO update when FB user will be available
+			//val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
+
+			// TODO add removing for GroupDao if needed
+			// Delete also entities stored in the local database
+			userRepository.deleteLocalUser()
+			offerRepository.clearOfferTables()
+			chatRepository.clearChatTables()
+			encryptedPreferenceRepository.clearPreferences()
+
+			//todo: delete also all offers, when we have system for keeping offer IDs
 			if (userDelete.status is Status.Success &&
 				contactUserDelete.status is Status.Success &&
-				contactFacebookDelete.status is Status.Success &&
-				offerDelete.status is Status.Success
+				// TODO update when FB user will be available
+				//contactFacebookDelete.status is Status.Success &&
+				offerDeleteSuccess
 			) {
 				withContext(Dispatchers.Main) {
 					onSuccess()

@@ -413,6 +413,7 @@ class ContactRepositoryImpl constructor(
 		mapper = { }
 	)
 
+	// TODO update when FB user will be available
 	override suspend fun deleteMyFacebookUser(): Resource<Unit> = tryOnline(
 		request = {
 			contactApi.deleteUserMe(

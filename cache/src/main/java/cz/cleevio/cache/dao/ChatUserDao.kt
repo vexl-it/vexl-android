@@ -31,4 +31,7 @@ interface ChatUserDao : BaseDao<ChatUserIdentityEntity> {
 			" AND inboxKey=:inboxKey"
 	)
 	fun getUserIdentityFlow(inboxKey: String, contactPublicKey: String): Flow<ChatUserIdentityEntity?>
+
+	@Query("DELETE FROM ChatUserIdentityEntity")
+	suspend fun clearTable()
 }

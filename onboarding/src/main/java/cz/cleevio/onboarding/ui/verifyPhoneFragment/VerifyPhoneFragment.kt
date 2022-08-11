@@ -67,6 +67,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 				}
 
 				//todo: any other expected errors?
+				binding.progressbar.isVisible = false
 			}
 		}
 

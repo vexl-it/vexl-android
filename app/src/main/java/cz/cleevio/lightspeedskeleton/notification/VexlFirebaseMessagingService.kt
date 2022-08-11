@@ -161,7 +161,14 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	}
 }
 
-//todo: change to proper types as soon as BE ready
+// TODO Handle app navigation according to the notification received
 enum class RemoteNotificationType {
-	UNKNOWN, TEST, DAILY_DRAW, WEEKLY_DRAW, WITHDRAW_UPDATED, CONTEST_DRAW, REFERRAL_BONUS
+	MESSAGE,
+	REQUEST_REVEAL,
+	APPROVE_REVEAL,
+	DISAPPROVE_REVEAL,
+	REQUEST_MESSAGING,
+	APPROVE_MESSAGING,
+	DISAPPROVE_MESSAGING,
+	DELETE_CHAT
 }

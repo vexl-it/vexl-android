@@ -55,6 +55,8 @@ interface ChatRepository {
 
 	suspend fun getKeyPairByMyPublicKey(myPublicKey: String): KeyPair?
 
+	suspend fun clearChatTables()
+
 	fun getPendingIdentityRequest(
 		inboxPublicKey: String,
 		firstKey: String,

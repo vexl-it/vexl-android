@@ -604,6 +604,11 @@ class ChatRepositoryImpl constructor(
 		return result.toList()
 	}
 
+	override suspend fun clearChatTables() {
+		chatUserDao.clearTable()
+		chatMessageDao.deleteAll()
+	}
+
 	override fun getChatUserIdentityFlow(inboxKey: String, contactPublicKey: String): Flow<ChatUserIdentity?> {
 		return chatUserDao.getUserIdentityFlow(inboxKey, contactPublicKey).map {
 			it?.fromCache()
