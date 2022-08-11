@@ -110,6 +110,27 @@
 				app:layout_constraintStart_toStartOf="@id/edit_avatar_image"
 				app:layout_constraintTop_toTopOf="@id/edit_avatar_image" />
 
+			<TextView
+				android:id="@+id/edit_avatar_delete_photo"
+				style="@style/Widget.Vexl.GrayButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dp"
+				android:clickable="true"
+				android:drawablePadding="10dp"
+				android:elevation="0dp"
+				android:focusable="true"
+				android:paddingHorizontal="12dp"
+				android:paddingVertical="9dp"
+				android:text="@string/profile_delete_photo_title"
+				android:textAllCaps="false"
+				android:textColor="@color/gray_4"
+				app:drawableStartCompat="@drawable/ic_cross"
+				app:drawableTint="@color/gray_4"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/clickable_wrapper" />
+
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.core.widget.NestedScrollView>
 
@@ -121,6 +142,7 @@
 		android:layout_marginHorizontal="8dp"
 		android:layout_marginBottom="16dp"
 		android:elevation="0dp"
+		android:enabled="false"
 		android:text="@string/profile_edit_avatar_action"
 		android:textAllCaps="false"
 		app:layout_constraintBottom_toBottomOf="parent"

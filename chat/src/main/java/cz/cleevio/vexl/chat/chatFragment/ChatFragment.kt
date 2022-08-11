@@ -177,12 +177,6 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 	}
 
-	private fun showBottomDialog(dialog: BottomSheetDialogFragment) {
-		if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-			dialog.show(childFragmentManager, dialog.javaClass.simpleName)
-		}
-	}
-
 	private fun sendMessage() {
 		binding.messageEdit.text.toString().let { message ->
 			if (message.isNotBlank()) {

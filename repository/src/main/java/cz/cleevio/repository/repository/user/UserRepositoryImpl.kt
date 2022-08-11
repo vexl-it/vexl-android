@@ -11,6 +11,7 @@ import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 class UserRepositoryImpl constructor(
 	private val userRestApi: UserApi,
@@ -91,7 +92,9 @@ class UserRepositoryImpl constructor(
 			UserEntity(
 				id = user.id ?: 1,
 				username = user.username,
+				anonymousUsername = user.anonymousUsername,
 				avatar = user.avatar,
+				anonymousAvatarImageIndex = user.anonymousAvatarImageIndex,
 				publicKey = user.publicKey,
 				finishedOnboarding = true
 			)
@@ -180,12 +183,28 @@ class UserRepositoryImpl constructor(
 		mapper = { }
 	)
 
+	override suspend fun storeAnonymousUserData(anonymousUsername: String, anonymousAvatarImageIndex: Int) {
+		userDao.getUser()?.id?.let {
+			Timber.d("user: ${userDao.getUser()}")
+			userDao.updateAnonymousInfo(it, anonymousUsername, anonymousAvatarImageIndex)
+		} ?: Timber.d("user: No user found")
+
+	}
+
+	override suspend fun deleteUserAvatar() {
+		userDao.getUser()?.id?.let {
+			userDao.deleteUserAvatar(it)
+		}
+	}
+
 	private suspend fun updateUser(user: User) {
 		userDao.update(
 			UserEntity(
 				id = getUserId() ?: 0,
 				username = user.username,
+				anonymousUsername = userDao.getUser()?.anonymousUsername,
 				avatar = user.avatar,
+				anonymousAvatarImageIndex = userDao.getUser()?.anonymousAvatarImageIndex,
 				publicKey = user.publicKey,
 				finishedOnboarding = user.finishedOnboarding
 			)

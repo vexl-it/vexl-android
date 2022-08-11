@@ -7,10 +7,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
 import coil.load
 import coil.request.CachePolicy
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.*
+import cz.cleevio.core.widget.DeletePhotoBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.cameraFragment.PERMANENTLY_DENIED_DURATION
 import cz.cleevio.profile.databinding.FragmentEditAvatarBinding
@@ -100,8 +104,7 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 				if (it) {
 					findNavController().popBackStack()
 				} else {
-					// TODO finish later
-					Toast.makeText(requireContext(), "You cannot upload empty image", Toast.LENGTH_SHORT)
+					Toast.makeText(requireContext(), R.string.profile_edit_avatar_empty_image_error, Toast.LENGTH_SHORT)
 						.show()
 				}
 			}
@@ -109,14 +112,24 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 
 		repeatScopeOnCreate {
 			viewModel.userFlow.collect { user ->
-				setAvatarPlaceholderVisible(isVisible = user?.avatar != null)
+				setAvatarIconsVisibility(isVisible = user?.avatar != null || user?.anonymousAvatarImageIndex != null)
 
-				user?.avatar?.let { avatar ->
-					binding.editAvatarImage.load(avatar) {
+				if (user?.avatar != null) {
+					binding.editAvatarImage.load(user.avatar) {
 						crossfade(true)
 						fallback(R.drawable.ic_profile_avatar_placeholder)
 						error(R.drawable.ic_profile_avatar_placeholder)
 						placeholder(R.drawable.ic_profile_avatar_placeholder)
+					}
+				} else {
+					val anonymousImageIndex = user?.anonymousAvatarImageIndex
+					if (anonymousImageIndex != null) {
+						binding.editAvatarImage.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
+							crossfade(true)
+							fallback(R.drawable.random_avatar_3)
+							error(R.drawable.random_avatar_3)
+							placeholder(R.drawable.random_avatar_3)
+						}
 					}
 				}
 			}
@@ -124,10 +137,12 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 
 		repeatScopeOnStart {
 			viewModel.profileImageUri.collect { profileImageUri ->
-				if (profileImageUri == null && viewModel.userFlow.value != null) return@collect
-				setAvatarPlaceholderVisible(profileImageUri != null)
+				val user = viewModel.userFlow.value
+				if (profileImageUri == null && user != null) return@collect
+				setAvatarIconsVisibility(profileImageUri != null || user?.anonymousAvatarImageIndex != null)
 				currentPhotoPath = profileImageUri
 
+				binding.editAvatarSaveBtn.isEnabled = true
 				profileImageUri?.let {
 					binding.editAvatarImage.load(it) {
 						crossfade(true)
@@ -156,6 +171,16 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 		}
 		binding.editAvatarSaveBtn.setDebouncedOnClickListener {
 			viewModel.editAvatar(requireContext().contentResolver)
+		}
+
+		binding.editAvatarDeletePhoto.setDebouncedOnClickListener {
+			showBottomDialog(
+				DeletePhotoBottomSheetDialog { shouldDelete ->
+					if (shouldDelete) {
+						viewModel.deleteAvatar()
+					}
+				}
+			)
 		}
 
 		setFragmentResultListener(PhotoOptionsBottomSheetDialog.RESULT_PHOTO_OPTIONS_RESULT) { _, bundle ->
@@ -197,12 +222,8 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 		}
 	}
 
-	private fun setAvatarPlaceholderVisible(isVisible: Boolean) {
+	private fun setAvatarIconsVisibility(isVisible: Boolean) {
 		binding.editAvatarCornerIcon.isVisible = isVisible
 		binding.editAvatarMiddleIcon.isVisible = !isVisible
-	}
-
-	private companion object {
-		const val BOTTOM_EXTRA_PADDING = 40
 	}
 }

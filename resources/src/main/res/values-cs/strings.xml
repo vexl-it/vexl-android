@@ -156,6 +156,8 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="profile_donate_button_donate">Darovat</string>
     <string name="profile_donate_button_dismiss">Zpět</string>
 
+    <!-- Delete photo -->
+
     <!-- CurrencySelect -->
     <string name="user_profile_currency_title">Měna</string>
     <string name="user_profile_currency_czk">Česká koruna</string>

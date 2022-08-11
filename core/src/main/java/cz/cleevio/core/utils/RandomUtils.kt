@@ -4,6 +4,9 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import cz.cleevio.core.R
 import cz.cleevio.repository.repository.UsernameUtils
+import java.lang.Math.random
+import java.util.*
+import kotlin.random.Random
 
 object RandomUtils {
 
@@ -18,6 +21,10 @@ object RandomUtils {
 
 	fun generateName(): String = UsernameUtils.generateName()
 
+	fun getAvatarIndex(): Int = Random.nextInt(0, imageOptions.size)
+
+	fun getRandomImageDrawableId(avatarIndex: Int): Int = imageOptions[avatarIndex]
+
 	//todo: expand when we receive icons
-	fun selectRandomImage(context: Context): Drawable? = context.getDrawable(imageOptions.random())
+	fun selectRandomImage(context: Context, drawableInt: Int): Drawable? = context.getDrawable(drawableInt)
 }

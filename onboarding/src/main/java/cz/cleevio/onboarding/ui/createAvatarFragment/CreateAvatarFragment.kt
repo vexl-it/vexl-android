@@ -168,9 +168,13 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 			}
 		}
 
-		binding.continueBtn.setOnClickListener {
-			viewModel.registerUser(args.username, requireContext().contentResolver)
+		binding.continueBtn.apply {
+			setOnClickListener {
+				viewModel.registerUser(args.username, requireContext().contentResolver)
+			}
+			isEnabled = true
 		}
+
 
 		setupPhotoListener()
 

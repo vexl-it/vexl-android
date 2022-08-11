@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class AnonymizeUserViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel,
-	userRepository: UserRepository
+	val userRepository: UserRepository
 ) : BaseViewModel() {
 
 	private val _uiState: MutableStateFlow<UIState> = MutableStateFlow(UIState.Normal)
@@ -26,9 +26,13 @@ class AnonymizeUserViewModel constructor(
 
 	fun anonymizeUser(context: Context) {
 		viewModelScope.launch(Dispatchers.Default) {
+			val randomImageIndex = RandomUtils.getAvatarIndex()
 			val newName = RandomUtils.generateName()
-			val newAvatar = RandomUtils.selectRandomImage(context)
-
+			val newAvatar = RandomUtils.selectRandomImage(context, RandomUtils.getRandomImageDrawableId(randomImageIndex))
+			userRepository.storeAnonymousUserData(
+				newName,
+				randomImageIndex
+			)
 			//wait until animation is covering the ui
 			delay(DELAY)
 			_uiState.emit(

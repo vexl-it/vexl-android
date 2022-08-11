@@ -141,6 +141,8 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="profile_edit_avatar_title">Change profile picture</string>
     <string name="profile_edit_avatar_subtitle">Space for additional copy. You can lorem ipsum dolor sit ametum roma von.</string>
     <string name="profile_edit_avatar_action">Upload new photo</string>
+    <string name="profile_edit_avatar_delete">Delete photo?</string>
+    <string name="profile_edit_avatar_empty_image_error">You cannot upload empty image</string>
 
     <!-- Profile Delete Account -->
     <string name="profile_delete_account_title">Delete account?</string>
@@ -159,6 +161,12 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="profile_donate_description">If you like Vexl, support it’s improvement by sending some Bitcoins as donation!</string>
     <string name="profile_donate_button_donate">Donate</string>
     <string name="profile_donate_button_dismiss">Back</string>
+
+    <!-- Delete photo -->
+    <string name="profile_delete_photo_title">Delete photo</string>
+    <string name="profile_delete_photo_subtitle">Do you really want to delete your photo? You can always upload new image if you want.</string>
+    <string name="profile_delete_photo_no">Nope</string>
+    <string name="profile_delete_photo_yes">Yes</string>
 
     <!-- CurrencySelect -->
     <string name="user_profile_currency_title">Currency</string>
