@@ -116,7 +116,6 @@ class VerifyPhoneViewModel constructor(
 				}
 			}
 
-
 			repeat(COUNTDOWN_LENGTH / COUNTDOWN_STEP) {
 				_countDownState.emit(CountDownState.Counting(COUNTDOWN_LENGTH - it * COUNTDOWN_STEP))
 				delay(COUNTDOWN_STEP.toLong())

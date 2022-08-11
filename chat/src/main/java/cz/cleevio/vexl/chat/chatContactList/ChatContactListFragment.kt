@@ -57,7 +57,7 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 		super.initView()
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(top = insets.top)
-			binding.chatsWrapper.updatePadding(bottom = insets.bottom)
+			binding.chatsWrapper.updatePadding(bottom = 2 * insets.bottom) // 2x because of once per size of the inset, and twice for the inset of the bottom menu
 		}
 
 		adapter = ChatContactListAdapter(

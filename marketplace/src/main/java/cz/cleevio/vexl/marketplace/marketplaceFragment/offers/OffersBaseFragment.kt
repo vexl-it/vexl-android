@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.ChipViewUtils
+import cz.cleevio.core.utils.repeatScopeOnResume
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -52,7 +53,7 @@ sealed class OffersBaseFragment constructor(
 				)
 			}
 		}
-		repeatScopeOnStart {
+		repeatScopeOnResume {
 			viewModel.myOffersCount.collect { myOffersCount ->
 				processMyOffersButtons(myOffersCount > 0)
 			}

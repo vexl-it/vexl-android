@@ -1,7 +1,7 @@
 package cz.cleevio.vexl.marketplace.marketplaceFragment.offers
 
 import cz.cleevio.core.model.OfferType
-import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.repeatScopeOnResume
 
 class OffersBuyFragment constructor(
 	navigateToFilters: (OfferType) -> Unit,
@@ -14,7 +14,7 @@ class OffersBuyFragment constructor(
 
 	override fun bindObservers() {
 		super.bindObservers()
-		repeatScopeOnStart {
+		repeatScopeOnResume {
 			viewModel.buyOffers.collect { offers ->
 				adapter.submitList(offers)
 			}
