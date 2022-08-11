@@ -100,7 +100,7 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 				setPadding(DIALOG_PADDING, DIALOG_PADDING, DIALOG_PADDING, DIALOG_PADDING)
 				layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 				isSingleLine = false
-				text = resources.getString(R.string.import_contacts_request_description)
+				text = getString(R.string.import_contacts_request_description)
 				setTextAppearance(R.style.TextAppearance_Cleevio_DialogBody)
 			}
 		)

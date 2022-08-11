@@ -57,7 +57,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
 		repeatScopeOnStart {
 			viewModel.phoneNumberSuccess.collect {
-				Toast.makeText(requireContext(), resources.getString(R.string.verify_phone_code_sent), Toast.LENGTH_SHORT)
+				Toast.makeText(requireContext(), getString(R.string.verify_phone_code_sent), Toast.LENGTH_SHORT)
 					.show()
 			}
 		}
@@ -66,7 +66,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 			viewModel.errorFlow.collect { errorIdentification ->
 				if (errorIdentification.code == CODE_ENTITY_NOT_EXIST_404) {
 					viewModel.resetKeys()
-					Toast.makeText(requireContext(), resources.getString(R.string.verify_phone_expired), Toast.LENGTH_SHORT)
+					Toast.makeText(requireContext(), getString(R.string.verify_phone_expired), Toast.LENGTH_SHORT)
 						.show()
 					delay(TimeUnit.SECONDS.toMillis(1))
 					//go back to previous screen and start again

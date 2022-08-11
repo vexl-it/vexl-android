@@ -52,9 +52,9 @@ class TermsFragment : BaseFragment(R.layout.fragment_terms) {
 	private fun initMarkdownText(isTermsOfUse: Boolean) {
 		val node = markwon.parse(
 			if (isTermsOfUse) {
-				resources.getString(R.string.terms_of_use_markdown)
+				getString(R.string.terms_of_use_markdown)
 			} else {
-				resources.getString(R.string.terms_of_use_policy_markdown)
+				getString(R.string.terms_of_use_policy_markdown)
 			}
 		)
 		val markdown = markwon.render(node)

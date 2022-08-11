@@ -29,8 +29,8 @@ class DeleteAccountBottomSheetDialog(
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
 			if (phase == 0) {
-				binding.title.text = resources.getString(R.string.profile_delete_account_title_sure)
-				binding.confirmBtn.text = resources.getString(R.string.profile_delete_account_yes)
+				binding.title.text = getString(R.string.profile_delete_account_title_sure)
+				binding.confirmBtn.text = getString(R.string.profile_delete_account_yes)
 				phase = 1
 			} else {
 				onDismissCallback?.invoke(true)

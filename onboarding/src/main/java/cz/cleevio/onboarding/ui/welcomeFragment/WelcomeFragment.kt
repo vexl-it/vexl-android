@@ -49,10 +49,10 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 	}
 
 	private fun clickableLink() {
-		val longText = resources.getString(R.string.welcome_terms_agreement)
+		val longText = getString(R.string.welcome_terms_agreement)
 		val str = SpannableString(longText)
-		val startIndex = longText.indexOf(resources.getString(R.string.welcome_terms_agreement_link))
-		val endIndex = startIndex + resources.getString(R.string.welcome_terms_agreement_link).length
+		val startIndex = longText.indexOf(getString(R.string.welcome_terms_agreement_link))
+		val endIndex = startIndex + getString(R.string.welcome_terms_agreement_link).length
 
 		val clickableSpan: ClickableSpan = object : ClickableSpan() {
 			override fun onClick(widget: View) {

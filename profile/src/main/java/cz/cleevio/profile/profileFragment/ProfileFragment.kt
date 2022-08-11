@@ -94,7 +94,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 		repeatScopeOnStart {
 			profileViewModel.encryptedPreferenceRepository.numberOfImportedContactsFlow.collect { contacts ->
-				binding.profileContacts.setSubtitle(resources.getString(R.string.profile_import_contacts_subtitle, contacts.toString()))
+				binding.profileContacts.setSubtitle(getString(R.string.profile_import_contacts_subtitle, contacts.toString()))
 			}
 		}
 	}
