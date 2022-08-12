@@ -1,7 +1,8 @@
-### Requires uninstall: NO
+### Requires uninstall: YES
 
 ### Improvements
-*
+* Filter offers
+* Improve localizations, error handling
 
 ### Fix
 *
