@@ -8,6 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.model.*
+import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
@@ -119,11 +120,14 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 					friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue(),
 					offerType = offer.offerType,
 					expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
-					active = !offer.active
+					active = !offer.active,
+					currency = binding.amountRange.currentCurrency.name
 				)
-				viewModel.updateOffer(offerId = offer.offerId, params = params, onSuccess = {
-					findNavController().popBackStack()
-				})
+				viewModel.updateOffer(
+					offerId = offer.offerId,
+					params = params,
+					onSuccess = { findNavController().popBackStack() }
+				)
 			}
 		)
 
@@ -224,63 +228,34 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferLocation.setFragmentManager(parentFragmentManager)
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
-		// TODO localize messages
-		// TODO parse required params in one method also for new offer!
 		binding.newOfferBtn.setOnClickListener {
-			val description = binding.newOfferDescription.text.toString()
-			if (description.isBlank()) {
-				Toast.makeText(requireActivity(), "Missing description", Toast.LENGTH_SHORT).show()
-				return@setOnClickListener
-			}
-			val location = binding.newOfferLocation.getLocationValue()
-			if (location.values.isEmpty()) {
-				Toast.makeText(requireActivity(), "Missing location", Toast.LENGTH_SHORT).show()
-				return@setOnClickListener
-			}
-			val paymentMethod = binding.newOfferPaymentMethod.getPaymentValue()
-			if (paymentMethod.value.isEmpty()) {
-				Toast.makeText(requireActivity(), "Missing payment method", Toast.LENGTH_SHORT).show()
-				return@setOnClickListener
-			}
-			val priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue()
-			if (priceTrigger.value == null) {
-				Toast.makeText(requireActivity(), "Invalid price trigger", Toast.LENGTH_SHORT).show()
-				return@setOnClickListener
-			}
-			val btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue()
-			if (btcNetwork.value.isEmpty()) {
-				Toast.makeText(requireActivity(), "Missing type", Toast.LENGTH_SHORT).show()
-				return@setOnClickListener
-			}
-			val friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue()
-			if (friendLevel.value == FriendLevel.NONE) {
-				Toast.makeText(requireActivity(), "Invalid friend level", Toast.LENGTH_SHORT).show()
-				return@setOnClickListener
-			}
-			val expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp()
-			if (expiration < System.currentTimeMillis()) {
-				Toast.makeText(requireActivity(), "Invalid delete trigger", Toast.LENGTH_SHORT).show()
-				return@setOnClickListener
-			}
-
-			val params = OfferParams(
-				description = description,
-				location = location,
+			val params = OfferUtils.isOfferParamsValid(
+				activity = requireActivity(),
+				description = binding.newOfferDescription.text.toString(),
+				location = binding.newOfferLocation.getLocationValue(),
 				fee = binding.newOfferFee.getFeeValue(),
 				priceRange = binding.amountRange.getPriceRangeValue(),
-				priceTrigger = priceTrigger,
-				paymentMethod = paymentMethod,
-				btcNetwork = btcNetwork,
-				friendLevel = friendLevel,
-				offerType = viewModel.offer.value!!.offerType,
-				expiration = expiration,
-				active = viewModel.offer.value!!.active
+				friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue(),
+				priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
+				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
+				paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
+				offerType = viewModel.offer.value?.offerType ?: return@setOnClickListener,
+				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
+				active = true,
+				currency = binding.amountRange.currentCurrency.name
 			)
-			binding.newOfferBtn.isVisible = false
-			binding.progress.isVisible = true
-			viewModel.updateOffer(offerId = args.offerId, params = params, onSuccess = {
-				findNavController().popBackStack()
-			})
+
+			if (params != null) {
+				binding.newOfferBtn.isVisible = false
+				binding.progress.isVisible = true
+				viewModel.updateOffer(
+					offerId = args.offerId,
+					params = params,
+					onSuccess = {
+						findNavController().popBackStack()
+					}
+				)
+			}
 		}
 
 		listenForInsets(binding.container) { insets ->

@@ -104,6 +104,13 @@
     <string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
     <string name="error_nickname_blank">Chybí přezdívka</string>
     <string name="error_missing_firebase_token">Chybí Firebase token pro doručené zprávy</string>
+    <string name="error_missing_offer_description">Chýba popis</string>
+    <string name="error_missing_offer_location">Chýba lokácia</string>
+    <string name="error_missing_offer_payment_method">Chýba spôsob platby</string>
+    <string name="error_missing_offer_price_trigger">Chýba spúšť ceny</string>
+    <string name="error_missing_offer_type">Chýba typ siete</string>
+    <string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
+    <string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Změnit profilový obrázek</string>

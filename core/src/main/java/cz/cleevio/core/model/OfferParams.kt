@@ -12,5 +12,5 @@ data class OfferParams constructor(
 	val offerType: String,
 	val expiration: Long,
 	val active: Boolean,
-	val currency: String = "CZK"
+	val currency: String
 )

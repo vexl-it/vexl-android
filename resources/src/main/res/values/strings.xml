@@ -108,6 +108,13 @@
     <string name="error_missing_offer_keys">You don\'t have keys for this offer</string>
     <string name="error_nickname_blank">Nickname is empty</string>
     <string name="error_missing_firebase_token">Firebase token for Inbox is missing</string>
+    <string name="error_missing_offer_description">Missing description</string>
+    <string name="error_missing_offer_location">Missing location</string>
+    <string name="error_missing_offer_payment_method">Missing payment method</string>
+    <string name="error_missing_offer_price_trigger">Missing price trigger</string>
+    <string name="error_missing_offer_type">Missing network type</string>
+    <string name="error_missing_offer_friend_level">Missing friend level</string>
+    <string name="error_invalid_offer_delete_trigger">Invalid time to delete offer</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Change profile picture</string>
