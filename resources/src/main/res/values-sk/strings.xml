@@ -224,6 +224,15 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="offer_edit">Upravit nabídku</string>
     <string name="offer_added">Přidáno %s</string>
 
+    <!-- Offer -->
+    <string name="error_missing_offer_description">Chýba popis</string>
+    <string name="error_missing_offer_location">Chýba lokácia</string>
+    <string name="error_missing_offer_payment_method">Chýba spôsob platby</string>
+    <string name="error_missing_offer_price_trigger">Chýba spúšť ceny</string>
+    <string name="error_missing_offer_type">Chýba typ siete</string>
+    <string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
+    <string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
+
     <!-- Filters -->
     <string name="filter_title">Filtr</string>
     <string name="filter_apply">Použít filtr</string>
@@ -285,6 +294,10 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="request_button">Odeslat žádost</string>
     <string name="request_common_friends">%d společných přátel</string>
     <string name="request_common_friends_empty_state">Nemáte společné přátele</string>
+    <string name="error_missing_offer_public_key">Chýba verejný kľúč</string>
+    <string name="error_missing_offer_request_message">Chýba správa požiadavky</string>
+    <string name="error_missing_offer_id">Chýba ID ponuky</string>
+    <string name="offer_request_sent_successfully">Žiadosť bola úspešne odoslaná</string>
 
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>

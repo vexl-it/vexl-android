@@ -24,13 +24,16 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.wasSuccessful.collect {
-				if (it) {
+			viewModel.wasSuccessful.collect { resource ->
+				if (resource.isSuccess()) {
 					findNavController().popBackStack()
-				} else {
-					// TODO finish later
-					Toast.makeText(requireContext(), "Name edit not successful", Toast.LENGTH_SHORT)
-						.show()
+				} else if (resource.isError()) {
+					Toast.makeText(
+						requireContext(),
+						resource.errorIdentification.message?.let { getString(it) }
+							?: resource.errorIdentification.stringMessage ?: return@collect,
+						Toast.LENGTH_SHORT
+					).show()
 				}
 			}
 		}
@@ -49,10 +52,10 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 		}
 
 		binding.editNameInput.editText?.doAfterTextChanged {
-			if (it?.toString()?.isBlank() == true) {
-				binding.editNameInput.editText?.error = "New name cannot be blank"
+			binding.editNameInput.editText?.error = if (it?.toString()?.isBlank() == true) {
+				getString(R.string.error_nickname_blank)
 			} else {
-				binding.editNameInput.editText?.error = null
+				null
 			}
 			viewModel.newName = it?.toString() ?: ""
 		}

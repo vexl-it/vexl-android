@@ -54,6 +54,7 @@ class MyOffersFragment : BaseFragment(R.layout.fragment_my_offers) {
 			)
 		}
 
+		// TODO implement offer sorting
 		binding.myOffersSort.addView(ChipViewUtils.generateChipView(
 			context = requireContext(),
 			icon = R.drawable.ic_chevron_down,

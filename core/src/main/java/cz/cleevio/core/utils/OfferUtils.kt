@@ -1,9 +1,14 @@
 package cz.cleevio.core.utils
 
+import android.app.Activity
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import com.cleevio.vexl.cryptography.EciesCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.model.OfferParams
+import cz.cleevio.core.R
+import cz.cleevio.core.model.*
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.contact.ContactKey
@@ -59,7 +64,7 @@ object OfferUtils {
 
 		//encrypt in loop for every contact
 		contactsPublicKeys.forEach { contactKey ->
-			val encryptedOffer = OfferUtils.encryptOffer(
+			val encryptedOffer = encryptOffer(
 				locationHelper = locationHelper,
 				params = params,
 				// TODO orEmpty should not happen, list in map is not nullable
@@ -111,4 +116,92 @@ object OfferUtils {
 
 	private fun eciesEncrypt(data: String, contactKey: String): String =
 		EciesCryptoLib.encrypt(contactKey, data)
+
+	fun isOfferParamsValid(
+		activity: Activity,
+		description: String,
+		location: LocationValue,
+		fee: FeeValue,
+		priceRange: PriceRangeValue,
+		friendLevel: FriendLevelValue,
+		priceTrigger: PriceTriggerValue,
+		btcNetwork: BtcNetworkValue,
+		paymentMethod: PaymentMethodValue,
+		offerType: String,
+		expiration: Long,
+		active: Boolean,
+		currency: String = "CZK"
+	): OfferParams? {
+		if (description.isBlank()) {
+			Toast.makeText(
+				activity,
+				activity.getString(R.string.error_missing_offer_description),
+				Toast.LENGTH_SHORT
+			).show()
+			return null
+		}
+		if (location.values.isEmpty()) {
+			Toast.makeText(
+				activity,
+				activity.getString(R.string.error_missing_offer_location),
+				Toast.LENGTH_SHORT
+			).show()
+			return null
+		}
+		if (paymentMethod.value.isEmpty()) {
+			Toast.makeText(
+				activity,
+				activity.getString(R.string.error_missing_offer_payment_method),
+				Toast.LENGTH_SHORT
+			).show()
+			return null
+		}
+		if (priceTrigger.value == null) {
+			Toast.makeText(
+				activity,
+				activity.getString(R.string.error_missing_offer_price_trigger),
+				Toast.LENGTH_SHORT
+			).show()
+			return null
+		}
+		if (btcNetwork.value.isEmpty()) {
+			Toast.makeText(
+				activity,
+				activity.getString(R.string.error_missing_offer_type),
+				Toast.LENGTH_SHORT
+			).show()
+			return null
+		}
+		if (friendLevel.value == FriendLevel.NONE) {
+			Toast.makeText(
+				activity,
+				activity.getString(R.string.error_missing_offer_friend_level),
+				Toast.LENGTH_SHORT
+			).show()
+			return null
+		}
+		if (expiration < System.currentTimeMillis()) {
+			Toast.makeText(
+				activity,
+				activity.getString(R.string.error_invalid_offer_delete_trigger),
+				Toast.LENGTH_SHORT
+			).show()
+			return null
+		}
+
+		return OfferParams(
+			description = description,
+			location = location,
+			fee = fee,
+			priceRange = priceRange,
+			priceTrigger = priceTrigger,
+			paymentMethod = paymentMethod,
+			btcNetwork = btcNetwork,
+			friendLevel = friendLevel,
+			offerType = offerType,
+			expiration = expiration,
+			active = active,
+			currency = currency
+		)
+	}
 }

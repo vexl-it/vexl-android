@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import coil.ImageLoader
 import coil.load
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
@@ -151,6 +150,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profilePrivateSettings.setOnClickListener {
+			// TODO implement private settings
 			Toast.makeText(requireContext(), "Profile private settings not implemented", Toast.LENGTH_SHORT)
 				.show()
 		}
@@ -184,8 +184,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		}
 
 		binding.profileSetPin.setOnClickListener {
-			Toast.makeText(requireContext(), "Pin not implemented", Toast.LENGTH_SHORT)
-				.show()
+			// TODO implement PIN
 		}
 
 		binding.profileSetCurrency.setOnClickListener {
