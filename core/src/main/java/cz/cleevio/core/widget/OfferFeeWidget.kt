@@ -80,6 +80,7 @@ class OfferFeeWidget @JvmOverloads constructor(
 	fun reset() {
 		selectedButton = FeeButtonSelected.WITHOUT_FEE
 		drawSeekbarSection(selectedButton)
+		binding.feeRadiogroup.check(R.id.fee_without)
 		updateFeeValue(FEE_MIN_VALUE)
 	}
 

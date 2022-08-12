@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import cz.cleevio.core.R
 import cz.cleevio.repository.repository.UsernameUtils
-import java.lang.Math.random
-import java.util.*
 import kotlin.random.Random
 
 object RandomUtils {

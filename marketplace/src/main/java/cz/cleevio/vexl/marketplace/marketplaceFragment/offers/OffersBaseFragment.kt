@@ -13,7 +13,6 @@ import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentOffersBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 sealed class OffersBaseFragment constructor(
 	val navigateToFilters: (OfferType) -> Unit,
 	val navigateToNewOffer: (OfferType) -> Unit,
@@ -25,26 +24,20 @@ sealed class OffersBaseFragment constructor(
 
 	override val viewModel by viewModel<OffersViewModel>()
 	protected val binding by viewBinding(FragmentOffersBinding::bind)
-	lateinit var adapter: OffersAdapter
+	protected val adapter: OffersAdapter by lazy {
+		OffersAdapter(requestOffer)
+	}
 
 	override fun bindObservers() {
-		repeatScopeOnStart {
-			viewModel.filters.collect { filters ->
+		repeatScopeOnResume {
+			viewModel.getFilters(getOfferType()).collect { isFilterInUse ->
 				binding.filters.removeAllViews()
-				filters.forEach { filter ->
-					binding.filters.addView(
-						ChipViewUtils.generateChipView(
-							context = requireContext(),
-							filter.label,
-							filter.icon
-						)
-					)
-				}
 				binding.filters.addView(
 					ChipViewUtils.generateChipView(
 						context = requireContext(),
 						icon = R.drawable.ic_chevron_down,
 						iconAtStart = false,
+						activeState = isFilterInUse,
 						filter = getString(R.string.filter_offers),
 						listener = {
 							navigateToFilters(getOfferType())
@@ -62,10 +55,10 @@ sealed class OffersBaseFragment constructor(
 
 	override fun initView() {
 		listenForInsets(binding.offersContainer) { insets ->
-			binding.offerList.updatePadding(bottom = 2 * insets.bottom)    // 2x because of once per size of the inset, and twice for the inset of the bottom menu
+			// 2x because of once per size of the inset, and twice for the inset of the bottom menu
+			binding.offerList.updatePadding(bottom = 2 * insets.bottom)
 		}
 
-		adapter = OffersAdapter(requestOffer)
 		binding.offerList.adapter = adapter
 
 		binding.addOfferBtn.setOnClickListener {
@@ -76,8 +69,6 @@ sealed class OffersBaseFragment constructor(
 		}
 
 		checkMyOffersCount(getOfferType())
-
-		viewModel.getFilters()
 	}
 
 	private fun processMyOffersButtons(hasMyOffers: Boolean) {

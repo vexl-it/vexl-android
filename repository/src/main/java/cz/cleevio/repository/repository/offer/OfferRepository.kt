@@ -3,14 +3,16 @@ package cz.cleevio.repository.repository.offer
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.request.offer.DeletePrivatePartRequest
-import cz.cleevio.repository.model.offer.LocationSuggestion
-import cz.cleevio.repository.model.offer.MyOffer
-import cz.cleevio.repository.model.offer.NewOffer
-import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.model.offer.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Suppress("TooManyFunctions")
 interface OfferRepository {
+
+	val buyOfferFilter: MutableStateFlow<OfferFilter>
+
+	val sellOfferFilter: MutableStateFlow<OfferFilter>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
 	suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair): Resource<Offer>
@@ -42,7 +44,12 @@ interface OfferRepository {
 
 	suspend fun getOffers(): List<Offer>
 
-	suspend fun getOffersFlow(): Flow<List<Offer>>
+	fun getOffersFlow(): Flow<List<Offer>>
+
+	fun getFilteredAndSortedOffersByTypeFlow(
+		offerTypeName: String,
+		offerFilter: OfferFilter
+	): Flow<List<Offer>>
 
 	suspend fun syncOffers()
 

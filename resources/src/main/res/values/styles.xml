@@ -718,6 +718,11 @@
 		<item name="android:checkable">false</item>
 	</style>
 
+	<style name="Widget.Cleevio.Vexl.Marketplace.FilterChip.Activated" parent="Widget.Cleevio.Vexl.Marketplace.FilterChip">
+		<item name="chipBackgroundColor">@color/yellow20</item>
+		<item name="android:checkable">false</item>
+	</style>
+
 	<style name="Widget.Cleevio.Chat.Message" parent="">
 		<item name="android:padding">10dp</item>
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.ParagraphSmall</item>

@@ -132,6 +132,7 @@ class OfferLocationWidget @JvmOverloads constructor(
 			LocationButtonSelected.NONE -> {
 				binding.locationInPerson.isChecked = false
 				binding.locationOnline.isChecked = false
+				binding.locationRadiogroup.clearCheck()
 			}
 			LocationButtonSelected.ONLINE -> {
 				binding.locationInPerson.isChecked = false

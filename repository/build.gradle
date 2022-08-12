@@ -57,5 +57,8 @@ dependencies {
 
     api 'com.googlecode.libphonenumber:libphonenumber:8.12.46'
 
+    testImplementation "com.google.truth:truth:1.1.3"
+    testImplementation "junit:junit:4.13.2"
+
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar"
 }

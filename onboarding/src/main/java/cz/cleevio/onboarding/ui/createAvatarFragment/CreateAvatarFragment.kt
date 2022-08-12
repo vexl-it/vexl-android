@@ -175,7 +175,6 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 			isEnabled = true
 		}
 
-
 		setupPhotoListener()
 
 		listenForInsets(binding.container) { insets ->
