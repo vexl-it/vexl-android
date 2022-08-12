@@ -312,7 +312,6 @@
 
 	<style name="TextAppearance.Vexl.Marketplace.FilterChip.Activated" parent="TextAppearance.Vexl.AddOffer">
 		<item name="android:textColor">@color/yellow_100</item>
-		<!--<item name="lineHeight">19.92sp</item>-->
 	</style>
 
 	<style name="TextAppearance.Vexl.Chat.ActionButton" parent="TextAppearance.Vexl.ParagraphSmall" />

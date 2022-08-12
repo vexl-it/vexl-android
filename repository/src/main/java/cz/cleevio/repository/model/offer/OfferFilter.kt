@@ -39,7 +39,7 @@ data class OfferFilter constructor(
 					offerLocation.longitude.toDouble(),
 					result
 				)
-				val distanceInKm = result[0] / 1000
+				val distanceInKm = result[POSITION_OF_DISTANCE] / ONE_KM_IN_METERS
 				val radius = (location.radius + offerLocation.radius).toFloat()
 				if (distanceInKm <= radius) return true
 			}
@@ -60,3 +60,6 @@ data class OfferFilter constructor(
 			priceRangeBottomLimit != null ||
 			currency != null
 }
+
+const val POSITION_OF_DISTANCE = 0
+const val ONE_KM_IN_METERS = 1000
