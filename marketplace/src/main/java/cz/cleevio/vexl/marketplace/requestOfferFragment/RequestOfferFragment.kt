@@ -73,22 +73,31 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 			val messageText = binding.requestText.text.toString()
 
 			if (offerPublicKey.isNullOrBlank() || messageText.isBlank() || offerId.isNullOrBlank()) {
-				//show error/toast
 				if (offerPublicKey.isNullOrBlank()) {
 					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(requireActivity(), "Offer is missing public key", Toast.LENGTH_SHORT).show()
+						Toast.makeText(
+							requireActivity(),
+							getString(R.string.error_missing_offer_public_key),
+							Toast.LENGTH_SHORT
+						).show()
 					}
 				}
-
 				if (messageText.isBlank()) {
 					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(requireActivity(), "No message detected", Toast.LENGTH_SHORT).show()
+						Toast.makeText(
+							requireActivity(),
+							getString(R.string.error_missing_offer_request_message),
+							Toast.LENGTH_SHORT
+						).show()
 					}
 				}
-
 				if (offerId.isNullOrBlank()) {
 					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(requireActivity(), "Offer is missing ID", Toast.LENGTH_SHORT).show()
+						Toast.makeText(
+							requireActivity(),
+							getString(R.string.error_missing_offer_id),
+							Toast.LENGTH_SHORT
+						).show()
 					}
 				}
 			} else {
@@ -98,9 +107,12 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 					offerId = offerId
 				) {
 					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(requireContext(), "Communication request sent successfully", Toast.LENGTH_SHORT)
-							.show()
-						delay(1500)
+						Toast.makeText(
+							requireContext(),
+							getString(R.string.offer_request_sent_successfully),
+							Toast.LENGTH_SHORT
+						).show()
+						delay(POP_BACKSTACK_DELAY)
 						findNavController().popBackStack()
 					}
 				}
@@ -155,5 +167,6 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 
 	private companion object {
 		private const val SCROLL_TO_BOTTOM_DELAY = 300L
+		private const val POP_BACKSTACK_DELAY = 1500L
 	}
 }

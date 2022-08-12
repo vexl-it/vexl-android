@@ -1,6 +1,10 @@
 package cz.cleevio.profile.editNameFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.network.data.ErrorIdentification
+import cz.cleevio.network.data.Resource
+import cz.cleevio.profile.R
+import cz.cleevio.repository.model.user.User
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -12,11 +16,10 @@ class EditNameViewModel constructor(
 	private val userRepository: UserRepository
 ) : BaseViewModel() {
 
-	private val _wasSuccessful = Channel<Boolean>(Channel.CONFLATED)
+	private val _wasSuccessful = Channel<Resource<User>>(Channel.CONFLATED)
 	val wasSuccessful = _wasSuccessful.receiveAsFlow()
 
 	val oldName = userRepository.getUserFlow()
-
 	var newName: String = ""
 
 	fun editName() {
@@ -26,10 +29,14 @@ class EditNameViewModel constructor(
 					username = newName,
 					avatar = null
 				).let {
-					_wasSuccessful.send(it.isSuccess())
+					_wasSuccessful.send(it)
 				}
 			} else {
-				_wasSuccessful.send(false)
+				_wasSuccessful.send(
+					Resource.error(
+						ErrorIdentification.MessageError(message = R.string.error_nickname_blank)
+					)
+				)
 			}
 		}
 	}
