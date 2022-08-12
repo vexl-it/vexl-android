@@ -24,7 +24,7 @@ interface OfferDao {
 	@Query("SELECT * FROM OfferEntity")
 	fun getAllExtendedOffersFlow(): Flow<List<OfferWithLocationsAndCommonFriends>>
 
-	@RawQuery(observedEntities = arrayOf(OfferWithLocationsAndCommonFriends::class))
+	@RawQuery(observedEntities = [OfferWithLocationsAndCommonFriends::class])
 	fun getFilteredOffersFlow(query: SupportSQLiteQuery): Flow<List<OfferWithLocationsAndCommonFriends>>
 
 	@Query("DELETE FROM OfferEntity")
