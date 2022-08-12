@@ -37,8 +37,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		repeatScopeOnStart {
 			viewModel.errorFlow.collect { resource ->
 				if (resource.status is Status.Error) {
-					binding.newOfferBtn.isVisible = true
-					binding.progress.isVisible = false
+					showProgressIndicator(false)
 					//show error toast
 					resource.errorIdentification.message?.let { messageCode ->
 						if (messageCode != -1) {
@@ -104,30 +103,16 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.offerState.setActive(offer.active)
 		binding.offerState.setListeners(
 			onDelete = {
-				viewModel.deleteOffer(offer.offerId, onSuccess = {
-					findNavController().popBackStack()
-				})
+				showProgressIndicator(true)
+				viewModel.deleteOffer(
+					offerId = offer.offerId,
+					onSuccess = {
+						findNavController().popBackStack()
+					}
+				)
 			},
 			onChangeActiveState = {
-				val params = OfferParams(
-					description = binding.newOfferDescription.text.toString(),
-					location = binding.newOfferLocation.getLocationValue(),
-					fee = binding.newOfferFee.getFeeValue(),
-					priceRange = binding.amountRange.getPriceRangeValue(),
-					priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
-					paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
-					btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
-					friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue(),
-					offerType = offer.offerType,
-					expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
-					active = !offer.active,
-					currency = binding.amountRange.currentCurrency.name
-				)
-				viewModel.updateOffer(
-					offerId = offer.offerId,
-					params = params,
-					onSuccess = { findNavController().popBackStack() }
-				)
+				updateOffer(!offer.active)
 			}
 		)
 
@@ -229,33 +214,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
 		binding.newOfferBtn.setOnClickListener {
-			val params = OfferUtils.isOfferParamsValid(
-				activity = requireActivity(),
-				description = binding.newOfferDescription.text.toString(),
-				location = binding.newOfferLocation.getLocationValue(),
-				fee = binding.newOfferFee.getFeeValue(),
-				priceRange = binding.amountRange.getPriceRangeValue(),
-				friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue(),
-				priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
-				btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
-				paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
-				offerType = viewModel.offer.value?.offerType ?: return@setOnClickListener,
-				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
-				active = true,
-				currency = binding.amountRange.currentCurrency.name
-			)
-
-			if (params != null) {
-				binding.newOfferBtn.isVisible = false
-				binding.progress.isVisible = true
-				viewModel.updateOffer(
-					offerId = args.offerId,
-					params = params,
-					onSuccess = {
-						findNavController().popBackStack()
-					}
-				)
-			}
+			updateOffer(true)
 		}
 
 		listenForInsets(binding.container) { insets ->
@@ -264,6 +223,38 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 				bottom = insets.bottomWithIME
 			)
 		}
+	}
+
+	private fun updateOffer(active: Boolean) {
+		val params = OfferUtils.isOfferParamsValid(
+			activity = requireActivity(),
+			description = binding.newOfferDescription.text.toString(),
+			location = binding.newOfferLocation.getLocationValue(),
+			fee = binding.newOfferFee.getFeeValue(),
+			priceRange = binding.amountRange.getPriceRangeValue(),
+			friendLevel = binding.newOfferFriendLevel.getSingleChoiceFriendLevelValue(),
+			priceTrigger = binding.newOfferPriceTrigger.getPriceTriggerValue(),
+			btcNetwork = binding.newOfferBtcNetwork.getBtcNetworkValue(),
+			paymentMethod = binding.newOfferPaymentMethod.getPaymentValue(),
+			offerType = viewModel.offer.value?.offerType ?: return,
+			expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
+			active = active,
+			currency = binding.amountRange.currentCurrency.name
+		)
+
+		if (params != null) {
+			showProgressIndicator(true)
+			viewModel.updateOffer(
+				offerId = args.offerId,
+				params = params,
+				onSuccess = { findNavController().popBackStack() }
+			)
+		}
+	}
+
+	private fun showProgressIndicator(isVisible: Boolean) {
+		binding.newOfferBtn.isVisible = !isVisible
+		binding.progress.isVisible = isVisible
 	}
 
 	companion object {

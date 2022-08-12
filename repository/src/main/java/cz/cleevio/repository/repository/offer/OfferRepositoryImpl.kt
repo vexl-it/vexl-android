@@ -192,9 +192,13 @@ class OfferRepositoryImpl constructor(
 		offerTypeName: String,
 		offerFilter: OfferFilter
 	): Flow<List<Offer>> {
-		val queryBuilder = StringBuilder("SELECT * FROM OfferEntity WHERE offerType == $SQL_VALUE_PLACEHOLDER")
+		val queryBuilder = StringBuilder("")
 		val values = arrayListOf<Any>()
+
+		queryBuilder.append("SELECT * FROM OfferEntity WHERE offerType == $SQL_VALUE_PLACEHOLDER")
 		values.add(offerTypeName)
+		queryBuilder.append(" AND active == $SQL_VALUE_PLACEHOLDER")
+		values.add(true)
 
 		if (offerFilter.locationType != null) {
 			queryBuilder.append(" AND locationState == $SQL_VALUE_PLACEHOLDER")
