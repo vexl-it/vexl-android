@@ -1,10 +1,10 @@
-### Requires uninstall: YES
+### Requires uninstall: NO
 
 ### Improvements
-* Filter offers
-* Improve localizations, error handling
+*
 
 ### Fix
-*
+* Fix active/deactive/delete offer
+* Filter inactive offers in buy/ell market place
 
 ### Known issues
