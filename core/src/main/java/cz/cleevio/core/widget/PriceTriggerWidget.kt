@@ -34,6 +34,11 @@ class PriceTriggerWidget @JvmOverloads constructor(
 		binding.priceEdit.setOnFocusChangeListener { _, hasFocus ->
 			onFocusChangeListener?.invoke(hasFocus)
 		}
+
+		binding.clearFilterBtn.setOnClickListener {
+			binding.priceEdit.setText(BigDecimal.ZERO.toString())
+			setCurrency(Currency.USD)
+		}
 	}
 
 	fun setupData(currentCryptoPrice: Float) {
