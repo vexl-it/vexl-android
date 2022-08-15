@@ -375,7 +375,9 @@ class ContactRepositoryImpl constructor(
 					contactLevel = ContactLevel.SECOND
 				)
 			}
-			contactKeyDao.replaceAll(contactKeys)
+			contactKeyDao.deleteFirstLevelKeys()
+			contactKeyDao.deleteSecondLevelKeys()
+			contactKeyDao.insertContacts(contactKeys)
 		}
 
 		return success

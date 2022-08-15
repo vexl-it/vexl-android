@@ -65,13 +65,15 @@ val marketplaceModule = module {
 			contactRepository = get(),
 			encryptedPreferenceRepository = get(),
 			locationHelper = get(),
+			groupRepository = get(),
 		)
 	}
 
 	viewModel { (offerType: OfferType) ->
 		FiltersViewModel(
 			offerType = offerType,
-			offerRepository = get()
+			offerRepository = get(),
+			groupRepository = get()
 		)
 	}
 

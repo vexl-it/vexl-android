@@ -9,6 +9,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.OfferUtils
@@ -20,27 +21,17 @@ import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
+import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-//TODO: !!! DULEZITE !!!
-//TODO: vsechny zmeny ktere se budou delat tady v NewOfferFragment a taky v NewOfferViewModel je treba udelat
-//TODO: i uvnitr EditOfferFragment a EditOfferViewModel.
-//TODO: UI zmeny je treba udelat i uvnitr FiltersFramgent (funkcionalita filtru jeste neni udelana, takze tam staci UI)
-//TODO: !!! DULEZITE !!!
-
-
-//TODO: upravit fragment_new_offer, dat tam recycler s Grid managerem podle figmy
-//TODO: https://www.figma.com/file/xDQNDwtoq8R0Aj1s4cKZTt/Vexl-App-V1.0-UI?node-id=2562%3A16719
 class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 	private val binding by viewBinding(FragmentNewOfferBinding::bind)
 	override val viewModel by viewModel<NewOfferViewModel>()
 
 	private val args by navArgs<NewOfferFragmentArgs>()
-
-	//TODO: vytvorit tady novy adapter ktery bude zobrazovat skupiny v gridu podle figmy
-	//TODO: https://www.figma.com/file/xDQNDwtoq8R0Aj1s4cKZTt/Vexl-App-V1.0-UI?node-id=2562%3A16719
+	lateinit var adapter: SelectGroupAdapter
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
@@ -67,8 +58,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 		repeatScopeOnStart {
 			viewModel.groups.collect { groups ->
-				//TODO: tady je treba submitnout skupiny do adapteru
-				//TODO: napojeni flow do DB je hotove
+				adapter.submitList(groups)
 			}
 		}
 
@@ -106,6 +96,11 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 	override fun initView() {
 		viewModel.loadMyContactsKeys()
+
+		adapter = SelectGroupAdapter()
+		val layoutManager = GridLayoutManager(requireContext(), 2)
+		binding.groupRecycler.layoutManager = layoutManager
+		binding.groupRecycler.adapter = adapter
 
 		binding.newOfferTitle.setTypeAndTitle(
 			when (args.offerType) {
@@ -222,7 +217,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				offerType = args.offerType.name,
 				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
 				active = true,
-				currency = binding.newOfferRange.currentCurrency.name
+				currency = binding.newOfferRange.currentCurrency.name,
+				groupUuids = adapter.getSelectedGroupUuids()
 			)
 
 			if (params != null) {

@@ -40,7 +40,7 @@ class GroupRepositoryImpl constructor(
 				CreateGroupRequest(
 					name = name,
 					logo = logo,
-					expiration = expiration,
+					expirationAt = expiration,
 					closureAt = closureAt,
 				)
 			)

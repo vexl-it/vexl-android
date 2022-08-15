@@ -347,6 +347,18 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/friend_level_description" />
 
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/group_recycler"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="16dp"
+				android:paddingTop="16dp"
+				android:nestedScrollingEnabled="false"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/new_offer_friend_level" />
+
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.core.widget.NestedScrollView>
 

@@ -5,6 +5,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.Currency
@@ -17,6 +18,7 @@ import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
+import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentFiltersBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -25,6 +27,8 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 
 	private val binding by viewBinding(FragmentFiltersBinding::bind)
 	private val args by navArgs<FiltersFragmentArgs>()
+	lateinit var adapter: SelectGroupAdapter
+
 	private val filterViewModel by viewModel<FiltersViewModel> {
 		parametersOf(args.offerType)
 	}
@@ -32,6 +36,11 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 	override var priceChartWidget: CurrencyPriceChartWidget? = null
 
 	override fun initView() {
+		adapter = SelectGroupAdapter()
+		val layoutManager = GridLayoutManager(requireContext(), 2)
+		binding.groupRecycler.layoutManager = layoutManager
+		binding.groupRecycler.adapter = adapter
+
 		priceChartWidget = binding.priceChart
 
 		super.initView()
@@ -87,6 +96,9 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		binding.friendLevel.isMultichoiceEnabled(true)
 
 		binding.applyBtn.setOnClickListener {
+			//todo: use/filter also by groups
+			//groupUuids = adapter.getSelectedGroupUuids()
+
 			filterViewModel.saveOfferFilter(
 				location = binding.filterLocation.getLocationValue(),
 				paymentMethod = binding.paymentMethod.getPaymentValue(),
@@ -162,6 +174,12 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		repeatScopeOnStart {
 			filterViewModel.setupViewFlow.collect { offerFilter ->
 				setupFilterViews(offerFilter)
+			}
+		}
+
+		repeatScopeOnStart {
+			filterViewModel.groups.collect { groups ->
+				adapter.submitList(groups)
 			}
 		}
 	}

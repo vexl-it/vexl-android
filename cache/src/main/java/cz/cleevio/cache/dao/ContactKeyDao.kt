@@ -14,10 +14,13 @@ interface ContactKeyDao {
 	@Query("SELECT * FROM ContactKeyEntity")
 	fun getAllKeysFlow(): Flow<List<ContactKeyEntity>>
 
-	@Query("SELECT * FROM ContactKeyEntity where contactLevel = :contactLevel")
+	@Query("SELECT * FROM ContactKeyEntity WHERE contactLevel == :contactLevel")
 	fun getKeysByLevel(contactLevel: ContactLevel): List<ContactKeyEntity>
 
-	@Query("SELECT * FROM ContactKeyEntity where groupUuid = :groupUuid")
+	@Query("DELETE FROM ContactKeyEntity WHERE contactLevel == :contactLevel")
+	fun deleteKeysByLevel(contactLevel: ContactLevel)
+
+	@Query("SELECT * FROM ContactKeyEntity WHERE groupUuid == :groupUuid")
 	fun getKeysByGroup(groupUuid: String): List<ContactKeyEntity>
 
 	fun getFirstLevelKeys() =
@@ -28,6 +31,15 @@ interface ContactKeyDao {
 
 	fun getGroupLevelKeys() =
 		getKeysByLevel(ContactLevel.GROUP)
+
+	fun deleteFirstLevelKeys() =
+		deleteKeysByLevel(ContactLevel.FIRST)
+
+	fun deleteSecondLevelKeys() =
+		deleteKeysByLevel(ContactLevel.SECOND)
+
+	fun deleteGroupLevelKeys() =
+		deleteKeysByLevel(ContactLevel.GROUP)
 
 	@Query("SELECT * FROM ContactKeyEntity")
 	fun getAllKeys(): List<ContactKeyEntity>
@@ -41,6 +53,6 @@ interface ContactKeyDao {
 		insertContacts(keys)
 	}
 
-	@Query("SELECT * FROM ContactKeyEntity where (publicKey == :publicKey AND groupUuid != :groupUuid)")
+	@Query("SELECT * FROM ContactKeyEntity WHERE (publicKey == :publicKey AND groupUuid != :groupUuid)")
 	fun findKeyOutsideThisGroup(publicKey: String, groupUuid: String): ContactKeyEntity?
 }

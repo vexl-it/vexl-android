@@ -11,6 +11,7 @@ import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
+import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.model.offer.Offer
@@ -34,7 +35,6 @@ class OfferWidget @JvmOverloads constructor(
 	@Suppress("LongMethod, ComplexMethod")
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null, group: Group? = null) {
 		binding.card.offerDescription.text = item.offerDescription
-
 		group?.let {
 			binding.card.groupInfo.text = resources.getString(R.string.offer_widget_groups_info, group.name)
 			binding.card.groupInfo.isVisible = true
@@ -51,6 +51,12 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).toInt()}k"
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
+
+		binding.profileImage.load(
+			RandomUtils.selectRandomImage(binding.root.context)
+		)
+		val generatedUsername = RandomUtils.generateName()
+
 		binding.card.offerType.text = if (item.offerType == "SELL") {
 			resources.getString(R.string.offer_to_sell)
 		} else {
@@ -61,15 +67,15 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			if (item.offerType == "SELL") {
 				colorizeTransactionType(
-					resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend "),
-					"Unknown friend",
+					resources.getString(R.string.marketplace_detail_user_sell, "$generatedUsername "),
+					generatedUsername,
 					binding.userName,
 					R.color.pink_100
 				)
 			} else {
 				colorizeTransactionType(
-					resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend "),
-					"Unknown friend",
+					resources.getString(R.string.marketplace_detail_user_buy, "$generatedUsername "),
+					generatedUsername,
 					binding.userName,
 					R.color.green_100
 				)
@@ -82,24 +88,19 @@ class OfferWidget @JvmOverloads constructor(
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))
 		} else {
 			when {
+				group != null -> {
+					resources.getString(R.string.offer_widget_groups, group.name)
+				}
 				item.friendLevel == FriendLevel.FIRST_DEGREE.name -> {
 					resources.getString(R.string.marketplace_detail_friend_first)
 				}
 				item.friendLevel == FriendLevel.SECOND_DEGREE.name -> {
 					resources.getString(R.string.marketplace_detail_friend_second)
 				}
-				group != null -> {
-					resources.getString(R.string.offer_widget_groups, group.name)
-				}
 				//fallback
 				else -> {
 					""
 				}
-			}
-			if (item.friendLevel == FriendLevel.FIRST_DEGREE.name) {
-				resources.getString(R.string.marketplace_detail_friend_first)
-			} else {
-				resources.getString(R.string.marketplace_detail_friend_second)
 			}
 		}
 

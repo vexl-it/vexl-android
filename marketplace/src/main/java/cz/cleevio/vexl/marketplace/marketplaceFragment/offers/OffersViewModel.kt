@@ -1,7 +1,6 @@
 package cz.cleevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.repository.model.offer.OfferWithGroup
 import cz.cleevio.repository.repository.group.GroupRepository
@@ -16,21 +15,21 @@ class OffersViewModel constructor(
 	private val offerRepository: OfferRepository
 ) : BaseViewModel() {
 
-	//fixme: OfferWithGroup
 	val buyOffersFlow = offerRepository.buyOfferFilter.flatMapLatest { filter ->
-		offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.BUY.name, filter)
+		offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.BUY.name, filter).map { list ->
+			list.map {
+				OfferWithGroup(offer = it, group = groupRepository.findGroupByUuidInDB(it.groupUuid))
+			}
+		}
 	}.flowOn(Dispatchers.Default)
 
-	//
-//		.map {
-//			OfferWithGroup(offer = it, group = groupRepository.findGroupByUuidInDB(it.groupUuid))
-//		}
 	val sellOffersFlow = offerRepository.sellOfferFilter.flatMapLatest { filter ->
-		offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.SELL.name, filter)
+		offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.SELL.name, filter).map { list ->
+			list.map {
+				OfferWithGroup(offer = it, group = groupRepository.findGroupByUuidInDB(it.groupUuid))
+			}
+		}
 	}.flowOn(Dispatchers.Default)
-
-	/*private val _filters = MutableSharedFlow<List<Filter>>(replay = 1)
-	val filters = _filters.asSharedFlow()*/
 
 	private val _myOffersCount = MutableSharedFlow<Int>(replay = 1)
 	val myOffersCount = _myOffersCount.asSharedFlow()

@@ -12,5 +12,6 @@ data class OfferParams constructor(
 	val offerType: String,
 	val expiration: Long,
 	val active: Boolean,
+	val groupUuids: List<String>,
 	val currency: String
 )

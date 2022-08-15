@@ -12,6 +12,7 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
+import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
@@ -27,6 +28,7 @@ class EditOfferViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
+	private val groupRepository: GroupRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	private val locationHelper: LocationHelper
 ) : BaseViewModel() {
@@ -36,6 +38,8 @@ class EditOfferViewModel constructor(
 
 	private val _offer = MutableStateFlow<Offer?>(null)
 	val offer = _offer.asStateFlow()
+
+	val groups = groupRepository.getGroupsFlow()
 
 	private val _queryForSuggestions = MutableStateFlow<Pair<OfferLocationItem?, String>>(Pair(null, ""))
 
@@ -52,6 +56,7 @@ class EditOfferViewModel constructor(
 	fun loadMyContactsKeys() {
 		viewModelScope.launch(Dispatchers.IO) {
 			contactRepository.syncMyContactsKeys()
+			groupRepository.syncAllGroupsMembers()
 		}
 	}
 

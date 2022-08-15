@@ -52,6 +52,7 @@ class NewOfferViewModel constructor(
 	fun loadMyContactsKeys() {
 		viewModelScope.launch(Dispatchers.IO) {
 			contactRepository.syncMyContactsKeys()
+			groupRepository.syncAllGroupsMembers()
 		}
 	}
 
@@ -60,7 +61,7 @@ class NewOfferViewModel constructor(
 
 			_newOfferRequest.emit(Resource.loading())
 			val offerKeys = KeyPairCryptoLib.generateKeyPair()
-			//TODO: sifrovani pro klice uzivatelu a skupiny se deje uvnitr tehle utils funkce
+
 			val encryptedOfferList = OfferUtils.prepareEncryptedOffers(
 				offerKeys = offerKeys,
 				params = params,
