@@ -95,6 +95,7 @@
 					android:layout_gravity="center"
 					android:gravity="center"
 					android:paddingBottom="2dp"
+					android:textColor="@color/text_primary"
 					tools:background="@color/black"
 					tools:src="CZ" />
 
