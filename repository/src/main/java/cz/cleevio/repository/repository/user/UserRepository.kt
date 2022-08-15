@@ -44,11 +44,11 @@ interface UserRepository {
 		username: String? = null, avatar: String? = null, avatarImageExtension: String? = null
 	): Resource<User>
 
+	suspend fun deleteAvatar(): Resource<Unit>
+
 	suspend fun deleteLocalUser()
 
 	suspend fun deleteMe(): Resource<Unit>
 
 	suspend fun storeAnonymousUserData(anonymousUsername: String, anonymousAvatarImageIndex: Int)
-
-	suspend fun deleteUserAvatar()
 }
