@@ -2,8 +2,6 @@ package cz.cleevio.core.utils
 
 import android.app.Activity
 import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.cleevio.vexl.cryptography.EciesCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
@@ -117,6 +115,7 @@ object OfferUtils {
 	private fun eciesEncrypt(data: String, contactKey: String): String =
 		EciesCryptoLib.encrypt(contactKey, data)
 
+	@Suppress("ReturnCount")
 	fun isOfferParamsValid(
 		activity: Activity,
 		description: String,

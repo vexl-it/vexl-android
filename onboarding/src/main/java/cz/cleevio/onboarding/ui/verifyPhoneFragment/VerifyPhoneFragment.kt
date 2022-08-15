@@ -14,10 +14,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.safeNavigateWithTransition
-import cz.cleevio.core.utils.showKeyboard
-import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.utils.*
 import cz.cleevio.network.data.ErrorIdentification.Companion.CODE_ENTITY_NOT_EXIST_404
 import cz.cleevio.network.data.Status
 import cz.cleevio.onboarding.R
@@ -107,7 +104,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 		binding.verifyPhoneInput.requestFocus()
 		binding.verifyPhoneInput.showKeyboard()
 
-		binding.continueBtn.setOnClickListener {
+		binding.continueBtn.setDebouncedOnClickListener {
 			binding.root.hideKeyboard()
 			val verificationCode = binding.verifyPhoneInput.text.toString()
 			viewModel.sendVerificationCode(verificationCode)

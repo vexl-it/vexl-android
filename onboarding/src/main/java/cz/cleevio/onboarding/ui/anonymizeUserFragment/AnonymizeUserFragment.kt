@@ -57,12 +57,14 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 
 		repeatScopeOnStart {
 			viewModel.currentUser.collect {
-				it ?: return@collect
-				binding.anonymizeUserName.text = it.username
-				binding.anonymizeUserImage.load(it.avatar) {
-					fallback(R.drawable.ic_profile_avatar_placeholder)
-					error(R.drawable.ic_profile_avatar_placeholder)
-					placeholder(R.drawable.ic_profile_avatar_placeholder)
+				if (viewModel.uiState.value == AnonymizeUserViewModel.UIState.Normal) {
+					it ?: return@collect
+					binding.anonymizeUserName.text = it.username
+					binding.anonymizeUserImage.load(it.avatar) {
+						fallback(R.drawable.ic_profile_avatar_placeholder)
+						error(R.drawable.ic_profile_avatar_placeholder)
+						placeholder(R.drawable.ic_profile_avatar_placeholder)
+					}
 				}
 			}
 		}

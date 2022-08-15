@@ -83,8 +83,7 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 
 		fun bind(item: ChatMessage) {
 
-			binding.chatContactIcon.context.let { context ->
-
+			itemView.context.let { context ->
 				when (item.type) {
 					MessageType.REQUEST_REVEAL -> {
 						binding.chatContactIcon.setImageDrawable(context.getDrawable(R.drawable.ic_default_avatar))
@@ -102,7 +101,6 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 						binding.identityRevealDescription.text = item.deanonymizedUser?.name
 					}
 				}
-
 			}
 
 		}

@@ -7,12 +7,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
+import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
+import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class OfferWidget @JvmOverloads constructor(
 	context: Context,
@@ -29,7 +32,7 @@ class OfferWidget @JvmOverloads constructor(
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null) {
 		binding.card.offerDescription.text = item.offerDescription
 		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).toInt()}k"
-		binding.card.priceCurrency.text = item.currency
+		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
 		binding.card.offerType.text = if (item.offerType == "SELL") {
 			resources.getString(R.string.offer_to_sell)
 		} else {

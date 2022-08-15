@@ -46,6 +46,11 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 			}
 		}
 
+		binding.clearFilterBtn.setOnClickListener {
+			binding.deleteInput.setText(DEFAULT_NUMBER.toString())
+			updateTimeframeText(DeleteTimeframe.DAYS)
+		}
+
 		updateTimeframeText(type)
 	}
 

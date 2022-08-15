@@ -7,6 +7,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.showKeyboard
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
@@ -30,7 +31,7 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 			findNavController().popBackStack()
 		}
 
-		binding.continueBtn.setOnClickListener {
+		binding.continueBtn.setDebouncedOnClickListener {
 			binding.usernameInput.hideKeyboard()
 			val username = binding.usernameInput.text.toString()
 			findNavController().safeNavigateWithTransition(

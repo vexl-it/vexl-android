@@ -24,12 +24,13 @@ class NewOfferViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
-	private val chatRepository: ChatRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	private val locationHelper: LocationHelper
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
+	var isTriggerSectionShowed = true
+	var isAdvancedSectionShowed = true
 
 	private val _newOfferRequest = MutableSharedFlow<Resource<Offer>>()
 	val newOfferRequest = _newOfferRequest.asSharedFlow()
