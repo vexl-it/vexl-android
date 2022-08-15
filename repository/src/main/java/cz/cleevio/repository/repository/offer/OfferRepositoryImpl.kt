@@ -199,6 +199,8 @@ class OfferRepositoryImpl constructor(
 		values.add(offerTypeName)
 		queryBuilder.append(" AND active == $SQL_VALUE_PLACEHOLDER")
 		values.add(true)
+		queryBuilder.append(" AND isMine == $SQL_VALUE_PLACEHOLDER")
+		values.add(false)
 
 		if (offerFilter.locationType != null) {
 			queryBuilder.append(" AND locationState == $SQL_VALUE_PLACEHOLDER")
@@ -277,6 +279,27 @@ class OfferRepositoryImpl constructor(
 			}
 		}
 	}
+
+	override fun getOffersSortedByDateOfCreationFlow(offerTypeName: String): Flow<List<Offer>> {
+		val queryBuilder = StringBuilder("")
+		val values = arrayListOf<Any>()
+
+		queryBuilder.append("SELECT * FROM OfferEntity ORDER BY createdAt DESC, isRequested ASC")
+
+		val simpleSQLiteQuery = SimpleSQLiteQuery(
+			queryBuilder.toString(),
+			values.toTypedArray()
+		)
+
+		return offerDao.getFilteredOffersFlow(simpleSQLiteQuery).map { list ->
+			list.map {
+				it.offer.fromCache(it.locations, it.commonFriends)
+			}
+		}.map { list ->
+			list.filter { it.offerType == offerTypeName && it.isMine }
+		}
+	}
+
 
 	override suspend fun syncOffers() {
 		val newOffers = getNewOffers()

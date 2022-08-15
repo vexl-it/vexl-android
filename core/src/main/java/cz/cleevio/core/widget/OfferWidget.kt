@@ -58,7 +58,7 @@ class OfferWidget @JvmOverloads constructor(
 			}
 		}
 
-		binding.card.location.text = item.location.joinToString(", ") { it.city }
+		binding.card.location.text = item.location.take(3).joinToString(", ") { it.city }
 
 		binding.userType.text = if (mode == Mode.MY_OFFER) {
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))

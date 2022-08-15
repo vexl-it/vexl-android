@@ -92,9 +92,9 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			}
 		}
 
-		binding.initPhoneInput.addTextChangedListener(textWatcher)
+		setDefaultCountryCode()
 
-		binding.initPhoneInput.setText(PREFILLED_PREFIX)
+		binding.initPhoneInput.addTextChangedListener(textWatcher)
 
 		listenForInsets(binding.parent) { insets ->
 			binding.container.updatePadding(top = insets.top)
@@ -145,8 +145,20 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		return phoneNumberUtil.getRegionCodeForCountryCode(phoneNumber.countryCode)
 	}
 
+	private fun setDefaultCountryCode() {
+		val sb = SpannableStringBuilder(PREFILLED_PREFIX)
+		sb.setSpan(
+			ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.gray_4)),
+			0, phoneNumberUtil.getCountryCodeForRegion(DEFAULT_COUNTRY_ISO_CODE).toString().length + 1,
+			Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+		)
+		binding.initPhoneInput.text = sb
+		binding.emoji.text = DEFAULT_COUNTRY_ISO_CODE.toFlagEmoji()
+	}
+
 	private companion object {
 		private const val PREFILLED_PREFIX = "+420"
+		private const val DEFAULT_COUNTRY_ISO_CODE = "CZ"
 	}
 }
 

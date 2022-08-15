@@ -10,8 +10,7 @@ buildscript {
     ext.koin = "3.0.2"  // has to be updated in LightBase first
     ext.lifecycle = "2.4.1"
     ext.moshi = '1.13.0'
-    // DO NOT UPGRADE NAV LIB - causes crashes
-    ext.navigation = "2.3.5"
+    ext.navigation = "2.5.1"
     ext.okhttp = "4.9.1"
     ext.retrofit = "2.9.0"
     ext.security_crypto = "1.1.0-alpha03"
