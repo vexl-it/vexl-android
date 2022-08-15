@@ -37,6 +37,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
 				adapter.submitList(messages)
+				binding.chatRv.smoothScrollToPosition(messages.size - 1)
 			}
 		}
 		repeatScopeOnStart {
