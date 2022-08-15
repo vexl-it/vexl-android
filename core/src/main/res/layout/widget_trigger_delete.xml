@@ -12,8 +12,8 @@
 			android:id="@+id/heading"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textAppearance="@style/TextAppearance.Vexl.Offer.Note"
 			android:text="@string/widget_trigger_delete_title"
+			android:textAppearance="@style/TextAppearance.Vexl.Offer.Note"
 			android:textColor="@color/gray_3"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
@@ -85,6 +85,7 @@
 					android:layout_height="match_parent"
 					android:drawablePadding="8dp"
 					android:gravity="center"
+					android:paddingHorizontal="10dp"
 					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe"
 					app:drawableEndCompat="@drawable/ic_chevron_down"
 					app:layout_constraintBottom_toBottomOf="parent"

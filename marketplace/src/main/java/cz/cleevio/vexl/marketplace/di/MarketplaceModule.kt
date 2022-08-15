@@ -42,7 +42,6 @@ val marketplaceModule = module {
 			userRepository = get(),
 			offerRepository = get(),
 			contactRepository = get(),
-			chatRepository = get(),
 			encryptedPreferenceRepository = get(),
 			locationHelper = get()
 		)

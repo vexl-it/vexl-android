@@ -52,7 +52,7 @@
 
     <!-- Register Phone -->
     <string name="init_phone_title">Zadej své telefonní číslo</string>
-    <string name="init_phone_note">Tvůj telefon bude 100\% anonymní</string>
+    <string name="init_phone_note">Tvůj telefon bude stoprocentně anonymní</string>
     <string name="init_phone_hint">Telefonní číslo</string>
     <string name="init_phone_length_not_valid">Telefonní číslo není správně</string>
     <string name="verify_phone_title">Poslali jsme ti kód</string>
@@ -74,9 +74,9 @@
     <string name="image_picker_title">Vyber si, odkud chceš obrázek nahrát</string>
     <string name="user_avatar_title">Nazdar %s\nJak vypadáš?</string>
     <string name="anonymize_user_title">Toto je tvá identita</string>
-    <string name="anonymize_user_title2">Identity anonymized!</string>
+    <string name="anonymize_user_title2">Identita anonymizována!</string>
     <string name="anonymize_user_note">Bez tvého svolení nikdo tvoji identitu neuvidí.</string>
-    <string name="anonymize_user_note2">This is how other users will see you until you reveal your real identity.</string>
+    <string name="anonymize_user_note2">Takto vás uvidí ostatní uživatelé, než požádáte/schválíte o odkrytí identity.</string>
     <string name="anonymize_user_btn">Anonymizovat</string>
 
     <!-- Register Phone Contacts -->

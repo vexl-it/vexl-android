@@ -1,7 +1,10 @@
 package cz.cleevio.vexl.marketplace.newOfferFragment
 
 import android.content.res.Resources
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
+import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
@@ -111,6 +114,40 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		binding.newOfferLocation.setFragmentManager(parentFragmentManager)
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
+		binding.advancedBtn.setOnClickListener {
+			viewModel.isAdvancedSectionShowed = !viewModel.isAdvancedSectionShowed
+			if (viewModel.isAdvancedSectionShowed) {
+				binding.advancedGroup.isVisible = true
+				binding.advancedBtn.animate().setDuration(DURATION).rotation(START_ROTATION).start()
+				Handler(Looper.getMainLooper()).postDelayed(DURATION) {
+					binding.nestedScrollView.smoothScrollTo(
+						binding.newOfferFriendLevel.x.toInt(),
+						binding.newOfferFriendLevel.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / 3
+					)
+				}
+			} else {
+				binding.advancedGroup.isVisible = false
+				binding.advancedBtn.animate().setDuration(DURATION).rotation(MAX_ROTATION).start()
+			}
+		}
+
+		binding.triggerBtn.setOnClickListener {
+			viewModel.isTriggerSectionShowed = !viewModel.isTriggerSectionShowed
+			if (viewModel.isTriggerSectionShowed) {
+				binding.triggerGroup.isVisible = true
+				binding.triggerBtn.animate().setDuration(DURATION).rotation(START_ROTATION).start()
+				Handler(Looper.getMainLooper()).postDelayed(DURATION) {
+					binding.nestedScrollView.smoothScrollTo(
+						binding.newOfferDeleteTrigger.x.toInt(),
+						binding.newOfferDeleteTrigger.y.toInt() - Resources.getSystem().displayMetrics.heightPixels / DISPLAY_THIRD
+					)
+				}
+			} else {
+				binding.triggerGroup.isVisible = false
+				binding.triggerBtn.animate().setDuration(DURATION).rotation(MAX_ROTATION).start()
+			}
+		}
+
 		binding.newOfferPriceTrigger.onFocusChangeListener = { hasFocus ->
 			if (hasFocus) {
 				binding.nestedScrollView.smoothScrollTo(
@@ -192,5 +229,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		private const val DISPLAY_THIRD = 3
 		private const val SUGGESTION_PADDING = 8
 		private const val OFFER_ITEM_PADDING = 32
+		private const val DURATION = 300L
+		private const val MAX_ROTATION = 180f
+		private const val START_ROTATION = 0f
 	}
 }
