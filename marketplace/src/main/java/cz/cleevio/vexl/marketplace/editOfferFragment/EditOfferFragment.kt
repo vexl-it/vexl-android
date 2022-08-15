@@ -1,7 +1,6 @@
 package cz.cleevio.vexl.marketplace.editOfferFragment
 
 import android.content.res.Resources
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
@@ -34,6 +33,13 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 	private val args by navArgs<EditOfferFragmentArgs>()
 
 	override fun bindObservers() {
+		repeatScopeOnStart {
+			viewModel.userFlow.collect {
+				it?.let { user ->
+					binding.newOfferFriendLevel.setUserAvatar(user.avatar, user.anonymousAvatarImageIndex)
+				}
+			}
+		}
 		repeatScopeOnStart {
 			viewModel.errorFlow.collect { resource ->
 				if (resource.status is Status.Error) {

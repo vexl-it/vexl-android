@@ -13,6 +13,7 @@ import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
+import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import cz.cleevio.vexl.marketplace.R
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ import kotlinx.coroutines.withContext
 
 
 class EditOfferViewModel constructor(
+	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
@@ -36,6 +38,8 @@ class EditOfferViewModel constructor(
 	val offer = _offer.asStateFlow()
 
 	private val _queryForSuggestions = MutableStateFlow<Pair<OfferLocationItem?, String>>(Pair(null, ""))
+
+	val userFlow = userRepository.getUserFlow()
 
 	@OptIn(FlowPreview::class)
 	val queryForSuggestions = _queryForSuggestions.asStateFlow()
