@@ -262,6 +262,7 @@ class OfferRepositoryImpl constructor(
 			values.add(offerFilter.priceRangeTopLimit)
 		}*/
 
+		queryBuilder.append(" AND isMine == false")
 		queryBuilder.append(" ORDER BY createdAt DESC, isRequested ASC")
 		val simpleSQLiteQuery = SimpleSQLiteQuery(
 			queryBuilder.toString(),
