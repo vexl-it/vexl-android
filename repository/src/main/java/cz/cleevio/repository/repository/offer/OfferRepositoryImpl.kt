@@ -278,6 +278,27 @@ class OfferRepositoryImpl constructor(
 		}
 	}
 
+	override fun getOffersSortedByDateOfCreationFlow(offerTypeName: String): Flow<List<Offer>> {
+		val queryBuilder = StringBuilder("")
+		val values = arrayListOf<Any>()
+
+		queryBuilder.append("SELECT * FROM OfferEntity ORDER BY createdAt DESC, isRequested ASC")
+
+		val simpleSQLiteQuery = SimpleSQLiteQuery(
+			queryBuilder.toString(),
+			values.toTypedArray()
+		)
+
+		return offerDao.getFilteredOffersFlow(simpleSQLiteQuery).map { list ->
+			list.map {
+				it.offer.fromCache(it.locations, it.commonFriends)
+			}
+		}.map { list ->
+			list.filter { it.offerType == offerTypeName && it.isMine }
+		}
+	}
+
+
 	override suspend fun syncOffers() {
 		val newOffers = getNewOffers()
 		if (newOffers.isSuccess()) overwriteOffers(newOffers.data.orEmpty())

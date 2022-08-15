@@ -24,9 +24,7 @@ class MyOffersViewModel constructor(
 
 	fun loadData() {
 		viewModelScope.launch(Dispatchers.IO) {
-			offerRepository.getOffersFlow().map { list ->
-				list.filter { it.offerType == offerType.name && it.isMine }
-			}.collect {
+			offerRepository.getOffersSortedByDateOfCreationFlow(offerType.name).collect {
 				_offers.emit(it)
 			}
 		}

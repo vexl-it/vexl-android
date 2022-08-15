@@ -51,6 +51,8 @@ interface OfferRepository {
 		offerFilter: OfferFilter
 	): Flow<List<Offer>>
 
+	fun getOffersSortedByDateOfCreationFlow(offerTypeName: String): Flow<List<Offer>>
+
 	suspend fun syncOffers()
 
 	suspend fun getMyOffersCount(offerType: String): Int
