@@ -199,6 +199,8 @@ class OfferRepositoryImpl constructor(
 		values.add(offerTypeName)
 		queryBuilder.append(" AND active == $SQL_VALUE_PLACEHOLDER")
 		values.add(true)
+		queryBuilder.append(" AND isMine == $SQL_VALUE_PLACEHOLDER")
+		values.add(false)
 
 		if (offerFilter.locationType != null) {
 			queryBuilder.append(" AND locationState == $SQL_VALUE_PLACEHOLDER")
@@ -262,7 +264,6 @@ class OfferRepositoryImpl constructor(
 			values.add(offerFilter.priceRangeTopLimit)
 		}*/
 
-		queryBuilder.append(" AND isMine == false")
 		queryBuilder.append(" ORDER BY createdAt DESC, isRequested ASC")
 		val simpleSQLiteQuery = SimpleSQLiteQuery(
 			queryBuilder.toString(),
