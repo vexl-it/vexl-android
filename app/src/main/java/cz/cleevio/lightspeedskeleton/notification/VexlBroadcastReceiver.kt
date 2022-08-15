@@ -14,6 +14,7 @@ class VexlBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 
 	private val navGraphModel by inject<NavMainGraphModel>()
 
+	@Suppress("GlobalCoroutineUsage")
 	override fun onReceive(context: Context?, intent: Intent?) {
 		GlobalScope.launch(Dispatchers.Default) {
 			navGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.Main)
