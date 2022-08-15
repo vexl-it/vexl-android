@@ -1,7 +1,6 @@
 package cz.cleevio.network.api
 
 import cz.cleevio.network.request.group.*
-import cz.cleevio.network.response.group.GroupCreatedResponse
 import cz.cleevio.network.response.group.GroupResponse
 import cz.cleevio.network.response.group.GroupsResponse
 import cz.cleevio.network.response.group.NewMembersResponse
@@ -27,10 +26,10 @@ interface GroupApi {
 	@POST("groups")
 	suspend fun postGroups(
 		@Body createGroupRequest: CreateGroupRequest
-	): Response<GroupCreatedResponse>
+	): Response<GroupResponse>
 
 	//get new members of group
-	@POST("groups/members/new")
+	@POST("groups/members")
 	suspend fun postGroupsMembersNew(
 		@Body newMemberRequest: NewMemberRequest
 	): Response<NewMembersResponse>
