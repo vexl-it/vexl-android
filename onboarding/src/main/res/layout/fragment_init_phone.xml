@@ -104,12 +104,11 @@
 			<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginHorizontal="18dp"
+				android:layout_marginHorizontal="22dp"
 				android:layout_marginTop="16dp"
 				android:drawablePadding="8dp"
 				android:text="@string/init_phone_note"
 				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Note"
-				android:visibility="gone"
 				app:drawableStartCompat="@drawable/ic_eye"
 				app:drawableTint="@color/gray_3"
 				app:layout_constraintEnd_toEndOf="parent"
