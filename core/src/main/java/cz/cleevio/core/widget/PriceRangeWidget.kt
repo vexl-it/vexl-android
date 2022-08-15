@@ -9,6 +9,7 @@ import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.PriceRangeValue
 import cz.cleevio.core.utils.formatCurrency
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
+import java.util.*
 
 class PriceRangeWidget @JvmOverloads constructor(
 	context: Context,
@@ -67,8 +68,8 @@ class PriceRangeWidget @JvmOverloads constructor(
 		this.topLimit = topLimit
 		binding.rangeText.text = resources.getString(
 			R.string.price_range,
-			bottomLimit.toInt().formatCurrency(currency.name, resources.configuration.locale),
-			topLimit.toInt().formatCurrency(currency.name, resources.configuration.locale)
+			bottomLimit.toInt().formatCurrency(currency.name, if (currency == Currency.CZK) resources.configuration.locale else Locale.US),
+			topLimit.toInt().formatCurrency(currency.name, if (currency == Currency.CZK) resources.configuration.locale else Locale.US)
 		)
 	}
 
