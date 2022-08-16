@@ -57,6 +57,7 @@ val marketplaceModule = module {
 
 	viewModel {
 		EditOfferViewModel(
+			userRepository = get(),
 			offerRepository = get(),
 			contactRepository = get(),
 			encryptedPreferenceRepository = get(),

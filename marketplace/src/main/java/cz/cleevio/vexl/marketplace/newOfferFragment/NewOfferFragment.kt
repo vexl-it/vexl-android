@@ -3,20 +3,17 @@ package cz.cleevio.vexl.marketplace.newOfferFragment
 import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
-import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.network.data.Status
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
@@ -37,7 +34,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect {
 				it?.let { user ->
-					binding.newOfferFriendLevel.setUserAvatar(user.avatar)
+					binding.newOfferFriendLevel.setUserAvatar(user.avatar, user.anonymousAvatarImageIndex)
 				}
 			}
 		}
