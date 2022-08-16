@@ -23,6 +23,7 @@ import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
+import cz.cleevio.vexl.marketplace.editOfferFragment.NUMBER_OF_COLUMNS
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
@@ -98,7 +99,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		viewModel.loadMyContactsKeys()
 
 		adapter = SelectGroupAdapter()
-		val layoutManager = GridLayoutManager(requireContext(), 2)
+		val layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_COLUMNS)
 		binding.groupRecycler.layoutManager = layoutManager
 		binding.groupRecycler.adapter = adapter
 

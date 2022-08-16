@@ -20,6 +20,7 @@ import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentFiltersBinding
+import cz.cleevio.vexl.marketplace.editOfferFragment.NUMBER_OF_COLUMNS
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -37,7 +38,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 
 	override fun initView() {
 		adapter = SelectGroupAdapter()
-		val layoutManager = GridLayoutManager(requireContext(), 2)
+		val layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_COLUMNS)
 		binding.groupRecycler.layoutManager = layoutManager
 		binding.groupRecycler.adapter = adapter
 

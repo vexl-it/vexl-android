@@ -26,6 +26,8 @@ import cz.cleevio.vexl.marketplace.newOfferFragment.NewOfferFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+const val NUMBER_OF_COLUMNS = 2
+
 class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 
 	private val binding by viewBinding(FragmentEditOfferBinding::bind)
@@ -170,7 +172,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		viewModel.loadMyContactsKeys()
 
 		adapter = SelectGroupAdapter()
-		val layoutManager = GridLayoutManager(requireContext(), 2)
+		val layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_COLUMNS)
 		binding.groupRecycler.layoutManager = layoutManager
 		binding.groupRecycler.adapter = adapter
 
