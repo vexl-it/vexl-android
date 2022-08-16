@@ -351,6 +351,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_message_identity_reveal_request">Identity reveal request</string>
     <string name="chat_message_identity_reveal_pending">Pending...</string>
     <string name="chat_message_identity_reveal_pending_ok">Got it!</string>
+    <string name="chat_message_identity_reveal_pending_button">Got it</string>
     <string name="chat_message_identity_reveal_pending_tap">Tap to reveal or decline</string>
     <string name="chat_message_identity_confirmation_title">Are you sure you want to reveal your identity?</string>
     <string name="chat_message_identity_confirmation_description">If you reveal identity you will see the identity of your counterparty too.</string>
