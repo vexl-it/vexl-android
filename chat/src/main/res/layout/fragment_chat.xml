@@ -140,6 +140,70 @@
 		tools:listitem="@layout/item_chat_message" />
 
 	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/identity_revealed_wrapper"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:visibility="gone"
+		app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_wrapper"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		tools:visibility="visible">
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/revealed_profile_icon"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_margin="12dp"
+			android:background="@color/white"
+			android:scaleType="fitCenter"
+			android:src="@drawable/ic_default_avatar"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintDimensionRatio="1:1"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.AvatarImage" />
+
+		<TextView
+			android:id="@+id/identity_revealed_title"
+			style="@style/TextAppearance.Vexl.Description"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="12dp"
+			android:layout_marginBottom="2dp"
+			android:text="@string/chat_message_identity_reveal_approved"
+			app:layout_constraintBottom_toTopOf="@id/identity_revealed_name"
+			app:layout_constraintStart_toEndOf="@id/revealed_profile_icon"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_chainStyle="packed" />
+
+		<TextView
+			android:id="@+id/identity_revealed_name"
+			style="@style/TextAppearance.Vexl.ParagraphSmallBold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="12dp"
+			android:textColor="@color/black"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/revealed_profile_icon"
+			app:layout_constraintTop_toBottomOf="@id/identity_revealed_title"
+			tools:text="Maria Graceland" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/identity_revealed_button"
+			style="@style/Widget.Vexl.Chat.BottomPopup.GotIt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="12dp"
+			android:padding="0dp"
+			android:text="@string/got_it"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/identity_reveal_requested_wrapper"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

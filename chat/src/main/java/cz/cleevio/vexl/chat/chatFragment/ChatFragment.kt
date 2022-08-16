@@ -53,6 +53,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					placeholder(R.drawable.random_avatar_5)
 				}
 				setupColoredTitle(chatUserIdentity?.name ?: "")
+
+				binding.identityRevealedName.text = chatUserIdentity?.name
+				binding.revealedProfileIcon.load(chatUserIdentity?.avatar) {
+					crossfade(true)
+					fallback(R.drawable.random_avatar_5)
+					error(R.drawable.random_avatar_5)
+					placeholder(R.drawable.random_avatar_5)
+				}
 			}
 		}
 		repeatScopeOnStart {
@@ -77,6 +85,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				if (revealed) {
 					startSlideAnimation()
 				}
+				binding.identityRevealedWrapper.isVisible = revealed
 			}
 		}
 	}
@@ -156,6 +165,9 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					senderPublicKey = viewModel.senderPublicKey, publicKeyToBlock = viewModel.receiverPublicKey
 				)
 			)
+		}
+		binding.identityRevealedButton.setOnClickListener {
+			binding.identityRevealedWrapper.isVisible = false
 		}
 
 		listenForInsets(binding.container) { insets ->
