@@ -376,6 +376,12 @@
 		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Chat.Item.Date" parent="TextAppearance.Vexl.DescriptionMicro">
+		<item name="android:textColor">@color/gray_3</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Heading1" parent="TextAppearance.MaterialComponents.Headline1">
 		<item name="android:textSize">40sp</item>
 		<item name="android:textColor">@color/white</item>

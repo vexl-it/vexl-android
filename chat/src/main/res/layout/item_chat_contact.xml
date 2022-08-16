@@ -26,11 +26,24 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="12dp"
+		android:layout_marginEnd="12dp"
 		android:ellipsize="end"
 		android:lines="1"
 		android:textAppearance="@style/TextAppearance.Vexl.Chat.Item.Text"
-		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/chat_time"
 		app:layout_constraintStart_toEndOf="@+id/chat_contact_icon"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="User name" />
+
+	<TextView
+		android:id="@+id/chat_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="12dp"
+		android:ellipsize="end"
+		android:lines="1"
+		android:textAppearance="@style/TextAppearance.Vexl.Chat.Item.Date"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="User name" />
 
