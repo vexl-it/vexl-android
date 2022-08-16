@@ -16,7 +16,7 @@ import cz.cleevio.repository.repository.contact.ContactRepository
 
 object OfferUtils {
 
-	const val NO_GROUP = "NONE"
+	private const val NO_GROUP = "NONE"
 
 	suspend fun prepareEncryptedOffers(
 		offerKeys: KeyPair,
@@ -30,8 +30,13 @@ object OfferUtils {
 		//load all public keys for specified level of friends
 		val contactsPublicKeys = when (params.friendLevel.value) {
 			FriendLevel.NONE -> emptyList()
-			FriendLevel.FIRST_DEGREE -> contactRepository.getFirstLevelContactKeys() + contactRepository.getGroupsContactKeys()
-			FriendLevel.SECOND_DEGREE -> contactRepository.getContactKeys()
+			FriendLevel.FIRST_DEGREE ->
+				contactRepository.getFirstLevelContactKeys() +
+					contactRepository.getGroupsContactKeys(params.groupUuids)
+			FriendLevel.SECOND_DEGREE ->
+				contactRepository.getFirstLevelContactKeys() +
+					contactRepository.getSecondLevelContactKeys() +
+					contactRepository.getGroupsContactKeys(params.groupUuids)
 			else -> emptyList()
 		}
 			.toMutableList()
@@ -46,7 +51,12 @@ object OfferUtils {
 						)
 					)
 				}
-			}.distinctBy {
+			}
+			//we need to give keys with group priority, because distinctBy keeps only first element
+			.sortedBy {
+				if (it.groupUuid == null) 1 else 0
+			}
+			.distinctBy {
 				// remove duplicities
 				it.key
 			}
@@ -65,7 +75,7 @@ object OfferUtils {
 			val encryptedOffer = encryptOffer(
 				locationHelper = locationHelper,
 				params = params,
-				// TODO orEmpty should not happen, list in map is not nullable
+				// orEmpty should not happen, list in map is not nullable
 				commonFriends = commonFriends[contactKey.key].orEmpty(),
 				contactKey = contactKey.key,
 				offerKeys = offerKeys,
@@ -129,7 +139,8 @@ object OfferUtils {
 		offerType: String,
 		expiration: Long,
 		active: Boolean,
-		currency: String = "CZK"
+		currency: String = "CZK",
+		groupUuids: List<String>
 	): OfferParams? {
 		if (description.isBlank()) {
 			Toast.makeText(
@@ -200,7 +211,8 @@ object OfferUtils {
 			offerType = offerType,
 			expiration = expiration,
 			active = active,
-			currency = currency
+			currency = currency,
+			groupUuids = groupUuids
 		)
 	}
 }

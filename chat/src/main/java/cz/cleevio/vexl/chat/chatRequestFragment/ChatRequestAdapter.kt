@@ -51,7 +51,9 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_second)
 			}
 			binding.requestMessage.text = item.message.text
-			binding.offerWidget.bind(item.offer!!)
+			item.offer?.let {
+				binding.offerWidget.bind(item = it, group = item.group)
+			}
 			val offerList = item.offer?.commonFriends.orEmpty().map { it.contact }
 			adapter.submitList(offerList)
 			binding.noneCommonFriends.isVisible = offerList.isEmpty()

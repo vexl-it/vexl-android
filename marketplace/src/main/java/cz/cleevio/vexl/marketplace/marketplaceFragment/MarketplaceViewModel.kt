@@ -51,8 +51,6 @@ class MarketplaceViewModel constructor(
 	fun syncMyGroupsData() {
 		viewModelScope.launch(Dispatchers.IO) {
 			groupRepository.syncMyGroups()
-
-			groupRepository.syncAllGroupsMembers()
 		}
 	}
 }

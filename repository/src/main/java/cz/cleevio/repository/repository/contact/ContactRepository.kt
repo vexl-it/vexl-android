@@ -24,7 +24,11 @@ interface ContactRepository {
 
 	fun getFirstLevelContactKeys(): List<ContactKey>
 
-	fun getGroupsContactKeys(): List<ContactKey>
+	fun getSecondLevelContactKeys(): List<ContactKey>
+
+	fun getAllGroupsContactKeys(): List<ContactKey>
+
+	fun getGroupsContactKeys(groupUuids: List<String>): List<ContactKey>
 
 	suspend fun deleteMyUser(): Resource<Unit>
 

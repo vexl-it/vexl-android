@@ -6,6 +6,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import cz.cleevio.core.model.*
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -19,11 +20,13 @@ import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
+import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentEditOfferBinding
 import cz.cleevio.vexl.marketplace.newOfferFragment.NewOfferFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+const val NUMBER_OF_COLUMNS = 2
 
 class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 
@@ -31,6 +34,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 	override val viewModel by viewModel<EditOfferViewModel>()
 
 	private val args by navArgs<EditOfferFragmentArgs>()
+	lateinit var adapter: SelectGroupAdapter
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
@@ -54,6 +58,12 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 						}
 					}
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.groups.collect { groups ->
+				adapter.submitList(groups)
 			}
 		}
 
@@ -161,6 +171,11 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 	override fun initView() {
 		viewModel.loadMyContactsKeys()
 
+		adapter = SelectGroupAdapter()
+		val layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_COLUMNS)
+		binding.groupRecycler.layoutManager = layoutManager
+		binding.groupRecycler.adapter = adapter
+
 		viewModel.loadOfferFromCacheById(args.offerId)
 
 		binding.newOfferTitle.setListeners(
@@ -245,7 +260,8 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			offerType = viewModel.offer.value?.offerType ?: return,
 			expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
 			active = active,
-			currency = binding.amountRange.currentCurrency.name
+			currency = binding.amountRange.currentCurrency.name,
+			groupUuids = adapter.getSelectedGroupUuids()
 		)
 
 		if (params != null) {

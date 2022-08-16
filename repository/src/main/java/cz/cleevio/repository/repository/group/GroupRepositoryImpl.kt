@@ -40,7 +40,7 @@ class GroupRepositoryImpl constructor(
 				CreateGroupRequest(
 					name = name,
 					logo = logo,
-					expiration = expiration,
+					expirationAt = expiration,
 					closureAt = closureAt,
 				)
 			)
@@ -221,6 +221,8 @@ class GroupRepositoryImpl constructor(
 		request = { groupApi.getGroups(code) },
 		mapper = { it?.fromNetwork() }
 	)
+
+	override suspend fun findGroupByUuidInDB(groupUuid: String): Group? = groupDao.getOneByUuid(groupUuid)?.fromEntity()
 }
 
 fun NewMembersResponse.toContactKey(): List<ContactKey> {

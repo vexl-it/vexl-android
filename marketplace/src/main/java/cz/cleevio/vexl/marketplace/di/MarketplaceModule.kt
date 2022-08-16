@@ -33,6 +33,7 @@ val marketplaceModule = module {
 
 	viewModel {
 		OffersViewModel(
+			groupRepository = get(),
 			offerRepository = get()
 		)
 	}
@@ -42,6 +43,7 @@ val marketplaceModule = module {
 			userRepository = get(),
 			offerRepository = get(),
 			contactRepository = get(),
+			groupRepository = get(),
 			encryptedPreferenceRepository = get(),
 			locationHelper = get()
 		)
@@ -49,6 +51,7 @@ val marketplaceModule = module {
 
 	viewModel {
 		RequestOfferViewModel(
+			groupRepository = get(),
 			offerRepository = get(),
 			chatRepository = get(),
 			encryptedPreferenceRepository = get()
@@ -62,13 +65,15 @@ val marketplaceModule = module {
 			contactRepository = get(),
 			encryptedPreferenceRepository = get(),
 			locationHelper = get(),
+			groupRepository = get(),
 		)
 	}
 
 	viewModel { (offerType: OfferType) ->
 		FiltersViewModel(
 			offerType = offerType,
-			offerRepository = get()
+			offerRepository = get(),
+			groupRepository = get()
 		)
 	}
 
@@ -76,6 +81,7 @@ val marketplaceModule = module {
 		MyOffersViewModel(
 			offerType = offerType,
 			offerRepository = get(),
+			groupRepository = get(),
 		)
 	}
 }

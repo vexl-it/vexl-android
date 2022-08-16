@@ -6,26 +6,30 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cz.cleevio.core.widget.OfferWidget
-import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.model.offer.OfferWithGroup
 import cz.cleevio.vexl.marketplace.databinding.ItemOfferBinding
 
-class OffersAdapter constructor(
+class OffersAdapter(
 	val requestOffer: (String) -> Unit,
 	val offerMode: OfferWidget.Mode = OfferWidget.Mode.MARKETPLACE
-) : ListAdapter<Offer, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Offer>() {
-	override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem.offerId == newItem.offerId
+) : ListAdapter<OfferWithGroup, OffersAdapter.ViewHolder>(object : DiffUtil.ItemCallback<OfferWithGroup>() {
+	override fun areItemsTheSame(oldItem: OfferWithGroup, newItem: OfferWithGroup): Boolean = oldItem.offer.offerId == newItem.offer.offerId
 
-	override fun areContentsTheSame(oldItem: Offer, newItem: Offer): Boolean = oldItem == newItem
+	override fun areContentsTheSame(oldItem: OfferWithGroup, newItem: OfferWithGroup): Boolean = oldItem == newItem
 }) {
 
 	inner class ViewHolder constructor(
 		private val binding: ItemOfferBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: Offer) {
-			binding.offerWidget.bind(item, requestOffer, offerMode)
+		fun bind(item: OfferWithGroup) {
+			binding.offerWidget.bind(
+				item = item.offer,
+				requestOffer = requestOffer,
+				mode = offerMode,
+				group = item.group
+			)
 		}
-
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =

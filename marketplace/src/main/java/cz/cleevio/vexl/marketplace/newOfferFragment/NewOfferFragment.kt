@@ -9,6 +9,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.OfferUtils
@@ -20,7 +21,9 @@ import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
+import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
+import cz.cleevio.vexl.marketplace.editOfferFragment.NUMBER_OF_COLUMNS
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
@@ -29,6 +32,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 	override val viewModel by viewModel<NewOfferViewModel>()
 
 	private val args by navArgs<NewOfferFragmentArgs>()
+	lateinit var adapter: SelectGroupAdapter
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
@@ -50,6 +54,12 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 						binding.progress.isVisible = false
 					}
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.groups.collect { groups ->
+				adapter.submitList(groups)
 			}
 		}
 
@@ -87,6 +97,11 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 	override fun initView() {
 		viewModel.loadMyContactsKeys()
+
+		adapter = SelectGroupAdapter()
+		val layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_COLUMNS)
+		binding.groupRecycler.layoutManager = layoutManager
+		binding.groupRecycler.adapter = adapter
 
 		binding.newOfferTitle.setTypeAndTitle(
 			when (args.offerType) {
@@ -203,7 +218,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				offerType = args.offerType.name,
 				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
 				active = true,
-				currency = binding.newOfferRange.currentCurrency.name
+				currency = binding.newOfferRange.currentCurrency.name,
+				groupUuids = adapter.getSelectedGroupUuids()
 			)
 
 			if (params != null) {

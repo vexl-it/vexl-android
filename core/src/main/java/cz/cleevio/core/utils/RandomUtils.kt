@@ -23,6 +23,10 @@ object RandomUtils {
 
 	fun getRandomImageDrawableId(avatarIndex: Int): Int = imageOptions[avatarIndex]
 
-	//todo: expand when we receive icons
-	fun selectRandomImage(context: Context, drawableInt: Int): Drawable? = context.getDrawable(drawableInt)
+	fun selectRandomImage(
+		context: Context,
+		drawableInt: Int = getRandomImageDrawableId(
+			getAvatarIndex()
+		)
+	): Drawable? = context.getDrawable(drawableInt)
 }
