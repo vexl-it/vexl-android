@@ -44,12 +44,8 @@ class EditAvatarViewModel constructor(
 
 	fun deleteAvatar() {
 		viewModelScope.launch(Dispatchers.IO) {
-			userRepository.updateUser(
-				avatar = null,
-				avatarImageExtension = IMAGE_EXTENSION
-			).let {
-				userRepository.deleteUserAvatar()
-				_wasSuccessful.send(it.isSuccess())
+			userRepository.deleteAvatar().let {
+				_wasSuccessful.send(true)
 			}
 		}
 	}

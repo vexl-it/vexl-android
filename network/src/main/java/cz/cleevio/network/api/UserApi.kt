@@ -42,6 +42,9 @@ interface UserApi {
 		@Body userRequest: UserRequest
 	): Response<UserResponse>
 
+	@DELETE("user/me/avatar")
+	suspend fun deleteAvatar(): Response<ResponseBody>
+
 	@DELETE("user/me")
 	suspend fun deleteUserMe(): Response<ResponseBody>
 

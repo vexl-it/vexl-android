@@ -175,6 +175,12 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
+	override suspend fun deleteAvatar(): Resource<Unit> = tryOnline(
+		doOnSuccess = { deleteUserAvatar() },
+		request = { userRestApi.deleteAvatar() },
+		mapper = { }
+	)
+
 	override suspend fun deleteLocalUser() =
 		userDao.deleteAll()
 
@@ -191,7 +197,7 @@ class UserRepositoryImpl constructor(
 
 	}
 
-	override suspend fun deleteUserAvatar() {
+	private suspend fun deleteUserAvatar() {
 		userDao.getUser()?.id?.let {
 			userDao.deleteUserAvatar(it)
 		}
