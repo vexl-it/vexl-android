@@ -10,6 +10,7 @@ import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatContactBinding
+import java.text.SimpleDateFormat
 
 class ChatContactListAdapter constructor(
 	val chatWithUser: (ChatListUser) -> Unit
@@ -54,6 +55,10 @@ class ChatContactListAdapter constructor(
 			}
 
 			binding.chatLastMessage.text = item.message.text
+			binding.chatTime.text = SimpleDateFormat.getDateTimeInstance(
+				SimpleDateFormat.SHORT,
+				SimpleDateFormat.SHORT
+			).format(item.message.time)
 
 			binding.container.setOnClickListener {
 				chatWithUser(item)
