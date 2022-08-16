@@ -12,6 +12,7 @@ import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.map
 
 class ChatViewModel constructor(
 	private val chatRepository: ChatRepository,
@@ -40,7 +41,9 @@ class ChatViewModel constructor(
 			inboxPublicKey = message.inboxPublicKey,
 			firstKey = message.senderPublicKey,
 			secondKey = message.recipientPublicKey
-		)
+		).map {
+			processMessages(it)
+		}
 	}
 
 	val hasPendingIdentityRevealRequests = communicationRequest.message.let { message ->
@@ -149,6 +152,50 @@ class ChatViewModel constructor(
 				chatRepository.syncMessages(myInboxPublicKey)
 				delay(MESSAGE_PULL_TIMEOUT)
 			}
+		}
+	}
+
+	private fun processMessages(originalMessages: List<ChatMessage>): List<ChatMessage> {
+		val processedMessages = mutableListOf<ChatMessage>()
+		originalMessages.forEach { originalMessage ->
+			when (originalMessage.type) {
+				MessageType.APPROVE_REVEAL, MessageType.DISAPPROVE_REVEAL -> {
+					// Do nothing
+				}
+				MessageType.REQUEST_REVEAL -> {
+					// find nearest response
+					val nearestRequestIdentityResponse = getNearestRevealIdentityResponse(originalMessage, originalMessages)
+					if (nearestRequestIdentityResponse != null) {
+						processedMessages.add(
+							// we replace the original message with the response, but with time of the original message
+							nearestRequestIdentityResponse.copy(
+								time = originalMessage.time
+							)
+						)
+					} else {
+						// no response, so we don't replace anything
+						processedMessages.add(originalMessage)
+					}
+				}
+				else -> {
+					processedMessages.add(originalMessage)
+				}
+			}
+
+		}
+		return processedMessages.toList()
+	}
+
+	private fun getNearestRevealIdentityResponse(requestRevealMessage: ChatMessage, messages: List<ChatMessage>): ChatMessage? {
+		return messages.filter {
+			// filter reveal identity responses
+			it.type == MessageType.APPROVE_REVEAL || it.type == MessageType.DISAPPROVE_REVEAL
+		}.filter {
+			// filter messages that came after our message
+			requestRevealMessage.time < it.time
+		}.minByOrNull {
+			// and get nearest by time
+			it.time
 		}
 	}
 
