@@ -142,6 +142,13 @@ class ChatViewModel constructor(
 
 			when (response.status) {
 				is Status.Success -> {
+					if (approved) {
+						chatRepository.deAnonymizeUser(
+							inboxKey = communicationRequest.message.inboxPublicKey,
+							contactPublicKey = receiverPublicKey,
+							myPublicKey = senderPublicKey
+						)
+					}
 					chatRepository.solveIdentityRevealRequest(
 						inboxPublicKey = communicationRequest.message.inboxPublicKey,
 						firstKey = senderPublicKey,

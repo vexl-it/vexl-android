@@ -92,6 +92,18 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		secondKey: String
 	): Flow<List<ChatMessageEntity>>
 
+	@Query(
+		"SELECT * " +
+			"FROM ChatMessageEntity " +
+			"WHERE type == 'REQUEST_REVEAL' " +
+			"AND inboxPublicKey == :inboxPublicKey " +
+			" AND (senderPublicKey == :userPublicKey AND recipientPublicKey == :myPublicKey) " +
+			"AND isProcessed == 0 AND isMine = 0 " +
+			"ORDER BY time DESC " +
+			"LIMIT 1"
+	)
+	fun getLastRequestRevealMessageByUser(inboxPublicKey: String, userPublicKey: String, myPublicKey: String): ChatMessageEntity?
+
 	@Suppress("FunctionMaxLength")
 	@Query(
 		"UPDATE ChatMessageEntity " +
