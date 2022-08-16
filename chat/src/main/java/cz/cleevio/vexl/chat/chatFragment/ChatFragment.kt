@@ -17,7 +17,6 @@ import coil.load
 import com.google.android.material.snackbar.Snackbar
 import cz.cleevio.core.utils.BuySellColorizer
 import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.showSnackbar
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
 import cz.cleevio.vexl.chat.R
@@ -140,15 +139,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				receiverPublicKey = viewModel.receiverPublicKey,
 				inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey,
 				onSendSuccess = {
-					showSnackbar(
-						container = binding.container,
-						message = getString(R.string.chat_identity_reveal_sent),
-						duration = Snackbar.LENGTH_INDEFINITE,
-						buttonText = R.string.chat_message_identity_reveal_pending_ok,
-						action = {}
-					)
+					binding.identityRevealSentWrapper.isVisible = true
 				}
 			))
+		}
+		binding.revealRequestButton.setOnClickListener {
+			binding.identityRevealSentWrapper.isVisible = false
 		}
 		binding.deleteChatBtn.setOnClickListener {
 			showBottomDialog(

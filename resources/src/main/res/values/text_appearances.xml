@@ -739,7 +739,7 @@
 		<item name="android:letterSpacing">-0.04</item>
 	</style>
 
-	<style name="TextAppearance.Vexl.RequestIdentity.Button" parent="TextAppearance.MaterialComponents.Body1">
+	<style name="TextAppearance.Vexl.RevealIdentity.Button" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textSize">16sp</item>
 		<item name="lineHeight">19.92dp</item>
 		<item name="android:fontFamily">@font/tt_satoshi_500</item>
