@@ -216,7 +216,7 @@
 		tools:visibility="visible">
 
 		<com.google.android.material.imageview.ShapeableImageView
-			android:id="@+id/profile_icon"
+			android:id="@+id/identity_reveal_requested_icon"
 			android:layout_width="48dp"
 			android:layout_height="48dp"
 			android:layout_margin="12dp"
@@ -239,7 +239,7 @@
 			android:text="@string/chat_message_identity_reveal_request"
 			android:textColor="@color/black"
 			app:layout_constraintBottom_toTopOf="@id/identity_reveal_requested_description"
-			app:layout_constraintStart_toEndOf="@id/profile_icon"
+			app:layout_constraintStart_toEndOf="@id/identity_reveal_requested_icon"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintVertical_chainStyle="packed" />
 
@@ -251,7 +251,7 @@
 			android:layout_marginStart="12dp"
 			android:text="@string/chat_message_identity_reveal_pending_tap"
 			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintStart_toEndOf="@id/profile_icon"
+			app:layout_constraintStart_toEndOf="@id/identity_reveal_requested_icon"
 			app:layout_constraintTop_toBottomOf="@id/identity_reveal_requested_title" />
 
 		<ImageButton

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
@@ -19,6 +20,8 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 
 	override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem == newItem
 }) {
+
+	private var _chatUserIdentity: ChatUserIdentity? = null
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val type: MessageType = MessageType.values()[viewType]
@@ -60,6 +63,10 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 	override fun getItemViewType(position: Int): Int =
 		getItem(position).type.ordinal
 
+	fun updateChatUserIdentity(chatUserIdentity: ChatUserIdentity?) {
+		_chatUserIdentity = chatUserIdentity
+	}
+
 	inner class TextViewHolder constructor(
 		private val binding: ItemChatMessageBinding
 	) : RecyclerView.ViewHolder(binding.root) {
@@ -86,7 +93,12 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 			itemView.context.let { context ->
 				when (item.type) {
 					MessageType.REQUEST_REVEAL -> {
-						binding.chatContactIcon.setImageDrawable(context.getDrawable(R.drawable.ic_default_avatar))
+						binding.chatContactIcon.load(_chatUserIdentity?.avatar) {
+							crossfade(true)
+							fallback(R.drawable.random_avatar_5)
+							error(R.drawable.random_avatar_5)
+							placeholder(R.drawable.random_avatar_5)
+						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_header)
 						binding.identityRevealDescription.text = context.getString(R.string.chat_message_identity_reveal_subheader)
 					}
