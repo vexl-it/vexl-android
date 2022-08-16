@@ -1,5 +1,6 @@
 package cz.cleevio.onboarding.ui.faqPageFragment
 
+import cz.cleevio.core.utils.fromHtml
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentFaqPageBinding
@@ -14,7 +15,7 @@ class FaqPageFragment : BaseFragment(R.layout.fragment_faq_page) {
 	override fun initView() {
 		arguments?.let { args ->
 			binding.faqTitle.text = args.getString(FAQ_TITLE) ?: ""
-			binding.faqSubtitle.text = args.getString(FAQ_SUBTITLE) ?: ""
+			binding.faqSubtitle.text = fromHtml(args.getString(FAQ_SUBTITLE) ?: "")
 			binding.faqImage.setImageResource(args.getInt(FAQ_RESOURCE_ID))
 		}
 	}

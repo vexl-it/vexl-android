@@ -1,6 +1,8 @@
 package cz.cleevio.onboarding.ui.faqParentFragment
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import androidx.core.text.bold
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -50,7 +52,15 @@ class PagerAdapter constructor(
 			}
 			6 -> fragment.arguments = Bundle().apply {
 				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_seven_title))
-				putString(FaqPageFragment.FAQ_SUBTITLE, fragmentActivity.getString(R.string.faq_screen_seven_subtitle))
+				putString(
+					FaqPageFragment.FAQ_SUBTITLE,
+					String.format(
+						CONTACT_SUBTITLE,
+						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_1),
+						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_2),
+						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_3)
+					)
+				)
 				putInt(FaqPageFragment.FAQ_RESOURCE_ID, R.drawable.ic_vexl_man)
 			}
 			else -> error("Wrong position $position for onboarding")
@@ -61,5 +71,6 @@ class PagerAdapter constructor(
 
 	companion object {
 		private const val NUMBER_OF_PAGES = 7
+		private const val CONTACT_SUBTITLE = "%s <font color='#101010'><b>%s</b></font> %s"
 	}
 }
