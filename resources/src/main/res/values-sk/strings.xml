@@ -341,6 +341,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_message_identity_reveal_request">Žádost o odhalení</string>
     <string name="chat_message_identity_reveal_pending">Čeká na odpověď...</string>
     <string name="chat_message_identity_reveal_pending_ok">Rozumím!</string>
+    <string name="chat_message_identity_reveal_pending_button">Rozumím</string>
     <string name="chat_message_identity_reveal_pending_tap">Odhal, nebo odmítni</string>
     <string name="chat_message_identity_confirmation_title">Určitě se chceš odhalit?</string>
     <string name="chat_message_identity_confirmation_description">Po odhalení se ti zobrazí i tvůj protějšek</string>

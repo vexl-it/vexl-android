@@ -61,6 +61,12 @@
 		<item name="cornerSize">12dp</item>
 	</style>
 
+	<style name="ShapeAppearanceOverlay.Cleevio.Vexl.IdentityReveal.Button" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">8dp</item>
+		<item name="backgroundColor">@color/gray_6</item>
+	</style>
+
 	<style name="ShapeAppearanceOverlay.Cleevio.Dialog" parent="ShapeAppearance.MaterialComponents.MediumComponent">
 		<item name="cornerSize">@dimen/corner_radius_dialog</item>
 	</style>
