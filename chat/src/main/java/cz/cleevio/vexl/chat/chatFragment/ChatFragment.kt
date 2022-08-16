@@ -45,7 +45,20 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		repeatScopeOnStart {
 			viewModel.chatUserIdentity.collect { chatUserIdentity ->
+				adapter.updateChatUserIdentity(chatUserIdentity)
 				binding.profileImage.load(chatUserIdentity?.avatar) {
+					crossfade(true)
+					fallback(R.drawable.random_avatar_5)
+					error(R.drawable.random_avatar_5)
+					placeholder(R.drawable.random_avatar_5)
+				}
+				binding.identityRevealRequestedIcon.load(chatUserIdentity?.avatar) {
+					crossfade(true)
+					fallback(R.drawable.random_avatar_5)
+					error(R.drawable.random_avatar_5)
+					placeholder(R.drawable.random_avatar_5)
+				}
+				binding.identityRevealSentIcon.load(chatUserIdentity?.avatar) {
 					crossfade(true)
 					fallback(R.drawable.random_avatar_5)
 					error(R.drawable.random_avatar_5)
