@@ -164,6 +164,8 @@ class ChatViewModel constructor(
 	private fun processMessages(originalMessages: List<ChatMessage>): List<ChatMessage> {
 		val processedMessages = mutableListOf<ChatMessage>()
 		originalMessages.forEach { originalMessage ->
+
+			// replace request with response
 			when (originalMessage.type) {
 				MessageType.APPROVE_REVEAL, MessageType.DISAPPROVE_REVEAL -> Unit // Do nothing
 				MessageType.REQUEST_REVEAL -> {
@@ -183,6 +185,14 @@ class ChatViewModel constructor(
 				}
 				else -> {
 					processedMessages.add(originalMessage)
+				}
+			}
+
+			// find out if the animation is to be done
+			if (originalMessage.type == MessageType.APPROVE_REVEAL && !originalMessage.isMine && !originalMessage.isProcessed) {
+				_identityRevealed.tryEmit(true)
+				viewModelScope.launch(Dispatchers.IO) {
+					chatRepository.processMessage(originalMessage)
 				}
 			}
 

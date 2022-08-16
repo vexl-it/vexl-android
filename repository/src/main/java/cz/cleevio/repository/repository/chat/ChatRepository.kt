@@ -31,6 +31,8 @@ interface ChatRepository {
 		messageType: String
 	): Resource<Unit>
 
+	suspend fun processMessage(message: ChatMessage)
+
 	suspend fun changeUserBlock(senderKeyPair: KeyPair, publicKeyToBlock: String, block: Boolean): Resource<Unit>
 
 	suspend fun askForCommunicationApproval(publicKey: String, offerId: String, message: ChatMessage): Resource<Unit>
