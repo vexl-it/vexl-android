@@ -402,6 +402,9 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
     <string name="faq_screen_seven_title">How do I contact Vexl?</string>
     <string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
+    <string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
+    <string name="faq_screen_seven_subtitle_2">support@vexl.it.</string>
+    <string name="faq_screen_seven_subtitle_3"> For a private comms, you can also send us an e2ee mail.\n\nOr you can meet us during your next P2P trade! 😻</string>
 
     <!-- Permissions -->
     <string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>

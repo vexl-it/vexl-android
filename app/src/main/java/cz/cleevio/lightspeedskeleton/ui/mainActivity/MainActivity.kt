@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			.getDynamicLink(intent)
 			.addOnSuccessListener(this) { pendingDynamicLinkData ->
 				try {
-					val groupCode = pendingDynamicLinkData.link?.lastPathSegment?.toLong() ?: 0L
+					val groupCode = pendingDynamicLinkData?.link?.lastPathSegment?.toLong() ?: 0L
 					viewModel.encryptedPreferenceRepository.groupCode = groupCode
 				} catch (ex: NumberFormatException) {
 					Timber.e(ex)
