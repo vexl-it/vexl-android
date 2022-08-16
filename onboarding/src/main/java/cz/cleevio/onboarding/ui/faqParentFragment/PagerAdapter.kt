@@ -19,6 +19,8 @@ class PagerAdapter constructor(
 	override fun createFragment(position: Int): Fragment {
 		val fragment = FaqPageFragment()
 
+		// TODO add another illustrations
+
 		when (position) {
 			0 -> fragment.arguments = Bundle().apply {
 				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_one_title))
@@ -59,7 +61,7 @@ class PagerAdapter constructor(
 						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_1),
 						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_2),
 						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_3)
-					)
+					).replace(IOS_NEW_LINE, ANDROID_NEW_LINE)
 				)
 				putInt(FaqPageFragment.FAQ_RESOURCE_ID, R.drawable.ic_vexl_man)
 			}
@@ -72,5 +74,7 @@ class PagerAdapter constructor(
 	companion object {
 		private const val NUMBER_OF_PAGES = 7
 		private const val CONTACT_SUBTITLE = "%s <font color='#101010'><b>%s</b></font> %s"
+		private const val IOS_NEW_LINE = "\n"
+		private const val ANDROID_NEW_LINE = "<br>"
 	}
 }
