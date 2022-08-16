@@ -18,7 +18,8 @@ import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
-import java.util.*
+
+const val LOCATION_DISPLAY_LIMIT = 3
 
 class OfferWidget @JvmOverloads constructor(
 	context: Context,
@@ -82,7 +83,7 @@ class OfferWidget @JvmOverloads constructor(
 			}
 		}
 
-		binding.card.location.text = item.location.take(3).joinToString(", ") { it.city }
+		binding.card.location.text = item.location.take(LOCATION_DISPLAY_LIMIT).joinToString(", ") { it.city }
 
 		binding.userType.text = if (mode == Mode.MY_OFFER) {
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))

@@ -60,7 +60,7 @@ class JoinGroupBottomSheetDialog constructor(
 					}
 					is Status.Error -> {
 						if (isFromDeeplink) {
-							Timber.e("Couldn't join group with deeplink code ${groupCode}")
+							Timber.e("Couldn't join group with deeplink code $groupCode")
 							FirebaseCrashlytics.getInstance().recordException(IllegalStateException("Deeplink group join failure"))
 						}
 					}

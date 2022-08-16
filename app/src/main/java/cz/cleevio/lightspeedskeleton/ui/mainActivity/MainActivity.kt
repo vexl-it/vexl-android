@@ -86,7 +86,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 					viewModel.encryptedPreferenceRepository.groupCode = groupCode
 				} catch (ex: NumberFormatException) {
 					Timber.e(ex)
-					FirebaseCrashlytics.getInstance().recordException(IllegalStateException("${pendingDynamicLinkData.link?.lastPathSegment} is not valid Long"))
+					FirebaseCrashlytics.getInstance().recordException(
+						IllegalStateException("${pendingDynamicLinkData.link?.lastPathSegment} is not valid Long")
+					)
 				}
 			}
 			.addOnFailureListener(this) { exception ->
