@@ -1,15 +1,19 @@
 package cz.cleevio.vexl.chat.chatFragment
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.content.res.Resources
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cz.cleevio.core.utils.BuySellColorizer
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -68,6 +72,13 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				)
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.identityRevealed.collect { revealed ->
+				if (revealed) {
+					startSlideAnimation()
+				}
+			}
+		}
 	}
 
 	override fun initView() {
@@ -85,10 +96,10 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			showBottomDialog(
 				RevealIdentityBottomSheetDialog(
 					onApprove = {
-						viewModel.resolveIdentityRevealRequest(true)
+						viewModel.resolveIdentityRevealRequest(true, resources.getInteger(R.integer.anonymize_duration).toLong())
 					},
 					onReject = {
-						viewModel.resolveIdentityRevealRequest(false)
+						viewModel.resolveIdentityRevealRequest(false, resources.getInteger(R.integer.anonymize_duration).toLong())
 					}
 				)
 			)
@@ -185,5 +196,49 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				binding.messageEdit.text?.clear()
 			}
 		}
+	}
+
+	private fun startSlideAnimation() {
+		val firstPartAnimation = ObjectAnimator.ofFloat(
+			binding.slideEffect,
+			TRANSITION_X,
+			Resources.getSystem().displayMetrics.widthPixels.toFloat(),
+			0f
+		).apply {
+			duration = resources.getInteger(R.integer.anonymize_duration).toLong()
+			interpolator = DecelerateInterpolator()
+		}
+
+		val secondPartAnimation = ObjectAnimator.ofFloat(
+			binding.slideEffect,
+			TRANSITION_X,
+			0f,
+			-Resources.getSystem().displayMetrics.widthPixels.toFloat()
+		).apply {
+			duration = resources.getInteger(R.integer.anonymize_duration).toLong()
+			interpolator = AccelerateInterpolator()
+		}
+
+		val animationSet = AnimatorSet()
+		animationSet.playSequentially(firstPartAnimation, secondPartAnimation)
+
+		animationSet.addListener(object : Animator.AnimatorListener {
+			override fun onAnimationStart(animation: Animator?) {
+				binding.slideEffect.isVisible = true
+			}
+
+			override fun onAnimationEnd(animation: Animator?) {
+				binding.slideEffect.isVisible = false
+			}
+
+			override fun onAnimationCancel(animation: Animator?) = Unit
+			override fun onAnimationRepeat(animation: Animator?) = Unit
+		})
+
+		animationSet.start()
+	}
+
+	private companion object {
+		private const val TRANSITION_X = "x"
 	}
 }

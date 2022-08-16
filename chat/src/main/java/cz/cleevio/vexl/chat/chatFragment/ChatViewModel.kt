@@ -22,8 +22,11 @@ class ChatViewModel constructor(
 
 	protected var messagePullJob: Job? = null
 
-	val _messageSentSuccessfully = MutableSharedFlow<Boolean>(replay = 1)
+	private val _messageSentSuccessfully = MutableSharedFlow<Boolean>(replay = 1)
 	val messageSentSuccessfully = _messageSentSuccessfully.asSharedFlow()
+
+	private val _identityRevealed = MutableSharedFlow<Boolean>(replay = 1)
+	val identityRevealed = _identityRevealed.asSharedFlow()
 
 	val chatUserIdentity = communicationRequest.let { communicationRequest ->
 		chatRepository.getChatUserIdentityFlow(
@@ -108,7 +111,7 @@ class ChatViewModel constructor(
 		}
 	}
 
-	fun resolveIdentityRevealRequest(approved: Boolean) {
+	fun resolveIdentityRevealRequest(approved: Boolean, delay: Long) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val messageType = if (approved) MessageType.APPROVE_REVEAL else MessageType.DISAPPROVE_REVEAL
 
@@ -118,6 +121,9 @@ class ChatViewModel constructor(
 					image = it.avatar
 				)
 			}
+
+			_identityRevealed.tryEmit(approved)
+			delay(maxOf(0, delay - 150))
 
 			val response = chatRepository.sendMessage(
 				senderPublicKey = senderPublicKey,
@@ -129,7 +135,7 @@ class ChatViewModel constructor(
 					type = messageType,
 					deanonymizedUser = user,
 					isMine = true,
-					isProcessed = false
+					isProcessed = true
 				),
 				messageType = messageType.name
 			)

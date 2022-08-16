@@ -275,4 +275,12 @@
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<View
+		android:id="@+id/slide_effect"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@drawable/background_splash_screen_gradient"
+		android:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
