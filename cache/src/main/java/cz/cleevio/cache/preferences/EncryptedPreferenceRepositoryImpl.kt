@@ -91,6 +91,12 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			numberOfImportedContactsFlow.tryEmit(value)
 		}
 
+	override var groupCode: Long
+		get() = getLongFromEP(KEY_GROUP_CODE, 0)
+		set(value) {
+			putLongToEP(KEY_GROUP_CODE, value)
+		}
+
 	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 	override val selectedCurrencyFlow: MutableStateFlow<String> = MutableStateFlow(selectedCurrency)
 	override val numberOfImportedContactsFlow: MutableStateFlow<Int> = MutableStateFlow(numberOfImportedContacts)
@@ -145,5 +151,6 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_SELECTED_CRYPTO_CURRENCY = "selected_crypto_currency"
 		private const val ARE_SCREENSHOTS_ALLOWED = "are_screenshots_allowed"
 		private const val NUMBER_OF_CONTACTS_IMPORTED = "number_of_contacts_imported"
+		private const val KEY_GROUP_CODE = "group_code"
 	}
 }

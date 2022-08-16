@@ -42,13 +42,19 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 	fun setUserAvatar(avatar: String?, anonymousAvatarImageIndex: Int?) {
 		if (avatar == null) {
 			if (anonymousAvatarImageIndex != null) {
-				binding.firstDegreeAvatar.load(RandomUtils.getRandomImageDrawableId(anonymousAvatarImageIndex), imageLoader = ImageLoader.invoke(context)) {
+				binding.firstDegreeAvatar.load(
+					drawableResId = RandomUtils.getRandomImageDrawableId(anonymousAvatarImageIndex),
+					imageLoader = ImageLoader.invoke(context)
+				) {
 					crossfade(true)
 					fallback(R.drawable.random_avatar_3)
 					error(R.drawable.random_avatar_3)
 					placeholder(R.drawable.random_avatar_3)
 				}
-				binding.secondDegreeAvatar.load(RandomUtils.getRandomImageDrawableId(anonymousAvatarImageIndex), imageLoader = ImageLoader.invoke(context)) {
+				binding.secondDegreeAvatar.load(
+					drawableResId = RandomUtils.getRandomImageDrawableId(anonymousAvatarImageIndex),
+					imageLoader = ImageLoader.invoke(context)
+				) {
 					crossfade(true)
 					fallback(R.drawable.random_avatar_3)
 					error(R.drawable.random_avatar_3)

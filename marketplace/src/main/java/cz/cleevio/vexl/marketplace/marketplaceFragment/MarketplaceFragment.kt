@@ -6,10 +6,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.cleevio.core.base.BaseGraphFragment
+import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.setEnterTransitionZSharedAxis
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
+import cz.cleevio.core.widget.JoinGroupBottomSheetDialog
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentMarketplaceBinding
@@ -35,6 +37,7 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 	override fun onStart() {
 		super.onStart()
 
+		marketplaceViewModel.checkAndLoadGroupFromDeeplink()
 		marketplaceViewModel.syncAllMessages()
 		marketplaceViewModel.syncMyGroupsData()
 	}
@@ -93,5 +96,22 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 
 		marketplaceViewModel.syncOffers()
 		marketplaceViewModel.loadMe()
+	}
+
+	override fun bindObservers() {
+		super.bindObservers()
+
+		repeatScopeOnStart {
+			marketplaceViewModel.groupLoaded.collect { group ->
+				showBottomDialog(
+					JoinGroupBottomSheetDialog(
+						groupName = group.name,
+						groupLogo = group.logoUrl ?: "",
+						groupCode = group.code,
+						isFromDeeplink = true
+					)
+				)
+			}
+		}
 	}
 }

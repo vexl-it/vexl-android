@@ -15,6 +15,7 @@ interface EncryptedPreferenceRepository {
 	var selectedCryptoCurrency: String
 	var areScreenshotsAllowed: Boolean
 	var numberOfImportedContacts: Int
+	var groupCode: Long
 
 	val areScreenshotsAllowedFlow: MutableStateFlow<Boolean>
 	val selectedCurrencyFlow: MutableStateFlow<String>
