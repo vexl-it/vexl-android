@@ -10,10 +10,14 @@ import coil.load
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.MessageType
+import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealRejectedBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
 	override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.uuid == newItem.uuid
@@ -22,6 +26,7 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 }) {
 
 	private var _chatUserIdentity: ChatUserIdentity? = null
+	private var _chatRepository: ChatRepository? = null
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val type: MessageType = MessageType.values()[viewType]
@@ -63,8 +68,9 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 	override fun getItemViewType(position: Int): Int =
 		getItem(position).type.ordinal
 
-	fun updateChatUserIdentity(chatUserIdentity: ChatUserIdentity?) {
+	fun updateChatUserIdentity(chatUserIdentity: ChatUserIdentity?, chatRepository: ChatRepository) {
 		_chatUserIdentity = chatUserIdentity
+		_chatRepository = chatRepository
 	}
 
 	inner class TextViewHolder constructor(
@@ -111,7 +117,11 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_approved)
 						binding.identityRevealDescription.text = _chatUserIdentity?.name
+						GlobalScope.launch(Dispatchers.IO) {
+							_chatRepository?.deAnonymizeUser(_chatUserIdentity?.name ?: "", _chatUserIdentity?.avatar, contactPublicKey = item.recipientPublicKey, inboxKey = item.inboxPublicKey)
+						}
 					}
+					else -> Unit
 				}
 			}
 
