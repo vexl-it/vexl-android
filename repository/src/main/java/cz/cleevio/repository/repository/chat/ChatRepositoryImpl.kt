@@ -20,7 +20,6 @@ import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.group.fromEntity
-import cz.cleevio.repository.model.group.fromEntity
 import cz.cleevio.repository.model.offer.fromCache
 import cz.cleevio.repository.model.offer.fromCacheWithoutFriendsMapping
 import cz.cleevio.repository.repository.UsernameUtils
@@ -375,6 +374,12 @@ class ChatRepositoryImpl constructor(
 				)
 			},
 			mapper = { }
+		)
+	}
+
+	override suspend fun processMessage(message: ChatMessage) {
+		chatMessageDao.replace(
+			message.copy(isProcessed = true).toCache()
 		)
 	}
 
