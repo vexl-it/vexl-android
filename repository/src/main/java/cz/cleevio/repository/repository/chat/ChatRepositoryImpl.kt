@@ -256,20 +256,6 @@ class ChatRepositoryImpl constructor(
 								)
 							}
 
-						//special handling for REQUEST_REVEAL - deanonymize the other user
-						messages
-							?.filter {
-								it.type == MessageType.REQUEST_REVEAL
-							}?.forEach { message ->
-								message.deanonymizedUser?.let { user ->
-									chatUserDao.deAnonymizeUser(
-										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
-										inboxKey = message.inboxPublicKey,
-										name = user.name!!, // There has to be some name
-										avatar = user.image
-									)
-								}
-							}
 						//special handling for APPROVE_REVEAL - deanonymize the other user AND solve pending requests
 						messages
 							?.filter {
@@ -315,6 +301,23 @@ class ChatRepositoryImpl constructor(
 			Resource.error(deleteResponse.errorIdentification)
 		} else {
 			Resource.success(Unit)
+		}
+	}
+
+	override suspend fun deAnonymizeUser(contactPublicKey: String, inboxKey: String, myPublicKey: String) {
+		val lastRequestRevealMessage = chatMessageDao.getLastRequestRevealMessageByUser(
+			inboxPublicKey = inboxKey,
+			userPublicKey = contactPublicKey,
+			myPublicKey = myPublicKey
+		)
+
+		lastRequestRevealMessage?.let { message ->
+			chatUserDao.deAnonymizeUser(
+				contactPublicKey = contactPublicKey,
+				inboxKey = inboxKey,
+				name = message.deAnonName!!,
+				avatar = message.deAnonImage
+			)
 		}
 	}
 

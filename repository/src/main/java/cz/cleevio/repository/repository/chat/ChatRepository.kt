@@ -78,4 +78,6 @@ interface ChatRepository {
 	)
 
 	fun getChatUserIdentityFlow(inboxKey: String, contactPublicKey: String): Flow<ChatUserIdentity?>
+
+	suspend fun deAnonymizeUser(contactPublicKey: String, inboxKey: String, myPublicKey: String)
 }
