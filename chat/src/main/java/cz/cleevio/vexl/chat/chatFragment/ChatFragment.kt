@@ -13,8 +13,10 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.ImageLoader
 import coil.load
 import cz.cleevio.core.utils.BuySellColorizer
+import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
@@ -81,7 +83,8 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		repeatScopeOnStart {
 			viewModel.canRequestIdentity.collect { canRequestIdentity ->
-				binding.revealIdentityBtn.isEnabled = canRequestIdentity
+				binding.revealIdentityBtn.isVisible = canRequestIdentity
+				/*
 				binding.revealIdentityBtn.setBackgroundColor(
 					if (canRequestIdentity) {
 						requireContext().getColor(R.color.gray_1)
@@ -89,6 +92,8 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 						requireContext().getColor(R.color.gray_2)
 					}
 				)
+
+				 */
 			}
 		}
 		repeatScopeOnStart {

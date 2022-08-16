@@ -34,21 +34,23 @@ class ChatContactListAdapter constructor(
 				placeholder(R.drawable.random_avatar_2)
 			}
 
+			val isDeanonymized = item.user?.deAnonymized == true
+
 			if (item.offer.offerType == "SELL") {
 				colorizeTransactionType(
 					binding.chatContactName.resources.getString(
-						cz.cleevio.core.R.string.marketplace_detail_user_sell, item.user?.name
+						cz.cleevio.core.R.string.marketplace_detail_user_sell, if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
 					),
-					item.user?.name ?: "",
+					if (isDeanonymized) item.user?.name ?: "" else item.user?.anonymousUsername ?: "",
 					binding.chatContactName,
 					R.color.pink_100
 				)
 			} else {
 				colorizeTransactionType(
 					binding.chatContactName.resources.getString(
-						cz.cleevio.core.R.string.marketplace_detail_user_buy, item.user?.name
+						cz.cleevio.core.R.string.marketplace_detail_user_buy,  if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
 					),
-					item.user?.name ?: "",
+					if (isDeanonymized) item.user?.name ?: "" else item.user?.anonymousUsername ?: "",
 					binding.chatContactName,
 					R.color.green_100
 				)

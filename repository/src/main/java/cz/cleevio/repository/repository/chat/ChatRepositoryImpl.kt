@@ -249,8 +249,10 @@ class ChatRepositoryImpl constructor(
 									ChatUserIdentityEntity(
 										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
 										inboxKey = message.inboxPublicKey,
-										name = UsernameUtils.generateName(),
-										avatar = null,
+										// Fixme: correctly linked avatar index and name is missing
+										// Fixme: For the avatar index look into eg. - OfferFriendLevelWidget
+										anonymousUsername = UsernameUtils.generateName(),
+										anonymousAvatarImageIndex = null,
 										deAnonymized = false
 									)
 								)
@@ -487,8 +489,7 @@ class ChatRepositoryImpl constructor(
 						ChatUserIdentityEntity(
 							contactPublicKey = message.recipientPublicKey, // recipient's key, because of it's outgoing message
 							inboxKey = message.inboxPublicKey,
-							name = UsernameUtils.generateName(),
-							avatar = null,
+							anonymousUsername = UsernameUtils.generateName(),
 							deAnonymized = false
 						)
 					)
