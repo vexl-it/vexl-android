@@ -40,6 +40,7 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 							ChatRequestFragmentDirections.proceedToChatFragment(pair.first)
 						)
 					}
+					else -> Unit
 				}
 			}
 		}

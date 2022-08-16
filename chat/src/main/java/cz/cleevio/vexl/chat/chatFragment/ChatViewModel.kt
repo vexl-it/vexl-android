@@ -24,8 +24,6 @@ class ChatViewModel constructor(
 
 	protected var messagePullJob: Job? = null
 
-	val canRequestIdentityFlow = encryptedPreference.canRequestRevealIdentityFlow
-
 	val _messageSentSuccessfully = MutableSharedFlow<Boolean>(replay = 1)
 	val messageSentSuccessfully = _messageSentSuccessfully.asSharedFlow()
 
@@ -159,6 +157,7 @@ class ChatViewModel constructor(
 						secondKey = receiverPublicKey
 					)
 				}
+				else -> Unit
 			}
 		}
 	}

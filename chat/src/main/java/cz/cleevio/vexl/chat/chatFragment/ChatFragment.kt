@@ -130,7 +130,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			)
 		}
 
-		binding.messageEdit.setOnEditorActionListener { v, actionId, event ->
+		binding.messageEdit.setOnEditorActionListener { _, actionId, _ ->
 			if (actionId == EditorInfo.IME_ACTION_SEND) {
 				sendMessage()
 			}
