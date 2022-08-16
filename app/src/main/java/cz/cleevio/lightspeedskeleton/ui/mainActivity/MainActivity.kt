@@ -18,6 +18,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.setExitTransitionGravityStart
 import cz.cleevio.lightspeedskeleton.R
@@ -32,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
@@ -71,6 +74,25 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 
 		bindObservers()
+		setupGroupDeepLinks()
+	}
+
+	private fun setupGroupDeepLinks() {
+		FirebaseDynamicLinks.getInstance()
+			.getDynamicLink(intent)
+			.addOnSuccessListener(this) { pendingDynamicLinkData ->
+				try {
+					val groupCode = pendingDynamicLinkData.link?.lastPathSegment?.toLong() ?: 0L
+					viewModel.encryptedPreferenceRepository.groupCode = groupCode
+				} catch (ex: NumberFormatException) {
+					Timber.e(ex)
+					FirebaseCrashlytics.getInstance().recordException(IllegalStateException("${pendingDynamicLinkData.link?.lastPathSegment} is not valid Long"))
+				}
+			}
+			.addOnFailureListener(this) { exception ->
+				Timber.e(exception)
+				FirebaseCrashlytics.getInstance().recordException(IllegalStateException("Dynamic link failure"))
+			}
 	}
 
 	private fun bindObservers() {

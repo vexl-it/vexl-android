@@ -76,6 +76,8 @@ dependencies {
 
     api platform("com.google.firebase:firebase-bom:$firebase_bom")
     api 'com.google.firebase:firebase-messaging-ktx'
+    api 'com.google.firebase:firebase-dynamic-links'
+    api 'com.google.firebase:firebase-crashlytics-ktx'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
