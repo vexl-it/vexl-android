@@ -103,14 +103,14 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 						binding.identityRevealDescription.text = context.getString(R.string.chat_message_identity_reveal_subheader)
 					}
 					MessageType.APPROVE_REVEAL -> {
-						binding.chatContactIcon.load(item.deanonymizedUser?.image) {
+						binding.chatContactIcon.load(_chatUserIdentity?.avatar) {
 							crossfade(true)
 							fallback(R.drawable.random_avatar_6)
 							error(R.drawable.random_avatar_6)
 							placeholder(R.drawable.random_avatar_6)
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_approved)
-						binding.identityRevealDescription.text = item.deanonymizedUser?.name
+						binding.identityRevealDescription.text = _chatUserIdentity?.name
 					}
 				}
 			}
