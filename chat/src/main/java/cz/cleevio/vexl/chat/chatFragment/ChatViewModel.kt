@@ -159,9 +159,7 @@ class ChatViewModel constructor(
 		val processedMessages = mutableListOf<ChatMessage>()
 		originalMessages.forEach { originalMessage ->
 			when (originalMessage.type) {
-				MessageType.APPROVE_REVEAL, MessageType.DISAPPROVE_REVEAL -> {
-					// Do nothing
-				}
+				MessageType.APPROVE_REVEAL, MessageType.DISAPPROVE_REVEAL -> Unit // Do nothing
 				MessageType.REQUEST_REVEAL -> {
 					// find nearest response
 					val nearestRequestIdentityResponse = getNearestRevealIdentityResponse(originalMessage, originalMessages)
