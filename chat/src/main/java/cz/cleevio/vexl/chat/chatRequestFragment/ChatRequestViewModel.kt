@@ -25,6 +25,10 @@ class ChatRequestViewModel constructor(
 	val communicationRequestResponse = _communicationRequestResponse.asSharedFlow()
 
 	init {
+		reloadCommunicationRequests()
+	}
+
+	fun reloadCommunicationRequests() {
 		viewModelScope.launch(Dispatchers.IO) {
 			loadCommunicationRequests()
 		}

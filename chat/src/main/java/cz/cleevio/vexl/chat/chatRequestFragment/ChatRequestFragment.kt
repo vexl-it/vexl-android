@@ -64,6 +64,11 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 			viewModel.processCommunicationRequest(currentRequest, false)
 		}
 
+		binding.swipeRefresh.setOnRefreshListener {
+			viewModel.reloadCommunicationRequests()
+			binding.swipeRefresh.isRefreshing = false
+		}
+
 		listenForInsets(binding.container) { insets ->
 			binding.container.updatePadding(top = insets.top, bottom = insets.bottom)
 		}
