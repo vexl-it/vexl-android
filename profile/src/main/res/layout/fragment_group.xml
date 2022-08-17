@@ -45,6 +45,10 @@
 		android:layout_marginHorizontal="16dp"
 		android:layout_marginTop="8dp"
 		android:text="@string/groups_join_button"
+		app:iconPadding="10dp"
+		app:iconTint="@color/yellow_100"
+		app:icon="@drawable/ic_plus"
+		app:iconGravity="textStart"
 		app:layout_constraintTop_toBottomOf="@id/create_group_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
