@@ -12,6 +12,7 @@ import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.model.offer.NewOffer
+import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
 
 object OfferUtils {
@@ -47,7 +48,9 @@ object OfferUtils {
 						ContactKey(
 							key = myPublicKey,
 							level = ContactLevel.NOT_SPECIFIED,
-							groupUuid = null
+							//fixme: this is just hotfix to have group uuid later, when we try to create additional private-parts
+							groupUuid = params.groupUuids.firstOrNull(),
+							isUpToDate = true
 						)
 					)
 				}
@@ -116,6 +119,41 @@ object OfferUtils {
 			active = eciesEncrypt(params.active.toString(), contactKey),
 			groupUuid = eciesEncrypt(groupUuid ?: NO_GROUP, contactKey),
 			currency = eciesEncrypt(params.currency, contactKey),
+			commonFriends = commonFriends.map { friend ->
+				eciesEncrypt(friend.getHashedContact(), contactKey)
+			}
+		)
+	}
+
+	fun encryptOffer(
+		locationHelper: LocationHelper,
+		offer: Offer,
+		commonFriends: List<BaseContact>,
+		contactKey: String,
+		offerKeys: KeyPair,
+		groupUuid: String?,
+	): NewOffer {
+		return NewOffer(
+			location = offer.location.map {
+				eciesEncrypt(locationHelper.locationToJsonString(it), contactKey)
+			},
+			userPublicKey = contactKey,
+			offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey),
+			feeState = eciesEncrypt(offer.feeState, contactKey),
+			feeAmount = eciesEncrypt(offer.feeAmount.toString(), contactKey),
+			offerDescription = eciesEncrypt(offer.offerDescription, contactKey),
+			amountBottomLimit = eciesEncrypt(offer.amountBottomLimit.toString(), contactKey),
+			amountTopLimit = eciesEncrypt(offer.amountTopLimit.toString(), contactKey),
+			locationState = eciesEncrypt(offer.locationState, contactKey),
+			paymentMethod = offer.paymentMethod.map { eciesEncrypt(it, contactKey) },
+			btcNetwork = offer.btcNetwork.map { eciesEncrypt(it, contactKey) },
+			friendLevel = eciesEncrypt(offer.friendLevel, contactKey),
+			offerType = eciesEncrypt(offer.offerType, contactKey),
+			activePriceState = eciesEncrypt(offer.activePriceState, contactKey),
+			activePriceValue = eciesEncrypt(offer.activePriceValue.toString(), contactKey),
+			active = eciesEncrypt(offer.active.toString(), contactKey),
+			groupUuid = eciesEncrypt(groupUuid ?: NO_GROUP, contactKey),
+			currency = eciesEncrypt(offer.currency, contactKey),
 			commonFriends = commonFriends.map { friend ->
 				eciesEncrypt(friend.getHashedContact(), contactKey)
 			}

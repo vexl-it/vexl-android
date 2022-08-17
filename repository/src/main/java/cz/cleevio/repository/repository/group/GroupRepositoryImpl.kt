@@ -84,6 +84,11 @@ class GroupRepositoryImpl constructor(
 				groupDao.deleteByUuid(
 					it.groupUuid
 				)
+
+				//delete also keys from that group
+				contactKeyDao.deleteKeysByGroupUuid(
+					it.groupUuid
+				)
 			}
 		}
 
@@ -133,13 +138,20 @@ class GroupRepositoryImpl constructor(
 					.map { it.publicKey }
 
 				val result = DeletePrivatePartRequest(
-					offerId = offers,
-					publicKey = validKeys
+					offerIds = offers,
+					publicKeys = validKeys
 				)
 
+				//delete group from DB
 				groupDao.deleteByUuid(
 					groupUuid
 				)
+
+				//delete also keys from that group
+				contactKeyDao.deleteKeysByGroupUuid(
+					groupUuid
+				)
+
 				syncMyGroups()
 
 				Resource.success(data = result)
@@ -159,7 +171,7 @@ class GroupRepositoryImpl constructor(
 		tryOnline(
 			request = {
 				//load all members from BE (publicKeys set as empty means load everything)
-				groupApi.postGroupsMembersNew(
+				groupApi.postGroupsMembers(
 					NewMemberRequest(
 						groups = allGroups.map {
 							GroupRequest(
@@ -175,7 +187,7 @@ class GroupRepositoryImpl constructor(
 			},
 			doOnSuccess = {
 				it?.let { contactKeyList ->
-					contactKeyDao.insertContacts(
+					contactKeyDao.insertGroupContacts(
 						contactKeyList.map { it.toCache() }
 					)
 				}
@@ -191,7 +203,7 @@ class GroupRepositoryImpl constructor(
 		val response = tryOnline(
 			request = {
 				//get new group members for
-				groupApi.postGroupsMembersNew(
+				groupApi.postGroupsMembers(
 					NewMemberRequest(
 						groups = listOf(
 							GroupRequest(
@@ -207,7 +219,7 @@ class GroupRepositoryImpl constructor(
 			},
 			doOnSuccess = {
 				it?.let { contactKeyList ->
-					contactKeyDao.insertContacts(
+					contactKeyDao.insertGroupContacts(
 						contactKeyList.map { it.toCache() }
 					)
 				}
@@ -233,7 +245,8 @@ fun NewMembersResponse.toContactKey(): List<ContactKey> {
 				ContactKey(
 					key = publicKey,
 					level = cz.cleevio.repository.model.contact.ContactLevel.GROUP,
-					groupUuid = groupData.groupUuid
+					groupUuid = groupData.groupUuid,
+					isUpToDate = false
 				)
 			)
 		}

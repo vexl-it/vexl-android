@@ -367,12 +367,14 @@ class ContactRepositoryImpl constructor(
 			val contactKeys = first.data.orEmpty().map {
 				ContactKeyEntity(
 					publicKey = it,
-					contactLevel = ContactLevel.FIRST
+					contactLevel = ContactLevel.FIRST,
+					isUpToDate = true
 				)
 			} + second.data.orEmpty().map {
 				ContactKeyEntity(
 					publicKey = it,
-					contactLevel = ContactLevel.SECOND
+					contactLevel = ContactLevel.SECOND,
+					isUpToDate = true
 				)
 			}
 			contactKeyDao.deleteFirstLevelKeys()
@@ -504,6 +506,14 @@ class ContactRepositoryImpl constructor(
 
 		return commonFriendsMap
 	}
+
+	override suspend fun loadNewContacts(): List<ContactKey> = contactKeyDao.getNewContacts().map { it.fromCache() }
+
+	override suspend fun markContactAsProcessed(contact: ContactKey) = contactKeyDao.replace(
+		contact.toCache()
+	)
+
+	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.insert(contactKey.toCache())
 
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()

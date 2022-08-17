@@ -3,7 +3,7 @@ package cz.cleevio.network.request.offer
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class UpdateOfferRequest constructor(
+data class CreateOfferPrivatePartRequest constructor(
 	val offerId: String,
-	val offerPrivateCreateList: List<OfferPrivateCreateRequest>
+	val privateParts: List<OfferPrivateCreateRequest>
 )

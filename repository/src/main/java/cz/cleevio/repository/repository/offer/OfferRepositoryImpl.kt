@@ -11,6 +11,7 @@ import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
+import cz.cleevio.network.request.offer.CreateOfferPrivatePartRequest
 import cz.cleevio.network.request.offer.CreateOfferRequest
 import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
@@ -87,6 +88,20 @@ class OfferRepositoryImpl constructor(
 		}
 
 		return offerCreateResource
+	}
+
+	override suspend fun createOfferForPublicKeys(offerId: String, offerList: List<NewOffer>): Resource<Unit> {
+		return tryOnline(
+			request = {
+				offerApi.postOffersPrivatePart(
+					CreateOfferPrivatePartRequest(
+						privateParts = offerList.map { it.toNetwork() },
+						offerId = offerId
+					)
+				)
+			},
+			mapper = { }
+		)
 	}
 
 	override suspend fun updateOffer(offerId: String, offerList: List<NewOffer>): Resource<Offer> = tryOnline(
@@ -376,6 +391,10 @@ class OfferRepositoryImpl constructor(
 		myOfferDao.getMyOffersWithoutInbox()
 			.map { it.fromCache() }
 
+	override suspend fun getMyOffers(): List<MyOffer> =
+		myOfferDao.listAll()
+			.map { it.fromCache() }
+
 	override suspend fun getLocationSuggestions(
 		count: Int, query: String, language: String
 	): Resource<List<LocationSuggestion>> = tryOnline(
@@ -406,6 +425,12 @@ class OfferRepositoryImpl constructor(
 		myOfferDao.clearTable()
 		locationDao.clearTable()
 		contactDao.clearTable()
+	}
+
+	override suspend fun getOfferById(offerId: String): Offer {
+		return offerDao.getOfferById(offerId = offerId).let {
+			it.offer.fromCache(it.locations, it.commonFriends)
+		}
 	}
 
 	companion object {

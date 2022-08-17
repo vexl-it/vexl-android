@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 class LeaveGroupBottomSheetDialog constructor(
 	private val groupUuid: String
@@ -42,7 +43,7 @@ class LeaveGroupBottomSheetDialog constructor(
 				when (response.status) {
 					is Status.Success -> {
 						response.data?.let {
-							if (it.offerId.isNotEmpty() && it.publicKey.isNotEmpty()) {
+							if (it.offerIds.isNotEmpty() && it.publicKeys.isNotEmpty()) {
 								offerRepository.deleteOfferForPublicKeys(it)
 							}
 						}
@@ -52,6 +53,7 @@ class LeaveGroupBottomSheetDialog constructor(
 					}
 					is Status.Error -> {
 						//todo: handle error?
+						Timber.e("Some error leaving group")
 					}
 					else -> Unit
 				}
