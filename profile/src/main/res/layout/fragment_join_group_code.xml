@@ -12,69 +12,85 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="16dp"
-		android:src="@drawable/ic_close_x"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintEnd_toEndOf="parent" />
+		android:contentDescription="?content"
+		android:src="@drawable/ic_chevron_left_24_white"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
 	<com.google.android.material.card.MaterialCardView
 		style="@style/Widget.Vexl.CardView"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="20dp"
+		android:layout_height="0dp"
 		android:layout_marginHorizontal="8dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginBottom="12dp"
 		android:background="@color/white"
-		app:cardElevation="4dp"
 		app:cardCornerRadius="20dp"
-		app:layout_constraintTop_toBottomOf="@id/close"
+		app:cardElevation="4dp"
+		app:layout_constraintBottom_toTopOf="@id/continue_btn"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toEndOf="parent">
+		app:layout_constraintTop_toBottomOf="@id/close">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:id="@+id/parent"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="match_parent">
 
 			<TextView
-				android:id="@+id/groups_join_title"
+				android:id="@+id/verify_phone_title"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="20dp"
-				android:textAppearance="@style/TextAppearance.Vexl.Groups.JoinCode.Title"
+				android:layout_marginTop="24dp"
 				android:text="@string/groups_enter_code_description"
-				app:layout_constraintTop_toTopOf="parent"
+				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Title"
+				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toEndOf="parent" />
+				app:layout_constraintTop_toTopOf="parent" />
 
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/group_code_input"
-				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-				android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined.Gray"
 				android:layout_width="0dp"
-				android:layout_height="wrap_content"
+				android:layout_height="56dp"
+				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="24dp"
-				android:textColor="@color/gray_4"
-				android:hint="@string/groups_enter_code_hint"
-				android:inputType="number"
-				app:layout_constraintTop_toBottomOf="@id/groups_join_title"
-				app:layout_constraintStart_toStartOf="parent"
+				android:background="@drawable/background_input_light"
+				android:hint="@string/verify_phone_hint"
+				android:inputType="numberDecimal"
+				android:paddingHorizontal="16dp"
+				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Input"
+				android:textColorHint="@color/gray_3"
 				app:layout_constraintEnd_toEndOf="parent"
-				tools:text="326126" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/verify_phone_title"
+				tools:text="12346" />
+
+			<com.google.android.material.progressindicator.CircularProgressIndicator
+				android:id="@+id/progressbar"
+				style="@style/Widget.LightBase.Dialog.CircleProgressIndicator"
+				android:layout_width="@dimen/size_dialog_progress_indicator"
+				android:layout_height="@dimen/size_dialog_progress_indicator"
+				android:visibility="gone"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
-
-
 	</com.google.android.material.card.MaterialCardView>
 
-	<Button
+	<com.google.android.material.button.MaterialButton
 		android:id="@+id/continue_btn"
-		style="@style/Widget.Vexl.Button"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginHorizontal="16dp"
-		android:layout_marginBottom="44dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginBottom="16dp"
+		android:enabled="false"
 		android:text="@string/general_continue"
-		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintBottom_toBottomOf="parent" />
+		app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

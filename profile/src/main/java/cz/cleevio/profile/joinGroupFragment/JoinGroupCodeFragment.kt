@@ -2,8 +2,8 @@ package cz.cleevio.profile.joinGroupFragment
 
 import android.widget.Toast
 import androidx.core.view.updatePadding
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
@@ -41,6 +41,10 @@ class JoinGroupCodeFragment : BaseFragment(R.layout.fragment_join_group_code) {
 				top = insets.top,
 				bottom = insets.bottomWithIME
 			)
+		}
+
+		binding.groupCodeInput.doAfterTextChanged {
+			binding.continueBtn.isEnabled = it.toString().isNotEmpty()
 		}
 
 		binding.close.setDebouncedOnClickListener {
