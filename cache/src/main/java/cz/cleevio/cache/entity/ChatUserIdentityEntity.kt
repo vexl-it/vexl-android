@@ -10,7 +10,9 @@ data class ChatUserIdentityEntity(
 	val id: Long = 0,
 	val contactPublicKey: String,
 	val inboxKey: String,
-	val name: String,
-	val avatar: String?,
+	val name: String? = null,
+	val anonymousUsername: String? = null,
+	val avatar: String? = null,
+	val anonymousAvatarImageIndex: Int? = null,
 	val deAnonymized: Boolean
 )

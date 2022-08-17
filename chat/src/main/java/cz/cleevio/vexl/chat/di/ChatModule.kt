@@ -20,7 +20,8 @@ val chatModule = module {
 		ChatViewModel(
 			communicationRequest = communicationRequest,
 			userRepository = get(),
-			chatRepository = get()
+			chatRepository = get(),
+			encryptedPreference = get()
 		)
 	}
 

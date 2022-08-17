@@ -10,10 +10,14 @@ import coil.load
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.MessageType
+import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealRejectedBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
 	override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.uuid == newItem.uuid
@@ -103,15 +107,16 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 						binding.identityRevealDescription.text = context.getString(R.string.chat_message_identity_reveal_subheader)
 					}
 					MessageType.APPROVE_REVEAL -> {
-						binding.chatContactIcon.load(item.deanonymizedUser?.image) {
+						binding.chatContactIcon.load(_chatUserIdentity?.avatar) {
 							crossfade(true)
 							fallback(R.drawable.random_avatar_6)
 							error(R.drawable.random_avatar_6)
 							placeholder(R.drawable.random_avatar_6)
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_approved)
-						binding.identityRevealDescription.text = item.deanonymizedUser?.name
+						binding.identityRevealDescription.text = _chatUserIdentity?.name
 					}
+					else -> Unit
 				}
 			}
 
