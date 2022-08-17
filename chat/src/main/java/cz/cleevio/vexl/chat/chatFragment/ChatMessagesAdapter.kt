@@ -126,6 +126,11 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatMessage) {
+			binding.identityRevealDescription.text = if (item.isMine) {
+				binding.identityRevealDescription.resources.getText(R.string.chat_message_identity_reveal_reject)
+			} else {
+				binding.identityRevealDescription.resources.getText(R.string.chat_message_identity_reveal_reject_received)
+			}
 		}
 	}
 }
