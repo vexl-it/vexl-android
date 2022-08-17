@@ -15,10 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.load
-import cz.cleevio.core.utils.BuySellColorizer
-import cz.cleevio.core.utils.RandomUtils
-import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.*
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
@@ -120,7 +117,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				binding.revealIdentityBtn.isVisible = canRequestIdentity
 			}
 		}
-		repeatScopeOnStart {
+		repeatScopeOnCreate {
 			viewModel.identityRevealed.collect { revealed ->
 				if (revealed) {
 					startSlideAnimation()
