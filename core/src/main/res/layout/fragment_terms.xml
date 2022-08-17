@@ -37,8 +37,10 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="24dp"
 				android:layout_marginTop="24dp"
+				android:layout_marginEnd="12dp"
 				android:text="@string/terms_of_use_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.Section.Title"
+				app:layout_constraintEnd_toStartOf="@id/tac_close"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 

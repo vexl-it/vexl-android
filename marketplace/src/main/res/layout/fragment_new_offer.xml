@@ -303,7 +303,6 @@
 				android:drawablePadding="8dp"
 				android:text="@string/filter_type_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
-				app:drawableEndCompat="@drawable/ic_info"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/advanced_title" />
 
@@ -356,8 +355,8 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="16dp"
-				android:paddingTop="16dp"
 				android:nestedScrollingEnabled="false"
+				android:paddingTop="16dp"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
