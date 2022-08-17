@@ -17,14 +17,6 @@ interface ChatUserDao : BaseDao<ChatUserIdentityEntity> {
 	fun deAnonymizeUser(name: String, avatar: String?, contactPublicKey: String, inboxKey: String)
 
 	@Query(
-		"UPDATE ChatUserIdentityEntity " +
-			"SET name=:name, avatar=:avatar, deAnonymized=0 " +
-			"WHERE contactPublicKey=:contactPublicKey " +
-			" AND inboxKey=:inboxKey"
-	)
-	fun setDeanonymizedData(name: String, avatar: String?, contactPublicKey: String, inboxKey: String)
-
-	@Query(
 		"SELECT * " +
 			"FROM ChatUserIdentityEntity " +
 			"WHERE contactPublicKey=:contactPublicKey " +

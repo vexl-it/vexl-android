@@ -47,26 +47,60 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.chatUserIdentity.collect { chatUserIdentity ->
 				adapter.updateChatUserIdentity(chatUserIdentity)
-				binding.profileImage.load(chatUserIdentity?.avatar) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_5)
-					error(R.drawable.random_avatar_5)
-					placeholder(R.drawable.random_avatar_5)
-				}
-				binding.identityRevealRequestedIcon.load(chatUserIdentity?.avatar) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_5)
-					error(R.drawable.random_avatar_5)
-					placeholder(R.drawable.random_avatar_5)
-				}
-				binding.identityRevealSentIcon.load(chatUserIdentity?.avatar) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_5)
-					error(R.drawable.random_avatar_5)
-					placeholder(R.drawable.random_avatar_5)
-				}
-				setupColoredTitle(chatUserIdentity?.name ?: "")
+				val isDeanonymized = chatUserIdentity?.deAnonymized == true
 
+				if (isDeanonymized) {
+					binding.profileImage.load(chatUserIdentity?.avatar) {
+						crossfade(true)
+						fallback(R.drawable.random_avatar_5)
+						error(R.drawable.random_avatar_5)
+						placeholder(R.drawable.random_avatar_5)
+					}
+					binding.identityRevealRequestedIcon.load(chatUserIdentity?.avatar) {
+						crossfade(true)
+						fallback(R.drawable.random_avatar_5)
+						error(R.drawable.random_avatar_5)
+						placeholder(R.drawable.random_avatar_5)
+					}
+					binding.identityRevealSentIcon.load(chatUserIdentity?.avatar) {
+						crossfade(true)
+						fallback(R.drawable.random_avatar_5)
+						error(R.drawable.random_avatar_5)
+						placeholder(R.drawable.random_avatar_5)
+					}
+
+					setupColoredTitle(chatUserIdentity?.name ?: "")
+				} else {
+					binding.profileImage.load(
+						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
+						imageLoader = ImageLoader.invoke(requireContext())
+					) {
+						crossfade(true)
+						fallback(R.drawable.random_avatar_5)
+						error(R.drawable.random_avatar_5)
+						placeholder(R.drawable.random_avatar_5)
+					}
+					binding.identityRevealRequestedIcon.load(
+						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
+						imageLoader = ImageLoader.invoke(requireContext())
+					) {
+						crossfade(true)
+						fallback(R.drawable.random_avatar_5)
+						error(R.drawable.random_avatar_5)
+						placeholder(R.drawable.random_avatar_5)
+					}
+					binding.identityRevealSentIcon.load(
+						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
+						imageLoader = ImageLoader.invoke(requireContext())
+					) {
+						crossfade(true)
+						fallback(R.drawable.random_avatar_5)
+						error(R.drawable.random_avatar_5)
+						placeholder(R.drawable.random_avatar_5)
+					}
+
+					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
+				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
 				binding.revealedProfileIcon.load(chatUserIdentity?.avatar) {
 					crossfade(true)
@@ -84,16 +118,6 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.canRequestIdentity.collect { canRequestIdentity ->
 				binding.revealIdentityBtn.isVisible = canRequestIdentity
-				/*
-				binding.revealIdentityBtn.setBackgroundColor(
-					if (canRequestIdentity) {
-						requireContext().getColor(R.color.gray_1)
-					} else {
-						requireContext().getColor(R.color.gray_2)
-					}
-				)
-
-				 */
 			}
 		}
 		repeatScopeOnStart {
