@@ -4,15 +4,15 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class CreateOfferRequest constructor(
-	val offerPrivateList: List<CreateOfferPrivateRequest>,
+	val offerPrivateList: List<OfferPrivateCreateRequest>,
 	val expiration: Long
 )
 
 @JsonClass(generateAdapter = true)
-data class CreateOfferPrivateRequest constructor(
+data class OfferPrivateCreateRequest constructor(
 	val userPublicKey: String,
-	val offerPublicKey: String,
 	val location: List<String>,
+	val offerPublicKey: String,
 	val offerDescription: String,
 	val amountBottomLimit: String,
 	val amountTopLimit: String,
@@ -21,12 +21,12 @@ data class CreateOfferPrivateRequest constructor(
 	val locationState: String,
 	val paymentMethod: List<String>,
 	val btcNetwork: List<String>,
+	val currency: String,
 	val friendLevel: String,
 	val offerType: String,
 	val activePriceState: String,
 	val activePriceValue: String,
 	val active: String,
-	val commonFriends: List<String>,
 	val groupUuid: String,
-	val currency: String,
+	val commonFriends: List<String>,
 )

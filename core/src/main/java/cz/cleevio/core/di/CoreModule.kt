@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import coil.ImageLoader
 import coil.util.CoilUtils
 import cz.cleevio.core.R
+import cz.cleevio.core.utils.BackgroundQueue
 import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.UserUtils
@@ -41,6 +42,15 @@ val coreModule = module {
 
 	single {
 		ImageHelper()
+	}
+
+	single {
+		BackgroundQueue(
+			offerRepository = get(),
+			encryptedPreferenceRepository = get(),
+			contactRepository = get(),
+			locationHelper = get()
+		)
 	}
 
 	single {

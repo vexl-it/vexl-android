@@ -1,15 +1,21 @@
 package cz.cleevio.cache.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import cz.cleevio.cache.entity.ContactKeyEntity
 import cz.cleevio.cache.entity.ContactLevel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ContactKeyDao {
+interface ContactKeyDao : BaseDao<ContactKeyEntity> {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertContacts(keys: List<ContactKeyEntity>)
+
+	@Insert(onConflict = OnConflictStrategy.IGNORE)
+	suspend fun insertGroupContacts(keys: List<ContactKeyEntity>)
 
 	@Query("SELECT * FROM ContactKeyEntity")
 	fun getAllKeysFlow(): Flow<List<ContactKeyEntity>>
@@ -19,6 +25,9 @@ interface ContactKeyDao {
 
 	@Query("DELETE FROM ContactKeyEntity WHERE contactLevel == :contactLevel")
 	fun deleteKeysByLevel(contactLevel: ContactLevel)
+
+	@Query("DELETE FROM ContactKeyEntity WHERE groupUuid == :groupUuid")
+	fun deleteKeysByGroupUuid(groupUuid: String)
 
 	@Query("SELECT * FROM ContactKeyEntity WHERE groupUuid == :groupUuid")
 	fun getKeysByGroup(groupUuid: String): List<ContactKeyEntity>
@@ -47,12 +56,9 @@ interface ContactKeyDao {
 	@Query("DELETE FROM ContactKeyEntity")
 	suspend fun clearTable()
 
-	@Transaction
-	suspend fun replaceAll(keys: List<ContactKeyEntity>) {
-		clearTable()
-		insertContacts(keys)
-	}
-
 	@Query("SELECT * FROM ContactKeyEntity WHERE (publicKey == :publicKey AND groupUuid != :groupUuid)")
 	fun findKeyOutsideThisGroup(publicKey: String, groupUuid: String): ContactKeyEntity?
+
+	@Query("SELECT * FROM ContactKeyEntity WHERE isUpToDate == 0")
+	fun getNewContacts(): List<ContactKeyEntity>
 }

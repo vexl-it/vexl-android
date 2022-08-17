@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import cz.cleevio.core.utils.BackgroundQueue
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import cz.cleevio.core.utils.NavMainGraphModel
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private lateinit var binding: ActivityMainBinding
 	private val viewModel by inject<MainViewModel>()
 	private val errorFlow: NetworkError by inject()
+	private val backgroundQueue: BackgroundQueue by inject()
 
 	private lateinit var navController: NavController
 	private var bottomBarAnimator: ValueAnimator? = null
@@ -48,6 +50,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
 	override fun onResume() {
 		super.onResume()
+
+		backgroundQueue.encryptOffersForNewContacts()
 
 		val navHostFragment = supportFragmentManager.findFragmentById(
 			R.id.navHostFragment

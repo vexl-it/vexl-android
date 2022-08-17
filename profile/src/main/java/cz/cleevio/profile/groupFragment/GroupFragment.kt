@@ -1,9 +1,9 @@
 package cz.cleevio.profile.groupFragment
 
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
@@ -14,6 +14,8 @@ import cz.cleevio.repository.model.group.Group
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+const val IS_TESTING_GROUPS = false
 
 class GroupFragment : BaseFragment(R.layout.fragment_group) {
 
@@ -50,6 +52,7 @@ class GroupFragment : BaseFragment(R.layout.fragment_group) {
 			findNavController().popBackStack()
 		}
 
+		binding.createGroupBtn.isVisible = IS_TESTING_GROUPS
 		binding.createGroupBtn.setOnClickListener {
 			val name = RandomUtils.generateName()
 			Toast.makeText(requireActivity(), "Creating group named $name", Toast.LENGTH_SHORT).show()
@@ -57,23 +60,6 @@ class GroupFragment : BaseFragment(R.layout.fragment_group) {
 				Toast.makeText(requireActivity(), "Group $name created", Toast.LENGTH_SHORT).show()
 			})
 		}
-
-		//debug only: connect button and input field
-//		binding.joinGroupBtn.setOnClickListener {
-//			val stringCode = binding.joinGroup.text.toString()
-//			try {
-//				val code = stringCode.toLong()
-//				showBottomDialog(
-//					JoinGroupBottomSheetDialog(
-//						groupName = "TODO: no name",
-//						groupLogo = "https://design.chaincamp.cz/assets/img/logos/chaincamp-symbol-purple-rgb.svg?h=8b40a6ef383113c8e50e13f52566cade",
-//						groupCode = code,
-//					)
-//				)
-//			} catch (ex: NumberFormatException) {
-//				Toast.makeText(requireActivity(), "Code is not valid number", Toast.LENGTH_SHORT).show()
-//			}
-//		}
 
 		binding.joinGroupBtn.setOnClickListener {
 			findNavController().navigate(

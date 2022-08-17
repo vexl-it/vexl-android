@@ -11,8 +11,10 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
-import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.contact.ContactKey
+import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.group.GroupRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +27,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 
 	private val chatRepository: ChatRepository by inject()
 	private val groupRepository: GroupRepository by inject()
+	private val contactRepository: ContactRepository by inject()
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
 	override fun onNewToken(token: String) {
@@ -40,9 +43,15 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val message = remoteMessage.data[NOTIFICATION_BODY]
 		val type = remoteMessage.data[NOTIFICATION_TYPE] ?: NOTIFICATION_TYPE_DEFAULT
 		val inbox = remoteMessage.data[NOTIFICATION_INBOX]
+		//extra info for notification about new members in group
+		//uuid is groupUuid
 		val uuid = remoteMessage.data[NOTIFICATION_UUID]
+		//extra into for notification about new FIRST_LEVEL contact
+		//publicKey is that contact publicKey
+		val publicKey = remoteMessage.data[PUBLIC_KEY]
 
 		Timber.tag("FIREBASE").d("$inbox")
+		Timber.tag("QUEUE").d("notification received")
 
 		//todo: do some custom stuff here, check notification type, check DB, display or not
 		//there will be more stuff when we implement group functionality
@@ -54,20 +63,20 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 
 		uuid?.let { groupUuid ->
 			coroutineScope.launch {
-				//todo: check if we have any offers created for this group
+				groupRepository.syncNewMembersInGroup(groupUuid)
+			}
+		}
 
-				//if we do, continue
-				val response = groupRepository.syncNewMembersInGroup(groupUuid)
-				//TODO: encrypt all offers for these new members and send it to BE
-				//fixme: when BE has new EP ready for adding extra private-parts to offer
-				when (response.status) {
-					is Status.Success -> {
-						//just debug
-						response.data?.map {
-							Timber.d("newMember: $it")
-						}
-					}
-				}
+		publicKey?.let { publicKey ->
+			coroutineScope.launch {
+				contactRepository.addNewContact(
+					ContactKey(
+						key = publicKey,
+						level = ContactLevel.FIRST,
+						groupUuid = null,
+						isUpToDate = false
+					)
+				)
 			}
 		}
 
@@ -154,7 +163,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		private const val NOTIFICATION_TITLE = "title"
 		private const val NOTIFICATION_BODY = "body"
 		private const val NOTIFICATION_INBOX = "inbox"
-		private const val NOTIFICATION_UUID = "uuid"
+		private const val NOTIFICATION_UUID = "group_uuid"
+		private const val PUBLIC_KEY = "public_key"
 
 		const val NOTIFICATION_TYPE_DEFAULT = "UNKNOWN"
 		private const val CODE = 102_487

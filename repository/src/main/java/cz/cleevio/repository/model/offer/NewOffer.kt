@@ -1,6 +1,6 @@
 package cz.cleevio.repository.model.offer
 
-import cz.cleevio.network.request.offer.CreateOfferPrivateRequest
+import cz.cleevio.network.request.offer.OfferPrivateCreateRequest
 
 //all fields should be encrypted strings
 data class NewOffer constructor(
@@ -25,8 +25,8 @@ data class NewOffer constructor(
 	val currency: String,
 )
 
-fun NewOffer.toNetwork(): CreateOfferPrivateRequest {
-	return CreateOfferPrivateRequest(
+fun NewOffer.toNetwork(): OfferPrivateCreateRequest {
+	return OfferPrivateCreateRequest(
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
 		location = this.location,

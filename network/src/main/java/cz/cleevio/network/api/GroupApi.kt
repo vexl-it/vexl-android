@@ -30,7 +30,7 @@ interface GroupApi {
 
 	//get new members of group
 	@POST("groups/members")
-	suspend fun postGroupsMembersNew(
+	suspend fun postGroupsMembers(
 		@Body newMemberRequest: NewMemberRequest
 	): Response<NewMembersResponse>
 
