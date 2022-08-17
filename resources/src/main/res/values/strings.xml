@@ -361,6 +361,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_message_identity_request_subtitle">By sending request you agree with revealing of your own identity too.</string>
     <string name="chat_message_identity_request_send">Send request</string>
     <string name="chat_message_identity_request_back">Back</string>
+    <string name="chat_message_identity_reveal_reject_received">Request have been declined</string>
     <string name="chat_message_identity_reveal_reject">You have declined</string>
     <string name="chat_message_identity_reveal_approved">Identity revealed!</string>
     <string name="chat_identity_reveal_sent">Identity reveal request sent</string>
