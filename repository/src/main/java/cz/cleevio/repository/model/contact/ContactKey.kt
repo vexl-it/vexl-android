@@ -6,7 +6,7 @@ data class ContactKey constructor(
 	val key: String,
 	val level: ContactLevel,
 	val groupUuid: String?,
-	val isUpToDate: Boolean,
+	val isUpToDate: Boolean
 )
 
 fun ContactKeyEntity.fromCache(): ContactKey {

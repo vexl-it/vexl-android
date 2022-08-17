@@ -11,7 +11,7 @@ data class ContactKeyEntity(
 	val publicKey: String,
 	val contactLevel: ContactLevel,
 	val groupUuid: String? = null,
-	val isUpToDate: Boolean,
+	val isUpToDate: Boolean
 )
 
 enum class ContactLevel {
