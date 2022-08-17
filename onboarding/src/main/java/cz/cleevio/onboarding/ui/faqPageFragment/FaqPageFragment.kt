@@ -16,7 +16,8 @@ class FaqPageFragment : BaseFragment(R.layout.fragment_faq_page) {
 		arguments?.let { args ->
 			binding.faqTitle.text = args.getString(FAQ_TITLE) ?: ""
 			binding.faqSubtitle.text = fromHtml(args.getString(FAQ_SUBTITLE) ?: "")
-			binding.faqImage.setImageResource(args.getInt(FAQ_RESOURCE_ID))
+			val faqImage = args.getInt(FAQ_RESOURCE_ID)
+			if (faqImage != NO_IMAGE) binding.faqImage.setImageResource(faqImage)
 		}
 	}
 
@@ -24,5 +25,6 @@ class FaqPageFragment : BaseFragment(R.layout.fragment_faq_page) {
 		const val FAQ_TITLE = "faq_title"
 		const val FAQ_SUBTITLE = "faq_subtitle"
 		const val FAQ_RESOURCE_ID = "faq_resource_id"
+		private const val NO_IMAGE = 0
 	}
 }
