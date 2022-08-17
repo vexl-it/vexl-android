@@ -1,7 +1,6 @@
 package cz.cleevio.vexl.chat.chatFragment
 
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUser
@@ -18,7 +17,6 @@ import kotlinx.coroutines.flow.map
 class ChatViewModel constructor(
 	val chatRepository: ChatRepository,
 	private val userRepository: UserRepository,
-	private val encryptedPreference: EncryptedPreferenceRepository,
 	val communicationRequest: CommunicationRequest
 ) : BaseViewModel() {
 
