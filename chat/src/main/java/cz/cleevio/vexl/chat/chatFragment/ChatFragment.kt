@@ -24,6 +24,7 @@ import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import java.lang.Integer.max
 
 class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
@@ -38,7 +39,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
 				adapter.submitList(messages)
-				binding.chatRv.smoothScrollToPosition(messages.size - 1)
+				binding.chatRv.smoothScrollToPosition(max(messages.size - 1, 0))
+
+				if (messages.isEmpty()) {
+					findNavController().popBackStack()
+				}
 			}
 		}
 		repeatScopeOnStart {
