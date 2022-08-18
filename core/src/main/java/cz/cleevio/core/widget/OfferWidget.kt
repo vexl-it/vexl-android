@@ -38,7 +38,6 @@ class OfferWidget @JvmOverloads constructor(
 		binding.card.offerDescription.text = item.offerDescription
 		group?.let {
 			binding.card.groupInfo.text = resources.getString(R.string.offer_widget_groups_info, group.name)
-			binding.card.groupInfo.isVisible = true
 
 			//todo: later take sticker from group?
 			binding.card.groupSticker.load(R.drawable.ic_sticker) {
@@ -47,8 +46,9 @@ class OfferWidget @JvmOverloads constructor(
 				error(R.drawable.ic_sticker)
 				placeholder(R.drawable.ic_sticker)
 			}
-			binding.card.groupSticker.isVisible = true
 		}
+		binding.card.groupInfo.isVisible = group != null
+		binding.card.groupSticker.isVisible = group != null
 
 		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).toInt()}k"
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
