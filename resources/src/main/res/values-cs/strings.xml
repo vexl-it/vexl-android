@@ -351,6 +351,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_message_identity_request_subtitle">Odesláním žádosti souhlasíš i se svým odhalením.</string>
     <string name="chat_message_identity_request_send">Odeslat žádost</string>
     <string name="chat_message_identity_request_back">Zpět</string>
+    <string name="chat_message_identity_reveal_reject_received">Byl jsi odmítnut</string>
     <string name="chat_message_identity_reveal_reject">Odmítnul jsi</string>
     <string name="chat_message_identity_reveal_approved">Identita odhalena!</string>
     <string name="chat_identity_reveal_sent">Žádost o odhalení odeslána</string>

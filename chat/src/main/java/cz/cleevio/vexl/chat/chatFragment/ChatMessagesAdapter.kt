@@ -10,14 +10,10 @@ import coil.load
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.MessageType
-import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealRejectedBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
 	override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.uuid == newItem.uuid
@@ -69,6 +65,8 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 
 	fun updateChatUserIdentity(chatUserIdentity: ChatUserIdentity?) {
 		_chatUserIdentity = chatUserIdentity
+		notifyDataSetChanged()
+		// not nice solution, but somehow the combine of messages & user chat identity in fragment didn't work...
 	}
 
 	inner class TextViewHolder constructor(
@@ -128,6 +126,11 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatMessage) {
+			binding.identityRevealDescription.text = if (item.isMine) {
+				binding.identityRevealDescription.resources.getText(R.string.chat_message_identity_reveal_reject)
+			} else {
+				binding.identityRevealDescription.resources.getText(R.string.chat_message_identity_reveal_reject_received)
+			}
 		}
 	}
 }
