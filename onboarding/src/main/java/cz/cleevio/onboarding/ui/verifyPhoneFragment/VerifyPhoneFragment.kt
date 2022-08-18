@@ -29,6 +29,8 @@ import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
 
+const val CODE_LENGTH = 6
+
 class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
 	private val args by navArgs<VerifyPhoneFragmentArgs>()
@@ -113,7 +115,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 		setupPhoneNumber()
 
 		binding.verifyPhoneInput.doAfterTextChanged {
-			binding.continueBtn.isEnabled = it.toString().isNotEmpty()
+			binding.continueBtn.isEnabled = it.toString().length == CODE_LENGTH
 		}
 
 		binding.verifyPhoneNote.setOnClickListener {

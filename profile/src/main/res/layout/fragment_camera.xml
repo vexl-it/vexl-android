@@ -96,6 +96,19 @@
 			app:layout_constraintBottom_toBottomOf="@id/title"
 			app:layout_constraintEnd_toEndOf="parent" />
 
+		<TextView
+			android:id="@+id/camera_denied"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:text="@string/groups_camera_denied"
+			android:textAppearance="@style/TextAppearance.Vexl.Groups.Scan.Title"
+			android:visibility="invisible"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent" />
+
 		<com.google.android.material.button.MaterialButton
 			android:id="@+id/camera_enter_code"
 			android:layout_width="wrap_content"

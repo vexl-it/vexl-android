@@ -29,6 +29,7 @@ class JoinGroupCodeFragment : BaseFragment(R.layout.fragment_join_group_code) {
 						groupName = group.name,
 						groupLogo = group.logoUrl ?: "",
 						groupCode = group.code,
+						destinationId = R.id.groupFragment
 					)
 				)
 			}
@@ -44,7 +45,7 @@ class JoinGroupCodeFragment : BaseFragment(R.layout.fragment_join_group_code) {
 		}
 
 		binding.groupCodeInput.doAfterTextChanged {
-			binding.continueBtn.isEnabled = it.toString().isNotEmpty()
+			binding.continueBtn.isEnabled = it.toString().length == CODE_LENGTH
 		}
 
 		binding.close.setDebouncedOnClickListener {
