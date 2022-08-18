@@ -28,7 +28,8 @@ data class OfferFilter constructor(
 
 		locations.forEach { location ->
 			offerLocations.forEach { offerLocation ->
-				if (location.city == offerLocation.city) return true
+				if (location.city.equals(offerLocation.city, true)) return true
+				/* TODO will be supported in future
 				if (location.latitude == offerLocation.latitude && location.longitude == location.longitude) return true
 
 				val result = floatArrayOf(0f)
@@ -41,7 +42,7 @@ data class OfferFilter constructor(
 				)
 				val distanceInKm = result[POSITION_OF_DISTANCE] / ONE_KM_IN_METERS
 				val radius = (location.radius + offerLocation.radius).toFloat()
-				if (distanceInKm <= radius) return true
+				if (distanceInKm <= radius) return true*/
 			}
 		}
 

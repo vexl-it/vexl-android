@@ -22,7 +22,7 @@ class OfferLocationItem @JvmOverloads constructor(
 	private lateinit var binding: WidgetOfferLocationItemBinding
 	private var onCloseListener: ((OfferLocationItem) -> Unit)? = null
 
-	private var radius: Int = 1
+	private var radius: Int = 0
 	private var location: Location? = null
 	private var fragmentManager: FragmentManager? = null
 
@@ -81,7 +81,7 @@ class OfferLocationItem @JvmOverloads constructor(
 	private fun getRadius(): Int = radius
 
 	fun reset() {
-		radius = 1
+		radius = 0
 		updateRadiusText(radius)
 		binding.locationItemText.setText("")
 	}
