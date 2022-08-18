@@ -13,6 +13,8 @@ android {
         minSdkVersion rootProject.ext.min_sdk_version
         targetSdkVersion rootProject.ext.target_sdk_version
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "MAPY_CZ_URL", "\"https://api.mapy.cz/suggest/\""
     }
 
     flavorDimensions "environment"
@@ -30,7 +32,6 @@ android {
             buildConfigField "String", "CONTACT_API_BASE_URL", "\"https://contact.vexl.devel.cleevio.io/api/v1/\""
             buildConfigField "String", "OFFER_API_BASE_URL", "\"https://offer.vexl.devel.cleevio.io/api/v1/\""
             buildConfigField "String", "CHAT_API_BASE_URL", "\"https://chat.vexl.devel.cleevio.io/api/v1/\""
-            buildConfigField "String", "MAPY_CZ_URL", "\"https://api.mapy.cz/suggest/\""
         }
         staging {
             buildConfigField "String", "API_BASE_URL", "\"https://lightspeed.cleevio.io/\""
