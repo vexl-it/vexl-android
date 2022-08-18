@@ -44,6 +44,7 @@ android {
 dependencies {
     implementation project(':core')
     implementation project(':camera')
+    implementation project(':onboarding')
 
     //QR code
     implementation 'com.google.android.gms:play-services-vision-common:19.1.3'
