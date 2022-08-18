@@ -61,6 +61,7 @@
 				android:paddingHorizontal="16dp"
 				android:textAppearance="@style/TextAppearance.Vexl.PhoneInit.Input"
 				android:textColorHint="@color/gray_3"
+				android:maxLength="6"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/verify_phone_title"
