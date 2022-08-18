@@ -19,7 +19,7 @@ android {
     buildToolsVersion rootProject.ext.build_tools_version
 
     defaultConfig {
-        applicationId "com.cleevio.vexl"
+        applicationId "it.vexl"
         minSdkVersion rootProject.ext.min_sdk_version
         targetSdkVersion rootProject.ext.target_sdk_version
         versionCode buildVersionCode
