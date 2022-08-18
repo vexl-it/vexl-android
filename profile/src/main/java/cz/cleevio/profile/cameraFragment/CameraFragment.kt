@@ -8,13 +8,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.util.forEach
 import androidx.core.util.isNotEmpty
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.JoinGroupBottomSheetDialog
@@ -49,12 +49,14 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 				requireActivity(),
 				permissions,
 				allGranted = {
+					binding.cameraDenied.isVisible = false
 					scanQrCode()
 				},
 				denied = {
-
+					binding.cameraDenied.isVisible = true
 				},
 				permanentlyDenied = {
+					binding.cameraDenied.isVisible = true
 					showSnackbar(
 						binding.container,
 						getString(lightbase.camera.R.string.camera_error_permanent_ban_camera),
@@ -79,6 +81,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 						groupName = group.name,
 						groupLogo = group.logoUrl ?: "",
 						groupCode = group.code,
+						destinationId = R.id.groupFragment
 					)
 				)
 			}

@@ -253,6 +253,29 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@+id/friend_level_description" />
 
+			<TextView
+				android:id="@+id/group_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="16dp"
+				android:layout_marginTop="32dp"
+				android:text="@string/offer_create_group_title"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/friend_level" />
+
+			<TextView
+				android:id="@+id/group_description"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="16dp"
+				android:layout_marginTop="4dp"
+				android:text="@string/offer_create_group_description"
+				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				android:textSize="14sp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/group_title" />
+
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/group_recycler"
 				android:layout_width="0dp"
@@ -263,7 +286,7 @@
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/friend_level" />
+				app:layout_constraintTop_toBottomOf="@+id/group_description" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.core.widget.NestedScrollView>

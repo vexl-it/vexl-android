@@ -209,8 +209,8 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="marketplace_currency_3_month">3 mth</string>
     <string name="marketplace_currency_6_month">6 mth</string>
     <string name="marketplace_currency_1_year">1 year</string>
-    <string name="marketplace_buy">Buy</string>
-    <string name="marketplace_sell">Sell</string>
+    <string name="marketplace_buy">To Buy</string>
+    <string name="marketplace_sell">To Sell</string>
     <string name="marketplace_my_offers">My offers</string>
     <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of a Friend</string>
@@ -279,6 +279,8 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="filter_friend_level_description">Trade with your friends only. \nTrade with friends of your friends.</string>
     <string name="widget_btc_network_lighting">Lightning</string>
     <string name="widget_btc_network_on_chain">On chain</string>
+    <string name="offer_create_group_title">Group</string>
+    <string name="offer_create_group_description">Share offer in group</string>
     <string name="widget_offer_description">Description</string>
     <string name="widget_offer_description_hint">Enter offer description</string>
     <string name="widget_offer_description_counter">%d/%d</string>
@@ -371,6 +373,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="groups_title">Groups</string>
     <string name="groups_leave_button">Leave</string>
     <string name="groups_item_members">%s members</string>
+    <string name="groups_camera_denied">Vexl has no access to the camera</string>
     <string name="groups_enter_code">Enter code manually</string>
     <string name="groups_scan_code">Scan QR code to join a group</string>
     <string name="groups_enter_code_description">Fill the activation code below</string>

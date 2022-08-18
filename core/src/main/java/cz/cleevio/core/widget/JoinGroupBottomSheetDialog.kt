@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -24,7 +25,9 @@ class JoinGroupBottomSheetDialog constructor(
 	private val groupCode: Long,
 	private val groupName: String,
 	private val groupLogo: String,
-	private val isFromDeeplink: Boolean = false
+	private val isFromDeeplink: Boolean = false,
+	@IdRes
+	private val destinationId: Int? = null
 ) : BottomSheetDialogFragment() {
 
 	private val groupRepository: GroupRepository by inject()
@@ -55,7 +58,11 @@ class JoinGroupBottomSheetDialog constructor(
 					is Status.Success -> {
 						withContext(Dispatchers.Main) {
 							dismiss()
-							findNavController().popBackStack()
+							if (destinationId != null) {
+								findNavController().popBackStack(destinationId, false)
+							} else {
+								findNavController().popBackStack()
+							}
 						}
 					}
 					is Status.Error -> {
