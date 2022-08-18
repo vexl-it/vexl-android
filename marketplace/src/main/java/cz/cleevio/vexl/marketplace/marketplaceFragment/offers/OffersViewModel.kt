@@ -16,17 +16,23 @@ class OffersViewModel constructor(
 ) : BaseViewModel() {
 
 	val buyOffersFlow = offerRepository.buyOfferFilter.flatMapLatest { filter ->
-		offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.BUY.name, filter).map { list ->
-			list.map {
-				OfferWithGroup(offer = it, group = groupRepository.findGroupByUuidInDB(it.groupUuid))
+		combine(
+			offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.BUY.name, filter),
+			groupRepository.getGroupsFlow()
+		) { offers, groups ->
+			offers.map { item ->
+				OfferWithGroup(offer = item, group = groups.firstOrNull { it.groupUuid == item.groupUuid })
 			}
 		}
 	}.flowOn(Dispatchers.Default)
 
 	val sellOffersFlow = offerRepository.sellOfferFilter.flatMapLatest { filter ->
-		offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.SELL.name, filter).map { list ->
-			list.map {
-				OfferWithGroup(offer = it, group = groupRepository.findGroupByUuidInDB(it.groupUuid))
+		combine(
+			offerRepository.getFilteredAndSortedOffersByTypeFlow(OfferType.SELL.name, filter),
+			groupRepository.getGroupsFlow()
+		) { offers, groups ->
+			offers.map { item ->
+				OfferWithGroup(offer = item, group = groups.firstOrNull { it.groupUuid == item.groupUuid })
 			}
 		}
 	}.flowOn(Dispatchers.Default)
