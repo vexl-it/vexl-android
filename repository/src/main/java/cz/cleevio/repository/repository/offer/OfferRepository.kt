@@ -66,5 +66,5 @@ interface OfferRepository {
 
 	suspend fun clearOfferTables()
 
-	suspend fun getOfferById(offerId: String): Offer
+	suspend fun getOfferById(offerId: String): Offer?
 }
