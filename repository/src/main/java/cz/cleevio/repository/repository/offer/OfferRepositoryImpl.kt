@@ -51,13 +51,15 @@ class OfferRepositoryImpl constructor(
 					)
 				)
 			},
-			mapper = { it?.fromNetwork() }
+			//we need to map to different stuff, so we will instead not map at all
+			mapper = { it }
 		)
 
-		offerCreateResource.data?.let { offer ->
+		offerCreateResource.data?.fromNetworkToAdmin()?.let { offer ->
 			//save keys and info into my offers
 			saveMyOfferIdAndKeys(
 				offerId = offer.offerId,
+				adminId = offer.adminId,
 				privateKey = offerKeys.privateKey,
 				publicKey = offerKeys.publicKey,
 				offerType = offer.offerType,
@@ -71,6 +73,7 @@ class OfferRepositoryImpl constructor(
 					//update info in my offers
 					saveMyOfferIdAndKeys(
 						offerId = offer.offerId,
+						adminId = offer.adminId,
 						privateKey = offerKeys.privateKey,
 						publicKey = offerKeys.publicKey,
 						offerType = offer.offerType,
@@ -82,12 +85,18 @@ class OfferRepositoryImpl constructor(
 					return Resource.error(inboxResponse.errorIdentification)
 				}
 			}
+		}
 
+		offerCreateResource.data?.fromNetwork()?.let { offer ->
 			//save offer into DB
 			updateOffers(listOf(offer))
 		}
 
-		return offerCreateResource
+		return if (offerCreateResource.status == Status.Success) {
+			Resource.success(data = offerCreateResource.data?.fromNetwork())
+		} else {
+			Resource.error(offerCreateResource.errorIdentification)
+		}
 	}
 
 	override suspend fun createOfferForPublicKeys(offerId: String, offerList: List<NewOffer>): Resource<Unit> {
@@ -96,7 +105,7 @@ class OfferRepositoryImpl constructor(
 				offerApi.postOffersPrivatePart(
 					CreateOfferPrivatePartRequest(
 						privateParts = offerList.map { it.toNetwork() },
-						offerId = offerId
+						offerId = myOfferDao.getAdminIdByOfferId(offerId)
 					)
 				)
 			},
@@ -108,7 +117,7 @@ class OfferRepositoryImpl constructor(
 		request = {
 			offerApi.putOffers(
 				UpdateOfferRequest(
-					offerId = offerId,
+					offerId = myOfferDao.getAdminIdByOfferId(offerId),
 					offerPrivateCreateList = offerList.map { it.toNetwork() }
 				)
 			)
@@ -130,7 +139,9 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit> = tryOnline(
 		request = {
-			offerApi.deleteOffersId(offerIds = offerIds)
+			offerApi.deleteOffersId(offerIds = offerIds.map { offerId ->
+				myOfferDao.getAdminIdByOfferId(offerId)
+			})
 		},
 		mapper = { },
 		doOnSuccess = {
@@ -147,7 +158,9 @@ class OfferRepositoryImpl constructor(
 		: Resource<Unit> = tryOnline(
 		request = {
 			offerApi.deleteOffersPrivatePart(
-				deletePrivatePartRequest = deletePrivatePartRequest
+				deletePrivatePartRequest = deletePrivatePartRequest.copy(offerIds = deletePrivatePartRequest.offerIds.map { offerId ->
+					myOfferDao.getAdminIdByOfferId(offerId)
+				})
 			)
 		},
 		mapper = { },
@@ -156,18 +169,20 @@ class OfferRepositoryImpl constructor(
 		}
 	)
 
-	override suspend fun refreshOffer(offerId: String): Resource<List<Offer>> = tryOnline(
-		request = { offerApi.getOffersId(listOf(offerId)) },
-		mapper = { items -> items?.map { item -> item.fromNetwork() } ?: emptyList() },
-		doOnSuccess = {
-			it?.let { offers ->
-				updateOffers(offers)
-			}
-		}
-	)
+	//NOT USED
+//	override suspend fun refreshOffer(offerId: String): Resource<List<Offer>> = tryOnline(
+//		request = { offerApi.getOffersId(listOf(offerId)) },
+//		mapper = { items -> items?.map { item -> item.fromNetwork() } ?: emptyList() },
+//		doOnSuccess = {
+//			it?.let { offers ->
+//				updateOffers(offers)
+//			}
+//		}
+//	)
 
 	override suspend fun saveMyOfferIdAndKeys(
 		offerId: String,
+		adminId: String,
 		privateKey: String,
 		publicKey: String,
 		offerType: String,
@@ -176,6 +191,7 @@ class OfferRepositoryImpl constructor(
 		myOfferDao.replace(
 			MyOfferEntity(
 				extId = offerId,
+				adminId = adminId,
 				privateKey = privateKey,
 				publicKey = publicKey,
 				offerType = offerType,

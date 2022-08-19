@@ -9,6 +9,7 @@ data class MyOfferEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
 	val extId: String,
+	val adminId: String,
 	val privateKey: String,
 	val publicKey: String,
 	val offerType: String,

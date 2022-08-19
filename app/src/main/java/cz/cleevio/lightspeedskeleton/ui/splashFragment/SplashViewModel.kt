@@ -36,6 +36,7 @@ class SplashViewModel constructor(
 				if (inboxResponse.status is Status.Success) {
 					offerRepository.saveMyOfferIdAndKeys(
 						offerId = myOffer.offerId,
+						adminId = myOffer.adminId,
 						privateKey = myOffer.privateKey,
 						publicKey = myOffer.publicKey,
 						offerType = myOffer.offerType,

@@ -30,11 +30,12 @@ interface OfferRepository {
 
 	suspend fun deleteOfferForPublicKeys(deletePrivatePartRequest: DeletePrivatePartRequest): Resource<Unit>
 
-	//not needed right now?
-	suspend fun refreshOffer(offerId: String): Resource<List<Offer>>
+	////NOT USED
+	//suspend fun refreshOffer(offerId: String): Resource<List<Offer>>
 
 	suspend fun saveMyOfferIdAndKeys(
 		offerId: String,
+		adminId: String,
 		privateKey: String,
 		publicKey: String,
 		offerType: String,
