@@ -84,6 +84,7 @@ class OfferRepositoryImpl constructor(
 					//do we need other flow for errors?
 					return Resource.error(inboxResponse.errorIdentification)
 				}
+				else -> Unit
 			}
 		}
 
