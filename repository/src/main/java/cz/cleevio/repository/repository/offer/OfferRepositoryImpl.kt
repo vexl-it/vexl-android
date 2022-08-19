@@ -404,16 +404,18 @@ class OfferRepositoryImpl constructor(
 		mapper = {
 			it?.result?.map { a ->
 				LocationSuggestion(
-					a.userData.municipality,
-					a.userData.region,
-					a.userData.country,
-					BigDecimal(a.userData.latitude),
-					BigDecimal(a.userData.longitude)
+					city = a.userData.municipality,
+					region = a.userData.region,
+					country = a.userData.country,
+					latitude = BigDecimal(a.userData.latitude),
+					longitude = BigDecimal(a.userData.longitude),
+					suggestFirstRow = a.userData.suggestFirstRow,
+					suggestSecondRow = a.userData.suggestSecondRow,
 				)
 			}
-				?.filter { a -> a.city.isNotBlank() }
-				?.distinctBy { a -> a.city }
-				?.filter { a -> a.city.contains(query, ignoreCase = true) }
+				?.filter { a -> a.cityText.isNotBlank() }
+				?.distinctBy { a -> a.cityText }
+				?.filter { a -> a.cityText.contains(query, ignoreCase = true) }
 				.orEmpty()
 		}
 	)

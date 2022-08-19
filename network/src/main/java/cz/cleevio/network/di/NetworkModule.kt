@@ -94,7 +94,9 @@ val networkModule = module {
 		provideRetrofit(
 			scope = this,
 			baseUrl = BuildConfig.MAPY_CZ_URL,
-			interceptors = emptyList()
+			interceptors = listOf(
+				get(named(HTTP_LOGGING_INTERCEPTOR))
+			)
 		).create(LocationApi::class.java)
 	}
 

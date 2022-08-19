@@ -104,7 +104,7 @@ class OfferLocationItem @JvmOverloads constructor(
 			longitude = suggestion.longitude,
 			latitude = suggestion.latitude,
 			radius = BigDecimal(getRadius()),
-			suggestion.city
+			city = suggestion.cityText
 		)
 	}
 }

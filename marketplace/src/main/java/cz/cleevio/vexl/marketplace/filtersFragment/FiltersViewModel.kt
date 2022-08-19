@@ -99,6 +99,6 @@ class FiltersViewModel constructor(
 	private companion object {
 		private const val DEBOUNCE = 300L
 		private const val SUGGESTION_COUNT = 20
-		private const val SUGGESTION_LANGUAGES = "cz,en"
+		private const val SUGGESTION_LANGUAGES = "cs,en"
 	}
 }
