@@ -427,9 +427,9 @@ class OfferRepositoryImpl constructor(
 		contactDao.clearTable()
 	}
 
-	override suspend fun getOfferById(offerId: String): Offer {
+	override suspend fun getOfferById(offerId: String): Offer? {
 		return offerDao.getOfferById(offerId = offerId).let {
-			it.offer.fromCache(it.locations, it.commonFriends)
+			it?.offer?.fromCache(it.locations, it.commonFriends)
 		}
 	}
 

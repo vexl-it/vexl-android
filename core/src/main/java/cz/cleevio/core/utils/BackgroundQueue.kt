@@ -39,30 +39,31 @@ class BackgroundQueue constructor(
 				)
 
 				//transform myOffer to Offer with data
-				val offer = offerRepository.getOfferById(myOffer.offerId)
+				val nullableOffer = offerRepository.getOfferById(myOffer.offerId)
+				nullableOffer?.let { offer ->
+					val encryptedOffers: List<NewOffer> = newMembers
+						//encrypt offer only for FIRST level contacts or group contact with correct groupUuid
+						.filter { contactKey ->
+							contactKey.level == ContactLevel.FIRST || contactKey.groupUuid == offer.groupUuid
+						}.map { contactKey ->
+							OfferUtils.encryptOffer(
+								locationHelper = locationHelper,
+								offer = offer,
+								// orEmpty should not happen, list in map is not nullable
+								commonFriends = commonFriends[contactKey.key].orEmpty(),
+								contactKey = contactKey.key,
+								offerKeys = KeyPair(myOffer.privateKey, myOffer.publicKey),
+								groupUuid = contactKey.groupUuid
+							)
+						}
 
-				val encryptedOffers: List<NewOffer> = newMembers
-					//encrypt offer only for FIRST level contacts or group contact with correct groupUuid
-					.filter { contactKey ->
-						contactKey.level == ContactLevel.FIRST || contactKey.groupUuid == offer.groupUuid
-					}.map { contactKey ->
-						OfferUtils.encryptOffer(
-							locationHelper = locationHelper,
-							offer = offer,
-							// orEmpty should not happen, list in map is not nullable
-							commonFriends = commonFriends[contactKey.key].orEmpty(),
-							contactKey = contactKey.key,
-							offerKeys = KeyPair(myOffer.privateKey, myOffer.publicKey),
-							groupUuid = contactKey.groupUuid
+					//send it to space
+					if (encryptedOffers.isNotEmpty()) {
+						offerRepository.createOfferForPublicKeys(
+							offerId = myOffer.offerId,
+							offerList = encryptedOffers
 						)
 					}
-
-				//send it to space
-				if (encryptedOffers.isNotEmpty()) {
-					offerRepository.createOfferForPublicKeys(
-						offerId = myOffer.offerId,
-						offerList = encryptedOffers
-					)
 				}
 			}
 

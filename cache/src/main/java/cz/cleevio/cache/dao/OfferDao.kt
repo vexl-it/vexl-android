@@ -34,7 +34,7 @@ interface OfferDao {
 	suspend fun deleteOffersById(offerIds: List<String>)
 
 	@Query("SELECT * FROM OfferEntity WHERE externalOfferId == :offerId")
-	fun getOfferById(offerId: String): OfferWithLocationsAndCommonFriends
+	fun getOfferById(offerId: String): OfferWithLocationsAndCommonFriends?
 
 	@Transaction
 	suspend fun replaceAll(offers: List<OfferEntity>) {
