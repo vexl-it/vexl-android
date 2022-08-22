@@ -47,15 +47,14 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 			viewModel.offer.collect {
 				it?.let { offerWithGroup ->
 					val contacts = offerWithGroup.offer.commonFriends.map { friend -> friend.contact }
+					binding.commonFriendsPlaceholder.isVisible = contacts.isNotEmpty()
+					binding.commonFriendsEmpty.isVisible = contacts.isEmpty()
 					binding.offerWidget.bind(item = offerWithGroup.offer, group = offerWithGroup.group)
-					binding.commonFriendsNumber.text =
-						if (contacts.isEmpty()) {
-							getString(R.string.request_common_friends_empty_state)
-						} else {
-							getString(R.string.request_common_friends, offerWithGroup.offer.commonFriends.size)
-						}
-					commonFriendsAdapter.submitList(offerWithGroup.offer.commonFriends.map { friend -> friend.contact })
-					binding.commonFriendsList.isVisible = contacts.isNotEmpty()
+
+					if (contacts.isNotEmpty()) {
+						binding.commonFriendsNumber.text = getString(R.string.request_common_friends, offerWithGroup.offer.commonFriends.size)
+						commonFriendsAdapter.submitList(offerWithGroup.offer.commonFriends.map { friend -> friend.contact })
+					}
 				}
 			}
 		}

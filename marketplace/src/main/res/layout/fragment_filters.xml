@@ -207,7 +207,6 @@
 				android:drawablePadding="8dp"
 				android:text="@string/filter_type_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
-				app:drawableEndCompat="@drawable/ic_info"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/advanced_title" />
 

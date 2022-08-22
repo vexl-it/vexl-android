@@ -42,7 +42,9 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			viewModel.phoneNumberSuccess.collect { initPhoneSuccess ->
 				findNavController().safeNavigateWithTransition(
 					InitPhoneFragmentDirections.proceedToVerifyPhoneFragment(
-						initPhoneSuccess.phoneNumber, initPhoneSuccess.confirmPhone.verificationId
+						phoneNumber = initPhoneSuccess.phoneNumber,
+						verificationId = initPhoneSuccess.confirmPhone.verificationId,
+						expirationAt = initPhoneSuccess.confirmPhone.expirationAt
 					)
 				)
 			}
@@ -74,13 +76,15 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 
 			binding.root.hideKeyboard()
 			val phoneNumber = binding.initPhoneInput.text.toString()
-			viewModel.sendPhoneNumber(phoneNumber)
+			val countryCode = "+${phoneNumberUtil.getCountryCodeForRegion(getCountryIsoCode(phoneNumber))}"
+			viewModel.sendPhoneNumber(countryCode = countryCode, phoneNumber = phoneNumber)
 		}
 
 		textWatcher = object : TextWatcher {
 			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
 			override fun afterTextChanged(s: Editable?) {
+				val selection = binding.initPhoneInput.selectionStart
 				val number = s.toString()
 				val countryIsoCode = getCountryIsoCode(number)
 				if (countryIsoCode.isNullOrEmpty()) {
@@ -88,7 +92,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 				} else {
 					setEmojiAndColorize(countryIsoCode, number)
 				}
-				binding.initPhoneInput.setSelection(binding.initPhoneInput.length())
+				binding.initPhoneInput.setSelection(selection)
 			}
 		}
 

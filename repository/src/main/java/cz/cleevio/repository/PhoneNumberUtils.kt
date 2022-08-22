@@ -8,30 +8,52 @@ import timber.log.Timber
 import java.util.*
 
 class PhoneNumberUtils constructor(
-	telephonyManager: TelephonyManager
+	val telephonyManager: TelephonyManager
 ) {
 	private val phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
 
 	//alternative is telephonyManager.simCountryIso
-	private val defaultRegion = "+" + telephonyManager.networkCountryIso.uppercase(Locale.getDefault())
+	private val defaultCountryIso = telephonyManager.networkCountryIso
+	private val defaultRegion = "+" + defaultCountryIso.uppercase(Locale.getDefault())
 
-	fun isPhoneValid(phoneNumber: String): Boolean {
-		return phoneNumber.parsePhoneNumber(phoneUtil)?.let {
+	fun isPhoneValid(phoneNumber: String, defaultCountryCode: String): Boolean {
+		return phoneNumber.parsePhoneNumber(phoneUtil, defaultCountryCode)?.let {
 			phoneUtil.isValidNumber(it)
 		} ?: false
 	}
 
-	fun getFormattedPhoneNumber(phoneNumber: String): String {
-		val parsedPhoneNumber = phoneNumber.parsePhoneNumber(phoneUtil)
+	fun getFormattedPhoneNumber(phoneNumber: String, defaultCountryCode: String): String {
+		val parsedPhoneNumber = phoneNumber.parsePhoneNumber(phoneUtil, defaultCountryCode)
 		return "+" + parsedPhoneNumber?.countryCode.toString() + parsedPhoneNumber?.nationalNumber.toString()
 	}
 
-	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
+	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil, defaultCountryCode: String): Phonenumber.PhoneNumber? {
+		val number = toValidPhoneNumber(this)
 		return try {
-			phoneUtil.parse(this, defaultRegion)
+			val phoneNumber = if (number.length == DEFAULT_PHONE_NUMBER_LENGTH) {
+				// Country code did not recognized, use default region
+				"$defaultCountryCode$number"
+			} else if (number.length == SLOVAK_PHONE_NUMBER_LENGTH && number.startsWith("0")) {
+				// Slovak phone number -> need to remove "0" from start
+				"$defaultCountryCode${number.drop(1)}"
+			} else {
+				this
+			}
+			phoneUtil.parse(phoneNumber, defaultRegion)
 		} catch (e: NumberParseException) {
 			Timber.e("NumberParseException was thrown: $e")
 			null
 		}
+	}
+
+	fun toValidPhoneNumber(phoneNumber: String): String {
+		return phoneNumber
+			.replace("\\s".toRegex(), "")
+			.replace("-".toRegex(), "")
+	}
+
+	companion object {
+		const val DEFAULT_PHONE_NUMBER_LENGTH = 9
+		const val SLOVAK_PHONE_NUMBER_LENGTH = 10
 	}
 }

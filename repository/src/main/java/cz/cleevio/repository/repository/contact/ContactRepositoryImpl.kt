@@ -118,20 +118,22 @@ class ContactRepositoryImpl constructor(
 		}
 		cursor?.close()
 
+		val defaultCountryCode = encryptedPreference.userCountryCode
+
 		Timber.tag("ContactSync").d("Contacts moved from cursor to list")
 		val result = contactList
-			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
+			.distinctBy { listOf(it.name, it.email, phoneNumberUtils.toValidPhoneNumber(it.phoneNumber)) }
 			.apply {
 				Timber.tag("ContactSync").d("Replacing only ${this.size} after distinctBy")
 			}
 			//take only valid phone numbers
-			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber) }
+			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber, defaultCountryCode) }
 			.apply {
 				Timber.tag("ContactSync").d("Replacing only ${this.size} after filter")
 			}.map {
 				//format phone number to proper format
 				it.copy(
-					phoneNumber = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber)
+					phoneNumber = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber, defaultCountryCode)
 				)
 			}
 
@@ -191,6 +193,10 @@ class ContactRepositoryImpl constructor(
 	}
 
 	override suspend fun deleteContacts(contacts: List<Contact>): Resource<Unit> {
+		if (contacts.isEmpty()) {
+			return Resource.success()
+		}
+
 		Timber.tag("DeleteContacts").d("Starting hashing ${contacts.size} contacts before uploading")
 		// hash phone numbers if we are here from onboarding.
 		// that means that we have skipped hashing before `not-imported` EP
@@ -517,10 +523,4 @@ class ContactRepositoryImpl constructor(
 
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
-	private fun String.toValidPhoneNumber(): String {
-		return this
-			.replace("\\s".toRegex(), "")
-			.replace("-".toRegex(), "")
-	}
 }
