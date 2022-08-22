@@ -82,6 +82,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
 			override fun afterTextChanged(s: Editable?) {
+				val selection = binding.initPhoneInput.selectionStart
 				val number = s.toString()
 				val countryIsoCode = getCountryIsoCode(number)
 				if (countryIsoCode.isNullOrEmpty()) {
@@ -89,7 +90,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 				} else {
 					setEmojiAndColorize(countryIsoCode, number)
 				}
-				binding.initPhoneInput.setSelection(binding.initPhoneInput.length())
+				binding.initPhoneInput.setSelection(selection)
 			}
 		}
 
