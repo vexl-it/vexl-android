@@ -315,8 +315,10 @@ fun FragmentActivity.listenForInsets(view: View, callback: (Insets) -> Unit) {
 
 		callback.invoke(
 			Insets(
-				insetFromTop, insetFromBottom,
-				insetFromBottom + getBottomNavigationViewHeight(), insetFromBottomWithIME
+				top = insetFromTop,
+				bottom = insetFromBottom,
+				bottomWithNavBar = insetFromBottom + getBottomNavigationViewHeight(),
+				bottomWithIME = insetFromBottomWithIME
 			)
 		)
 		insets
