@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			}
 	}
 
+	@Suppress("ComplexMethod")
 	private fun bindObservers() {
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -169,7 +170,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							}
 						}
 
-						NavMainGraphModel.NavGraph.ChatRequests -> {
+						NavMainGraphModel.NavGraph.ChatList -> {
 							//TODO: hack that should be fixed later
 							binding.bottomNavigation.post {
 								binding.bottomNavigation.findViewById<View>(R.id.nav_chat)?.performClick()
