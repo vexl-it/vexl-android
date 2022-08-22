@@ -120,7 +120,7 @@ class ContactRepositoryImpl constructor(
 
 		Timber.tag("ContactSync").d("Contacts moved from cursor to list")
 		val result = contactList
-			.distinctBy { listOf(it.name, it.email, it.phoneNumber.toValidPhoneNumber()) }
+			.distinctBy { listOf(it.name, it.email, phoneNumberUtils.toValidPhoneNumber(it.phoneNumber)) }
 			.apply {
 				Timber.tag("ContactSync").d("Replacing only ${this.size} after distinctBy")
 			}
@@ -517,10 +517,4 @@ class ContactRepositoryImpl constructor(
 
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
-	private fun String.toValidPhoneNumber(): String {
-		return this
-			.replace("\\s".toRegex(), "")
-			.replace("-".toRegex(), "")
-	}
 }
