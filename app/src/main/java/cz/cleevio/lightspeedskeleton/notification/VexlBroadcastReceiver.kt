@@ -18,6 +18,43 @@ class VexlBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 	override fun onReceive(context: Context?, intent: Intent?) {
 		GlobalScope.launch(Dispatchers.Default) {
 			navGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.Main)
+
+			intent?.let { intent ->
+				val type = RemoteNotificationType.valueOf(
+					intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_TYPE, RemoteNotificationType.UNKNOWN.name)
+						?: RemoteNotificationType.UNKNOWN.name
+				)
+				val inboxKey = intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_INBOX) ?: ""
+				val senderKey = intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_SENDER) ?: ""
+
+				when (type) {
+					RemoteNotificationType.MESSAGE,
+					RemoteNotificationType.REQUEST_REVEAL,
+					RemoteNotificationType.APPROVE_REVEAL,
+					RemoteNotificationType.DISAPPROVE_REVEAL,
+					RemoteNotificationType.APPROVE_MESSAGING -> {
+						navGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.ChatDetail(inboxKey = inboxKey, senderKey = senderKey)
+						)
+					}
+					RemoteNotificationType.REQUEST_MESSAGING,
+					RemoteNotificationType.DISAPPROVE_MESSAGING -> {
+						navGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.ChatRequests
+						)
+					}
+					RemoteNotificationType.DELETE_CHAT -> {
+						navGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.ChatList
+						)
+					}
+					else -> {
+						navGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.Main
+						)
+					}
+				}
+			}
 		}
 	}
 }

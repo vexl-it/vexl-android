@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit
 const val NETWORK_INTERCEPTOR = "NETWORK_INTERCEPTOR"
 const val AUTH_INTERCEPTOR = "AUTH_INTERCEPTOR"
 const val HTTP_LOGGING_INTERCEPTOR = "HTTP_LOGGING_INTERCEPTOR"
-const val NETWORK_REQUEST_TIMEOUT = 30L
+const val NETWORK_REQUEST_TIMEOUT = 120L
 
 val networkModule = module {
 

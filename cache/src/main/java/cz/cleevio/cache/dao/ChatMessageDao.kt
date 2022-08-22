@@ -102,7 +102,10 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"ORDER BY time DESC " +
 			"LIMIT 1"
 	)
-	fun getLastRequestRevealMessageByUser(inboxPublicKey: String, userPublicKey: String, myPublicKey: String): ChatMessageEntity?
+	fun getLastRequestRevealMessageByUser(
+		inboxPublicKey: String, userPublicKey: String,
+		myPublicKey: String
+	): ChatMessageEntity?
 
 	@Suppress("FunctionMaxLength")
 	@Query(

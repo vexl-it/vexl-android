@@ -10,7 +10,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import cz.cleevio.lightspeedskeleton.R
-import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -43,6 +42,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val message = remoteMessage.data[NOTIFICATION_BODY]
 		val type = remoteMessage.data[NOTIFICATION_TYPE] ?: NOTIFICATION_TYPE_DEFAULT
 		val inbox = remoteMessage.data[NOTIFICATION_INBOX]
+		val sender = remoteMessage.data[NOTIFICATION_SENDER]
 		//extra info for notification about new members in group
 		//uuid is groupUuid
 		val uuid = remoteMessage.data[NOTIFICATION_UUID]
@@ -51,7 +51,6 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val publicKey = remoteMessage.data[PUBLIC_KEY]
 
 		Timber.tag("FIREBASE").d("$inbox")
-		Timber.tag("QUEUE").d("notification received")
 
 		//todo: do some custom stuff here, check notification type, check DB, display or not
 		//there will be more stuff when we implement group functionality
@@ -80,11 +79,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 			}
 		}
 
-		val intent = Intent(applicationContext, MainActivity::class.java)
-		intent.putExtra(NOTIFICATION_TYPE, type)
-		intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
-		val pendingIntent = createPendingIntent(type)
-
+		val pendingIntent = createPendingIntent(type, inbox, sender)
 		if (title != null && message != null) {
 			coroutineScope.launch {
 				showNotification(
@@ -135,9 +130,11 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 			.setDefaults(NotificationCompat.DEFAULT_ALL)
 	}
 
-	private fun createPendingIntent(type: String): PendingIntent {
+	private fun createPendingIntent(type: String, inbox: String?, sender: String?): PendingIntent {
 		val intent = Intent(applicationContext, VexlBroadcastReceiver::class.java).apply {
 			putExtra(NOTIFICATION_TYPE, type)
+			putExtra(NOTIFICATION_INBOX, inbox)
+			putExtra(NOTIFICATION_SENDER, sender)
 		}
 		return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
 			PendingIntent.getBroadcast(
@@ -162,7 +159,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		const val NOTIFICATION_LOG_MESSAGE = "log_message"
 		private const val NOTIFICATION_TITLE = "title"
 		private const val NOTIFICATION_BODY = "body"
-		private const val NOTIFICATION_INBOX = "inbox"
+		const val NOTIFICATION_INBOX = "inbox"
+		const val NOTIFICATION_SENDER = "sender"
 		private const val NOTIFICATION_UUID = "group_uuid"
 		private const val PUBLIC_KEY = "public_key"
 
@@ -173,6 +171,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 
 // TODO Handle app navigation according to the notification received
 enum class RemoteNotificationType {
+	UNKNOWN,
 	MESSAGE,
 	REQUEST_REVEAL,
 	APPROVE_REVEAL,

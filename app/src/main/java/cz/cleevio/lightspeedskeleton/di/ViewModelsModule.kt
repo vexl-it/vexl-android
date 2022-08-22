@@ -10,6 +10,7 @@ val viewModelsModule = module {
 		MainViewModel(
 			encryptedPreferenceRepository = get(),
 			navMainGraphModel = get(),
+			chatRepository = get(),
 		)
 	}
 

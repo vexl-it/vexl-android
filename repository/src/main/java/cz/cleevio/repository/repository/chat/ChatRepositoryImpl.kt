@@ -617,6 +617,53 @@ class ChatRepositoryImpl constructor(
 		return result.toList()
 	}
 
+	override suspend fun getOneChatUser(messageKeyPair: MessageKeyPair): ChatListUser? {
+		val latestMessage = chatMessageDao.getLatestBySenders(
+			inboxPublicKey = messageKeyPair.recipientPublicKey,
+			firstKey = messageKeyPair.senderPublicKey,
+			secondKey = messageKeyPair.recipientPublicKey
+		)?.fromCache()
+
+		if (latestMessage != null) {
+			val contactPublicKey = if (latestMessage.isMine) {
+				latestMessage.recipientPublicKey
+			} else {
+				latestMessage.senderPublicKey
+			}
+			val originalChatListUser = ChatListUser(
+				message = latestMessage,
+				offer = offerDao.getAllExtendedOffers().filter {
+					it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
+						it.offer.offerPublicKey == latestMessage.senderPublicKey
+				}.map {
+					it.offer.fromCache(it.locations, it.commonFriends)
+				}.first(),
+				user = chatUserDao.getUserIdentity(latestMessage.inboxPublicKey, contactPublicKey)?.fromCache()
+			)
+
+			return if (originalChatListUser.offer.isMine) {
+				// For our own offer we don't have common friends, because when creating the offer we don't
+				// know who will contact us, and every conversation will have different common friends.
+				// So here we don't read that data from database, but ask API directly
+				val myOfferCommonFriends = contactRepository.getCommonFriends(listOf(contactPublicKey))
+				originalChatListUser.copy(
+					offer = originalChatListUser.offer.copy(
+						commonFriends = myOfferCommonFriends[contactPublicKey].orEmpty().map {
+							CommonFriend(
+								it.getHashedContact(),
+								it
+							)
+						}
+					)
+				)
+			} else {
+				originalChatListUser
+			}
+		}
+
+		return null
+	}
+
 	override suspend fun clearChatTables() {
 		chatUserDao.clearTable()
 		chatMessageDao.deleteAll()
