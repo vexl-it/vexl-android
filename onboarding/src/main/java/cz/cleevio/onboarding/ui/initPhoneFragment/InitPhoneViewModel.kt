@@ -29,7 +29,7 @@ class InitPhoneViewModel constructor(
 		loadKeys()
 	}
 
-	fun sendPhoneNumber(phoneNumber: String) {
+	fun sendPhoneNumber(countryCode: String, phoneNumber: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_loading.send(true)
 			val response = userRepository.authStepOne(phoneNumber)
@@ -38,6 +38,7 @@ class InitPhoneViewModel constructor(
 
 			when (response.status) {
 				is Status.Success -> response.data?.let { confirmPhone ->
+					encryptedPreferences.userCountryCode = countryCode
 					_phoneNumberSuccess.send(
 						InitPhoneSuccess(
 							phoneNumber = phoneNumber,

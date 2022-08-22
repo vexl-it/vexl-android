@@ -7,6 +7,7 @@ interface EncryptedPreferenceRepository {
 	var isUserVerified: Boolean
 	var userPublicKey: String
 	var userPrivateKey: String
+	var userCountryCode: String
 	var signature: String
 	var hash: String
 	var facebookSignature: String

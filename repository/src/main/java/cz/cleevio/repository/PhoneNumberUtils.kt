@@ -15,25 +15,19 @@ class PhoneNumberUtils constructor(
 	//alternative is telephonyManager.simCountryIso
 	private val defaultCountryIso = telephonyManager.networkCountryIso
 	private val defaultRegion = "+" + defaultCountryIso.uppercase(Locale.getDefault())
-	private val defaultCountryCode = when (defaultCountryIso) {
-		CZECH_REGION_CODE -> CZECH_PHONE_NUMBER_COUNTRY_CODE_PREFIX
-		SLOVAK_REGION_CODE -> SLOVAK_PHONE_NUMBER_COUNTRY_CODE_PREFIX
-		else -> ""
-	}
 
-
-	fun isPhoneValid(phoneNumber: String): Boolean {
-		return phoneNumber.parsePhoneNumber(phoneUtil)?.let {
+	fun isPhoneValid(phoneNumber: String, defaultCountryCode: String): Boolean {
+		return phoneNumber.parsePhoneNumber(phoneUtil, defaultCountryCode)?.let {
 			phoneUtil.isValidNumber(it)
 		} ?: false
 	}
 
-	fun getFormattedPhoneNumber(phoneNumber: String): String {
-		val parsedPhoneNumber = phoneNumber.parsePhoneNumber(phoneUtil)
+	fun getFormattedPhoneNumber(phoneNumber: String, defaultCountryCode: String): String {
+		val parsedPhoneNumber = phoneNumber.parsePhoneNumber(phoneUtil, defaultCountryCode)
 		return "+" + parsedPhoneNumber?.countryCode.toString() + parsedPhoneNumber?.nationalNumber.toString()
 	}
 
-	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
+	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil, defaultCountryCode: String): Phonenumber.PhoneNumber? {
 		val number = toValidPhoneNumber(this)
 		return try {
 			val phoneNumber = if (number.length == DEFAULT_PHONE_NUMBER_LENGTH) {
@@ -61,11 +55,5 @@ class PhoneNumberUtils constructor(
 	companion object {
 		const val DEFAULT_PHONE_NUMBER_LENGTH = 9
 		const val SLOVAK_PHONE_NUMBER_LENGTH = 10
-
-		const val CZECH_REGION_CODE = "cz"
-		const val SLOVAK_REGION_CODE = "sk"
-
-		const val CZECH_PHONE_NUMBER_COUNTRY_CODE_PREFIX = "+420"
-		const val SLOVAK_PHONE_NUMBER_COUNTRY_CODE_PREFIX = "+421"
 	}
 }
