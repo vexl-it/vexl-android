@@ -23,12 +23,14 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import cz.cleevio.core.utils.BackgroundQueue
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.setExitTransitionGravityStart
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.network.NetworkError
 import cz.cleevio.profile.profileFragment.ProfileFragment
 import cz.cleevio.vexl.chat.chatContactList.ChatContactListFragment
+import cz.cleevio.vexl.chat.chatContactList.ChatContactListFragmentDirections
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
@@ -142,13 +144,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 						}
 
 						is NavMainGraphModel.NavGraph.ChatDetail -> {
-							Timber.tag("ASDX").d("Main triggered")
 							binding.bottomNavigation.post {
-								Timber.tag("ASDX").d("Main triggered #2")
 								if (it.inboxKey != null && it.senderKey != null) {
 									//TODO: hack that should be fixed later
 									binding.bottomNavigation.findViewById<View>(R.id.nav_chat)?.performClick()
-									//binding.bottomNavigation.selectedItemId = R.navigation.nav_chat
 
 									viewModel.goToChatDetail(
 										navController = navController,
@@ -156,6 +155,24 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 										senderKey = it.senderKey ?: ""
 									)
 								}
+							}
+						}
+
+						NavMainGraphModel.NavGraph.ChatRequests -> {
+							binding.bottomNavigation.post {
+								//TODO: hack that should be fixed later
+								binding.bottomNavigation.findViewById<View>(R.id.nav_chat)?.performClick()
+
+								navController.safeNavigateWithTransition(
+									ChatContactListFragmentDirections.proceedToChatRequestFragment()
+								)
+							}
+						}
+
+						NavMainGraphModel.NavGraph.ChatRequests -> {
+							//TODO: hack that should be fixed later
+							binding.bottomNavigation.post {
+								binding.bottomNavigation.findViewById<View>(R.id.nav_chat)?.performClick()
 							}
 						}
 					}
