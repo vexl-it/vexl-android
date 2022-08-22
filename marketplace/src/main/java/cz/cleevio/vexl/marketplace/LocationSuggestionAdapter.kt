@@ -23,8 +23,8 @@ class LocationSuggestionAdapter constructor(
 			ItemLocationSuggestionBinding.bind(convertView)
 		}
 
-		binding.city.text = items[position].city
-		binding.region.text = items[position].region + ", " + items[position].country
+		binding.city.text = items[position].cityText
+		binding.region.text = items[position].regionText
 		binding.divider.isGone = position == items.size - 1
 
 		if (convertView == null) convertView = binding.root

@@ -66,7 +66,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		repeatScopeOnStart {
 			viewModel.suggestions.collect { (offerLocationItem, queries) ->
 				if (queries.isEmpty()) return@collect
-				if (queries.map { it.city }.contains(offerLocationItem?.getEditText()?.text.toString())) {
+				if (queries.map { it.cityText }.contains(offerLocationItem?.getEditText()?.text.toString())) {
 					offerLocationItem?.setLocation(queries.first())
 					return@collect
 				}

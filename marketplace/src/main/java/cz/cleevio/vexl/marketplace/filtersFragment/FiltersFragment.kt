@@ -146,7 +146,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		repeatScopeOnStart {
 			filterViewModel.suggestions.collect { (offerLocationItem, queries) ->
 				if (queries.isEmpty()) return@collect
-				if (queries.map { it.city }.contains(offerLocationItem?.getEditText()?.text.toString())) {
+				if (queries.map { it.cityText }.contains(offerLocationItem?.getEditText()?.text.toString())) {
 					offerLocationItem?.setLocation(queries.first())
 					return@collect
 				}
