@@ -5,7 +5,6 @@ import androidx.core.view.updatePadding
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.ChipViewUtils
 import cz.cleevio.core.utils.repeatScopeOnResume
-import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -55,8 +54,7 @@ sealed class OffersBaseFragment constructor(
 
 	override fun initView() {
 		listenForInsets(binding.offersContainer) { insets ->
-			// 2x because of once per size of the inset, and twice for the inset of the bottom menu
-			binding.offerList.updatePadding(bottom = 2 * insets.bottom)
+			binding.offerList.updatePadding(bottom = insets.bottomWithNavBar)
 		}
 
 		binding.offerList.adapter = adapter
