@@ -39,7 +39,7 @@ class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
 
 		binding.welcomeContinueBtn.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
-				WelcomeFragmentDirections.proceedToFaqFragment(continueToOnboarding = true)
+				WelcomeFragmentDirections.proceedToOnboardingPart2()
 			)
 		}
 
