@@ -30,7 +30,7 @@ interface OfferApi {
 
 	@DELETE("offers")
 	suspend fun deleteOffersId(
-		@Query(value = "offerIds") offerIds: List<String>
+		@Query(value = "adminIds") adminIds: List<String>
 	): Response<ResponseBody>
 
 	@GET("offers/me")

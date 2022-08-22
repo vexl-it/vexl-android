@@ -138,7 +138,7 @@ class GroupRepositoryImpl constructor(
 					.map { it.publicKey }
 
 				val result = DeletePrivatePartRequest(
-					offerIds = offers,
+					adminIds = offers,
 					publicKeys = validKeys
 				)
 
