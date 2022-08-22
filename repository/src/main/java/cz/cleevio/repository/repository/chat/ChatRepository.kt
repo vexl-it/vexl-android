@@ -1,6 +1,7 @@
 package cz.cleevio.repository.repository.chat
 
 import com.cleevio.vexl.cryptography.model.KeyPair
+import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.ChatMessage
@@ -50,6 +51,8 @@ interface ChatRepository {
 	suspend fun loadCommunicationRequests(): List<CommunicationRequest>
 
 	suspend fun loadChatUsers(): List<ChatListUser>
+
+	suspend fun getOneChatUser(messageKeyPair: MessageKeyPair): ChatListUser?
 
 	suspend fun deleteMessage(communicationRequest: CommunicationRequest)
 

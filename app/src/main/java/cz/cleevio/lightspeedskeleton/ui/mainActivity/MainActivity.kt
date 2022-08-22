@@ -3,6 +3,7 @@ package cz.cleevio.lightspeedskeleton.ui.mainActivity
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +19,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import cz.cleevio.core.utils.BackgroundQueue
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import cz.cleevio.core.utils.BackgroundQueue
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.setExitTransitionGravityStart
 import cz.cleevio.lightspeedskeleton.R
@@ -124,18 +125,39 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							navController.setGraph(
 								R.navigation.nav_onboarding
 							)
-						NavMainGraphModel.NavGraph.Marketplace ->
+						NavMainGraphModel.NavGraph.Marketplace -> {
 							navController.setGraph(
 								R.navigation.nav_marketplace
 							)
-						NavMainGraphModel.NavGraph.Chat ->
+						}
+						NavMainGraphModel.NavGraph.Chat -> {
 							navController.setGraph(
 								R.navigation.nav_chat
 							)
-						NavMainGraphModel.NavGraph.Profile ->
+						}
+						NavMainGraphModel.NavGraph.Profile -> {
 							navController.setGraph(
 								R.navigation.nav_profile
 							)
+						}
+
+						is NavMainGraphModel.NavGraph.ChatDetail -> {
+							Timber.tag("ASDX").d("Main triggered")
+							binding.bottomNavigation.post {
+								Timber.tag("ASDX").d("Main triggered #2")
+								if (it.inboxKey != null && it.senderKey != null) {
+									//TODO: hack that should be fixed later
+									binding.bottomNavigation.findViewById<View>(R.id.nav_chat)?.performClick()
+									//binding.bottomNavigation.selectedItemId = R.navigation.nav_chat
+
+									viewModel.goToChatDetail(
+										navController = navController,
+										inboxKey = it.inboxKey ?: "",
+										senderKey = it.senderKey ?: ""
+									)
+								}
+							}
+						}
 					}
 				}
 			}

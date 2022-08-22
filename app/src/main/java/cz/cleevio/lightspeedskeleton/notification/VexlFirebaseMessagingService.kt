@@ -83,6 +83,9 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val intent = Intent(applicationContext, MainActivity::class.java)
 		intent.putExtra(NOTIFICATION_TYPE, type)
 		intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
+		intent.putExtra(NOTIFICATION_INBOX, inbox)
+		//TODO: should contain sender key
+		//intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
 		val pendingIntent = createPendingIntent(type)
 
 		if (title != null && message != null) {
@@ -162,7 +165,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		const val NOTIFICATION_LOG_MESSAGE = "log_message"
 		private const val NOTIFICATION_TITLE = "title"
 		private const val NOTIFICATION_BODY = "body"
-		private const val NOTIFICATION_INBOX = "inbox"
+		const val NOTIFICATION_INBOX = "inbox"
+		const val NOTIFICATION_SENDER_KEY = "sender"
 		private const val NOTIFICATION_UUID = "group_uuid"
 		private const val PUBLIC_KEY = "public_key"
 
@@ -173,6 +177,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 
 // TODO Handle app navigation according to the notification received
 enum class RemoteNotificationType {
+	UNKNOWN,
 	MESSAGE,
 	REQUEST_REVEAL,
 	APPROVE_REVEAL,

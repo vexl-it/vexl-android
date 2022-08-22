@@ -16,6 +16,9 @@ class NavMainGraphModel {
 		object Marketplace : NavGraph()
 		object Chat : NavGraph()
 		object Profile : NavGraph()
+		data class ChatDetail(val inboxKey: String? = null, val senderKey: String? = null) : NavGraph()
+		object ChatRequests : NavGraph()
+		object ChatList : NavGraph()
 	}
 
 	private val navGraphChannel = Channel<NavGraph>(Channel.RENDEZVOUS)
