@@ -41,4 +41,7 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 
 	@Query("DELETE FROM MyOfferEntity")
 	suspend fun clearTable()
+
+	@Query("SELECT adminId FROM MyOfferEntity WHERE extId = :extId")
+	suspend fun getAdminIdByOfferId(extId: String): String
 }

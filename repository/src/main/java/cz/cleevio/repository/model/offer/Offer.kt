@@ -4,6 +4,7 @@ import android.os.Parcelable
 import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
+import cz.cleevio.network.response.offer.OfferUnifiedAdminResponse
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.contact.fromDao
@@ -49,6 +50,33 @@ data class Offer constructor(
 }
 
 fun OfferUnifiedResponse.fromNetwork(): Offer {
+	return Offer(
+		offerId = this.offerId,
+		location = this.location.map { it.decryptedValue.fromNetwork() },
+		userPublicKey = this.userPublicKey,
+		offerPublicKey = this.offerPublicKey.decryptedValue,
+		offerDescription = this.offerDescription.decryptedValue,
+		amountBottomLimit = this.amountBottomLimit.decryptedValue,
+		amountTopLimit = this.amountTopLimit.decryptedValue,
+		feeState = this.feeState.decryptedValue,
+		feeAmount = this.feeAmount.decryptedValue,
+		locationState = this.locationState.decryptedValue,
+		paymentMethod = this.paymentMethod.map { it.decryptedValue },
+		btcNetwork = this.btcNetwork.map { it.decryptedValue },
+		friendLevel = this.friendLevel.decryptedValue,
+		offerType = this.offerType.decryptedValue,
+		activePriceState = this.activePriceState.decryptedValue,
+		activePriceValue = this.activePriceValue.decryptedValue,
+		active = this.active.decryptedValue.toBoolean(),
+		groupUuid = this.groupUuid.decryptedValue,
+		currency = this.currency.decryptedValue,
+		commonFriends = this.commonFriends.map { CommonFriend(it.decryptedValue) },
+		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
+		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
+	)
+}
+
+fun OfferUnifiedAdminResponse.fromNetwork(): Offer {
 	return Offer(
 		offerId = this.offerId,
 		location = this.location.map { it.decryptedValue.fromNetwork() },
