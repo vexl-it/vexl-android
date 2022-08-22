@@ -9,7 +9,6 @@ import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneSuccess
-import cz.cleevio.repository.model.offer.fromNetwork
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
@@ -56,7 +55,10 @@ class VerifyPhoneViewModel constructor(
 			_verificationChannel.send(Resource.loading())
 
 			val now = ZonedDateTime.now()
-			val verificationIdExpirationDate = ZonedDateTime.parse(expirationAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
+			val verificationIdExpirationDate = ZonedDateTime.parse(
+				expirationAt,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+			)
 
 			if (now.isAfter(verificationIdExpirationDate)) {
 				val authStepOneResponse = userRepository.authStepOne(phoneNumber)

@@ -42,7 +42,9 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			viewModel.phoneNumberSuccess.collect { initPhoneSuccess ->
 				findNavController().safeNavigateWithTransition(
 					InitPhoneFragmentDirections.proceedToVerifyPhoneFragment(
-						initPhoneSuccess.phoneNumber, initPhoneSuccess.confirmPhone.verificationId, initPhoneSuccess.confirmPhone.expirationAt
+						phoneNumber = initPhoneSuccess.phoneNumber,
+						verificationId = initPhoneSuccess.confirmPhone.verificationId,
+						expirationAt = initPhoneSuccess.confirmPhone.expirationAt
 					)
 				)
 			}
@@ -74,7 +76,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 
 			binding.root.hideKeyboard()
 			val phoneNumber = binding.initPhoneInput.text.toString()
-			val countryCode = "+${phoneNumberUtil.getCountryCodeForRegion(getCountryIsoCode(phoneNumber)).toString()}"
+			val countryCode = "+${phoneNumberUtil.getCountryCodeForRegion(getCountryIsoCode(phoneNumber))}"
 			viewModel.sendPhoneNumber(countryCode = countryCode, phoneNumber = phoneNumber)
 		}
 
