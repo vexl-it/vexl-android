@@ -85,7 +85,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
 		intent.putExtra(NOTIFICATION_INBOX, inbox)
 		//TODO: should contain sender key
-		//intent.putExtra(NOTIFICATION_LOG_MESSAGE, "Notification $type with title $title clicked")
+		//intent.putExtra(NOTIFICATION_SENDER_KEY, senderKey)
 		val pendingIntent = createPendingIntent(type)
 
 		if (title != null && message != null) {
