@@ -4,6 +4,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class CreateOfferPrivatePartRequest constructor(
-	val offerId: String,
+	val adminId: String,
 	val privateParts: List<OfferPrivateCreateRequest>
 )

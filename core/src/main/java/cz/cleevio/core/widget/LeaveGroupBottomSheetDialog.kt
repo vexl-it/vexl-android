@@ -43,7 +43,7 @@ class LeaveGroupBottomSheetDialog constructor(
 				when (response.status) {
 					is Status.Success -> {
 						response.data?.let {
-							if (it.offerIds.isNotEmpty() && it.publicKeys.isNotEmpty()) {
+							if (it.adminIds.isNotEmpty() && it.publicKeys.isNotEmpty()) {
 								offerRepository.deleteOfferForPublicKeys(it)
 							}
 						}

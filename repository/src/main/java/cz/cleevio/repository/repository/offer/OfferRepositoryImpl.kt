@@ -106,7 +106,7 @@ class OfferRepositoryImpl constructor(
 				offerApi.postOffersPrivatePart(
 					CreateOfferPrivatePartRequest(
 						privateParts = offerList.map { it.toNetwork() },
-						offerId = myOfferDao.getAdminIdByOfferId(offerId)
+						adminId = myOfferDao.getAdminIdByOfferId(offerId)
 					)
 				)
 			},
@@ -118,7 +118,7 @@ class OfferRepositoryImpl constructor(
 		request = {
 			offerApi.putOffers(
 				UpdateOfferRequest(
-					offerId = myOfferDao.getAdminIdByOfferId(offerId),
+					adminId = myOfferDao.getAdminIdByOfferId(offerId),
 					offerPrivateCreateList = offerList.map { it.toNetwork() }
 				)
 			)
@@ -140,7 +140,7 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit> = tryOnline(
 		request = {
-			offerApi.deleteOffersId(offerIds = offerIds.map { offerId ->
+			offerApi.deleteOffersId(adminIds = offerIds.map { offerId ->
 				myOfferDao.getAdminIdByOfferId(offerId)
 			})
 		},
@@ -159,7 +159,7 @@ class OfferRepositoryImpl constructor(
 		: Resource<Unit> = tryOnline(
 		request = {
 			offerApi.deleteOffersPrivatePart(
-				deletePrivatePartRequest = deletePrivatePartRequest.copy(offerIds = deletePrivatePartRequest.offerIds.map { offerId ->
+				deletePrivatePartRequest = deletePrivatePartRequest.copy(adminIds = deletePrivatePartRequest.adminIds.map { offerId ->
 					myOfferDao.getAdminIdByOfferId(offerId)
 				})
 			)
