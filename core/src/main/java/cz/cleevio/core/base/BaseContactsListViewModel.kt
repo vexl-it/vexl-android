@@ -38,7 +38,8 @@ open class BaseContactsListViewModel constructor(
 	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
 	private val _deleteSuccessful = MutableSharedFlow<Boolean>(replay = 1)
 
-	val successful: Flow<Boolean> = _uploadSuccessful.combine(
+	val successful: Flow<Boolean> = combine(
+		_uploadSuccessful,
 		_deleteSuccessful
 	) { upload, delete ->
 		upload and delete
@@ -163,7 +164,7 @@ open class BaseContactsListViewModel constructor(
 				else -> Unit
 			}
 			when (deleteResponse.status) {
-				is Status.Success -> deleteResponse.data?.let {
+				is Status.Success -> {
 					_deleteSuccessful.emit(true)
 					// Added due to if we try to import empty list of contacts it fails
 					// but if we deleted all of them we need to propagate the number of imported contacts into the profile section

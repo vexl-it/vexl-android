@@ -56,7 +56,6 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 			viewModel.progressFlow.collect { show ->
 				binding.contactsListWidget.isVisible = !show
 				binding.importContactsBtn.isVisible = !show
-
 				binding.progressbar.isVisible = show
 			}
 		}

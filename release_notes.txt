@@ -4,7 +4,6 @@
 *
 
 ### Fix
-* Fix active/deactive/delete offer
-* Filter inactive offers in buy/ell market place
+* Fix import contacts in onboarding
 
 ### Known issues

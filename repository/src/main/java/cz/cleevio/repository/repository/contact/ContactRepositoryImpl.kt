@@ -194,7 +194,7 @@ class ContactRepositoryImpl constructor(
 
 	override suspend fun deleteContacts(contacts: List<Contact>): Resource<Unit> {
 		if (contacts.isEmpty()) {
-			return Resource.success()
+			return Resource.success(Unit)
 		}
 
 		Timber.tag("DeleteContacts").d("Starting hashing ${contacts.size} contacts before uploading")
