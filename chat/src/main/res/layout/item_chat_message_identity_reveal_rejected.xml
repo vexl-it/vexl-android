@@ -12,7 +12,7 @@
 		android:layout_height="80dp"
 		android:background="@color/white"
 		android:backgroundTint="@color/gray_1"
-		android:scaleType="fitCenter"
+		android:scaleType="centerCrop"
 		android:src="@drawable/ic_prohibit"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="parent"
