@@ -29,8 +29,10 @@ import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.network.NetworkError
 import cz.cleevio.profile.profileFragment.ProfileFragment
+import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.chatContactList.ChatContactListFragment
 import cz.cleevio.vexl.chat.chatContactList.ChatContactListFragmentDirections
+import cz.cleevio.vexl.lightbase.core.extensions.isNotNullOrBlank
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
@@ -146,12 +148,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
 						is NavMainGraphModel.NavGraph.ChatDetail -> {
 							binding.bottomNavigation.post {
-								if (it.inboxKey != null && it.senderKey != null) {
+								if (it.inboxKey.isNotNullOrBlank() && it.senderKey.isNotNullOrBlank()) {
 									//TODO: hack that should be fixed later
 									binding.bottomNavigation.findViewById<View>(R.id.nav_chat)?.performClick()
 
 									viewModel.goToChatDetail(
-										navController = navController,
 										inboxKey = it.inboxKey ?: "",
 										senderKey = it.senderKey ?: ""
 									)
@@ -177,6 +178,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							}
 						}
 					}
+				}
+			}
+		}
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.navigateToChatDetail.collect { userWithMessage ->
+					navController.safeNavigateWithTransition(
+						ChatContactListFragmentDirections.proceedToChatFragment(
+							communicationRequest = CommunicationRequest(
+								message = userWithMessage.message,
+								offer = userWithMessage.offer
+							)
+						)
+					)
 				}
 			}
 		}

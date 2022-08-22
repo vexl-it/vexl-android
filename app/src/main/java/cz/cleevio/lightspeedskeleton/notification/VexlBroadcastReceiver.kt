@@ -25,7 +25,7 @@ class VexlBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 						?: RemoteNotificationType.UNKNOWN.name
 				)
 				val inboxKey = intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_INBOX) ?: ""
-				val senderKey = intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_SENDER_KEY) ?: ""
+				val senderKey = intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_SENDER) ?: ""
 
 				when (type) {
 					RemoteNotificationType.MESSAGE,
