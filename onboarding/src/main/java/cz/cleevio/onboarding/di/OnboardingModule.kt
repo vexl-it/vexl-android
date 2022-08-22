@@ -27,10 +27,11 @@ val onboardingModule = module {
 		)
 	}
 
-	viewModel { (phoneNumber: String, verificationId: Long) ->
+	viewModel { (phoneNumber: String, verificationId: Long, expirationAt: String) ->
 		VerifyPhoneViewModel(
 			phoneNumber = phoneNumber,
-			verificationId = verificationId,
+			initialVerificationId = verificationId,
+			initialExpirationAt = expirationAt,
 			userRepository = get(),
 			encryptedPreference = get(),
 			contactRepository = get(),

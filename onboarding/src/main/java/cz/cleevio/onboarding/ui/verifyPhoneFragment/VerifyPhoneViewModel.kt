@@ -9,6 +9,7 @@ import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.onboarding.ui.initPhoneFragment.InitPhoneSuccess
+import cz.cleevio.repository.model.offer.fromNetwork
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
@@ -19,15 +20,21 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class VerifyPhoneViewModel constructor(
 	val phoneNumber: String,
-	val verificationId: Long,
+	val initialVerificationId: Long,
+	val initialExpirationAt: String,
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val encryptedPreference: EncryptedPreferenceRepository,
 	private val userUtils: UserUtils,
 ) : BaseViewModel() {
+
+	private var verificationId: Long = initialVerificationId
+	private var expirationAt: String = initialExpirationAt
 
 	private val _verificationChannel = Channel<Resource<ConfirmCode>>(Channel.CONFLATED)
 	val verificationChannel: Flow<Resource<ConfirmCode>> = _verificationChannel.receiveAsFlow()
@@ -47,6 +54,24 @@ class VerifyPhoneViewModel constructor(
 	fun sendVerificationCode(verificationCode: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_verificationChannel.send(Resource.loading())
+
+			val now = ZonedDateTime.now()
+			val verificationIdExpirationDate = ZonedDateTime.parse(expirationAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
+
+			if (now.isAfter(verificationIdExpirationDate)) {
+				val authStepOneResponse = userRepository.authStepOne(phoneNumber)
+				when (authStepOneResponse.status) {
+					is Status.Success -> authStepOneResponse.data?.let { confirmPhone ->
+						verificationId = confirmPhone.verificationId
+						expirationAt = confirmPhone.expirationAt
+					}
+					is Status.Error -> {
+						_errorFlow.emit(authStepOneResponse.errorIdentification)
+						return@launch
+					}
+				}
+			}
+
 			val response = userRepository.authStepTwo(verificationCode, verificationId)
 			when (response.status) {
 				is Status.Success -> response.data?.challenge?.let { challenge ->
@@ -102,8 +127,6 @@ class VerifyPhoneViewModel constructor(
 
 	fun restartCountDown() {
 		countDownTimer.launch {
-			// TODO call backend for new sms
-
 			val response = userRepository.authStepOne(phoneNumber)
 			when (response.status) {
 				is Status.Success -> response.data?.let { confirmPhone ->
@@ -113,6 +136,8 @@ class VerifyPhoneViewModel constructor(
 							confirmPhone = confirmPhone
 						)
 					)
+					verificationId = confirmPhone.verificationId
+					expirationAt = confirmPhone.expirationAt
 				}
 			}
 

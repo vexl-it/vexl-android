@@ -28,6 +28,11 @@
 				android:defaultValue="0L"
 				app:argType="long" />
 
+			<argument
+				android:name="expirationAt"
+				android:defaultValue=""
+				app:argType="string" />
+
 		</action>
 
 	</fragment>
@@ -48,6 +53,11 @@
 			android:name="verificationId"
 			android:defaultValue="0L"
 			app:argType="long" />
+
+		<argument
+			android:name="expirationAt"
+			android:defaultValue=""
+			app:argType="string" />
 
 		<action
 			android:id="@+id/proceed_to_phoneDoneFragment"

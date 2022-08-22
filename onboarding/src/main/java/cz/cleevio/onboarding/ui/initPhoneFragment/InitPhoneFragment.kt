@@ -42,7 +42,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			viewModel.phoneNumberSuccess.collect { initPhoneSuccess ->
 				findNavController().safeNavigateWithTransition(
 					InitPhoneFragmentDirections.proceedToVerifyPhoneFragment(
-						initPhoneSuccess.phoneNumber, initPhoneSuccess.confirmPhone.verificationId
+						initPhoneSuccess.phoneNumber, initPhoneSuccess.confirmPhone.verificationId, initPhoneSuccess.confirmPhone.expirationAt
 					)
 				)
 			}

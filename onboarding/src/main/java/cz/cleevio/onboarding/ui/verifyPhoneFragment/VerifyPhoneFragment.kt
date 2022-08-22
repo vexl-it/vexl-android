@@ -34,7 +34,7 @@ const val CODE_LENGTH = 6
 class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
 	private val args by navArgs<VerifyPhoneFragmentArgs>()
-	override val viewModel by viewModel<VerifyPhoneViewModel> { parametersOf(args.phoneNumber, args.verificationId) }
+	override val viewModel by viewModel<VerifyPhoneViewModel> { parametersOf(args.phoneNumber, args.verificationId, args.expirationAt) }
 	private val binding by viewBinding(FragmentVerifyPhoneBinding::bind)
 
 	override fun onCreate(savedInstanceState: Bundle?) {
