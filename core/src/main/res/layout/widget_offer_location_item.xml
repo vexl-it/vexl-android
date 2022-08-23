@@ -31,7 +31,8 @@
 					android:layout_height="match_parent"
 					android:hint="@string/widget_location_hint"
 					android:textAppearance="@style/TextAppearance.Vexl.Location.Value"
-					android:inputType="textCapWords"
+					android:inputType="textCapWords|textMultiLine"
+					android:imeOptions="actionDone"
 					android:paddingHorizontal="20dp"
 					android:textColor="@color/yellow_100"
 					android:textColorHint="@color/gray_3"
@@ -40,7 +41,7 @@
 					app:layout_constraintEnd_toStartOf="@+id/location_item_separator"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
-					tools:text="Praha" />
+					tools:text="Ústí nad Labem - Stará Boleslav" />
 
 				<View
 					android:id="@+id/location_item_separator"

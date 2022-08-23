@@ -1,7 +1,9 @@
 package cz.cleevio.core.widget
 
 import android.content.Context
+import android.text.InputType
 import android.util.AttributeSet
+import android.view.inputmethod.EditorInfo
 import android.widget.AutoCompleteTextView
 import android.widget.FrameLayout
 import androidx.core.widget.doAfterTextChanged
@@ -32,6 +34,8 @@ class OfferLocationItem @JvmOverloads constructor(
 	init {
 		setupUI()
 
+		binding.locationItemText.imeOptions = EditorInfo.IME_ACTION_DONE
+		binding.locationItemText.setRawInputType(InputType.TYPE_CLASS_TEXT)
 		binding.locationItemText.setOnFocusChangeListener { _, hasFocus ->
 			onFocusChangeListener?.invoke(hasFocus, this)
 		}
