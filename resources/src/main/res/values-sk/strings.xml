@@ -239,16 +239,16 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="filter_offers">Filtrovat nabídky</string>
     <string name="widget_fee_without">Bez poplatku</string>
     <string name="widget_fee_ok">S poplatkem</string>
-    <string name="widget_fee_percent">%s%%</string>
-    <string name="widget_location_online">Online</string>
-    <string name="widget_location_in_person">Pouze osobně</string>
-    <string name="widget_trigger_price_title">Aktivní při ceně</string>
-    <string name="widget_trigger_title">Spouštěče</string>
-    <string name="widget_trigger_price_below">Pod</string>
-    <string name="widget_trigger_price_above">Nad</string>
-    <string name="widget_trigger_price_curr_crypto_price">právě teď 1 BTC = $%f</string>
-    <string name="widget_trigger_delete_title">Smazat nabídku za</string>
-    <string name="widget_trigger_delete_timeframe">Časové rozmezí</string>
+	<string name="widget_fee_percent">%s%%</string>
+	<string name="widget_location_online">Online</string>
+	<string name="widget_location_in_person">Pouze osobně</string>
+	<string name="widget_trigger_price_title">Aktivní při ceně</string>
+	<string name="widget_trigger_title">Spouštěče</string>
+	<string name="widget_trigger_price_below">Pod</string>
+	<string name="widget_trigger_price_above">Nad</string>
+	<string name="widget_trigger_price_curr_crypto_price">právě teď 1 BTC = $%f</string>
+	<string name="widget_trigger_delete_title">Smazat nabídku za</string>
+	<string name="widget_trigger_delete_timeframe">Časové rozmezí</string>
 	<string name="widget_trigger_delete_days">Dnů</string>
 	<string name="widget_trigger_delete_weeks">Týdnů</string>
 	<string name="widget_trigger_delete_months">Měsíců</string>
@@ -291,17 +291,17 @@ ipsum dolor sit ametum roma von carpa di.</string>
 
 	<!-- Offer Request -->
 	<string name="request_title">Nabídka</string>
-    <string name="request_title_loading">Odesílám</string>
-    <string name="request_text_hint">např. pojď zavexlit, kámo!</string>
-    <string name="request_button">Odeslat žádost</string>
-    <string name="request_common_friends">%d společných přátel</string>
-    <string name="request_common_friends_empty_state">Nemáte společné přátele</string>
-    <string name="error_missing_offer_public_key">Chýba verejný kľúč</string>
-    <string name="error_missing_offer_request_message">Chýba správa požiadavky</string>
-    <string name="error_missing_offer_id">Chýba ID ponuky</string>
-    <string name="offer_request_sent_successfully">Žiadosť bola úspešne odoslaná</string>
+	<string name="request_title_loading">Odesílám</string>
+	<string name="request_text_hint">např. pojď zavexlit, kámo!</string>
+	<string name="request_button">Odeslat žádost</string>
+	<string name="request_common_friends">%d společných přátel</string>
+	<string name="request_common_friends_empty_state">Nemáte společné přátele</string>
+	<string name="error_missing_offer_public_key">Chýba verejný kľúč</string>
+	<string name="error_missing_offer_request_message">Chýba správa požiadavky</string>
+	<string name="error_missing_offer_id">Chýba ID ponuky</string>
+	<string name="offer_request_sent_successfully">Žiadosť bola úspešne odoslaná</string>
 
-    <!-- Chat -->
+	<!-- Chat -->
     <string name="chat_main_title">Chat</string>
     <string name="chat_filter_all">Vše</string>
     <string name="chat_filter_buyers">Kupující</string>
