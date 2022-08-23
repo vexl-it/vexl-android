@@ -52,7 +52,7 @@
 					android:id="@+id/currency_czk"
 					style="@style/Widget.Cleevio.Vexl.CurrencyRadioBtn"
 					android:layout_height="wrap_content"
-					android:buttonTint="@color/yellow"
+					android:buttonTint="@drawable/currency_radio_selector"
 					android:text="@string/user_profile_currency_czk"
 					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe.Active"
 					tools:checked="true" />
@@ -61,7 +61,7 @@
 					android:id="@+id/currency_eur"
 					style="@style/Widget.Cleevio.Vexl.CurrencyRadioBtn"
 					android:layout_height="wrap_content"
-					android:buttonTint="@color/yellow"
+					android:buttonTint="@drawable/currency_radio_selector"
 					android:text="@string/user_profile_currency_eur"
 					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe.Active" />
 
@@ -69,7 +69,7 @@
 					android:id="@+id/currency_usd"
 					style="@style/Widget.Cleevio.Vexl.CurrencyRadioBtn"
 					android:layout_height="wrap_content"
-					android:buttonTint="@color/yellow"
+					android:buttonTint="@drawable/currency_radio_selector"
 					android:text="@string/user_profile_currency_usd"
 					android:textAppearance="@style/TextAppearance.Vexl.Trigger.Delete.Timeframe.Active" />
 

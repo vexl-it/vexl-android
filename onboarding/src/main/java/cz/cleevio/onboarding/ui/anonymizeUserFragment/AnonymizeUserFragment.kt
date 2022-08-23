@@ -61,9 +61,9 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 					it ?: return@collect
 					binding.anonymizeUserName.text = it.username
 					binding.anonymizeUserImage.load(it.avatar) {
-						fallback(R.drawable.ic_profile_avatar_placeholder)
-						error(R.drawable.ic_profile_avatar_placeholder)
-						placeholder(R.drawable.ic_profile_avatar_placeholder)
+						fallback(R.drawable.random_avatar_1)
+						error(R.drawable.random_avatar_1)
+						placeholder(R.drawable.random_avatar_1)
 					}
 				}
 			}
