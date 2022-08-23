@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 data class BlockInboxRequest constructor(
 	val publicKey: String,
 	val publicKeyToBlock: String,
-	val signature: String,
+	val signedChallenge: SignedChallengeRequest,
 	//true = block, false = unblock
 	val block: Boolean
 )

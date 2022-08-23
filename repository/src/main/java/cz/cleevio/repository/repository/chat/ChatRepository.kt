@@ -15,7 +15,7 @@ interface ChatRepository {
 	suspend fun saveFirebasePushToken(token: String)
 
 	//-----------------------------
-	suspend fun createInbox(publicKey: String): Resource<Unit>
+	suspend fun createInbox(offerId: String): Resource<Unit>
 
 	suspend fun syncMessages(inboxPublicKey: String): Resource<Unit>
 

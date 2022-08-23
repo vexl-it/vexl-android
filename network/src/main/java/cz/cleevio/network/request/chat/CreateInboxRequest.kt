@@ -7,5 +7,6 @@ data class CreateInboxRequest constructor(
 	//public key of user or offer
 	val publicKey: String,
 	//firebase token
-	val token: String
+	val token: String,
+	val signedChallenge: SignedChallengeRequest
 )

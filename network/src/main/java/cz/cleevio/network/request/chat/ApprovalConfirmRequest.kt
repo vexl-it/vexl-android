@@ -6,8 +6,8 @@ import com.squareup.moshi.JsonClass
 data class ApprovalConfirmRequest constructor(
 	val publicKey: String,
 	val publicKeyToConfirm: String,
-	val signature: String,
 	val message: String,
 	//true = approve, false = disapprove
-	val approve: Boolean
+	val approve: Boolean,
+	val signedChallenge: SignedChallengeRequest
 )
