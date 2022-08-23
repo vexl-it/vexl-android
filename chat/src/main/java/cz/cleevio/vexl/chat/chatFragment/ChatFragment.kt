@@ -35,13 +35,16 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	lateinit var adapter: ChatMessagesAdapter
 
+	//flags
+	var showingBlockDialog = false
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
 				adapter.submitList(messages)
 				binding.chatRv.smoothScrollToPosition(max(messages.size - 1, 0))
 
-				if (messages.isEmpty()) {
+				if (messages.isEmpty() && !showingBlockDialog) {
 					findNavController().popBackStack()
 				}
 			}
@@ -199,10 +202,13 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			)
 		}
 		binding.blockUserBtn.setOnClickListener {
+			showingBlockDialog = true
 			showBottomDialog(
 				BlockUserBottomSheetDialog(
-					senderPublicKey = viewModel.senderPublicKey, publicKeyToBlock = viewModel.receiverPublicKey
-				)
+					senderPublicKey = viewModel.senderPublicKey,
+					publicKeyToBlock = viewModel.receiverPublicKey,
+					inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey
+				) { showingBlockDialog = false }
 			)
 		}
 		binding.identityRevealedButton.setOnClickListener {

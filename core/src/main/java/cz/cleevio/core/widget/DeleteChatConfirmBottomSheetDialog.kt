@@ -53,7 +53,7 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 						isMine = true,
 						isProcessed = false
 					),
-					messageType = "DELETE_CHAT"
+					messageType = MessageType.DELETE_CHAT.name
 				)
 				when (response.status) {
 					is Status.Success -> {
