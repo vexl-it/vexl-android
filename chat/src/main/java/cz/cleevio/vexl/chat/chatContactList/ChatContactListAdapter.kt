@@ -48,7 +48,7 @@ class ChatContactListAdapter constructor(
 			} else {
 				colorizeTransactionType(
 					binding.chatContactName.resources.getString(
-						cz.cleevio.core.R.string.marketplace_detail_user_buy,  if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
+						cz.cleevio.core.R.string.marketplace_detail_user_buy, if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
 					),
 					if (isDeanonymized) item.user?.name ?: "" else item.user?.anonymousUsername ?: "",
 					binding.chatContactName,
@@ -56,7 +56,10 @@ class ChatContactListAdapter constructor(
 				)
 			}
 
-			binding.chatLastMessage.text = item.message.text
+			val prefix = if (item.message.isMine)
+				binding.chatContactName.resources.getString(R.string.chat_message_prefix)
+			else ""
+			binding.chatLastMessage.text = "$prefix${item.message.text}"
 			binding.chatTime.text = SimpleDateFormat.getDateTimeInstance(
 				SimpleDateFormat.SHORT,
 				SimpleDateFormat.SHORT
