@@ -39,6 +39,7 @@ class InitPhoneViewModel constructor(
 			when (response.status) {
 				is Status.Success -> response.data?.let { confirmPhone ->
 					encryptedPreferences.userCountryCode = countryCode
+					encryptedPreferences.userPhoneNumber = phoneNumber
 					_phoneNumberSuccess.send(
 						InitPhoneSuccess(
 							phoneNumber = phoneNumber,

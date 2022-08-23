@@ -46,6 +46,12 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putStringToEP(KEY_USER_COUNTRY_CODE, value)
 		}
 
+	override var userPhoneNumber: String
+		get() = getStringFromEP(KEY_USER_PHONE_NUMBER, "")
+		set(value) {
+			putStringToEP(KEY_USER_PHONE_NUMBER, value)
+		}
+
 	override var signature: String
 		get() = getStringFromEP(KEY_USER_SIGNATURE, "")
 		set(value) {
@@ -150,6 +156,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_USER_PUBLIC_KEY = "user_public_key"
 		private const val KEY_USER_PRIVATE_KEY = "user_private_key"
 		private const val KEY_USER_COUNTRY_CODE = "user_country_code"
+		private const val KEY_USER_PHONE_NUMBER = "user_phone_number"
 		private const val KEY_USER_SIGNATURE = "user_signature"
 		private const val KEY_HASH = "hash"
 		private const val KEY_USER_FACEBOOK_SIGNATURE = "user_facebook_signature"

@@ -118,7 +118,8 @@ class ContactRepositoryImpl constructor(
 		}
 		cursor?.close()
 
-		val defaultCountryCode = encryptedPreference.userCountryCode
+		val userCountryCode = encryptedPreference.userCountryCode
+		val userPhoneNumber = encryptedPreference.userPhoneNumber
 
 		Timber.tag("ContactSync").d("Contacts moved from cursor to list")
 		val result = contactList
@@ -126,16 +127,18 @@ class ContactRepositoryImpl constructor(
 			.apply {
 				Timber.tag("ContactSync").d("Replacing only ${this.size} after distinctBy")
 			}
-			//take only valid phone numbers
-			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber, defaultCountryCode) }
+			// Take only valid phone numbers
+			.filter { phoneNumberUtils.isPhoneValid(it.phoneNumber, userCountryCode) }
 			.apply {
 				Timber.tag("ContactSync").d("Replacing only ${this.size} after filter")
 			}.map {
-				//format phone number to proper format
+				// Format phone number to proper format
 				it.copy(
-					phoneNumber = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber, defaultCountryCode)
+					phoneNumber = phoneNumberUtils.getFormattedPhoneNumber(it.phoneNumber, userCountryCode)
 				)
 			}
+			// Do not take user phone number as contact
+			.filter { it.phoneNumber != phoneNumberUtils.toValidPhoneNumber(userPhoneNumber) }
 
 		return Resource.success(data = result)
 	}
