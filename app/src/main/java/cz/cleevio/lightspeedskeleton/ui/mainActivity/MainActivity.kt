@@ -27,6 +27,8 @@ import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.setExitTransitionGravityStart
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
+import cz.cleevio.lightspeedskeleton.notification.RemoteNotificationType
+import cz.cleevio.lightspeedskeleton.notification.VexlFirebaseMessagingService
 import cz.cleevio.network.NetworkError
 import cz.cleevio.profile.profileFragment.ProfileFragment
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -84,6 +86,50 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
 		bindObservers()
 		setupGroupDeepLinks()
+
+		resolveNotificationIntent(this.intent)
+	}
+
+	override fun onNewIntent(intent: android.content.Intent?) {
+		super.onNewIntent(intent)
+
+		resolveNotificationIntent(intent)
+	}
+
+	private fun resolveNotificationIntent(intent: android.content.Intent?) {
+		intent?.let { intent ->
+			lifecycleScope.launch {
+				val type = RemoteNotificationType.valueOf(
+					intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_TYPE, RemoteNotificationType.UNKNOWN.name)
+						?: RemoteNotificationType.UNKNOWN.name
+				)
+				val inboxKey = intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_INBOX) ?: ""
+				val senderKey = intent.extras?.getString(VexlFirebaseMessagingService.NOTIFICATION_SENDER) ?: ""
+
+				when (type) {
+					RemoteNotificationType.MESSAGE,
+					RemoteNotificationType.REQUEST_REVEAL,
+					RemoteNotificationType.APPROVE_REVEAL,
+					RemoteNotificationType.DISAPPROVE_REVEAL,
+					RemoteNotificationType.APPROVE_MESSAGING -> {
+						viewModel.navMainGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.ChatDetail(inboxKey = inboxKey, senderKey = senderKey)
+						)
+					}
+					RemoteNotificationType.REQUEST_MESSAGING,
+					RemoteNotificationType.DISAPPROVE_MESSAGING -> {
+						viewModel.navMainGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.ChatRequests
+						)
+					}
+					RemoteNotificationType.DELETE_CHAT -> {
+						viewModel.navMainGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.ChatList
+						)
+					}
+				}
+			}
+		}
 	}
 
 	private fun setupGroupDeepLinks() {
