@@ -181,6 +181,8 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		repeatScopeOnStart {
 			filterViewModel.groups.collect { groups ->
 				adapter.submitList(groups)
+				binding.groupTitle.isVisible = groups.isNotEmpty()
+				binding.groupDescription.isVisible = groups.isNotEmpty()
 			}
 		}
 	}

@@ -60,6 +60,8 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		repeatScopeOnStart {
 			viewModel.groups.collect { groups ->
 				adapter.submitList(groups)
+				binding.groupTitle.isVisible = groups.isNotEmpty()
+				binding.groupDescription.isVisible = groups.isNotEmpty()
 			}
 		}
 
