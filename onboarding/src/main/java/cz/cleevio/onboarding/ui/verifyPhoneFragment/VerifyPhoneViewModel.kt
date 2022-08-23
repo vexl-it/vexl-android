@@ -127,7 +127,7 @@ class VerifyPhoneViewModel constructor(
 		userUtils.resetKeys()
 	}
 
-	fun restartCountDown() {
+	fun resendCode() {
 		countDownTimer.launch {
 			val response = userRepository.authStepOne(phoneNumber)
 			when (response.status) {
@@ -142,13 +142,22 @@ class VerifyPhoneViewModel constructor(
 					expirationAt = confirmPhone.expirationAt
 				}
 			}
-
-			repeat(COUNTDOWN_LENGTH / COUNTDOWN_STEP) {
-				_countDownState.emit(CountDownState.Counting(COUNTDOWN_LENGTH - it * COUNTDOWN_STEP))
-				delay(COUNTDOWN_STEP.toLong())
-			}
-			_countDownState.emit(CountDownState.Finished)
+			resetCountDown()
 		}
+	}
+
+	fun initCountDown() {
+		countDownTimer.launch {
+			resetCountDown()
+		}
+	}
+
+	private suspend fun resetCountDown() {
+		repeat(COUNTDOWN_LENGTH / COUNTDOWN_STEP) {
+			_countDownState.emit(CountDownState.Counting(COUNTDOWN_LENGTH - it * COUNTDOWN_STEP))
+			delay(COUNTDOWN_STEP.toLong())
+		}
+		_countDownState.emit(CountDownState.Finished)
 	}
 
 	sealed class CountDownState {
