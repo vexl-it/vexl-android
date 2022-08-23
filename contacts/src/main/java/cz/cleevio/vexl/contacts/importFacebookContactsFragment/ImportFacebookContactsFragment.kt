@@ -18,10 +18,12 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.facebookPermissionApproved.collect {
-				findNavController().safeNavigateWithTransition(
-					ImportFacebookContactsFragmentDirections.proceedToFacebookContactsListFragment()
-				)
+			viewModel.facebookPermissionApproved.collect { isApproved ->
+				if (isApproved) {
+					findNavController().safeNavigateWithTransition(
+						ImportFacebookContactsFragmentDirections.proceedToFacebookContactsListFragment()
+					)
+				}
 			}
 		}
 	}
