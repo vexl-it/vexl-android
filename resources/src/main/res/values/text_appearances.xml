@@ -1021,5 +1021,12 @@
 		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Groups.OpenJoinGroup" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">16sp</item>
+		<item name="lineHeight">20.16sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_400</item>
+		<item name="fontFamily">@font/tt_satoshi_400</item>
+		<item name="android:letterSpacing">-0.04</item>
+	</style>
 
 </resources>

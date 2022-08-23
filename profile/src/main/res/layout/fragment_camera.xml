@@ -76,25 +76,24 @@
 			android:id="@+id/title"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="16dp"
-			android:layout_marginTop="32dp"
+			android:layout_marginStart="40dp"
 			android:text="@string/groups_scan_code"
 			android:textAppearance="@style/TextAppearance.Vexl.Groups.Scan.Title"
-			app:layout_constraintBottom_toTopOf="@id/mask"
+			app:layout_constraintBottom_toBottomOf="@id/close"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintStart_toEndOf="@id/close"
+			app:layout_constraintTop_toTopOf="@id/close" />
 
 		<ImageButton
 			android:id="@+id/close"
-			style="@style/Widget.Vexl.CloseButton"
+			style="@style/Widget.Vexl.CloseButtonNoBackground"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="16dp"
-			android:src="@drawable/ic_close_x"
-			app:layout_constraintTop_toTopOf="@id/title"
-			app:layout_constraintBottom_toBottomOf="@id/title"
-			app:layout_constraintEnd_toEndOf="parent" />
+			android:contentDescription="?content"
+			android:src="@drawable/ic_chevron_left_24_white"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/camera_denied"
@@ -111,15 +110,14 @@
 
 		<com.google.android.material.button.MaterialButton
 			android:id="@+id/camera_enter_code"
+			style="@style/Widget.Vexl.OpenJoinGroupButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="72dp"
 			android:text="@string/groups_enter_code"
-			android:background="@drawable/background_camera_qr"
-			android:drawablePadding="8dp"
 			android:foreground="?attr/selectableItemBackground"
-			android:paddingHorizontal="16dp"
-			android:paddingVertical="8dp"
+			android:drawablePadding="8dp"
+			app:icon="@drawable/ic_pencil"
 			app:drawableTint="@color/black"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
