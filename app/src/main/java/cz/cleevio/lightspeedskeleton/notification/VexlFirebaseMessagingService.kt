@@ -10,6 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import cz.cleevio.lightspeedskeleton.R
+import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -131,20 +132,20 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	}
 
 	private fun createPendingIntent(type: String, inbox: String?, sender: String?): PendingIntent {
-		val intent = Intent(applicationContext, VexlBroadcastReceiver::class.java).apply {
+		val intent = Intent(applicationContext, MainActivity::class.java).apply {
 			putExtra(NOTIFICATION_TYPE, type)
 			putExtra(NOTIFICATION_INBOX, inbox)
 			putExtra(NOTIFICATION_SENDER, sender)
 		}
 		return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-			PendingIntent.getBroadcast(
+			PendingIntent.getActivity(
 				applicationContext,
 				CODE,
 				intent,
 				PendingIntent.FLAG_UPDATE_CURRENT
 			)
 		} else {
-			PendingIntent.getBroadcast(
+			PendingIntent.getActivity(
 				applicationContext,
 				CODE,
 				intent,
