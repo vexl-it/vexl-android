@@ -249,16 +249,16 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="widget_trigger_price_curr_crypto_price">právě teď 1 BTC = $%f</string>
     <string name="widget_trigger_delete_title">Smazat nabídku za</string>
     <string name="widget_trigger_delete_timeframe">Časové rozmezí</string>
-    <string name="widget_trigger_delete_days">Dnů</string>
-    <string name="widget_trigger_delete_weeks">Týdnů</string>
-    <string name="widget_trigger_delete_months">Měsíců</string>
-    <string name="widget_offer_state_pause">Pauza</string>
-    <string name="widget_offer_state_activate">Aktivovat</string>
-    <string name="widget_offer_state_delete">Smazat</string>
-    <string name="widget_offer_state_active">Aktivní</string>
-    <string name="widget_offer_state_inactive">Neaktivní</string>
-    <string name="filter_amount_title">Množství</string>
-    <string name="filter_location_title">Lokalita</string>
+	<string name="widget_trigger_delete_days">Dnů</string>
+	<string name="widget_trigger_delete_weeks">Týdnů</string>
+	<string name="widget_trigger_delete_months">Měsíců</string>
+	<string name="widget_offer_state_pause">Pauza</string>
+	<string name="widget_offer_state_activate">Aktivovat</string>
+	<string name="widget_offer_state_delete">Smazat</string>
+	<string name="widget_offer_state_active">Aktivní</string>
+	<string name="widget_offer_state_inactive">Neaktivní</string>
+	<string name="filter_amount_title">Množství</string>
+	<string name="filter_location_title">Lokalita</string>
 	<string name="widget_location_add_new">Jiná lokalita</string>
 	<string name="widget_payment_cash">Hotovost</string>
 	<string name="widget_payment_revolut">Revolut</string>
@@ -281,16 +281,16 @@ ipsum dolor sit ametum roma von carpa di.</string>
 	<string name="offer_create_sell_btn">Vytvořit nabídku prodeje</string>
 	<string name="offer_update_sell_btn">Aktualizovat nabídku prodeje</string>
 	<string name="offer_create_buy_btn">Vytvořit poptávku nákupu</string>
-    <string name="offer_update_buy_btn">Aktualizovat poptávku nákupu</string>
-    <string name="widget_location_km">\u00B1 %d km</string>
-    <string name="widget_location_hint">Město</string>
-    <string name="create_create_offer">Vytvořit nabídku</string>
-    <string name="currency_usd">USD</string>
-    <string name="currency_eur">EUR</string>
-    <string name="currency_czk">CZK</string>
+	<string name="offer_update_buy_btn">Aktualizovat poptávku nákupu</string>
+	<string name="widget_location_km">\u00B1 %d km</string>
+	<string name="widget_location_hint">Město</string>
+	<string name="create_create_offer">Vytvořit nabídku</string>
+	<string name="currency_usd">USD</string>
+	<string name="currency_eur">EUR</string>
+	<string name="currency_czk">CZK</string>
 
-    <!-- Offer Request -->
-    <string name="request_title">Nabídka</string>
+	<!-- Offer Request -->
+	<string name="request_title">Nabídka</string>
     <string name="request_title_loading">Odesílám</string>
     <string name="request_text_hint">např. pojď zavexlit, kámo!</string>
     <string name="request_button">Odeslat žádost</string>
@@ -306,6 +306,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_filter_all">Vše</string>
     <string name="chat_filter_buyers">Kupující</string>
     <string name="chat_filter_sellers">Prodávající</string>
+	<string name="chat_message_prefix">já:</string>
 
     <!-- Chat requests -->
     <string name="chat_request_main_title">%s Žádosti</string>
