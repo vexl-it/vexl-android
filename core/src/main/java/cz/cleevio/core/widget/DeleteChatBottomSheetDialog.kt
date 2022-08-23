@@ -11,6 +11,7 @@ class DeleteChatBottomSheetDialog(
 	private val senderPublicKey: String,
 	private val receiverPublicKey: String,
 	private val inboxPublicKey: String,
+	val onDismiss: () -> Unit
 ) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogDeleteChatBinding
@@ -30,7 +31,8 @@ class DeleteChatBottomSheetDialog(
 			val dialog = DeleteChatConfirmBottomSheetDialog(
 				senderPublicKey = senderPublicKey,
 				receiverPublicKey = receiverPublicKey,
-				inboxPublicKey = inboxPublicKey
+				inboxPublicKey = inboxPublicKey,
+				onDismiss = onDismiss
 			)
 			dismiss()
 			dialog.show(parentFragmentManager, dialog.javaClass.simpleName)

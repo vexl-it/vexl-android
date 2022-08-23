@@ -1,5 +1,6 @@
 package cz.cleevio.core.widget
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 	private val senderPublicKey: String,
 	private val receiverPublicKey: String,
 	private val inboxPublicKey: String,
+	val onDismiss: () -> Unit
 ) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogDeleteChatConfirmBinding
@@ -72,5 +74,11 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 		binding.backBtn.setOnClickListener {
 			dismiss()
 		}
+	}
+
+	override fun onDismiss(dialog: DialogInterface) {
+		super.onDismiss(dialog)
+
+		onDismiss()
 	}
 }
