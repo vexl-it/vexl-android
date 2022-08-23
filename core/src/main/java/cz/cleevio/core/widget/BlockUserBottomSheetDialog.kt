@@ -9,7 +9,9 @@ import cz.cleevio.core.databinding.BottomSheetDialogBlockUserBinding
 
 class BlockUserBottomSheetDialog(
 	private val senderPublicKey: String,
-	private val publicKeyToBlock: String
+	private val publicKeyToBlock: String,
+	private val inboxPublicKey: String,
+	val onDismiss: () -> Unit
 ) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogBlockUserBinding
@@ -27,7 +29,10 @@ class BlockUserBottomSheetDialog(
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
 			val dialog = BlockUserConfirmBottomSheetDialog(
-				senderPublicKey = senderPublicKey, publicKeyToBlock = publicKeyToBlock
+				senderPublicKey = senderPublicKey,
+				publicKeyToBlock = publicKeyToBlock,
+				inboxPublicKey = inboxPublicKey,
+				onDismiss = onDismiss
 			)
 			dismiss()
 			dialog.show(parentFragmentManager, dialog.javaClass.simpleName)
