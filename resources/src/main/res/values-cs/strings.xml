@@ -338,6 +338,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_block_user_confirm_description">Opravdu chceš uživatele zablokovat? Tento krok nejde vrátit zpět. Dobře si to rozmysli.</string>
     <string name="chat_block_user_confirm_nope">Ne</string>
     <string name="chat_block_user_confirm_action">Ano, chci</string>
+    <string name="chat_message_conversation_started">Konverzace začala</string>
     <string name="chat_message_identity_reveal_header">Žádost o odhalení</string>
     <string name="chat_message_identity_reveal_subheader">Pojďme se odhalit!</string>
     <string name="chat_message_identity_reveal_request_sent">Žádost o odhalení odeslána</string>

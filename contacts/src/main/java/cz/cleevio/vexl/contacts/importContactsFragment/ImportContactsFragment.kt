@@ -1,11 +1,15 @@
 package cz.cleevio.vexl.contacts.importContactsFragment
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.browser.customtabs.CustomTabsClient.getPackageName
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,18 +31,30 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 	private val binding by viewBinding(FragmentImportContactsBinding::bind)
 	override val viewModel by viewModel<ImportContactsViewModel>()
 
+	private var reallowPermissions = false
+
 	private val requestContactsPermissions = registerForActivityResult(
 		ActivityResultContracts.RequestMultiplePermissions()
 	) { permissions ->
 		PermissionResolver.resolve(requireActivity(), permissions,
 			allGranted = {
 				viewModel.updateHasReadContactPermissions(true)
+				reallowPermissions = false
 			},
 			denied = {
 				viewModel.updateHasReadContactPermissions(false)
+				reallowPermissions = false
 			},
 			permanentlyDenied = {
-				viewModel.updateHasReadContactPermissions(false)
+				if (reallowPermissions) {
+					startActivity(Intent().apply {
+						action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+						data = Uri.fromParts("package", requireContext().packageName, null)
+					})
+				} else {
+					viewModel.updateHasReadContactPermissions(false)
+				}
+				reallowPermissions = false
 			})
 	}
 
@@ -92,6 +108,7 @@ class ImportContactsFragment : BaseFragment(R.layout.fragment_import_contacts) {
 				dialog.dismiss()
 			}
 			.setPositiveButton(R.string.import_contacts_allow) { _, _ ->
+				reallowPermissions = true
 				checkReadContactsPermissions()
 			}
 		builder.setCustomTitle(

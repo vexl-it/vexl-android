@@ -42,7 +42,11 @@ class ChatRequestViewModel constructor(
 		)
 	}
 
-	fun processCommunicationRequest(communicationRequest: CommunicationRequest, approve: Boolean) {
+	fun processCommunicationRequest(
+		communicationRequest: CommunicationRequest,
+		approve: Boolean,
+		text: String = ""
+	) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = chatRepository.confirmCommunicationRequest(
 				offerId = communicationRequest.offer?.offerId!!,
@@ -51,8 +55,7 @@ class ChatRequestViewModel constructor(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = communicationRequest.message.inboxPublicKey,
 					senderPublicKey = communicationRequest.offer?.offerPublicKey!!,
-					//todo: move to strings or remove
-					text = if (approve) "The conversation has started" else "",
+					text = text,
 					//todo: change to this
 					type = if (approve) MessageType.APPROVE_MESSAGING else MessageType.DISAPPROVE_MESSAGING,
 					recipientPublicKey = communicationRequest.message.senderPublicKey,

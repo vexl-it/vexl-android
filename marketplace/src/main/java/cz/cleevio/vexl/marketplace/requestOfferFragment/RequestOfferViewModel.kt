@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.util.*
 
 
@@ -39,7 +40,7 @@ class RequestOfferViewModel constructor(
 				offerId = offerId,
 				message = ChatMessage(
 					uuid = UUID.randomUUID().toString(),
-					inboxPublicKey = offerPublicKey,
+					inboxPublicKey = encryptedPreferenceRepository.userPublicKey,
 					senderPublicKey = encryptedPreferenceRepository.userPublicKey,
 					recipientPublicKey = offerPublicKey,
 					text = text,

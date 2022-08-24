@@ -10,21 +10,19 @@ import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentOffersBinding
+import cz.cleevio.vexl.marketplace.marketplaceFragment.NavMarketplaceGraphModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-sealed class OffersBaseFragment constructor(
-	val navigateToFilters: (OfferType) -> Unit,
-	val navigateToNewOffer: (OfferType) -> Unit,
-	val navigateToMyOffers: (OfferType) -> Unit,
-	val requestOffer: (String) -> Unit
-) : BaseFragment(R.layout.fragment_offers) {
+sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 
 	abstract fun getOfferType(): OfferType
 
 	override val viewModel by viewModel<OffersViewModel>()
 	protected val binding by viewBinding(FragmentOffersBinding::bind)
 	protected val adapter: OffersAdapter by lazy {
-		OffersAdapter(requestOffer)
+		OffersAdapter(requestOffer = {
+			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.RequestOffer(it))
+		})
 	}
 
 	override fun bindObservers() {
@@ -39,7 +37,7 @@ sealed class OffersBaseFragment constructor(
 						activeState = isFilterInUse,
 						filter = getString(R.string.filter_offers),
 						listener = {
-							navigateToFilters(getOfferType())
+							viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.Filters(getOfferType()))
 						}
 					)
 				)
@@ -60,10 +58,10 @@ sealed class OffersBaseFragment constructor(
 		binding.offerList.adapter = adapter
 
 		binding.addOfferBtn.setOnClickListener {
-			navigateToNewOffer(getOfferType())
+			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.NewOffer(getOfferType()))
 		}
 		binding.myOffersBtn.setOnClickListener {
-			navigateToMyOffers(getOfferType())
+			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.MyOffer(getOfferType()))
 		}
 
 		checkMyOffersCount(getOfferType())

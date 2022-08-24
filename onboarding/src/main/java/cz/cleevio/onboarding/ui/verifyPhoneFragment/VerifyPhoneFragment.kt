@@ -41,7 +41,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		viewModel.restartCountDown()
+		viewModel.initCountDown()
 	}
 
 	override fun bindObservers() {
@@ -121,7 +121,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 		}
 
 		binding.verifyPhoneNote.setOnClickListener {
-			viewModel.restartCountDown()
+			viewModel.resendCode()
 		}
 
 		listenForInsets(binding.parent) { insets ->

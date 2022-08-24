@@ -8,11 +8,7 @@ import cz.cleevio.vexl.marketplace.marketplaceFragment.offers.OffersSellFragment
 import timber.log.Timber
 
 class MarketplacePagerAdapter constructor(
-	fragment: Fragment,
-	private val navigateToFilters: (OfferType) -> (Unit),
-	private val navigateToNewOffer: (OfferType) -> (Unit),
-	private val navigateToMyOffers: (OfferType) -> (Unit),
-	private val requestOffer: (String) -> (Unit)
+	fragment: Fragment
 ) : FragmentStateAdapter(fragment) {
 
 	override fun getItemCount(): Int {
@@ -22,11 +18,11 @@ class MarketplacePagerAdapter constructor(
 	override fun createFragment(position: Int): Fragment {
 		return when (position) {
 			0 -> {
-				OffersBuyFragment(navigateToFilters, navigateToNewOffer, navigateToMyOffers, requestOffer)
+				OffersBuyFragment()
 			}
 
 			1 -> {
-				OffersSellFragment(navigateToFilters, navigateToNewOffer, navigateToMyOffers, requestOffer)
+				OffersSellFragment()
 			}
 
 			else -> {

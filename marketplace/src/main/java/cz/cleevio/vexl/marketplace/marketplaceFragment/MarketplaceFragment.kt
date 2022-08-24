@@ -57,29 +57,7 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 			binding.swipeRefresh.isRefreshing = false
 		}
 
-		binding.marketplaceViewpager.adapter = MarketplacePagerAdapter(
-			fragment = this,
-			navigateToFilters = { offerType ->
-				findNavController().navigate(
-					MarketplaceFragmentDirections.proceedToFiltersFragment(offerType)
-				)
-			},
-			navigateToNewOffer = { offerType ->
-				findNavController().safeNavigateWithTransition(
-					MarketplaceFragmentDirections.proceedToNewOfferFragment(offerType)
-				)
-			},
-			navigateToMyOffers = { offerType ->
-				findNavController().safeNavigateWithTransition(
-					MarketplaceFragmentDirections.proceedToMyOffersFragment(offerType)
-				)
-			},
-			requestOffer = { offerId ->
-				findNavController().safeNavigateWithTransition(
-					MarketplaceFragmentDirections.proceedToRequestOfferFragment(offerId = offerId)
-				)
-			}
-		)
+		binding.marketplaceViewpager.adapter = MarketplacePagerAdapter(this)
 
 		priceChartWidget?.onLayoutChanged = {
 			TransitionManager.beginDelayedTransition(binding.container)
@@ -111,6 +89,33 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 						isFromDeeplink = true
 					)
 				)
+			}
+		}
+
+		repeatScopeOnStart {
+			marketplaceViewModel.navMarketplaceGraphFlow.collect {
+				when (it) {
+					is NavMarketplaceGraphModel.NavGraph.Filters -> {
+						findNavController().navigate(
+							MarketplaceFragmentDirections.proceedToFiltersFragment(it.type)
+						)
+					}
+					is NavMarketplaceGraphModel.NavGraph.MyOffer -> {
+						findNavController().safeNavigateWithTransition(
+							MarketplaceFragmentDirections.proceedToMyOffersFragment(it.type)
+						)
+					}
+					is NavMarketplaceGraphModel.NavGraph.NewOffer -> {
+						findNavController().safeNavigateWithTransition(
+							MarketplaceFragmentDirections.proceedToNewOfferFragment(it.type)
+						)
+					}
+					is NavMarketplaceGraphModel.NavGraph.RequestOffer -> {
+						findNavController().safeNavigateWithTransition(
+							MarketplaceFragmentDirections.proceedToRequestOfferFragment(it.offerId)
+						)
+					}
+				}
 			}
 		}
 	}
