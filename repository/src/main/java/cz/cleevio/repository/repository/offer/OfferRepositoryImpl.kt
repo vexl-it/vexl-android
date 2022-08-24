@@ -40,14 +40,15 @@ class OfferRepositoryImpl constructor(
 
 	override val sellOfferFilter = MutableStateFlow(OfferFilter())
 
-	override suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair): Resource<Offer> {
+	override suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair, offerType: String): Resource<Offer> {
 		//create offer
 		val offerCreateResource = tryOnline(
 			request = {
 				offerApi.postOffers(
 					CreateOfferRequest(
 						offerPrivateList = offerList.map { it.toNetwork() },
-						expiration = expiration
+						expiration = expiration,
+						offerType = offerType
 					)
 				)
 			},
