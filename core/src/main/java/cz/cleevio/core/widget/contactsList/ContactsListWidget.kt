@@ -21,6 +21,7 @@ class ContactsListWidget @JvmOverloads constructor(
 	private lateinit var binding: WidgetContactsImportListBinding
 	private lateinit var adapter: ContactsListAdapter
 	private var _contacts: List<BaseContact> = emptyList()
+	private var isDeselectAll: Boolean = true
 
 	init {
 		setupUI()
@@ -32,7 +33,8 @@ class ContactsListWidget @JvmOverloads constructor(
 
 	fun setupListeners(
 		onContactImportSwitched: (BaseContact, Boolean) -> Unit,
-		onDeselectAllClicked: () -> Unit
+		onDeselectAllClicked: () -> Unit,
+		onSelectAllClicked: () -> Unit,
 	) {
 		adapter = ContactsListAdapter(onContactImportSwitched)
 		binding.contactsList.adapter = adapter
@@ -58,7 +60,14 @@ class ContactsListWidget @JvmOverloads constructor(
 		})
 
 		binding.deselectAllBtn.setOnClickListener {
-			onDeselectAllClicked()
+			isDeselectAll = if (isDeselectAll) {
+				onDeselectAllClicked()
+				false
+			} else {
+				onSelectAllClicked()
+				true
+			}
+			setupDeselectAllBtn()
 		}
 	}
 
@@ -77,11 +86,14 @@ class ContactsListWidget @JvmOverloads constructor(
 		_contacts = contacts
 		binding.contactsList.isVisible = contacts.isNotEmpty()
 		binding.emptyListInfo.isVisible = contacts.isEmpty()
-		binding.deselectAllBtn.text =
-			if (openedFromScreen == OpenedFromScreen.ONBOARDING) {
-				resources.getString(R.string.import_contacts_deselect)
-			} else {
-				resources.getString(R.string.import_contacts_select)
-			}
+		setupDeselectAllBtn()
+	}
+
+	private fun setupDeselectAllBtn() {
+		binding.deselectAllBtn.text = if (isDeselectAll) {
+			resources.getString(R.string.import_contacts_deselect)
+		} else {
+			resources.getString(R.string.import_contacts_select)
+		}
 	}
 }

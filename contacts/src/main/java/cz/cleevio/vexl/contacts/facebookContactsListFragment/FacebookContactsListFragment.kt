@@ -38,6 +38,9 @@ class FacebookContactsListFragment : BaseFragment(R.layout.fragment_facebook_con
 			},
 			onDeselectAllClicked = {
 				viewModel.unselectAll()
+			},
+			onSelectAllClicked = {
+				viewModel.selectAll()
 			}
 		)
 

@@ -54,6 +54,9 @@ class ProfileFacebookContactsListFragment : BottomSheetDialogFragment() {
 				viewModel.contactSelected(contact, selected)
 			},
 			onDeselectAllClicked = {
+				viewModel.unselectAll()
+			},
+			onSelectAllClicked = {
 				viewModel.selectAll()
 			}
 		)
