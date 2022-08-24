@@ -54,24 +54,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private lateinit var navController: NavController
 	private var bottomBarAnimator: ValueAnimator? = null
 	private var bottomInsetValue = 0
+	private var lastVisitedGraph: Int? = null
 
 	override fun onResume() {
 		super.onResume()
-
 		backgroundQueue.encryptOffersForNewContacts()
-
-		val navHostFragment = supportFragmentManager.findFragmentById(
-			R.id.navHostFragment
-		) as NavHostFragment
-		navController = navHostFragment.navController
-		navController.addOnDestinationChangedListener(this)
-
-		binding.bottomNavigation.setOnApplyWindowInsetsListener(null)
-		listenForInsets(binding.container) { insets ->
-			bottomInsetValue = insets.bottom
-		}
-
-		binding.bottomNavigation.setupWithNavController(navController)
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,8 +71,19 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		// Going to Edge to Edge
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 
+		setupBottomNavigationBar()
 		bindObservers()
 		setupGroupDeepLinks()
+
+		lastVisitedGraph = savedInstanceState?.getInt(LAST_VISITED_GRAPH, R.navigation.nav_main)
+
+		val startedBefore = savedInstanceState?.getBoolean(ACTIVITY_STARTED_BEFORE) ?: false
+		if (startedBefore) {
+			navController.restoreState(savedInstanceState?.getBundle(GRAPH_STATE))
+			navController.setGraph(lastVisitedGraph ?: R.navigation.nav_main)
+		} else {
+			navController.setGraph(R.navigation.nav_main)
+		}
 
 		resolveNotificationIntent(this.intent)
 	}
@@ -132,6 +130,32 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		}
 	}
 
+	override fun onSaveInstanceState(outState: Bundle) {
+		super.onSaveInstanceState(outState)
+		outState.putBoolean(ACTIVITY_STARTED_BEFORE, true)
+		outState.putBundle(GRAPH_STATE, navController.saveState())
+
+		lastVisitedGraph?.let {
+			outState.putInt(LAST_VISITED_GRAPH, it)
+		}
+	}
+
+	private fun setupBottomNavigationBar() {
+		val navHostFragment = supportFragmentManager.findFragmentById(
+			R.id.navHostFragment
+		) as NavHostFragment
+
+		navController = navHostFragment.navController
+		navController.addOnDestinationChangedListener(this)
+
+		listenForInsets(binding.container) { insets ->
+			bottomInsetValue = insets.bottom
+		}
+
+		binding.bottomNavigation.setupWithNavController(navController)
+	}
+
+
 	private fun setupGroupDeepLinks() {
 		FirebaseDynamicLinks.getInstance()
 			.getDynamicLink(intent)
@@ -155,7 +179,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	@Suppress("ComplexMethod")
 	private fun bindObservers() {
 		lifecycleScope.launch {
-			repeatOnLifecycle(Lifecycle.State.STARTED) {
+			repeatOnLifecycle(Lifecycle.State.CREATED) {
 				viewModel.navGraphFlow.collect {
 					when (it) {
 						NavMainGraphModel.NavGraph.EmptyState -> Unit
@@ -166,30 +190,37 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							navController.setGraph(
 								R.navigation.nav_contacts
 							)
+							lastVisitedGraph = R.navigation.nav_contacts
 						}
 						NavMainGraphModel.NavGraph.Main -> {
 							navController.setGraph(
 								R.navigation.nav_bottom_navigation
 							)
+							lastVisitedGraph = R.navigation.nav_bottom_navigation
 						}
-						NavMainGraphModel.NavGraph.Onboarding ->
+						NavMainGraphModel.NavGraph.Onboarding -> {
 							navController.setGraph(
 								R.navigation.nav_onboarding
 							)
+							lastVisitedGraph = R.navigation.nav_onboarding
+						}
 						NavMainGraphModel.NavGraph.Marketplace -> {
 							navController.setGraph(
 								R.navigation.nav_marketplace
 							)
+							lastVisitedGraph = R.navigation.nav_marketplace
 						}
 						NavMainGraphModel.NavGraph.Chat -> {
 							navController.setGraph(
 								R.navigation.nav_chat
 							)
+							lastVisitedGraph = R.navigation.nav_chat
 						}
 						NavMainGraphModel.NavGraph.Profile -> {
 							navController.setGraph(
 								R.navigation.nav_profile
 							)
+							lastVisitedGraph = R.navigation.nav_profile
 						}
 
 						is NavMainGraphModel.NavGraph.ChatDetail -> {
@@ -348,4 +379,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		}
 		bottomBarAnimator?.start()
 	}
+
+	companion object {
+		private const val ACTIVITY_STARTED_BEFORE = "activity_started_before"
+		private const val LAST_VISITED_GRAPH = "last_visited_graph"
+		private const val GRAPH_STATE = "LAST_VISITED_GRAPH"
+	}
+
 }

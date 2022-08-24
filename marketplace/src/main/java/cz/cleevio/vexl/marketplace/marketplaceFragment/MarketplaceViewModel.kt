@@ -23,10 +23,13 @@ class MarketplaceViewModel constructor(
 	val chatRepository: ChatRepository,
 	val groupRepository: GroupRepository,
 	val encryptedPreference: EncryptedPreferenceRepository,
+	private val navMarketplaceGraphModel: NavMarketplaceGraphModel
 ) : BaseViewModel() {
 
 	private val _groupLoaded = MutableSharedFlow<Group>(replay = 1)
 	val groupLoaded = _groupLoaded.asSharedFlow()
+
+	val navMarketplaceGraphFlow = navMarketplaceGraphModel.navGraphFlow
 
 	fun syncOffers() {
 		viewModelScope.launch(Dispatchers.IO) {

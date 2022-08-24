@@ -6,13 +6,15 @@ import cz.cleevio.repository.model.offer.OfferWithGroup
 import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
+import cz.cleevio.vexl.marketplace.marketplaceFragment.NavMarketplaceGraphModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class OffersViewModel constructor(
 	val groupRepository: GroupRepository,
-	private val offerRepository: OfferRepository
+	private val navMarketplaceGraphModel: NavMarketplaceGraphModel,
+	private val offerRepository: OfferRepository,
 ) : BaseViewModel() {
 
 	val buyOffersFlow = offerRepository.buyOfferFilter.flatMapLatest { filter ->
@@ -55,6 +57,12 @@ class OffersViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val myOfferCount = offerRepository.getMyOffersCount(offerType.name)
 			_myOffersCount.emit(myOfferCount)
+		}
+	}
+
+	fun navigateToGraph(navGraph: NavMarketplaceGraphModel.NavGraph) {
+		viewModelScope.launch(Dispatchers.Default) {
+			navMarketplaceGraphModel.navigateToGraph(navGraph)
 		}
 	}
 }
