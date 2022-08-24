@@ -3,7 +3,7 @@ package cz.cleevio.network.request.chat
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class DeletionRequest constructor(
-	val publicKey: String,
-	val signedChallenge: SignedChallengeRequest
+data class SignedChallengeRequest constructor(
+	val challenge: String,
+	val signature: String
 )

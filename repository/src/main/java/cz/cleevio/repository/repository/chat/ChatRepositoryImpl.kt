@@ -44,22 +44,7 @@ class ChatRepositoryImpl constructor(
 	private val groupDao: GroupDao
 ) : ChatRepository {
 
-	//map PublicKey -> Signature
-	private val signatures = mutableMapOf<String, ChatChallenge>()
-
-	private fun hasSignature(publicKey: String): Boolean = getSignature(publicKey) != null
-
-	private fun getSignature(publicKey: String): String? {
-		return signatures[publicKey]?.let {
-			if (it.expiration < System.currentTimeMillis()) {
-				null
-			} else {
-				it.signature
-			}
-		}
-	}
-
-	private suspend fun refreshChallenge(keyPair: KeyPair): Resource<Unit> {
+	private suspend fun refreshChallenge(keyPair: KeyPair): SignedChallengeRequest? {
 		val challenge = tryOnline(
 			request = { chatApi.postChallenge(challengeRequest = CreateChallengeRequest(keyPair.publicKey)) },
 			mapper = { it?.fromNetwork() }
@@ -67,21 +52,21 @@ class ChatRepositoryImpl constructor(
 		//solve challenge
 		return when (challenge.status) {
 			is Status.Success -> {
-				challenge.data?.let { chatChallenge ->
+				return challenge.data?.let { chatChallenge ->
 					val signature = EcdsaCryptoLib.sign(
 						keyPair, chatChallenge.challenge
 					)
-					//save to map
-					signatures.put(keyPair.publicKey, chatChallenge.copy(signature = signature))
+
+					//return solved challenge
+					SignedChallengeRequest(
+						challenge = chatChallenge.challenge,
+						signature = signature
+					)
 				}
-				Resource.success(Unit)
-			}
-			is Status.Error -> {
-				//fixme: give proper error message
-				Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 			}
 			else -> {
-				Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+				//challenge failed somehow
+				null
 			}
 		}
 	}
@@ -99,6 +84,24 @@ class ChatRepositoryImpl constructor(
 		}.toList()
 	}
 
+	private suspend fun findKeyPairByPublicKey(publicKey: String): KeyPair? {
+		if (encryptedPreferenceRepository.userPublicKey == publicKey) {
+			return KeyPair(
+				publicKey = publicKey,
+				privateKey = encryptedPreferenceRepository.userPrivateKey
+			)
+		}
+
+		myOfferDao.getMyOfferByPublicKey(publicKey)?.let {
+			return KeyPair(
+				publicKey = publicKey,
+				privateKey = it.privateKey
+			)
+		}
+
+		return null
+	}
+
 	override fun getMessages(inboxPublicKey: String, firstKey: String, secondKey: String): SharedFlow<List<ChatMessage>> =
 		chatMessageDao.listAllBySenders(inboxPublicKey = inboxPublicKey, firstKey = firstKey, secondKey = secondKey)
 			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
@@ -114,10 +117,16 @@ class ChatRepositoryImpl constructor(
 		//update firebase token for each of them
 		//todo: ask BE for EP where we sent list of publicKeys
 		inboxKeys.forEach { inboxKey ->
+			val keyPair = getKeyPairByMyPublicKey(inboxKey) ?: return@forEach
+			val signedChallenge = refreshChallenge(keyPair) ?: return@forEach
 			val response = tryOnline(
 				request = {
 					chatApi.putInboxes(
-						UpdateInboxRequest(publicKey = inboxKey, token = token)
+						UpdateInboxRequest(
+							publicKey = inboxKey,
+							token = token,
+							signedChallenge = signedChallenge
+						)
 					)
 				},
 				mapper = { it }
@@ -164,17 +173,22 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun createInbox(publicKey: String): Resource<Unit> {
+		val keyPair = findKeyPairByPublicKey(publicKey) ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 		return notificationDao.getOne()?.let { notificationDataStorage ->
-			tryOnline(
-				request = {
-					chatApi.postInboxes(
-						inboxRequest = CreateInboxRequest(
-							publicKey = publicKey, token = notificationDataStorage.token
+			refreshChallenge(keyPair)?.let { signedChallenge ->
+				tryOnline(
+					request = {
+						chatApi.postInboxes(
+							inboxRequest = CreateInboxRequest(
+								publicKey = keyPair.publicKey,
+								token = notificationDataStorage.token,
+								signedChallenge = signedChallenge
+							)
 						)
-					)
-				},
-				mapper = { }
-			)
+					},
+					mapper = { }
+				)
+			} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
 	}
 
@@ -201,21 +215,13 @@ class ChatRepositoryImpl constructor(
 
 	@Suppress("ReturnCount")
 	override suspend fun syncMessages(keyPair: KeyPair): Resource<Unit> {
-		//verify that you have valid challenge for this inbox
-		if (!hasSignature(keyPair.publicKey)) {
-			//refresh challenge
-			refreshChallenge(keyPair)
-		}
-
-		val signatureNullable = getSignature(keyPair.publicKey)
-		signatureNullable?.let { signature ->
-			//load messages
+		refreshChallenge(keyPair)?.let { signedChallenge ->
 			val messagesResponse = tryOnline(
 				request = {
 					chatApi.putInboxesMessages(
 						messageRequest = MessageRequest(
 							publicKey = keyPair.publicKey,
-							signature = signature
+							signedChallenge = signedChallenge
 						)
 					)
 				},
@@ -294,7 +300,6 @@ class ChatRepositoryImpl constructor(
 			if (messagesResponse.status is Status.Error) {
 				return Resource.error(messagesResponse.errorIdentification)
 			}
-			//todo: add correct text
 		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 
 		//delete messages from BE
@@ -367,19 +372,28 @@ class ChatRepositoryImpl constructor(
 				message.toCache()
 			)
 		}
-		return tryOnline(
-			request = {
-				chatApi.postInboxesMessages(
-					sendMessageRequest = SendMessageRequest(
-						senderPublicKey = senderPublicKey,
-						receiverPublicKey = receiverPublicKey,
-						message = message.toNetwork(receiverPublicKey),
-						messageType = messageType
+
+		val keyPair = findKeyPairByPublicKey(senderPublicKey)
+		if (keyPair == null) {
+			return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		}
+
+		refreshChallenge(keyPair)?.let { signedChallenge ->
+			return tryOnline(
+				request = {
+					chatApi.postInboxesMessages(
+						sendMessageRequest = SendMessageRequest(
+							senderPublicKey = senderPublicKey,
+							receiverPublicKey = receiverPublicKey,
+							message = message.toNetwork(receiverPublicKey),
+							messageType = messageType,
+							signedChallenge = signedChallenge
+						)
 					)
-				)
-			},
-			mapper = { }
-		)
+				},
+				mapper = { }
+			)
+		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 	}
 
 	override suspend fun processMessage(message: ChatMessage) {
@@ -388,29 +402,35 @@ class ChatRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit> = tryOnline(
-		request = { chatApi.deleteInboxesMessages(DeletionRequest(publicKey = publicKey)) },
-		mapper = { }
-	)
+	override suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit> {
+		val keyPair = findKeyPairByPublicKey(publicKey) ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		return refreshChallenge(keyPair)?.let { signedChallenge ->
+			tryOnline(
+				request = {
+					chatApi.deleteInboxesMessages(
+						DeletionRequest(
+							publicKey = publicKey,
+							signedChallenge = signedChallenge
+						)
+					)
+				},
+				mapper = { }
+			)
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+	}
 
 	override suspend fun changeUserBlock(
 		senderKeyPair: KeyPair, publicKeyToBlock: String,
 		block: Boolean
 	): Resource<Unit> {
-		if (!hasSignature(senderKeyPair.publicKey)) {
-			//refresh challenge
-			refreshChallenge(senderKeyPair)
-		}
-
-		val signatureNullable = getSignature(senderKeyPair.publicKey)
-		return signatureNullable?.let { signature ->
+		return refreshChallenge(senderKeyPair)?.let { signedChallenge ->
 			val blockResponse = tryOnline(
 				request = {
 					chatApi.putInboxesBlock(
 						BlockInboxRequest(
 							publicKey = senderKeyPair.publicKey,
 							publicKeyToBlock = publicKeyToBlock,
-							signature = signature,
+							signedChallenge = signedChallenge,
 							block = block
 						)
 					)
@@ -418,7 +438,6 @@ class ChatRepositoryImpl constructor(
 				mapper = { }
 			)
 			blockResponse
-			//todo: add correct text
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 	}
 
@@ -459,13 +478,7 @@ class ChatRepositoryImpl constructor(
 			publicKey = myOfferKeyPair.publicKey
 		)
 
-		if (!hasSignature(senderKeyPair.publicKey)) {
-			//refresh challenge
-			refreshChallenge(senderKeyPair)
-		}
-
-		val signatureNullable = getSignature(senderKeyPair.publicKey)
-		return signatureNullable?.let { signature ->
+		return refreshChallenge(senderKeyPair)?.let { signatureChallenge ->
 			chatMessageDao.insert(
 				message.toCache()
 			)
@@ -475,7 +488,7 @@ class ChatRepositoryImpl constructor(
 						ApprovalConfirmRequest(
 							publicKey = senderKeyPair.publicKey,
 							publicKeyToConfirm = publicKeyToConfirm,
-							signature = signature,
+							signedChallenge = signatureChallenge,
 							message = message.toNetwork(publicKeyToConfirm),
 							approve = approve
 						)
@@ -500,12 +513,23 @@ class ChatRepositoryImpl constructor(
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 	}
 
-	override suspend fun deleteInbox(publicKey: String): Resource<Unit> = tryOnline(
-		request = {
-			chatApi.deleteInboxes(DeletionRequest(publicKey = publicKey))
-		},
-		mapper = { }
-	)
+	override suspend fun deleteInbox(publicKey: String): Resource<Unit> {
+		val keyPair = getKeyPairByMyPublicKey(publicKey) ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+
+		return refreshChallenge(keyPair)?.let { signatureChallenge ->
+			tryOnline(
+				request = {
+					chatApi.deleteInboxes(
+						DeletionRequest(
+							publicKey = publicKey,
+							signedChallenge = signatureChallenge
+						)
+					)
+				},
+				mapper = { }
+			)
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+	}
 
 	override suspend fun loadCommunicationRequests(): List<CommunicationRequest> {
 		val result: MutableList<CommunicationRequest> = mutableListOf()

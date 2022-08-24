@@ -24,6 +24,8 @@ interface GroupRepository {
 
 	suspend fun leaveGroup(groupUuid: String): Resource<DeletePrivatePartRequest>
 
+	suspend fun leaveAllGroups()
+
 	suspend fun syncAllGroupsMembers(): Resource<Unit>
 
 	suspend fun syncNewMembersInGroup(groupUuid: String): Resource<List<ContactKey>>

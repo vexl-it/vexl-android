@@ -524,6 +524,10 @@ class ContactRepositoryImpl constructor(
 
 	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.insert(contactKey.toCache())
 
+	override suspend fun clearContactKeyTables() {
+		contactKeyDao.clearTable()
+	}
+
 	private fun isEmailValid(email: String): Boolean =
 		!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

@@ -165,6 +165,13 @@ class GroupRepositoryImpl constructor(
 		}
 	}
 
+	override suspend fun leaveAllGroups() {
+		val groups = groupDao.getAllGroups()
+		groups.forEach {
+			leaveGroup(it.groupUuid)
+		}
+	}
+
 	override suspend fun syncAllGroupsMembers(): Resource<Unit> {
 		//load all groups from DB
 		val allGroups = groupDao.getAllGroups().map { it.fromEntity() }
