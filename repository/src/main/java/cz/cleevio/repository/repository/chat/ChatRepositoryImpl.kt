@@ -172,12 +172,8 @@ class ChatRepositoryImpl constructor(
 		notificationDao.replace(NotificationEntity(token = token, uploaded = true))
 	}
 
-	override suspend fun createInbox(offerId: String): Resource<Unit> {
-		val myOfferKeyPair = myOfferDao.getOfferKeysByExtId(offerId)
-		val keyPair = KeyPair(
-			privateKey = myOfferKeyPair.privateKey,
-			publicKey = myOfferKeyPair.publicKey
-		)
+	override suspend fun createInbox(publicKey: String): Resource<Unit> {
+		val keyPair = findKeyPairByPublicKey(publicKey) ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
 		return notificationDao.getOne()?.let { notificationDataStorage ->
 			refreshChallenge(keyPair)?.let { signedChallenge ->
 				tryOnline(

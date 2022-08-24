@@ -7,6 +7,7 @@ import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
+import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
@@ -24,6 +25,7 @@ class ProfileViewModel constructor(
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
+	private val groupRepository: GroupRepository,
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
@@ -52,18 +54,19 @@ class ProfileViewModel constructor(
 			}
 			val userDelete = userRepository.deleteMe()
 			val contactUserDelete = contactRepository.deleteMyUser()
+			//leave also all groups
+			groupRepository.leaveAllGroups()
 
 			// TODO update when FB user will be available
 			//val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
 
-			// TODO add removing for GroupDao if needed
 			// Delete also entities stored in the local database
 			userRepository.deleteLocalUser()
 			offerRepository.clearOfferTables()
 			chatRepository.clearChatTables()
+			contactRepository.clearContactKeyTables()
 			encryptedPreferenceRepository.clearPreferences()
 
-			//todo: delete also all offers, when we have system for keeping offer IDs
 			if (userDelete.status is Status.Success &&
 				contactUserDelete.status is Status.Success &&
 				// TODO update when FB user will be available

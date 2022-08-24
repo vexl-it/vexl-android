@@ -51,4 +51,6 @@ interface ContactRepository {
 	suspend fun markContactAsProcessed(contact: ContactKey)
 
 	suspend fun addNewContact(contactKey: ContactKey)
+
+	suspend fun clearContactKeyTables()
 }

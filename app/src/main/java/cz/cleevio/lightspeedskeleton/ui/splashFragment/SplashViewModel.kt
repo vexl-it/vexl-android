@@ -32,7 +32,7 @@ class SplashViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val offers = offerRepository.getMyOffersWithoutInbox()
 			offers.forEach { myOffer ->
-				val inboxResponse = chatRepository.createInbox(myOffer.offerId)
+				val inboxResponse = chatRepository.createInbox(myOffer.publicKey)
 				if (inboxResponse.status is Status.Success) {
 					offerRepository.saveMyOfferIdAndKeys(
 						offerId = myOffer.offerId,
