@@ -1,7 +1,6 @@
 package cz.cleevio.vexl.marketplace.di
 
 import cz.cleevio.core.model.OfferType
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import cz.cleevio.vexl.marketplace.editOfferFragment.EditOfferViewModel
 import cz.cleevio.vexl.marketplace.filtersFragment.FiltersViewModel
@@ -39,7 +38,8 @@ val marketplaceModule = module {
 		OffersViewModel(
 			groupRepository = get(),
 			offerRepository = get(),
-			navMarketplaceGraphModel = get()
+			navMarketplaceGraphModel = get(),
+			remoteConfig = get(),
 		)
 	}
 

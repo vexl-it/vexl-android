@@ -80,4 +80,9 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 	protected fun checkMyOffersCount(offerType: OfferType) {
 		viewModel.checkMyOffersCount(offerType)
 	}
+
+	protected fun changeLockedVisibility(visible: Boolean) {
+		binding.marketLocked.isVisible = visible
+		binding.offerList.isVisible = !visible
+	}
 }

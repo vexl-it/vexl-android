@@ -152,8 +152,27 @@ open class BaseContactsListViewModel constructor(
 			_progressFlow.emit(true)
 			val contactsToBeUploaded = contactsToBeShowedList.filter { it.markedForUpload }
 			val contactsToBeDeleted = contactsToBeShowedList.filter { !it.markedForUpload }
+			if (contactsToBeDeleted.isNotEmpty()) {
+				val deleteResponse = contactRepository.deleteContacts(contactsToBeDeleted)
+				when (deleteResponse.status) {
+					is Status.Success -> {
+						_deleteSuccessful.emit(true)
+						// Added due to if we try to import empty list of contacts it fails
+						// but if we deleted all of them we need to propagate the number of imported contacts into the profile section
+						// Otherwise if there was nothing to delete, it's a bug and the number should not be propagated
+						if (contactsToBeUploaded.isEmpty() && contactsToBeDeleted.isNotEmpty()) {
+							encryptedPreferenceRepository.numberOfImportedContacts = 0
+						}
+					}
+					is Status.Error -> _deleteSuccessful.emit(false)
+					else -> Unit
+				}
+			} else {
+				_deleteSuccessful.emit(true)
+			}
+
 			val uploadResponse = contactRepository.uploadAllMissingContacts(contactsToBeUploaded)
-			val deleteResponse = contactRepository.deleteContacts(contactsToBeDeleted)
+
 			_progressFlow.emit(false)
 			when (uploadResponse.status) {
 				is Status.Success -> uploadResponse.data?.let { data ->
@@ -161,19 +180,6 @@ open class BaseContactsListViewModel constructor(
 					encryptedPreferenceRepository.numberOfImportedContacts = contactsToBeUploaded.size
 				}
 				is Status.Error -> _uploadSuccessful.emit(false)
-				else -> Unit
-			}
-			when (deleteResponse.status) {
-				is Status.Success -> {
-					_deleteSuccessful.emit(true)
-					// Added due to if we try to import empty list of contacts it fails
-					// but if we deleted all of them we need to propagate the number of imported contacts into the profile section
-					// Otherwise if there was nothing to delete, it's a bug and the number should not be propagated
-					if (contactsToBeUploaded.isEmpty() && contactsToBeDeleted.isNotEmpty()) {
-						encryptedPreferenceRepository.numberOfImportedContacts = 0
-					}
-				}
-				is Status.Error -> _deleteSuccessful.emit(false)
 				else -> Unit
 			}
 		}
