@@ -1,6 +1,7 @@
 package cz.cleevio.onboarding.ui.usernameFragment
 
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -26,10 +27,6 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 	override fun initView() {
 		binding.usernameInput.requestFocus()
 		binding.usernameInput.showKeyboard()
-
-		binding.close.setOnClickListener {
-			findNavController().popBackStack()
-		}
 
 		binding.continueBtn.setDebouncedOnClickListener {
 			binding.usernameInput.hideKeyboard()

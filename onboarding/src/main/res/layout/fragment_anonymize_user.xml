@@ -103,6 +103,17 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />
 
+	<com.google.android.material.progressindicator.CircularProgressIndicator
+		android:id="@+id/progressbar"
+		style="@style/Widget.LightBase.Dialog.CircleProgressIndicator"
+		android:layout_width="@dimen/size_dialog_progress_indicator"
+		android:layout_height="@dimen/size_dialog_progress_indicator"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/continue_btn"
 		style="@style/Widget.Vexl.Onboarding.BottomButton"

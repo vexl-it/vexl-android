@@ -1,7 +1,7 @@
 package cz.cleevio.repository.repository.user
 
 import cz.cleevio.network.data.Resource
-import cz.cleevio.network.request.user.UserAvatar
+import cz.cleevio.network.request.user.UserRequest
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.model.user.ConfirmPhone
@@ -36,7 +36,7 @@ interface UserRepository {
 
 	suspend fun getUserFullname(): UserProfile?
 
-	suspend fun registerUser(username: String, avatar: UserAvatar?): Resource<User>
+	suspend fun registerUser(request: UserRequest): Resource<User>
 
 	//----------------------------------
 

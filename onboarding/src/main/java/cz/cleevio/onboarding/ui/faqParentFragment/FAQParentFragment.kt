@@ -78,7 +78,7 @@ class FAQParentFragment : BaseFragment(R.layout.fragment_faq_parent) {
 	private fun navigateNext() {
 		if (args.continueToOnboarding) {
 			findNavController().safeNavigateWithTransition(
-				FAQParentFragmentDirections.proceedToOnboardingPart2()
+				FAQParentFragmentDirections.proceedToOnboardingPhone()
 			)
 		} else {
 			findNavController().popBackStack()

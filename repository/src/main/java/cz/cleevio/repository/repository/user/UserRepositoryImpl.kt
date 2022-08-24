@@ -118,7 +118,7 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun registerUser(username: String, avatar: UserAvatar?): Resource<User> {
+	override suspend fun registerUser(request: UserRequest): Resource<User> {
 		return tryOnline(
 			doOnSuccess = {
 				it?.let {
@@ -129,12 +129,7 @@ class UserRepositoryImpl constructor(
 				it?.fromNetwork()
 			},
 			request = {
-				userRestApi.postUser(
-					UserRequest(
-						username = username,
-						avatar = avatar
-					)
-				)
+				userRestApi.postUser(request)
 			}
 		)
 	}

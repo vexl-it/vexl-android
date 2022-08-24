@@ -204,6 +204,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							)
 							lastVisitedGraph = R.navigation.nav_onboarding
 						}
+						NavMainGraphModel.NavGraph.OnboardingIdentity -> {
+							getFirstFragmentFromNavHost()?.apply {
+								this.setExitTransitionGravityStart()
+							}
+							navController.setGraph(
+								R.navigation.nav_onboarding_identity
+							)
+							lastVisitedGraph = R.navigation.nav_onboarding_identity
+						}
 						NavMainGraphModel.NavGraph.Marketplace -> {
 							navController.setGraph(
 								R.navigation.nav_marketplace

@@ -40,14 +40,13 @@ val onboardingModule = module {
 	}
 
 	viewModel {
-		PhoneDoneViewModel()
+		PhoneDoneViewModel(
+			navMainGraphModel = get()
+		)
 	}
 
 	viewModel {
 		CreateAvatarViewModel(
-			userRepository = get(),
-			chatRepository = get(),
-			encryptedPreference = get(),
 			navMainGraphModel = get(),
 			imageHelper = get()
 		)
@@ -56,7 +55,9 @@ val onboardingModule = module {
 	viewModel {
 		AnonymizeUserViewModel(
 			userRepository = get(),
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			chatRepository = get(),
+			encryptedPreference = get(),
 		)
 	}
 }
