@@ -42,7 +42,7 @@ class NetworkInterceptor constructor(
 		const val HEADER_CONTENT_TYPE_VALUE = "application/json; charset=utf-8"
 		const val HEADER_X_PLATFORM = "X-Platform"
 		const val HEADER_X_INSTALL_UUID = "X-Install-UUID"
-		const val HEADER_X_PLATFORM_VALUE = "android"
+		const val HEADER_X_PLATFORM_VALUE = "ANDROID"
 		const val HEADER_ACCEPT_LANGUAGE = "Accept-Language"
 		const val HEADER_USER_AGENT = "User-Agent"
 

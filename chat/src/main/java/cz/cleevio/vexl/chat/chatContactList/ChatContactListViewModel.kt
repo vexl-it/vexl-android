@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.chat.chatContactList
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -53,8 +54,8 @@ class ChatContactListViewModel constructor(
 			usersChattedWithList.filter { user ->
 				when (currentFilter) {
 					FilterType.ALL -> true
-					FilterType.BUYERS -> false // TODO find out how to do this
-					FilterType.SELLERS -> false // TODO find out how to do this
+					FilterType.BUYERS -> user.offer.offerType == OfferType.BUY.name
+					FilterType.SELLERS -> user.offer.offerType == OfferType.SELL.name
 				}
 			}.sortedByDescending {
 				it.message.time
