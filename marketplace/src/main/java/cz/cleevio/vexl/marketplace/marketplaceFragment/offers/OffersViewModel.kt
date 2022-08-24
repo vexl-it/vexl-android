@@ -26,6 +26,10 @@ class OffersViewModel constructor(
 		) { offers, groups ->
 			offers.map { item ->
 				OfferWithGroup(offer = item, group = groups.firstOrNull { it.groupUuid == item.groupUuid })
+			}.sortedBy {
+				if (it.offer.isRequested) return@sortedBy 1
+
+				return@sortedBy 0
 			}
 		}
 	}.flowOn(Dispatchers.Default)
@@ -37,6 +41,10 @@ class OffersViewModel constructor(
 		) { offers, groups ->
 			offers.map { item ->
 				OfferWithGroup(offer = item, group = groups.firstOrNull { it.groupUuid == item.groupUuid })
+			}.sortedBy {
+				if (it.offer.isRequested) return@sortedBy 1
+
+				return@sortedBy 0
 			}
 		}
 	}.flowOn(Dispatchers.Default)
