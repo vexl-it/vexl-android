@@ -2,6 +2,7 @@ package cz.cleevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.ChipViewUtils
 import cz.cleevio.core.utils.repeatScopeOnResume
@@ -54,6 +55,8 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 		listenForInsets(binding.offersContainer) { insets ->
 			binding.offerList.updatePadding(bottom = insets.bottomWithNavBar)
 		}
+
+		changeLockedVisibility(viewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED))
 
 		binding.offerList.adapter = adapter
 
