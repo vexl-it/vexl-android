@@ -219,19 +219,19 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="offer_to_buy">K nákupu</string>
     <string name="offer_active_count">%s aktivních nabídek</string>
     <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
-	<string name="offer_sort_oldest">Seřazeno od nejstarších</string>
-	<string name="offer_my_offer">Moje nabídka</string>
-	<string name="offer_edit">Upravit nabídku</string>
-	<string name="offer_added">Přidáno %s</string>
+    <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
+    <string name="offer_my_offer">Moje nabídka</string>
+    <string name="offer_edit">Upravit nabídku</string>
+    <string name="offer_added">Přidáno %s</string>
 
-	<!-- Offer -->
-	<string name="error_missing_offer_description">Chybí popis</string>
-	<string name="error_missing_offer_location">Chybí lokace</string>
-	<string name="error_missing_offer_payment_method">Chybí způsob platby</string>
-	<string name="error_missing_offer_price_trigger">Chybí spoušť ceny</string>
-	<string name="error_missing_offer_type">Chybí typ sítě</string>
-	<string name="error_missing_offer_friend_level">Chybějící úroveň přátel</string>
-	<string name="error_invalid_offer_delete_trigger">Neplatný čas na smazání nabídky</string>
+    <!-- Offer -->
+    <string name="error_missing_offer_description">Chybí popis</string>
+    <string name="error_missing_offer_location">Chybí lokace</string>
+    <string name="error_missing_offer_payment_method">Chybí způsob platby</string>
+    <string name="error_missing_offer_price_trigger">Chybí spoušť ceny</string>
+    <string name="error_missing_offer_type">Chybí typ sítě</string>
+    <string name="error_missing_offer_friend_level">Chybějící úroveň přátel</string>
+    <string name="error_invalid_offer_delete_trigger">Neplatný čas na smazání nabídky</string>
 
     <!-- Filters -->
     <string name="filter_title">Filtr</string>
@@ -308,18 +308,18 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_filter_sellers">Prodávající</string>
     <string name="chat_message_prefix">já:</string>
 
-	<!-- Chat requests -->
-	<string name="chat_request_main_title">%s Žádosti</string>
-	<string name="chat_request_accept">Přijmout</string>
-	<string name="chat_request_decline">Odmítnout</string>
-	<string name="chat_request_my_offer">Moje nabídka</string>
+    <!-- Chat requests -->
+    <string name="chat_request_main_title">%s Žádosti</string>
+    <string name="chat_request_accept">Přijmout</string>
+    <string name="chat_request_decline">Odmítnout</string>
+    <string name="chat_request_my_offer">Moje nabídka</string>
 
-	<!-- Chat messaging -->
-	<string name="chat_btns_reveal_identity">Odhalit identitu</string>
-	<string name="chat_btns_my_offer">Moje nabídka</string>
-	<string name="chat_btns_common_friends">Společní přátelé</string>
-	<string name="chat_common_friends_facebook_contact">Přes Facebook</string>
-	<string name="chat_btns_delete_chat">Vymazat chat</string>
+    <!-- Chat messaging -->
+    <string name="chat_btns_reveal_identity">Odhalit identitu</string>
+    <string name="chat_btns_my_offer">Moje nabídka</string>
+    <string name="chat_btns_common_friends">Společní přátelé</string>
+    <string name="chat_common_friends_facebook_contact">Přes Facebook</string>
+    <string name="chat_btns_delete_chat">Vymazat chat</string>
     <string name="chat_btns_block_user">Zablokovat uživatele</string>
     <string name="chat_message_input_placeholder">Napiš něco...</string>
     <string name="chat_delete_chat_title">Vymazat chat?</string>
