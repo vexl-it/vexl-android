@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.chat.chatContactList
 
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ChatContactListViewModel constructor(
-	private val chatRepository: ChatRepository
+	private val chatRepository: ChatRepository,
+	val remoteConfig: FirebaseRemoteConfig,
 ) : BaseViewModel() {
 
 	private val _usersRequestingChat = MutableSharedFlow<List<CommunicationRequest>>(replay = 1)

@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
+import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
@@ -53,6 +54,9 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 
 	override fun initView() {
 		priceChartWidget = binding.priceChart
+
+		binding.recycler.isVisible = !chatContactListViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)
+		binding.marketLocked.isVisible = chatContactListViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)
 
 		super.initView()
 		listenForInsets(binding.container) { insets ->

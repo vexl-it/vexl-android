@@ -12,6 +12,7 @@ import androidx.transition.TransitionManager
 import coil.ImageLoader
 import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.OpenedFromScreen
@@ -155,6 +156,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				.show()
 		}
 
+		binding.parentSectionGroup.isVisible = !profileViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)
 		binding.profileGroups.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToGroupFragment()

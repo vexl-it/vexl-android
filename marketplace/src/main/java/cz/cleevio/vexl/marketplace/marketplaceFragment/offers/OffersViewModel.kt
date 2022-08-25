@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.marketplace.marketplaceFragment.offers
 
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.repository.model.offer.OfferWithGroup
 import cz.cleevio.repository.repository.group.GroupRepository
@@ -15,6 +16,7 @@ class OffersViewModel constructor(
 	val groupRepository: GroupRepository,
 	private val navMarketplaceGraphModel: NavMarketplaceGraphModel,
 	private val offerRepository: OfferRepository,
+	val remoteConfig: FirebaseRemoteConfig
 ) : BaseViewModel() {
 
 	val buyOffersFlow = offerRepository.buyOfferFilter.flatMapLatest { filter ->

@@ -1,6 +1,7 @@
 package cz.cleevio.profile.profileFragment
 
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.Currency
 import cz.cleevio.core.utils.NavMainGraphModel
@@ -19,12 +20,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class ProfileViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
+	val remoteConfig: FirebaseRemoteConfig,
 	private val groupRepository: GroupRepository,
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	val navMainGraphModel: NavMainGraphModel

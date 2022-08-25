@@ -12,7 +12,8 @@ val chatModule = module {
 
 	viewModel {
 		ChatContactListViewModel(
-			chatRepository = get()
+			chatRepository = get(),
+			remoteConfig = get()
 		)
 	}
 

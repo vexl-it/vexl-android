@@ -19,6 +19,7 @@ val profileModule = module {
 			contactRepository = get(),
 			offerRepository = get(),
 			chatRepository = get(),
+			remoteConfig = get(),
 			groupRepository = get(),
 			encryptedPreferenceRepository = get(),
 			navMainGraphModel = get()
