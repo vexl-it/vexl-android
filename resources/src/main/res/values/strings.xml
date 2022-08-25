@@ -108,6 +108,8 @@
     <string name="error_missing_offer_keys">You don\'t have keys for this offer</string>
     <string name="error_nickname_blank">Nickname is empty</string>
     <string name="error_missing_firebase_token">Firebase token for Inbox is missing</string>
+    <string name="error_missing_keypair">The action could not be completed because of missing key pair</string>
+    <string name="error_missing_challenge">The action could not be completed because of missing signed challenge</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Change profile picture</string>
@@ -348,7 +350,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_block_user_confirm_description">Do you really want to block this user? You will never be able to undo this action. Choose wisely.</string>
     <string name="chat_block_user_confirm_nope">Nope</string>
     <string name="chat_block_user_confirm_action">Yes, block</string>
-    <string name="chat_message_conversation_started">The conversation has started</string>
+    <string name="chat_message_conversation_request_accepted">The conversation has started</string>
     <string name="chat_message_identity_reveal_header">Identity reveal request</string>
     <string name="chat_message_identity_reveal_subheader">Let’s reveal identities!</string>
     <string name="chat_message_identity_reveal_request_sent">Identity reveal request sent</string>
