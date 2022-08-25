@@ -155,7 +155,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		binding.bottomNavigation.setupWithNavController(navController)
 	}
 
-
 	private fun setupGroupDeepLinks() {
 		FirebaseDynamicLinks.getInstance()
 			.getDynamicLink(intent)
@@ -394,5 +393,4 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		private const val LAST_VISITED_GRAPH = "last_visited_graph"
 		private const val GRAPH_STATE = "LAST_VISITED_GRAPH"
 	}
-
 }

@@ -1,7 +1,6 @@
 package cz.cleevio.onboarding.ui.usernameFragment
 
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding

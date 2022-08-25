@@ -67,8 +67,8 @@ class OfferWidget @JvmOverloads constructor(
 		if (mode == Mode.MY_OFFER) {
 			binding.userName.text = context.getString(R.string.offer_my_offer)
 		} else {
-			val isSell = (item.offerType == OfferType.SELL.name && !item.isMine)
-				|| (item.offerType == OfferType.BUY.name && item.isMine)
+			val isSell = (item.offerType == OfferType.SELL.name && !item.isMine) ||
+				(item.offerType == OfferType.BUY.name && item.isMine)
 			if (isSell) {
 				colorizeTransactionType(
 					resources.getString(R.string.marketplace_detail_user_sell, "$generatedUsername "),

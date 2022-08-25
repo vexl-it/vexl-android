@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 data class UserRequest constructor(
 	val username: String?,
 	val avatar: UserAvatar?
-): Parcelable
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
 @Parcelize

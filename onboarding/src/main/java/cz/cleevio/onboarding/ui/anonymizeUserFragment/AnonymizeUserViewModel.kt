@@ -7,9 +7,7 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.network.data.Resource
-import cz.cleevio.network.data.Status
 import cz.cleevio.network.request.user.UserRequest
-import cz.cleevio.repository.model.user.User
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
