@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
@@ -23,6 +24,8 @@ import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.lang.Integer.max
@@ -33,6 +36,9 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	override val viewModel by viewModel<ChatViewModel> { parametersOf(args.communicationRequest) }
 
 	private val args by navArgs<ChatFragmentArgs>()
+
+	private var isHidingSubmitMessageWrapper: Boolean = false
+	private var imeDefaultInsets: Int? = null
 
 	lateinit var adapter: ChatMessagesAdapter
 
@@ -175,12 +181,15 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			findNavController().popBackStack()
 		}
 		binding.myOfferBtn.setOnClickListener {
+			hideSubmitMessageWrapper()
 			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer!!)) // TODO solve double !
 		}
 		binding.commonFriendsBtn.setOnClickListener {
+			hideSubmitMessageWrapper()
 			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer?.commonFriends.orEmpty()))
 		}
 		binding.revealIdentityBtn.setOnClickListener {
+			hideSubmitMessageWrapper()
 			showBottomDialog(IdentityRequestBottomSheetDialog(
 				senderPublicKey = viewModel.senderPublicKey,
 				receiverPublicKey = viewModel.receiverPublicKey,
@@ -195,6 +204,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		binding.deleteChatBtn.setOnClickListener {
 			showingDialog = true
+			hideSubmitMessageWrapper()
 			showBottomDialog(
 				DeleteChatBottomSheetDialog(
 					senderPublicKey = viewModel.senderPublicKey,
@@ -205,6 +215,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		binding.blockUserBtn.setOnClickListener {
 			showingDialog = true
+			hideSubmitMessageWrapper()
 			showBottomDialog(
 				BlockUserBottomSheetDialog(
 					senderPublicKey = viewModel.senderPublicKey,
@@ -222,8 +233,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 
 		listenForIMEInset(binding.submitMessageWrapper) { insets ->
-			binding.submitMessageWrapper.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-				bottomMargin = insets
+			if (imeDefaultInsets == null) {
+				imeDefaultInsets = insets
+			}
+
+			if (!isHidingSubmitMessageWrapper) {
+				binding.submitMessageWrapper.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+					bottomMargin = insets
+				}
 			}
 		}
 	}
@@ -298,6 +315,20 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		})
 
 		animationSet.start()
+	}
+
+	private fun hideSubmitMessageWrapper() {
+		isHidingSubmitMessageWrapper = true
+		imeDefaultInsets?.let {
+			binding.submitMessageWrapper.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = it
+			}
+		}
+		// Delay because of listenForIMEInset() emits only single value during hiding keyboard (not emits till is hidden)
+		lifecycleScope.launch {
+			delay(500)
+			isHidingSubmitMessageWrapper = false
+		}
 	}
 
 	private companion object {
