@@ -134,7 +134,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			showBottomDialog(
 				DonateBottomSheetDialog {
 					if (it) {
-						startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://seznam.cz")))
+						startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://pay.satoshilabs.com/apps/2jSjLWx4uVsXcGZNRUSiv9tpzh7X/pos")))
 					}
 				}
 			)
