@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.repository.model.chat.ChatListUser
+import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatContactBinding
+import timber.log.Timber
 import java.text.SimpleDateFormat
 
 class ChatContactListAdapter constructor(
@@ -36,7 +39,10 @@ class ChatContactListAdapter constructor(
 
 			val isDeanonymized = item.user?.deAnonymized == true
 
-			if (item.offer.offerType == "SELL") {
+			val isSell = (item.offer.offerType == OfferType.SELL.name && !item.offer.isMine)
+				|| (item.offer.offerType == OfferType.BUY.name && item.offer.isMine)
+
+			if (isSell) {
 				colorizeTransactionType(
 					binding.chatContactName.resources.getString(
 						cz.cleevio.core.R.string.marketplace_detail_user_sell, if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
@@ -59,7 +65,7 @@ class ChatContactListAdapter constructor(
 			val prefix = if (item.message.isMine)
 				binding.chatContactName.resources.getString(R.string.chat_message_prefix)
 			else ""
-			binding.chatLastMessage.text = "$prefix${item.message.text}"
+			binding.chatLastMessage.text = item.message.text?.let { "$prefix${it}" } ?: ""
 			binding.chatTime.text = SimpleDateFormat.getDateTimeInstance(
 				SimpleDateFormat.SHORT,
 				SimpleDateFormat.SHORT

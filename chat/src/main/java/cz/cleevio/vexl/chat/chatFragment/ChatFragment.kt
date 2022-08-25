@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.load
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.*
 import cz.cleevio.vexl.chat.R
@@ -228,21 +229,24 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	}
 
 	private fun setupColoredTitle(name: String) {
-		val isRequested = args.communicationRequest.offer?.isRequested == true
+		val offer = args.communicationRequest.offer
+		val isRequested = offer?.isRequested == true
+		val isSell = (offer?.offerType == OfferType.SELL.name && !offer.isMine)
+			|| (offer?.offerType == OfferType.BUY.name && offer.isMine)
 
-		if (args.communicationRequest.offer?.offerType == "BUY") {
-			BuySellColorizer.colorizeTransactionType(
-				getString(R.string.marketplace_detail_user_buy, name),
-				name,
-				binding.username,
-				if (isRequested) R.color.gray_3 else R.color.green_100
-			)
-		} else {
+		if (isSell) {
 			BuySellColorizer.colorizeTransactionType(
 				getString(R.string.marketplace_detail_user_sell, name),
 				name,
 				binding.username,
 				if (isRequested) R.color.gray_3 else R.color.pink_100
+			)
+		} else {
+			BuySellColorizer.colorizeTransactionType(
+				getString(R.string.marketplace_detail_user_buy, name),
+				name,
+				binding.username,
+				if (isRequested) R.color.gray_3 else R.color.green_100
 			)
 		}
 	}

@@ -10,6 +10,7 @@ import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.formatAsPercentage
@@ -66,7 +67,9 @@ class OfferWidget @JvmOverloads constructor(
 		if (mode == Mode.MY_OFFER) {
 			binding.userName.text = context.getString(R.string.offer_my_offer)
 		} else {
-			if (item.offerType == "SELL") {
+			val isSell = (item.offerType == OfferType.SELL.name && !item.isMine)
+				|| (item.offerType == OfferType.BUY.name && item.isMine)
+			if (isSell) {
 				colorizeTransactionType(
 					resources.getString(R.string.marketplace_detail_user_sell, "$generatedUsername "),
 					generatedUsername,
