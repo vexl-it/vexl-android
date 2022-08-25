@@ -9,7 +9,7 @@ import cz.cleevio.lightspeedskeleton.R
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-const val REMOTE_CONFIG_INTERVAL = 3600L
+const val REMOTE_CONFIG_INTERVAL = 60L
 val appModule = module {
 
 	single<TelephonyManager> {
