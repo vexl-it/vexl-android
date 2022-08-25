@@ -173,7 +173,8 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun createInbox(publicKey: String): Resource<Unit> {
-		val keyPair = findKeyPairByPublicKey(publicKey) ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		val keyPair = findKeyPairByPublicKey(publicKey)
+			?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_keypair))
 		return notificationDao.getOne()?.let { notificationDataStorage ->
 			refreshChallenge(keyPair)?.let { signedChallenge ->
 				tryOnline(
@@ -188,29 +189,15 @@ class ChatRepositoryImpl constructor(
 					},
 					mapper = { }
 				)
-			} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+			} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
 	}
 
 	override suspend fun syncMessages(inboxPublicKey: String): Resource<Unit> {
-		val keyPair = if (inboxPublicKey == encryptedPreferenceRepository.userPublicKey) {
-			KeyPair(
-				privateKey = encryptedPreferenceRepository.userPrivateKey,
-				publicKey = encryptedPreferenceRepository.userPublicKey
-			)
-		} else {
-			myOfferDao.getMyOfferByPublicKey(inboxPublicKey)?.fromCache()?.let {
-				KeyPair(
-					privateKey = it.privateKey,
-					publicKey = it.publicKey
-				)
-			}
-		}
-
+		val keyPair = findKeyPairByPublicKey(inboxPublicKey)
 		return keyPair?.let {
 			syncMessages(keyPair)
-			//todo: add correct text
-		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_keypair))
 	}
 
 	@Suppress("ReturnCount")
@@ -300,7 +287,7 @@ class ChatRepositoryImpl constructor(
 			if (messagesResponse.status is Status.Error) {
 				return Resource.error(messagesResponse.errorIdentification)
 			}
-		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 
 		//delete messages from BE
 		val deleteResponse = deleteMessagesFromBE(keyPair.publicKey)
@@ -374,9 +361,7 @@ class ChatRepositoryImpl constructor(
 		}
 
 		val keyPair = findKeyPairByPublicKey(senderPublicKey)
-		if (keyPair == null) {
-			return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
-		}
+			?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_keypair))
 
 		refreshChallenge(keyPair)?.let { signedChallenge ->
 			return tryOnline(
@@ -393,7 +378,7 @@ class ChatRepositoryImpl constructor(
 				},
 				mapper = { }
 			)
-		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}
 
 	override suspend fun processMessage(message: ChatMessage) {
@@ -403,7 +388,8 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun deleteMessagesFromBE(publicKey: String): Resource<Unit> {
-		val keyPair = findKeyPairByPublicKey(publicKey) ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		val keyPair = findKeyPairByPublicKey(publicKey)
+			?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_keypair))
 		return refreshChallenge(keyPair)?.let { signedChallenge ->
 			tryOnline(
 				request = {
@@ -416,7 +402,7 @@ class ChatRepositoryImpl constructor(
 				},
 				mapper = { }
 			)
-		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_keypair))
 	}
 
 	override suspend fun changeUserBlock(
@@ -424,7 +410,7 @@ class ChatRepositoryImpl constructor(
 		block: Boolean
 	): Resource<Unit> {
 		return refreshChallenge(senderKeyPair)?.let { signedChallenge ->
-			val blockResponse = tryOnline(
+			tryOnline(
 				request = {
 					chatApi.putInboxesBlock(
 						BlockInboxRequest(
@@ -437,8 +423,7 @@ class ChatRepositoryImpl constructor(
 				},
 				mapper = { }
 			)
-			blockResponse
-		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}
 
 	override suspend fun askForCommunicationApproval(
@@ -510,7 +495,7 @@ class ChatRepositoryImpl constructor(
 			)
 
 			confirmResponse
-		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}
 
 	override suspend fun deleteInbox(publicKey: String): Resource<Unit> {
@@ -528,7 +513,7 @@ class ChatRepositoryImpl constructor(
 				},
 				mapper = { }
 			)
-		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_unknown_error_occurred))
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}
 
 	override suspend fun loadCommunicationRequests(): List<CommunicationRequest> {

@@ -229,9 +229,9 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="error_missing_offer_location">Chýba lokácia</string>
     <string name="error_missing_offer_payment_method">Chýba spôsob platby</string>
     <string name="error_missing_offer_price_trigger">Chýba spúšť ceny</string>
-    <string name="error_missing_offer_type">Chýba typ siete</string>
-    <string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
-    <string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
+	<string name="error_missing_offer_type">Chýba typ siete</string>
+	<string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
+	<string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
 
     <!-- Filters -->
     <string name="filter_title">Filtr</string>
@@ -308,8 +308,8 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="chat_filter_sellers">Prodávající</string>
     <string name="chat_message_prefix">já:</string>
 
-    <!-- Chat requests -->
-    <string name="chat_request_main_title">%s Žádosti</string>
+	<!-- Chat requests -->
+	<string name="chat_request_main_title">%s Žádosti</string>
     <string name="chat_request_accept">Přijmout</string>
     <string name="chat_request_decline">Odmítnout</string>
     <string name="chat_request_my_offer">Moje nabídka</string>
