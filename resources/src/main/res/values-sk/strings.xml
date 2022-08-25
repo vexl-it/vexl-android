@@ -209,39 +209,39 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="marketplace_detail_up_to">Max</string>
     <string name="marketplace_detail_payment">Platba</string>
     <string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
-    <string name="offer_request">Žádost</string>
-    <string name="offer_requested">Žádost poslána</string>
-    <string name="offer_edit_sell_title">Moje nabídky prodeje</string>
-    <string name="offer_edit_buy_title">Moje poptávky nákupu</string>
-    <string name="offer_create_sell_title">Nová nabídka prodeje</string>
-    <string name="offer_create_buy_title">Nová poptávka nákupu</string>
-    <string name="offer_to_sell">K prodeji</string>
-    <string name="offer_to_buy">K nákupu</string>
-    <string name="offer_active_count">%s aktivních nabídek</string>
-    <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
-    <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
-    <string name="offer_my_offer">Moje nabídka</string>
-    <string name="offer_edit">Upravit nabídku</string>
-    <string name="offer_added">Přidáno %s</string>
+	<string name="offer_request">Žádost</string>
+	<string name="offer_requested">Žádost poslána</string>
+	<string name="offer_edit_sell_title">Moje nabídky prodeje</string>
+	<string name="offer_edit_buy_title">Moje poptávky nákupu</string>
+	<string name="offer_create_sell_title">Nová nabídka prodeje</string>
+	<string name="offer_create_buy_title">Nová poptávka nákupu</string>
+	<string name="offer_to_sell">K prodeji</string>
+	<string name="offer_to_buy">K nákupu</string>
+	<string name="offer_active_count">%s aktivních nabídek</string>
+	<string name="offer_sort_newest">Seřazeno od nejnovějších</string>
+	<string name="offer_sort_oldest">Seřazeno od nejstarších</string>
+	<string name="offer_my_offer">Moje nabídka</string>
+	<string name="offer_edit">Upravit nabídku</string>
+	<string name="offer_added">Přidáno %s</string>
 
-    <!-- Offer -->
-    <string name="error_missing_offer_description">Chýba popis</string>
-    <string name="error_missing_offer_location">Chýba lokácia</string>
-    <string name="error_missing_offer_payment_method">Chýba spôsob platby</string>
-    <string name="error_missing_offer_price_trigger">Chýba spúšť ceny</string>
-    <string name="error_missing_offer_type">Chýba typ siete</string>
-    <string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
-    <string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
+	<!-- Offer -->
+	<string name="error_missing_offer_description">Chýba popis</string>
+	<string name="error_missing_offer_location">Chýba lokácia</string>
+	<string name="error_missing_offer_payment_method">Chýba spôsob platby</string>
+	<string name="error_missing_offer_price_trigger">Chýba spúšť ceny</string>
+	<string name="error_missing_offer_type">Chýba typ siete</string>
+	<string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
+	<string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
 
-    <!-- Filters -->
-    <string name="filter_title">Filtr</string>
-    <string name="filter_apply">Použít filtr</string>
-    <string name="filter_offers">Filtrovat nabídky</string>
-    <string name="widget_fee_without">Bez poplatku</string>
-    <string name="widget_fee_ok">S poplatkem</string>
-    <string name="widget_fee_percent">%s%%</string>
-    <string name="widget_location_online">Online</string>
-    <string name="widget_location_in_person">Pouze osobně</string>
+	<!-- Filters -->
+	<string name="filter_title">Filtr</string>
+	<string name="filter_apply">Použít filtr</string>
+	<string name="filter_offers">Filtrovat nabídky</string>
+	<string name="widget_fee_without">Bez poplatku</string>
+	<string name="widget_fee_ok">S poplatkem</string>
+	<string name="widget_fee_percent">%s%%</string>
+	<string name="widget_location_online">Online</string>
+	<string name="widget_location_in_person">Pouze osobně</string>
     <string name="widget_trigger_price_title">Aktivní při ceně</string>
     <string name="widget_trigger_title">Spouštěče</string>
     <string name="widget_trigger_price_below">Pod</string>
@@ -298,38 +298,38 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="request_common_friends_empty_state">Nemáte společné přátele</string>
     <string name="error_missing_offer_public_key">Chýba verejný kľúč</string>
     <string name="error_missing_offer_request_message">Chýba správa požiadavky</string>
-    <string name="error_missing_offer_id">Chýba ID ponuky</string>
-    <string name="offer_request_sent_successfully">Žiadosť bola úspešne odoslaná</string>
+	<string name="error_missing_offer_id">Chýba ID ponuky</string>
+	<string name="offer_request_sent_successfully">Žiadosť bola úspešne odoslaná</string>
 
-    <!-- Chat -->
-    <string name="chat_main_title">Chat</string>
-    <string name="chat_filter_all">Vše</string>
-    <string name="chat_filter_buyers">Kupující</string>
-    <string name="chat_filter_sellers">Prodávající</string>
-    <string name="chat_message_prefix">já:</string>
+	<!-- Chat -->
+	<string name="chat_main_title">Chat</string>
+	<string name="chat_filter_all">Vše</string>
+	<string name="chat_filter_buyers">Kupující</string>
+	<string name="chat_filter_sellers">Prodávající</string>
+	<string name="chat_message_prefix">já:</string>
 
-    <!-- Chat requests -->
-    <string name="chat_request_main_title">%s Žádosti</string>
-    <string name="chat_request_accept">Přijmout</string>
-    <string name="chat_request_decline">Odmítnout</string>
-    <string name="chat_request_my_offer">Moje nabídka</string>
+	<!-- Chat requests -->
+	<string name="chat_request_main_title">%s Žádosti</string>
+	<string name="chat_request_accept">Přijmout</string>
+	<string name="chat_request_decline">Odmítnout</string>
+	<string name="chat_request_my_offer">Moje nabídka</string>
 
-    <!-- Chat messaging -->
-    <string name="chat_btns_reveal_identity">Odhalit identitu</string>
-    <string name="chat_btns_my_offer">Moje nabídka</string>
-    <string name="chat_btns_common_friends">Společní přátelé</string>
-    <string name="chat_common_friends_facebook_contact">Přes Facebook</string>
-    <string name="chat_btns_delete_chat">Vymazat chat</string>
-    <string name="chat_btns_block_user">Zablokovat uživatele</string>
-    <string name="chat_message_input_placeholder">Napiš něco...</string>
-    <string name="chat_delete_chat_title">Vymazat chat?</string>
-    <string name="chat_delete_chat_description">Dovexlováno? Chat uzavři až po dokončení transakce, uzavřením se smaže celá historie chatu.</string>
-    <string name="chat_delete_chat_back">Zpět</string>
-    <string name="chat_delete_chat_delete">Vymazat chat</string>
-    <string name="chat_delete_chat_confirm_title">Určitě?</string>
-    <string name="chat_delete_chat_confirm_description">Tento krok nelze vrátit zpět. Určitě chceš vymazat chat?</string>
-    <string name="chat_delete_chat_confirm_back">Ne</string>
-    <string name="chat_delete_chat_confirm_action">Ano, chci</string>
+	<!-- Chat messaging -->
+	<string name="chat_btns_reveal_identity">Odhalit identitu</string>
+	<string name="chat_btns_my_offer">Moje nabídka</string>
+	<string name="chat_btns_common_friends">Společní přátelé</string>
+	<string name="chat_common_friends_facebook_contact">Přes Facebook</string>
+	<string name="chat_btns_delete_chat">Vymazat chat</string>
+	<string name="chat_btns_block_user">Zablokovat uživatele</string>
+	<string name="chat_message_input_placeholder">Napiš něco...</string>
+	<string name="chat_delete_chat_title">Vymazat chat?</string>
+	<string name="chat_delete_chat_description">Dovexlováno? Chat uzavři až po dokončení transakce, uzavřením se smaže celá historie chatu.</string>
+	<string name="chat_delete_chat_back">Zpět</string>
+	<string name="chat_delete_chat_delete">Vymazat chat</string>
+	<string name="chat_delete_chat_confirm_title">Určitě?</string>
+	<string name="chat_delete_chat_confirm_description">Tento krok nelze vrátit zpět. Určitě chceš vymazat chat?</string>
+	<string name="chat_delete_chat_confirm_back">Ne</string>
+	<string name="chat_delete_chat_confirm_action">Ano, chci</string>
     <string name="chat_block_user_title">Zablokovat napořád?</string>
     <string name="chat_block_user_description">Opravdu chceš uživatele zablokovat? Tento krok nejde vrátit zpět. Dobře si to rozmysli.</string>
     <string name="chat_block_user_back">Ne</string>
