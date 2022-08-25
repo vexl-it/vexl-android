@@ -130,4 +130,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) "
 	)
 	fun deleteByKeys(inboxPublicKey: String, firstKey: String, secondKey: String)
+
+	@Query("SELECT * FROM ChatMessageEntity")
+	fun listAllFlow(): Flow<List<ChatMessageEntity>>
 }
