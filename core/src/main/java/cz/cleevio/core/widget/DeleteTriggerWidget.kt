@@ -99,7 +99,7 @@ class DeleteTriggerWidget @JvmOverloads constructor(
 	}
 
 	companion object {
-		const val DEFAULT_NUMBER = 14
+		const val DEFAULT_NUMBER = 30
 	}
 }
 

@@ -10,7 +10,6 @@ import cz.cleevio.core.widget.OfferLocationItem
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.Offer
-import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -71,7 +70,7 @@ class NewOfferViewModel constructor(
 			)
 
 			//send all in single request to BE
-			val response = offerRepository.createOffer(encryptedOfferList, params.expiration, offerKeys)
+			val response = offerRepository.createOffer(encryptedOfferList, params.expiration, offerKeys, offerType = params.offerType)
 			_newOfferRequest.emit(response)
 		}
 	}

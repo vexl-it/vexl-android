@@ -15,7 +15,7 @@ interface OfferRepository {
 	val sellOfferFilter: MutableStateFlow<OfferFilter>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
-	suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair): Resource<Offer>
+	suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair, offerType: String): Resource<Offer>
 
 	suspend fun createOfferForPublicKeys(offerId: String, offerList: List<NewOffer>): Resource<Unit>
 
