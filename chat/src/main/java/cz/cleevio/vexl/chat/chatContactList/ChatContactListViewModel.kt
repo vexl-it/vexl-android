@@ -31,13 +31,20 @@ class ChatContactListViewModel constructor(
 	private val _showRefreshIndicator = MutableStateFlow(false)
 	val showRefreshIndicator = _showRefreshIndicator.asStateFlow()
 
+	init {
+		viewModelScope.launch(Dispatchers.IO) {
+			chatRepository.chatUsers.collect {
+				usersChattedWithList = it
+				emitUsers()
+				_showRefreshIndicator.emit(false)
+			}
+		}
+	}
+
 	fun refreshChats() {
 		viewModelScope.launch(Dispatchers.IO) {
 			_showRefreshIndicator.emit(true)
-			val data = chatRepository.loadChatUsers()
-			usersChattedWithList = data
-			emitUsers()
-			_showRefreshIndicator.emit(false)
+			chatRepository.startEmittingChatUsers()
 		}
 	}
 

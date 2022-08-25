@@ -44,6 +44,8 @@ class ChatRepositoryImpl constructor(
 	private val groupDao: GroupDao
 ) : ChatRepository {
 
+	override val chatUsers: MutableSharedFlow<List<ChatListUser>> = MutableSharedFlow()
+
 	private suspend fun refreshChallenge(keyPair: KeyPair): SignedChallengeRequest? {
 		val challenge = tryOnline(
 			request = { chatApi.postChallenge(challengeRequest = CreateChallengeRequest(keyPair.publicKey)) },
@@ -557,7 +559,14 @@ class ChatRepositoryImpl constructor(
 		return result.toList()
 	}
 
-	override suspend fun loadChatUsers(): List<ChatListUser> {
+	override suspend fun startEmittingChatUsers() {
+		//emit default value
+		loadChatUsers()
+		//and emit again whenever there is new MessageEntity
+		chatMessageDao.listAllFlow().collectLatest { loadChatUsers() }
+	}
+
+	private suspend fun loadChatUsers() {
 		val result: MutableList<ChatListUser> = mutableListOf()
 		//get keys to all of my inboxes
 		val inboxKeys = getMyInboxKeys()
@@ -628,7 +637,7 @@ class ChatRepositoryImpl constructor(
 			}
 		}
 
-		return result.toList()
+		chatUsers.emit(result.toList())
 	}
 
 	override suspend fun getOneChatUser(messageKeyPair: MessageKeyPair): ChatListUser? {

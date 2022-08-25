@@ -1,6 +1,7 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.UserUtils
 import cz.cleevio.network.data.Status
@@ -20,7 +21,8 @@ class SplashViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel,
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
-	private val userUtils: UserUtils
+	private val userUtils: UserUtils,
+	remoteConfig: FirebaseRemoteConfig
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
@@ -29,6 +31,8 @@ class SplashViewModel constructor(
 	val contactKeysLoaded = _contactKeysLoaded.asSharedFlow()
 
 	init {
+		remoteConfig.fetchAndActivate()
+
 		viewModelScope.launch(Dispatchers.IO) {
 			val offers = offerRepository.getMyOffersWithoutInbox()
 			offers.forEach { myOffer ->

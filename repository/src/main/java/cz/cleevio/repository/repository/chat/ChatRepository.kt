@@ -8,9 +8,12 @@ import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
 interface ChatRepository {
+
+	val chatUsers: MutableSharedFlow<List<ChatListUser>>
 
 	suspend fun saveFirebasePushToken(token: String)
 
@@ -50,7 +53,7 @@ interface ChatRepository {
 
 	suspend fun loadCommunicationRequests(): List<CommunicationRequest>
 
-	suspend fun loadChatUsers(): List<ChatListUser>
+	suspend fun startEmittingChatUsers()
 
 	suspend fun getOneChatUser(messageKeyPair: MessageKeyPair): ChatListUser?
 
