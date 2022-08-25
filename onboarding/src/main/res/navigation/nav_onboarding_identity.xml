@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_onboarding_identity"
+	app:startDestination="@+id/usernameFragment">
+
+	<include app:graph="@navigation/nav_camera" />
+
+	<fragment
+		android:id="@+id/usernameFragment"
+		android:name="cz.cleevio.onboarding.ui.usernameFragment.UsernameFragment"
+		android:label="UsernameFragment"
+		tools:layout="@layout/fragment_username">
+
+		<action
+			android:id="@+id/proceed_to_avatarFragment"
+			app:destination="@id/createAvatarFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/createAvatarFragment"
+		android:name="cz.cleevio.onboarding.ui.createAvatarFragment.CreateAvatarFragment"
+		android:label="CreateAvatarFragment"
+		tools:layout="@layout/fragment_avatar">
+
+		<argument
+			android:name="username"
+			app:argType="string" />
+
+		<action
+			android:id="@+id/proceed_to_takePhotoFragment"
+			app:destination="@id/nav_camera" />
+		<action
+			android:id="@+id/proceed_to_anonymize_user"
+			app:destination="@id/anonymizeUserFragment" />
+		<action
+			android:id="@+id/proceed_to_bottom_sheet_dialog"
+			app:destination="@id/photoOptionsBottomSheetDialog" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/anonymizeUserFragment"
+		android:name="cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserFragment"
+		android:label="AnonymizeUserFragment"
+		tools:layout="@layout/fragment_anonymize_user" >
+		<argument
+			android:name="request"
+			app:argType="cz.cleevio.network.request.user.UserRequest" />
+	</fragment>
+
+	<dialog
+		android:id="@+id/photoOptionsBottomSheetDialog"
+		android:name="lightbase.camera.ui.photoBottomSheet.PhotoOptionsBottomSheetDialog"
+		android:label="PhotoOptionsBottomSheetDialog"
+		tools:layout="@layout/bottom_sheet_photo_options" />
+
+</navigation>

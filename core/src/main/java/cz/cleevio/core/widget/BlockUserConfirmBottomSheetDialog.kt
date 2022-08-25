@@ -44,7 +44,6 @@ class BlockUserConfirmBottomSheetDialog(
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
 			coroutineScope.launch {
-
 				//delete chat
 				chatRepository.sendMessage(
 					senderPublicKey = senderPublicKey,

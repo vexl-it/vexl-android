@@ -14,6 +14,7 @@
 		android:layout_margin="16dp"
 		android:contentDescription="?content"
 		android:src="@drawable/ic_chevron_left_24_white"
+		android:visibility="invisible"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 

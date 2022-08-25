@@ -11,6 +11,7 @@ class NavMainGraphModel {
 		object EmptyState : NavGraph()
 
 		object Onboarding : NavGraph()
+		object OnboardingIdentity : NavGraph()
 		object Contacts : NavGraph()
 		object Main : NavGraph()
 		object Marketplace : NavGraph()

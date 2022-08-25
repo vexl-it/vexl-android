@@ -60,7 +60,7 @@ class ChatRequestFragment : BaseFragment(R.layout.fragment_chat_request) {
 			viewModel.processCommunicationRequest(
 				communicationRequest = currentRequest,
 				approve = true,
-				text = getString(R.string.chat_message_conversation_started)
+				text = getString(R.string.chat_message_conversation_request_accepted)
 			)
 		}
 

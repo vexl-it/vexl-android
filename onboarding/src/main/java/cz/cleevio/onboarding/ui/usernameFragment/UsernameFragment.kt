@@ -27,10 +27,6 @@ class UsernameFragment : BaseFragment(R.layout.fragment_username) {
 		binding.usernameInput.requestFocus()
 		binding.usernameInput.showKeyboard()
 
-		binding.close.setOnClickListener {
-			findNavController().popBackStack()
-		}
-
 		binding.continueBtn.setDebouncedOnClickListener {
 			binding.usernameInput.hideKeyboard()
 			val username = binding.usernameInput.text.toString()

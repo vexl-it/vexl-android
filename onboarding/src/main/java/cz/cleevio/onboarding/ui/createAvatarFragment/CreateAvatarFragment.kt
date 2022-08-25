@@ -113,23 +113,6 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 				}
 			}
 		}
-
-		repeatScopeOnStart {
-			viewModel.user.collect {
-				it?.let {
-					findNavController().safeNavigateWithTransition(
-						CreateAvatarFragmentDirections.proceedToAnonymizeUser()
-					)
-				}
-			}
-		}
-
-		repeatScopeOnStart {
-			viewModel.loading.collect { loading ->
-				binding.continueBtn.isEnabled = !loading
-				binding.progressbar.isVisible = loading
-			}
-		}
 	}
 
 	override fun initView() {
@@ -170,7 +153,10 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 
 		binding.continueBtn.apply {
 			setOnClickListener {
-				viewModel.registerUser(args.username, requireContext().contentResolver)
+				val request = viewModel.getUserRequest(args.username, requireContext().contentResolver)
+				findNavController().safeNavigateWithTransition(
+					CreateAvatarFragmentDirections.proceedToAnonymizeUser(request)
+				)
 			}
 			isEnabled = true
 		}

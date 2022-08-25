@@ -1,21 +1,19 @@
 package cz.cleevio.onboarding.ui.phoneDoneFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class PhoneDoneViewModel : BaseViewModel() {
-
-	private val _goToNextScreen = MutableStateFlow(false)
-	val goToNextScreen = _goToNextScreen.asStateFlow()
+class PhoneDoneViewModel constructor(
+	private val navMainGraphModel: NavMainGraphModel
+) : BaseViewModel() {
 
 	fun startTimer() {
 		viewModelScope.launch {
 			delay(SCREEN_DELAY)
-			_goToNextScreen.emit(true)
+			navMainGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.OnboardingIdentity)
 		}
 	}
 

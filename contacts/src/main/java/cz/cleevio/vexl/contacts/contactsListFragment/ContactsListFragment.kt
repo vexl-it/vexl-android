@@ -72,6 +72,9 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 			},
 			onDeselectAllClicked = {
 				viewModel.unselectAll()
+			},
+			onSelectAllClicked = {
+				viewModel.selectAll()
 			}
 		)
 

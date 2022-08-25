@@ -8,24 +8,23 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import coil.load
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentAnonymizeUserBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 
 	private val binding by viewBinding(FragmentAnonymizeUserBinding::bind)
 	override val viewModel by viewModel<AnonymizeUserViewModel>()
+	private val args by navArgs<AnonymizeUserFragmentArgs>()
 
 	override val hasMenu = true
 
@@ -68,6 +67,24 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 				}
 			}
 		}
+
+		repeatScopeOnStart {
+			viewModel.registerUserFlow.collect {
+				binding.continueBtn.isEnabled = !it.isLoading()
+				binding.progressbar.isVisible = it.isLoading()
+
+				if (it.isError()) {
+					it.errorIdentification.message?.let { messageCode ->
+						if (messageCode != -1) {
+							showSnackbar(
+								view = binding.container,
+								message = getString(messageCode)
+							)
+						}
+					}
+				}
+			}
+		}
 	}
 
 	override fun initView() {
@@ -81,11 +98,7 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 				startSlideAnimation()
 				viewModel.anonymizeUser(requireContext())
 			} else {
-				viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-					viewModel.navMainGraphModel.navigateToGraph(
-						NavMainGraphModel.NavGraph.Contacts
-					)
-				}
+				viewModel.registerUser(args.request)
 			}
 		}
 

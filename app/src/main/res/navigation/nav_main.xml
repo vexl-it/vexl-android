@@ -9,6 +9,8 @@
 
 	<include app:graph="@navigation/nav_onboarding" />
 
+	<include app:graph="@navigation/nav_onboarding_identity" />
+
 	<include app:graph="@navigation/nav_contacts" />
 
 	<include app:graph="@navigation/nav_marketplace" />

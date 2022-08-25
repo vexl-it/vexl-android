@@ -155,7 +155,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		binding.bottomNavigation.setupWithNavController(navController)
 	}
 
-
 	private fun setupGroupDeepLinks() {
 		FirebaseDynamicLinks.getInstance()
 			.getDynamicLink(intent)
@@ -203,6 +202,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 								R.navigation.nav_onboarding
 							)
 							lastVisitedGraph = R.navigation.nav_onboarding
+						}
+						NavMainGraphModel.NavGraph.OnboardingIdentity -> {
+							getFirstFragmentFromNavHost()?.apply {
+								this.setExitTransitionGravityStart()
+							}
+							navController.setGraph(
+								R.navigation.nav_onboarding_identity
+							)
+							lastVisitedGraph = R.navigation.nav_onboarding_identity
 						}
 						NavMainGraphModel.NavGraph.Marketplace -> {
 							navController.setGraph(
@@ -385,5 +393,4 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		private const val LAST_VISITED_GRAPH = "last_visited_graph"
 		private const val GRAPH_STATE = "LAST_VISITED_GRAPH"
 	}
-
 }

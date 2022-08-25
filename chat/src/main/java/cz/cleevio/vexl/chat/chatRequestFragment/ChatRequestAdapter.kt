@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cz.cleevio.core.R
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -30,7 +31,11 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 		private lateinit var adapter: ChatRequestCommonFriendAdapter
 
 		fun bind(item: CommunicationRequest) {
-			if (item.offer?.offerType == "SELL") {
+			val offer = item.offer
+			val isSell = (offer?.offerType == OfferType.SELL.name && !offer.isMine)
+				|| (offer?.offerType == OfferType.BUY.name && offer.isMine)
+
+			if (isSell) {
 				colorizeTransactionType(
 					binding.userName.resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend"),
 					"Unknown friend",
