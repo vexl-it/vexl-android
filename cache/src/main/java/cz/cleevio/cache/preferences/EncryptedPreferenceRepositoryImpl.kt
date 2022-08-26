@@ -90,7 +90,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		}
 
 	override var areScreenshotsAllowed: Boolean
-		get() = getBooleanFromEP(ARE_SCREENSHOTS_ALLOWED, true)
+		get() = getBooleanFromEP(ARE_SCREENSHOTS_ALLOWED, false)
 		set(value) {
 			putBooleanToEP(ARE_SCREENSHOTS_ALLOWED, value)
 			areScreenshotsAllowedFlow.tryEmit(value)
