@@ -3,12 +3,16 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetTriggerPriceBinding
 import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
+import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.PriceTriggerValue
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import timber.log.Timber
 import java.math.BigDecimal
 
@@ -16,15 +20,18 @@ class PriceTriggerWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr), KoinComponent {
 
+	private lateinit var currency: Currency
 	private lateinit var binding: WidgetTriggerPriceBinding
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository by inject()
+
 
 	var onFocusChangeListener: ((Boolean) -> Unit)? = null
 
 	init {
 		setupUI()
-		setCurrency(Currency.USD)
+		setCurrency(encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency())
 	}
 
 	private fun setupUI() {
@@ -37,7 +44,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 
 		binding.clearFilterBtn.setOnClickListener {
 			binding.priceEdit.setText(BigDecimal.ZERO.toString())
-			setCurrency(Currency.USD)
+			setCurrency(encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency())
 		}
 	}
 
@@ -49,6 +56,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 	}
 
 	fun setCurrency(currentCurrency: Currency) {
+		this.currency = currentCurrency
 		binding.currency.text = currentCurrency.getCurrencySymbol(context)
 	}
 
@@ -70,9 +78,14 @@ class PriceTriggerWidget @JvmOverloads constructor(
 		return BigDecimal.ZERO
 	}
 
+	private fun getTriggerCurrency(): String {
+		return this.currency.name
+	}
+
 	fun getPriceTriggerValue(): PriceTriggerValue = PriceTriggerValue(
 		type = getTriggerType(),
-		value = getTriggerValue()
+		value = getTriggerValue(),
+		currency = getTriggerCurrency()
 	)
 
 	fun setPriceTriggerValue(data: PriceTriggerValue) {
@@ -91,6 +104,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 			}
 		}
 		binding.priceEdit.setText(data.value.toString())
+		setCurrency(data.currency.mapStringToCurrency())
 	}
 }
 

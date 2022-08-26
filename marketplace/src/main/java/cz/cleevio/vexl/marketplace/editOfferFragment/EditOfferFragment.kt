@@ -154,10 +154,10 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferPriceTrigger.setPriceTriggerValue(
 			PriceTriggerValue(
 				value = offer.activePriceValue,
-				type = TriggerType.valueOf(offer.activePriceState)
+				type = TriggerType.valueOf(offer.activePriceState),
+				currency = offer.activePriceCurrency
 			)
 		)
-		//todo: we need someone to specify behavior for time delete trigger
 
 		binding.newOfferBtcNetwork.setValues(offer.btcNetwork.map { btcNetwork ->
 			BtcNetworkButtonSelected.valueOf(btcNetwork)
