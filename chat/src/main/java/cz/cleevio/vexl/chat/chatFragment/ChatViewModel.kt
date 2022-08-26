@@ -13,6 +13,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.map
+import org.commonmark.internal.util.Parsing.isBlank
 import timber.log.Timber
 
 class ChatViewModel constructor(
@@ -175,9 +176,11 @@ class ChatViewModel constructor(
 		originalMessages.forEach { originalMessage ->
 
 			// replace request with response
-			when (originalMessage.type) {
-				MessageType.APPROVE_REVEAL, MessageType.DISAPPROVE_REVEAL -> Unit // Do nothing
-				MessageType.REQUEST_REVEAL -> {
+			when {
+				originalMessage.type == MessageType.APPROVE_REVEAL
+					|| originalMessage.type == MessageType.DISAPPROVE_REVEAL
+					|| (originalMessage.type == MessageType.REQUEST_MESSAGING && originalMessage.text.isNullOrBlank()) -> Unit // Do nothing
+				originalMessage.type == MessageType.REQUEST_REVEAL -> {
 					// find nearest response
 					val nearestRequestIdentityResponse = getNearestRevealIdentityResponse(originalMessage, originalMessages)
 					if (nearestRequestIdentityResponse != null) {
