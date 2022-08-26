@@ -32,7 +32,7 @@ class RequestOfferViewModel constructor(
 	private val _offer = MutableStateFlow<OfferWithGroup?>(null)
 	val offer = _offer.asStateFlow()
 
-	fun sendRequest(text: String, offerPublicKey: String, offerId: String, onSuccess: suspend () -> Unit) {
+	fun sendRequest(text: String?, offerPublicKey: String, offerId: String, onSuccess: suspend () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_isRequesting.emit(true)
 			val response = chatRepository.askForCommunicationApproval(
