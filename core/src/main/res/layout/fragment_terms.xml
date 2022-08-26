@@ -118,11 +118,10 @@
 			<TextView
 				android:id="@+id/text"
 				android:layout_width="match_parent"
-				android:layout_height="0dp"
+				android:layout_height="wrap_content"
 				android:paddingHorizontal="16dp"
 				android:paddingVertical="40dp"
 				android:textColor="@color/white"
-				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/terms_privacy_radio_group" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
