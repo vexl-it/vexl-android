@@ -448,6 +448,11 @@ class ChatRepositoryImpl constructor(
 			mapper = { },
 			doOnSuccess = {
 				requestedOfferDao.replace(RequestedOfferEntity(offerId = offerId))
+				//trigger
+				val offer = offerDao.getOfferById(offerId = offerId)
+				offer?.let {
+					offerDao.insertOffer(it.offer.copy(isRequested = true))
+				}
 			}
 		)
 	}
