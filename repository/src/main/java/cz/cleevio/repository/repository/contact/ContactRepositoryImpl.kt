@@ -5,7 +5,6 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.util.Patterns
-import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.dao.ContactKeyDao
@@ -24,6 +23,8 @@ import cz.cleevio.network.request.contact.ContactRequest
 import cz.cleevio.network.request.contact.CreateUserRequest
 import cz.cleevio.network.request.contact.DeleteContactRequest
 import cz.cleevio.network.response.contact.ContactLevelApi
+import cz.cleevio.repository.BuildConfig
+import cz.cleevio.repository.BuildConfig.HMAC_PASSWORD
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.contact.*
@@ -174,7 +175,7 @@ class ContactRepositoryImpl constructor(
 		// that means that we have skipped hashing before `not-imported` EP
 		val hashedContacts = contacts.map {
 			if (it.hashedPhoneNumber.isBlank()) {
-				it.copy(hashedPhoneNumber = HmacCryptoLib.digest(HMAC_PASSWORD, it.phoneNumber))
+				it.copy(hashedPhoneNumber = HmacCryptoLib.digest(BuildConfig.HMAC_PASSWORD, it.phoneNumber))
 			} else {
 				it
 			}

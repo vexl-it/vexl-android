@@ -2,13 +2,13 @@ package cz.cleevio.core.base
 
 import android.content.ContentResolver
 import androidx.lifecycle.viewModelScope
-import com.cleevio.vexl.cryptography.HMAC_PASSWORD
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.isPhoneValid
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.BuildConfig
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.contact.Contact
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -57,7 +57,7 @@ open class BaseContactsListViewModel constructor(
 				}
 				//hash all valid numbers and save them
 				.map { contact ->
-					contact.copy(hashedPhoneNumber = HmacCryptoLib.digest(HMAC_PASSWORD, contact.phoneNumber))
+					contact.copy(hashedPhoneNumber = HmacCryptoLib.digest(BuildConfig.HMAC_PASSWORD, contact.phoneNumber))
 				}
 
 			//BE returns list of contacts that user didn't import previously
