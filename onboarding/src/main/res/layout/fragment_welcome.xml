@@ -12,8 +12,10 @@
 		style="@style/Widget.Vexl.CardView"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_margin="8dp"
-		app:layout_constraintBottom_toTopOf="@id/terms_switch_text"
+		android:layout_marginHorizontal="8dp"
+		android:layout_marginTop="35dp"
+		android:layout_marginBottom="8dp"
+		app:layout_constraintBottom_toTopOf="@id/terms_wrapper"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +29,7 @@
 				android:id="@+id/welcome_image"
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				android:layout_marginTop="100dp"
+				android:layout_marginTop="65dp"
 				android:layout_marginBottom="64dp"
 				android:adjustViewBounds="true"
 				android:contentDescription="?content"
@@ -66,32 +68,45 @@
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</com.google.android.material.card.MaterialCardView>
 
-	<TextView
-		android:id="@+id/terms_switch_text"
-		android:layout_width="0dp"
+	<androidx.cardview.widget.CardView
+		android:id="@+id/terms_wrapper"
+		style="@style/Widget.Vexl.CardView"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="32dp"
-		android:layout_marginTop="16dp"
-		android:layout_marginBottom="24dp"
-		android:drawablePadding="20dp"
-		android:textAppearance="@style/TextAppearance.Vexl.Description.Welcome"
-		app:drawableStartCompat="@drawable/ic_notepad"
+		android:layout_margin="8dp"
+		android:backgroundTint="@color/grey_0"
+		app:cardCornerRadius="13dp"
+		app:cardElevation="0dp"
 		app:layout_constraintBottom_toTopOf="@id/welcome_continue_btn"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/welcome_wrapper"
-		tools:text="@string/welcome_terms_agreement" />
-
-	<com.google.android.material.switchmaterial.SwitchMaterial
-		android:id="@+id/terms_switch"
-		style="@style/Widget.Vexl.Switch"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginEnd="38dp"
-		app:layout_constraintBottom_toBottomOf="@id/terms_switch_text"
-		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="1"
-		app:layout_constraintStart_toEndOf="@id/terms_switch_text"
-		app:layout_constraintTop_toTopOf="@id/terms_switch_text" />
+		app:layout_constraintTop_toBottomOf="@id/welcome_wrapper">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="20dp"
+			android:layout_marginVertical="16dp"
+			android:orientation="horizontal">
+
+			<TextView
+				android:id="@+id/terms_switch_text"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_weight="1"
+				android:drawablePadding="20dp"
+				android:textAppearance="@style/TextAppearance.Vexl.Description.Welcome"
+				app:drawableStartCompat="@drawable/ic_notepad"
+				tools:text="@string/welcome_terms_agreement" />
+
+			<com.google.android.material.switchmaterial.SwitchMaterial
+				android:id="@+id/terms_switch"
+				style="@style/Widget.Vexl.Switch"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical" />
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/welcome_continue_btn"
