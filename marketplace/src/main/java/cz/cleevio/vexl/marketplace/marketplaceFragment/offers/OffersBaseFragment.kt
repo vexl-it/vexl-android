@@ -71,11 +71,11 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 		checkMyOffersCount(getOfferType())
 
 		binding.lockedSellBtn.setOnClickListener {
-			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.NewOffer(OfferType.SELL))
+			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.MyOffer(OfferType.SELL))
 		}
 
 		binding.lockedBuyBtn.setOnClickListener {
-			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.NewOffer(OfferType.BUY))
+			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.MyOffer(OfferType.BUY))
 		}
 	}
 

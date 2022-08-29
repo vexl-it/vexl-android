@@ -266,11 +266,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							}
 						}
 
-						is NavMainGraphModel.NavGraph.NewOffer -> {
+						is NavMainGraphModel.NavGraph.MyOfferList -> {
 							binding.bottomNavigation.post {
 								binding.bottomNavigation.findViewById<View>(R.id.nav_marketplace)?.performClick()
 								navController.safeNavigateWithTransition(
-									MarketplaceFragmentDirections.proceedToNewOfferFragment(it.offerType)
+									MarketplaceFragmentDirections.proceedToMyOffersFragment(it.offerType)
 								)
 							}
 						}
