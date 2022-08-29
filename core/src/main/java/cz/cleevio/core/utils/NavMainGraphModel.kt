@@ -1,5 +1,6 @@
 package cz.cleevio.core.utils
 
+import cz.cleevio.core.model.OfferType
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import timber.log.Timber
@@ -20,6 +21,7 @@ class NavMainGraphModel {
 		data class ChatDetail(val inboxKey: String? = null, val senderKey: String? = null) : NavGraph()
 		object ChatRequests : NavGraph()
 		object ChatList : NavGraph()
+		data class NewOffer(val offerType: OfferType) : NavGraph()
 	}
 
 	private val navGraphChannel = Channel<NavGraph>(Channel.RENDEZVOUS)

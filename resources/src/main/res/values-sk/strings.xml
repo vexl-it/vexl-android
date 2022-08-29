@@ -31,9 +31,9 @@
 
     <!-- Terms of Use -->
     <string name="terms_of_use_title">Podmínky použití</string>
-    <string name="terms_of_use_terms_bookmark">Podmínky použití</string>
-    <string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
-    <string name="terms_of_use_markdown"># Just testing markdown
+	<string name="terms_of_use_terms_bookmark">Podmínky použití</string>
+	<string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
+	<string name="terms_of_use_markdown"># Just testing markdown
 
 [link](https://google.com)
 
@@ -41,169 +41,111 @@
 
 * **Name Surname** - work position
 * **Name Surname** - work position</string>
-    <string name="terms_of_use_policy_markdown">1.  **VÍTEJTE**
-
+	<string name="terms_of_use_policy_markdown">{{header}}1. VÍTEJTE{{/header}}
 Rádi bychom Vám poděkovali, že jste se rozhodli používat právě Vexl. Víme, že se už nemůžete dočkat, až se do něj poprvé přihlásíte, ale ještě před tím bychom Vás rádi požádali, abyste nám věnovali několik minut Vašeho času a přečetli si tyto Smluvní podmínky. Víme, že Váš čas je cenný, a proto slibujeme, že naše dokumenty budou vždy maximálně stručné. Pokud souhlasíte se vším, co jste si zde přečetli, můžete se pustit do používání Vexlu.
 
-2. **SMLUVNÍ STRANY**
-
+{{header}}2. SMLUVNÍ STRANY{{/header}}
 Nejprve se pojďme vzájemně představit, abyste věděli, kdo se skrývá pod pojmy "my" a "Vy", které se v tomto dokumentu často vyskytují.
 „My“ jsme obchodní společnost Vexl s.r.o. se sídlem Kundratka 2359/17a, Libeň, 180 00 Praha 8, Česká Republika. Toto by pro Vás pravděpodobně byla dostatečná informace, zákon nám však ukládá, abychom ještě uvedli, že naše identifikační číslo (IČO) je 172 70 642 a že jsme zapsáni v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 369216.
 Pojmem „Vy“ máme na mysli kohokoliv, kdo Vexl jakýmkoliv způsobem používá, nehledě na to, zda jste fyzická nebo právnická osoba. 
 Asi je to samozřejmé, ale Vaše svéprávnost (způsobilost právně jednat) nesmí být omezena do té míry, že by Vám to mohlo bránit v souhlasu s těmito Smluvními podmínkami a používání Vexlu. Pro zjednodušení se zkrátka dohodněme, že pro používání Vexlu Vám musí být alespoň 18 let.
 
-3. **CO JE VEXL?**
-
+{{header}}3. CO JE VEXL?{{/header}}
 Zjednodušeně řečeno, Vexl je služba (jejíž součástí je aplikace), která umožňuje uživatelům se zájmem o nákup nebo prodej Bitcoinu navázat spojení, diskutovat o svých nabídkách a dohodnout se na obchodech. A co víc, Vexl během celého procesu o uživatelích neshromažďuje a neukládá téměř žádné informace. Jakmile se uživatelé propojí, mohou o možném obchodu komunikovat prostřednictvím soukromého zabezpečeného (end-to-end šifrováním) chatu.
-
-**Důležité upozornění: Vexl jako takový neobsahuje žádné nástroje, které by uživatelům umožňovaly provádět transakce Bitcoinu. Zároveň Vexl ani nesleduje, zda mezi některými z našich uživatelů vůbec došlo k obchodům s Bitcoinem. Jediným účelem Vexlu je poskytnout uživatelům bezpečnou a snadno použitelnou platformu, na které se mohou vzájemně vyhledat, kontaktovat a projednat podmínky případného obchodu.**
-
+Důležité upozornění: Vexl jako takový neobsahuje žádné nástroje, které by uživatelům umožňovaly provádět transakce Bitcoinu. Zároveň Vexl ani nesleduje, zda mezi některými z našich uživatelů vůbec došlo k obchodům s Bitcoinem. Jediným účelem Vexlu je poskytnout uživatelům bezpečnou a snadno použitelnou platformu, na které se mohou vzájemně vyhledat, kontaktovat a projednat podmínky případného obchodu.
 Z výše uvedených důvodů také nemůžeme vydávat žádná potvrzení o transakcích mezi uživateli a rozhodně nemůžeme jménem uživatelů vystavovat žádné faktury. Pokud takové potvrzení potřebujete, musíte svůj požadavek sdělit uživateli, se kterým obchodujete.
 
-4. **UŽIVATELSKÝ ÚČET**
-
+{{header}}4. UŽIVATELSKÝ ÚČET{{/header}}
 Abychom zajistili bezpečnost a soukromí Vašeho uživatelského účtu, rozhodli jsme se pro zcela inovativní přístup. Namísto vytváření běžného uživatelského účtu a ukládání všech souvisejících dat na našich serverech jsme se rozhodli, že většina citlivých dat bude uložena lokálně ve Vašem zařízení a že Váš uživatelský účet bude přístupný pouze s pomocí takzvaného privátního klíče, který Vexl vygeneruje a uloží lokálně ve Vašem zařízení při vytvoření uživatelského účtu. To znamená, že Váš účet je přístupný pouze z Vašeho zařízení a jakmile je privátní klíč vymazán, nikdo včetně Vás se k uživatelskému účtu nebude moci přihlásit.
-
 Důležité upozornění: Váš privátní klíč je nezbytný pro přístup k uživatelskému účtu a souvisejícím datům. Pokud ztratíte svůj mobilní telefon, formátujete disk Vašeho mobilního telefonu, odinstalujete aplikaci Vexl nebo se dokonce jen rozhodnete z aplikace Vexl odhlásit, Váš privátní klíč bude ztracen a Váš původní uživatelský účet včetně všech souvisejících dat nebude možné obnovit.
-
 Při vytvoření Vašeho uživatelského účtu ověříme Vaše telefonní číslo zasláním ověřovacího kódu. Souhlasíte s tím, že obdržíte SMS zprávu (od nás nebo od našich externích partnerů) s ověřovacími kódy pro dokončení procesu registrace a potvrzujete, že jste pro tento účel oprávněni dané telefonní číslo používat.
-
 Ačkoli si pro přístup k Vexlu nemusíte nastavovat heslo, důrazně doporučujeme to udělat. Při volbě hesla také doporučujeme nepoužívat znovu hesla používaná v jiných aplikacích. Dobrým nápadem, jak udržet svůj uživatelský účet v bezpečí, může být také častá změna hesla. Pro přístup k aplikaci Vexl si můžete případně také nastavit FaceID.
-
 Uživatelský účet je určen pouze Vám a Vy jste tedy odpovědní za všechny činnosti, které se na něm nebo jeho prostřednictvím odehrávají, proto je důležité, abyste své heslo a zařízení používaná k přístupu k uživatelskému účtu zabezpečili. Tím chráníte nejen sebe, ale i všechny ostatní uživatele Vexlu, kteří nemají možnost zjistit, kdo je skutečně přihlášen k Vašemu uživatelskému účtu.
 
-5. **KONTAKTY UŽIVATELE**
-
+{{header}}5. KONTAKTY UŽIVATELE{{/header}}
 Vexl Vám umožňuje spojit se pouze s Vašimi přáteli (kontakty 1. stupně) nebo s lidmi, se kterými máte společného přítele (kontakty 2. stupně). Proto budete v rámci procesu registrace požádáni o import kontaktních údajů Vašich přátel, buď z adresáře Vašeho mobilního telefonu, nebo z Vašeho uživatelského účtu na Facebooku, aby Vexl mohl porovnat Vaši databázi kontaktů s kontaktními údaji našich současných uživatelů. Vexl přitom nemůže provádět jakékoliv změny v seznamu kontaktů ve Vašem mobilním telefonu nebo na Vašem účtu na Facebooku. Kontaktní údaje poté zůstanou uloženy zašifrované (a pro nás tedy nečitelné) v naší samostatné mikroslužbě určené pouze pro ukládání těchto zašifrovaných seznamů kontaktů.
-
 Důležité upozornění: Stejně jako u ostatních údajů budou kontaktní údaje zašifrovány Vexlem lokálně ve Vašem zařízení a pro nás jsou tedy nečitelné. Vaše kontakty 1. a 2. stupně vyhledáváme výhradně vzájemným porovnáním zašifrovaných dat (hashů), aniž bychom museli znát podkladové kontaktní údaje.
 
-6. **NABÍDKY A CHAT**
 
+{{header}}6. NABÍDKY A CHAT{{/header}}
 Hlavní funkcí Vexlu je zveřejňování nabídek na nákup nebo prodej Bitcoinu a zprostředkování kontaktu mezi uživateli, kteří mají o tyto nabídky zájem. V závislosti na parametrech nabídky je tato viditelná buď pro kontakty 1. stupně nebo pro kontakty 2. stupně. Nabídka je pro dané uživatele zašifrována pomocí jejich veřejných klíčů, takže ji žádný jiný uživatelé nevidí.
-
-**Důležité upozornění: Uživatelé neznají identitu nabízejícího, dokud ji nabízející sám aktivně neprozradí. Vidí však anonymní informace o vzájemném spojení (například kolik mají společných přátel atd.)**
-
+Důležité upozornění: Uživatelé neznají identitu nabízejícího, dokud ji nabízející sám aktivně neprozradí. Vidí však anonymní informace o vzájemném spojení (například kolik mají společných přátel atd.)
 Uživatel může požádat o propojení s uživatelem, který činí nabídku. Pokud uživatel, který nabídku učinil, spojení přijme, zahájí se mezi uživateli chat. V rámci tohoto chatu mohou uživatelé požadovat, aby si navzájem prozradili svou identitu. Toto je zcela dobrovolné a vždy můžete odmítnout. Odhalení identity je nevratné.
-
 Zprávy v rámci chatu jsou zašifrované pomocí veřejných klíčů obou uživatelů, kteří se chatu účastní. Zprávy jsou uloženy lokálně v mobilních telefonech obou uživatelů, kde je lze dešifrovat pomocí jejich soukromých klíčů. Z naší strany zprávy pouze přenášíme a neukládáme je trvale na naše servery (vedle toho i kdybychom je ukládali, nemohli bychom je přečíst, protože jsou zašifrované).
+Důležité upozornění: Zprávy v chatu nejsou z naší strany zálohovány. Po ukončení chatu nelze zprávy obnovit. Pokud se s druhým uživatelem dohodnete na důležitých detailech týkajících se Vašeho obchodu, doporučujeme chat neukončovat, dokud není obchod úspěšně dokončen.
 
-**Důležité upozornění: Zprávy v chatu nejsou z naší strany zálohovány. Po ukončení chatu nelze zprávy obnovit. Pokud se s druhým uživatelem dohodnete na důležitých detailech týkajících se Vašeho obchodu, doporučujeme chat neukončovat, dokud není obchod úspěšně dokončen.**
-
-7. **OSOBNÍ ÚDAJE**
-
+{{header}}7. OSOBNÍ ÚDAJE{{/header}}
 Rádi bychom Vás ubezpečili, že shromažďování Vašich osobních údajů (např. údajů poskytnutých při vytváření uživatelského účtu) v souvislosti s používáním Vexlu je maximálně omezeno. Většina informací se ukládá lokálně a ostatním uživatelům se přenášejí v zašifrované podobě, takže je navíc nemůžeme přečíst ani kdybychom chtěli.
-
 Pokud k nějakému shromažďování, ukládání a nakládání s Vašimi osobními údaji skutečně dojde, bude to vždy transparentně popsáno v samostatném souboru podmínek pro nakládání s osobními údaji uživatelů Vexl (Zásady ochrany osobních údajů Vexl), k souhlasu s nimiž budete v dalším kroku procesu registrace vyzváni.
 
-8. **APLIKACE A LICENCE**
-
+{{header}}8. APLIKACE A LICENCE{{/header}}
 Aplikace Vexl představuje jediný způsob přístupu ke službám Vexl, a je tedy nedílnou součástí Vexlu. Aplikace může být čas od času aktualizována. V takových případech Vás obvykle prostřednictvím vyskakovacího okna v aplikaci informujeme, že je k dispozici nová aktualizace. Před dalším používáním aplikaci musíte vždy aplikaci aktualizovat, aby byla zajištěna její správná funkčnost.
-
 Používání aplikace Vexl se řídí licencí GNU General Public License verze 3 (GPLv3). Mějte prosím na paměti, že aplikaci Vexl nebo její část můžeme licencovat také pod jinou vlastní (např. uzavřenou) licencí. 
-
 Bez ohledu na cokoli uvedené v těchto Smluvních podmínkách si vyhrazujeme vlastnictví všech autorských práv, ochranných známek, log, patentů a dalších práv duševního vlastnictví spojených s Vexlem.
 
-9. **KODEX CHOVÁNÍ**
-
-**Chování vůči ostatním uživatelům**
-
+{{header}}9. KODEX CHOVÁNÍ{{/header}}
+Chování vůči ostatním uživatelům
 Jak už víte, Vexl Vám umožňuje komunikovat s ostatními uživateli. Přestože komunikaci mezi uživateli přenášíme výhradně v zašifrované podobě a nemáme možnost ji kontrolovat, žádáme Vás, abyste zachovávali určité standardy chování. Věříme, že naši uživatelé chápou, co tím máme na mysli, a přestože bychom to rádi nechali tak, zákon nám ukládá, abychom byli konkrétnější, takže si to pojďme říct:
-
-**Nesmíte (i)** zneužívat nebo porušovat práva jiných uživatelů, včetně práv na soukromí, práva na ochranu osobnosti, práva duševního vlastnictví nebo jiná vlastnická práva; **(ii)** posílat jiným uživatelům obsah, který je nezákonný, obscénní, hanlivý, výhružný, zastrašující, obtěžující, nenávistný, rasově nebo etnicky urážlivý, nebo podněcovat k jednání, které by bylo nezákonné nebo jinak nevhodné; **(iii)** zasílat ostatním uživatelům jakékoli nepravdivé nebo zavádějící informace; **(iv)** vydávat se při komunikaci s ostatními uživateli za jiné osoby; nebo **(v)** zasílat ostatním uživatelům viry nebo jiné škodlivé počítačové kódy.
-
-**Chování vůči nám**
-
+Nesmíte (i) zneužívat nebo porušovat práva jiných uživatelů, včetně práv na soukromí, práva na ochranu osobnosti, práva duševního vlastnictví nebo jiná vlastnická práva; (ii) posílat jiným uživatelům obsah, který je nezákonný, obscénní, hanlivý, výhružný, zastrašující, obtěžující, nenávistný, rasově nebo etnicky urážlivý, nebo podněcovat k jednání, které by bylo nezákonné nebo jinak nevhodné; (iii) zasílat ostatním uživatelům jakékoli nepravdivé nebo zavádějící informace; (iv) vydávat se při komunikaci s ostatními uživateli za jiné osoby; nebo (v) zasílat ostatním uživatelům viry nebo jiné škodlivé počítačové kódy.
+Chování vůči nám
 Současně Vás žádáme, abyste k nám byli ohleduplní a nepoužívali Vexl k nezákonným aktivitám nebo způsobem, který by nás mohl poškodit. Opět bychom to nejraději nechali takto, ale zákon nám ukládá, abychom byli konkrétnější, takže si opět pojďme uvést dostatečné podrobnosti:
-
-**Nesmíte (i)** používat Vexl jinak než k zákonným, oprávněným a přijatelným účelům v souladu s těmito Smluvními podmínkami, **(ii)** zpřístupňovat, používat, upravovat, distribuovat nebo zneužít Vexl způsobem, který by nás mohl poškodit 
-(šíření virů nebo jiného nežádoucího či škodlivého obsahu, pokus o získání neoprávněného přístupu do našich systémů, narušení integrity Vexl atd.), **(iii)** zneužívat nebo porušovat práva naší společnosti, včetně práv duševního vlastnictví nebo jiných vlastnických práv. 
-
-**Porušení prohlášení**
-
+Nesmíte (i) používat Vexl jinak než k zákonným, oprávněným a přijatelným účelům v souladu s těmito Smluvními podmínkami, (ii) zpřístupňovat, používat, upravovat, distribuovat nebo zneužít Vexl způsobem, který by nás mohl poškodit 
+(šíření virů nebo jiného nežádoucího či škodlivého obsahu, pokus o získání neoprávněného přístupu do našich systémů, narušení integrity Vexl atd.), (iii) zneužívat nebo porušovat práva naší společnosti, včetně práv duševního vlastnictví nebo jiných vlastnických práv. 
+Porušení prohlášení
 Pokud v těchto Smluvních podmínkách něco prohlásíte nebo s něčím souhlasíte, bereme Vás za slovo, takže pokud se později dozvíme, že některé z Vašich prohlášení podle těchto Smluvních podmínek bylo nepravdivé, budeme to považovat za porušení těchto Smluvních podmínek.
 
-10. **HLÁŠENÍ PORUŠENÍ**
-
-Pokud zjistíte, že jakýkoli obsah v rámci Vexlu porušuje Vaše práva duševního vlastnictví, osobnostní práva (včetně práva na soukromí a práva na zachycení a šíření podoby) nebo může být považován za jakékoli jiné porušení platných právních předpisů nebo těchto Podmínek služby, ohlaste, prosím, toto porušení prostřednictvím e-mailové adresy: [support@vexl.it](mailto:support@vexl.it).
-
+{{header}}10. HLÁŠENÍ PORUŠENÍ{{/header}}
+Pokud zjistíte, že jakýkoli obsah v rámci Vexlu porušuje Vaše práva duševního vlastnictví, osobnostní práva (včetně práva na soukromí a práva na zachycení a šíření podoby) nebo může být považován za jakékoli jiné porušení platných právních předpisů nebo těchto Podmínek služby, ohlaste, prosím, toto porušení prostřednictvím e-mailové adresy: support@vexl.it. 
 Můžeme si vyžádat další informace a/nebo podklady (například Vaše osobní údaje a důkazy o porušení) potřebné k posouzení Vašeho oznámení a v takovém případě souhlasíte s tím, že budete poskytovat plnou součinnost s našimi dalšími požadavky. Je samozřejmostí, že jakákoliv ohlášení můžeme posoudit pouze v případě, že budete plně spolupracovat a poskytnete nám veškeré požadované podklady a/nebo informace. 
-
 Vezměte prosím na vědomí, že i v případě, že k porušení dojde a je ohlášeno, máme jen velmi omezené nástroje k odstranění jakéhokoli obsahu v rámci Vexlu, protože obsah je uložen lokálně v zařízeních uživatelů (a my je rozhodně nemůžeme procházet a hledat v nich jakýkoli škodlivý obsah; obsah je navíc zašifrovaný) a je mezi uživateli přenášen pouze v zašifrované podobě (a dešifrovat jej mohou pouze uživatelé, kterým je určen, nikoli my).
 
-11. **DOSTUPNOST**
+{{header}}11. DOSTUPNOST{{/header}}
+Vždy se snažíme zajistit nepřetržitý a nepřerušovaný provoz našich služeb, abyste měli k Vexlu přístup a mohli jej kdykoli užívat. Nicméně z důvodu údržby, oprav, výjimečných výpadků nebo z jiných důvodů se může stát, že Vexl nebude dostupný. Proto nemůžeme vždy zaručit zcela nepřetržitou dostupnost. 
 
-Vždy se snažíme zajistit nepřetržitý a nepřerušovaný provoz našich služeb, abyste měli k Vexlu přístup a mohli jej kdykoli užívat. Nicméně z důvodu údržby, oprav, výjimečných výpadků nebo z jiných důvodů se může stát, že Vexl nebude dostupný. Proto nemůžeme vždy zaručit zcela nepřetržitou dostupnost.
-
-12. **ODPOVĚDNOST A OMEZENÍ ZÁRUKY**
-
+{{header}}12. ODPOVĚDNOST A OMEZENÍ ZÁRUKY{{/header}}
 V krátkosti:
-- Vexl je Vám poskytován na as is a where available bázi bez jakýchkoli záruk.
-- Neodpovídáme za žádné škody vzniklé v souvislosti s Vaším používáním nebo nemožností používat Vexl.
-- Neneseme odpovědnost za porušení podmínek dohodnutých mezi uživateli prostřednictvím Vexl.
-
+Vexl je Vám poskytován na as is a where available bázi bez jakýchkoli záruk.
+Neodpovídáme za žádné škody vzniklé v souvislosti s Vaším používáním nebo nemožností používat Vexl.
+Neneseme odpovědnost za porušení podmínek dohodnutých mezi uživateli prostřednictvím Vexl.
 Podrobněji:
-
-Vexl jsme vytvořili a provozujeme s přiměřenou úrovní odbornosti a péče a doufáme, že se Vám jeho užívání bude líbit; nicméně mějte na paměti, že je vám stále nabízen tak, jak je (as is) a bez garance dostupnosti (where available), a proto se výslovně zříkáme jakýchkoli záruk, výslovných nebo předpokládaných, které se k tomuto vztahují.
-
+Vexl jsme vytvořili a provozujeme s přiměřenou úrovní odbornosti a péče a doufáme, že se Vám jeho užívání bude líbit; nicméně mějte na paměti, že je vám stále nabízen tak, jak je (as is) a bez garance dostupnosti (where available), a proto se výslovně zříkáme jakýchkoli záruk, výslovných nebo předpokládaných, které se k tomuto vztahují. 
 Za žádných okolností neneseme odpovědnost za jakékoli přímé, nepřímé, zvláštní, následné, sankční nebo jakékoli jiné škody a náklady, zahrnující, mimo jiné, ušlý zisk, ztrátu příjmů nebo ztrátu obchodní příležitosti, které vznikly v důsledku nebo v souvislosti s Vaším přístupem a užíváním nebo nemožností přístupu a užívání Vexlu. 
-
 Dále se tímto v plném rozsahu přípustném dle jakýchkoliv platných právních předpisů vzdáváte jakýchkoliv nároků na náhradu škody, které byste vůči nám mohli mít v souvislosti s užíváním Vexlu nebo nemožností jej užívat. 
-
 Výslovně se vzdáváte nároku na náhradu škody vzniklé v souvislosti s jakýmikoliv obchody sjednanými s jinými uživateli Vexl. Nesete výhradní odpovědnost za údaje a poplatky mobilního operátora a daně spojené se zařízeními, na kterých používáte Vexl.
-
 Pokud budou výše uvedená omezení záruk a odpovědnosti shledána neplatnými nebo neúčinnými nebo jinak nevymahatelnými, souhlasíte s tím, že naše celková odpovědnost za jakékoli nároky vyplývající z těchto Smluvních podmínek nebo s nimi související je omezena v nejvyšším rozsahu povoleném příslušnými právními předpisy.
 
-13. FINANČNÍ RIZIKA
-
+{{header}}13. FINANČNÍ RIZIKA{{/header}}
 I když nám do obchodování mezi našimi uživateli nic není, jak jsme v těchto Smluvních podmínkách opakovaně uvedli, přesto se cítíme povinni poskytnout Vám poučení o možných rizicích souvisejících s kryptoměnami (abychom byli upřímní, spíše nám to ukládá zákon).
-
 Takže popořadě: V žádném případě nemohou žádné informace v rámci Vexlu představovat finanční, investiční nebo odborné poradenství, pokud to není výslovně uvedeno. Za svá rozhodnutí týkající se ukládání, nákupu, prodeje, směny, zasílání a přijímání Bitcoinu nesete výhradní odpovědnost Vy a vždy musíte před pořízením Bitcoinu zvážit svou finanční situaci a související rizika.
-
 Tímto prohlašujete, že rozumíte všem rizikům spojeným s nákupem, prodejem a směnou Bitcoinu, včetně skutečnosti, že transakce s Bitcoinem jsou nevratné. Prohlašujete, že chápete, že hodnota Bitcoinu může být extrémně volatilní a že jeho směnný kurz vůči jiným kryptoměnám nebo fiat měnám může výrazně kolísat, což může vést k výraznému a náhlému snížení hodnoty Vašeho majetku.
-
 Tímto berete na vědomí, že nesete výhradní odpovědnost za získání potřebných informací o daňových nebo podobných povinnostech, které vzniknou v souvislosti s jakýmikoliv uskutečněnými transakcemi, a za srážku, výběr, vykazování a odvádění správných částek daně příslušným orgánům.
-
 Berete na vědomí, že v těchto Smluvních podmínkách nejsou uvedena všechna rizika související s užíváním kryptoměn.
+Důležité upozornění: Vexl pro pohodlí uživatelů zobrazuje aktuální cenu Bitcoinu. Nicméně žádná všeobecně uznávaná cena Bitcoinu neexistuje a ceny se na různých kryptoměnových burzách obvykle liší. Vexl tedy ukazuje průměrnou cenu Bitcoinu poskytovanou platformou CoinGecko (https://coingecko.com). 
 
-**Důležité upozornění: Vexl pro pohodlí uživatelů zobrazuje aktuální cenu Bitcoinu. Nicméně žádná všeobecně uznávaná cena Bitcoinu neexistuje a ceny se na různých kryptoměnových burzách obvykle liší. Vexl tedy ukazuje průměrnou cenu Bitcoinu poskytovanou platformou CoinGecko ([https://coingecko.com](https://coingecko.com)).**
-
-14. **UKONČENÍ**
-
+{{header}}14. UKONČENÍ{{/header}}
 Vždy nás bude mrzet, že odcházíte, ale pokud se rozhodnete Vexl dále nevyužívat, budeme Vaše rozhodnutí respektovat. Váš uživatelský účet lze smazat poměrně snadno, a to klepnutím na tlačítko "odhlásit" umístěné v uživatelském rozhraní. Po odhlášení již nelze obnovit žádná data související s původním uživatelským účtem.
-
-**Důležité upozornění: Pokud se rozhodnete odhlásit, buďte opatrní, protože odhlášením dojde k faktickému vymazání Vašeho uživatelského účtu. Taková akce je nevratná, takže pokud se v budoucnu rozhodnete Vexl znovu používat, nebudete moci obnovit žádná data spojená s Vaším původním uživatelským účtem a budete muset projít stejným procesem registrace jako jakýkoliv nový uživatel.**
-
+Důležité upozornění: Pokud se rozhodnete odhlásit, buďte opatrní, protože odhlášením dojde k faktickému vymazání Vašeho uživatelského účtu. Taková akce je nevratná, takže pokud se v budoucnu rozhodnete Vexl znovu používat, nebudete moci obnovit žádná data spojená s Vaším původním uživatelským účtem a budete muset projít stejným procesem registrace jako jakýkoliv nový uživatel. 
 Vyhrazujeme si také výslovně právo pozastavit nebo trvale odepřít přístup k Vexlu uživatelům nacházejícím se v určitých zemích nebo státním příslušníkům určitých zemí, a to především z regulatorních důvodů (Vaši polohu nebo státní příslušnost můžeme identifikovat také nepřímo, například podle kódu země, appstoru nebo Vašeho telefonního čísla).
-
 A konečně, vyhrazujeme si také právo zcela ukončit činnost Vexlu. V takovém případě Vás upozorníme alespoň třicet (30) dní předem. Po uplynutí této lhůty budeme mít možnost ukončit provoz Vexlu a vy tak již nebudete mít možnost přístupu ke svému uživatelskému účtu.
 
-15. **OZNÁMENÍ**
+{{header}}15. OZNÁMENÍ{{/header}}
+Vaše zprávy nám: Můžete nás kontaktovat elektronicky prostřednictvím nástrojů dostupných na našich webových stránkách nebo prostřednictvím e-mailové adresy support@vexl.it. Vaše zpráva je považována za doručenou, okamžikem, kdy Vám potvrdíme její doručení, což se vždy snažíme udělat okamžitě.
+Naše zprávy Vám: Nechceme Vás příliš obtěžovat, ale občas Vás možná i tak budeme muset kontaktovat. V takovém případě použijeme push notifikaci, která se Vám zobrazí po přihlášení k Vašemu uživatelskému účtu.
 
-**Vaše zprávy nám:** Můžete nás kontaktovat elektronicky prostřednictvím nástrojů dostupných na našich webových stránkách nebo prostřednictvím e-mailové adresy [support@vexl.it](mailto:support@vexl.it). Vaše zpráva je považována za doručenou, okamžikem, kdy Vám potvrdíme její doručení, což se vždy snažíme udělat okamžitě.
-
-**Naše zprávy Vám:** Nechceme Vás příliš obtěžovat, ale občas Vás možná i tak budeme muset kontaktovat. V takovém případě použijeme push notifikaci, která se Vám zobrazí po přihlášení k Vašemu uživatelskému účtu.
-
-16. **ROZHODNÉ PRÁVO**
-
+{{header}}17. ROZHODNÉ PRÁVO{{/header}}
 Vaše užívání Vexlu, jakož i tyto Smluvní podmínky a veškeré související záležitosti, včetně sporů mezi Vámi a námi, se řídí právním řádem České republiky, a to bez ohledu na kolizní pravidla.
-
-**Pouze pro spotřebitele:** Jsme povinni Vás informovat, že tato doložka o volbě práva Vás nezbavuje, pokud jste spotřebitel, práv vyplývajících z kogentních ustanovení práva země Vašeho obvyklého bydliště v případě, že by se toto právo jinak použilo podle čl. 6 odst. 1 nařízení Evropského parlamentu a Rady (ES) č. 593/2008 ze dne 17. června 2008 o právu rozhodném pro smluvní závazkové vztahy 
+Pouze pro spotřebitele: Jsme povinni Vás informovat, že tato doložka o volbě práva Vás nezbavuje, pokud jste spotřebitel, práv vyplývajících z kogentních ustanovení práva země Vašeho obvyklého bydliště v případě, že by se toto právo jinak použilo podle čl. 6 odst. 1 nařízení Evropského parlamentu a Rady (ES) 
+č. 593/2008 ze dne 17. června 2008 o právu rozhodném pro smluvní závazkové vztahy 
 (Řím I).
 
-17. **ŘEŠENÍ SPORŮ**
-
+{{header}}18. ŘEŠENÍ SPORŮ{{/header}}
 Vždy se snažíme vyřešit jakýkoliv problém smírně a žádáme Vás o totéž. Proto souhlasíte s tím, že nás budete informovat o všech sporech, které vzniknou na základě těchto Smluvních podmínek, nebo v souvislosti s nimi, a souhlasíte s tím, že než se obrátíte na soud, pokusíte se vždy o mimosoudní řešení sporu. 
-
 Někdy však mimosoudní řešení sporu není prostě možné. V takovém případě budou veškeré spory, které se jakýmkoliv způsobem týkají těchto Smluvních podmínek, s konečnou platností řešeny před soudem České republiky příslušným podle místa sídla naší společnosti.
+Pouze pro spotřebitele: Jsme povinni Vás informovat, že v případě jakéhokoliv sporu máte právo se obrátit ohledně možnosti mimosoudního řešení sporu na Český telekomunikační úřad, se sídlem Sokolovská 58/219, Praha 9, IČO: 701 06 975, prostřednictvím webové stránky https://www.ctu.eu/out-court-dispute-resolution, pro spory týkající se elektronických komunikací, a dále na Českou obchodní inspekci, se sídlem Štěpánská 567/15, 120 00 Praha 2, IČO: 000 20 869, prostřednictvím webové stránky https://adr.coi.cz/cs, v případě jakýchkoliv jiných sporů. Můžete také využít platformu pro mimosoudní řešení sporů, umístěnou na webových stránkách http://ec.europa.eu/consumer/odr. 
 
-**Pouze pro spotřebitele:** Jsme povinni Vás informovat, že v případě jakéhokoliv sporu máte právo se obrátit ohledně možnosti mimosoudního řešení sporu na Český telekomunikační úřad, se sídlem Sokolovská 58/219, Praha 9, IČO: 701 06 975, prostřednictvím webové stránky [https://www.ctu.eu/out-court-dispute-resolution](https://www.ctu.eu/out-court-dispute-resolution), pro spory týkající se elektronických komunikací, a dále na Českou obchodní inspekci, se sídlem Štěpánská 567/15, 120 00 Praha 2, IČO: 000 20 869, prostřednictvím webové stránky [https://adr.coi.cz/cs](https://adr.coi.cz/cs), v případě jakýchkoliv jiných sporů. Můžete také využít platformu pro mimosoudní řešení sporů, umístěnou na webových stránkách [http://ec.europa.eu/consumer/odr](http://ec.europa.eu/consumer/odr). 
-
-18. **ZMĚNY**
-
-**Provozovatel:** Souhlasíte s jakoukoliv případnou budoucí změnou provozovatele Vexl podle těchto Smluvních podmínek (postoupení smlouvy založené těmito Smluvními podmínkami). V případě takové změny Vás budeme vždy informovat.
-
-**Smluvní podmínky:** Tyto Smluvní podmínky nebo další podmínky, které se vztahují na Vexl (například Zásady ochrany osobních údajů), můžeme čas od času změnit nebo doplnit a pokud tak učiníme, budeme Vás muset požádat, abyste si je znovu přečetli a souhlasili s nimi. Uvědomujeme si, že je to pro Vás nepohodlné, a proto slibujeme, že to nebudeme dělat příliš často. Vaše další užívání Vexlu potvrzuje Váš souhlas s aktualizovanými Smluvními podmínkami.</string>
+{{header}}19. ZMĚNY{{/header}}
+Provozovatel: Souhlasíte s jakoukoliv případnou budoucí změnou provozovatele Vexl podle těchto Smluvních podmínek (postoupení smlouvy založené těmito Smluvními podmínkami). V případě takové změny Vás budeme vždy informovat.
+Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vztahují na Vexl (například Zásady ochrany osobních údajů), můžeme čas od času změnit nebo doplnit a pokud tak učiníme, budeme Vás muset požádat, abyste si je znovu přečetli a souhlasili s nimi. Uvědomujeme si, že je to pro Vás nepohodlné, a proto slibujeme, že to nebudeme dělat příliš často. Vaše další užívání Vexlu potvrzuje Váš souhlas s aktualizovanými Smluvními podmínkami.</string>
 
     <!-- Register Phone -->
     <string name="init_phone_title">Zadej své telefonní číslo</string>
@@ -223,7 +165,7 @@ Někdy však mimosoudní řešení sporu není prostě možné. V takovém pří
     <string name="avatar_title">Jak vypadáš?</string>
     <string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí.</string>
     <string name="avatar_welcome">Nazdar, %s!</string>
-    <string name="avatar_continue">Pokračovat</string>
+	<string name="avatar_continue">Pokračovat</string>
     <string name="verify_phone_done_title">Telefon ověřen.\nČas nastavit tvůj profil.</string>
     <string name="image_picker_camera">Foťák</string>
     <string name="image_picker_gallery">Knihovna</string>
@@ -355,59 +297,59 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="marketplace_currency_3_month">3 měs</string>
     <string name="marketplace_currency_6_month">6 měs</string>
     <string name="marketplace_currency_1_year">1 rok</string>
-    <string name="marketplace_buy">Koupit</string>
-    <string name="marketplace_sell">Prodat</string>
-    <string name="marketplace_my_offers">Moje nabídky</string>
-    <string name="marketplace_detail_friend_first">Přítel</string>
-    <string name="marketplace_detail_friend_second">Přítel přítele</string>
-    <string name="marketplace_detail_user_sell">%s prodává</string>
-    <string name="marketplace_detail_user_buy">%s nakupuje</string>
-    <string name="marketplace_detail_up_to">Max</string>
-    <string name="marketplace_detail_payment">Platba</string>
-    <string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
-    <string name="offer_request">Žádost</string>
-    <string name="offer_requested">Žádost poslána</string>
-    <string name="offer_edit_sell_title">Moje nabídky prodeje</string>
-    <string name="offer_edit_buy_title">Moje poptávky nákupu</string>
-    <string name="offer_create_sell_title">Nová nabídka prodeje</string>
-    <string name="offer_create_buy_title">Nová poptávka nákupu</string>
-    <string name="offer_to_sell">K prodeji</string>
-    <string name="offer_to_buy">K nákupu</string>
-    <string name="offer_active_count">%s aktivních nabídek</string>
-    <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
-    <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
-    <string name="offer_my_offer">Moje nabídka</string>
-    <string name="offer_edit">Upravit nabídku</string>
-    <string name="offer_added">Přidáno %s</string>
+	<string name="marketplace_buy">Koupit</string>
+	<string name="marketplace_sell">Prodat</string>
+	<string name="marketplace_my_offers">Moje nabídky</string>
+	<string name="marketplace_detail_friend_first">Přítel</string>
+	<string name="marketplace_detail_friend_second">Přítel přítele</string>
+	<string name="marketplace_detail_user_sell">%s prodává</string>
+	<string name="marketplace_detail_user_buy">%s nakupuje</string>
+	<string name="marketplace_detail_up_to">Max</string>
+	<string name="marketplace_detail_payment">Platba</string>
+	<string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
+	<string name="offer_request">Žádost</string>
+	<string name="offer_requested">Žádost poslána</string>
+	<string name="offer_edit_sell_title">Moje nabídky prodeje</string>
+	<string name="offer_edit_buy_title">Moje poptávky nákupu</string>
+	<string name="offer_create_sell_title">Nová nabídka prodeje</string>
+	<string name="offer_create_buy_title">Nová poptávka nákupu</string>
+	<string name="offer_to_sell">K prodeji</string>
+	<string name="offer_to_buy">K nákupu</string>
+	<string name="offer_active_count">%s aktivních nabídek</string>
+	<string name="offer_sort_newest">Seřazeno od nejnovějších</string>
+	<string name="offer_sort_oldest">Seřazeno od nejstarších</string>
+	<string name="offer_my_offer">Moje nabídka</string>
+	<string name="offer_edit">Upravit nabídku</string>
+	<string name="offer_added">Přidáno %s</string>
 
-    <!-- Offer -->
-    <string name="error_missing_offer_description">Chýba popis</string>
-    <string name="error_missing_offer_location">Chýba lokácia</string>
-    <string name="error_missing_offer_payment_method">Chýba spôsob platby</string>
-    <string name="error_missing_offer_price_trigger">Chýba spúšť ceny</string>
-    <string name="error_missing_offer_type">Chýba typ siete</string>
-    <string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
-    <string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
+	<!-- Offer -->
+	<string name="error_missing_offer_description">Chýba popis</string>
+	<string name="error_missing_offer_location">Chýba lokácia</string>
+	<string name="error_missing_offer_payment_method">Chýba spôsob platby</string>
+	<string name="error_missing_offer_price_trigger">Chýba spúšť ceny</string>
+	<string name="error_missing_offer_type">Chýba typ siete</string>
+	<string name="error_missing_offer_friend_level">Chýbajúca úroveň priateľov</string>
+	<string name="error_invalid_offer_delete_trigger">Neplatný čas na zmazanie ponuky</string>
 
-    <!-- Filters -->
-    <string name="filter_title">Filtr</string>
-    <string name="filter_apply">Použít filtr</string>
-    <string name="filter_offers">Filtrovat nabídky</string>
-    <string name="widget_fee_without">Bez poplatku</string>
-    <string name="widget_fee_ok">S poplatkem</string>
-    <string name="widget_fee_percent">%s%%</string>
-    <string name="widget_location_online">Online</string>
-    <string name="widget_location_in_person">Pouze osobně</string>
-    <string name="widget_trigger_price_title">Aktivní při ceně</string>
-    <string name="widget_trigger_title">Spouštěče</string>
-    <string name="widget_trigger_price_below">Pod</string>
-    <string name="widget_trigger_price_above">Nad</string>
-    <string name="widget_trigger_price_curr_crypto_price">právě teď 1 BTC = $%f</string>
-    <string name="widget_trigger_delete_title">Smazat nabídku za</string>
-    <string name="widget_trigger_delete_timeframe">Časové rozmezí</string>
-    <string name="widget_trigger_delete_days">Dnů</string>
-    <string name="widget_trigger_delete_weeks">Týdnů</string>
-    <string name="widget_trigger_delete_months">Měsíců</string>
+	<!-- Filters -->
+	<string name="filter_title">Filtr</string>
+	<string name="filter_apply">Použít filtr</string>
+	<string name="filter_offers">Filtrovat nabídky</string>
+	<string name="widget_fee_without">Bez poplatku</string>
+	<string name="widget_fee_ok">S poplatkem</string>
+	<string name="widget_fee_percent">%s%%</string>
+	<string name="widget_location_online">Online</string>
+	<string name="widget_location_in_person">Pouze osobně</string>
+	<string name="widget_trigger_price_title">Aktivní při ceně</string>
+	<string name="widget_trigger_title">Spouštěče</string>
+	<string name="widget_trigger_price_below">Pod</string>
+	<string name="widget_trigger_price_above">Nad</string>
+	<string name="widget_trigger_price_curr_crypto_price">právě teď 1 BTC = $%f</string>
+	<string name="widget_trigger_delete_title">Smazat nabídku za</string>
+	<string name="widget_trigger_delete_timeframe">Časové rozmezí</string>
+	<string name="widget_trigger_delete_days">Dnů</string>
+	<string name="widget_trigger_delete_weeks">Týdnů</string>
+	<string name="widget_trigger_delete_months">Měsíců</string>
     <string name="widget_offer_state_pause">Pauza</string>
     <string name="widget_offer_state_activate">Aktivovat</string>
     <string name="widget_offer_state_delete">Smazat</string>
@@ -445,57 +387,57 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="currency_eur">EUR</string>
     <string name="currency_czk">CZK</string>
 
-    <!-- Offer Request -->
-    <string name="request_title">Nabídka</string>
-    <string name="request_title_loading">Odesílám</string>
-    <string name="request_text_hint">např. pojď zavexlit, kámo!</string>
-    <string name="request_button">Odeslat žádost</string>
-    <string name="request_common_friends">%d společných přátel</string>
-    <string name="request_common_friends_empty_state">Nemáte společné přátele</string>
-    <string name="error_missing_offer_public_key">Chýba verejný kľúč</string>
-    <string name="error_missing_offer_request_message">Chýba správa požiadavky</string>
-    <string name="error_missing_offer_id">Chýba ID ponuky</string>
-    <string name="offer_request_sent_successfully">Žiadosť bola úspešne odoslaná</string>
+	<!-- Offer Request -->
+	<string name="request_title">Nabídka</string>
+	<string name="request_title_loading">Odesílám</string>
+	<string name="request_text_hint">např. pojď zavexlit, kámo!</string>
+	<string name="request_button">Odeslat žádost</string>
+	<string name="request_common_friends">%d společných přátel</string>
+	<string name="request_common_friends_empty_state">Nemáte společné přátele</string>
+	<string name="error_missing_offer_public_key">Chýba verejný kľúč</string>
+	<string name="error_missing_offer_request_message">Chýba správa požiadavky</string>
+	<string name="error_missing_offer_id">Chýba ID ponuky</string>
+	<string name="offer_request_sent_successfully">Žiadosť bola úspešne odoslaná</string>
 
-    <!-- Chat -->
-    <string name="chat_main_title">Chat</string>
-    <string name="chat_filter_all">Vše</string>
-    <string name="chat_filter_buyers">Kupující</string>
-    <string name="chat_filter_sellers">Prodávající</string>
-    <string name="chat_message_prefix">já:</string>
+	<!-- Chat -->
+	<string name="chat_main_title">Chat</string>
+	<string name="chat_filter_all">Vše</string>
+	<string name="chat_filter_buyers">Kupující</string>
+	<string name="chat_filter_sellers">Prodávající</string>
+	<string name="chat_message_prefix">já:</string>
 
-    <!-- Chat requests -->
-    <string name="chat_request_main_title">%s Žádosti</string>
-    <string name="chat_request_accept">Přijmout</string>
-    <string name="chat_request_decline">Odmítnout</string>
-    <string name="chat_request_my_offer">Moje nabídka</string>
+	<!-- Chat requests -->
+	<string name="chat_request_main_title">%s Žádosti</string>
+	<string name="chat_request_accept">Přijmout</string>
+	<string name="chat_request_decline">Odmítnout</string>
+	<string name="chat_request_my_offer">Moje nabídka</string>
 
-    <!-- Chat messaging -->
-    <string name="chat_btns_reveal_identity">Odhalit identitu</string>
-    <string name="chat_btns_my_offer">Moje nabídka</string>
-    <string name="chat_btns_common_friends">Společní přátelé</string>
-    <string name="chat_common_friends_facebook_contact">Přes Facebook</string>
-    <string name="chat_btns_delete_chat">Vymazat chat</string>
-    <string name="chat_btns_block_user">Zablokovat uživatele</string>
-    <string name="chat_message_input_placeholder">Napiš něco...</string>
-    <string name="chat_delete_chat_title">Vymazat chat?</string>
-    <string name="chat_delete_chat_description">Dovexlováno? Chat uzavři až po dokončení transakce, uzavřením se smaže celá historie chatu.</string>
-    <string name="chat_delete_chat_back">Zpět</string>
-    <string name="chat_delete_chat_delete">Vymazat chat</string>
-    <string name="chat_delete_chat_confirm_title">Určitě?</string>
-    <string name="chat_delete_chat_confirm_description">Tento krok nelze vrátit zpět. Určitě chceš vymazat chat?</string>
-    <string name="chat_delete_chat_confirm_back">Ne</string>
-    <string name="chat_delete_chat_confirm_action">Ano, chci</string>
-    <string name="chat_block_user_title">Zablokovat napořád?</string>
-    <string name="chat_block_user_description">Opravdu chceš uživatele zablokovat? Tento krok nejde vrátit zpět. Dobře si to rozmysli.</string>
-    <string name="chat_block_user_back">Ne</string>
-    <string name="chat_block_user_block">Ano, chci</string>
-    <string name="chat_block_user_confirm_title">Určitě?</string>
-    <string name="chat_block_user_confirm_description">Opravdu chceš uživatele zablokovat? Tento krok nejde vrátit zpět. Dobře si to rozmysli.</string>
-    <string name="chat_block_user_confirm_nope">Ne</string>
-    <string name="chat_block_user_confirm_action">Ano, chci</string>
-    <string name="chat_message_conversation_request_accepted">Konverzace zahájena</string>
-    <string name="chat_message_identity_reveal_header">Žádost o odhalení</string>
+	<!-- Chat messaging -->
+	<string name="chat_btns_reveal_identity">Odhalit identitu</string>
+	<string name="chat_btns_my_offer">Moje nabídka</string>
+	<string name="chat_btns_common_friends">Společní přátelé</string>
+	<string name="chat_common_friends_facebook_contact">Přes Facebook</string>
+	<string name="chat_btns_delete_chat">Vymazat chat</string>
+	<string name="chat_btns_block_user">Zablokovat uživatele</string>
+	<string name="chat_message_input_placeholder">Napiš něco...</string>
+	<string name="chat_delete_chat_title">Vymazat chat?</string>
+	<string name="chat_delete_chat_description">Dovexlováno? Chat uzavři až po dokončení transakce, uzavřením se smaže celá historie chatu.</string>
+	<string name="chat_delete_chat_back">Zpět</string>
+	<string name="chat_delete_chat_delete">Vymazat chat</string>
+	<string name="chat_delete_chat_confirm_title">Určitě?</string>
+	<string name="chat_delete_chat_confirm_description">Tento krok nelze vrátit zpět. Určitě chceš vymazat chat?</string>
+	<string name="chat_delete_chat_confirm_back">Ne</string>
+	<string name="chat_delete_chat_confirm_action">Ano, chci</string>
+	<string name="chat_block_user_title">Zablokovat napořád?</string>
+	<string name="chat_block_user_description">Opravdu chceš uživatele zablokovat? Tento krok nejde vrátit zpět. Dobře si to rozmysli.</string>
+	<string name="chat_block_user_back">Ne</string>
+	<string name="chat_block_user_block">Ano, chci</string>
+	<string name="chat_block_user_confirm_title">Určitě?</string>
+	<string name="chat_block_user_confirm_description">Opravdu chceš uživatele zablokovat? Tento krok nejde vrátit zpět. Dobře si to rozmysli.</string>
+	<string name="chat_block_user_confirm_nope">Ne</string>
+	<string name="chat_block_user_confirm_action">Ano, chci</string>
+	<string name="chat_message_conversation_request_accepted">Konverzace zahájena</string>
+	<string name="chat_message_identity_reveal_header">Žádost o odhalení</string>
     <string name="chat_message_identity_reveal_subheader">Pojďme se odhalit!</string>
     <string name="chat_message_identity_reveal_request_sent">Žádost o odhalení odeslána</string>
     <string name="chat_message_identity_reveal_request">Žádost o odhalení</string>
@@ -550,16 +492,21 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="faq_screen_four_subtitle">One challenge with truly anonymous communications systems like Vexl is that sometimes you do need to verify the identity of the person you’re talking to! In cases like these, it’s best to use a secure secondary channel of communication to confirm with the other person that you’re both who you say you are.</string>
     <string name="faq_screen_five_title">How can I ensure that my communication and trades are private and encrypted? </string>
     <string name="faq_screen_five_subtitle">Vexl is open source - anyone can look for any backdoor or malicious intentions. Also, here you can look at the report from an independent Security Audit . </string>
-    <string name="faq_screen_six_title">How can you ensure that my data is protected?</string>
-    <string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
-    <string name="faq_screen_seven_title">How do I contact Vexl?</string>
-    <string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
-    <string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
-    <string name="faq_screen_seven_subtitle_2">support@vexl.it.</string>
-    <string name="faq_screen_seven_subtitle_3"> For a private comms, you can also send us an e2ee mail.\n\nOr you can meet us during your next P2P trade! 😻</string>
+	<string name="faq_screen_six_title">How can you ensure that my data is protected?</string>
+	<string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
+	<string name="faq_screen_seven_title">How do I contact Vexl?</string>
+	<string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
+	<string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
+	<string name="faq_screen_seven_subtitle_2">support@vexl.it.</string>
+	<string name="faq_screen_seven_subtitle_3"> For a private comms, you can also send us an e2ee mail.\n\nOr you can meet us during your next P2P trade! 😻</string>
 
-    <!-- Permissions -->
-    <string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
+	<!-- Permissions -->
+	<string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
 
-    <!-- Locked Screen -->
+	<!-- Locked Screen -->
+	<string name="locked_screen_title">Marketplace is just warming up.\nWait for the full experience.</string>
+	<string name="locked_screen_subtitle">Create your offer today</string>
+	<string name="locked_screen_sell">I\'m selling</string>
+	<string name="locked_screen_buy">I\'m buying</string>
+	<string name="locked_screen_offers">Offer</string>
 </resources>

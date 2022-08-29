@@ -378,6 +378,20 @@
 		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Vexl.BottomButton</item>
 	</style>
 
+	<style name="Widget.Vexl.Locked.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+		<item name="android:textAppearance">@style/TextAppearance.Vexl.Locked.Button</item>
+		<item name="android:textColor">@color/background_button_primary_texts</item>
+		<item name="android:backgroundTint">@color/background_button_primary</item>
+		<item name="android:insetLeft">0dp</item>
+		<item name="android:insetRight">0dp</item>
+		<item name="android:insetTop">0dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:insetBottom">0dp</item>
+		<item name="rippleColor">@color/black</item>
+		<item name="android:elevation">0dp</item>
+		<item name="shapeAppearance">@style/ShapeAppearanceOverlay.Vexl.BottomButton</item>
+	</style>
+
 	<style name="Widget.Vexl.Onboarding.BottomButton.Secondary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.Chat.RequestButton</item>
 		<item name="android:textColor">@color/yellow_100</item>

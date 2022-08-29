@@ -46,6 +46,7 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 		}
 		repeatScopeOnResume {
 			viewModel.myOffersCount.collect { myOffersCount ->
+				if (viewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)) return@collect
 				processMyOffersButtons(myOffersCount > 0)
 			}
 		}
@@ -68,6 +69,14 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 		}
 
 		checkMyOffersCount(getOfferType())
+
+		binding.lockedSellBtn.setOnClickListener {
+			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.NewOffer(OfferType.SELL))
+		}
+
+		binding.lockedBuyBtn.setOnClickListener {
+			viewModel.navigateToGraph(NavMarketplaceGraphModel.NavGraph.NewOffer(OfferType.BUY))
+		}
 	}
 
 	private fun processMyOffersButtons(hasMyOffers: Boolean) {
@@ -86,6 +95,10 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 
 	protected fun changeLockedVisibility(visible: Boolean) {
 		binding.marketLocked.isVisible = visible
+
 		binding.offerList.isVisible = !visible
+		binding.filtersWrapper.isVisible = !visible
+		binding.myOffersBtn.isVisible = !visible
+		binding.addOfferBtn.isVisible = !visible
 	}
 }

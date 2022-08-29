@@ -156,11 +156,15 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				.show()
 		}
 
-		binding.parentSectionGroup.isVisible = !profileViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)
 		binding.profileGroups.setOnClickListener {
-			findNavController().safeNavigateWithTransition(
-				ProfileFragmentDirections.actionProfileFragmentToGroupFragment()
-			)
+			if (profileViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)) {
+				Toast.makeText(requireContext(), getString(R.string.locked_groups), Toast.LENGTH_SHORT)
+					.show()
+			} else {
+				findNavController().safeNavigateWithTransition(
+					ProfileFragmentDirections.actionProfileFragmentToGroupFragment()
+				)
+			}
 		}
 
 		binding.profileChangePicture.setOnClickListener {

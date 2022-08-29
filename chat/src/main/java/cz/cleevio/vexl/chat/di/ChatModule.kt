@@ -13,7 +13,8 @@ val chatModule = module {
 	viewModel {
 		ChatContactListViewModel(
 			chatRepository = get(),
-			remoteConfig = get()
+			remoteConfig = get(),
+			navMainGraphModel = get(),
 		)
 	}
 
