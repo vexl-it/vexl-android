@@ -148,6 +148,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		navController = navHostFragment.navController
 		navController.addOnDestinationChangedListener(this)
 
+		binding.bottomNavigation.setOnApplyWindowInsetsListener(null)
+
 		listenForInsets(binding.container) { insets ->
 			bottomInsetValue = insets.bottom
 		}
