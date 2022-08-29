@@ -81,10 +81,10 @@ class ChatContactListViewModel constructor(
 		}
 	}
 
-	fun goCreateNewOffer(offerType: OfferType) {
+	fun goToMyOfferList(offerType: OfferType) {
 		viewModelScope.launch(Dispatchers.IO) {
 			navMainGraphModel.navigateToGraph(
-				NavMainGraphModel.NavGraph.NewOffer(offerType = offerType)
+				NavMainGraphModel.NavGraph.MyOfferList(offerType = offerType)
 			)
 		}
 	}

@@ -21,7 +21,7 @@ class NavMainGraphModel {
 		data class ChatDetail(val inboxKey: String? = null, val senderKey: String? = null) : NavGraph()
 		object ChatRequests : NavGraph()
 		object ChatList : NavGraph()
-		data class NewOffer(val offerType: OfferType) : NavGraph()
+		data class MyOfferList(val offerType: OfferType) : NavGraph()
 	}
 
 	private val navGraphChannel = Channel<NavGraph>(Channel.RENDEZVOUS)

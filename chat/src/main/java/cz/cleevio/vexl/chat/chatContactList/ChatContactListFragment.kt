@@ -101,11 +101,11 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 		}
 
 		binding.lockedSellBtn.setOnClickListener {
-			chatContactListViewModel.goCreateNewOffer(OfferType.SELL)
+			chatContactListViewModel.goToMyOfferList(OfferType.SELL)
 		}
 
 		binding.lockedBuyBtn.setOnClickListener {
-			chatContactListViewModel.goCreateNewOffer(OfferType.BUY)
+			chatContactListViewModel.goToMyOfferList(OfferType.BUY)
 		}
 	}
 
