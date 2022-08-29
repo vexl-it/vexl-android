@@ -145,9 +145,10 @@
 		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
 		android:layout_height="@dimen/bottom_screen_button_height"
+		android:enabled="false"
 		android:layout_marginHorizontal="8dp"
 		android:layout_marginBottom="16dp"
-		android:text="@string/profile_edit_name_action"
+		android:text="@string/avatar_continue"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />

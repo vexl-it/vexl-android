@@ -101,6 +101,11 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.profileImageUri.collect { profileImageUri ->
+				if (profileImageUri != null) {
+					binding.continueBtn.isEnabled = true
+					binding.continueBtn.text = getString(R.string.profile_edit_name_action)
+				}
+
 				setAvatarPlaceholderVisible(profileImageUri != null)
 				currentPhotoPath = profileImageUri
 
@@ -151,14 +156,11 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 			}
 		}
 
-		binding.continueBtn.apply {
-			setOnClickListener {
-				val request = viewModel.getUserRequest(args.username, requireContext().contentResolver)
-				findNavController().safeNavigateWithTransition(
-					CreateAvatarFragmentDirections.proceedToAnonymizeUser(request)
-				)
-			}
-			isEnabled = true
+		binding.continueBtn.setOnClickListener {
+			val request = viewModel.getUserRequest(args.username, requireContext().contentResolver)
+			findNavController().safeNavigateWithTransition(
+				CreateAvatarFragmentDirections.proceedToAnonymizeUser(request)
+			)
 		}
 
 		setupPhotoListener()
