@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.base.BaseGraphFragment
+import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
@@ -55,8 +56,7 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 	override fun initView() {
 		priceChartWidget = binding.priceChart
 
-		binding.recycler.isVisible = !chatContactListViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)
-		binding.marketLocked.isVisible = chatContactListViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)
+		changeLockedVisibility(chatContactListViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED))
 
 		super.initView()
 		listenForInsets(binding.container) { insets ->
@@ -99,6 +99,14 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 				}
 			}
 		}
+
+		binding.lockedSellBtn.setOnClickListener {
+			chatContactListViewModel.goCreateNewOffer(OfferType.SELL)
+		}
+
+		binding.lockedBuyBtn.setOnClickListener {
+			chatContactListViewModel.goCreateNewOffer(OfferType.BUY)
+		}
 	}
 
 	override fun onResume() {
@@ -106,5 +114,11 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 
 		chatContactListViewModel.refreshChats()
 		chatContactListViewModel.refreshChatRequests()
+	}
+
+	private fun changeLockedVisibility(visible: Boolean) {
+		binding.marketLocked.isVisible = visible
+
+		binding.chatsWrapper.isVisible = !visible
 	}
 }

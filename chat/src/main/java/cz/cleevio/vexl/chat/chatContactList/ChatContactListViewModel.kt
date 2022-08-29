@@ -3,6 +3,7 @@ package cz.cleevio.vexl.chat.chatContactList
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.core.model.OfferType
+import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 class ChatContactListViewModel constructor(
 	private val chatRepository: ChatRepository,
 	val remoteConfig: FirebaseRemoteConfig,
+	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
 	private val _usersRequestingChat = MutableSharedFlow<List<CommunicationRequest>>(replay = 1)
@@ -76,6 +78,14 @@ class ChatContactListViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			currentFilter = filterType
 			emitUsers()
+		}
+	}
+
+	fun goCreateNewOffer(offerType: OfferType) {
+		viewModelScope.launch(Dispatchers.IO) {
+			navMainGraphModel.navigateToGraph(
+				NavMainGraphModel.NavGraph.NewOffer(offerType = offerType)
+			)
 		}
 	}
 

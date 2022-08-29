@@ -38,6 +38,7 @@ import cz.cleevio.vexl.lightbase.core.extensions.isNotNullOrBlank
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceFragment
+import cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -262,6 +263,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							//TODO: hack that should be fixed later
 							binding.bottomNavigation.post {
 								binding.bottomNavigation.findViewById<View>(R.id.nav_chat)?.performClick()
+							}
+						}
+
+						is NavMainGraphModel.NavGraph.NewOffer -> {
+							binding.bottomNavigation.post {
+								binding.bottomNavigation.findViewById<View>(R.id.nav_marketplace)?.performClick()
+								navController.safeNavigateWithTransition(
+									MarketplaceFragmentDirections.proceedToNewOfferFragment(it.offerType)
+								)
 							}
 						}
 					}
