@@ -38,7 +38,8 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 				when (args.openedFromScreen) {
 					OpenedFromScreen.UNKNOWN -> {
 						findNavController().safeNavigateWithTransition(
-							ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
+							//ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
+							ContactsListFragmentDirections.proceedToFinishImportFragment()
 						)
 					}
 					OpenedFromScreen.PROFILE -> {
@@ -46,7 +47,8 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 					}
 					OpenedFromScreen.ONBOARDING -> {
 						findNavController().safeNavigateWithTransition(
-							ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
+							//ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
+							ContactsListFragmentDirections.proceedToFinishImportFragment()
 						)
 					}
 				}
