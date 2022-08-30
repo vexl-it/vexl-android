@@ -3,7 +3,6 @@ package cz.cleevio.repository.repository.marketplace
 import cz.cleevio.cache.dao.CryptoCurrencyDao
 import cz.cleevio.cache.entity.CryptoCurrencyEntity
 import cz.cleevio.network.api.CryptocurrencyApi
-import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
@@ -34,10 +33,6 @@ class CryptoCurrencyRepositoryImpl constructor(
 						)
 					)
 				}
-			},
-			doOnError = { _, _ ->
-				cryptoCurrencyUtils.setCurrencies(null)
-				null
 			}
 		)
 	}
