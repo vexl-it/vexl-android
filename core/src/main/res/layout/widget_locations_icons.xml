@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/one_location_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:constraint_referenced_ids="one_location_first"
+			tools:visibility="gone" />
+
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/two_locations_group"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:constraint_referenced_ids="two_locations_first, two_locations_second"
+			tools:visibility="gone" />
+
+		<ImageView
+			android:id="@+id/one_location_first"
+			android:layout_width="wrap_content"
+			android:layout_height="30dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+
+		<ImageView
+			android:id="@+id/two_locations_first"
+			android:layout_width="wrap_content"
+			android:layout_height="20dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toStartOf="@id/two_locations_second"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+		<ImageView
+			android:id="@+id/two_locations_second"
+			android:layout_width="wrap_content"
+			android:layout_height="20dp"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/two_locations_first"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tint="@color/gray_3"
+			tools:src="@drawable/ic_map_pin" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>
