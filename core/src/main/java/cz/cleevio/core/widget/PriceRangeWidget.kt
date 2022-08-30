@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetPriceRangeBinding
-import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.PriceRangeValue
 import cz.cleevio.core.utils.formatCurrency
+import cz.cleevio.repository.model.Currency
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.util.*
 

@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 import android.widget.RadioGroup
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyBinding
-import cz.cleevio.core.model.Currency
+import cz.cleevio.repository.model.Currency
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
 

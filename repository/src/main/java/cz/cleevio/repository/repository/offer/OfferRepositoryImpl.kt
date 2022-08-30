@@ -17,6 +17,7 @@ import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.offer.*
+import cz.cleevio.repository.repository.CryptoCurrencyUtils
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +35,7 @@ class OfferRepositoryImpl constructor(
 	private val offerCommonFriendCrossRefDao: OfferCommonFriendCrossRefDao,
 	private val transactionProvider: TransactionProvider,
 	private val chatRepository: ChatRepository,
+	private val cryptoCurrencyUtils: CryptoCurrencyUtils,
 ) : OfferRepository {
 
 	override val buyOfferFilter = MutableStateFlow(OfferFilter())
@@ -124,7 +126,7 @@ class OfferRepositoryImpl constructor(
 				)
 			)
 		},
-		mapper = { it?.fromNetwork() },
+		mapper = { it?.fromNetwork(currencyUtils = cryptoCurrencyUtils) },
 		doOnSuccess = {
 			it?.let { offer ->
 				updateOffers(listOf(offer))
@@ -136,7 +138,7 @@ class OfferRepositoryImpl constructor(
 		request = {
 			offerApi.getOffersMe()
 		},
-		mapper = { it?.items?.map { item -> item.fromNetwork() } }
+		mapper = { it?.items?.map { item -> item.fromNetwork(currencyUtils = cryptoCurrencyUtils) } }
 	)
 
 	override suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit> = tryOnline(
@@ -402,7 +404,7 @@ class OfferRepositoryImpl constructor(
 		request = {
 			offerApi.getModifiedOffers(0, Int.MAX_VALUE, "1970-01-01T00:00:00.000Z")
 		},
-		mapper = { it?.items?.map { item -> item.fromNetwork() } }
+		mapper = { it?.items?.map { item -> item.fromNetwork(currencyUtils = cryptoCurrencyUtils) } }
 	)
 
 	override suspend fun getMyOffersWithoutInbox(): List<MyOffer> =

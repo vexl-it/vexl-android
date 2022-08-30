@@ -6,9 +6,11 @@ import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import cz.cleevio.repository.model.marketplace.MarketChartEntries
 import cz.cleevio.repository.model.marketplace.fromNetwork
+import cz.cleevio.repository.repository.CryptoCurrencyUtils
 
 class CryptoCurrencyRepositoryImpl constructor(
-	private val cryptocurrencyApi: CryptocurrencyApi
+	private val cryptocurrencyApi: CryptocurrencyApi,
+	private val cryptoCurrencyUtils: CryptoCurrencyUtils
 ) : CryptoCurrencyRepository {
 
 	override suspend fun getCryptocurrencyPrice(crypto: String): Resource<CryptoCurrencies> {
@@ -16,7 +18,12 @@ class CryptoCurrencyRepositoryImpl constructor(
 			mapper = {
 				it?.fromNetwork()
 			},
-			request = { cryptocurrencyApi.getCryptocurrencyPrice(crypto) }
+			request = { cryptocurrencyApi.getCryptocurrencyPrice(crypto) },
+			doOnSuccess = {
+				it?.let { currencies ->
+					cryptoCurrencyUtils.setCurrencies(currencies)
+				}
+			}
 		)
 	}
 

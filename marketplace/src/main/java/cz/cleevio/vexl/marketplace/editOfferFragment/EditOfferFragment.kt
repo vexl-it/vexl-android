@@ -7,13 +7,18 @@ import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import cz.cleevio.core.model.*
+import cz.cleevio.core.model.FeeValue
+import cz.cleevio.core.model.OfferType
+import cz.cleevio.core.model.PriceTriggerValue
+import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.model.offer.PriceTriggerType
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -154,10 +159,10 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferPriceTrigger.setPriceTriggerValue(
 			PriceTriggerValue(
 				value = offer.activePriceValue,
-				type = TriggerType.valueOf(offer.activePriceState)
+				type = PriceTriggerType.valueOf(offer.activePriceState),
+				currency = offer.activePriceCurrency
 			)
 		)
-		//todo: we need someone to specify behavior for time delete trigger
 
 		binding.newOfferBtcNetwork.setValues(offer.btcNetwork.map { btcNetwork ->
 			BtcNetworkButtonSelected.valueOf(btcNetwork)

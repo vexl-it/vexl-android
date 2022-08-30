@@ -1,7 +1,8 @@
-package cz.cleevio.core.model
+package cz.cleevio.repository.model
 
 import android.content.Context
-import cz.cleevio.core.R
+import cz.cleevio.repository.R
+
 
 enum class Currency {
 	CZK,

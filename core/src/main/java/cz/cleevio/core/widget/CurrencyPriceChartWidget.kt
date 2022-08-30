@@ -12,11 +12,11 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyPriceChartBinding
 import cz.cleevio.core.model.CryptoCurrency
-import cz.cleevio.core.model.Currency
-import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.MarketChartEntry
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.utils.marketGraph.MarketChartUtils
+import cz.cleevio.repository.model.Currency
+import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent

@@ -26,6 +26,7 @@ data class OfferEntity(
 	val offerType: String,
 	val activePriceState: String,
 	val activePriceValue: BigDecimal,
+	val activePriceCurrency: String,
 	val active: Boolean,
 	val groupUuid: String,
 	val currency: String,

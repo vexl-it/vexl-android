@@ -14,7 +14,6 @@ import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.base.BaseGraphFragment
-import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -31,10 +30,10 @@ import cz.cleevio.profile.profileContactsListFragment.ProfileContactsListFragmen
 import cz.cleevio.profile.profileFacebookContactsListFragment.ProfileFacebookContactsListFragment
 import cz.cleevio.profile.reportFragment.ReportBottomSheetDialog
 import cz.cleevio.profile.requestDataFragment.RequestDataBottomSheetDialog
+import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
@@ -104,12 +103,10 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		repeatScopeOnStart {
 			profileViewModel.hasPermissionsEvent.collect { hasPermission ->
 				if (hasPermission) {
-					Timber.tag("ASDX").d("Permission granted")
 					showBottomDialog(
 						ProfileContactsListFragment(OpenedFromScreen.PROFILE)
 					)
 				} else {
-					Timber.tag("ASDX").d("Permission rejected")
 					showPermissionDeniedDialog()
 				}
 			}

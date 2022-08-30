@@ -7,11 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.BottomSheetDialogCurrencyBinding
-import cz.cleevio.core.databinding.BottomSheetDialogJoinBinding
-import cz.cleevio.core.databinding.BottomSheetDialogReportBinding
-import cz.cleevio.core.model.Currency
-import cz.cleevio.core.utils.DateTimeRange
-import cz.cleevio.core.utils.sendEmailToSupport
+import cz.cleevio.repository.model.Currency
 
 class CurrencyBottomSheetDialog(
 	private val currentCurrency: Currency,

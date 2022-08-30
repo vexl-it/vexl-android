@@ -8,6 +8,7 @@ import cz.cleevio.network.response.offer.OfferUnifiedAdminResponse
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.contact.fromDao
+import cz.cleevio.repository.repository.CryptoCurrencyUtils
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 import java.time.ZonedDateTime
@@ -33,6 +34,7 @@ data class Offer constructor(
 	val offerType: String,
 	val activePriceState: String,
 	val activePriceValue: BigDecimal,
+	val activePriceCurrency: String,
 	val active: Boolean,
 	val commonFriends: List<CommonFriend>,
 	val groupUuid: String,
@@ -49,7 +51,7 @@ data class Offer constructor(
 	}
 }
 
-fun OfferUnifiedResponse.fromNetwork(): Offer {
+fun OfferUnifiedResponse.fromNetwork(currencyUtils: CryptoCurrencyUtils): Offer {
 	return Offer(
 		offerId = this.offerId,
 		location = this.location.map { it.decryptedValue.fromNetwork() },
@@ -67,13 +69,25 @@ fun OfferUnifiedResponse.fromNetwork(): Offer {
 		offerType = this.offerType.decryptedValue,
 		activePriceState = this.activePriceState.decryptedValue,
 		activePriceValue = this.activePriceValue.decryptedValue,
+		activePriceCurrency = this.activePriceCurrency.decryptedValue,
 		active = this.active.decryptedValue.toBoolean(),
 		groupUuid = this.groupUuid.decryptedValue,
 		currency = this.currency.decryptedValue,
 		commonFriends = this.commonFriends.map { CommonFriend(it.decryptedValue) },
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
-	)
+	).let { offer ->
+		val currentCurrencyValue = currencyUtils.getPrice(offer.activePriceCurrency)
+		if (offer.activePriceState == PriceTriggerType.PRICE_IS_ABOVE.name) {
+			return@let offer.copy(active = currentCurrencyValue > offer.activePriceValue)
+		}
+
+		if (offer.activePriceState == PriceTriggerType.PRICE_IS_BELOW.name) {
+			return@let offer.copy(active = currentCurrencyValue < offer.activePriceValue)
+		}
+
+		offer
+	}
 }
 
 fun OfferUnifiedAdminResponse.fromNetwork(): Offer {
@@ -94,6 +108,7 @@ fun OfferUnifiedAdminResponse.fromNetwork(): Offer {
 		offerType = this.offerType.decryptedValue,
 		activePriceState = this.activePriceState.decryptedValue,
 		activePriceValue = this.activePriceValue.decryptedValue,
+		activePriceCurrency = this.activePriceCurrency.decryptedValue,
 		active = this.active.decryptedValue.toBoolean(),
 		groupUuid = this.groupUuid.decryptedValue,
 		currency = this.currency.decryptedValue,
@@ -122,6 +137,7 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 		offerType = this.offerType,
 		activePriceState = this.activePriceState,
 		activePriceValue = this.activePriceValue,
+		activePriceCurrency = this.activePriceCurrency,
 		active = this.active,
 		groupUuid = this.groupUuid,
 		currency = this.currency,
@@ -155,6 +171,7 @@ fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, 
 		offerType = this.offerType,
 		activePriceState = this.activePriceState,
 		activePriceValue = this.activePriceValue,
+		activePriceCurrency = this.activePriceCurrency,
 		active = this.active,
 		groupUuid = this.groupUuid,
 		currency = this.currency,
@@ -184,6 +201,7 @@ fun Offer.toCache(): OfferEntity {
 		offerType = this.offerType,
 		activePriceState = this.activePriceState,
 		activePriceValue = this.activePriceValue,
+		activePriceCurrency = this.activePriceCurrency,
 		active = this.active,
 		commonFriends = this.commonFriends.joinToString(),
 		groupUuid = this.groupUuid,

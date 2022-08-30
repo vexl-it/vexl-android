@@ -199,7 +199,6 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 
 		binding.newOfferCurrency.onCurrencyPicked = {
 			binding.newOfferRange.setupWithCurrency(it)
-			binding.newOfferPriceTrigger.setCurrency(it)
 		}
 
 		binding.newOfferBtn.text = when (args.offerType) {
