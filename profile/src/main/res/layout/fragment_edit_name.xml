@@ -69,8 +69,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:inputType="textCapWords"
-			android:textColor="@color/white"
 			android:textAppearance="@style/TextAppearance.Vexl.EditName.Input"
+			android:textColor="@color/white"
 			android:textCursorDrawable="@null"
 			tools:hint="Ondrasek" />
 
@@ -84,6 +84,7 @@
 		android:layout_marginHorizontal="16dp"
 		android:layout_marginTop="16dp"
 		android:layout_marginBottom="16dp"
+		android:enabled="false"
 		android:text="@string/profile_edit_name_action"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"

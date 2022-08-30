@@ -39,8 +39,9 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 		}
 
 		repeatScopeOnStart {
-			viewModel.oldName.collect {
+			viewModel.user.collect {
 				it ?: return@collect
+				viewModel.oldName = it.username
 				binding.editNameInput.editText?.setText(it.username)
 			}
 		}
@@ -52,6 +53,7 @@ class EditNameFragment : BaseFragment(R.layout.fragment_edit_name) {
 		}
 
 		binding.editNameInput.editText?.doAfterTextChanged {
+			binding.editNameSaveBtn.isEnabled = viewModel.oldName != it.toString()
 			binding.editNameInput.editText?.error = if (it?.toString()?.isBlank() == true) {
 				getString(R.string.error_nickname_blank)
 			} else {
