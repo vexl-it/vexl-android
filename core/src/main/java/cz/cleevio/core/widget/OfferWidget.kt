@@ -102,9 +102,12 @@ class OfferWidget @JvmOverloads constructor(
 		//location text
 		val cities = item.location.take(LOCATION_DISPLAY_LIMIT).joinToString(", ") { it.city }
 		binding.card.location.text = if (item.locationState == LocationButtonSelected.ONLINE.name)
-			"$cities, ${resources.getString(R.string.widget_location_online)}"
-		else
+			{
+				"$cities, ${resources.getString(R.string.widget_location_online)}"
+			}
+		else {
 			cities
+		}
 
 		binding.userType.text = if (mode == Mode.MY_OFFER) {
 			context.getString(R.string.offer_added, myOfferFormat.format(item.createdAt))

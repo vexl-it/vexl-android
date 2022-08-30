@@ -6,7 +6,6 @@ import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import cz.cleevio.core.databinding.WidgetContactsImportListBinding
-import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.resources.R
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
@@ -72,8 +71,7 @@ class ContactsListWidget @JvmOverloads constructor(
 	}
 
 	fun setupData(
-		contacts: List<BaseContact>,
-		openedFromScreen: OpenedFromScreen
+		contacts: List<BaseContact>
 	) {
 		val query = binding.searchNameInput.query.toString().lowercase()
 		if (query.isNotEmpty() && query.isNotBlank()) {

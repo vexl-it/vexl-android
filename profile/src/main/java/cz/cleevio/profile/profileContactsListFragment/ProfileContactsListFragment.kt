@@ -10,9 +10,7 @@ import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.model.OpenedFromScreen
-import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.BottomSheetDialogProfileContactsListBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -43,7 +41,7 @@ class ProfileContactsListFragment constructor(
 	private fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.contactsToBeShowed.collect {
-				binding.contactsListWidget.setupData(it, openedFromScreen)
+				binding.contactsListWidget.setupData(it)
 				binding.emptyContactsBtn.isInvisible = it.isNotEmpty()
 				binding.backBtn.isVisible = it.isNotEmpty()
 				binding.confirmBtn.isVisible = it.isNotEmpty()
