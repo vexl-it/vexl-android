@@ -51,10 +51,6 @@ open class BaseContactsListViewModel constructor(
 			_progressFlow.emit(true)
 			Timber.tag("ContactSync").d("We are not in onboarding flow, so we should hash all contacts")
 			val hashedContacts = localContacts
-				//filter out invalid phone numbers
-				.filter {
-					it.phoneNumber.isNotBlank() && it.phoneNumber.isPhoneValid()
-				}
 				//hash all valid numbers and save them
 				.map { contact ->
 					contact.copy(hashedPhoneNumber = HmacCryptoLib.digest(BuildConfig.HMAC_PASSWORD, contact.phoneNumber))
