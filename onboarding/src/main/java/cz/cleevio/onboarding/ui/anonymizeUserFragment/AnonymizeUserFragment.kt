@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.res.Resources
+import android.net.Uri
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.core.view.isVisible
@@ -37,6 +38,12 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 						binding.continueBtn.text = getString(R.string.anonymize_user_btn)
 						binding.anonymizeUserNote.text = getString(R.string.anonymize_user_note)
 						binding.anonymizeUserTitle.text = getString(R.string.anonymize_user_title)
+						binding.anonymizeUserName.text = args.username
+						binding.anonymizeUserImage.load(args.avatarUri) {
+							fallback(R.drawable.random_avatar_1)
+							error(R.drawable.random_avatar_1)
+							placeholder(R.drawable.random_avatar_1)
+						}
 					}
 					is AnonymizeUserViewModel.UIState.Anonymized -> {
 						binding.continueBtn.isEnabled = true
@@ -49,20 +56,6 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 						binding.anonymizeUserNote.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
 						binding.anonymizeUserTitle.text = getString(R.string.anonymize_user_title2)
 						binding.continueBtn.text = getString(R.string.general_continue)
-					}
-				}
-			}
-		}
-
-		repeatScopeOnStart {
-			viewModel.currentUser.collect {
-				if (viewModel.uiState.value == AnonymizeUserViewModel.UIState.Normal) {
-					it ?: return@collect
-					binding.anonymizeUserName.text = it.username
-					binding.anonymizeUserImage.load(it.avatar) {
-						fallback(R.drawable.random_avatar_1)
-						error(R.drawable.random_avatar_1)
-						placeholder(R.drawable.random_avatar_1)
 					}
 				}
 			}
@@ -98,7 +91,11 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 				startSlideAnimation()
 				viewModel.anonymizeUser(requireContext())
 			} else {
-				viewModel.registerUser(args.request)
+				viewModel.registerUser(
+					username = args.username,
+					avatarUri = args.avatarUri?.let { Uri.parse(it) },
+					contentResolver = requireContext().contentResolver
+				)
 			}
 		}
 

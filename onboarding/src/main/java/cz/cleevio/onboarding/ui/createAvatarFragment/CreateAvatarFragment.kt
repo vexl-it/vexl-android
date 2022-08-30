@@ -157,9 +157,12 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		}
 
 		binding.continueBtn.setOnClickListener {
-			val request = viewModel.getUserRequest(args.username, requireContext().contentResolver)
+			val avatarUri = viewModel.profileImageUri.value.toString()
 			findNavController().safeNavigateWithTransition(
-				CreateAvatarFragmentDirections.proceedToAnonymizeUser(request)
+				CreateAvatarFragmentDirections.proceedToAnonymizeUser(
+					username = args.username,
+					avatarUri = avatarUri
+				)
 			)
 		}
 

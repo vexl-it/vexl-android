@@ -10,23 +10,4 @@ import lightbase.camera.utils.ImageHelper
 class CreateAvatarViewModel constructor(
 	navMainGraphModel: NavMainGraphModel,
 	imageHelper: ImageHelper
-) : BaseAvatarViewModel(navMainGraphModel, imageHelper) {
-
-	fun getUserRequest(
-		username: String,
-		contentResolver: ContentResolver
-	): UserRequest {
-		val profileUri = profileImageUri.value
-		val avatar = if (profileUri != null) {
-			UserAvatar(
-				data = super.getAvatarData(profileUri, contentResolver),
-				extension = IMAGE_EXTENSION
-			)
-		} else null
-
-		return UserRequest(
-			username = username,
-			avatar = avatar
-		)
-	}
-}
+) : BaseAvatarViewModel(navMainGraphModel, imageHelper) {}
