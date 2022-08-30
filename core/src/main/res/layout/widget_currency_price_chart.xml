@@ -21,7 +21,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:visibility="gone"
-			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, chart_divider, price_chart_period_radiogroup,first_date,forth_date,fifth_date,sixth_date,seventh_date"
+			app:constraint_referenced_ids="currency_name, crypto_change_percentage, large_chart, chart_divider, price_chart_period_radiogroup_wrapper,first_date,forth_date,fifth_date,sixth_date,seventh_date"
 			tools:visibility="visible" />
 
 		<androidx.constraintlayout.widget.Group
@@ -244,70 +244,77 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/first_date" />
 
-		<RadioGroup
-			android:id="@+id/price_chart_period_radiogroup"
+		<HorizontalScrollView
+			android:id="@+id/price_chart_period_radiogroup_wrapper"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginBottom="16dp"
-			android:orientation="horizontal"
+			android:clipToPadding="false"
+			android:paddingHorizontal="8dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/chart_divider">
 
-			<RadioButton
-				android:id="@+id/period_1_day"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+			<RadioGroup
+				android:id="@+id/price_chart_period_radiogroup"
 				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
-				android:button="@android:color/transparent"
-				android:checked="true"
-				android:text="@string/marketplace_currency_1_day" />
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="16dp"
+				android:orientation="horizontal">
 
-			<RadioButton
-				android:id="@+id/period_1_week"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
-				android:button="@android:color/transparent"
-				android:text="@string/marketplace_currency_1_week" />
+				<RadioButton
+					android:id="@+id/period_1_day"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:background="@drawable/currency_period_radio_selector"
+					android:button="@android:color/transparent"
+					android:checked="true"
+					android:text="@string/marketplace_currency_1_day" />
 
-			<RadioButton
-				android:id="@+id/period_1_month"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
-				android:button="@android:color/transparent"
-				android:text="@string/marketplace_currency_1_month" />
+				<RadioButton
+					android:id="@+id/period_1_week"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:background="@drawable/currency_period_radio_selector"
+					android:button="@android:color/transparent"
+					android:text="@string/marketplace_currency_1_week" />
 
-			<RadioButton
-				android:id="@+id/period_3_month"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
-				android:button="@android:color/transparent"
-				android:text="@string/marketplace_currency_3_month" />
+				<RadioButton
+					android:id="@+id/period_1_month"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:background="@drawable/currency_period_radio_selector"
+					android:button="@android:color/transparent"
+					android:text="@string/marketplace_currency_1_month" />
 
-			<RadioButton
-				android:id="@+id/period_6_month"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
-				android:button="@android:color/transparent"
-				android:text="@string/marketplace_currency_6_month" />
+				<RadioButton
+					android:id="@+id/period_3_month"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:background="@drawable/currency_period_radio_selector"
+					android:button="@android:color/transparent"
+					android:text="@string/marketplace_currency_3_month" />
 
-			<RadioButton
-				android:id="@+id/period_1_year"
-				style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
-				android:layout_width="wrap_content"
-				android:background="@drawable/currency_period_radio_selector"
-				android:button="@android:color/transparent"
-				android:text="@string/marketplace_currency_1_year" />
+				<RadioButton
+					android:id="@+id/period_6_month"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:background="@drawable/currency_period_radio_selector"
+					android:button="@android:color/transparent"
+					android:text="@string/marketplace_currency_6_month" />
 
-		</RadioGroup>
+				<RadioButton
+					android:id="@+id/period_1_year"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="wrap_content"
+					android:background="@drawable/currency_period_radio_selector"
+					android:button="@android:color/transparent"
+					android:text="@string/marketplace_currency_1_year" />
 
+			</RadioGroup>
+
+		</HorizontalScrollView>
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
 </merge>

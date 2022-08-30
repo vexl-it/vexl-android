@@ -1,6 +1,8 @@
 package cz.cleevio.core.widget
 
 import android.content.Context
+import android.os.Build
+import android.text.format.DateFormat
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
@@ -88,7 +90,15 @@ class CurrencyPriceChartWidget @JvmOverloads constructor(
 
 		val formattedDates = if (dateTimeRange == DateTimeRange.DAY) {
 			dates.map {
-				val format = SimpleDateFormat("hh:mm")
+				val format = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+					SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT)
+				} else {
+					if (DateFormat.is24HourFormat(context)) {
+						SimpleDateFormat("HH:mm")
+					} else {
+						SimpleDateFormat("hh:mm")
+					}
+				}
 				format.format(it)
 			}
 		} else {
