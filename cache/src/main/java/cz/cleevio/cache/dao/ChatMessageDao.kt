@@ -37,7 +37,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"FROM ChatMessageEntity " +
 			"WHERE " +
 			"inboxPublicKey = :inboxPublicKey " +
-			" AND NOT (type == 'REQUEST_MESSAGING' AND isMine=0)" +
+			" AND NOT (type == 'REQUEST_MESSAGING')" +
 			" AND NOT (type == 'DISAPPROVE_MESSAGING' AND isMine=1)" +
 			"GROUP BY senderPublicKey, recipientPublicKey"
 	)
