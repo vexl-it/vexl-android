@@ -106,6 +106,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="8dp"
 				android:layout_marginTop="48dp"
+				android:visibility="gone"
 				app:cardBackgroundColor="@color/background_profile_card"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
@@ -272,11 +273,11 @@
 						android:id="@+id/profile_set_pin"
 						android:layout_width="0dp"
 						android:layout_height="wrap_content"
+						android:visibility="gone"
 						app:icon="@drawable/ic_profile_faceid"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toTopOf="parent"
-						android:visibility="gone"
 						app:line_visibility="true"
 						app:title="@string/profile_pin" />
 
@@ -441,46 +442,12 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/profile_section_wrapper_six" />
 
-			<com.google.android.material.card.MaterialCardView
-				android:id="@+id/profile_section_wrapper_vexl_support"
-				style="@style/Widget.Vexl.CardView"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_marginHorizontal="8dp"
-				android:layout_marginTop="32dp"
-				app:cardBackgroundColor="#322916"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/profile_delete_account_info"
-				app:layout_constraintVertical_chainStyle="spread_inside">
-
-				<androidx.constraintlayout.widget.ConstraintLayout
-					android:id="@+id/parent_section_vexl_support_container"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-
-					<cz.cleevio.profile.widget.ProfileRowWidget
-						android:id="@+id/profile_vexl_support"
-						android:layout_width="0dp"
-						android:layout_height="wrap_content"
-						app:icon="@drawable/ic_profile_donate"
-						app:icon_color="@color/yellow_100"
-						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintTop_toTopOf="parent"
-						app:text_color="@color/yellow_100"
-						app:title="@string/profile_vexl_support" />
-
-				</androidx.constraintlayout.widget.ConstraintLayout>
-
-			</com.google.android.material.card.MaterialCardView>
-
 			<View
 				android:layout_width="0dp"
-				android:layout_height="100dp"
+				android:layout_height="50dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/profile_section_wrapper_vexl_support" />
+				app:layout_constraintTop_toBottomOf="@id/profile_delete_account_info" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.core.widget.NestedScrollView>
