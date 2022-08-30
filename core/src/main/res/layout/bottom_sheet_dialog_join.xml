@@ -23,10 +23,10 @@
 
 			<ImageView
 				android:id="@+id/qr_code"
-				android:layout_width="128dp"
-				android:layout_height="128dp"
+				android:layout_width="148dp"
+				android:layout_height="148dp"
 				android:layout_gravity="center"
-				android:layout_marginTop="40dp"
+				android:layout_marginTop="20dp"
 				android:contentDescription="?content"
 				android:src="@drawable/join_qr" />
 
@@ -34,7 +34,7 @@
 				android:id="@+id/title"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="32dp"
+				android:layout_marginTop="28dp"
 				android:gravity="center"
 				android:text="@string/profile_join_vexl_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.DialogHeading"
