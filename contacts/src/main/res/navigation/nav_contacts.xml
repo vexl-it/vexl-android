@@ -37,6 +37,10 @@
 			android:id="@+id/proceed_to_importFacebookContactsFragment"
 			app:destination="@id/importFacebookContactsFragment" />
 
+		<action
+			android:id="@+id/proceed_to_finishImportFragment"
+			app:destination="@id/finishImportFragment" />
+
 	</fragment>
 
 	<fragment
@@ -74,5 +78,4 @@
 		tools:layout="@layout/fragment_finish_import">
 
 	</fragment>
-
 </navigation>
