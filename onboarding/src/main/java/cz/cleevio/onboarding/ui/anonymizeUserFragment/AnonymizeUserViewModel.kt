@@ -14,7 +14,6 @@ import cz.cleevio.network.request.user.UserAvatar
 import cz.cleevio.network.request.user.UserRequest
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
-import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
