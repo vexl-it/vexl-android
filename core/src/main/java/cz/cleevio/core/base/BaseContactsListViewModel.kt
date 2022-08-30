@@ -6,7 +6,6 @@ import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.core.utils.isPhoneValid
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.BuildConfig
 import cz.cleevio.repository.model.contact.BaseContact
