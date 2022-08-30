@@ -3,9 +3,9 @@ package cz.cleevio.profile.profileFragment
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.model.Currency
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.group.GroupRepository

@@ -8,12 +8,12 @@ import androidx.core.view.isVisible
 import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
-import cz.cleevio.core.model.Currency.Companion.getCurrencySymbol
-import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.repository.model.Currency.Companion.getCurrencySymbol
+import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater

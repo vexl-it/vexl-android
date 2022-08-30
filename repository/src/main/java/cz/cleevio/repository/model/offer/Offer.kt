@@ -78,11 +78,11 @@ fun OfferUnifiedResponse.fromNetwork(currencyUtils: CryptoCurrencyUtils): Offer 
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
 	).let { offer ->
 		val currentCurrencyValue = currencyUtils.getPrice(offer.activePriceCurrency)
-		if (offer.activePriceState == "PRICE_IS_ABOVE") {
+		if (offer.activePriceState == PriceTriggerType.PRICE_IS_ABOVE.name) {
 			return@let offer.copy(active = currentCurrencyValue > offer.activePriceValue)
 		}
 
-		if (offer.activePriceState == "PRICE_IS_BELOW") {
+		if (offer.activePriceState == PriceTriggerType.PRICE_IS_BELOW.name) {
 			return@let offer.copy(active = currentCurrencyValue < offer.activePriceValue)
 		}
 

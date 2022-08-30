@@ -2,10 +2,10 @@ package cz.cleevio.core.base
 
 import androidx.annotation.CallSuper
 import cz.cleevio.core.model.CryptoCurrency.Companion.mapStringToCryptoCurrency
-import cz.cleevio.core.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
+import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

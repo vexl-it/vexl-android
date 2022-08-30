@@ -8,11 +8,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
-import cz.cleevio.core.model.Currency
 import cz.cleevio.core.model.FeeValue
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
+import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.model.offer.OfferFilter
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
