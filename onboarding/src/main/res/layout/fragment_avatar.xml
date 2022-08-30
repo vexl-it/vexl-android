@@ -145,7 +145,6 @@
 		style="@style/Widget.Vexl.Onboarding.BottomButton"
 		android:layout_width="0dp"
 		android:layout_height="@dimen/bottom_screen_button_height"
-		android:enabled="false"
 		android:layout_marginHorizontal="8dp"
 		android:layout_marginBottom="16dp"
 		android:text="@string/avatar_continue"

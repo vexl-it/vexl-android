@@ -102,7 +102,6 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		repeatScopeOnStart {
 			viewModel.profileImageUri.collect { profileImageUri ->
 				if (profileImageUri != null) {
-					binding.continueBtn.isEnabled = true
 					binding.continueBtn.text = getString(R.string.profile_edit_name_action)
 				}
 
@@ -157,7 +156,7 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 		}
 
 		binding.continueBtn.setOnClickListener {
-			val avatarUri = viewModel.profileImageUri.value.toString()
+			val avatarUri = viewModel.profileImageUri.value?.toString()
 			findNavController().safeNavigateWithTransition(
 				CreateAvatarFragmentDirections.proceedToAnonymizeUser(
 					username = args.username,
