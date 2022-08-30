@@ -125,7 +125,9 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		super.initView()
 
 		// TODO change visibility once the functionality will be revealed
+		binding.profileSectionWrapperPrivateSettings.isVisible = false
 		binding.profileSectionWrapperFive.isVisible = false
+		binding.profileFacebook.isVisible = false
 
 		binding.profileDonate.setOnClickListener {
 			showBottomDialog(
