@@ -197,16 +197,14 @@
 			app:layout_constraintStart_toEndOf="@id/payment_method_divider"
 			app:layout_constraintTop_toBottomOf="@id/offer_description">
 
-			<ImageView
-				android:id="@+id/location_image"
-				android:layout_width="30dp"
+			<cz.cleevio.core.widget.LocationsIconsWidget
+				android:id="@+id/location_icons"
+				android:layout_width="wrap_content"
 				android:layout_height="30dp"
-				android:contentDescription="?content"
-				android:src="@drawable/ic_map_pin"
+				android:layout_gravity="center_horizontal"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				app:tint="@color/gray_3" />
+				app:layout_constraintTop_toTopOf="parent" />
 
 			<TextView
 				android:id="@+id/location"
@@ -219,7 +217,7 @@
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/location_image"
+				app:layout_constraintTop_toBottomOf="@id/location_icons"
 				tools:text="Prague" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
