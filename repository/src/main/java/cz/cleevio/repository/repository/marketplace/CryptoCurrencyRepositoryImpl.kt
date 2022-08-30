@@ -23,6 +23,10 @@ class CryptoCurrencyRepositoryImpl constructor(
 				it?.let { currencies ->
 					cryptoCurrencyUtils.setCurrencies(currencies)
 				}
+			},
+			doOnError = { _, _ ->
+				cryptoCurrencyUtils.setCurrencies(null)
+				null
 			}
 		)
 	}

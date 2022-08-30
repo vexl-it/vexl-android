@@ -6,25 +6,25 @@ import java.math.BigDecimal
 
 class CryptoCurrencyUtils {
 
-	private lateinit var cryptoCurrencies: CryptoCurrencies
+	private var cryptoCurrencies: CryptoCurrencies? = null
 
-	fun setCurrencies(currencies: CryptoCurrencies) {
+	fun setCurrencies(currencies: CryptoCurrencies?) {
 		cryptoCurrencies = currencies
 	}
 
 	fun getPrice(currency: String): BigDecimal {
 		return when (currency) {
 			Currency.CZK.name -> {
-				cryptoCurrencies.priceCzk
+				cryptoCurrencies?.priceCzk ?: BigDecimal.ZERO
 			}
 			Currency.USD.name -> {
-				cryptoCurrencies.priceUsd
+				cryptoCurrencies?.priceUsd ?: BigDecimal.ZERO
 			}
 			Currency.EUR.name -> {
-				cryptoCurrencies.priceEur
+				cryptoCurrencies?.priceEur ?: BigDecimal.ZERO
 			}
 			else -> {
-				BigDecimal(0.0)
+				BigDecimal.ZERO
 			}
 		}
 	}
