@@ -43,12 +43,18 @@ class OfferStateWidget @JvmOverloads constructor(
 			binding.stateActive.setCompoundDrawablesWithIntrinsicBounds(
 				getDrawable(context, R.drawable.ic_ellipse_green), null, null, null
 			)
+			binding.statePauseText.setCompoundDrawablesWithIntrinsicBounds(
+				getDrawable(context, R.drawable.ic_pause), null, null, null
+			)
 			binding.statePauseText.text = context.getText(R.string.widget_offer_state_pause)
 		} else {
 			binding.stateActive.text = context.getText(R.string.widget_offer_state_inactive)
-			binding.stateActive.setTextColor(getColor(context, R.color.gray_4))
+			binding.stateActive.setTextColor(getColor(context, R.color.yellow))
 			binding.stateActive.setCompoundDrawablesWithIntrinsicBounds(
-				getDrawable(context, R.drawable.ic_ellipse_gray), null, null, null
+				getDrawable(context, R.drawable.ic_ellipse_yellow), null, null, null
+			)
+			binding.statePauseText.setCompoundDrawablesWithIntrinsicBounds(
+				getDrawable(context, R.drawable.ic_play_gray), null, null, null
 			)
 			binding.statePauseText.text = context.getText(R.string.widget_offer_state_activate)
 		}

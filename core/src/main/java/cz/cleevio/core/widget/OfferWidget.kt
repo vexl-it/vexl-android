@@ -18,6 +18,7 @@ import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
+import java.math.MathContext
 import java.time.format.DateTimeFormatter
 
 const val LOCATION_DISPLAY_LIMIT = 3
@@ -51,7 +52,7 @@ class OfferWidget @JvmOverloads constructor(
 		binding.card.groupInfo.isVisible = group != null
 		binding.card.groupSticker.isVisible = group != null
 
-		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).toInt()}k"
+		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).round(MathContext(ROUND_PRECISION))}k"
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
 
 		binding.profileImage.load(
@@ -59,7 +60,7 @@ class OfferWidget @JvmOverloads constructor(
 		)
 		val generatedUsername = RandomUtils.generateName()
 
-		binding.card.offerType.text = if (item.offerType == "SELL") {
+		binding.card.offerType.text = if (item.offerType == OfferType.SELL.name) {
 			resources.getString(R.string.offer_to_sell)
 		} else {
 			resources.getString(R.string.offer_to_buy)
@@ -213,6 +214,7 @@ class OfferWidget @JvmOverloads constructor(
 
 	companion object {
 		const val THOUSAND = 1000
+		const val ROUND_PRECISION = 2
 		val myOfferFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd. MM. yyyy")
 	}
 }
