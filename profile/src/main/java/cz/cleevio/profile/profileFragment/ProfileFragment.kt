@@ -34,7 +34,6 @@ import cz.cleevio.profile.requestDataFragment.RequestDataBottomSheetDialog
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
@@ -104,12 +103,10 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		repeatScopeOnStart {
 			profileViewModel.hasPermissionsEvent.collect { hasPermission ->
 				if (hasPermission) {
-					Timber.tag("ASDX").d("Permission granted")
 					showBottomDialog(
 						ProfileContactsListFragment(OpenedFromScreen.PROFILE)
 					)
 				} else {
-					Timber.tag("ASDX").d("Permission rejected")
 					showPermissionDeniedDialog()
 				}
 			}

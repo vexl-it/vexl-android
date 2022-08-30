@@ -10,7 +10,6 @@ import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.repository.CryptoCurrencyUtils
 import kotlinx.parcelize.Parcelize
-import timber.log.Timber
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -78,17 +77,13 @@ fun OfferUnifiedResponse.fromNetwork(currencyUtils: CryptoCurrencyUtils): Offer 
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
 	).let { offer ->
-		Timber.tag("ASDX").d("${offer.activePriceState}")
-		Timber.tag("ASDX").d("${offer.activePriceValue}")
-		Timber.tag("ASDX").d("${offer.activePriceCurrency}")
-
 		val currentCurrencyValue = currencyUtils.getPrice(offer.activePriceCurrency)
 		if (offer.activePriceState == "PRICE_IS_ABOVE") {
-			return@let offer.copy(active = offer.activePriceValue > currentCurrencyValue)
+			return@let offer.copy(active = currentCurrencyValue > offer.activePriceValue)
 		}
 
 		if (offer.activePriceState == "PRICE_IS_BELOW") {
-			return@let offer.copy(active = offer.activePriceValue < currentCurrencyValue)
+			return@let offer.copy(active = currentCurrencyValue < offer.activePriceValue)
 		}
 
 		offer
