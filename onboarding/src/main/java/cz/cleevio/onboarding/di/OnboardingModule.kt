@@ -58,6 +58,7 @@ val onboardingModule = module {
 			navMainGraphModel = get(),
 			chatRepository = get(),
 			encryptedPreference = get(),
+			imageHelper = get()
 		)
 	}
 }

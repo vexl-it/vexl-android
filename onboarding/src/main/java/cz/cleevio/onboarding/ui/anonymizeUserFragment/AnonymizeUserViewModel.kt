@@ -1,28 +1,33 @@
 package cz.cleevio.onboarding.ui.anonymizeUserFragment
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.base.BaseAvatarViewModel
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.network.data.Resource
+import cz.cleevio.network.request.user.UserAvatar
 import cz.cleevio.network.request.user.UserRequest
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
-import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import lightbase.camera.utils.ImageHelper
 
 class AnonymizeUserViewModel constructor(
-	val navMainGraphModel: NavMainGraphModel,
+	navMainGraphModel: NavMainGraphModel,
+	imageHelper: ImageHelper,
 	val userRepository: UserRepository,
 	private val chatRepository: ChatRepository,
 	private val encryptedPreference: EncryptedPreferenceRepository,
-) : BaseViewModel() {
+) : BaseAvatarViewModel(navMainGraphModel, imageHelper) {
 
 	private val _uiState: MutableStateFlow<UIState> = MutableStateFlow(UIState.Normal)
 	val uiState: StateFlow<UIState> = _uiState.asStateFlow()
@@ -51,9 +56,25 @@ class AnonymizeUserViewModel constructor(
 		}
 	}
 
-	fun registerUser(request: UserRequest) {
+	fun registerUser(
+		username: String,
+		avatarUri: Uri?,
+		contentResolver: ContentResolver
+	) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_registerUserChannel.send(Resource.loading())
+
+			val avatar = if (avatarUri != null) {
+				UserAvatar(
+					data = super.getAvatarData(avatarUri, contentResolver),
+					extension = IMAGE_EXTENSION
+				)
+			} else null
+
+			val request = UserRequest(
+				username = username,
+				avatar = avatar
+			)
 
 			val registerUserResponse = userRepository.registerUser(request)
 

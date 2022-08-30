@@ -45,10 +45,14 @@
 		android:id="@+id/anonymizeUserFragment"
 		android:name="cz.cleevio.onboarding.ui.anonymizeUserFragment.AnonymizeUserFragment"
 		android:label="AnonymizeUserFragment"
-		tools:layout="@layout/fragment_anonymize_user" >
+		tools:layout="@layout/fragment_anonymize_user">
 		<argument
-			android:name="request"
-			app:argType="cz.cleevio.network.request.user.UserRequest" />
+			android:name="username"
+			app:argType="string" />
+		<argument
+			android:name="avatarUri"
+			app:nullable="true"
+			app:argType="string" />
 	</fragment>
 
 	<dialog
