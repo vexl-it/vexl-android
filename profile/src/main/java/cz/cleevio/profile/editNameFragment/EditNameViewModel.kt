@@ -19,7 +19,8 @@ class EditNameViewModel constructor(
 	private val _wasSuccessful = Channel<Resource<User>>(Channel.CONFLATED)
 	val wasSuccessful = _wasSuccessful.receiveAsFlow()
 
-	val oldName = userRepository.getUserFlow()
+	val user = userRepository.getUserFlow()
+	var oldName: String = ""
 	var newName: String = ""
 
 	fun editName() {
