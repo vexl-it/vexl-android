@@ -166,6 +166,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 
 	private fun processRawValue(rawValue: String) {
 		try {
+			//example of raw data: https://link.vexl.it/hTGcU33ZQRQE9FwQ9?code=379051
 			Timber.tag("ASDX").d("$rawValue")
 			val code = rawValue.takeLast(CODE_LENGTH)
 			//check that code value is 6 numbers
