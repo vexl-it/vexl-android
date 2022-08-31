@@ -42,8 +42,6 @@ interface ContactRepository {
 
 	suspend fun syncFacebookContacts(facebookId: String, accessToken: String): Resource<List<FacebookContact>>
 
-	suspend fun generateContactsTmp(): Resource<Unit>
-	suspend fun generateFacebookContactsTmp(): Resource<Unit>
 	suspend fun getCommonFriends(contactsPublicKeys: Collection<String>): Map<String, List<BaseContact>>
 
 	suspend fun loadNewContacts(): List<ContactKey>
