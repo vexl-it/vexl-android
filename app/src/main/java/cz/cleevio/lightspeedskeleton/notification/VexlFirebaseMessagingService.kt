@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
 import cz.cleevio.repository.model.contact.ContactKey
@@ -47,9 +48,11 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		//extra info for notification about new members in group
 		//uuid is groupUuid
 		val uuid = remoteMessage.data[NOTIFICATION_UUID]
-		//extra into for notification about new FIRST_LEVEL contact
+		//extra into for notification about new contact
 		//publicKey is that contact publicKey
+		//connectionLevel is that contact level
 		val publicKey = remoteMessage.data[PUBLIC_KEY]
+		val connectionLevel = remoteMessage.data[CONNECTION_LEVEL]
 
 		Timber.tag("FIREBASE").d("$inbox")
 
@@ -69,10 +72,22 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 
 		publicKey?.let { publicKey ->
 			coroutineScope.launch {
+				val level = when (connectionLevel) {
+					FriendLevel.FIRST_DEGREE.name -> {
+						ContactLevel.FIRST
+					}
+					FriendLevel.SECOND_DEGREE.name -> {
+						ContactLevel.SECOND
+					}
+					else -> {
+						ContactLevel.FIRST
+					}
+				}
+
 				contactRepository.addNewContact(
 					ContactKey(
 						key = publicKey,
-						level = ContactLevel.FIRST,
+						level = level,
 						groupUuid = null,
 						isUpToDate = false
 					)
@@ -155,6 +170,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		const val NOTIFICATION_SENDER = "sender"
 		private const val NOTIFICATION_UUID = "group_uuid"
 		private const val PUBLIC_KEY = "public_key"
+		private const val CONNECTION_LEVEL = "connection_level"
 
 		const val NOTIFICATION_TYPE_DEFAULT = "UNKNOWN"
 		private const val CODE = 102_487
