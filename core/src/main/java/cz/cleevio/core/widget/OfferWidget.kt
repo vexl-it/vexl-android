@@ -2,6 +2,7 @@ package cz.cleevio.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -35,7 +36,7 @@ class OfferWidget @JvmOverloads constructor(
 		setupUI()
 	}
 
-	@Suppress("LongMethod, ComplexMethod")
+	@Suppress("LongMethod", "ComplexMethod")
 	fun bind(item: Offer, requestOffer: ((String) -> Unit)? = null, mode: Mode? = null, group: Group? = null) {
 		binding.card.offerDescription.text = item.offerDescription
 		group?.let {
@@ -68,21 +69,21 @@ class OfferWidget @JvmOverloads constructor(
 		if (mode == Mode.MY_OFFER) {
 			binding.userName.text = context.getString(R.string.offer_my_offer)
 		} else {
-			val isSell = (item.offerType == OfferType.SELL.name && !item.isMine) ||
-				(item.offerType == OfferType.BUY.name && item.isMine)
+			val isSell = item.offerType == OfferType.SELL.name && !item.isMine ||
+				item.offerType == OfferType.BUY.name && item.isMine
 			if (isSell) {
 				colorizeTransactionType(
 					resources.getString(R.string.marketplace_detail_user_sell, "$generatedUsername "),
 					generatedUsername,
 					binding.userName,
-					R.color.pink_100
+					if (item.isRequested) R.color.gray_3 else R.color.pink_100
 				)
 			} else {
 				colorizeTransactionType(
 					resources.getString(R.string.marketplace_detail_user_buy, "$generatedUsername "),
 					generatedUsername,
 					binding.userName,
-					R.color.green_100
+					if (item.isRequested) R.color.gray_3 else R.color.green_100
 				)
 			}
 		}
@@ -99,11 +100,12 @@ class OfferWidget @JvmOverloads constructor(
 		}
 		binding.card.locationIcons.bind(locationValues)
 
-		//location text
-		val cities = item.location.take(LOCATION_DISPLAY_LIMIT).joinToString(", ") { it.city }
+		//location text + duplicity prevention
+		val locations = item.location.map { it.city }.toSet()
+		val cities = locations.take(LOCATION_DISPLAY_LIMIT).joinToString(", ") { it }
 		binding.card.location.text = if (item.locationState == LocationButtonSelected.ONLINE.name) {
-				"$cities, ${resources.getString(R.string.widget_location_online)}"
-			} else {
+			"$cities, ${resources.getString(R.string.widget_location_online)}"
+		} else {
 			cities
 		}
 
@@ -192,10 +194,11 @@ class OfferWidget @JvmOverloads constructor(
 			}
 		)
 		binding.requestBtn.icon = if (isRequested) {
-			context.getDrawable(R.drawable.ic_succesfull_blue)
+			AppCompatResources.getDrawable(context, R.drawable.ic_succesfull_blue)
 		} else {
-			context.getDrawable(R.drawable.ic_eye)
+			AppCompatResources.getDrawable(context, R.drawable.ic_eye)
 		}
+		binding.requestBtn.iconTint = null
 
 		binding.card.offerWrapper.run {
 			setCardBackgroundColor(
@@ -218,6 +221,13 @@ class OfferWidget @JvmOverloads constructor(
 				if (isRequested) R.color.gray_1 else R.color.white
 			)
 		)
+
+		if (isRequested) {
+			binding.profileImage.setColorFilter(
+				ContextCompat.getColor(context, R.color.gray_1),
+				android.graphics.PorterDuff.Mode.MULTIPLY
+			)
+		}
 
 		binding.requestBtn.isEnabled = !isRequested
 	}
