@@ -132,7 +132,8 @@ val networkModule = module {
 			interceptors = listOf(
 				get(named(AUTH_INTERCEPTOR)),
 				get(named(NETWORK_INTERCEPTOR)),
-				get(named(HTTP_LOGGING_INTERCEPTOR))
+				get(named(HTTP_LOGGING_INTERCEPTOR)),
+				get(named(LOGOUT_INTERCEPTOR))
 			),
 			baseUrl = BuildConfig.CONTACT_API_BASE_URL
 		).create(GroupApi::class.java)

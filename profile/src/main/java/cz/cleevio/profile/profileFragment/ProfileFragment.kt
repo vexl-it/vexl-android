@@ -239,14 +239,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			showBottomDialog(
 				DeleteAccountBottomSheetDialog {
 					if (it) {
-						profileViewModel.logout(
-							{
-								profileViewModel.navigateToOnboarding()
-							},
-							{
-								profileViewModel.navigateToOnboarding()
-							}
-						)
+						profileViewModel.logout()
 					}
 				}
 			)

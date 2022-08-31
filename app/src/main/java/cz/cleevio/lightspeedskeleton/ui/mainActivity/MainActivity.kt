@@ -2,7 +2,6 @@ package cz.cleevio.lightspeedskeleton.ui.mainActivity
 
 import android.animation.Animator
 import android.animation.ValueAnimator
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -343,16 +342,20 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				errorFlow.logout.collect { error ->
 					//todo: do logout stuff (clean DB, delete offer on BE, etc)
-
-					//restart app
-					this@MainActivity.let { activity ->
-						val intent = activity.packageManager.getLaunchIntentForPackage(activity.packageName)
-						intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-						startActivity(intent)
-						activity.finish()
-					}
+					viewModel.logout(
+						onSuccess = { triggerAppRestart() },
+						onError = { triggerAppRestart() }
+					)
 				}
 			}
+		}
+	}
+
+	private fun triggerAppRestart() {
+		lifecycleScope.launch {
+			viewModel.navMainGraphModel.navigateToGraph(
+				NavMainGraphModel.NavGraph.Onboarding
+			)
 		}
 	}
 

@@ -55,6 +55,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val connectionLevel = remoteMessage.data[CONNECTION_LEVEL]
 
 		Timber.tag("FIREBASE").d("$inbox")
+		Timber.tag("FIREBASE").d("publicKey $publicKey")
+		Timber.tag("FIREBASE").d("connectionLevel $connectionLevel")
 
 		//todo: do some custom stuff here, check notification type, check DB, display or not
 		//there will be more stuff when we implement group functionality
