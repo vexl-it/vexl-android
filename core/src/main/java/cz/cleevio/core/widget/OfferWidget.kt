@@ -100,8 +100,9 @@ class OfferWidget @JvmOverloads constructor(
 		}
 		binding.card.locationIcons.bind(locationValues)
 
-		//location text
-		val cities = item.location.take(LOCATION_DISPLAY_LIMIT).joinToString(", ") { it.city }
+		//location text + duplicity prevention
+		val locations = item.location.map { it.city }.toSet()
+		val cities = locations.take(LOCATION_DISPLAY_LIMIT).joinToString(", ") { it }
 		binding.card.location.text = if (item.locationState == LocationButtonSelected.ONLINE.name) {
 				"$cities, ${resources.getString(R.string.widget_location_online)}"
 			} else {
