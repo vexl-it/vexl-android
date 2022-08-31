@@ -5,7 +5,7 @@
 	android:id="@+id/nav_intro"
 	app:startDestination="@id/introParentFragment">
 
-	<include app:graph="@navigation/nav_onboarding_phone" />
+	<include app:graph="@navigation/nav_onboarding" />
 
 	<fragment
 		android:id="@+id/introParentFragment"
@@ -13,13 +13,9 @@
 		android:label="IntroParentFragment"
 		tools:layout="@layout/fragment_intro_parent">
 
-		<argument
-			android:name="continueToOnboarding"
-			app:argType="boolean" />
-
 		<action
-			android:id="@+id/proceed_to_onboarding_phone"
-			app:destination="@id/nav_onboarding_phone" />
+			android:id="@+id/proceed_to_onboarding"
+			app:destination="@id/nav_onboarding" />
 
 	</fragment>
 </navigation>

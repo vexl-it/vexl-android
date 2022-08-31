@@ -15,57 +15,25 @@ class IntroPagerAdapter constructor(
 
 	@Suppress("MagicNumber")
 	override fun createFragment(position: Int): Fragment {
-		val fragment = FaqPageFragment()
-
-		// TODO add another illustrations
+		val fragment = IntroPageFragment()
 
 		when (position) {
 			0 -> fragment.arguments = Bundle().apply {
-				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_one_title))
-				putString(FaqPageFragment.FAQ_SUBTITLE, fragmentActivity.getString(R.string.faq_screen_one_subtitle))
+				putString(IntroPageFragment.INTRO_TITLE, fragmentActivity.getString(R.string.intro_first_title))
 			}
 			1 -> fragment.arguments = Bundle().apply {
-				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_two_title))
-				putString(FaqPageFragment.FAQ_SUBTITLE, fragmentActivity.getString(R.string.faq_screen_two_subtitle))
+				putString(IntroPageFragment.INTRO_TITLE, fragmentActivity.getString(R.string.intro_second_title))
 			}
 			2 -> fragment.arguments = Bundle().apply {
-				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_three_title))
-				putString(FaqPageFragment.FAQ_SUBTITLE, fragmentActivity.getString(R.string.faq_screen_three_subtitle))
+				putString(IntroPageFragment.INTRO_TITLE, fragmentActivity.getString(R.string.intro_third_title))
 			}
-			3 -> fragment.arguments = Bundle().apply {
-				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_four_title))
-				putString(FaqPageFragment.FAQ_SUBTITLE, fragmentActivity.getString(R.string.faq_screen_four_subtitle))
-			}
-			4 -> fragment.arguments = Bundle().apply {
-				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_five_title))
-				putString(FaqPageFragment.FAQ_SUBTITLE, fragmentActivity.getString(R.string.faq_screen_five_subtitle))
-			}
-			5 -> fragment.arguments = Bundle().apply {
-				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_six_title))
-				putString(FaqPageFragment.FAQ_SUBTITLE, fragmentActivity.getString(R.string.faq_screen_six_subtitle))
-			}
-			6 -> fragment.arguments = Bundle().apply {
-				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_seven_title))
-				putString(
-					FaqPageFragment.FAQ_SUBTITLE,
-					String.format(
-						CONTACT_SUBTITLE,
-						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_1),
-						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_2),
-						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_3)
-					).replace(IOS_NEW_LINE, ANDROID_NEW_LINE)
-				)
-			}
-			else -> error("Wrong position $position for onboarding")
+			else -> error("Wrong position $position for intro")
 		}
 
 		return fragment
 	}
 
 	companion object {
-		private const val NUMBER_OF_PAGES = 7
-		private const val CONTACT_SUBTITLE = "%s <font color='#101010'><b>%s</b></font>%s"
-		private const val IOS_NEW_LINE = "\n"
-		private const val ANDROID_NEW_LINE = "<br>"
+		private const val NUMBER_OF_PAGES = 3
 	}
 }

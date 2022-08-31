@@ -1,30 +1,27 @@
 package cz.cleevio.onboarding.ui.introFragment
 
-import cz.cleevio.core.utils.fromHtml
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
-import cz.cleevio.onboarding.databinding.FragmentFaqPageBinding
+import cz.cleevio.onboarding.databinding.FragmentIntroPageBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 
 class IntroPageFragment : BaseFragment(R.layout.fragment_intro_page) {
 
-	private val binding by viewBinding(FragmentFaqPageBinding::bind)
+	private val binding by viewBinding(FragmentIntroPageBinding::bind)
 
 	override fun bindObservers() = Unit
 
 	override fun initView() {
 		arguments?.let { args ->
-			binding.faqTitle.text = args.getString(FAQ_TITLE) ?: ""
-			binding.faqSubtitle.text = fromHtml(args.getString(FAQ_SUBTITLE) ?: "")
-			val faqImage = args.getInt(FAQ_RESOURCE_ID)
-			if (faqImage != NO_IMAGE) binding.faqImage.setImageResource(faqImage)
+			binding.introTitle.text = args.getString(INTRO_TITLE) ?: ""
+			val introImage = args.getInt(INTRO_RESOURCE_ID)
+			if (introImage != NO_IMAGE) binding.introAnimation.setImageResource(introImage)
 		}
 	}
 
 	companion object {
-		const val FAQ_TITLE = "faq_title"
-		const val FAQ_SUBTITLE = "faq_subtitle"
-		const val FAQ_RESOURCE_ID = "faq_resource_id"
+		const val INTRO_TITLE = "intro_title"
+		const val INTRO_RESOURCE_ID = "intro_resource_id"
 		private const val NO_IMAGE = 0
 	}
 }

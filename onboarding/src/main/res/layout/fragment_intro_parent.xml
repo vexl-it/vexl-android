@@ -32,7 +32,7 @@
 				app:active_count="1"
 				app:inactive_color="@color/gray_4"
 				app:layout_constraintTop_toTopOf="parent"
-				app:size="7" />
+				app:size="3" />
 
 			<androidx.viewpager2.widget.ViewPager2
 				android:id="@+id/intro_viewpager"
