@@ -19,8 +19,11 @@ import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import java.math.BigDecimal
-import java.math.MathContext
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 const val LOCATION_DISPLAY_LIMIT = 3
 
@@ -53,7 +56,16 @@ class OfferWidget @JvmOverloads constructor(
 		binding.card.groupInfo.isVisible = group != null
 		binding.card.groupSticker.isVisible = group != null
 
-		binding.card.priceLimit.text = "${(item.amountTopLimit / BigDecimal(THOUSAND)).round(MathContext(ROUND_PRECISION))}k"
+
+		val priceLimit = item.amountTopLimit.divide(
+			BigDecimal(THOUSAND),
+			1,
+			RoundingMode.HALF_UP
+		)
+
+		binding.card.priceLimit.text =
+			"${(DecimalFormat("###,###.#", DecimalFormatSymbols(Locale.US)).format(priceLimit))}k"
+
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
 
 		binding.profileImage.load(
