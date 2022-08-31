@@ -48,4 +48,5 @@ dependencies {
     implementation project(':camera')
 
     implementation 'io.michaelrocks:libphonenumber-android:8.12.52'
+    implementation 'com.airbnb.android:lottie:5.2.0'
 }

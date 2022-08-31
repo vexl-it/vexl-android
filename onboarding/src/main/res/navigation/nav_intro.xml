@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_intro"
+	app:startDestination="@id/introParentFragment">
+
+	<include app:graph="@navigation/nav_onboarding_phone" />
+
+	<fragment
+		android:id="@+id/introParentFragment"
+		android:name="cz.cleevio.onboarding.ui.introFragment.IntroParentFragment"
+		android:label="IntroParentFragment"
+		tools:layout="@layout/fragment_intro_parent">
+
+		<argument
+			android:name="continueToOnboarding"
+			app:argType="boolean" />
+
+		<action
+			android:id="@+id/proceed_to_onboarding_phone"
+			app:destination="@id/nav_onboarding_phone" />
+
+	</fragment>
+</navigation>
