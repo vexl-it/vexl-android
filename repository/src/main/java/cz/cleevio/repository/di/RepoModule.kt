@@ -1,7 +1,6 @@
 package cz.cleevio.repository.di
 
 import cz.cleevio.repository.PhoneNumberUtils
-import cz.cleevio.repository.repository.CryptoCurrencyUtils
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.chat.ChatRepositoryImpl
 import cz.cleevio.repository.repository.contact.ContactRepository
@@ -17,10 +16,6 @@ import cz.cleevio.repository.repository.user.UserRepositoryImpl
 import org.koin.dsl.module
 
 val repoModule = module {
-
-	single {
-		CryptoCurrencyUtils()
-	}
 
 	single<UserRepository> {
 		UserRepositoryImpl(
@@ -42,7 +37,7 @@ val repoModule = module {
 			offerCommonFriendCrossRefDao = get(),
 			chatRepository = get(),
 			locationApi = get(),
-			cryptoCurrencyUtils = get()
+			cryptoCurrencyDao = get()
 		)
 	}
 
@@ -60,7 +55,7 @@ val repoModule = module {
 	single<CryptoCurrencyRepository> {
 		CryptoCurrencyRepositoryImpl(
 			cryptocurrencyApi = get(),
-			cryptoCurrencyUtils = get()
+			cryptoCurrencyDao = get()
 		)
 	}
 

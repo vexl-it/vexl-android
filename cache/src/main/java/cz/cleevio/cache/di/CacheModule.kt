@@ -73,6 +73,10 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().cryptoCurrencyDao()
+	}
+
+	single {
 		TransactionProvider(get())
 	}
 
