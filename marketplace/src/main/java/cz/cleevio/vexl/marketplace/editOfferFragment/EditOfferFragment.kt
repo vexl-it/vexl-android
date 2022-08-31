@@ -67,10 +67,12 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		}
 
 		repeatScopeOnStart {
+			// Fixme: Update visibility logic once the functionality will be reviewed after conference
 			viewModel.groups.collect { groups ->
 				adapter.submitList(groups)
-				binding.groupTitle.isVisible = groups.isNotEmpty()
-				binding.groupDescription.isVisible = groups.isNotEmpty()
+				binding.groupTitle.isVisible = false //groups.isNotEmpty()
+				binding.groupDescription.isVisible = false //groups.isNotEmpty()
+				binding.groupRecycler.isVisible = false
 			}
 		}
 
