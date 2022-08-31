@@ -166,13 +166,14 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 
 	private fun processRawValue(rawValue: String) {
 		try {
-			//check that raw value is 6 numbers
-			if (rawValue.isNotBlank() && rawValue.filter { it.isDigit() }.length == CODE_LENGTH) {
+			Timber.tag("ASDX").d("$rawValue")
+			val code = rawValue.takeLast(CODE_LENGTH)
+			//check that code value is 6 numbers
+			if (code.isNotBlank() && code.filter { it.isDigit() }.length == CODE_LENGTH) {
 				found = true
 				requireActivity().runOnUiThread {
 					cameraSource.stop()
-					Timber.tag("ASDX").d("$rawValue")
-					viewModel.loadGroupByCode(rawValue)
+					viewModel.loadGroupByCode(code)
 				}
 			} else {
 				requireActivity().runOnUiThread {
@@ -181,6 +182,9 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera), KoinComponent {
 			}
 		} catch (e: Exception) {
 			Timber.e(e)
+			requireActivity().runOnUiThread {
+				showToast(getString(R.string.groups_scan_not_found), Toast.LENGTH_LONG)
+			}
 		}
 	}
 
