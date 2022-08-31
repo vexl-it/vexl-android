@@ -29,10 +29,10 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 					// continue to onboarding
 					viewModel.deletePreviousUserKeys()
 
-					Timber.i("Navigating to onboarding")
+					Timber.i("Navigating to intro")
 					delay(SPLASH_DELAY)
 					viewModel.navMainGraphModel.navigateToGraph(
-						NavMainGraphModel.NavGraph.Onboarding
+						NavMainGraphModel.NavGraph.Intro
 					)
 				}
 			}

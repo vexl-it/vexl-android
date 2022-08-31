@@ -7,6 +7,8 @@
 
 	<include app:graph="@navigation/nav_camera" />
 
+	<include app:graph="@navigation/nav_intro" />
+
 	<include app:graph="@navigation/nav_onboarding" />
 
 	<include app:graph="@navigation/nav_onboarding_identity" />
@@ -24,6 +26,10 @@
 		android:name="cz.cleevio.lightspeedskeleton.ui.splashFragment.SplashFragment"
 		android:label="SplashFragment"
 		tools:layout="@layout/fragment_splash">
+		<action
+			android:id="@+id/action_to_intro"
+			app:destination="@+id/nav_intro" />
+
 		<action
 			android:id="@+id/action_to_onboarding"
 			app:destination="@+id/nav_onboarding" />

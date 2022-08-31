@@ -2,20 +2,18 @@ package cz.cleevio.onboarding.ui.introFragment
 
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
-import cz.cleevio.onboarding.databinding.FragmentFaqParentBinding
+import cz.cleevio.onboarding.databinding.FragmentIntroParentBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 
 class IntroParentFragment : BaseFragment(R.layout.fragment_intro_parent) {
 
-	private val binding by viewBinding(FragmentFaqParentBinding::bind)
+	private val binding by viewBinding(FragmentIntroParentBinding::bind)
 	override val hasMenu = true
-	private val args by navArgs<IntroParentFragmentArgs>()
 
 	private var adapter: IntroPagerAdapter? = null
 
@@ -24,22 +22,18 @@ class IntroParentFragment : BaseFragment(R.layout.fragment_intro_parent) {
 	override fun initView() {
 		setupAdapter()
 
-		binding.close.setOnClickListener {
-			navigateNext()
-		}
-
-		binding.faqParentLeftBtn.setOnClickListener {
-			if (binding.faqViewpager.currentItem == 0) {
+		binding.introParentLeftBtn.setOnClickListener {
+			if (binding.introViewpager.currentItem == 0) {
 				findNavController().popBackStack()
 			} else {
-				binding.faqViewpager.setCurrentItem(binding.faqViewpager.currentItem - 1, true)
+				binding.introViewpager.setCurrentItem(binding.introViewpager.currentItem - 1, true)
 			}
 		}
-		binding.faqParentRightBtn.setOnClickListener {
-			if (binding.faqViewpager.currentItem == (adapter?.itemCount ?: 0) - 1) {
+		binding.introParentRightBtn.setOnClickListener {
+			if (binding.introViewpager.currentItem == (adapter?.itemCount ?: 0) - 1) {
 				navigateNext()
 			} else {
-				binding.faqViewpager.setCurrentItem(binding.faqViewpager.currentItem + 1, true)
+				binding.introViewpager.setCurrentItem(binding.introViewpager.currentItem + 1, true)
 			}
 		}
 
@@ -50,25 +44,10 @@ class IntroParentFragment : BaseFragment(R.layout.fragment_intro_parent) {
 
 	private fun setupAdapter() {
 		adapter = IntroPagerAdapter(requireActivity())
-		binding.faqViewpager.adapter = adapter
-		binding.faqViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+		binding.introViewpager.adapter = adapter
+		binding.introViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 			override fun onPageSelected(position: Int) {
 				binding.segmentBar.setProgress(position + 1)
-
-				when (position) {
-					0 -> {
-						binding.faqParentLeftBtn.text = getString(R.string.general_close)
-						binding.faqParentRightBtn.text = getString(R.string.next)
-					}
-					(adapter?.itemCount ?: 0) - 1 -> {
-						binding.faqParentLeftBtn.text = getString(R.string.general_back)
-						binding.faqParentRightBtn.text = getString(R.string.general_done)
-					}
-					else -> {
-						binding.faqParentLeftBtn.text = getString(R.string.general_back)
-						binding.faqParentRightBtn.text = getString(R.string.next)
-					}
-				}
 
 				super.onPageSelected(position)
 			}
@@ -76,12 +55,8 @@ class IntroParentFragment : BaseFragment(R.layout.fragment_intro_parent) {
 	}
 
 	private fun navigateNext() {
-		if (args.continueToOnboarding) {
-			findNavController().safeNavigateWithTransition(
-				IntroParentFragmentDirections.proceedToOnboardingPhone()
-			)
-		} else {
-			findNavController().popBackStack()
-		}
+		findNavController().safeNavigateWithTransition(
+			IntroParentFragmentDirections.proceedToOnboarding()
+		)
 	}
 }
