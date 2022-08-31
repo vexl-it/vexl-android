@@ -36,7 +36,7 @@
 	</style>
 
 	<style name="Widget.LightBase.Camera.ImageButton.PhotoPreview.FlipCamera" parent="">
-		<item name="android:layout_width">56dp</item>
+		<item name="android:layout_width">56dp</item>č
 		<item name="android:layout_height">56dp</item>
 		<item name="android:background">@drawable/background_black_semitransparent</item>
 		<item name="android:foreground">@drawable/ripple_mask_rounded</item>

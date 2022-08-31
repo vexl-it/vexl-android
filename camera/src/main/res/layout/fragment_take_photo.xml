@@ -37,7 +37,7 @@
 		<ImageView
 			android:id="@+id/flipCameraBtn"
 			style="@style/Widget.LightBase.Camera.ImageButton.PhotoPreview.FlipCamera"
-			android:contentDescription="@string/camera_close_camera"
+			android:contentDescription="@null"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toStartOf="@+id/selfieCameraButton"
 			app:layout_constraintTop_toTopOf="@+id/selfieCameraButton"

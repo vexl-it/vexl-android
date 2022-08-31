@@ -27,7 +27,7 @@
 		app:layout_constraintBottom_toBottomOf="@id/close"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="@id/close"
-		app:size="4" />
+		app:size="3" />
 
 	<com.google.android.material.card.MaterialCardView
 		style="@style/Widget.Vexl.CardView"
