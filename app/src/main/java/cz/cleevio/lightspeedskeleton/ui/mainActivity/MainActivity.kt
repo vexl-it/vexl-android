@@ -337,6 +337,26 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 				}
 			}
 		}
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				errorFlow.logout.collect { error ->
+					//todo: do logout stuff (clean DB, delete offer on BE, etc)
+					viewModel.logout(
+						onSuccess = { triggerAppRestart() },
+						onError = { triggerAppRestart() }
+					)
+				}
+			}
+		}
+	}
+
+	private fun triggerAppRestart() {
+		lifecycleScope.launch {
+			viewModel.navMainGraphModel.navigateToGraph(
+				NavMainGraphModel.NavGraph.Onboarding
+			)
+		}
 	}
 
 	private fun getFirstFragmentFromNavHost(): Fragment? {

@@ -16,13 +16,10 @@ val profileModule = module {
 	viewModel {
 		ProfileViewModel(
 			userRepository = get(),
-			contactRepository = get(),
-			offerRepository = get(),
-			chatRepository = get(),
 			remoteConfig = get(),
-			groupRepository = get(),
 			encryptedPreferenceRepository = get(),
-			navMainGraphModel = get()
+			navMainGraphModel = get(),
+			networkError = get()
 		)
 	}
 

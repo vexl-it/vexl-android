@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit
 const val NETWORK_INTERCEPTOR = "NETWORK_INTERCEPTOR"
 const val AUTH_INTERCEPTOR = "AUTH_INTERCEPTOR"
 const val HTTP_LOGGING_INTERCEPTOR = "HTTP_LOGGING_INTERCEPTOR"
+const val LOGOUT_INTERCEPTOR = "LOGOUT_INTERCEPTOR"
 const val NETWORK_REQUEST_TIMEOUT = 120L
 
 val networkModule = module {
@@ -72,7 +73,8 @@ val networkModule = module {
 			interceptors = listOf(
 				get(named(AUTH_INTERCEPTOR)),
 				get(named(NETWORK_INTERCEPTOR)),
-				get(named(HTTP_LOGGING_INTERCEPTOR))
+				get(named(HTTP_LOGGING_INTERCEPTOR)),
+				get(named(LOGOUT_INTERCEPTOR))
 			),
 			baseUrl = BuildConfig.CONTACT_API_BASE_URL
 		).create(ContactApi::class.java)
@@ -130,7 +132,8 @@ val networkModule = module {
 			interceptors = listOf(
 				get(named(AUTH_INTERCEPTOR)),
 				get(named(NETWORK_INTERCEPTOR)),
-				get(named(HTTP_LOGGING_INTERCEPTOR))
+				get(named(HTTP_LOGGING_INTERCEPTOR)),
+				get(named(LOGOUT_INTERCEPTOR))
 			),
 			baseUrl = BuildConfig.CONTACT_API_BASE_URL
 		).create(GroupApi::class.java)
@@ -219,6 +222,12 @@ val networkModule = module {
 		HttpLoggingInterceptor(logging).apply {
 			level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
 		}
+	} bind Interceptor::class
+
+	single(named(LOGOUT_INTERCEPTOR)) {
+		LogoutInterceptor(
+			networkError = get()
+		)
 	} bind Interceptor::class
 
 	single {
