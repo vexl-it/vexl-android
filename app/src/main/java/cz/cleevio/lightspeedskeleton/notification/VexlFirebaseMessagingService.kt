@@ -57,9 +57,9 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		val publicKey = remoteMessage.data[PUBLIC_KEY]
 		val connectionLevel = remoteMessage.data[CONNECTION_LEVEL]
 
-		Timber.tag("FIREBASE").d("$inbox")
-		Timber.tag("FIREBASE").d("publicKey $publicKey")
-		Timber.tag("FIREBASE").d("connectionLevel $connectionLevel")
+		Timber.tag(FIREBASE_TAG).d("$inbox")
+		Timber.tag(FIREBASE_TAG).d("publicKey $publicKey")
+		Timber.tag(FIREBASE_TAG).d("connectionLevel $connectionLevel")
 
 		//todo: do some custom stuff here, check notification type, check DB, display or not
 		//there will be more stuff when we implement group functionality
@@ -170,6 +170,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	}
 
 	companion object {
+		const val FIREBASE_TAG = "FIREBASE"
 		const val CHANNEL_ID = R.string.channel_chat_id
 		const val NOTIFICATION_TYPE = "type"
 		const val NOTIFICATION_LOG_MESSAGE = "log_message"

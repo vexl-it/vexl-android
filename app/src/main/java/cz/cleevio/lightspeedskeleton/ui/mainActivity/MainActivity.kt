@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			}
 	}
 
-	@Suppress("ComplexMethod")
+	@Suppress("ComplexMethod", "LongMethod")
 	private fun bindObservers() {
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.CREATED) {

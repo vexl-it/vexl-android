@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import cz.cleevio.onboarding.R
-import cz.cleevio.onboarding.ui.faqPageFragment.FaqPageFragment
 
 class IntroPagerAdapter constructor(
 	private val fragmentActivity: FragmentActivity
