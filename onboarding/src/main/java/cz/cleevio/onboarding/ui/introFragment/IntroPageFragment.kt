@@ -14,14 +14,14 @@ class IntroPageFragment : BaseFragment(R.layout.fragment_intro_page) {
 	override fun initView() {
 		arguments?.let { args ->
 			binding.introTitle.text = args.getString(INTRO_TITLE) ?: ""
-			val introImage = args.getInt(INTRO_RESOURCE_ID)
-			if (introImage != NO_IMAGE) binding.introAnimation.setImageResource(introImage)
+			val introAnimationId = args.getInt(INTRO_RESOURCE_ID)
+			binding.introAnimation.setAnimation(introAnimationId)
+			binding.introAnimation.playAnimation()
 		}
 	}
 
 	companion object {
 		const val INTRO_TITLE = "intro_title"
 		const val INTRO_RESOURCE_ID = "intro_resource_id"
-		private const val NO_IMAGE = 0
 	}
 }
