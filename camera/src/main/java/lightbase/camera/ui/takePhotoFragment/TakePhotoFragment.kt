@@ -90,6 +90,15 @@ class TakePhotoFragment : BaseFragment(R.layout.fragment_take_photo) {
 			binding.selfieCameraButton.setOnClickListener { takePhoto(requireContext()) }
 		}
 
+		binding.flipCameraBtn.setOnClickListener {
+			lensFacing = if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
+				CameraSelector.LENS_FACING_BACK
+			} else {
+				CameraSelector.LENS_FACING_FRONT
+			}
+			requestCameraPermissions.launch(arrayOf(Manifest.permission.CAMERA))
+		}
+
 		setupCloseButton()
 	}
 
