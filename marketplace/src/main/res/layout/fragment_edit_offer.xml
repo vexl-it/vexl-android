@@ -284,9 +284,9 @@
 				android:layout_height="wrap_content"
 				android:layout_marginEnd="16dp"
 				android:background="@color/black"
-				android:visibility="gone"
 				android:contentDescription="?content"
 				android:src="@drawable/ic_chevron_down"
+				android:visibility="gone"
 				app:layout_constraintBottom_toBottomOf="@id/advanced_title"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toTopOf="@+id/advanced_title"
@@ -322,6 +322,7 @@
 				android:layout_marginTop="32dp"
 				android:text="@string/filter_friend_level_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				android:visibility="gone"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/new_offer_btc_network" />
 
@@ -333,6 +334,7 @@
 				android:layout_marginTop="4dp"
 				android:text="@string/filter_friend_level_description"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				android:visibility="gone"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/friend_level_title" />
 
@@ -342,6 +344,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="24dp"
+				android:visibility="gone"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/friend_level_description" />
@@ -352,9 +355,9 @@
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="32dp"
-				android:visibility="gone"
 				android:text="@string/offer_create_group_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
+				android:visibility="gone"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@+id/new_offer_friend_level" />
 
@@ -364,10 +367,10 @@
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="16dp"
 				android:layout_marginTop="4dp"
-				android:visibility="gone"
 				android:text="@string/offer_create_group_description"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Filter.Section.Title.Gray"
 				android:textSize="14sp"
+				android:visibility="gone"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@+id/group_title" />
 
@@ -376,8 +379,8 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="16dp"
-				android:paddingTop="16dp"
 				android:nestedScrollingEnabled="false"
+				android:paddingTop="16dp"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
