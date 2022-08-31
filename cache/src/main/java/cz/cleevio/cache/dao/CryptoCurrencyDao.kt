@@ -18,5 +18,4 @@ interface CryptoCurrencyDao {
 
 	@Query("SELECT * FROM CryptoCurrencyEntity LIMIT 1")
 	fun getCryptoCurrency(): CryptoCurrencyEntity?
-
 }

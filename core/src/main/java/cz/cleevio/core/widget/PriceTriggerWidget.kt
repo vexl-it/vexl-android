@@ -27,7 +27,6 @@ class PriceTriggerWidget @JvmOverloads constructor(
 	private lateinit var binding: WidgetTriggerPriceBinding
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository by inject()
 
-
 	var onFocusChangeListener: ((Boolean) -> Unit)? = null
 
 	init {
@@ -79,9 +78,7 @@ class PriceTriggerWidget @JvmOverloads constructor(
 		return BigDecimal.ZERO
 	}
 
-	private fun getTriggerCurrency(): String {
-		return this.currency.name
-	}
+	private fun getTriggerCurrency(): String = this.currency.name
 
 	fun getPriceTriggerValue(): PriceTriggerValue = PriceTriggerValue(
 		type = getTriggerType(),
