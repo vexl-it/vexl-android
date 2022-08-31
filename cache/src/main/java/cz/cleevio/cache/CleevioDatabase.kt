@@ -22,7 +22,8 @@ import cz.cleevio.cache.entity.*
 		ChatMessageEntity::class,
 		NotificationEntity::class,
 		GroupEntity::class,
-		ChatUserIdentityEntity::class
+		ChatUserIdentityEntity::class,
+		CryptoCurrencyEntity::class,
 	],
 	version = 1,
 	// Export is true only if you want to create new json schema for testing purpose
@@ -47,4 +48,5 @@ abstract class CleevioDatabase : RoomDatabase() {
 	abstract fun requestedOfferDao(): RequestedOfferDao
 	abstract fun offerCommonFriendCrossRefDao(): OfferCommonFriendCrossRefDao
 	abstract fun groupDao(): GroupDao
+	abstract fun cryptoCurrencyDao(): CryptoCurrencyDao
 }

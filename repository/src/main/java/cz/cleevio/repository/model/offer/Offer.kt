@@ -8,7 +8,7 @@ import cz.cleevio.network.response.offer.OfferUnifiedAdminResponse
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.contact.fromDao
-import cz.cleevio.repository.repository.CryptoCurrencyUtils
+import cz.cleevio.repository.model.currency.CryptoCurrencyValues
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 import java.time.ZonedDateTime
@@ -51,7 +51,7 @@ data class Offer constructor(
 	}
 }
 
-fun OfferUnifiedResponse.fromNetwork(currencyUtils: CryptoCurrencyUtils): Offer {
+fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?): Offer {
 	return Offer(
 		offerId = this.offerId,
 		location = this.location.map { it.decryptedValue.fromNetwork() },
@@ -77,13 +77,16 @@ fun OfferUnifiedResponse.fromNetwork(currencyUtils: CryptoCurrencyUtils): Offer 
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
 	).let { offer ->
-		val currentCurrencyValue = currencyUtils.getPrice(offer.activePriceCurrency)
-		if (offer.activePriceState == PriceTriggerType.PRICE_IS_ABOVE.name) {
-			return@let offer.copy(active = currentCurrencyValue > offer.activePriceValue)
-		}
 
-		if (offer.activePriceState == PriceTriggerType.PRICE_IS_BELOW.name) {
-			return@let offer.copy(active = currentCurrencyValue < offer.activePriceValue)
+		if (cryptoCurrencyValues != null) {
+			val currentCurrencyValue = cryptoCurrencyValues.getPrice(offer.activePriceCurrency)
+			if (offer.activePriceState == PriceTriggerType.PRICE_IS_ABOVE.name) {
+				return@let offer.copy(active = currentCurrencyValue > offer.activePriceValue)
+			}
+
+			if (offer.activePriceState == PriceTriggerType.PRICE_IS_BELOW.name) {
+				return@let offer.copy(active = currentCurrencyValue < offer.activePriceValue)
+			}
 		}
 
 		offer

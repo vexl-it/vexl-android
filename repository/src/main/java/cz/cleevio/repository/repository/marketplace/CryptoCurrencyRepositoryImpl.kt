@@ -1,16 +1,19 @@
 package cz.cleevio.repository.repository.marketplace
 
+import cz.cleevio.cache.dao.CryptoCurrencyDao
+import cz.cleevio.cache.entity.CryptoCurrencyEntity
 import cz.cleevio.network.api.CryptocurrencyApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.repository.model.marketplace.CryptoCurrencies
 import cz.cleevio.repository.model.marketplace.MarketChartEntries
 import cz.cleevio.repository.model.marketplace.fromNetwork
-import cz.cleevio.repository.repository.CryptoCurrencyUtils
+
+const val CRYPTO_ENTITY_ID = 124875L
 
 class CryptoCurrencyRepositoryImpl constructor(
 	private val cryptocurrencyApi: CryptocurrencyApi,
-	private val cryptoCurrencyUtils: CryptoCurrencyUtils
+	private val cryptoCurrencyDao: CryptoCurrencyDao
 ) : CryptoCurrencyRepository {
 
 	override suspend fun getCryptocurrencyPrice(crypto: String): Resource<CryptoCurrencies> {
@@ -21,12 +24,15 @@ class CryptoCurrencyRepositoryImpl constructor(
 			request = { cryptocurrencyApi.getCryptocurrencyPrice(crypto) },
 			doOnSuccess = {
 				it?.let { currencies ->
-					cryptoCurrencyUtils.setCurrencies(currencies)
+					cryptoCurrencyDao.replace(
+						CryptoCurrencyEntity(
+							id = CRYPTO_ENTITY_ID,
+							priceUsd = currencies.priceUsd,
+							priceCzk = currencies.priceCzk,
+							priceEur = currencies.priceEur,
+						)
+					)
 				}
-			},
-			doOnError = { _, _ ->
-				cryptoCurrencyUtils.setCurrencies(null)
-				null
 			}
 		)
 	}
