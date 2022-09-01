@@ -1,7 +1,7 @@
 package cz.cleevio.repository.model.offer
 
 data class OfferFilter constructor(
-	val locationType: String? = null,
+	val locationTypes: Set<String>? = null,
 	val locations: List<Location>? = null,
 	val paymentMethods: Set<String>? = null,
 	val btcNetworks: Set<String>? = null,
@@ -50,7 +50,7 @@ data class OfferFilter constructor(
 	}
 
 	fun isFilterInUse() =
-		locationType != null ||
+		locationTypes?.isNotEmpty() == true ||
 			locations?.isNotEmpty() == true ||
 			paymentMethods?.isNotEmpty() == true ||
 			btcNetworks?.isNotEmpty() == true ||

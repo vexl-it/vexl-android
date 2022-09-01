@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	tools:parentTag="androidx.cardview.widget.CardView">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:id="@+id/location_items_wrapper"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_one"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_two"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_three"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_four"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:visibility="gone" />
+
+			<cz.cleevio.core.widget.OfferLocationItem
+				android:id="@+id/location_new_five"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:visibility="gone" />
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/location_add_new_location"
+				style="@style/Widget.Vexl.AddButton"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp">
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:id="@+id/add_button_icon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginVertical="16dp"
+					android:layout_marginEnd="4dp"
+					android:src="@drawable/ic_plus"
+					android:tint="@color/gray_3"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/add_button_text"
+					app:layout_constraintHorizontal_chainStyle="packed"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<TextView
+					android:id="@+id/add_button_text"
+					android:layout_width="wrap_content"
+					android:layout_height="0dp"
+					android:gravity="center"
+					android:text="@string/widget_location_add_new"
+					android:textAppearance="@style/TextAppearance.Vexl.AddButton"
+					app:layout_constraintBottom_toBottomOf="@+id/add_button_icon"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toEndOf="@+id/add_button_icon"
+					app:layout_constraintTop_toTopOf="@+id/add_button_icon" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</LinearLayout>
+
+		<FrameLayout
+			style="@style/Widget.Vexl.Filters.FilterCardView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/location_items_wrapper">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/location_radiogroup"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+
+				<CheckBox
+					android:id="@+id/location_online"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:background="@drawable/widget_payment_method_selector"
+					android:button="@android:color/transparent"
+					android:gravity="center"
+					android:layout_marginEnd="4dp"
+					android:text="@string/widget_location_online"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/location_in_person"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<CheckBox
+					android:id="@+id/location_in_person"
+					style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="4dp"
+					android:background="@drawable/widget_payment_method_selector"
+					android:button="@android:color/transparent"
+					android:gravity="center"
+					android:text="@string/widget_location_in_person"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toEndOf="@+id/location_online"
+					app:layout_constraintTop_toTopOf="parent" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</FrameLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

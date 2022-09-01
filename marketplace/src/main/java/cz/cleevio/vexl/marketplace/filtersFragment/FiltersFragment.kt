@@ -101,7 +101,8 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 			//groupUuids = adapter.getSelectedGroupUuids()
 
 			filterViewModel.saveOfferFilter(
-				location = binding.filterLocation.getLocationValue(),
+				locationTypes = binding.filterLocation.getSelectedLocationTypes(),
+				locationValues = binding.filterLocation.getLocationValues(),
 				paymentMethod = binding.paymentMethod.getPaymentValue(),
 				btcNetwork = binding.networkType.getBtcNetworkValue(),
 				friendLevels = binding.friendLevel.getMultichoiceFriendLevels(),
@@ -191,7 +192,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		binding.filterLocation.reset()
 		binding.filterLocation.setValues(
 			offerFilter.locations ?: emptyList(),
-			offerFilter.locationType?.let { LocationButtonSelected.valueOf(it) } ?: LocationButtonSelected.NONE
+			offerFilter.locationTypes?.map { LocationButtonSelected.valueOf(it) } ?: emptyList()
 		)
 		offerFilter.paymentMethods?.let { methods ->
 			binding.paymentMethod.setValues(

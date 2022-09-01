@@ -128,7 +128,7 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/filter_offer_fee" />
 
-			<cz.cleevio.core.widget.OfferLocationWidget
+			<cz.cleevio.core.widget.OfferFilterLocationWidget
 				android:id="@+id/filter_location"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"

@@ -238,9 +238,13 @@ class OfferRepositoryImpl constructor(
 		queryBuilder.append(" AND isMine == $SQL_VALUE_PLACEHOLDER")
 		values.add(false)
 
-		if (offerFilter.locationType != null) {
-			queryBuilder.append(" AND locationState == $SQL_VALUE_PLACEHOLDER")
-			values.add(offerFilter.locationType)
+		if (offerFilter.locationTypes?.isNotEmpty() == true) {
+			val levels = offerFilter.locationTypes.joinToString(
+				separator = SQL_VALUE_SEPARATOR,
+				transform = { SQL_VALUE_PLACEHOLDER }
+			)
+			queryBuilder.append(" AND locationState in($levels)")
+			values.addAll(offerFilter.locationTypes)
 		}
 		if (offerFilter.paymentMethods?.isNotEmpty() == true) {
 			queryBuilder.append(

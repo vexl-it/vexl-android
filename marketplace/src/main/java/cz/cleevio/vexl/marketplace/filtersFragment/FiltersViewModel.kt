@@ -3,7 +3,9 @@ package cz.cleevio.vexl.marketplace.filtersFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.model.*
 import cz.cleevio.core.widget.FriendLevel
+import cz.cleevio.core.widget.LocationButtonSelected
 import cz.cleevio.core.widget.OfferLocationItem
+import cz.cleevio.repository.model.offer.Location
 import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.OfferFilter
 import cz.cleevio.repository.repository.group.GroupRepository
@@ -69,7 +71,8 @@ class FiltersViewModel constructor(
 	}
 
 	fun saveOfferFilter(
-		location: LocationValue,
+		locationTypes: Set<LocationButtonSelected>,
+		locationValues: List<Location>,
 		paymentMethod: PaymentMethodValue,
 		btcNetwork: BtcNetworkValue,
 		friendLevels: Set<FriendLevel>,
@@ -78,8 +81,8 @@ class FiltersViewModel constructor(
 		currency: String?
 	) {
 		val offerFilter = OfferFilter(
-			locationType = if (!location.isTypeNone()) location.type.name else null,
-			locations = location.values,
+			locationTypes = locationTypes.map { it.name }.toSet(),
+			locations = locationValues,
 			paymentMethods = paymentMethod.value.map { it.name }.toSet(),
 			btcNetworks = btcNetwork.value.map { it.name }.toSet(),
 			friendLevels = friendLevels.map { it.name }.toSet(),

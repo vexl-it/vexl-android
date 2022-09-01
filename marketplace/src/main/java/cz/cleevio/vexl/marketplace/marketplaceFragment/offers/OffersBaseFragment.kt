@@ -57,7 +57,8 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 			binding.offerList.updatePadding(bottom = insets.bottomWithNavBar)
 		}
 
-		changeLockedVisibility(viewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED))
+		//changeLockedVisibility(viewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED))
+		changeLockedVisibility(false)
 
 		binding.offerList.adapter = adapter
 
