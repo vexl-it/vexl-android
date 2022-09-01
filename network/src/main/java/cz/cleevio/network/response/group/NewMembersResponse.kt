@@ -10,5 +10,6 @@ data class NewMembersResponse constructor(
 @JsonClass(generateAdapter = true)
 data class GroupMembers constructor(
 	val groupUuid: String,
-	val publicKeys: List<String>,
+	val newPublicKeys: List<String>,
+	val removedPublicKeys: List<String>,
 )

@@ -29,6 +29,9 @@ interface ContactKeyDao : BaseDao<ContactKeyEntity> {
 	@Query("DELETE FROM ContactKeyEntity WHERE groupUuid == :groupUuid")
 	fun deleteKeysByGroupUuid(groupUuid: String)
 
+	@Query("DELETE FROM ContactKeyEntity WHERE groupUuid == :groupUuid AND publicKey == :publicKey")
+	fun deleteKeysByGroupUuidAndPublicKey(groupUuid: String, publicKey: String)
+
 	@Query("SELECT * FROM ContactKeyEntity WHERE groupUuid == :groupUuid")
 	fun getKeysByGroup(groupUuid: String): List<ContactKeyEntity>
 
