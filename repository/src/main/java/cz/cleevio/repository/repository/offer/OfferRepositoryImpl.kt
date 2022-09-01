@@ -243,20 +243,20 @@ class OfferRepositoryImpl constructor(
 			values.add(offerFilter.locationType)
 		}
 		if (offerFilter.paymentMethods?.isNotEmpty() == true) {
-			val paymentMethods = offerFilter.paymentMethods.toList().joinToString(
-				separator = SQL_VALUE_SEPARATOR,
-				transform = { SQL_VALUE_PLACEHOLDER }
+			queryBuilder.append(
+				sqlLikeOperator(
+					fieldName = "paymentMethod",
+					data = offerFilter.paymentMethods.toList()
+				)
 			)
-			queryBuilder.append(" AND paymentMethod in($paymentMethods)")
-			values.addAll(offerFilter.paymentMethods)
 		}
 		if (offerFilter.btcNetworks?.isNotEmpty() == true) {
-			val networks = offerFilter.btcNetworks.toList().joinToString(
-				separator = SQL_VALUE_SEPARATOR,
-				transform = { SQL_VALUE_PLACEHOLDER }
+			queryBuilder.append(
+				sqlLikeOperator(
+					fieldName = "btcNetwork",
+					data = offerFilter.btcNetworks.toList()
+				)
 			)
-			queryBuilder.append(" AND btcNetwork in($networks)")
-			values.addAll(offerFilter.btcNetworks)
 		}
 		if (offerFilter.friendLevels?.isNotEmpty() == true) {
 			val levels = offerFilter.friendLevels.joinToString(
@@ -454,6 +454,19 @@ class OfferRepositoryImpl constructor(
 		return offerDao.getOfferById(offerId = offerId).let {
 			it?.offer?.fromCache(it.locations, it.commonFriends)
 		}
+	}
+
+	private fun sqlLikeOperator(fieldName: String, data: List<Any>): String {
+		val query = StringBuilder()
+		query.append(" AND (")
+		data.forEachIndexed { index, paymentMethod ->
+			query.append("$fieldName LIKE '%$paymentMethod%'")
+			if (data.lastIndex != index) {
+				query.append(" OR ")
+			}
+		}
+		query.append(")")
+		return query.toString()
 	}
 
 	companion object {
