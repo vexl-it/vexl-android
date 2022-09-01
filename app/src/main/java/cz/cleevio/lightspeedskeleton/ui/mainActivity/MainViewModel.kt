@@ -65,6 +65,7 @@ class MainViewModel constructor(
 		}
 	}
 
+	@Suppress("ComplexCondition")
 	fun logout(onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
 		viewModelScope.launch(Dispatchers.IO) {
 			var offerDeleteSuccess = true

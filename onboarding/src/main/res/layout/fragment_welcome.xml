@@ -25,19 +25,18 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<ImageView
-				android:id="@+id/welcome_image"
+			<com.airbnb.lottie.LottieAnimationView
+				android:id="@+id/welcome_animation"
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				android:layout_marginTop="65dp"
-				android:layout_marginBottom="64dp"
-				android:adjustViewBounds="true"
-				android:contentDescription="?content"
-				android:src="@drawable/ic_vexl_man"
+				android:background="@android:color/transparent"
 				app:layout_constraintBottom_toTopOf="@id/vexl_logo"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
+				app:layout_constraintTop_toTopOf="parent"
+				app:lottie_autoPlay="true"
+				app:lottie_loop="false"
+				app:lottie_rawRes="@raw/vexl_get_started" />
 
 			<ImageView
 				android:id="@+id/vexl_logo"

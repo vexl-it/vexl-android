@@ -8,41 +8,52 @@
 		android:id="@+id/donate_wrapper"
 		style="@style/Widget.Vexl.CardView"
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
+		android:layout_height="wrap_content"
 		android:layout_margin="8dp"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHeight_percent=".75"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:layout_marginBottom="16dp">
+
+			<com.airbnb.lottie.LottieAnimationView
+				android:id="@+id/animation"
+				android:layout_width="match_parent"
+				android:layout_height="220dp"
+				android:background="@android:color/transparent"
+				app:layout_constraintBottom_toTopOf="@id/title"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:lottie_autoPlay="true"
+				app:lottie_loop="true"
+				app:lottie_rawRes="@raw/vexl_donate" />
 
 			<TextView
 				android:id="@+id/title"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_margin="16dp"
 				android:text="@string/profile_donate_title"
 				android:textAppearance="@style/TextAppearance.Vexl.MainScreenHeading"
 				android:textColor="@color/black"
-				app:layout_constraintBottom_toTopOf="@id/subtitle"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/animation" />
 
 			<TextView
 				android:id="@+id/subtitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginHorizontal="16dp"
-				android:layout_marginBottom="20dp"
+				android:layout_marginTop="16dp"
 				android:text="@string/profile_donate_description"
 				android:textAppearance="@style/TextAppearance.Vexl.Profile.Description"
 				android:textColor="@color/gray_3"
-				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/title" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 

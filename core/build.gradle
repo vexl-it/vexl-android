@@ -70,6 +70,7 @@ dependencies {
     api "io.insert-koin:koin-android:$koin"
     api "io.coil-kt:coil:1.1.1"
     api "io.noties.markwon:core:$markwon"
+    api 'com.airbnb.android:lottie:5.2.0'
 
     implementation "com.github.PhilJay:MPAndroidChart:$mp_android_chart_version"
     implementation 'com.lyft.kronos:kronos-android:0.0.1-alpha11'

@@ -27,13 +27,13 @@ class OfferFeeWidget @JvmOverloads constructor(
 			when (id) {
 				R.id.fee_without -> {
 					selectedButton = FeeButtonSelected.WITHOUT_FEE
-					setValues(FeeValue(FeeButtonSelected.WITHOUT_FEE, 0f))
-					binding.feeBar.value = 0f
+					setValues(FeeValue(FeeButtonSelected.WITHOUT_FEE, FEE_WITHOUT_VALUE))
+					binding.feeBar.value = FEE_WITHOUT_VALUE
 				}
 				R.id.fee_ok -> {
 					selectedButton = FeeButtonSelected.WITH_FEE
-					setValues(FeeValue(FeeButtonSelected.WITH_FEE, 1f))
-					binding.feeBar.value = 1f
+					setValues(FeeValue(FeeButtonSelected.WITH_FEE, FEE_OK_VALUE))
+					binding.feeBar.value = FEE_OK_VALUE
 				}
 				else -> {
 					Timber.e("Unknown radio ID! '$id'")
@@ -97,6 +97,8 @@ class OfferFeeWidget @JvmOverloads constructor(
 	}
 
 	companion object {
+		const val FEE_OK_VALUE = 1f
+		const val FEE_WITHOUT_VALUE = 0f
 		const val FEE_MIN_VALUE = 1f
 		const val FEE_MAX_VALUE = 10f
 	}

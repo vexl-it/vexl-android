@@ -63,7 +63,7 @@ class OfferWidget @JvmOverloads constructor(
 		)
 
 		binding.card.priceLimit.text =
-			"${(DecimalFormat("###,###.#", DecimalFormatSymbols(Locale.US)).format(priceLimit))}k"
+			"${DecimalFormat("###,###.#", DecimalFormatSymbols(Locale.US)).format(priceLimit)}k"
 
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
 

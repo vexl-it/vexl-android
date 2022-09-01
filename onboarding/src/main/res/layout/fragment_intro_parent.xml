@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_margin="8dp"
+	android:transitionGroup="true">
+
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/intro_wrapper"
+		style="@style/Widget.Vexl.CardView"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_marginBottom="10dp"
+		app:layout_constraintBottom_toTopOf="@id/intro_parent_left_btn"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<cz.cleevio.core.widget.SegmentedProgressBar
+				android:id="@+id/segment_bar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="12dp"
+				android:layout_marginTop="12dp"
+				app:active_color="@color/black"
+				app:active_count="1"
+				app:inactive_color="@color/gray_4"
+				app:layout_constraintTop_toTopOf="parent"
+				app:size="3" />
+
+			<androidx.viewpager2.widget.ViewPager2
+				android:id="@+id/intro_viewpager"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:orientation="horizontal"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/segment_bar" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</com.google.android.material.card.MaterialCardView>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/intro_parent_left_btn"
+		style="@style/Widget.Vexl.Onboarding.BottomButton.Left"
+		android:layout_width="0dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginEnd="4dp"
+		android:layout_marginBottom="16dp"
+		android:text="@string/intro_skip"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/intro_parent_right_btn"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/intro_parent_right_btn"
+		style="@style/Widget.Vexl.Onboarding.BottomButton.Right"
+		android:layout_width="0dp"
+		android:layout_height="@dimen/bottom_screen_button_height"
+		android:layout_marginStart="4dp"
+		android:layout_marginBottom="16dp"
+		android:text="@string/intro_continue"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/intro_parent_left_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

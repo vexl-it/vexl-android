@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			}
 	}
 
-	@Suppress("ComplexMethod")
+	@Suppress("ComplexMethod", "LongMethod")
 	private fun bindObservers() {
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.CREATED) {
@@ -199,6 +199,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 								R.navigation.nav_bottom_navigation
 							)
 							lastVisitedGraph = R.navigation.nav_bottom_navigation
+						}
+						NavMainGraphModel.NavGraph.Intro -> {
+							navController.setGraph(
+								R.navigation.nav_intro
+							)
+							lastVisitedGraph = R.navigation.nav_intro
 						}
 						NavMainGraphModel.NavGraph.Onboarding -> {
 							navController.setGraph(
