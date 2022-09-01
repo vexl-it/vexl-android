@@ -6,7 +6,7 @@ data class OfferFilter constructor(
 	val paymentMethods: Set<String>? = null,
 	val btcNetworks: Set<String>? = null,
 	val friendLevels: Set<String>? = null,
-	val feeType: String? = null,
+	val feeTypes: Set<String>? = null,
 	val feeValue: Float? = null,
 	val priceRangeTopLimit: Float? = null,
 	val priceRangeBottomLimit: Float? = null,
@@ -55,7 +55,7 @@ data class OfferFilter constructor(
 			paymentMethods?.isNotEmpty() == true ||
 			btcNetworks?.isNotEmpty() == true ||
 			friendLevels?.isNotEmpty() == true ||
-			feeType != null ||
+			feeTypes?.isNotEmpty() == true ||
 			feeValue != null ||
 			priceRangeTopLimit != null ||
 			priceRangeBottomLimit != null ||

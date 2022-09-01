@@ -2,6 +2,7 @@ package cz.cleevio.vexl.marketplace.filtersFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.core.model.*
+import cz.cleevio.core.widget.FeeButtonSelected
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.core.widget.LocationButtonSelected
 import cz.cleevio.core.widget.OfferLocationItem
@@ -76,7 +77,8 @@ class FiltersViewModel constructor(
 		paymentMethod: PaymentMethodValue,
 		btcNetwork: BtcNetworkValue,
 		friendLevels: Set<FriendLevel>,
-		fee: FeeValue?,
+		feeValue: Float?,
+		feeTypes: Set<FeeButtonSelected>,
 		priceRange: PriceRangeValue?,
 		currency: String?
 	) {
@@ -86,8 +88,8 @@ class FiltersViewModel constructor(
 			paymentMethods = paymentMethod.value.map { it.name }.toSet(),
 			btcNetworks = btcNetwork.value.map { it.name }.toSet(),
 			friendLevels = friendLevels.map { it.name }.toSet(),
-			feeType = fee?.type?.name,
-			feeValue = if(fee?.isWithFee() == true) fee.value else null,
+			feeTypes = feeTypes.map { it.name }.toSet(),
+			feeValue = if(FeeButtonSelected.WITH_FEE in feeTypes) feeValue else null,
 			priceRangeTopLimit = priceRange?.topLimit,
 			priceRangeBottomLimit = priceRange?.bottomLimit,
 			currency = currency

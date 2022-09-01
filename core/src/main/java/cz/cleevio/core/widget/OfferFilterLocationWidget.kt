@@ -125,12 +125,12 @@ class OfferFilterLocationWidget @JvmOverloads constructor(
 		checkAddButtonVisibility()
 
 		selectedButtons = selected.toMutableSet()
-		updateSelectedButton(selectedButtons)
+		updateSelectedButton()
 	}
 
-	private fun updateSelectedButton(selected: MutableSet<LocationButtonSelected>) {
-		binding.locationInPerson.isChecked = selected.contains(LocationButtonSelected.IN_PERSON)
-		binding.locationOnline.isChecked = selected.contains(LocationButtonSelected.ONLINE)
+	private fun updateSelectedButton() {
+		binding.locationInPerson.isChecked = selectedButtons.contains(LocationButtonSelected.IN_PERSON)
+		binding.locationOnline.isChecked = selectedButtons.contains(LocationButtonSelected.ONLINE)
 	}
 
 	companion object {

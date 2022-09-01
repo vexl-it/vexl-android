@@ -239,11 +239,11 @@ class OfferRepositoryImpl constructor(
 		values.add(false)
 
 		if (offerFilter.locationTypes?.isNotEmpty() == true) {
-			val levels = offerFilter.locationTypes.joinToString(
+			val types = offerFilter.locationTypes.joinToString(
 				separator = SQL_VALUE_SEPARATOR,
 				transform = { SQL_VALUE_PLACEHOLDER }
 			)
-			queryBuilder.append(" AND locationState in($levels)")
+			queryBuilder.append(" AND locationState in($types)")
 			values.addAll(offerFilter.locationTypes)
 		}
 		if (offerFilter.paymentMethods?.isNotEmpty() == true) {
@@ -270,13 +270,19 @@ class OfferRepositoryImpl constructor(
 			queryBuilder.append(" AND friendLevel in($levels)")
 			values.addAll(offerFilter.friendLevels)
 		}
-		if (offerFilter.feeType != null) {
-			queryBuilder.append(" AND feeState == $SQL_VALUE_PLACEHOLDER")
-			values.add(offerFilter.feeType)
-		}
-		if (offerFilter.feeValue != null) {
-			queryBuilder.append(" AND feeAmount == $SQL_VALUE_PLACEHOLDER")
-			values.add(offerFilter.feeValue)
+		if (offerFilter.feeTypes?.isNotEmpty() == true) {
+			val types = offerFilter.feeTypes.joinToString(
+				separator = SQL_VALUE_SEPARATOR,
+				transform = { SQL_VALUE_PLACEHOLDER }
+			)
+
+			if (offerFilter.feeValue != null) {
+				queryBuilder.append(" AND (feeState in($types) OR feeAmount == $SQL_VALUE_PLACEHOLDER)")
+				values.addAll(offerFilter.feeTypes)
+				values.add(offerFilter.feeValue)
+			} else {
+				queryBuilder.append(" AND feeState in($types)")
+			}
 		}
 		if (offerFilter.currency != null) {
 			queryBuilder.append(" AND currency == $SQL_VALUE_PLACEHOLDER")

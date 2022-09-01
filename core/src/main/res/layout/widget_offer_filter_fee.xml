@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	tools:parentTag="androidx.cardview.widget.CardView">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<CheckBox
+			android:id="@+id/fee_without"
+			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="4dp"
+			android:background="@drawable/widget_payment_method_selector"
+			android:button="@android:color/transparent"
+			android:gravity="center"
+			android:text="@string/widget_fee_without"
+			app:layout_constraintEnd_toStartOf="@+id/fee_ok"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<CheckBox
+			android:id="@+id/fee_ok"
+			style="@style/Widget.Cleevio.Vexl.TabbedRadioBtn"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="4dp"
+			android:background="@drawable/widget_payment_method_selector"
+			android:button="@android:color/transparent"
+			android:gravity="center"
+			android:text="@string/widget_fee_ok"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/fee_without"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<com.google.android.material.card.MaterialCardView
+			style="@style/Widget.Vexl.Filters.FilterCardView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/fee_ok">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+				<TextView
+					android:id="@+id/fee_value"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="16dp"
+					android:textColor="@color/grey_light"
+					android:textSize="20sp"
+					app:layout_constraintBottom_toTopOf="@id/fee_bar"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:text="10%"
+					tools:visibility="gone" />
+
+				<com.google.android.material.slider.Slider
+					android:id="@+id/fee_bar"
+					android:layout_width="0dp"
+					android:layout_height="40dp"
+					android:stepSize="1"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/fee_value"
+					app:thumbColor="@color/white"
+					app:tickColor="@null"
+					app:trackColorActive="@color/white"
+					app:trackColorInactive="@color/gray_3" />
+			</androidx.constraintlayout.widget.ConstraintLayout>
+		</com.google.android.material.card.MaterialCardView>
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

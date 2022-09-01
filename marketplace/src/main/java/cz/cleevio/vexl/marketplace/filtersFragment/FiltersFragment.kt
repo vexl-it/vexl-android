@@ -106,11 +106,12 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 				paymentMethod = binding.paymentMethod.getPaymentValue(),
 				btcNetwork = binding.networkType.getBtcNetworkValue(),
 				friendLevels = binding.friendLevel.getMultichoiceFriendLevels(),
-				fee = if (binding.filterOfferFee.isVisible) {
+				feeValue = if (binding.filterOfferFee.isVisible) {
 					binding.filterOfferFee.getFeeValue()
 				} else {
 					null
 				},
+				feeTypes = binding.filterOfferFee.getFeeTypes(),
 				priceRange = if (binding.priceRangeWidget.isVisible) {
 					binding.priceRangeWidget.getPriceRangeValue()
 				} else {
@@ -207,17 +208,12 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		offerFilter.friendLevels?.let { levels ->
 			binding.friendLevel.setValues(levels.map { FriendLevel.valueOf(it) }.toSet())
 		}
-		offerFilter.feeType?.let { type ->
-			offerFilter.feeValue?.let { feeValue ->
-				binding.filterOfferFee.setValues(
-					FeeValue(
-						type = FeeButtonSelected.valueOf(type),
-						value = feeValue
-					)
-				)
-				binding.filterOfferFee.isVisible = true
-			}
-		}
+		binding.filterOfferFee.setValues(
+			value = offerFilter.feeValue,
+			selected =offerFilter.feeTypes?.map { FeeButtonSelected.valueOf(it) } ?: emptyList()
+		)
+		binding.filterOfferFee.isVisible = offerFilter.feeTypes?.isEmpty() == false
+
 		offerFilter.currency?.let {
 			val currency = Currency.valueOf(it)
 			binding.priceRangeWidget.setupWithCurrency(currency)
