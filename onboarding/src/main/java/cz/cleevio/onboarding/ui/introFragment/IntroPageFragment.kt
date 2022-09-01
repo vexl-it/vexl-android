@@ -16,7 +16,8 @@ class IntroPageFragment : BaseFragment(R.layout.fragment_intro_page) {
 			binding.introTitle.text = args.getString(INTRO_TITLE) ?: ""
 			val introAnimationId = args.getInt(INTRO_RESOURCE_ID)
 			binding.introAnimation.setAnimation(introAnimationId)
-			binding.introAnimation.playAnimation()
+			// Fixme: Uncomment play animation once the Vexl will give us smaller animations
+			// binding.introAnimation.playAnimation()
 		}
 	}
 	companion object {
