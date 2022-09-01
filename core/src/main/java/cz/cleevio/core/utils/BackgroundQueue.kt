@@ -9,6 +9,8 @@ import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
@@ -19,7 +21,15 @@ class BackgroundQueue constructor(
 	private val locationHelper: LocationHelper
 ) : KoinComponent {
 
+	private val _triggerChannel = Channel<Unit>(Channel.CONFLATED)
+	val triggerChannel = _triggerChannel.receiveAsFlow()
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+	fun triggerBackgroundCheck() {
+		coroutineScope.launch {
+			_triggerChannel.send(Unit)
+		}
+	}
 
 	fun encryptOffersForNewContacts() {
 		coroutineScope.launch {

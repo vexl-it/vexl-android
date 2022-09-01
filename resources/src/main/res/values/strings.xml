@@ -33,9 +33,9 @@
     <!-- Terms of Use -->
     <string name="terms_of_use_title">Terms\nof Use</string>
     <string name="terms_of_use_faq_button">Don’t have a time to read all this? Take a look on Frequently Asked Questions.</string>
-	<string name="terms_of_use_terms_bookmark">Terms of Use</string>
-	<string name="terms_of_use_policy_bookmark">Privacy Policy</string>
-	<string name="terms_of_use_markdown"># Just testing markdown
+    <string name="terms_of_use_terms_bookmark">Terms of Use</string>
+    <string name="terms_of_use_policy_bookmark">Privacy Policy</string>
+    <string name="terms_of_use_markdown"># Just testing markdown
 
 [link](https://google.com)
 
@@ -43,7 +43,7 @@
 
 * **Name Surname** - work position
 * **Name Surname** - work position</string>
-	<string name="terms_of_use_policy_markdown">{{header}}1. VÍTEJTE{{/header}}
+    <string name="terms_of_use_policy_markdown">{{header}}1. VÍTEJTE{{/header}}
 Rádi bychom Vám poděkovali, že jste se rozhodli používat právě Vexl. Víme, že se už nemůžete dočkat, až se do něj poprvé přihlásíte, ale ještě před tím bychom Vás rádi požádali, abyste nám věnovali několik minut Vašeho času a přečetli si tyto Smluvní podmínky. Víme, že Váš čas je cenný, a proto slibujeme, že naše dokumenty budou vždy maximálně stručné. Pokud souhlasíte se vším, co jste si zde přečetli, můžete se pustit do používání Vexlu.
 
 {{header}}2. SMLUVNÍ STRANY{{/header}}
@@ -169,7 +169,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="avatar_title">What do you look like?</string>
     <string name="avatar_description">Nobody will see your face until you allow it</string>
     <string name="avatar_welcome">Hey, %s!</string>
-	<string name="avatar_continue">Continue</string>
+    <string name="avatar_continue">Continue</string>
     <string name="verify_phone_done_title">Phone verified.\nLet’s setup your profile.</string>
     <string name="image_picker_camera">Camera</string>
     <string name="image_picker_gallery">Photo Album</string>
@@ -190,7 +190,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="import_contacts_allow">Allow</string>
     <string name="import_contacts_not_allow">Don’t allow</string>
     <string name="import_contacts_title">Let’s find you\nfriends!</string>
-    <string name="import_contacts_subtitle">Vexl doesn’t see your contacts</string>
+    <string name="import_contacts_subtitle">We will store your contacts in our server in a secure way, even us won\'t be able to access them</string>
     <string name="import_contacts_request_title">Allow contacts</string>
     <string name="import_contacts_request_description">Vexl needs access to your contacts in order to work.\nDon\'t worry we won’t ever see them</string>
     <string name="import_contacts_secondary_request_title">Really?</string>
@@ -504,22 +504,29 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="faq_screen_four_subtitle">One challenge with truly anonymous communications systems like Vexl is that sometimes you do need to verify the identity of the person you’re talking to! In cases like these, it’s best to use a secure secondary channel of communication to confirm with the other person that you’re both who you say you are.</string>
     <string name="faq_screen_five_title">How can I ensure that my communication and trades are private and encrypted? </string>
     <string name="faq_screen_five_subtitle">Vexl is open source - anyone can look for any backdoor or malicious intentions. Also, here you can look at the report from an independent Security Audit . </string>
-	<string name="faq_screen_six_title">How can you ensure that my data is protected?</string>
-	<string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
-	<string name="faq_screen_seven_title">How do I contact Vexl?</string>
-	<string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
-	<string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
-	<string name="faq_screen_seven_subtitle_2">support@vexl.it.</string>
-	<string name="faq_screen_seven_subtitle_3"> For a private comms, you can also send us an e2ee mail.\n\nOr you can meet us during your next P2P trade! 😻</string>
+    <string name="faq_screen_six_title">How can you ensure that my data is protected?</string>
+    <string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
+    <string name="faq_screen_seven_title">How do I contact Vexl?</string>
+    <string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
+    <string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
+    <string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
+    <string name="faq_screen_seven_subtitle_3">. For a private comms, you can also send us an e2ee mail.\n\nOr you can meet us during your next P2P trade! 😻</string>
 
-	<!-- Permissions -->
-	<string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
+    <!-- Permissions -->
+    <string name="permission_camera_denied">Camera permission denied</string>
 
-	<!-- Locked Screen -->
-	<string name="locked_screen_title">Marketplace is just warming up.\nWait for the full experience.</string>
-	<string name="locked_screen_subtitle">Create your offer today</string>
-	<string name="locked_screen_sell">I\'m selling</string>
-	<string name="locked_screen_buy">I\'m buying</string>
-	<string name="locked_screen_offers">Offer</string>
-	<string name="locked_groups">Groups are locked right now</string>
+    <!-- Locked Screen -->
+    <string name="locked_screen_title">Marketplace is just warming up.\nWait for the full experience.</string>
+    <string name="locked_screen_subtitle">Create your offer today</string>
+    <string name="locked_screen_sell">I\'m selling</string>
+    <string name="locked_screen_buy">I\'m buying</string>
+    <string name="locked_screen_offers">Offer</string>
+    <string name="locked_groups">Groups are locked right now</string>
+
+    <!-- Intro -->
+    <string name="intro_skip">Skip</string>
+    <string name="intro_continue">Continue</string>
+    <string name="intro_first_title">Import your\ncontacts\nanonymously.</string>
+    <string name="intro_second_title">See their\nbuy &amp; sell\noffers.</string>
+    <string name="intro_third_title">Request identity\nfor the ones you\nlike and trade.</string>
 </resources>

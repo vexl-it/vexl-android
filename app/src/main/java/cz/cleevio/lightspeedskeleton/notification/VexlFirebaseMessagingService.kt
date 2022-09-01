@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import cz.cleevio.core.utils.BackgroundQueue
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
@@ -29,6 +30,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	private val chatRepository: ChatRepository by inject()
 	private val groupRepository: GroupRepository by inject()
 	private val contactRepository: ContactRepository by inject()
+	private val backgroundQueue: BackgroundQueue by inject()
+
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
 	override fun onNewToken(token: String) {
@@ -69,6 +72,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		uuid?.let { groupUuid ->
 			coroutineScope.launch {
 				groupRepository.syncNewMembersInGroup(groupUuid)
+
+				backgroundQueue.triggerBackgroundCheck()
 			}
 		}
 
@@ -94,6 +99,8 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 						isUpToDate = false
 					)
 				)
+
+				backgroundQueue.triggerBackgroundCheck()
 			}
 		}
 

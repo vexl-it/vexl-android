@@ -349,6 +349,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 				}
 			}
 		}
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				backgroundQueue.triggerChannel.collect { _ ->
+					backgroundQueue.encryptOffersForNewContacts()
+				}
+			}
+		}
 	}
 
 	private fun triggerAppRestart() {
