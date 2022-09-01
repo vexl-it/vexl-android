@@ -1,12 +1,12 @@
 package cz.cleevio.repository.model.offer
 
 data class OfferFilter constructor(
-	val locationType: String? = null,
+	val locationTypes: Set<String>? = null,
 	val locations: List<Location>? = null,
 	val paymentMethods: Set<String>? = null,
 	val btcNetworks: Set<String>? = null,
 	val friendLevels: Set<String>? = null,
-	val feeType: String? = null,
+	val feeTypes: Set<String>? = null,
 	val feeValue: Float? = null,
 	val priceRangeTopLimit: Float? = null,
 	val priceRangeBottomLimit: Float? = null,
@@ -50,12 +50,12 @@ data class OfferFilter constructor(
 	}
 
 	fun isFilterInUse() =
-		locationType != null ||
+		locationTypes?.isNotEmpty() == true ||
 			locations?.isNotEmpty() == true ||
 			paymentMethods?.isNotEmpty() == true ||
 			btcNetworks?.isNotEmpty() == true ||
 			friendLevels?.isNotEmpty() == true ||
-			feeType != null ||
+			feeTypes?.isNotEmpty() == true ||
 			feeValue != null ||
 			priceRangeTopLimit != null ||
 			priceRangeBottomLimit != null ||

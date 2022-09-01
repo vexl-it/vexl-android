@@ -56,7 +56,6 @@ class OfferWidget @JvmOverloads constructor(
 		binding.card.groupInfo.isVisible = group != null
 		binding.card.groupSticker.isVisible = group != null
 
-
 		val priceLimit = item.amountTopLimit.divide(
 			BigDecimal(THOUSAND),
 			1,

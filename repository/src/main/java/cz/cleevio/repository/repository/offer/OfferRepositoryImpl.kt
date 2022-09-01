@@ -238,25 +238,29 @@ class OfferRepositoryImpl constructor(
 		queryBuilder.append(" AND isMine == $SQL_VALUE_PLACEHOLDER")
 		values.add(false)
 
-		if (offerFilter.locationType != null) {
-			queryBuilder.append(" AND locationState == $SQL_VALUE_PLACEHOLDER")
-			values.add(offerFilter.locationType)
+		if (offerFilter.locationTypes?.isNotEmpty() == true) {
+			val types = offerFilter.locationTypes.joinToString(
+				separator = SQL_VALUE_SEPARATOR,
+				transform = { SQL_VALUE_PLACEHOLDER }
+			)
+			queryBuilder.append(" AND locationState in($types)")
+			values.addAll(offerFilter.locationTypes)
 		}
 		if (offerFilter.paymentMethods?.isNotEmpty() == true) {
-			val paymentMethods = offerFilter.paymentMethods.toList().joinToString(
-				separator = SQL_VALUE_SEPARATOR,
-				transform = { SQL_VALUE_PLACEHOLDER }
+			queryBuilder.append(
+				sqlLikeOperator(
+					fieldName = "paymentMethod",
+					data = offerFilter.paymentMethods.toList()
+				)
 			)
-			queryBuilder.append(" AND paymentMethod in($paymentMethods)")
-			values.addAll(offerFilter.paymentMethods)
 		}
 		if (offerFilter.btcNetworks?.isNotEmpty() == true) {
-			val networks = offerFilter.btcNetworks.toList().joinToString(
-				separator = SQL_VALUE_SEPARATOR,
-				transform = { SQL_VALUE_PLACEHOLDER }
+			queryBuilder.append(
+				sqlLikeOperator(
+					fieldName = "btcNetwork",
+					data = offerFilter.btcNetworks.toList()
+				)
 			)
-			queryBuilder.append(" AND btcNetwork in($networks)")
-			values.addAll(offerFilter.btcNetworks)
 		}
 		if (offerFilter.friendLevels?.isNotEmpty() == true) {
 			val levels = offerFilter.friendLevels.joinToString(
@@ -266,13 +270,19 @@ class OfferRepositoryImpl constructor(
 			queryBuilder.append(" AND friendLevel in($levels)")
 			values.addAll(offerFilter.friendLevels)
 		}
-		if (offerFilter.feeType != null) {
-			queryBuilder.append(" AND feeState == $SQL_VALUE_PLACEHOLDER")
-			values.add(offerFilter.feeType)
-		}
-		if (offerFilter.feeValue != null) {
-			queryBuilder.append(" AND feeAmount == $SQL_VALUE_PLACEHOLDER")
-			values.add(offerFilter.feeValue)
+		if (offerFilter.feeTypes?.isNotEmpty() == true) {
+			val types = offerFilter.feeTypes.joinToString(
+				separator = SQL_VALUE_SEPARATOR,
+				transform = { SQL_VALUE_PLACEHOLDER }
+			)
+
+			if (offerFilter.feeValue != null) {
+				queryBuilder.append(" AND (feeState in($types) OR feeAmount == $SQL_VALUE_PLACEHOLDER)")
+				values.addAll(offerFilter.feeTypes)
+				values.add(offerFilter.feeValue)
+			} else {
+				queryBuilder.append(" AND feeState in($types)")
+			}
 		}
 		if (offerFilter.currency != null) {
 			queryBuilder.append(" AND currency == $SQL_VALUE_PLACEHOLDER")
@@ -454,6 +464,19 @@ class OfferRepositoryImpl constructor(
 		return offerDao.getOfferById(offerId = offerId).let {
 			it?.offer?.fromCache(it.locations, it.commonFriends)
 		}
+	}
+
+	private fun sqlLikeOperator(fieldName: String, data: List<Any>): String {
+		val query = StringBuilder()
+		query.append(" AND (")
+		data.forEachIndexed { index, paymentMethod ->
+			query.append("$fieldName LIKE '%$paymentMethod%'")
+			if (data.lastIndex != index) {
+				query.append(" OR ")
+			}
+		}
+		query.append(")")
+		return query.toString()
 	}
 
 	companion object {
