@@ -201,7 +201,6 @@
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toTopOf="parent"
-						app:line_visibility="true"
 						app:title="@string/profile_import_contacts" />
 
 					<cz.cleevio.profile.widget.ProfileRowWidget
