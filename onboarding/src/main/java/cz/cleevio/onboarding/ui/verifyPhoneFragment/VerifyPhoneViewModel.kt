@@ -169,7 +169,7 @@ class VerifyPhoneViewModel constructor(
 	}
 
 	companion object {
-		private const val COUNTDOWN_LENGTH = 30_000
+		private const val COUNTDOWN_LENGTH = 180_000
 		private const val COUNTDOWN_STEP = 500
 	}
 }
