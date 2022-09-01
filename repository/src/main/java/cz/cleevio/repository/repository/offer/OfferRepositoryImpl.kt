@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import java.math.BigDecimal
+import java.text.Normalizer
 
 class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
@@ -435,7 +436,7 @@ class OfferRepositoryImpl constructor(
 			}
 				?.filter { a -> a.cityText.isNotBlank() }
 				?.distinctBy { a -> a.cityText }
-				?.filter { a -> a.cityText.contains(query, ignoreCase = true) }
+				?.filter { a -> a.cityText.removeNonSpacingMarks().contains(query.removeNonSpacingMarks(), ignoreCase = true) }
 				.orEmpty()
 		}
 	)
@@ -459,4 +460,8 @@ class OfferRepositoryImpl constructor(
 		private const val SQL_VALUE_SEPARATOR = ","
 		private const val SQL_VALUE_PLACEHOLDER = "?"
 	}
+
+	fun String.removeNonSpacingMarks() =
+		Normalizer.normalize(this, Normalizer.Form.NFD)
+			.replace("\\p{Mn}+".toRegex(), "")
 }
