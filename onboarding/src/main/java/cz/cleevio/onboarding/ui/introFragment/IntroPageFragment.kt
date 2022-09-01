@@ -19,7 +19,6 @@ class IntroPageFragment : BaseFragment(R.layout.fragment_intro_page) {
 			binding.introAnimation.playAnimation()
 		}
 	}
-
 	companion object {
 		const val INTRO_TITLE = "intro_title"
 		const val INTRO_RESOURCE_ID = "intro_resource_id"

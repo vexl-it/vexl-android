@@ -19,15 +19,15 @@ class IntroPagerAdapter constructor(
 		when (position) {
 			0 -> fragment.arguments = Bundle().apply {
 				putString(IntroPageFragment.INTRO_TITLE, fragmentActivity.getString(R.string.intro_first_title))
-				putInt(IntroPageFragment.INTRO_RESOURCE_ID, R.raw.vexl_intro_1)
+				putInt(IntroPageFragment.INTRO_RESOURCE_ID, R.raw.vexl_intro_01)
 			}
 			1 -> fragment.arguments = Bundle().apply {
 				putString(IntroPageFragment.INTRO_TITLE, fragmentActivity.getString(R.string.intro_second_title))
-				putInt(IntroPageFragment.INTRO_RESOURCE_ID, R.raw.vexl_intro_2)
+				putInt(IntroPageFragment.INTRO_RESOURCE_ID, R.raw.vexl_intro_02)
 			}
 			2 -> fragment.arguments = Bundle().apply {
 				putString(IntroPageFragment.INTRO_TITLE, fragmentActivity.getString(R.string.intro_third_title))
-				putInt(IntroPageFragment.INTRO_RESOURCE_ID, R.raw.vexl_intro_3)
+				putInt(IntroPageFragment.INTRO_RESOURCE_ID, R.raw.vexl_intro_03)
 			}
 			else -> error("Wrong position $position for intro")
 		}

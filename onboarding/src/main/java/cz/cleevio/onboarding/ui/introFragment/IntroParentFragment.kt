@@ -23,11 +23,7 @@ class IntroParentFragment : BaseFragment(R.layout.fragment_intro_parent) {
 		setupAdapter()
 
 		binding.introParentLeftBtn.setOnClickListener {
-			if (binding.introViewpager.currentItem == 0) {
-				findNavController().popBackStack()
-			} else {
-				binding.introViewpager.setCurrentItem(binding.introViewpager.currentItem - 1, true)
-			}
+			navigateNext()
 		}
 		binding.introParentRightBtn.setOnClickListener {
 			if (binding.introViewpager.currentItem == (adapter?.itemCount ?: 0) - 1) {
