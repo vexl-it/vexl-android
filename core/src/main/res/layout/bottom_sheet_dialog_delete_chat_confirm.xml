@@ -19,6 +19,17 @@
 			android:layout_height="wrap_content"
 			android:layout_margin="16dp">
 
+			<ImageView
+				android:id="@+id/animation"
+				android:layout_width="match_parent"
+				android:layout_height="220dp"
+				android:background="@android:color/transparent"
+				android:contentDescription="?attr/startIconContentDescription"
+				android:src="@drawable/ic_delete_chat"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
 			<TextView
 				android:id="@+id/title"
 				android:layout_width="match_parent"
@@ -28,7 +39,7 @@
 				android:textColor="@color/black"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
+				app:layout_constraintTop_toBottomOf="@id/animation" />
 
 			<TextView
 				android:id="@+id/friends_list"
