@@ -44,12 +44,7 @@ data class Offer constructor(
 	//custom flags
 	var isMine: Boolean = false,
 	var isRequested: Boolean = false
-) : Parcelable {
-
-	override fun toString(): String {
-		return "\n\nOffer(databaseId=$databaseId,\nofferId='$offerId',\nlocation=$location,\nuserPublicKey='$userPublicKey',\nofferPublicKey='$offerPublicKey',\nofferDescription='$offerDescription',\namountBottomLimit=$amountBottomLimit,\namountTopLimit=$amountTopLimit,\nfeeState='$feeState',\nfeeAmount=$feeAmount,\nlocationState='$locationState',\npaymentMethod=$paymentMethod,\nbtcNetwork=$btcNetwork,\nfriendLevel='$friendLevel',\nofferType='$offerType',\nactivePriceState='$activePriceState',\nactivePriceValue=$activePriceValue,\nactive=$active,\ncommonFriends=$commonFriends,\ngroupUuid='$groupUuid',\ncurrency='$currency',\ncreatedAt=$createdAt,\nmodifiedAt=$modifiedAt,\nisMine=$isMine,\nisRequested=$isRequested)"
-	}
-}
+) : Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?): Offer {
 	return Offer(

@@ -190,12 +190,20 @@ class GroupRepositoryImpl constructor(
 				)
 			},
 			mapper = {
-				it?.toContactKey()
+				it?.fromNetwork()
 			},
 			doOnSuccess = {
 				it?.let { contactKeyList ->
+					contactKeyList.first.forEach { contactKey ->
+						contactKey.groupUuid?.let { groupUuid ->
+							contactKeyDao.deleteKeysByGroupUuidAndPublicKey(
+								groupUuid, contactKey.key
+							)
+						}
+					}
+
 					contactKeyDao.insertGroupContacts(
-						contactKeyList.map { it.toCache() }
+						contactKeyList.second.map { it.toCache() }
 					)
 				}
 			}
@@ -204,7 +212,7 @@ class GroupRepositoryImpl constructor(
 		return Resource.success(Unit)
 	}
 
-	override suspend fun syncNewMembersInGroup(groupUuid: String): Resource<List<ContactKey>> {
+	override suspend fun syncNewMembersInGroup(groupUuid: String): Resource<Unit> {
 		//get keys for group
 		val keyContacts = contactKeyDao.getKeysByGroup(groupUuid)
 		val response = tryOnline(
@@ -222,18 +230,26 @@ class GroupRepositoryImpl constructor(
 				)
 			},
 			mapper = {
-				it?.toContactKey()
+				it?.fromNetwork()
 			},
 			doOnSuccess = {
 				it?.let { contactKeyList ->
+					contactKeyList.first.forEach { contactKey ->
+						contactKey.groupUuid?.let { groupUuid ->
+							contactKeyDao.deleteKeysByGroupUuidAndPublicKey(
+								groupUuid, contactKey.key
+							)
+						}
+					}
+
 					contactKeyDao.insertGroupContacts(
-						contactKeyList.map { it.toCache() }
+						contactKeyList.second.map { it.toCache() }
 					)
 				}
 			}
 		)
 
-		return response
+		return Resource.success(Unit)
 	}
 
 	override suspend fun getGroupInfoByCode(code: String): Resource<Group> = tryOnline(
@@ -244,11 +260,22 @@ class GroupRepositoryImpl constructor(
 	override suspend fun findGroupByUuidInDB(groupUuid: String): Group? = groupDao.getOneByUuid(groupUuid)?.fromEntity()
 }
 
-fun NewMembersResponse.toContactKey(): List<ContactKey> {
-	val result: MutableList<ContactKey> = mutableListOf()
+fun NewMembersResponse.fromNetwork(): Pair<List<ContactKey>, List<ContactKey>> {
+	val keysToAdd: MutableList<ContactKey> = mutableListOf()
+	val keysToRemove: MutableList<ContactKey> = mutableListOf()
 	this.newMembers.forEach { groupData ->
-		groupData.publicKeys.forEach { publicKey ->
-			result.add(
+		groupData.newPublicKeys.forEach { publicKey ->
+			keysToAdd.add(
+				ContactKey(
+					key = publicKey,
+					level = cz.cleevio.repository.model.contact.ContactLevel.GROUP,
+					groupUuid = groupData.groupUuid,
+					isUpToDate = false
+				)
+			)
+		}
+		groupData.removedPublicKeys.forEach { publicKey ->
+			keysToRemove.add(
 				ContactKey(
 					key = publicKey,
 					level = cz.cleevio.repository.model.contact.ContactLevel.GROUP,
@@ -258,5 +285,5 @@ fun NewMembersResponse.toContactKey(): List<ContactKey> {
 			)
 		}
 	}
-	return result
+	return Pair(keysToRemove, keysToAdd)
 }
