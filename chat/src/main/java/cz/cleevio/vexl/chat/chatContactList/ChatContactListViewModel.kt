@@ -63,10 +63,12 @@ class ChatContactListViewModel constructor(
 	private suspend fun emitUsers() {
 		_usersChattedWith.emit(
 			usersChattedWithList.filter { user ->
+				val isBuyers = (user.offer.offerType == OfferType.BUY.name && !user.offer.isMine)
+					|| (user.offer.offerType == OfferType.SELL.name && user.offer.isMine)
 				when (currentFilter) {
 					FilterType.ALL -> true
-					FilterType.BUYERS -> user.offer.offerType == OfferType.BUY.name
-					FilterType.SELLERS -> user.offer.offerType == OfferType.SELL.name
+					FilterType.BUYERS -> isBuyers
+					FilterType.SELLERS -> !isBuyers
 				}
 			}.sortedByDescending {
 				it.message.time
