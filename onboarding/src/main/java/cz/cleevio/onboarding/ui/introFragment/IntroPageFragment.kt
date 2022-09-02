@@ -15,8 +15,7 @@ class IntroPageFragment : BaseFragment(R.layout.fragment_intro_page) {
 		arguments?.let { args ->
 			binding.introTitle.text = args.getString(INTRO_TITLE) ?: ""
 			val introAnimationId = args.getInt(INTRO_RESOURCE_ID)
-			binding.introAnimation.setAnimation(introAnimationId)
-			binding.introAnimation.playAnimation()
+			binding.introAnimation.setImageResource(introAnimationId)
 		}
 	}
 	companion object {

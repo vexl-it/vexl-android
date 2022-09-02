@@ -5,17 +5,16 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<com.airbnb.lottie.LottieAnimationView
+	<ImageView
 		android:id="@+id/intro_animation"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:background="@android:color/transparent"
+		android:contentDescription="?content"
 		app:layout_constraintBottom_toTopOf="@id/intro_title"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:lottie_autoPlay="false"
-		app:lottie_loop="false" />
+		app:layout_constraintTop_toTopOf="parent" />
 
 	<TextView
 		android:id="@+id/intro_title"
