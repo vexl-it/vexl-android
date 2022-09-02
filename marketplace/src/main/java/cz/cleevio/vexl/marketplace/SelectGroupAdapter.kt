@@ -11,8 +11,9 @@ import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.vexl.marketplace.databinding.ItemSelectGroupBinding
+import okhttp3.internal.notifyAll
 
-class SelectGroupAdapter : ListAdapter<Group, SelectGroupAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Group>() {
+class SelectGroupAdapter  : ListAdapter<Group, SelectGroupAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Group>() {
 	override fun areItemsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem.groupUuid == newItem.groupUuid
 
 	override fun areContentsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem == newItem
@@ -30,6 +31,12 @@ class SelectGroupAdapter : ListAdapter<Group, SelectGroupAdapter.ViewHolder>(obj
 	}
 
 	fun getSelectedGroupUuids(): List<String> = selectedGroups.toList()
+
+	fun setSelectedGroupUuids(uuids: List<String>) {
+		selectedGroups.clear()
+		selectedGroups.addAll(uuids)
+		this.notifyDataSetChanged()
+	}
 
 	inner class ViewHolder constructor(
 		private val binding: ItemSelectGroupBinding
