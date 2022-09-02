@@ -20,17 +20,16 @@
 			android:layout_marginHorizontal="16dp"
 			android:layout_marginBottom="16dp">
 
-			<com.airbnb.lottie.LottieAnimationView
+			<ImageView
 				android:id="@+id/animation"
 				android:layout_width="match_parent"
 				android:layout_height="220dp"
 				android:background="@android:color/transparent"
+				android:contentDescription="?content"
+				android:src="@drawable/ic_donate"
 				app:layout_constraintBottom_toTopOf="@id/title"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:lottie_autoPlay="true"
-				app:lottie_loop="true"
-				app:lottie_rawRes="@raw/vexl_donate" />
+				app:layout_constraintStart_toStartOf="parent" />
 
 			<TextView
 				android:id="@+id/title"
