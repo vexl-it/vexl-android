@@ -2,16 +2,16 @@
 <resources>
 
     <!-- General -->
-    <string name="general_eur_sign">€</string>
-    <string name="general_usd_sign">$</string>
-    <string name="general_czk_sign">Kč</string>
-    <string name="general_continue">Pokračovat</string>
-    <string name="general_more">Více</string>
-    <string name="general_close">Zavřít</string>
-    <string name="general_start">Spustit</string>
-    <string name="general_pause">Pauza</string>
-    <string name="general_cancel">Zrušit</string>
-    <string name="general_ok">Ok</string>
+	<string name="general_eur_sign">€</string>
+	<string name="general_usd_sign">$</string>
+	<string name="general_czk_sign">Kč</string>
+	<string name="general_continue">Pokračovat</string>
+	<string name="general_more">Více</string>
+	<string name="general_close">Zavřít</string>
+	<string name="general_start">Spustit</string>
+	<string name="general_pause">Pauza</string>
+	<string name="general_cancel">Zrušit</string>
+	<string name="general_ok">Ok</string>
 	<string name="general_back">Zpět</string>
 	<string name="general_done">Hotovo</string>
 	<string name="general_search">Vyhledat</string>
@@ -175,7 +175,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
 	<string name="anonymize_user_title">Toto je tvůj soukromý profil.</string>
 	<string name="anonymize_user_title2">Tohle je tvoje Vexl identita!</string>
 	<string name="anonymize_user_note">Bez tvého svolení jej nikdo neuvidí.</string>
-	<string name="anonymize_user_note2">Takto tě uvidí ostatní uživatelé, než jim odhalíte svůj soukromý profil.</string>
+	<string name="anonymize_user_note2">Takto tě uvidí ostatní uživatelé, než jim odhalíš svůj soukromý profil.</string>
 	<string name="anonymize_user_btn">Anonymizovat</string>
 
 	<!-- Register Phone Contacts -->
@@ -200,22 +200,22 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
 
 	<!-- Errors -->
 	<string name="error_username_not_available">Toto uživatelské jméno už někdo používá</string>
-    <string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
+	<string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
 	<string name="error_nickname_blank">Nejdřív si vyplň přezdívku.</string>
-    <string name="error_missing_firebase_token">Chybí Firebase token pro doručené zprávy</string>
+	<string name="error_missing_firebase_token">Chybí Firebase token pro doručené zprávy</string>
 
-    <!-- Profile -->
-    <string name="profile_change_picture">Změnit profilový obrázek</string>
-    <string name="profile_edit_name">Upravit jméno</string>
-    <string name="profile_pin">Nastavit PIN / FaceID</string>
-    <string name="profile_allow_screenshots">Povolit screenshoty</string>
-    <string name="profile_allow_screenshots_description">Zablokovat screenshoty</string>
-    <string name="profile_import_contacts">Nahrané kontakty</string>
-    <string name="profile_import_contacts_subtitle">%s přátel</string>
-    <string name="profile_import_facebook">Facebook import</string>
-    <string name="profile_terms_and_privacy">Podmínky použití a ochrana osobních údajů</string>
-    <string name="profile_faq">Často kladené otázky</string>
-    <string name="profile_report_issue">Nahlásit problém</string>
+	<!-- Profile -->
+	<string name="profile_change_picture">Změnit profilový obrázek</string>
+	<string name="profile_edit_name">Upravit jméno</string>
+	<string name="profile_pin">Nastavit PIN / FaceID</string>
+	<string name="profile_allow_screenshots">Povolit screenshoty</string>
+	<string name="profile_allow_screenshots_description">Zablokovat screenshoty</string>
+	<string name="profile_import_contacts">Nahrané kontakty</string>
+	<string name="profile_import_contacts_subtitle">%s přátel</string>
+	<string name="profile_import_facebook">Facebook import</string>
+	<string name="profile_terms_and_privacy">Podmínky použití a ochrana osobních údajů</string>
+	<string name="profile_faq">Často kladené otázky</string>
+	<string name="profile_report_issue">Nahlásit problém</string>
 	<string name="profile_request_data">Vyžádat uložená data</string>
 	<string name="profile_logout">Smazat účet</string>
 	<string name="profile_currency">Měna</string>
@@ -463,19 +463,19 @@ ipsum dolor sit ametum roma von carpa di.</string>
 	<string name="chat_identity_reveal_sent">Žádost o odhalení odeslána</string>
 
 	<!-- Groups -->
-    <string name="groups_join_button">Přidat se ke skupině</string>
-    <string name="groups_title">Skupiny</string>
-    <string name="groups_leave_button">Odejít</string>
-    <string name="groups_item_members">%s členové</string>
-    <string name="groups_camera_denied">Vexl has no access to the camera</string>
-    <string name="groups_enter_code">Vložit kód ručně</string>
-    <string name="groups_scan_code">Nascanovat QR pro připojení do skupiny</string>
-    <string name="groups_enter_code_description">Vyplňte aktivační kód níže</string>
-    <string name="groups_leave_group_title">Opustit skupinu?</string>
-    <string name="groups_leave_group_description">Nebudete si moci zobrazit nabídky a konverzace se členy skupiny</string>
-    <string name="groups_leave_group_no">Ne</string>
-    <string name="groups_leave_group_yes">Ano, odejít</string>
-    <string name="groups_join_title">Chceš se připojit? %s</string>
+	<string name="groups_join_button">Přidat se ke skupině</string>
+	<string name="groups_title">Skupiny</string>
+	<string name="groups_leave_button">Odejít</string>
+	<string name="groups_item_members">%s členové</string>
+	<string name="groups_camera_denied">Vexl has no access to the camera</string>
+	<string name="groups_enter_code">Vložit kód ručně</string>
+	<string name="groups_scan_code">Nascanovat QR pro připojení do skupiny</string>
+	<string name="groups_enter_code_description">Vyplňte aktivační kód níže</string>
+	<string name="groups_leave_group_title">Opustit skupinu?</string>
+	<string name="groups_leave_group_description">Nebudete si moci zobrazit nabídky a konverzace se členy skupiny</string>
+	<string name="groups_leave_group_no">Ne</string>
+	<string name="groups_leave_group_yes">Ano, odejít</string>
+	<string name="groups_join_title">Chceš se připojit? %s</string>
 	<string name="groups_join_description">Po přidání uvidíš nabídky členů této skupiny.</string>
 	<string name="groups_join_no">Ne</string>
 	<string name="groups_join_yes">Ano</string>
