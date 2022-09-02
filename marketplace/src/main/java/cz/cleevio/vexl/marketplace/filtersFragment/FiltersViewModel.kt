@@ -80,7 +80,8 @@ class FiltersViewModel constructor(
 		feeValue: Float?,
 		feeTypes: Set<FeeButtonSelected>,
 		priceRange: PriceRangeValue?,
-		currency: String?
+		currency: String?,
+		groupUuids: List<String>
 	) {
 		val offerFilter = OfferFilter(
 			locationTypes = locationTypes.map { it.name }.toSet(),
@@ -92,7 +93,8 @@ class FiltersViewModel constructor(
 			feeValue = if(FeeButtonSelected.WITH_FEE in feeTypes) feeValue else null,
 			priceRangeTopLimit = priceRange?.topLimit,
 			priceRangeBottomLimit = priceRange?.bottomLimit,
-			currency = currency
+			currency = currency,
+			groupUuids = groupUuids
 		)
 		if (offerType.isBuy()) {
 			offerRepository.buyOfferFilter.value = offerFilter

@@ -10,7 +10,8 @@ data class OfferFilter constructor(
 	val feeValue: Float? = null,
 	val priceRangeTopLimit: Float? = null,
 	val priceRangeBottomLimit: Float? = null,
-	val currency: String? = null
+	val currency: String? = null,
+	val groupUuids: List<String>? = null
 ) {
 
 	fun isOfferMatchPriceRange(minOffer: Float, maxOffer: Float): Boolean {

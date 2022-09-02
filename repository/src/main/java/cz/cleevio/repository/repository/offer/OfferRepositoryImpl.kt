@@ -288,6 +288,14 @@ class OfferRepositoryImpl constructor(
 			queryBuilder.append(" AND currency == $SQL_VALUE_PLACEHOLDER")
 			values.add(offerFilter.currency)
 		}
+		if (offerFilter.groupUuids?.isNotEmpty() == true) {
+			queryBuilder.append(
+				sqlLikeOperator(
+					fieldName = "groupUuid",
+					data = offerFilter.groupUuids.toList()
+				)
+			)
+		}
 		/* 	FIXME this query is not working if offer price range match second or other nested conditions then is the first one
 			It is filtered programatically at the bottom of this method
 			Maybe change query from AND/OR to BETWEEN

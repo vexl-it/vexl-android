@@ -97,9 +97,6 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		binding.friendLevel.isMultichoiceEnabled(true)
 
 		binding.applyBtn.setOnClickListener {
-			//todo: use/filter also by groups
-			//groupUuids = adapter.getSelectedGroupUuids()
-
 			filterViewModel.saveOfferFilter(
 				locationTypes = binding.filterLocation.getSelectedLocationTypes(),
 				locationValues = binding.filterLocation.getLocationValues(),
@@ -121,7 +118,8 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 					binding.priceRangeWidget.currentCurrency.name
 				} else {
 					null
-				}
+				},
+				groupUuids = adapter.getSelectedGroupUuids()
 			)
 			findNavController().popBackStack()
 		}
@@ -138,6 +136,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		binding.filterOfferFee.isVisible = false
 		binding.amountTitle.isVisible = false
 		binding.priceRangeWidget.isVisible = false
+		adapter.setSelectedGroupUuids(emptyList())
 
 		TransitionManager.beginDelayedTransition(binding.container)
 	}
@@ -210,7 +209,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		}
 		binding.filterOfferFee.setValues(
 			value = offerFilter.feeValue,
-			selected =offerFilter.feeTypes?.map { FeeButtonSelected.valueOf(it) } ?: emptyList()
+			selected = offerFilter.feeTypes?.map { FeeButtonSelected.valueOf(it) } ?: emptyList()
 		)
 		binding.filterOfferFee.isVisible = offerFilter.feeTypes?.isEmpty() == false
 
@@ -229,6 +228,9 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 				binding.priceRangeWidget.isVisible = true
 				binding.filterOfferFee.isVisible = true
 			}
+		}
+		if (!offerFilter.groupUuids.isNullOrEmpty()) {
+			adapter.setSelectedGroupUuids(offerFilter.groupUuids ?: emptyList())
 		}
 	}
 
