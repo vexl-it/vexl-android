@@ -13,10 +13,7 @@ import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.safeNavigateWithTransition
-import cz.cleevio.core.utils.showKeyboard
-import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.utils.*
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentInitPhoneBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -69,13 +66,13 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		binding.initPhoneInput.showKeyboard()
 
 		binding.termsContinueBtn.setOnClickListener {
-			if (binding.initPhoneInput.text.toString().length != resources.getInteger(R.integer.phone_input_length)) {
+			val phoneNumber = binding.initPhoneInput.text.toString().toValidPhoneNumber()
+			if (phoneNumber.length != resources.getInteger(R.integer.phone_input_length) && !phoneNumber.isPhoneValid()) {
 				showToast(getString(R.string.init_phone_length_not_valid))
 				return@setOnClickListener
 			}
 
 			binding.root.hideKeyboard()
-			val phoneNumber = binding.initPhoneInput.text.toString()
 			val countryCode = "+${phoneNumberUtil.getCountryCodeForRegion(getCountryIsoCode(phoneNumber))}"
 			viewModel.sendPhoneNumber(countryCode = countryCode, phoneNumber = phoneNumber)
 		}
