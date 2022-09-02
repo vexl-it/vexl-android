@@ -22,7 +22,7 @@ fun String.toValidPhoneNumber(): String {
 }
 
 fun String.isPhoneValid(): Boolean =
-	this.matches("^\\+(?:[0-9] ?){6,14}[0-9]\$".toRegex())
+	this.matches("^[+][0-9]{10,13}$".toRegex())
 
 @Suppress("DEPRECATION")
 fun fromHtml(text: String): Spanned {
