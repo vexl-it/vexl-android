@@ -18,7 +18,7 @@
     <string name="general_verify">Ověřuji...</string>
     <string name="next">Dále</string>
     <string name="skip">Přeskočit</string>
-    <string name="got_it">Rozumím!</string>
+    <string name="got_it">Rozumím</string>
 
     <!-- Onboarding -->
 
@@ -304,11 +304,10 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="marketplace_currency_1_year">1 rok</string>
     <string name="marketplace_buy">Prodat</string>
     <string name="marketplace_sell">Koupit</string>
-    <string name="marketplace_my_offers">Nová nabídka nákupu</string>
     <string name="marketplace_detail_friend_first">Přítel</string>
     <string name="marketplace_detail_friend_second">Přítel přítele</string>
-    <string name="marketplace_detail_user_sell">%s prodává</string>
-    <string name="marketplace_detail_user_buy">%s nakupuje</string>
+    <string name="marketplace_detail_user_sell">%s nakupuje</string>
+    <string name="marketplace_detail_user_buy">%s prodává</string>
     <string name="marketplace_detail_up_to">do</string>
     <string name="marketplace_detail_payment">Platba</string>
     <string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
@@ -318,8 +317,6 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="offer_edit_buy_title">Chci prodat</string>
     <string name="offer_create_sell_title">Nová nabídka</string>
     <string name="offer_create_buy_title">Nová nabídka</string>
-    <string name="offer_to_sell">K prodeji</string>
-    <string name="offer_to_buy">K nákupu</string>
     <string name="offer_active_count">%s aktivních nabídek</string>
     <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
     <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
@@ -331,7 +328,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="error_missing_offer_description">Chybí popis</string>
     <string name="error_missing_offer_location">Chybí lokace</string>
     <string name="error_missing_offer_payment_method">Chybí způsob platby</string>
-    <string name="error_missing_offer_price_trigger">Chybí spoušť ceny</string>
+    <string name="error_missing_offer_price_trigger">Chybí cenový spouštěč nabídky</string>
     <string name="error_missing_offer_type">Chybí typ sítě</string>
     <string name="error_missing_offer_friend_level">Chybějící úroveň přátel</string>
     <string name="error_invalid_offer_delete_trigger">Neplatný čas na smazání nabídky</string>
@@ -345,8 +342,8 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="widget_fee_percent">%s%%</string>
     <string name="widget_location_online">Online</string>
     <string name="widget_location_in_person">Pouze osobně</string>
-    <string name="widget_trigger_price_title">Aktivní při ceně</string>
-    <string name="widget_trigger_title">Spouštěče</string>
+    <string name="widget_trigger_price_title">Nabídka je aktivní při ceně</string>
+    <string name="widget_trigger_title">Cenové spouštěče</string>
     <string name="widget_trigger_price_below">Pod</string>
     <string name="widget_trigger_price_above">Nad</string>
     <string name="widget_trigger_price_curr_crypto_price">právě teď 1 BTC = $%f</string>
@@ -381,10 +378,10 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="filter_advanced_title">Pokročilé</string>
     <string name="filter_type_title">Typ</string>
     <string name="filter_friend_level_title">Úroveň přítele</string>
-    <string name="offer_create_sell_btn">Vytvořit nabídku prodeje</string>
-    <string name="offer_update_sell_btn">Aktualizovat nabídku prodeje</string>
-    <string name="offer_create_buy_btn">Vytvořit poptávku nákupu</string>
-    <string name="offer_update_buy_btn">Aktualizovat poptávku nákupu</string>
+    <string name="offer_create_sell_btn">Vytvořit nabídku nákupu</string>
+    <string name="offer_update_sell_btn">Aktualizovat nabídku nákupu</string>
+    <string name="offer_create_buy_btn">Vytvořit nabídku prodeje</string>
+    <string name="offer_update_buy_btn">Aktualizovat poptávku prodeje</string>
     <string name="widget_location_km">\u00B1 %d km</string>
     <string name="widget_location_hint">Město</string>
     <string name="create_create_offer">Vytvořit nabídku</string>
@@ -395,20 +392,20 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <!-- Offer Request -->
     <string name="request_title">Nabídka</string>
     <string name="request_title_loading">Odesílám</string>
-    <string name="request_text_hint">např. pojď zavexlit, kámo!</string>
+    <string name="request_text_hint">např. Pojď zavexlit, kámo!</string>
     <string name="request_button">Odeslat žádost</string>
     <string name="request_common_friends">%d společných přátel</string>
     <string name="request_common_friends_empty_state">Nemáte společné přátele</string>
     <string name="error_missing_offer_public_key">Chybí veřejný klíč</string>
-    <string name="error_missing_offer_request_message">Chybí zpráva požadavku</string>
+    <string name="error_missing_offer_request_message">Chybí zpráva </string>
     <string name="error_missing_offer_id">Chybí ID nabídky</string>
     <string name="offer_request_sent_successfully">Žádost byla úspěšně odeslána</string>
 
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>
     <string name="chat_filter_all">Vše</string>
-    <string name="chat_filter_buyers">Kupující</string>
-    <string name="chat_filter_sellers">Prodávající</string>
+    <string name="chat_filter_buyers">Prodávající</string>
+    <string name="chat_filter_sellers">Kupující</string>
     <string name="chat_message_prefix">já:</string>
 
     <!-- Chat requests -->
@@ -506,7 +503,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="faq_screen_seven_subtitle_3">Nebo se s námi můžete setkat během dalšího P2P obchodu! 😻</string>
 
     <!-- Permissions -->
-    <string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
+    <string name="permission_camera_denied">Přístup ke kameře byl odepřen</string>
 
     <!-- Locked Screen -->
     <string name="locked_screen_title">Marketplace is just warming up.\nWait for the full experience.</string>
@@ -515,6 +512,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="locked_screen_buy">I\'m buying</string>
     <string name="locked_screen_offers">Offer</string>
     <string name="locked_groups">Groups are locked right now</string>
+    <string name="locked_screen_contacts_remaining">Contacts remaining</string>
 
     <!-- Intro -->
     <string name="intro_skip">Skip</string>

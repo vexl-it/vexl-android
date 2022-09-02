@@ -18,7 +18,7 @@
     <string name="general_verify">Verifying...</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
-    <string name="got_it">Got it!</string>
+    <string name="got_it">Got it</string>
     <string name="notification_channel_id">vexlChannel</string>
 
     <!-- Onboarding -->
@@ -309,22 +309,22 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="marketplace_currency_1_year">1 year</string>
     <string name="marketplace_buy">To Sell</string>
     <string name="marketplace_sell">To Buy</string>
-    <string name="marketplace_my_offers">Create offer to buy</string>
+    <string name="marketplace_my_offers">Create new offer</string>
     <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of a Friend</string>
-    <string name="marketplace_detail_user_sell">%s is selling</string>
-    <string name="marketplace_detail_user_buy">%s is buying</string>
+    <string name="marketplace_detail_user_sell">%s is buying</string>
+    <string name="marketplace_detail_user_buy">%s is selling</string>
     <string name="marketplace_detail_up_to">Up to</string>
     <string name="marketplace_detail_payment">Payment</string>
     <string name="marketplace_detail_fee">Includes %1$s %% transaction fee</string>
     <string name="offer_request">Request</string>
     <string name="offer_requested">Requested</string>
-    <string name="offer_edit_sell_title">I want to buy</string>
-    <string name="offer_edit_buy_title">I want to sell</string>
+    <string name="offer_edit_sell_title">I want to sell</string>
+    <string name="offer_edit_buy_title">I want to buy</string>
     <string name="offer_create_sell_title">Create new offer</string>
     <string name="offer_create_buy_title">Create new offer</string>
-    <string name="offer_to_sell">Selling</string>
-    <string name="offer_to_buy">Buying</string>
+    <string name="offer_to_sell">Buying Test1</string>
+    <string name="offer_to_buy">Selling Test1</string>
     <string name="offer_active_count">%s active offers</string>
     <string name="offer_sort_newest">Sorted by newest</string>
     <string name="offer_sort_oldest">Sorted by oldest</string>
@@ -336,7 +336,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="error_missing_offer_description">Missing description</string>
     <string name="error_missing_offer_location">Missing location</string>
     <string name="error_missing_offer_payment_method">Missing payment method</string>
-    <string name="error_missing_offer_price_trigger">Missing price trigger</string>
+    <string name="error_missing_offer_price_trigger">Missing offer price trigger</string>
     <string name="error_missing_offer_type">Missing network type</string>
     <string name="error_missing_offer_friend_level">Missing friend level</string>
     <string name="error_invalid_offer_delete_trigger">Invalid time to delete offer</string>
@@ -350,8 +350,8 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="widget_fee_percent">%s%%</string>
     <string name="widget_location_online">Online</string>
     <string name="widget_location_in_person">Only in person</string>
-    <string name="widget_trigger_price_title">Active when price is</string>
-    <string name="widget_trigger_title">Triggers</string>
+    <string name="widget_trigger_price_title">Offer is active when price is</string>
+    <string name="widget_trigger_title">Price triggers</string>
     <string name="widget_trigger_price_below">Below</string>
     <string name="widget_trigger_price_above">Above</string>
     <string name="widget_trigger_price_curr_crypto_price">currently 1 BTC = $%f</string>
@@ -386,10 +386,10 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="filter_advanced_title">Advanced</string>
     <string name="filter_type_title">Type</string>
     <string name="filter_friend_level_title">Friend level</string>
-    <string name="offer_create_sell_btn">Create sell offer</string>
+    <string name="offer_create_sell_btn">Create buy offer</string>
     <string name="offer_update_sell_btn">Update sell offer</string>
-    <string name="offer_create_buy_btn">Create buy offer</string>
-    <string name="offer_update_buy_btn">Update buy offer</string>
+    <string name="offer_create_buy_btn">Create sell offer</string>
+    <string name="offer_update_buy_btn">Update sell offer</string>
     <string name="widget_location_km">\u00B1 %d km</string>
     <string name="widget_location_hint">City</string>
     <string name="create_create_offer">Create offer</string>
@@ -400,7 +400,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <!-- Offer Request -->
     <string name="request_title">Offer</string>
     <string name="request_title_loading">Sending</string>
-    <string name="request_text_hint">e.g. let\'s trade my friend...</string>
+    <string name="request_text_hint">e.g. Let\'s trade my friend...</string>
     <string name="request_button">Send request</string>
     <string name="request_common_friends">%d common friends</string>
     <string name="request_common_friends_empty_state">You don\'t have common friends</string>
@@ -412,8 +412,8 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>
     <string name="chat_filter_all">All</string>
-    <string name="chat_filter_buyers">Buyers</string>
-    <string name="chat_filter_sellers">Sellers</string>
+    <string name="chat_filter_buyers">Sellers</string>
+    <string name="chat_filter_sellers">Buyers</string>
     <string name="chat_message_prefix">me:</string>
 
     <!-- Chat requests -->
