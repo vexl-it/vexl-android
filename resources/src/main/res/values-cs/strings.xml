@@ -23,7 +23,7 @@
     <!-- Onboarding -->
 
     <!-- Welcome -->
-    <string name="welcome_title">Chceš začít vexlovat?</string>
+    <string name="welcome_title">Vítej! Chceš začít vexlovat?</string>
     <string name="welcome_terms_agreement">Souhlasím s podmínkami</string>
     <string name="welcome_terms_agreement_link">podmínkami</string>
     <string name="welcome_terms_agreement_url">https://google.com</string>
@@ -31,6 +31,7 @@
 
     <!-- Terms of Use -->
     <string name="terms_of_use_title">Podmínky použití</string>
+    <string name="terms_of_use_faq_button">Nemáš čas na dlouhé čtení? Mrkni na výběr z nejčastějších dotazů.</string>
     <string name="terms_of_use_terms_bookmark">Podmínky použití</string>
     <string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
     <string name="terms_of_use_markdown"># Just testing markdown
@@ -148,33 +149,33 @@ Provozovatel: Souhlasíte s jakoukoliv případnou budoucí změnou provozovatel
 Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vztahují na Vexl (například Zásady ochrany osobních údajů), můžeme čas od času změnit nebo doplnit a pokud tak učiníme, budeme Vás muset požádat, abyste si je znovu přečetli a souhlasili s nimi. Uvědomujeme si, že je to pro Vás nepohodlné, a proto slibujeme, že to nebudeme dělat příliš často. Vaše další užívání Vexlu potvrzuje Váš souhlas s aktualizovanými Smluvními podmínkami.</string>
 
     <!-- Register Phone -->
-    <string name="init_phone_title">Zadej své telefonní číslo</string>
-    <string name="init_phone_note">Tvůj telefon bude stoprocentně anonymní</string>
+    <string name="init_phone_title">Jaké je tvoje telefonní číslo?</string>
+    <string name="init_phone_note">Tvoje číslo se nikdo nedozví (ani my).</string>
     <string name="init_phone_hint">Telefonní číslo</string>
     <string name="init_phone_length_not_valid">Telefonní číslo není správně</string>
-    <string name="verify_phone_title">Poslali jsme ti kód</string>
+    <string name="verify_phone_title">Poslali jsme ti ověřovací kód.</string>
     <string name="verify_phone_subtitle">Zadej ho níže a ověř %s</string>
     <string name="verify_phone_hint">Aktivační kód</string>
-    <string name="verify_phone_info_countdown">Neobdržel jsi kód? Zkus poslat znova za %s s</string>
-    <string name="verify_phone_info_btn">Neobdržel jsi kód? Zkus poslat znova</string>
+    <string name="verify_phone_info_countdown">Neobdržel jsi kód? Zkus ho poslat znova za %s s</string>
+    <string name="verify_phone_info_btn">Neobdržel jsi kód? Zkus ho poslat znova</string>
 
     <!-- Register Name and Avatar -->
-    <string name="username_title">Jak ti kamarádi říkají?</string>
-    <string name="username_info">Bez tvého svolení tvé jméno nikdo neuvidí.</string>
+    <string name="username_title">Jak ti říkají kamarádi?</string>
+    <string name="username_info">Bez tvého svolení ho nikdo neuvidí.</string>
     <string name="username_hint">Tvoje jméno nebo přezdívka</string>
-    <string name="avatar_title">Jak vypadáš?</string>
-    <string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí.</string>
-    <string name="avatar_welcome">Nazdar, %s!</string>
+    <string name="avatar_title">Vyber si svoji profilovou fotku.</string>
+    <string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí (ani my).</string>
+    <string name="avatar_welcome">Ahoj %s!</string>
     <string name="avatar_continue">Pokračovat</string>
-    <string name="verify_phone_done_title">Telefon ověřen.\nČas nastavit tvůj profil.</string>
+    <string name="verify_phone_done_title">Tvé číslo bylo ověřeno.\nČas nastavit tvůj profil.</string>
     <string name="image_picker_camera">Foťák</string>
     <string name="image_picker_gallery">Knihovna</string>
     <string name="image_picker_title">Vyber si, odkud chceš obrázek nahrát</string>
     <string name="user_avatar_title">Nazdar %s\nJak vypadáš?</string>
-    <string name="anonymize_user_title">Toto je tvá identita</string>
-    <string name="anonymize_user_title2">Identita anonymizována!</string>
-    <string name="anonymize_user_note">Bez tvého svolení nikdo tvoji identitu neuvidí.</string>
-    <string name="anonymize_user_note2">Takto vás uvidí ostatní uživatelé, než požádáte/schválíte o odkrytí identity.</string>
+    <string name="anonymize_user_title">Toto je tvůj soukromý profil.</string>
+    <string name="anonymize_user_title2">Tohle je tvoje nová Vexl identita!</string>
+    <string name="anonymize_user_note">Bez tvého svolení jej nikdo neuvidí.</string>
+    <string name="anonymize_user_note2">Takto tě uvidí ostatní uživatelé, než jim odhalíš svůj soukromý profil.</string>
     <string name="anonymize_user_btn">Anonymizovat</string>
 
     <!-- Register Phone Contacts -->
@@ -185,13 +186,13 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="import_contacts_skip">Zatím přeskočit</string>
     <string name="import_contacts_allow">Povolit</string>
     <string name="import_contacts_not_allow">Zakázat</string>
-    <string name="import_contacts_title">Najít kamarády</string>
-    <string name="import_contacts_subtitle">We will store your contacts in our server in a secure way, even us won\'t be able to access them</string>
-    <string name="import_contacts_request_title">Povolit kontakty</string>
-    <string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům.\nNemusíš ale mít obavy, nikdo je neuvidí.</string>
+    <string name="import_contacts_title">Propojit s přáteli</string>
+    <string name="import_contacts_subtitle">Kontaky jsou šifrovány (i pro nás).</string>
+    <string name="import_contacts_request_title">Povolit import kontaktů</string>
+    <string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům.\nNemusíš mít obavy, nikdo je neuvidí.</string>
     <string name="import_contacts_secondary_request_title">Opravdu?</string>
     <string name="import_contacts_secondary_request_description">Vexl potřebuje tvoje kontakty k tomu, aby tě anonymně spojil s ostatními vexláky.</string>
-    <string name="import_facebook_contacts_title">Propoj s Facebookem a rozšiř svůj dosah</string>
+    <string name="import_facebook_contacts_title">Propoj s Facebookem a rozšiř svůj dosah!</string>
     <string name="import_facebook_contacts_import">Import přátel z Facebooku</string>
     <string name="import_contacts_finish_title">Nastavuji...</string>
     <string name="import_contacts_update_button">Aktualizovat</string>
@@ -200,7 +201,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <!-- Errors -->
     <string name="error_username_not_available">Toto uživatelské jméno už někdo používá</string>
     <string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
-    <string name="error_nickname_blank">Chybí přezdívka</string>
+    <string name="error_nickname_blank">Nejdřív si vyplň přezdívku.</string>
     <string name="error_missing_firebase_token">Chybí Firebase token pro doručené zprávy</string>
 
     <!-- Profile -->
@@ -226,10 +227,10 @@ But you can delete account.</string>
     <string name="profile_private_settings_subtitle">Unlock to access your identity and contacts</string>
 
     <!-- Profile Edit Name -->
-    <string name="profile_edit_name_title">Edit name</string>
+    <string name="profile_edit_name_title">Upravit jméno</string>
     <string name="profile_edit_name_subtitle">Space for additional copy. You can lorem
 ipsum dolor sit ametum roma von carpa di.</string>
-    <string name="profile_edit_name_action">Save</string>
+    <string name="profile_edit_name_action">Uložit</string>
 
     <!-- Profile Edit Avatar -->
     <string name="profile_edit_avatar_title">Change profile picture</string>
@@ -251,7 +252,7 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="profile_join_vexl_button_title">Rozumím</string>
 
     <!-- Donate -->
-    <string name="profile_donate_title">Daruj love</string>
+    <string name="profile_donate_title">Podpoř nás</string>
     <string name="profile_donate_description">Pokud se ti Vexl líbí, budeme rádi za trochu Bitcoinu na jeho další vylepšování.</string>
     <string name="profile_donate_button_donate">Darovat</string>
     <string name="profile_donate_button_dismiss">Zpět</string>

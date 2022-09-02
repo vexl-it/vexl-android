@@ -32,7 +32,7 @@
 
     <!-- Terms of Use -->
     <string name="terms_of_use_title">Terms\nof Use</string>
-    <string name="terms_of_use_faq_button">Don’t have a time to read all this? Take a look on Frequently Asked Questions.</string>
+    <string name="terms_of_use_faq_button">Don’t have time to read all of this? Take a look at some Frequently Asked Questions (FAQs).</string>
     <string name="terms_of_use_terms_bookmark">Terms of Use</string>
     <string name="terms_of_use_policy_bookmark">Privacy Policy</string>
     <string name="terms_of_use_markdown"># Just testing markdown
@@ -151,34 +151,34 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
 
     <!-- Register Phone -->
     <string name="init_phone_title">What’s your phone number?</string>
-    <string name="init_phone_note">Your number will be anonymous</string>
+    <string name="init_phone_note">It will never be shared with anyone (not even us).</string>
     <string name="init_phone_hint">Phone number</string>
     <string name="init_phone_length_not_valid">Phone number is invalid</string>
-    <string name="verify_phone_title">We\'ve just sent you a code</string>
+    <string name="verify_phone_title">We\'ve just sent you a verification code.</string>
     <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
     <string name="verify_phone_hint">Activation code</string>
-    <string name="verify_phone_info_countdown">Didn’t receive code? Resend in %s s</string>
-    <string name="verify_phone_info_btn">Didn’t receive code? Resend</string>
+    <string name="verify_phone_info_countdown">Didn’t receive a code? Resend in %s s</string>
+    <string name="verify_phone_info_btn">Didn’t receive a code? Click here to try again.</string>
     <string name="verify_phone_code_sent">Code was sent!</string>
     <string name="verify_phone_expired">Verification expired. Start your registration again, please</string>
 
     <!-- Register Name and Avatar -->
     <string name="username_title">What do your friends call you?</string>
-    <string name="username_info">Nobody will see your name until you allow it</string>
+    <string name="username_info">Nobody will see it until you allow it.</string>
     <string name="username_hint">Name or nickname</string>
-    <string name="avatar_title">What do you look like?</string>
-    <string name="avatar_description">Nobody will see your face until you allow it</string>
-    <string name="avatar_welcome">Hey, %s!</string>
+    <string name="avatar_title">Choose a profile picture.</string>
+    <string name="avatar_description">Nobody will see it until you allow it.</string>
+    <string name="avatar_welcome">Hey %s!</string>
     <string name="avatar_continue">Continue</string>
-    <string name="verify_phone_done_title">Phone verified.\nLet’s setup your profile.</string>
+    <string name="verify_phone_done_title">Phone number verified.\nLet’s setup your profile.</string>
     <string name="image_picker_camera">Camera</string>
     <string name="image_picker_gallery">Photo Album</string>
-    <string name="image_picker_title">Select the source of your avatar</string>
+    <string name="image_picker_title">Select the source of your avatar.</string>
     <string name="user_avatar_title">Hey %s!\nWhat do you look like?</string>
-    <string name="anonymize_user_title">This is your identity</string>
-    <string name="anonymize_user_title2">Identity anonymized!</string>
-    <string name="anonymize_user_note">Nobody will see your identity until your allow it</string>
-    <string name="anonymize_user_note2">This is how other users will see you until you reveal your real identity.</string>
+    <string name="anonymize_user_title">This is your private profile.</string>
+    <string name="anonymize_user_title2">This is your new Vexl identity!</string>
+    <string name="anonymize_user_note">Nobody will see it until you allow it.</string>
+    <string name="anonymize_user_note2">This is how others see you until you choose to reveal your private profile.</string>
     <string name="anonymize_user_btn">Anonymize</string>
 
     <!-- Register Phone Contacts -->
@@ -189,8 +189,8 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="import_contacts_skip">Skip for now</string>
     <string name="import_contacts_allow">Allow</string>
     <string name="import_contacts_not_allow">Don’t allow</string>
-    <string name="import_contacts_title">Let’s find you\nfriends!</string>
-    <string name="import_contacts_subtitle">We will store your contacts in our server in a secure way, even us won\'t be able to access them</string>
+    <string name="import_contacts_title">Connect with your\nfriends!</string>
+    <string name="import_contacts_subtitle">Contacts are encrypted (even for us).</string>
     <string name="import_contacts_request_title">Allow contacts</string>
     <string name="import_contacts_request_description">Vexl needs access to your contacts in order to work.\nDon\'t worry we won’t ever see them</string>
     <string name="import_contacts_secondary_request_title">Really?</string>
@@ -203,8 +203,8 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
 
     <!-- Errors -->
     <string name="error_username_not_available">The username is unavailable</string>
-    <string name="error_missing_offer_keys">You don\'t have keys for this offer</string>
-    <string name="error_nickname_blank">Nickname is empty</string>
+    <string name="error_missing_offer_keys">You don\'t have access to this offer.</string>
+    <string name="error_nickname_blank">You have to choose a nickname.</string>
     <string name="error_missing_firebase_token">Firebase token for Inbox is missing</string>
     <string name="error_missing_keypair">The action could not be completed because of missing key pair</string>
     <string name="error_missing_challenge">The action could not be completed because of missing signed challenge</string>
@@ -516,12 +516,13 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="permission_camera_denied">Camera permission denied</string>
 
     <!-- Locked Screen -->
-    <string name="locked_screen_title">Marketplace is just warming up.\nWait for the full experience.</string>
-    <string name="locked_screen_subtitle">Create your offer today</string>
+    <string name="locked_screen_title">We are currently growing our social network. Import your contacts and help us spread the world!</string>
+    <string name="locked_screen_subtitle">Have you already created your offer?</string>
     <string name="locked_screen_sell">I\'m selling</string>
     <string name="locked_screen_buy">I\'m buying</string>
     <string name="locked_screen_offers">Offer</string>
     <string name="locked_groups">Groups are locked right now</string>
+    <string name="locked_screen_contacts_remaining">Contacts remaining</string>
 
     <!-- Intro -->
     <string name="intro_skip">Skip</string>

@@ -1037,6 +1037,14 @@
 		<item name="android:letterSpacing">-0.04</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Locked.ContactsRemaining" parent="TextAppearance.MaterialComponents.Body1">
+		<item name="android:textSize">16sp</item>
+		<item name="lineHeight">19.92sp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_600</item>
+		<item name="fontFamily">@font/tt_satoshi_600</item>
+		<item name="android:letterSpacing">-0.04</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Locked.Title" parent="TextAppearance.MaterialComponents.Body1">
 		<item name="android:textSize">18sp</item>
 		<item name="lineHeight">24sp</item>
