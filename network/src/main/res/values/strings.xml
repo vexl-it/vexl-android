@@ -38,17 +38,4 @@
 
 	<!-- Login errors -->
 	<string name="app_language_code" translatable="false">en</string>
-	<string name="error_user_is_blocked" translatable="false">User is blocked</string>
-	<string name="error_user_is_not_verified" translatable="false">User is not verified</string>
-	<string name="error_unauthorized" translatable="false">Unauthorized error. You were logged out.</string>
-	<string name="error_user_already_exists" translatable="false">Provided user already exists</string>
-	<string name="error_user_does_not_exist" translatable="false">User does not exist</string>
-	<string name="error_email_confirm_invalid_code" translatable="false">Invalid code</string>
-	<string name="error_wrong_login_credentials" translatable="false">Wrong login credentials</string>
-	<string name="error_unknown_error_occurred" translatable="false">The action could not be completed because an unknown error occurred. Please try again later.</string>
-	<string name="error_unknown_connection_problem" translatable="false">Connection problem. Please try again later.</string>
-	<string name="error_invalid_format" translatable="false">Invalid format</string>
-	<string name="error_invalid_password" translatable="false">Invalid password</string>
-	<string name="error_avatar_has_invalid_format" translatable="false">Avatar has invalid format</string>
-	<string name="error_invalid_data_format" translatable="false">Invalid data format</string>
 </resources>

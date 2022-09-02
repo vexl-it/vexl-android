@@ -529,4 +529,11 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="intro_first_title">Import your\ncontacts\nanonymously.</string>
     <string name="intro_second_title">See their\nbuy &amp; sell\noffers.</string>
     <string name="intro_third_title">Request identity\nfor the ones you\nlike and trade.</string>
+
+    <!-- Error -->
+    <string name="error_user_is_blocked">User is blocked</string>
+    <string name="error_unauthorized">Unauthorized error. You were logged out.</string>
+    <string name="error_unknown_error_occurred">The action could not be completed because an unknown error occurred. Please try again later.</string>
+    <string name="error_unknown_connection_problem">Connection problem. Please try again later.</string>
+    <string name="error_invalid_data_format">Invalid data format</string>
 </resources>
