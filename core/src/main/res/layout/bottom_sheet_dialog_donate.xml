@@ -85,7 +85,6 @@
 		android:layout_marginEnd="8dp"
 		android:layout_marginBottom="30dp"
 		android:text="@string/profile_donate_button_donate"
-		app:icon="@drawable/ic_donate"
 		app:iconGravity="textEnd"
 		app:iconTint="@color/black"
 		app:layout_constraintBottom_toBottomOf="parent"
