@@ -77,110 +77,126 @@
 		app:layout_constraintTop_toBottomOf="@id/filters_wrapper"
 		tools:listitem="@layout/widget_offer" />
 
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<androidx.core.widget.NestedScrollView
 		android:id="@+id/market_locked"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
+		android:fillViewport="true"
 		android:visibility="gone"
-		android:background="@drawable/blur"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/filters_wrapper">
 
-		<ImageView
-			android:id="@+id/locked_image"
-			android:layout_width="170dp"
-			android:layout_height="170dp"
-			android:layout_marginTop="32dp"
-			android:src="@drawable/remaining_offers"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent" />
-
-		<TextView
-			android:id="@+id/locked_contacts_remaining"
-			android:layout_width="0dp"
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:paddingHorizontal="60dp"
-			android:gravity="center"
-			android:text="@string/locked_screen_contacts_remaining"
-			android:textAppearance="@style/TextAppearance.Vexl.Locked.ContactsRemaining"
-			android:textColor="@color/white"
-			app:layout_constraintTop_toBottomOf="@+id/locked_image"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent" />
+			android:background="@drawable/blur">
 
-		<TextView
-			android:id="@+id/locked_title"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:paddingHorizontal="60dp"
-			android:gravity="center"
-			android:text="@string/locked_screen_title"
-			android:textAppearance="@style/TextAppearance.Vexl.Locked.Title"
-			android:textColor="@color/white"
-			app:layout_constraintTop_toBottomOf="@+id/locked_contacts_remaining"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent" />
+			<ImageView
+				android:id="@+id/locked_image"
+				android:layout_width="170dp"
+				android:layout_height="170dp"
+				android:layout_marginTop="32dp"
+				android:src="@drawable/remaining_offers"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
 
-		<View
-			android:id="@+id/locked_divider"
-			android:layout_width="0dp"
-			android:layout_height="1dp"
-			android:layout_marginHorizontal="60dp"
-			android:layout_marginTop="20dp"
-			android:background="@color/white_opacity_15"
-			app:layout_constraintTop_toBottomOf="@+id/locked_title"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent" />
+			<TextView
+				android:id="@+id/locked_contacts_remaining"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:paddingHorizontal="60dp"
+				android:gravity="center"
+				android:text="@string/locked_screen_contacts_remaining"
+				android:textAppearance="@style/TextAppearance.Vexl.Locked.ContactsRemaining"
+				android:textColor="@color/white"
+				app:layout_constraintTop_toBottomOf="@+id/locked_image"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
 
-		<TextView
-			android:id="@+id/locked_subtitle"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="20dp"
-			android:paddingHorizontal="60dp"
-			android:gravity="center"
-			android:text="@string/locked_screen_subtitle"
-			android:textAppearance="@style/TextAppearance.Vexl.Locked.Subtitle"
-			android:textColor="@color/white"
-			app:layout_constraintTop_toBottomOf="@+id/locked_divider"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent" />
+			<TextView
+				android:id="@+id/locked_title"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:paddingHorizontal="60dp"
+				android:gravity="center"
+				android:text="@string/locked_screen_title"
+				android:textAppearance="@style/TextAppearance.Vexl.Locked.Title"
+				android:textColor="@color/white"
+				app:layout_constraintTop_toBottomOf="@+id/locked_contacts_remaining"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/locked_buy_btn"
-			style="@style/Widget.Vexl.Locked.Button"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/locked_screen_button_height"
-			android:layout_marginTop="16dp"
-			android:layout_marginStart="60dp"
-			android:layout_marginEnd="6dp"
-			android:elevation="0dp"
-			android:text="@string/locked_screen_buy"
-			android:textAllCaps="false"
-			app:layout_constraintTop_toBottomOf="@id/locked_subtitle"
-			app:layout_constraintEnd_toStartOf="@id/locked_sell_btn"
-			app:layout_constraintStart_toStartOf="parent" />
+			<View
+				android:id="@+id/locked_divider"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:layout_marginHorizontal="60dp"
+				android:layout_marginTop="20dp"
+				android:background="@color/white_opacity_15"
+				app:layout_constraintTop_toBottomOf="@+id/locked_title"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/locked_sell_btn"
-			style="@style/Widget.Vexl.Locked.Button"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/locked_screen_button_height"
-			android:layout_marginTop="16dp"
-			android:layout_marginStart="6dp"
-			android:layout_marginEnd="60dp"
-			android:elevation="0dp"
-			android:text="@string/locked_screen_sell"
-			android:textAllCaps="false"
-			app:layout_constraintTop_toBottomOf="@id/locked_subtitle"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@id/locked_buy_btn" />
+			<TextView
+				android:id="@+id/locked_subtitle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dp"
+				android:paddingHorizontal="60dp"
+				android:gravity="center"
+				android:text="@string/locked_screen_subtitle"
+				android:textAppearance="@style/TextAppearance.Vexl.Locked.Subtitle"
+				android:textColor="@color/white"
+				app:layout_constraintTop_toBottomOf="@+id/locked_divider"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/locked_buy_btn"
+				style="@style/Widget.Vexl.Locked.Button"
+				android:layout_width="0dp"
+				android:layout_height="@dimen/locked_screen_button_height"
+				android:layout_marginTop="16dp"
+				android:layout_marginStart="60dp"
+				android:layout_marginEnd="6dp"
+				android:elevation="0dp"
+				android:text="@string/locked_screen_buy"
+				android:textAllCaps="false"
+				app:layout_constraintTop_toBottomOf="@id/locked_subtitle"
+				app:layout_constraintEnd_toStartOf="@id/locked_sell_btn"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/locked_sell_btn"
+				style="@style/Widget.Vexl.Locked.Button"
+				android:layout_width="0dp"
+				android:layout_height="@dimen/locked_screen_button_height"
+				android:layout_marginTop="16dp"
+				android:layout_marginStart="6dp"
+				android:layout_marginEnd="60dp"
+				android:elevation="0dp"
+				android:text="@string/locked_screen_sell"
+				android:textAllCaps="false"
+				app:layout_constraintTop_toBottomOf="@id/locked_subtitle"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/locked_buy_btn" />
+
+			<View
+				android:id="@+id/fake"
+				android:layout_width="0dp"
+				android:layout_height="90dp"
+				android:visibility="invisible"
+				app:layout_constraintTop_toBottomOf="@+id/locked_sell_btn"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
