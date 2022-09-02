@@ -25,7 +25,7 @@
 				android:layout_height="190dp"
 				android:background="@android:color/transparent"
 				android:contentDescription="?attr/startIconContentDescription"
-				android:src="@drawable/ic_block_user"
+				android:src="@drawable/ic_block_user_confirm"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
