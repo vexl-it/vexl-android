@@ -304,7 +304,6 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="marketplace_currency_1_year">1 rok</string>
     <string name="marketplace_buy">Prodat</string>
     <string name="marketplace_sell">Koupit</string>
-    <string name="marketplace_my_offers">Nová nabídka nákupu</string>
     <string name="marketplace_detail_friend_first">Přítel</string>
     <string name="marketplace_detail_friend_second">Přítel přítele</string>
     <string name="marketplace_detail_user_sell">%s nakupuje</string>
@@ -318,8 +317,6 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="offer_edit_buy_title">Moje poptávky nákupu</string>
     <string name="offer_create_sell_title">Nová nabídka prodeje</string>
     <string name="offer_create_buy_title">Nová poptávka nákupu</string>
-    <string name="offer_to_sell">K prodeji</string>
-    <string name="offer_to_buy">K nákupu</string>
     <string name="offer_active_count">%s aktivních nabídek</string>
     <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
     <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
@@ -407,8 +404,8 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>
     <string name="chat_filter_all">Vše</string>
-    <string name="chat_filter_buyers">Kupující</string>
-    <string name="chat_filter_sellers">Prodávající</string>
+    <string name="chat_filter_buyers">Prodávající</string>
+    <string name="chat_filter_sellers">Kupující</string>
     <string name="chat_message_prefix">já:</string>
 
     <!-- Chat requests -->
