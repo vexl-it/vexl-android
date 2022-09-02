@@ -4,6 +4,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.dao.*
+import cz.cleevio.cache.entity.ChatUserIdentityEntity
 import cz.cleevio.cache.entity.MyOfferEntity
 import cz.cleevio.cache.entity.OfferCommonFriendCrossRef
 import cz.cleevio.network.LocationApi
@@ -15,6 +16,9 @@ import cz.cleevio.network.request.offer.CreateOfferPrivatePartRequest
 import cz.cleevio.network.request.offer.CreateOfferRequest
 import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
+import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.chat.ChatUserIdentity
+import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.currency.fromCache
 import cz.cleevio.repository.model.offer.*
@@ -37,6 +41,7 @@ class OfferRepositoryImpl constructor(
 	private val transactionProvider: TransactionProvider,
 	private val chatRepository: ChatRepository,
 	private val cryptoCurrencyDao: CryptoCurrencyDao,
+	private val chatUserDao: ChatUserDao,
 ) : OfferRepository {
 
 	override val buyOfferFilter = MutableStateFlow(OfferFilter())
@@ -389,8 +394,40 @@ class OfferRepositoryImpl constructor(
 						)
 					}
 				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
+
+				if (offer.isRequested) {
+					//try to find saved user name and photo and stuff
+					val chatUserIdentity = chatUserDao.getUserByInboxKey(offer.offerPublicKey)?.fromCache()
+					//we have already created ChatUser for this offer
+					if (chatUserIdentity != null) {
+						offer.fillUserInfo(chatUserIdentity)
+					} else {
+						//we need to create ChatUser for this offer
+						val entity = ChatUserIdentityEntity(
+							contactPublicKey = offer.offerPublicKey,
+							inboxKey = offer.offerPublicKey,
+							anonymousUsername = RandomUtils.generateName(),
+							anonymousAvatarImageIndex = RandomUtils.getAvatarIndex(),
+							deAnonymized = false
+						)
+						//save it into DB
+						chatUserDao.replace(entity)
+						//and fill this info into offer
+						offer.fillUserInfo(entity.fromCache())
+					}
+				}
 			}
 		}
+	}
+
+	private fun Offer.fillUserInfo(chatUserIdentity: ChatUserIdentity) {
+		this.userName = if (chatUserIdentity.name.isNullOrBlank()) {
+			chatUserIdentity.anonymousUsername
+		} else {
+			chatUserIdentity.name
+		}
+		this.userAvatarId = RandomUtils.getRandomImageDrawableId(chatUserIdentity.anonymousAvatarImageIndex ?: 0)
+		this.userAvatar = chatUserIdentity.avatar
 	}
 
 	private suspend fun updateOffers(offers: List<Offer>) {

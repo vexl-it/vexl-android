@@ -12,8 +12,8 @@ import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
-import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.repository.model.group.Group
@@ -68,10 +68,19 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
 
-		binding.profileImage.load(
-			RandomUtils.selectRandomImage(binding.root.context)
-		)
-		val generatedUsername = RandomUtils.generateName()
+
+		if (item.userAvatar.isNullOrBlank()) {
+			//either select random drawable
+			binding.profileImage.load(
+				RandomUtils.selectRandomImage(context, item.userAvatarId ?: 0)
+			)
+		} else {
+			//or load user avatar from url
+			binding.profileImage.load(
+				item.userAvatar
+			)
+		}
+		val generatedUsername = item.userName ?: RandomUtils.generateName()
 
 		binding.card.offerType.text = if (item.offerType == OfferType.SELL.name) {
 			resources.getString(R.string.offer_to_sell)

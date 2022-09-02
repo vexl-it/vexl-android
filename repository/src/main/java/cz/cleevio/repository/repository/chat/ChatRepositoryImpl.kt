@@ -490,14 +490,6 @@ class ChatRepositoryImpl constructor(
 				doOnSuccess = {
 					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
 					// create anonymous identity
-					chatUserDao.replace(
-						ChatUserIdentityEntity(
-							contactPublicKey = message.recipientPublicKey, // recipient's key, because of it's outgoing message
-							inboxKey = message.inboxPublicKey,
-							anonymousUsername = UsernameUtils.generateName(),
-							deAnonymized = false
-						)
-					)
 				}
 			)
 

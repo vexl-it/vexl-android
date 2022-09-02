@@ -43,7 +43,10 @@ data class Offer constructor(
 	val modifiedAt: ZonedDateTime,
 	//custom flags
 	var isMine: Boolean = false,
-	var isRequested: Boolean = false
+	var isRequested: Boolean = false,
+	var userName: String? = null,
+	var userAvatar: String? = null,
+	var userAvatarId: Int? = null,
 ) : Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?): Offer {

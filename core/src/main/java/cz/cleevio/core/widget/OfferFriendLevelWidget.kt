@@ -10,7 +10,7 @@ import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFriendLevelBinding
 import cz.cleevio.core.model.FriendLevelValue
-import cz.cleevio.core.utils.RandomUtils
+import cz.cleevio.repository.RandomUtils
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class OfferFriendLevelWidget @JvmOverloads constructor(
