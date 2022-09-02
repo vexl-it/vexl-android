@@ -22,18 +22,18 @@
 
     <!-- Onboarding -->
 
-	<!-- Welcome -->
-	<string name="welcome_title">Chceš začít vexlovat?</string>
-	<string name="welcome_terms_agreement">Souhlasím s podmínkami</string>
-	<string name="welcome_terms_agreement_link">podmínkami</string>
-	<string name="welcome_terms_agreement_url">https://google.com</string>
-	<string name="welcome_button">Pokračovat</string>
+    <!-- Welcome -->
+    <string name="welcome_title">Chceš začít vexlovat?</string>
+    <string name="welcome_terms_agreement">Souhlasím s podmínkami</string>
+    <string name="welcome_terms_agreement_link">podmínkami</string>
+    <string name="welcome_terms_agreement_url">https://google.com</string>
+    <string name="welcome_button">Pokračovat</string>
 
-	<!-- Terms of Use -->
-	<string name="terms_of_use_title">Podmínky použití</string>
-	<string name="terms_of_use_terms_bookmark">Podmínky použití</string>
-	<string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
-	<string name="terms_of_use_markdown"># Just testing markdown
+    <!-- Terms of Use -->
+    <string name="terms_of_use_title">Podmínky použití</string>
+    <string name="terms_of_use_terms_bookmark">Podmínky použití</string>
+    <string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
+    <string name="terms_of_use_markdown"># Just testing markdown
 
 [link](https://google.com)
 
@@ -41,7 +41,7 @@
 
 * **Name Surname** - work position
 * **Name Surname** - work position</string>
-	<string name="terms_of_use_policy_markdown">{{header}}1. VÍTEJTE{{/header}}
+    <string name="terms_of_use_policy_markdown">{{header}}1. VÍTEJTE{{/header}}
 Rádi bychom Vám poděkovali, že jste se rozhodli používat právě Vexl. Víme, že se už nemůžete dočkat, až se do něj poprvé přihlásíte, ale ještě před tím bychom Vás rádi požádali, abyste nám věnovali několik minut Vašeho času a přečetli si tyto Smluvní podmínky. Víme, že Váš čas je cenný, a proto slibujeme, že naše dokumenty budou vždy maximálně stručné. Pokud souhlasíte se vším, co jste si zde přečetli, můžete se pustit do používání Vexlu.
 
 {{header}}2. SMLUVNÍ STRANY{{/header}}
@@ -165,7 +165,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="avatar_title">Jak vypadáš?</string>
     <string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí.</string>
     <string name="avatar_welcome">Nazdar, %s!</string>
-	<string name="avatar_continue">Pokračovat</string>
+    <string name="avatar_continue">Pokračovat</string>
     <string name="verify_phone_done_title">Telefon ověřen.\nČas nastavit tvůj profil.</string>
     <string name="image_picker_camera">Foťák</string>
     <string name="image_picker_gallery">Knihovna</string>
@@ -186,7 +186,7 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="import_contacts_allow">Povolit</string>
     <string name="import_contacts_not_allow">Zakázat</string>
     <string name="import_contacts_title">Najít kamarády</string>
-	<string name="import_contacts_subtitle">We will store your contacts in our server in a secure way, even us won\'t be able to access them</string>
+    <string name="import_contacts_subtitle">We will store your contacts in our server in a secure way, even us won\'t be able to access them</string>
     <string name="import_contacts_request_title">Povolit kontakty</string>
     <string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům.\nNemusíš ale mít obavy, nikdo je neuvidí.</string>
     <string name="import_contacts_secondary_request_title">Opravdu?</string>
@@ -225,52 +225,52 @@ But you can delete account.</string>
     <string name="profile_private_settings_title">Private settings</string>
     <string name="profile_private_settings_subtitle">Unlock to access your identity and contacts</string>
 
-	<!-- Profile Edit Name -->
-	<string name="profile_edit_name_title">Edit name</string>
-	<string name="profile_edit_name_subtitle">Space for additional copy. You can lorem
+    <!-- Profile Edit Name -->
+    <string name="profile_edit_name_title">Edit name</string>
+    <string name="profile_edit_name_subtitle">Space for additional copy. You can lorem
 ipsum dolor sit ametum roma von carpa di.</string>
-	<string name="profile_edit_name_action">Save</string>
+    <string name="profile_edit_name_action">Save</string>
 
-	<!-- Profile Edit Avatar -->
-	<string name="profile_edit_avatar_title">Change profile picture</string>
-	<string name="profile_edit_avatar_subtitle">Space for additional copy. You can lorem ipsum dolor sit ametum roma von.</string>
-	<string name="profile_edit_avatar_action">Upload new photo</string>
-	<string name="profile_edit_avatar_delete">Delete photo?</string>
-	<string name="profile_edit_avatar_empty_image_error">You cannot upload empty image</string>
+    <!-- Profile Edit Avatar -->
+    <string name="profile_edit_avatar_title">Change profile picture</string>
+    <string name="profile_edit_avatar_subtitle">Space for additional copy. You can lorem ipsum dolor sit ametum roma von.</string>
+    <string name="profile_edit_avatar_action">Upload new photo</string>
+    <string name="profile_edit_avatar_delete">Delete photo?</string>
+    <string name="profile_edit_avatar_empty_image_error">You cannot upload empty image</string>
 
-	<!-- Profile Delete Account -->
-	<string name="profile_delete_account_title">Delete account?</string>
-	<string name="profile_delete_account_subtitle">Do you really want to delete your account? You will never be able to undo this action.</string>
-	<string name="profile_delete_account_no">Nope</string>
-	<string name="profile_delete_account_yes_delete">Yes, delete</string>
-	<string name="profile_delete_account_yes">Yes</string>
-	<string name="profile_delete_account_title_sure">You sure?</string>
+    <!-- Profile Delete Account -->
+    <string name="profile_delete_account_title">Delete account?</string>
+    <string name="profile_delete_account_subtitle">Do you really want to delete your account? You will never be able to undo this action.</string>
+    <string name="profile_delete_account_no">Nope</string>
+    <string name="profile_delete_account_yes_delete">Yes, delete</string>
+    <string name="profile_delete_account_yes">Yes</string>
+    <string name="profile_delete_account_title_sure">You sure?</string>
 
-	<!-- JoinVexl -->
-	<string name="profile_join_vexl_title">Připoj se k Vexlu</string>
-	<string name="profile_join_vexl_button_title">Rozumím</string>
+    <!-- JoinVexl -->
+    <string name="profile_join_vexl_title">Připoj se k Vexlu</string>
+    <string name="profile_join_vexl_button_title">Rozumím</string>
 
-	<!-- Donate -->
-	<string name="profile_donate_title">Daruj love</string>
-	<string name="profile_donate_description">Pokud se ti Vexl líbí, budeme rádi za trochu Bitcoinu na jeho další vylepšování.</string>
-	<string name="profile_donate_button_donate">Darovat</string>
-	<string name="profile_donate_button_dismiss">Zpět</string>
+    <!-- Donate -->
+    <string name="profile_donate_title">Daruj love</string>
+    <string name="profile_donate_description">Pokud se ti Vexl líbí, budeme rádi za trochu Bitcoinu na jeho další vylepšování.</string>
+    <string name="profile_donate_button_donate">Darovat</string>
+    <string name="profile_donate_button_dismiss">Zpět</string>
 
-	<!-- Delete photo -->
-	<string name="profile_delete_photo_title">Delete photo</string>
-	<string name="profile_delete_photo_subtitle">Do you really want to delete your photo? You can always upload new image if you want.</string>
-	<string name="profile_delete_photo_no">Nope</string>
-	<string name="profile_delete_photo_yes">Yes</string>
+    <!-- Delete photo -->
+    <string name="profile_delete_photo_title">Delete photo</string>
+    <string name="profile_delete_photo_subtitle">Do you really want to delete your photo? You can always upload new image if you want.</string>
+    <string name="profile_delete_photo_no">Nope</string>
+    <string name="profile_delete_photo_yes">Yes</string>
 
-	<!-- CurrencySelect -->
-	<string name="user_profile_currency_title">Měna</string>
-	<string name="user_profile_currency_czk">Česká koruna</string>
-	<string name="user_profile_currency_eur">Euro</string>
-	<string name="user_profile_currency_usd">Americký dolar</string>
-	<string name="user_profile_currency_dismissButton">Hotovo</string>
+    <!-- CurrencySelect -->
+    <string name="user_profile_currency_title">Měna</string>
+    <string name="user_profile_currency_czk">Česká koruna</string>
+    <string name="user_profile_currency_eur">Euro</string>
+    <string name="user_profile_currency_usd">Americký dolar</string>
+    <string name="user_profile_currency_dismissButton">Hotovo</string>
 
-	<!-- Report issue -->
-	<string name="user_profile_report_issue_email">support@vexl.it</string>
+    <!-- Report issue -->
+    <string name="user_profile_report_issue_email">support@vexl.it</string>
     <string name="user_profile_report_issue_title">Něco se pokazilo?</string>
     <string name="user_profile_report_issue_subtitle">Kontaktujte náš support.</string>
     <string name="user_profile_report_issue_confirm">Chápu</string>
@@ -485,39 +485,46 @@ ipsum dolor sit ametum roma von carpa di.</string>
     <string name="offer_widget_groups_info">%s nabídka</string>
 
     <!-- Faq -->
-	<string name="faq_screen_one_title">What is Vexl?</string>
-	<string name="faq_screen_one_subtitle">Vexl is a platform where you can trade Bitcoin within your real world social network - your friends and friends of their friends - while staying completely anonymous - if you wish.</string>
-	<string name="faq_screen_two_title">Who can see my contacts?</string>
-	<string name="faq_screen_two_subtitle">People whom you allow to see your identity can see the friends you have in common. That\'s it.</string>
-	<string name="faq_screen_three_title">How can I remain anonymous and still participate in Vexl? </string>
-	<string name="faq_screen_three_subtitle">By default, you participate in the network under your Vexl name and Vexl avatar that were given to you during the registration. You can only reveal your identity per a particular trade in our secure, end to end encrypted chat.</string>
-	<string name="faq_screen_four_title">How can I make sure that the person I am talking to is the person I want to talk to?</string>
-	<string name="faq_screen_four_subtitle">One challenge with truly anonymous communications systems like Vexl is that sometimes you do need to verify the identity of the person you’re talking to! In cases like these, it’s best to use a secure secondary channel of communication to confirm with the other person that you’re both who you say you are.</string>
-	<string name="faq_screen_five_title">How can I ensure that my communication and trades are private and encrypted? </string>
-	<string name="faq_screen_five_subtitle">Vexl is open source - anyone can look for any backdoor or malicious intentions. Also, here you can look at the report from an independent Security Audit . </string>
-	<string name="faq_screen_six_title">How can you ensure that my data is protected?</string>
-	<string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
-	<string name="faq_screen_seven_title">How do I contact Vexl?</string>
-	<string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
-	<string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
-	<string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
-	<string name="faq_screen_seven_subtitle_3">. For a private comms, you can also send us an e2ee mail.\n\nOr you can meet us during your next P2P trade! 😻</string>
+    <string name="faq_screen_one_title">What is Vexl?</string>
+    <string name="faq_screen_one_subtitle">Vexl is a platform where you can trade Bitcoin within your real world social network - your friends and friends of their friends - while staying completely anonymous - if you wish.</string>
+    <string name="faq_screen_two_title">Who can see my contacts?</string>
+    <string name="faq_screen_two_subtitle">People whom you allow to see your identity can see the friends you have in common. That\'s it.</string>
+    <string name="faq_screen_three_title">How can I remain anonymous and still participate in Vexl? </string>
+    <string name="faq_screen_three_subtitle">By default, you participate in the network under your Vexl name and Vexl avatar that were given to you during the registration. You can only reveal your identity per a particular trade in our secure, end to end encrypted chat.</string>
+    <string name="faq_screen_four_title">How can I make sure that the person I am talking to is the person I want to talk to?</string>
+    <string name="faq_screen_four_subtitle">One challenge with truly anonymous communications systems like Vexl is that sometimes you do need to verify the identity of the person you’re talking to! In cases like these, it’s best to use a secure secondary channel of communication to confirm with the other person that you’re both who you say you are.</string>
+    <string name="faq_screen_five_title">How can I ensure that my communication and trades are private and encrypted? </string>
+    <string name="faq_screen_five_subtitle">Vexl is open source - anyone can look for any backdoor or malicious intentions. Also, here you can look at the report from an independent Security Audit . </string>
+    <string name="faq_screen_six_title">How can you ensure that my data is protected?</string>
+    <string name="faq_screen_six_subtitle">Vexl is designed to never collect or store any sensitive information. Vexl messages and other content cannot be accessed by us or other third parties because they are always end-to-end encrypted, private, and secure. Our Terms of Service and Privacy Policy are available below.</string>
+    <string name="faq_screen_seven_title">How do I contact Vexl?</string>
+    <string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
+    <string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
+    <string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
+    <string name="faq_screen_seven_subtitle_3">. For a private comms, you can also send us an e2ee mail.\n\nOr you can meet us during your next P2P trade! 😻</string>
 
-	<!-- Permissions -->
-	<string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
+    <!-- Permissions -->
+    <string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
 
-	<!-- Locked Screen -->
-	<string name="locked_screen_title">Marketplace is just warming up.\nWait for the full experience.</string>
-	<string name="locked_screen_subtitle">Create your offer today</string>
-	<string name="locked_screen_sell">I\'m selling</string>
-	<string name="locked_screen_buy">I\'m buying</string>
-	<string name="locked_screen_offers">Offer</string>
-	<string name="locked_groups">Groups are locked right now</string>
+    <!-- Locked Screen -->
+    <string name="locked_screen_title">Marketplace is just warming up.\nWait for the full experience.</string>
+    <string name="locked_screen_subtitle">Create your offer today</string>
+    <string name="locked_screen_sell">I\'m selling</string>
+    <string name="locked_screen_buy">I\'m buying</string>
+    <string name="locked_screen_offers">Offer</string>
+    <string name="locked_groups">Groups are locked right now</string>
 
-	<!-- Intro -->
-	<string name="intro_skip">Skip</string>
-	<string name="intro_continue">Continue</string>
-	<string name="intro_first_title">Import your\ncontacts\nanonymously.</string>
-	<string name="intro_second_title">See their\nbuy &amp; sell\noffers.</string>
-	<string name="intro_third_title">Request identity\nfor the ones you\nlike and trade.</string>
+    <!-- Intro -->
+    <string name="intro_skip">Skip</string>
+    <string name="intro_continue">Continue</string>
+    <string name="intro_first_title">Import your\ncontacts\nanonymously.</string>
+    <string name="intro_second_title">See their\nbuy &amp; sell\noffers.</string>
+    <string name="intro_third_title">Request identity\nfor the ones you\nlike and trade.</string>
+
+    <!-- Error -->
+    <string name="error_user_is_blocked">Uživatel je zablokován</string>
+    <string name="error_unauthorized">Neoprávněná chyba. Byli jste odhlášeni.</string>
+    <string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkuste to znovu později.</string>
+    <string name="error_unknown_connection_problem">Problém s připojením. Prosím zkuste to znovu později.</string>
+    <string name="error_invalid_data_format">Neplatný formát dat</string>
 </resources>
