@@ -487,11 +487,11 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="offer_widget_groups_info">%s nabídka</string>
 
     <!-- Faq -->
-    <string name="faq_screen_one_title">What is Vexl?</string>
-    <string name="faq_screen_one_subtitle">Vexl is a platform where you can trade Bitcoin within your real world social network - your friends and friends of their friends - while staying completely anonymous - if you wish.</string>
-    <string name="faq_screen_two_title">Who can see my contacts?</string>
-    <string name="faq_screen_two_subtitle">People whom you allow to see your identity can see the friends you have in common. That\'s it.</string>
-    <string name="faq_screen_three_title">How can I remain anonymous and still participate in Vexl? </string>
+    <string name="faq_screen_one_title">Co je Vexl ?</string>
+    <string name="faq_screen_one_subtitle">Vexl je platforma kde můžeš domlouvat směnu bitcoinu v rámci své reálné sociální sítě - se svými přáteli a přáteli jejich přátel - a přitom zůstat zcela anonymní, pokud si to přeješ.</string>
+    <string name="faq_screen_two_title">Kdo může vidět mé kontakty?</string>
+    <string name="faq_screen_two_subtitle">Lidé, kterým dovolíte vidět tvou identitu, mohou vidět vaše společné přátele. To je vše.</string>
+    <string name="faq_screen_three_title">Jak mohu zůstat anonymní a přitom být součástí Vexlu?</string>
     <string name="faq_screen_three_subtitle">By default, you participate in the network under your Vexl name and Vexl avatar that were given to you during the registration. You can only reveal your identity per a particular trade in our secure, end to end encrypted chat.</string>
     <string name="faq_screen_four_title">How can I make sure that the person I am talking to is the person I want to talk to?</string>
     <string name="faq_screen_four_subtitle">One challenge with truly anonymous communications systems like Vexl is that sometimes you do need to verify the identity of the person you’re talking to! In cases like these, it’s best to use a secure secondary channel of communication to confirm with the other person that you’re both who you say you are.</string>

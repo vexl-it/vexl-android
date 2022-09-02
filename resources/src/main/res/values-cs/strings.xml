@@ -487,6 +487,23 @@ Smluvní podmínky: Tyto Smluvní podmínky nebo další podmínky, které se vz
     <string name="offer_widget_groups_info">%s nabídka</string>
 
     <!-- Faq -->
+    <string name="faq_screen_one_title">Co je Vexl ?</string>
+    <string name="faq_screen_one_subtitle">Vexl je platforma kde můžeš domlouvat směnu bitcoinu v rámci své reálné sociální sítě - se svými přáteli a přáteli jejich přátel - a přitom zůstat zcela anonymní, pokud si to přeješ.</string>
+    <string name="faq_screen_two_title">Kdo může vidět mé kontakty?</string>
+    <string name="faq_screen_two_subtitle">Lidé, kterým dovolíte vidět tvou identitu, mohou vidět vaše společné přátele. To je vše.</string>
+    <string name="faq_screen_three_title">Jak mohu zůstat anonymní a přitom být součástí Vexlu?</string>
+    <string name="faq_screen_three_subtitle">Ostatní účastnící sítě tě uvidí pod tvým Vexl jménem a avatarem, které ti byly přiděleny při registraci. Svou identitu můžete odhalit pouze pro konkrétní obchod v našem zabezpečeném, end-to-end šifrovaném chatu.</string>
+    <string name="faq_screen_four_title">Jak se mohu ujistit, že osoba, se kterou mluvím, je ta, se kterou chci mluvit?</string>
+    <string name="faq_screen_four_subtitle">Jedním z úskalí skutečně anonymních komunikačních systémů, jako je Vexl, je to, že někdy musíte ověřit totožnost osoby, se kterou komunikujete! V takových případech je nejlepší použít zabezpečený sekundární komunikační kanál, abyste si s druhou osobou potvrdili, že jste oba ti, za které se vydáváte.</string>
+    <string name="faq_screen_five_title">Jak mohu zajistit, aby moje komunikace a obchody byly soukromé a šifrované?</string>
+    <string name="faq_screen_five_subtitle">Vexl má otevřený zdrojový kód - kdokoli v něm může hledat zadní vrátka nebo škodlivé úmysly. Zde se také můžete podívat na zprávu z nezávislého bezpečnostního auditu.</string>
+    <string name="faq_screen_six_title">Jak můžete zajistit ochranu mých údajů?</string>
+    <string name="faq_screen_six_subtitle">Vexl je navržen tak, aby nikdy neshromažďoval ani neukládal žádné citlivé informace. Ke zprávám Vexl a dalšímu obsahu nemáme my ani jiné třetí strany přístup, protože jsou vždy šifrovány end-to-end, jsou soukromé a zabezpečené. Naše podmínky poskytování služeb a zásady ochrany osobních údajů jsou k dispozici níže.</string>
+    <string name="faq_screen_seven_title">Jak mohu kontaktovat Vexl ?</string>
+    <string name="faq_screen_seven_subtitle">Vždy se na nás můžete obrátit prostřednictvím e-mailu: support@vexl.it. Pro soukromou komunikaci nám můžete také poslat e-mail e2ee. Nebo se s námi můžete setkat během svého příštího P2P obchodu! 😻</string>
+    <string name="faq_screen_seven_subtitle_1">Vždy se na nás můžete obrátit prostřednictvím e-mailu:</string>
+    <string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
+    <string name="faq_screen_seven_subtitle_3">Pro soukromou komunikaci nám můžete také poslat e2ee mail.\n\nNebo se s námi můžete setkat během dalšího P2P obchodu! 😻</string>
 
     <!-- Permissions -->
     <string name="permission_camera_denied">Přístup ke kameře byl zakázán</string>
