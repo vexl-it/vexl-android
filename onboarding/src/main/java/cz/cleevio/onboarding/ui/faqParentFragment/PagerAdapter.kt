@@ -71,7 +71,7 @@ class PagerAdapter constructor(
 
 	companion object {
 		private const val NUMBER_OF_PAGES = 7
-		private const val CONTACT_SUBTITLE = "%s <font color='#101010'><b>%s</b></font>%s"
+		private const val CONTACT_SUBTITLE = "%s <font color='#101010'><b>%s</b></font> %s"
 		private const val IOS_NEW_LINE = "\n"
 		private const val ANDROID_NEW_LINE = "<br>"
 	}
