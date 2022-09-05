@@ -19,6 +19,7 @@ import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
+import timber.log.Timber
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -70,10 +71,18 @@ class OfferWidget @JvmOverloads constructor(
 
 
 		if (item.userAvatar.isNullOrBlank()) {
+			Timber.tag("ASDX").d("userAvatarId ${item.userAvatarId}")
 			//either select random drawable
-			binding.profileImage.load(
-				RandomUtils.selectRandomImage(context, item.userAvatarId ?: 0)
-			)
+			if (item.userAvatarId != null) {
+				binding.profileImage.load(
+					RandomUtils.selectRandomImage(context, item.userAvatarId!!)
+				)
+			} else {
+				binding.profileImage.load(
+					RandomUtils.selectRandomImage(context)
+				)
+			}
+
 		} else {
 			//or load user avatar from url
 			binding.profileImage.load(

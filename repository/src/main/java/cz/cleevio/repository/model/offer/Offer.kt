@@ -1,15 +1,20 @@
 package cz.cleevio.repository.model.offer
 
 import android.os.Parcelable
+import cz.cleevio.cache.dao.ChatUserDao
 import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedAdminResponse
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
+import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.chat.ChatUserIdentity
+import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.currency.CryptoCurrencyValues
 import kotlinx.parcelize.Parcelize
+import timber.log.Timber
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -119,8 +124,8 @@ fun OfferUnifiedAdminResponse.fromNetwork(): Offer {
 	)
 }
 
-fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<ContactEntity>): Offer {
-	return Offer(
+fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<ContactEntity>, chatUserDao: ChatUserDao): Offer {
+	val offer = Offer(
 		databaseId = this.offerId,
 		offerId = this.externalOfferId,
 		location = locations.map { it.fromCache() },
@@ -151,10 +156,22 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 		isMine = this.isMine,
 		isRequested = this.isRequested
 	)
+
+	if (!offer.isMine) {
+		//try to find saved user name and photo and stuff
+		val chatUserIdentity = chatUserDao.getUserByInboxKey(offer.offerPublicKey)?.fromCache()
+		//we expect it to be already in DB from syncOffers
+		if (chatUserIdentity != null) {
+			Timber.tag("ASDX").d("chatUserIdentity anonymousAvatarImageIndex ${chatUserIdentity.anonymousAvatarImageIndex}")
+			offer.fillUserInfo(chatUserIdentity)
+		}
+	}
+
+	return offer
 }
 
-fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, commonFriends: List<CommonFriend>): Offer {
-	return Offer(
+fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, commonFriends: List<CommonFriend>, chatUserDao: ChatUserDao): Offer {
+	val offer = Offer(
 		databaseId = this.offerId,
 		offerId = this.externalOfferId,
 		location = locations.map { it.fromCache() },
@@ -182,6 +199,18 @@ fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, 
 		isMine = this.isMine,
 		isRequested = this.isRequested
 	)
+
+	if (!offer.isMine) {
+		//try to find saved user name and photo and stuff
+		val chatUserIdentity = chatUserDao.getUserByInboxKey(offer.offerPublicKey)?.fromCache()
+		//we expect it to be already in DB from syncOffers
+		if (chatUserIdentity != null) {
+			Timber.tag("ASDX").d("chatUserIdentity anonymousAvatarImageIndex ${chatUserIdentity.anonymousAvatarImageIndex}")
+			offer.fillUserInfo(chatUserIdentity)
+		}
+	}
+
+	return offer
 }
 
 fun Offer.toCache(): OfferEntity {
@@ -212,4 +241,15 @@ fun Offer.toCache(): OfferEntity {
 		isMine = this.isMine,
 		isRequested = this.isRequested
 	)
+}
+
+private fun Offer.fillUserInfo(chatUserIdentity: ChatUserIdentity) {
+	this.userName = if (chatUserIdentity.name.isNullOrBlank()) {
+		chatUserIdentity.anonymousUsername
+	} else {
+		chatUserIdentity.name
+	}
+	this.userAvatarId = RandomUtils.getRandomImageDrawableId(chatUserIdentity.anonymousAvatarImageIndex ?: 0)
+	Timber.tag("ASDX").d("this.userAvatarId ${this.userAvatarId}")
+	this.userAvatar = chatUserIdentity.avatar
 }

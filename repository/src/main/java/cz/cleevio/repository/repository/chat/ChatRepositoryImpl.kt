@@ -541,7 +541,7 @@ class ChatRepositoryImpl constructor(
 
 				// Let it there
 				if (offerWithLocation != null) {
-					val offer = offerWithLocation.offer.fromCacheWithoutFriendsMapping(offerWithLocation.locations, commonFriends)
+					val offer = offerWithLocation.offer.fromCacheWithoutFriendsMapping(offerWithLocation.locations, commonFriends, chatUserDao)
 					result.add(
 						CommunicationRequest(
 							message = message,
@@ -599,7 +599,7 @@ class ChatRepositoryImpl constructor(
 						it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
 							it.offer.offerPublicKey == latestMessage.senderPublicKey
 					}.map {
-						it.offer.fromCache(it.locations, it.commonFriends)
+						it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 					}.firstOrNull()
 
 					if (offer != null) {
@@ -654,7 +654,7 @@ class ChatRepositoryImpl constructor(
 				it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
 					it.offer.offerPublicKey == latestMessage.senderPublicKey
 			}.map {
-				it.offer.fromCache(it.locations, it.commonFriends)
+				it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 			}.firstOrNull()
 
 			if (offer != null) {

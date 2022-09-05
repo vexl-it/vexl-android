@@ -37,7 +37,8 @@ val repoModule = module {
 			offerCommonFriendCrossRefDao = get(),
 			chatRepository = get(),
 			locationApi = get(),
-			cryptoCurrencyDao = get()
+			cryptoCurrencyDao = get(),
+			chatUserDao = get(),
 		)
 	}
 

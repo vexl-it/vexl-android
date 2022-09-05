@@ -17,7 +17,6 @@ import cz.cleevio.network.request.offer.CreateOfferRequest
 import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.repository.RandomUtils
-import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.currency.fromCache
@@ -26,6 +25,7 @@ import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import java.math.BigDecimal
 import java.text.Normalizer
 
@@ -220,12 +220,12 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun getOffers() =
 		offerDao.getAllExtendedOffers().map {
-			it.offer.fromCache(it.locations, it.commonFriends)
+			it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 		}
 
 	override fun getOffersFlow() = offerDao.getAllExtendedOffersFlow().map { list ->
 		list.map {
-			it.offer.fromCache(it.locations, it.commonFriends)
+			it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 		}
 	}
 
@@ -331,7 +331,7 @@ class OfferRepositoryImpl constructor(
 
 		return offerDao.getFilteredOffersFlow(simpleSQLiteQuery).map { list ->
 			list.map {
-				it.offer.fromCache(it.locations, it.commonFriends)
+				it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 			}.filter { offer ->
 				offerFilter.isOfferMatchPriceRange(offer.amountBottomLimit.toFloat(), offer.amountTopLimit.toFloat())
 					&& offerFilter.isOfferLocationInRadius(offer.location)
@@ -352,7 +352,7 @@ class OfferRepositoryImpl constructor(
 
 		return offerDao.getFilteredOffersFlow(simpleSQLiteQuery).map { list ->
 			list.map {
-				it.offer.fromCache(it.locations, it.commonFriends)
+				it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 			}
 		}.map { list ->
 			list.filter { it.offerType == offerTypeName && it.isMine }
@@ -395,13 +395,13 @@ class OfferRepositoryImpl constructor(
 					}
 				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
 
-				if (offer.isRequested) {
+				Timber.tag("ASDX").d("isRequested: ${offer.isRequested}")
+				Timber.tag("ASDX").d("isMine: ${offer.isMine}")
+				if (!offer.isMine) {
 					//try to find saved user name and photo and stuff
 					val chatUserIdentity = chatUserDao.getUserByInboxKey(offer.offerPublicKey)?.fromCache()
-					//we have already created ChatUser for this offer
-					if (chatUserIdentity != null) {
-						offer.fillUserInfo(chatUserIdentity)
-					} else {
+					//if not found
+					if (chatUserIdentity == null) {
 						//we need to create ChatUser for this offer
 						val entity = ChatUserIdentityEntity(
 							contactPublicKey = offer.offerPublicKey,
@@ -412,22 +412,10 @@ class OfferRepositoryImpl constructor(
 						)
 						//save it into DB
 						chatUserDao.replace(entity)
-						//and fill this info into offer
-						offer.fillUserInfo(entity.fromCache())
 					}
 				}
 			}
 		}
-	}
-
-	private fun Offer.fillUserInfo(chatUserIdentity: ChatUserIdentity) {
-		this.userName = if (chatUserIdentity.name.isNullOrBlank()) {
-			chatUserIdentity.anonymousUsername
-		} else {
-			chatUserIdentity.name
-		}
-		this.userAvatarId = RandomUtils.getRandomImageDrawableId(chatUserIdentity.anonymousAvatarImageIndex ?: 0)
-		this.userAvatar = chatUserIdentity.avatar
 	}
 
 	private suspend fun updateOffers(offers: List<Offer>) {
@@ -507,7 +495,7 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun getOfferById(offerId: String): Offer? {
 		return offerDao.getOfferById(offerId = offerId).let {
-			it?.offer?.fromCache(it.locations, it.commonFriends)
+			it?.offer?.fromCache(it.locations, it.commonFriends, chatUserDao)
 		}
 	}
 
