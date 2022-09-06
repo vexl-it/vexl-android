@@ -485,8 +485,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="marketplace_currency_3_month">3 mth</string>
     <string name="marketplace_currency_6_month">6 mth</string>
     <string name="marketplace_currency_1_year">1 year</string>
-    <string name="marketplace_buy">Selling</string>
-    <string name="marketplace_sell">Buying</string>
+    <string name="marketplace_buy">Buying</string>
+    <string name="marketplace_sell">Selling</string>
     <string name="marketplace_my_offers">Create new offer</string>
     <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of a Friend</string>
@@ -501,8 +501,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="offer_edit_buy_title">Create new offer</string>
     <string name="offer_create_sell_title">Create new offer</string>
     <string name="offer_create_buy_title">Create new offer</string>
-    <string name="offer_to_sell">Buying</string>
-    <string name="offer_to_buy">Selling</string>
+    <string name="offer_to_sell">Selling</string>
+    <string name="offer_to_buy">Buying</string>
     <string name="offer_active_count">%s active offers</string>
     <string name="offer_sort_newest">Sorted by newest</string>
     <string name="offer_sort_oldest">Sorted by oldest</string>
@@ -564,10 +564,10 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="filter_advanced_title">Advanced</string>
     <string name="filter_type_title">Type</string>
     <string name="filter_friend_level_title">Friend level</string>
-    <string name="offer_create_sell_btn">Create buy offer</string>
-    <string name="offer_update_sell_btn">Update buy offer</string>
-    <string name="offer_create_buy_btn">Create sell offer</string>
-    <string name="offer_update_buy_btn">Update sell offer</string>
+    <string name="offer_create_sell_btn">Create sell offer</string>
+    <string name="offer_update_sell_btn">Update sell offer</string>
+    <string name="offer_create_buy_btn">Create buy offer</string>
+    <string name="offer_update_buy_btn">Update buy offer</string>
     <string name="widget_location_km">\u00B1 %d km</string>
     <string name="widget_location_hint">City</string>
     <string name="create_create_offer">Create offer</string>
@@ -590,8 +590,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>
     <string name="chat_filter_all">All</string>
-    <string name="chat_filter_buyers">Sellers</string>
-    <string name="chat_filter_sellers">Buyers</string>
+    <string name="chat_filter_buyers">Buyers</string>
+    <string name="chat_filter_sellers">Sellers</string>
     <string name="chat_message_prefix">me:</string>
 
     <!-- Chat requests -->

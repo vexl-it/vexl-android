@@ -126,6 +126,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							NavMainGraphModel.NavGraph.ChatList
 						)
 					}
+					else -> {
+						//do nothing
+					}
 				}
 			}
 		}
