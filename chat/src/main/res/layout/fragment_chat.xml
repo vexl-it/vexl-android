@@ -354,6 +354,7 @@
 			android:id="@+id/send_image_button"
 			android:layout_width="45dp"
 			android:layout_height="45dp"
+			android:visibility="gone"
 			android:background="@drawable/background_button_chat_image"
 			android:backgroundTint="@null"
 			android:contentDescription="?content"
