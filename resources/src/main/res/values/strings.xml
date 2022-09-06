@@ -501,8 +501,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="offer_edit_buy_title">Create new offer</string>
     <string name="offer_create_sell_title">Create new offer</string>
     <string name="offer_create_buy_title">Create new offer</string>
-    <string name="offer_to_sell">Buying</string>
-    <string name="offer_to_buy">Selling</string>
+    <string name="offer_to_sell">Selling</string>
+    <string name="offer_to_buy">Buying</string>
     <string name="offer_active_count">%s active offers</string>
     <string name="offer_sort_newest">Sorted by newest</string>
     <string name="offer_sort_oldest">Sorted by oldest</string>
@@ -590,8 +590,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <!-- Chat -->
     <string name="chat_main_title">Chat</string>
     <string name="chat_filter_all">All</string>
-    <string name="chat_filter_buyers">Sellers</string>
-    <string name="chat_filter_sellers">Buyers</string>
+    <string name="chat_filter_buyers">Buyers</string>
+    <string name="chat_filter_sellers">Sellers</string>
     <string name="chat_message_prefix">me:</string>
 
     <!-- Chat requests -->
