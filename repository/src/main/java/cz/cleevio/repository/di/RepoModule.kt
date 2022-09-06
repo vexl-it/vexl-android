@@ -39,6 +39,7 @@ val repoModule = module {
 			locationApi = get(),
 			cryptoCurrencyDao = get(),
 			chatUserDao = get(),
+			encryptedPreference = get(),
 		)
 	}
 

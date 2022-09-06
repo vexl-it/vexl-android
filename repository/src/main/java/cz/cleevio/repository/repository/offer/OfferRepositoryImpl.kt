@@ -7,6 +7,7 @@ import cz.cleevio.cache.dao.*
 import cz.cleevio.cache.entity.ChatUserIdentityEntity
 import cz.cleevio.cache.entity.MyOfferEntity
 import cz.cleevio.cache.entity.OfferCommonFriendCrossRef
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.LocationApi
 import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
@@ -42,6 +43,7 @@ class OfferRepositoryImpl constructor(
 	private val chatRepository: ChatRepository,
 	private val cryptoCurrencyDao: CryptoCurrencyDao,
 	private val chatUserDao: ChatUserDao,
+	private val encryptedPreference: EncryptedPreferenceRepository,
 ) : OfferRepository {
 
 	override val buyOfferFilter = MutableStateFlow(OfferFilter())
@@ -405,7 +407,7 @@ class OfferRepositoryImpl constructor(
 						//we need to create ChatUser for this offer
 						val entity = ChatUserIdentityEntity(
 							contactPublicKey = offer.offerPublicKey,
-							inboxKey = offer.offerPublicKey,
+							inboxKey = encryptedPreference.userPublicKey,
 							anonymousUsername = RandomUtils.generateName(),
 							anonymousAvatarImageIndex = RandomUtils.getAvatarIndex(),
 							deAnonymized = false
