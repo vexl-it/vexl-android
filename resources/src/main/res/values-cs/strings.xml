@@ -24,17 +24,17 @@
 
     <!-- Welcome -->
     <string name="welcome_title">Vítej! Chceš začít vexlovat?</string>
-	<string name="welcome_terms_agreement">Souhlasím s podmínkami</string>
-	<string name="welcome_terms_agreement_link">podmínkami</string>
-	<string name="welcome_terms_agreement_url">https://google.com</string>
-	<string name="welcome_button">Pokračovat</string>
+    <string name="welcome_terms_agreement">Souhlasím s podmínkami</string>
+    <string name="welcome_terms_agreement_link">podmínkami</string>
+    <string name="welcome_terms_agreement_url">https://google.com</string>
+    <string name="welcome_button">Pokračovat</string>
 
-	<!-- Terms of Use -->
-	<string name="terms_of_use_title">Podmínky použití</string>
-	<string name="terms_of_use_faq_button">Nemáš čas na dlouhé čtení? Mrkni na výběr z nejčastějších dotazů.</string>
-	<string name="terms_of_use_terms_bookmark">Podmínky použití</string>
-	<string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
-	<string name="terms_of_use_markdown">1.  **VÍTEJTE**\n
+    <!-- Terms of Use -->
+    <string name="terms_of_use_title">Podmínky použití</string>
+    <string name="terms_of_use_faq_button">Nemáš čas na dlouhé čtení? Mrkni na výběr z nejčastějších dotazů.</string>
+    <string name="terms_of_use_terms_bookmark">Podmínky použití</string>
+    <string name="terms_of_use_policy_bookmark">Ochrana soukromí</string>
+    <string name="terms_of_use_markdown">1.  **VÍTEJTE**\n
 \n
 Rádi bychom Vám poděkovali, že jste se rozhodli používat právě Vexl. Víme, že se už nemůžete dočkat, až se do něj poprvé přihlásíte, ale ještě před tím bychom Vás rádi požádali, abyste nám věnovali několik minut Vašeho času a přečetli si tyto Smluvní podmínky. Víme, že Váš čas je cenný, a proto slibujeme, že naše dokumenty budou vždy maximálně stručné. Pokud souhlasíte se vším, co jste si zde přečetli, můžete se pustit do používání Vexlu.\n
 \n
@@ -197,7 +197,7 @@ Někdy však mimosoudní řešení sporu není prostě možné. V takovém pří
 **Provozovatel:** Souhlasíte s jakoukoliv případnou budoucí změnou provozovatele Vexl podle těchto Smluvních podmínek (postoupení smlouvy založené těmito Smluvními podmínkami). V případě takové změny Vás budeme vždy informovat.\n
 \n
 **Smluvní podmínky:** Tyto Smluvní podmínky nebo další podmínky, které se vztahují na Vexl (například Zásady ochrany osobních údajů), můžeme čas od času změnit nebo doplnit a pokud tak učiníme, budeme Vás muset požádat, abyste si je znovu přečetli a souhlasili s nimi. Uvědomujeme si, že je to pro Vás nepohodlné, a proto slibujeme, že to nebudeme dělat příliš často. Vaše další užívání Vexlu potvrzuje Váš souhlas s aktualizovanými Smluvními podmínkami.\n</string>
-	<string name="terms_of_use_policy_markdown">1. **Kdo shromažďuje mé osobní údaje?**\n
+    <string name="terms_of_use_policy_markdown">1. **Kdo shromažďuje mé osobní údaje?**\n
 \n
 Jsme obchodní společnost s názvem **Vexl s.r.o.**, se sídlem Kundratka 2359/17a, Libeň, 180 00 Praha 8, IČO: 172 70 642, zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 369216.\n
 \n
@@ -329,28 +329,28 @@ Tyto Zásady ochrany osobních údajů nabývají účinnosti dne 11. 7. 2022.\n
 \n
 Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a aktualizovat. V případě jakýchkoliv změn nebo dodatků Vás před dalším používáním služby Vexl požádáme o opětovný souhlas s jejich obsahem.</string>
 
-	<!-- Register Phone -->
-	<string name="init_phone_title">Jaké je tvoje telefonní číslo?</string>
-	<string name="init_phone_note">Tvoje číslo se nikdo nedozví (ani my).</string>
-	<string name="init_phone_hint">Telefonní číslo</string>
-	<string name="init_phone_length_not_valid">Telefonní číslo není správně</string>
-	<string name="verify_phone_title">Poslali jsme ti ověřovací kód.</string>
-	<string name="verify_phone_subtitle">Zadej ho níže a ověř %s</string>
-	<string name="verify_phone_hint">Aktivační kód</string>
-	<string name="verify_phone_info_countdown">Neobdržel jsi kód? Zkus ho poslat znova za %s s</string>
-	<string name="verify_phone_info_btn">Neobdržel jsi kód? Zkus ho poslat znova</string>
-	<string name="verify_phone_code_sent">Kód byl odeslán!</string>
-	<string name="verify_phone_expired">Verifikace expirovala. Prosím registrujte se znovu</string>
+    <!-- Register Phone -->
+    <string name="init_phone_title">Jaké je tvoje telefonní číslo?</string>
+    <string name="init_phone_note">Tvoje číslo se nikdo nedozví (ani my).</string>
+    <string name="init_phone_hint">Telefonní číslo</string>
+    <string name="init_phone_length_not_valid">Telefonní číslo není správně</string>
+    <string name="verify_phone_title">Poslali jsme ti ověřovací kód.</string>
+    <string name="verify_phone_subtitle">Zadej ho níže a ověř %s</string>
+    <string name="verify_phone_hint">Aktivační kód</string>
+    <string name="verify_phone_info_countdown">Neobdržel jsi kód? Zkus ho poslat znova za %s s</string>
+    <string name="verify_phone_info_btn">Neobdržel jsi kód? Zkus ho poslat znova</string>
+    <string name="verify_phone_code_sent">Kód byl odeslán!</string>
+    <string name="verify_phone_expired">Verifikace expirovala. Prosím registrujte se znovu</string>
 
-	<!-- Register Name and Avatar -->
-	<string name="username_title">Jak ti říkají kamarádi?</string>
-	<string name="username_info">Bez tvého svolení ho nikdo neuvidí.</string>
-	<string name="username_hint">Tvoje jméno nebo přezdívka</string>
-	<string name="avatar_title">Vyber si svoji profilovou fotku.</string>
-	<string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí (ani my).</string>
-	<string name="avatar_welcome">Ahoj %s!</string>
-	<string name="avatar_continue">Pokračovat</string>
-	<string name="verify_phone_done_title">Tvé číslo bylo ověřeno.\nČas nastavit tvůj profil.</string>
+    <!-- Register Name and Avatar -->
+    <string name="username_title">Jak ti říkají kamarádi?</string>
+    <string name="username_info">Bez tvého svolení ho nikdo neuvidí.</string>
+    <string name="username_hint">Tvoje jméno nebo přezdívka</string>
+    <string name="avatar_title">Vyber si svoji profilovou fotku.</string>
+    <string name="avatar_description">Bez tvého svolení nikdo tvou fotku neuvidí (ani my).</string>
+    <string name="avatar_welcome">Ahoj %s!</string>
+    <string name="avatar_continue">Pokračovat</string>
+    <string name="verify_phone_done_title">Tvé číslo bylo ověřeno.\nČas nastavit tvůj profil.</string>
     <string name="image_picker_camera">Foťák</string>
     <string name="image_picker_gallery">Knihovna</string>
     <string name="image_picker_title">Vyber si, odkud chceš obrázek nahrát</string>
@@ -475,40 +475,40 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="marketplace_currency_bitcoin">Bitcoin</string>
     <string name="marketplace_currency_variation_1_day">%1$s %% dnes</string>
     <string name="marketplace_currency_variation_1_week">%1$s %% před týdnem</string>
-	<string name="marketplace_currency_variation_1_month">%1$s %% před měsícem</string>
-	<string name="marketplace_currency_variation_3_month">%1$s %% před 3 měsíci</string>
-	<string name="marketplace_currency_variation_6_month">%1$s %% před 6 měsíci</string>
-	<string name="marketplace_currency_variation_1_year">%1$s %% před rokem</string>
-	<string name="marketplace_currency_1_day">1 den</string>
-	<string name="marketplace_currency_1_week">1 týd</string>
-	<string name="marketplace_currency_1_month">1 měs</string>
-	<string name="marketplace_currency_3_month">3 měs</string>
-	<string name="marketplace_currency_6_month">6 měs</string>
-	<string name="marketplace_currency_1_year">1 rok</string>
-	<string name="marketplace_buy">Prodej</string>
-	<string name="marketplace_sell">Nákup</string>
-	<string name="marketplace_my_offers">Moje nabídky</string>
-	<string name="marketplace_detail_friend_first">Přítel</string>
-	<string name="marketplace_detail_friend_second">Přítel přítele</string>
-	<string name="marketplace_detail_user_sell">%s nakupuje</string>
-	<string name="marketplace_detail_user_buy">%s prodává</string>
-	<string name="marketplace_detail_up_to">do</string>
-	<string name="marketplace_detail_payment">Platba</string>
-	<string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
-	<string name="offer_request">Žádost</string>
-	<string name="offer_requested">Žádost poslána</string>
-	<string name="offer_edit_sell_title">Nová nabídka</string>
-	<string name="offer_edit_buy_title">Nová nabídka</string>
-	<string name="offer_create_sell_title">Nová nabídka</string>
-	<string name="offer_create_buy_title">Nová nabídka</string>
-	<string name="offer_active_count">%s aktivních nabídek</string>
-	<string name="offer_sort_newest">Seřazeno od nejnovějších</string>
-	<string name="offer_sort_oldest">Seřazeno od nejstarších</string>
-	<string name="offer_my_offer">Moje nabídka</string>
-	<string name="offer_edit">Upravit nabídku</string>
-	<string name="offer_added">Přidáno %s</string>
+    <string name="marketplace_currency_variation_1_month">%1$s %% před měsícem</string>
+    <string name="marketplace_currency_variation_3_month">%1$s %% před 3 měsíci</string>
+    <string name="marketplace_currency_variation_6_month">%1$s %% před 6 měsíci</string>
+    <string name="marketplace_currency_variation_1_year">%1$s %% před rokem</string>
+    <string name="marketplace_currency_1_day">1 den</string>
+    <string name="marketplace_currency_1_week">1 týd</string>
+    <string name="marketplace_currency_1_month">1 měs</string>
+    <string name="marketplace_currency_3_month">3 měs</string>
+    <string name="marketplace_currency_6_month">6 měs</string>
+    <string name="marketplace_currency_1_year">1 rok</string>
+    <string name="marketplace_buy">Nákup</string>
+    <string name="marketplace_sell">Prodej</string>
+    <string name="marketplace_my_offers">Moje nabídky</string>
+    <string name="marketplace_detail_friend_first">Přítel</string>
+    <string name="marketplace_detail_friend_second">Přítel přítele</string>
+    <string name="marketplace_detail_user_sell">%s nakupuje</string>
+    <string name="marketplace_detail_user_buy">%s prodává</string>
+    <string name="marketplace_detail_up_to">do</string>
+    <string name="marketplace_detail_payment">Platba</string>
+    <string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
+    <string name="offer_request">Žádost</string>
+    <string name="offer_requested">Žádost poslána</string>
+    <string name="offer_edit_sell_title">Nová nabídka</string>
+    <string name="offer_edit_buy_title">Nová nabídka</string>
+    <string name="offer_create_sell_title">Nová nabídka</string>
+    <string name="offer_create_buy_title">Nová nabídka</string>
+    <string name="offer_active_count">%s aktivních nabídek</string>
+    <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
+    <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
+    <string name="offer_my_offer">Moje nabídka</string>
+    <string name="offer_edit">Upravit nabídku</string>
+    <string name="offer_added">Přidáno %s</string>
 
-	<!-- Offer -->
+    <!-- Offer -->
     <string name="error_missing_offer_description">Chybí popis</string>
     <string name="error_missing_offer_location">Chybí lokace</string>
     <string name="error_missing_offer_payment_method">Chybí způsob platby</string>
@@ -554,7 +554,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="widget_btc_network_lighting">Lightning</string>
     <string name="widget_btc_network_on_chain">On-chain</string>
     <string name="offer_create_group_title">Skupina</string>
-    <string name="offer_create_group_description">Sdílej offer ve skupině</string>
+    <string name="offer_create_group_description">Sdílej nabídku ve skupině</string>
     <string name="widget_offer_description">Popis</string>
     <string name="widget_offer_description_hint">Popiš svou nabídku</string>
     <string name="widget_offer_description_counter">%d/%d</string>
@@ -562,10 +562,10 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="filter_advanced_title">Pokročilé</string>
     <string name="filter_type_title">Typ</string>
     <string name="filter_friend_level_title">Úroveň přítele</string>
-    <string name="offer_create_sell_btn">Vytvořit nabídku nákupu</string>
-    <string name="offer_update_sell_btn">Aktualizovat nabídku nákupu</string>
-    <string name="offer_create_buy_btn">Vytvořit nabídku prodeje</string>
-    <string name="offer_update_buy_btn">Aktualizovat poptávku prodeje</string>
+    <string name="offer_create_sell_btn">Vytvořit nabídku prodeje</string>
+    <string name="offer_update_sell_btn">Aktualizovat poptávku prodeje</string>
+    <string name="offer_create_buy_btn">Vytvořit nabídku nákupu</string>
+    <string name="offer_update_buy_btn">Aktualizovat nabídku nákupu</string>
     <string name="widget_location_km">\u00B1 %d km</string>
     <string name="widget_location_hint">Město</string>
     <string name="create_create_offer">Vytvořit nabídku</string>
@@ -680,35 +680,35 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="faq_screen_five_subtitle">Vexl má otevřený zdrojový kód - kdokoli v něm může hledat zadní vrátka nebo škodlivé úmysly. Můžeš se taky podívat na zprávu z nezávislého bezpečnostního auditu.</string>
     <string name="faq_screen_six_title">Jak můžete zajistit ochranu mých údajů?</string>
     <string name="faq_screen_six_subtitle">Vexl je navržen tak, aby nikdy neshromažďoval ani neukládal žádné citlivé informace. Ke zprávám a dalšímu obsahu nemáme my ani jiné třetí strany přístup, protože jsou vždy šifrovány end-to-end. Naše podmínky poskytování služeb a zásady ochrany osobních údajů jsou k dispozici níže.</string>
-	<string name="faq_screen_seven_title">Jak mohu kontaktovat Vexl ?</string>
-	<string name="faq_screen_seven_subtitle">Vždy se na nás můžete obrátit prostřednictvím e-mailu: support@vexl.it. Nebo se s námi můžete setkat během svého příštího P2P obchodu! 😻</string>
-	<string name="faq_screen_seven_subtitle_1">Vždy se na nás můžete obrátit prostřednictvím e-mailu:</string>
-	<string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
-	<string name="faq_screen_seven_subtitle_3">Nebo se s námi můžete setkat během dalšího P2P obchodu! 😻</string>
+    <string name="faq_screen_seven_title">Jak mohu kontaktovat Vexl ?</string>
+    <string name="faq_screen_seven_subtitle">Vždy se na nás můžete obrátit prostřednictvím e-mailu: support@vexl.it. Nebo se s námi můžete setkat během svého příštího P2P obchodu! 😻</string>
+    <string name="faq_screen_seven_subtitle_1">Vždy se na nás můžete obrátit prostřednictvím e-mailu:</string>
+    <string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
+    <string name="faq_screen_seven_subtitle_3">Nebo se s námi můžete setkat během dalšího P2P obchodu! 😻</string>
 
-	<!-- Permissions -->
-	<string name="permission_camera_denied">Přístup ke kameře byl odepřen</string>
+    <!-- Permissions -->
+    <string name="permission_camera_denied">Přístup ke kameře byl odepřen</string>
 
-	<!-- Locked Screen -->
-	<string name="locked_screen_title">V současnosti vytváříme sociální síť. Importuj své kontakty a pomoz nám šířit Vexl!</string>
-	<string name="locked_screen_subtitle">Vytvořil jsi už svou nabídku?</string>
-	<string name="locked_screen_sell">Chci koupit</string>
-	<string name="locked_screen_buy">Chci prodat</string>
-	<string name="locked_screen_offers">Nabídka</string>
-	<string name="locked_groups">Funkce Skupiny je zamčena.</string>
-	<string name="locked_screen_contacts_remaining">Zbývajících kontaktů</string>
+    <!-- Locked Screen -->
+    <string name="locked_screen_title">V současnosti vytváříme sociální síť. Importuj své kontakty a pomoz nám šířit Vexl!</string>
+    <string name="locked_screen_subtitle">Vytvořil jsi už svou nabídku?</string>
+    <string name="locked_screen_sell">Chci koupit</string>
+    <string name="locked_screen_buy">Chci prodat</string>
+    <string name="locked_screen_offers">Nabídka</string>
+    <string name="locked_groups">Funkce Skupiny je zamčena.</string>
+    <string name="locked_screen_contacts_remaining">Zbývajících kontaktů</string>
 
-	<!-- Intro -->
-	<string name="intro_skip">Přeskočit</string>
-	<string name="intro_continue">Pokračovat</string>
-	<string name="intro_first_title">Anonymně\nse spoj\nse svými kontakty.</string>
-	<string name="intro_second_title">Podívej se\nna jejich\nnabídky.</string>
-	<string name="intro_third_title">Začnete chatovat,\nodhlate své identity\na obchodujte.</string>
+    <!-- Intro -->
+    <string name="intro_skip">Přeskočit</string>
+    <string name="intro_continue">Pokračovat</string>
+    <string name="intro_first_title">Anonymně\nse spoj\nse svými kontakty.</string>
+    <string name="intro_second_title">Podívej se\nna jejich\nnabídky.</string>
+    <string name="intro_third_title">Začnete chatovat,\nodhlate své identity\na obchodujte.</string>
 
-	<!-- Error -->
-	<string name="error_user_is_blocked">Uživatel je zablokován</string>
-	<string name="error_unauthorized">Neoprávněná chyba. Byli jste odhlášeni.</string>
-	<string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkuste to znovu později.</string>
-	<string name="error_unknown_connection_problem">Problém s připojením. Prosím zkuste to znovu později.</string>
-	<string name="error_invalid_data_format">Neplatný formát dat</string>
+    <!-- Error -->
+    <string name="error_user_is_blocked">Uživatel je zablokován</string>
+    <string name="error_unauthorized">Neoprávněná chyba. Byli jste odhlášeni.</string>
+    <string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkuste to znovu později.</string>
+    <string name="error_unknown_connection_problem">Problém s připojením. Prosím zkuste to znovu později.</string>
+    <string name="error_invalid_data_format">Neplatný formát dat</string>
 </resources>
