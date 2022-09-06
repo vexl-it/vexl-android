@@ -1,6 +1,7 @@
 package cz.cleevio.core.widget
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -205,11 +206,12 @@ class OfferWidget @JvmOverloads constructor(
 			}
 		)
 		binding.requestBtn.icon = if (isRequested) {
+			binding.requestBtn.iconTint = null
 			AppCompatResources.getDrawable(context, R.drawable.ic_succesfull_blue)
 		} else {
+			binding.requestBtn.iconTint = ColorStateList.valueOf(resources.getColor(R.color.black, null))
 			AppCompatResources.getDrawable(context, R.drawable.ic_eye)
 		}
-		binding.requestBtn.iconTint = null
 
 		binding.card.offerWrapper.run {
 			setCardBackgroundColor(
