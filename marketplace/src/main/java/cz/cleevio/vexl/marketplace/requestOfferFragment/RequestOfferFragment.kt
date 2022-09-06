@@ -115,15 +115,24 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 
 		listenForInsets(binding.requestOfferBtn) { insets ->
 			binding.container.updatePadding(
-				top = insets.top
+				top = insets.top,
+				bottom = insets.bottom
 			)
+		}
+
+		val defaultButtonMargin = binding.requestOfferBtn.marginBottom
+		listenForIMEInset(binding.container) { bottomInset ->
+			binding.requestOfferBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+				bottomMargin = bottomInset + defaultButtonMargin
+				topMargin = bottomInset + defaultButtonMargin
+			}
 		}
 
 		binding.requestText.setOnFocusChangeListener { _, hasFocus ->
 			if (hasFocus) {
 				binding.container.postDelayed({
 					if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-						binding.container.fullScroll(View.FOCUS_DOWN)
+						binding.nestedScrollView.fullScroll(View.FOCUS_DOWN)
 						binding.requestText.requestFocus()
 					}
 				}, SCROLL_TO_BOTTOM_DELAY)

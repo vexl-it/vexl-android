@@ -28,7 +28,7 @@
 				android:layout_gravity="center"
 				android:layout_marginTop="20dp"
 				android:contentDescription="?content"
-				android:src="@drawable/join_qr" />
+				android:src="@drawable/ic_join_qr" />
 
 			<TextView
 				android:id="@+id/title"
