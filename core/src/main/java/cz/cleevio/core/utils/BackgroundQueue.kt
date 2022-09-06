@@ -9,10 +9,12 @@ import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import timber.log.Timber
 
 class BackgroundQueue constructor(
 	private val offerRepository: OfferRepository,
@@ -24,6 +26,7 @@ class BackgroundQueue constructor(
 	private val _triggerChannel = Channel<Unit>(Channel.CONFLATED)
 	val triggerChannel = _triggerChannel.receiveAsFlow()
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
+	private var job: Job? = null
 
 	fun triggerBackgroundCheck() {
 		coroutineScope.launch {
@@ -32,7 +35,12 @@ class BackgroundQueue constructor(
 	}
 
 	fun encryptOffersForNewContacts() {
-		coroutineScope.launch {
+		if (job?.isActive == true) {
+			Timber.w("Lock prevented multiple encryption cycles")
+			return
+		}
+
+		job = coroutineScope.launch {
 			//load keys from DB
 			val newMembers: List<ContactKey> = contactRepository.loadNewContacts()
 			//load my offers
@@ -81,6 +89,8 @@ class BackgroundQueue constructor(
 			newMembers.forEach { contact ->
 				contactRepository.markContactAsProcessed(contact.copy(isUpToDate = true))
 			}
+			//reset lock
+			job = null
 		}
 	}
 }
