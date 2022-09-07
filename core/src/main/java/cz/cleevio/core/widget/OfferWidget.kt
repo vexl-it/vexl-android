@@ -240,6 +240,8 @@ class OfferWidget @JvmOverloads constructor(
 				ContextCompat.getColor(context, R.color.gray_1),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			)
+		} else {
+			binding.profileImage.clearColorFilter()
 		}
 
 		binding.requestBtn.isEnabled = !isRequested
