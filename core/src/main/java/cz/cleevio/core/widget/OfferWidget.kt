@@ -78,25 +78,51 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			resources.getString(R.string.offer_to_buy)
 		}
-		if (mode == Mode.MY_OFFER) {
-			binding.userName.text = context.getString(R.string.offer_my_offer)
-		} else {
-			val isSell = item.offerType == OfferType.SELL.name && !item.isMine ||
-				item.offerType == OfferType.BUY.name && item.isMine
-			if (isSell) {
-				colorizeTransactionType(
-					resources.getString(R.string.marketplace_detail_user_sell, "$generatedUsername "),
-					generatedUsername,
-					binding.userName,
-					if (item.isRequested) R.color.gray_3 else R.color.pink_100
-				)
-			} else {
-				colorizeTransactionType(
-					resources.getString(R.string.marketplace_detail_user_buy, "$generatedUsername "),
-					generatedUsername,
-					binding.userName,
-					if (item.isRequested) R.color.gray_3 else R.color.green_100
-				)
+
+		when (mode) {
+			Mode.MARKETPLACE -> {
+				val isSell = item.offerType == OfferType.SELL.name && !item.isMine ||
+					item.offerType == OfferType.BUY.name && item.isMine
+				if (isSell) {
+					colorizeTransactionType(
+						resources.getString(R.string.marketplace_detail_user_sell, "$generatedUsername "),
+						generatedUsername,
+						binding.userName,
+						if (item.isRequested) R.color.gray_3 else R.color.pink_100
+					)
+				} else {
+					colorizeTransactionType(
+						resources.getString(R.string.marketplace_detail_user_buy, "$generatedUsername "),
+						generatedUsername,
+						binding.userName,
+						if (item.isRequested) R.color.gray_3 else R.color.green_100
+					)
+				}
+			}
+			Mode.CHAT -> {
+				val isSell = item.offerType == OfferType.SELL.name && !item.isMine ||
+					item.offerType == OfferType.BUY.name && item.isMine
+				if (isSell) {
+					colorizeTransactionType(
+						resources.getString(R.string.marketplace_detail_user_sell, "$generatedUsername "),
+						generatedUsername,
+						binding.userName,
+						R.color.pink_100
+					)
+				} else {
+					colorizeTransactionType(
+						resources.getString(R.string.marketplace_detail_user_buy, "$generatedUsername "),
+						generatedUsername,
+						binding.userName,
+						R.color.green_100
+					)
+				}
+			}
+			Mode.MY_OFFER -> {
+				binding.userName.text = context.getString(R.string.offer_my_offer)
+			}
+			null -> {
+				//fallback
 			}
 		}
 
@@ -150,21 +176,31 @@ class OfferWidget @JvmOverloads constructor(
 		}
 		binding.card.paymentMethodIcons.bind(item.paymentMethod)
 
-		if (mode == Mode.MY_OFFER) {
-			binding.requestBtn.isVisible = false
-			binding.editBtn.isVisible = true
-		} else {
-			binding.requestBtn.isVisible = true
-			binding.editBtn.isVisible = false
+		when (mode) {
+			Mode.MARKETPLACE -> {
+				binding.requestBtn.isVisible = true
+				binding.editBtn.isVisible = false
 
-			binding.requestBtn.isVisible = requestOffer != null
-			binding.requestBtn.text = if (item.isRequested) {
-				context.getString(R.string.offer_requested)
-			} else {
-				context.getString(R.string.offer_request)
+				binding.requestBtn.isVisible = requestOffer != null
+				binding.requestBtn.text = if (item.isRequested) {
+					context.getString(R.string.offer_requested)
+				} else {
+					context.getString(R.string.offer_request)
+				}
+
+				setUiColor(item.isRequested)
 			}
-
-			setUiColor(item.isRequested)
+			Mode.CHAT -> {
+				binding.requestBtn.isVisible = false
+				binding.editBtn.isVisible = false
+			}
+			Mode.MY_OFFER -> {
+				binding.requestBtn.isVisible = false
+				binding.editBtn.isVisible = true
+			}
+			null -> {
+				//fallback
+			}
 		}
 		binding.requestBtn.setOnClickListener {
 			requestOffer?.invoke(item.offerId)
