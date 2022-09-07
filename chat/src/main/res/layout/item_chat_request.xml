@@ -43,11 +43,24 @@
 		app:layout_constraintTop_toBottomOf="@id/user_name"
 		tools:text="Friend of Friend" />
 
+	<ImageView
+		android:id="@+id/arrow_image"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="-2dp"
+		android:contentDescription="?content"
+		android:elevation="4dp"
+		android:rotation="180"
+		android:src="@drawable/offer_extension"
+		app:layout_constraintBottom_toTopOf="@id/card"
+		app:layout_constraintStart_toEndOf="@id/profile_image" />
+
 	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/card"
 		style="@style/Widget.Vexl.CardView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="8dp"
+		android:layout_marginHorizontal="8dp"
 		android:layout_marginTop="20dp"
 		android:background="@color/white"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -121,12 +134,11 @@
 				android:id="@+id/offer_widget"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_margin="8dp"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/common_friends_wrapper"
-				app:widget_mode="chat" />
+				app:widget_mode="chat_request" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 

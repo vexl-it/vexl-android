@@ -24,13 +24,26 @@
 			android:layout_height="wrap_content"
 			android:clipChildren="false"
 			android:clipToPadding="false"
-			android:paddingTop="24dp">
+			android:paddingTop="16dp">
+
+			<TextView
+				android:id="@+id/your_offer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:text="@string/offer_your_offer"
+				android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro.OfferCard.Title"
+				android:visibility="gone"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:visibility="visible" />
 
 			<TextView
 				android:id="@+id/group_info"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="24dp"
+				android:layout_marginTop="8dp"
 				android:background="@drawable/background_offer_group_info"
 				android:paddingHorizontal="8dp"
 				android:paddingVertical="4dp"
@@ -38,7 +51,7 @@
 				android:textColor="#530B6E"
 				android:visibility="gone"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/your_offer"
 				tools:text="Chaincamp offer"
 				tools:visibility="visible" />
 

@@ -497,6 +497,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="marketplace_detail_fee">Includes %1$s %% transaction fee</string>
     <string name="offer_request">Request</string>
     <string name="offer_requested">Requested</string>
+    <string name="offer_your_offer">Your offer</string>
     <string name="offer_edit_sell_title">Create new offer</string>
     <string name="offer_edit_buy_title">Create new offer</string>
     <string name="offer_create_sell_title">Create new offer</string>
