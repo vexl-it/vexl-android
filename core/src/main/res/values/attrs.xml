@@ -6,6 +6,7 @@
 		<attr name="widget_mode" format="enum">
 			<enum name="marketplace" value="0" />
 			<enum name="chat" value="1" />
+			<enum name="chat_request" value="2" />
 		</attr>
 	</declare-styleable>
 

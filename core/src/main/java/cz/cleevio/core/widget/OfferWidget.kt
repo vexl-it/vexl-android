@@ -3,6 +3,7 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
+import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -14,6 +15,7 @@ import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.core.utils.toDp
 import cz.cleevio.repository.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.repository.model.group.Group
@@ -215,12 +217,16 @@ class OfferWidget @JvmOverloads constructor(
 
 		val widgetMode = getMode()
 		binding.userInformationGroup.isVisible = widgetMode == Mode.MARKETPLACE
-		if (widgetMode == Mode.CHAT) {
+		if (widgetMode == Mode.CHAT || widgetMode == Mode.CHAT_REQUEST) {
 			binding.card.offerWrapper.run {
 				setCardBackgroundColor(resources.getColor(R.color.gray_6, null))
 				cardElevation = 0.0f
 			}
 		}
+		binding.card.yourOffer.isVisible = widgetMode == Mode.CHAT_REQUEST
+		binding.arrowImage.isVisible = widgetMode != Mode.CHAT_REQUEST && widgetMode != Mode.CHAT
+		binding.endDivider.isVisible = widgetMode != Mode.CHAT_REQUEST
+		binding.endDividerChatRequest.isVisible = widgetMode == Mode.CHAT_REQUEST
 	}
 
 	private fun getMode(): Mode {
@@ -284,7 +290,7 @@ class OfferWidget @JvmOverloads constructor(
 	}
 
 	enum class Mode {
-		MARKETPLACE, CHAT, MY_OFFER
+		MARKETPLACE, CHAT, CHAT_REQUEST, MY_OFFER
 	}
 
 	enum class Fee {
