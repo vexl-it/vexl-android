@@ -490,29 +490,29 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="marketplace_my_offers">Moje nabídky</string>
     <string name="marketplace_detail_friend_first">Přítel</string>
     <string name="marketplace_detail_friend_second">Přítel přítele</string>
-    <string name="marketplace_detail_user_sell">%s nakupuje</string>
-	<string name="marketplace_detail_user_buy">%s prodává</string>
-	<string name="marketplace_detail_up_to">do</string>
-	<string name="marketplace_detail_payment">Platba</string>
-	<string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
-	<string name="offer_request">Žádost</string>
-	<string name="offer_requested">Žádost poslána</string>
-	<string name="offer_edit_sell_title">Nová nabídka</string>
-	<string name="offer_edit_buy_title">Nová nabídka</string>
-	<string name="offer_create_sell_title">Nová nabídka</string>
-	<string name="offer_create_buy_title">Nová nabídka</string>
-	<string name="offer_to_sell">Selling</string>
-	<string name="offer_to_buy">Buying</string>
-	<string name="offer_active_count">%s aktivních nabídek</string>
-	<string name="offer_sort_newest">Seřazeno od nejnovějších</string>
-	<string name="offer_sort_oldest">Seřazeno od nejstarších</string>
-	<string name="offer_my_offer">Moje nabídka</string>
-	<string name="offer_edit">Upravit nabídku</string>
-	<string name="offer_added">Přidáno %s</string>
+    <string name="marketplace_detail_user_sell">%s prodává</string>
+    <string name="marketplace_detail_user_buy">%s nakupuje</string>
+    <string name="marketplace_detail_up_to">do</string>
+    <string name="marketplace_detail_payment">Platba</string>
+    <string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
+    <string name="offer_request">Žádost</string>
+    <string name="offer_requested">Žádost poslána</string>
+    <string name="offer_edit_sell_title">Nová nabídka</string>
+    <string name="offer_edit_buy_title">Nová nabídka</string>
+    <string name="offer_create_sell_title">Nová nabídka</string>
+    <string name="offer_create_buy_title">Nová nabídka</string>
+    <string name="offer_to_sell">Selling</string>
+    <string name="offer_to_buy">Buying</string>
+    <string name="offer_active_count">%s aktivních nabídek</string>
+    <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
+    <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
+    <string name="offer_my_offer">Moje nabídka</string>
+    <string name="offer_edit">Upravit nabídku</string>
+    <string name="offer_added">Přidáno %s</string>
 
-	<!-- Offer -->
-	<string name="error_missing_offer_description">Chybí popis</string>
-	<string name="error_missing_offer_location">Chybí lokace</string>
+    <!-- Offer -->
+    <string name="error_missing_offer_description">Chybí popis</string>
+    <string name="error_missing_offer_location">Chybí lokace</string>
     <string name="error_missing_offer_payment_method">Chybí způsob platby</string>
     <string name="error_missing_offer_price_trigger">Chybí cenový spouštěč nabídky</string>
     <string name="error_missing_offer_type">Chybí typ sítě</string>
@@ -580,28 +580,28 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="request_title_loading">Odesílám</string>
     <string name="request_text_hint">např. Pojď zavexlit, kámo!</string>
     <string name="request_button">Odeslat žádost</string>
-	<string name="request_common_friends">%d společných přátel</string>
-	<string name="request_common_friends_empty_state">Nemáte společné přátele</string>
-	<string name="error_missing_offer_public_key">Chybí veřejný klíč</string>
-	<string name="error_missing_offer_request_message">Chybí zpráva </string>
-	<string name="error_missing_offer_id">Chybí ID nabídky</string>
-	<string name="offer_request_sent_successfully">Žádost byla úspěšně odeslána</string>
+    <string name="request_common_friends">%d společných přátel</string>
+    <string name="request_common_friends_empty_state">Nemáte společné přátele</string>
+    <string name="error_missing_offer_public_key">Chybí veřejný klíč</string>
+    <string name="error_missing_offer_request_message">Chybí zpráva </string>
+    <string name="error_missing_offer_id">Chybí ID nabídky</string>
+    <string name="offer_request_sent_successfully">Žádost byla úspěšně odeslána</string>
 
-	<!-- Chat -->
-	<string name="chat_main_title">Chat</string>
-	<string name="chat_filter_all">Vše</string>
-	<string name="chat_filter_buyers">Kupující</string>
-	<string name="chat_filter_sellers">Prodávající</string>
-	<string name="chat_message_prefix">já:</string>
+    <!-- Chat -->
+    <string name="chat_main_title">Chat</string>
+    <string name="chat_filter_all">Vše</string>
+    <string name="chat_filter_buyers">Kupující</string>
+    <string name="chat_filter_sellers">Prodávající</string>
+    <string name="chat_message_prefix">já:</string>
 
-	<!-- Chat requests -->
-	<string name="chat_request_main_title">%s Žádosti</string>
-	<string name="chat_request_accept">Přijmout</string>
-	<string name="chat_request_decline">Odmítnout</string>
-	<string name="chat_request_my_offer">Moje nabídka</string>
+    <!-- Chat requests -->
+    <string name="chat_request_main_title">%s Žádosti</string>
+    <string name="chat_request_accept">Přijmout</string>
+    <string name="chat_request_decline">Odmítnout</string>
+    <string name="chat_request_my_offer">Moje nabídka</string>
 
-	<!-- Chat messaging -->
-	<string name="chat_btns_reveal_identity">Odhalit identitu</string>
+    <!-- Chat messaging -->
+    <string name="chat_btns_reveal_identity">Odhalit identitu</string>
     <string name="chat_btns_my_offer">Moje nabídka</string>
     <string name="chat_btns_common_friends">Společní přátelé</string>
     <string name="chat_common_friends_facebook_contact">Přes Facebook</string>
