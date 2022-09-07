@@ -490,8 +490,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="marketplace_my_offers">Create new offer</string>
     <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of a Friend</string>
-    <string name="marketplace_detail_user_sell">%s is buying</string>
-    <string name="marketplace_detail_user_buy">%s is selling</string>
+    <string name="marketplace_detail_user_sell">%s is selling</string>
+    <string name="marketplace_detail_user_buy">%s is buying</string>
     <string name="marketplace_detail_up_to">Up to</string>
     <string name="marketplace_detail_payment">Payment</string>
     <string name="marketplace_detail_fee">Includes %1$s %% transaction fee</string>
