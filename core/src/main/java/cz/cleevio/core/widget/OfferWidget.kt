@@ -3,7 +3,6 @@ package cz.cleevio.core.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -15,7 +14,6 @@ import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.formatAsPercentage
-import cz.cleevio.core.utils.toDp
 import cz.cleevio.repository.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.repository.model.group.Group
@@ -197,6 +195,10 @@ class OfferWidget @JvmOverloads constructor(
 				binding.editBtn.isVisible = false
 			}
 			Mode.MY_OFFER -> {
+				binding.requestBtn.isVisible = false
+				binding.editBtn.isVisible = true
+			}
+			Mode.CHAT_REQUEST -> {
 				binding.requestBtn.isVisible = false
 				binding.editBtn.isVisible = true
 			}
