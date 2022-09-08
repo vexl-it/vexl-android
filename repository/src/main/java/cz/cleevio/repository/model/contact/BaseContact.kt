@@ -5,7 +5,7 @@ import android.net.Uri
 import android.os.Parcelable
 import cz.cleevio.cache.entity.ContactEntity
 
-abstract class BaseContact(
+abstract class BaseContact constructor(
 	open val id: Long,
 	open val name: String,
 	open val photoUri: Uri?,
