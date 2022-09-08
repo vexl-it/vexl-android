@@ -9,7 +9,6 @@ import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.ItemContactBinding
 import cz.cleevio.repository.model.contact.BaseContact
-import timber.log.Timber
 
 class ContactsListAdapter(
 	private val onContactImportSwitched: (BaseContact, Boolean) -> Unit
@@ -26,7 +25,7 @@ class ContactsListAdapter(
 		private val binding: ItemContactBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: BaseContact, position: Int) {
+		fun bind(item: BaseContact) {
 			binding.run {
 				contactImportCheckbox.setOnCheckedChangeListener(null)
 
@@ -41,8 +40,6 @@ class ContactsListAdapter(
 				contactImportCheckbox.isChecked = item.markedForUpload
 
 				contactImportCheckbox.setOnCheckedChangeListener { _, isChecked -> onContactImportSwitched(item, isChecked) }
-
-				Timber.tag("ContactSync").d("binding ${position + 1} with name ${item.name}")
 			}
 		}
 	}
@@ -53,9 +50,6 @@ class ContactsListAdapter(
 		)
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		if (position == 0) {
-			Timber.tag("ContactSync").d("size: ${itemCount}")
-		}
-		holder.bind(getItem(position), position)
+		holder.bind(getItem(position))
 	}
 }

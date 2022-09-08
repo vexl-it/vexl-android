@@ -10,7 +10,6 @@ import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.resources.R
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
-import timber.log.Timber
 
 class ContactsListWidget @JvmOverloads constructor(
 	context: Context,
@@ -79,7 +78,6 @@ class ContactsListWidget @JvmOverloads constructor(
 			val filteredContacts = _contacts.filter { it.name.lowercase().contains(query) }
 			adapter.submitList(filteredContacts)
 		} else {
-			Timber.tag("ContactSync").d("Will be submitting ${contacts.size}")
 			adapter.submitList(contacts)
 		}
 
