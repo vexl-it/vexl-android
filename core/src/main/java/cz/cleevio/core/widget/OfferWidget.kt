@@ -141,6 +141,7 @@ class OfferWidget @JvmOverloads constructor(
 			}
 			null -> {
 				//fallback
+				binding.userName.text = generatedUsername
 			}
 		}
 
@@ -222,6 +223,8 @@ class OfferWidget @JvmOverloads constructor(
 			}
 			null -> {
 				//fallback
+				binding.requestBtn.isVisible = false
+				binding.editBtn.isVisible = false
 			}
 		}
 		binding.requestBtn.setOnClickListener {

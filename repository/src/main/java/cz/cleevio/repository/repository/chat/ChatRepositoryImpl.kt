@@ -17,12 +17,12 @@ import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.chat.*
 import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.repository.R
+import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.group.fromEntity
 import cz.cleevio.repository.model.offer.fromCache
 import cz.cleevio.repository.model.offer.fromCacheWithoutFriendsMapping
-import cz.cleevio.repository.repository.UsernameUtils
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -234,20 +234,18 @@ class ChatRepositoryImpl constructor(
 								)
 							}
 
-						//special handling for APPROVE_MESSAGING - create anonymized user for the other user
+						//special handling for REQUEST_MESSAGING - create anonymized user for the other user
 						messages
 							?.filter {
-								it.type == MessageType.APPROVE_MESSAGING
+								it.type == MessageType.REQUEST_MESSAGING
 							}?.forEach { message ->
 								// create anonymous identity
 								chatUserDao.replace(
 									ChatUserIdentityEntity(
 										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
 										inboxKey = message.inboxPublicKey,
-										// Fixme: correctly linked avatar index and name is missing
-										// Fixme: For the avatar index look into eg. - OfferFriendLevelWidget
-										anonymousUsername = UsernameUtils.generateName(),
-										anonymousAvatarImageIndex = null,
+										anonymousUsername = RandomUtils.generateName(),
+										anonymousAvatarImageIndex = RandomUtils.getAvatarIndex(),
 										deAnonymized = false
 									)
 								)

@@ -10,6 +10,7 @@ import cz.cleevio.core.R
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.widget.FriendLevel
+import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.databinding.ItemChatRequestBinding
 
@@ -35,17 +36,18 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 			val isSell = (offer?.offerType == OfferType.SELL.name && !offer.isMine)
 				|| (offer?.offerType == OfferType.BUY.name && offer.isMine)
 
+			val username = offer?.userName ?: RandomUtils.generateName()
 			if (isSell) {
 				colorizeTransactionType(
-					binding.userName.resources.getString(R.string.marketplace_detail_user_sell, "Unknown friend"),
-					"Unknown friend",
+					binding.userName.resources.getString(R.string.marketplace_detail_user_sell, username),
+					username,
 					binding.userName,
 					R.color.pink_100
 				)
 			} else {
 				colorizeTransactionType(
-					binding.userName.resources.getString(R.string.marketplace_detail_user_buy, "Unknown friend"),
-					"Unknown friend",
+					binding.userName.resources.getString(R.string.marketplace_detail_user_buy, username),
+					username,
 					binding.userName,
 					R.color.green_100
 				)

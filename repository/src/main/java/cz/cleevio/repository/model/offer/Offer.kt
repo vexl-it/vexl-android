@@ -159,11 +159,13 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 
 	if (!offer.isMine) {
 		//try to find saved user name and photo and stuff
-		val chatUserIdentity = chatUserDao.getUserByInboxKey(offer.offerPublicKey)?.fromCache()
+		val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()
 		//we expect it to be already in DB from syncOffers
 		if (chatUserIdentity != null) {
 			Timber.tag("ASDX").d("chatUserIdentity anonymousAvatarImageIndex ${chatUserIdentity.anonymousAvatarImageIndex}")
 			offer.fillUserInfo(chatUserIdentity)
+		} else {
+			Timber.tag("ASDX").d("chatUserIdentity is null for key: ${offer.offerPublicKey}")
 		}
 	}
 
@@ -202,7 +204,7 @@ fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, 
 
 	if (!offer.isMine) {
 		//try to find saved user name and photo and stuff
-		val chatUserIdentity = chatUserDao.getUserByInboxKey(offer.offerPublicKey)?.fromCache()
+		val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()
 		//we expect it to be already in DB from syncOffers
 		if (chatUserIdentity != null) {
 			Timber.tag("ASDX").d("chatUserIdentity anonymousAvatarImageIndex ${chatUserIdentity.anonymousAvatarImageIndex}")

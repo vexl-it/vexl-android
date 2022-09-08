@@ -401,7 +401,7 @@ class OfferRepositoryImpl constructor(
 				Timber.tag("ASDX").d("isMine: ${offer.isMine}")
 				if (!offer.isMine) {
 					//try to find saved user name and photo and stuff
-					val chatUserIdentity = chatUserDao.getUserByInboxKey(offer.offerPublicKey)?.fromCache()
+					val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()
 					//if not found
 					if (chatUserIdentity == null) {
 						//we need to create ChatUser for this offer

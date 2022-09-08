@@ -27,9 +27,9 @@ interface ChatUserDao : BaseDao<ChatUserIdentityEntity> {
 	@Query(
 		"SELECT * " +
 			"FROM ChatUserIdentityEntity " +
-			"WHERE inboxKey=:inboxKey"
+			"WHERE contactPublicKey=:contactPublicKey"
 	)
-	fun getUserByInboxKey(inboxKey: String): ChatUserIdentityEntity?
+	fun getUserByContactKey(contactPublicKey: String): ChatUserIdentityEntity?
 
 	@Query(
 		"SELECT * " +
