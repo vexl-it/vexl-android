@@ -26,7 +26,6 @@ import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 import java.math.BigDecimal
 import java.text.Normalizer
 
@@ -397,8 +396,6 @@ class OfferRepositoryImpl constructor(
 					}
 				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
 
-				Timber.tag("ASDX").d("isRequested: ${offer.isRequested}")
-				Timber.tag("ASDX").d("isMine: ${offer.isMine}")
 				if (!offer.isMine) {
 					//try to find saved user name and photo and stuff
 					val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()

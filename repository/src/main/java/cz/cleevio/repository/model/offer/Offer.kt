@@ -14,7 +14,6 @@ import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.currency.CryptoCurrencyValues
 import kotlinx.parcelize.Parcelize
-import timber.log.Timber
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -162,10 +161,7 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 		val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()
 		//we expect it to be already in DB from syncOffers
 		if (chatUserIdentity != null) {
-			Timber.tag("ASDX").d("chatUserIdentity anonymousAvatarImageIndex ${chatUserIdentity.anonymousAvatarImageIndex}")
 			offer.fillUserInfo(chatUserIdentity)
-		} else {
-			Timber.tag("ASDX").d("chatUserIdentity is null for key: ${offer.offerPublicKey}")
 		}
 	}
 
@@ -256,6 +252,5 @@ private fun Offer.fillUserInfo(chatUserIdentity: ChatUserIdentity) {
 		chatUserIdentity.name
 	}
 	this.userAvatarId = RandomUtils.getRandomImageDrawableId(chatUserIdentity.anonymousAvatarImageIndex ?: 0)
-	Timber.tag("ASDX").d("this.userAvatarId ${this.userAvatarId}")
 	this.userAvatar = chatUserIdentity.avatar
 }

@@ -22,7 +22,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 
@@ -47,7 +46,6 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		repeatScopeOnStart {
 			viewModel.offer.collect {
 				it?.let { offerWithGroup ->
-					Timber.tag("ASDX").d("${offerWithGroup.offer}")
 					val contacts = offerWithGroup.offer.commonFriends.map { friend -> friend.contact }
 					binding.commonFriendsPlaceholder.isVisible = contacts.isNotEmpty()
 					binding.commonFriendsEmpty.isVisible = contacts.isEmpty()
