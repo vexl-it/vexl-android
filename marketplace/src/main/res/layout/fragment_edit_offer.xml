@@ -76,7 +76,7 @@
 
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/new_offer_description"
-				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				style="@style/Widget.Cleevio.TextInput.OutlinedBox"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="16dp"

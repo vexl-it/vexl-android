@@ -111,6 +111,11 @@
 		<item name="boxStrokeColor">@color/stroke_color_input_states</item>
 		<item name="boxStrokeWidth">@dimen/stroke_width_input</item>
 		<item name="colorControlActivated">@color/stroke_color_text_input_outlined</item>
+		<item name="android:textColorHighlight">@color/yellow_100</item>
+	</style>
+
+	<style name="Widget.Cleevio.TextInput.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="android:textColorHighlight">@color/yellow_100</item>
 	</style>
 
 	<style name="Widget.Cleevio.OutlinedTextInput.EditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
@@ -118,6 +123,7 @@
 		<item name="android:textAppearance">@style/TextAppearance.Cleevio.TextInput.Text</item>
 		<!-- cursor color -->
 		<item name="colorControlActivated">@color/stroke_color_text_input_outlined_active</item>
+		<item name="android:textColorHighlight">@color/yellow_100</item>
 	</style>
 
 	<style name="Widget.Cleevio.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
@@ -800,6 +806,7 @@
 		<item name="android:textAppearance">@style/TextAppearance.Vexl.InputText</item>
 		<item name="placeholderTextAppearance">@style/TextAppearance.Vexl.InputPlaceholderText</item>
 		<item name="boxStrokeColor">@android:color/transparent</item>
+		<item name="android:textColorHighlight">@color/yellow_100</item>
 	</style>
 
 	<style name="Widget.Vexl.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">

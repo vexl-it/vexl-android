@@ -144,7 +144,7 @@
 
 				<com.google.android.material.textfield.TextInputEditText
 					android:id="@+id/request_text"
-					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+					style="@style/Widget.Cleevio.TextInput.OutlinedBox"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:gravity="top"
