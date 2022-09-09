@@ -71,6 +71,7 @@
 			android:inputType="textCapWords"
 			android:textAppearance="@style/TextAppearance.Vexl.EditName.Input"
 			android:textColor="@color/white"
+			android:textColorHighlight="@color/yellow_100"
 			android:textCursorDrawable="@null"
 			tools:hint="Ondrasek" />
 
