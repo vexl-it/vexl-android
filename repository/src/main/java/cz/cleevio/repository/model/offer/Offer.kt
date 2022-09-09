@@ -172,7 +172,10 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 	return offer
 }
 
-fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, commonFriends: List<CommonFriend>, chatUserDao: ChatUserDao): Offer {
+fun OfferEntity.fromCacheWithoutFriendsMapping(
+	locations: List<LocationEntity>, commonFriends: List<CommonFriend>,
+	chatUserDao: ChatUserDao, chatUserKey: String? = null, inboxKey: String? = null
+): Offer {
 	val offer = Offer(
 		databaseId = this.offerId,
 		offerId = this.externalOfferId,
@@ -202,14 +205,15 @@ fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, 
 		isRequested = this.isRequested
 	)
 
-	if (!offer.isMine) {
-		//try to find saved user name and photo and stuff
-		val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()
-		//we expect it to be already in DB from syncOffers
-		if (chatUserIdentity != null) {
-			Timber.tag("ASDX").d("chatUserIdentity anonymousAvatarImageIndex ${chatUserIdentity.anonymousAvatarImageIndex}")
-			offer.fillUserInfo(chatUserIdentity)
-		}
+	//try to find saved user name and photo and stuff
+	val chatUserIdentity = chatUserDao.getUserIdentity(
+		inboxKey = inboxKey ?: offer.offerPublicKey,
+		contactPublicKey = chatUserKey ?: offer.offerPublicKey
+	)?.fromCache()
+	//we expect it to be already in DB from syncOffers for offers that are not mine
+	//and from syncMessages with type REQUEST_MESSAGING for mine offers
+	if (chatUserIdentity != null) {
+		offer.fillUserInfo(chatUserIdentity)
 	}
 
 	return offer

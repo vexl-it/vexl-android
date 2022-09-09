@@ -539,7 +539,13 @@ class ChatRepositoryImpl constructor(
 
 				// Let it there
 				if (offerWithLocation != null) {
-					val offer = offerWithLocation.offer.fromCacheWithoutFriendsMapping(offerWithLocation.locations, commonFriends, chatUserDao)
+					val offer = offerWithLocation.offer.fromCacheWithoutFriendsMapping(
+						offerWithLocation.locations,
+						commonFriends,
+						chatUserDao,
+						chatUserKey = message.senderPublicKey,
+						inboxKey = message.inboxPublicKey
+					)
 					result.add(
 						CommunicationRequest(
 							message = message,
