@@ -4,8 +4,10 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.dao.*
+import cz.cleevio.cache.entity.ChatUserIdentityEntity
 import cz.cleevio.cache.entity.MyOfferEntity
 import cz.cleevio.cache.entity.OfferCommonFriendCrossRef
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.LocationApi
 import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
@@ -15,6 +17,8 @@ import cz.cleevio.network.request.offer.CreateOfferPrivatePartRequest
 import cz.cleevio.network.request.offer.CreateOfferRequest
 import cz.cleevio.network.request.offer.DeletePrivatePartRequest
 import cz.cleevio.network.request.offer.UpdateOfferRequest
+import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.currency.fromCache
 import cz.cleevio.repository.model.offer.*
@@ -37,6 +41,8 @@ class OfferRepositoryImpl constructor(
 	private val transactionProvider: TransactionProvider,
 	private val chatRepository: ChatRepository,
 	private val cryptoCurrencyDao: CryptoCurrencyDao,
+	private val chatUserDao: ChatUserDao,
+	private val encryptedPreference: EncryptedPreferenceRepository,
 ) : OfferRepository {
 
 	override val buyOfferFilter = MutableStateFlow(OfferFilter())
@@ -215,12 +221,12 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun getOffers() =
 		offerDao.getAllExtendedOffers().map {
-			it.offer.fromCache(it.locations, it.commonFriends)
+			it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 		}
 
 	override fun getOffersFlow() = offerDao.getAllExtendedOffersFlow().map { list ->
 		list.map {
-			it.offer.fromCache(it.locations, it.commonFriends)
+			it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 		}
 	}
 
@@ -326,7 +332,7 @@ class OfferRepositoryImpl constructor(
 
 		return offerDao.getFilteredOffersFlow(simpleSQLiteQuery).map { list ->
 			list.map {
-				it.offer.fromCache(it.locations, it.commonFriends)
+				it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 			}.filter { offer ->
 				offerFilter.isOfferMatchPriceRange(offer.amountBottomLimit.toFloat(), offer.amountTopLimit.toFloat())
 					&& offerFilter.isOfferLocationInRadius(offer.location)
@@ -347,7 +353,7 @@ class OfferRepositoryImpl constructor(
 
 		return offerDao.getFilteredOffersFlow(simpleSQLiteQuery).map { list ->
 			list.map {
-				it.offer.fromCache(it.locations, it.commonFriends)
+				it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 			}
 		}.map { list ->
 			list.filter { it.offerType == offerTypeName && it.isMine }
@@ -389,6 +395,24 @@ class OfferRepositoryImpl constructor(
 						)
 					}
 				offerCommonFriendCrossRefDao.replaceAll(commonFriendRefs)
+
+				if (!offer.isMine) {
+					//try to find saved user name and photo and stuff
+					val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()
+					//if not found
+					if (chatUserIdentity == null) {
+						//we need to create ChatUser for this offer
+						val entity = ChatUserIdentityEntity(
+							contactPublicKey = offer.offerPublicKey,
+							inboxKey = encryptedPreference.userPublicKey,
+							anonymousUsername = RandomUtils.generateName(),
+							anonymousAvatarImageIndex = RandomUtils.getAvatarIndex(),
+							deAnonymized = false
+						)
+						//save it into DB
+						chatUserDao.replace(entity)
+					}
+				}
 			}
 		}
 	}
@@ -470,7 +494,7 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun getOfferById(offerId: String): Offer? {
 		return offerDao.getOfferById(offerId = offerId).let {
-			it?.offer?.fromCache(it.locations, it.commonFriends)
+			it?.offer?.fromCache(it.locations, it.commonFriends, chatUserDao)
 		}
 	}
 

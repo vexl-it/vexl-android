@@ -1,11 +1,15 @@
 package cz.cleevio.repository.model.offer
 
 import android.os.Parcelable
+import cz.cleevio.cache.dao.ChatUserDao
 import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.LocationEntity
 import cz.cleevio.cache.entity.OfferEntity
 import cz.cleevio.network.response.offer.OfferUnifiedAdminResponse
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
+import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.chat.ChatUserIdentity
+import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.currency.CryptoCurrencyValues
@@ -43,7 +47,10 @@ data class Offer constructor(
 	val modifiedAt: ZonedDateTime,
 	//custom flags
 	var isMine: Boolean = false,
-	var isRequested: Boolean = false
+	var isRequested: Boolean = false,
+	var userName: String? = null,
+	var userAvatar: String? = null,
+	var userAvatarId: Int? = null,
 ) : Parcelable
 
 fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?): Offer {
@@ -116,8 +123,8 @@ fun OfferUnifiedAdminResponse.fromNetwork(): Offer {
 	)
 }
 
-fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<ContactEntity>): Offer {
-	return Offer(
+fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<ContactEntity>, chatUserDao: ChatUserDao): Offer {
+	val offer = Offer(
 		databaseId = this.offerId,
 		offerId = this.externalOfferId,
 		location = locations.map { it.fromCache() },
@@ -148,10 +155,24 @@ fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<C
 		isMine = this.isMine,
 		isRequested = this.isRequested
 	)
+
+	if (!offer.isMine) {
+		//try to find saved user name and photo and stuff
+		val chatUserIdentity = chatUserDao.getUserByContactKey(offer.offerPublicKey)?.fromCache()
+		//we expect it to be already in DB from syncOffers
+		if (chatUserIdentity != null) {
+			offer.fillUserInfo(chatUserIdentity)
+		}
+	}
+
+	return offer
 }
 
-fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, commonFriends: List<CommonFriend>): Offer {
-	return Offer(
+fun OfferEntity.fromCacheWithoutFriendsMapping(
+	locations: List<LocationEntity>, commonFriends: List<CommonFriend>,
+	chatUserDao: ChatUserDao, chatUserKey: String? = null, inboxKey: String? = null
+): Offer {
+	val offer = Offer(
 		databaseId = this.offerId,
 		offerId = this.externalOfferId,
 		location = locations.map { it.fromCache() },
@@ -179,6 +200,19 @@ fun OfferEntity.fromCacheWithoutFriendsMapping(locations: List<LocationEntity>, 
 		isMine = this.isMine,
 		isRequested = this.isRequested
 	)
+
+	//try to find saved user name and photo and stuff
+	val chatUserIdentity = chatUserDao.getUserIdentity(
+		inboxKey = inboxKey ?: offer.offerPublicKey,
+		contactPublicKey = chatUserKey ?: offer.offerPublicKey
+	)?.fromCache()
+	//we expect it to be already in DB from syncOffers for offers that are not mine
+	//and from syncMessages with type REQUEST_MESSAGING for mine offers
+	if (chatUserIdentity != null) {
+		offer.fillUserInfo(chatUserIdentity)
+	}
+
+	return offer
 }
 
 fun Offer.toCache(): OfferEntity {
@@ -209,4 +243,14 @@ fun Offer.toCache(): OfferEntity {
 		isMine = this.isMine,
 		isRequested = this.isRequested
 	)
+}
+
+private fun Offer.fillUserInfo(chatUserIdentity: ChatUserIdentity) {
+	this.userName = if (chatUserIdentity.name.isNullOrBlank()) {
+		chatUserIdentity.anonymousUsername
+	} else {
+		chatUserIdentity.name
+	}
+	this.userAvatarId = RandomUtils.getRandomImageDrawableId(chatUserIdentity.anonymousAvatarImageIndex ?: 0)
+	this.userAvatar = chatUserIdentity.avatar
 }

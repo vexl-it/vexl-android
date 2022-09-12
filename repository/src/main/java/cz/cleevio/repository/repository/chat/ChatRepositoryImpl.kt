@@ -17,12 +17,12 @@ import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.chat.*
 import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.repository.R
+import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.*
 import cz.cleevio.repository.model.contact.CommonFriend
 import cz.cleevio.repository.model.group.fromEntity
 import cz.cleevio.repository.model.offer.fromCache
 import cz.cleevio.repository.model.offer.fromCacheWithoutFriendsMapping
-import cz.cleevio.repository.repository.UsernameUtils
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -234,20 +234,18 @@ class ChatRepositoryImpl constructor(
 								)
 							}
 
-						//special handling for APPROVE_MESSAGING - create anonymized user for the other user
+						//special handling for REQUEST_MESSAGING - create anonymized user for the other user
 						messages
 							?.filter {
-								it.type == MessageType.APPROVE_MESSAGING
+								it.type == MessageType.REQUEST_MESSAGING
 							}?.forEach { message ->
 								// create anonymous identity
 								chatUserDao.replace(
 									ChatUserIdentityEntity(
 										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
 										inboxKey = message.inboxPublicKey,
-										// Fixme: correctly linked avatar index and name is missing
-										// Fixme: For the avatar index look into eg. - OfferFriendLevelWidget
-										anonymousUsername = UsernameUtils.generateName(),
-										anonymousAvatarImageIndex = null,
+										anonymousUsername = RandomUtils.generateName(),
+										anonymousAvatarImageIndex = RandomUtils.getAvatarIndex(),
 										deAnonymized = false
 									)
 								)
@@ -490,14 +488,6 @@ class ChatRepositoryImpl constructor(
 				doOnSuccess = {
 					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
 					// create anonymous identity
-					chatUserDao.replace(
-						ChatUserIdentityEntity(
-							contactPublicKey = message.recipientPublicKey, // recipient's key, because of it's outgoing message
-							inboxKey = message.inboxPublicKey,
-							anonymousUsername = UsernameUtils.generateName(),
-							deAnonymized = false
-						)
-					)
 				}
 			)
 
@@ -549,7 +539,13 @@ class ChatRepositoryImpl constructor(
 
 				// Let it there
 				if (offerWithLocation != null) {
-					val offer = offerWithLocation.offer.fromCacheWithoutFriendsMapping(offerWithLocation.locations, commonFriends)
+					val offer = offerWithLocation.offer.fromCacheWithoutFriendsMapping(
+						offerWithLocation.locations,
+						commonFriends,
+						chatUserDao,
+						chatUserKey = message.senderPublicKey,
+						inboxKey = message.inboxPublicKey
+					)
 					result.add(
 						CommunicationRequest(
 							message = message,
@@ -607,7 +603,7 @@ class ChatRepositoryImpl constructor(
 						it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
 							it.offer.offerPublicKey == latestMessage.senderPublicKey
 					}.map {
-						it.offer.fromCache(it.locations, it.commonFriends)
+						it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 					}.firstOrNull()
 
 					if (offer != null) {
@@ -662,7 +658,7 @@ class ChatRepositoryImpl constructor(
 				it.offer.offerPublicKey == latestMessage.recipientPublicKey ||
 					it.offer.offerPublicKey == latestMessage.senderPublicKey
 			}.map {
-				it.offer.fromCache(it.locations, it.commonFriends)
+				it.offer.fromCache(it.locations, it.commonFriends, chatUserDao)
 			}.firstOrNull()
 
 			if (offer != null) {

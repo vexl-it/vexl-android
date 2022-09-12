@@ -1,8 +1,7 @@
-package cz.cleevio.core.utils
+package cz.cleevio.repository
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import cz.cleevio.core.R
 import cz.cleevio.repository.repository.UsernameUtils
 import kotlin.random.Random
 

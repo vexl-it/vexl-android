@@ -4,12 +4,12 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
-import cz.cleevio.core.utils.RandomUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.LeaveGroupBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.databinding.FragmentGroupBinding
+import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
