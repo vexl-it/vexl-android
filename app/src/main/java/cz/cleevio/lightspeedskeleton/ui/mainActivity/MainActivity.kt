@@ -416,22 +416,22 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 				}
 			}
 			addListener(object : Animator.AnimatorListener {
-				override fun onAnimationStart(p0: Animator?) {
+				override fun onAnimationStart(p0: Animator) {
 					binding.bottomNavigation.isVisible = true
 				}
 
-				override fun onAnimationEnd(p0: Animator?) {
+				override fun onAnimationEnd(p0: Animator) {
 					binding.bottomNavigation.isVisible = to == bottomInsetValue
 				}
 
-				override fun onAnimationCancel(p0: Animator?) {
+				override fun onAnimationCancel(p0: Animator) {
 					binding.bottomNavigation.updateLayoutParams<ViewGroup.MarginLayoutParams> {
 						bottomMargin = to
 					}
 					binding.bottomNavigation.isVisible = to == bottomInsetValue
 				}
 
-				override fun onAnimationRepeat(p0: Animator?) = Unit
+				override fun onAnimationRepeat(p0: Animator) = Unit
 			})
 		}
 		bottomBarAnimator?.start()

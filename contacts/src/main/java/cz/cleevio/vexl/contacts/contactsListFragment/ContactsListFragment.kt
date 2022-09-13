@@ -1,5 +1,6 @@
 package cz.cleevio.vexl.contacts.contactsListFragment
 
+import android.os.Build
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
@@ -15,6 +16,7 @@ import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentContactsListBinding
+import cz.cleevio.vexl.contacts.facebookContactsListFragment.FacebookContactsListFragmentDirections
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -37,19 +39,13 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 			viewModel.successful.collect {
 				when (args.openedFromScreen) {
 					OpenedFromScreen.UNKNOWN -> {
-						findNavController().safeNavigateWithTransition(
-							//ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
-							ContactsListFragmentDirections.proceedToFinishImportFragment()
-						)
+						continueToNextScreen()
 					}
 					OpenedFromScreen.PROFILE -> {
 						viewModel.navMainGraphModel.navigateToGraph(NavMainGraphModel.NavGraph.Profile)
 					}
 					OpenedFromScreen.ONBOARDING -> {
-						findNavController().safeNavigateWithTransition(
-							//ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
-							ContactsListFragmentDirections.proceedToFinishImportFragment()
-						)
+						continueToNextScreen()
 					}
 				}
 			}
@@ -60,6 +56,19 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 				binding.importContactsBtn.isVisible = !show
 				binding.progressbar.isVisible = show
 			}
+		}
+	}
+
+	private fun continueToNextScreen() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+			findNavController().safeNavigateWithTransition(
+				FacebookContactsListFragmentDirections.proceedToNotificationFragment()
+			)
+		} else {
+			findNavController().safeNavigateWithTransition(
+				//ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
+				FacebookContactsListFragmentDirections.proceedToFinishImportFragment()
+			)
 		}
 	}
 
