@@ -22,8 +22,8 @@ import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
+const val PACKAGE = "package"
 //This fragment should be used only on API 33 and higher
 class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 
@@ -47,7 +47,7 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 				if (reallowPermissions) {
 					startActivity(Intent().apply {
 						action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-						data = Uri.fromParts("package", requireContext().packageName, null)
+						data = Uri.fromParts(PACKAGE, requireContext().packageName, null)
 					})
 				} else {
 					viewModel.updateHasReadContactPermissions(false)
@@ -60,10 +60,8 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 		repeatScopeOnStart {
 			viewModel.hasPermissionsEvent.collect { hasPermission ->
 				if (hasPermission) {
-					Timber.tag("ASDX").d("Permission notification granted")
 					continueToNextScreen()
 				} else {
-					Timber.tag("ASDX").d("Permission notification rejected")
 					showPermissionDeniedDialog()
 				}
 			}
