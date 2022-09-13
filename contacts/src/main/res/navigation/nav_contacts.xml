@@ -41,6 +41,10 @@
 			android:id="@+id/proceed_to_finishImportFragment"
 			app:destination="@id/finishImportFragment" />
 
+		<action
+			android:id="@+id/proceed_to_notificationFragment"
+			app:destination="@id/notificationFragment" />
+
 	</fragment>
 
 	<fragment
@@ -64,6 +68,22 @@
 		android:name="cz.cleevio.vexl.contacts.facebookContactsListFragment.FacebookContactsListFragment"
 		android:label="facebookContactsListFragment"
 		tools:layout="@layout/fragment_facebook_contacts_list">
+
+		<action
+			android:id="@+id/proceed_to_finishImportFragment"
+			app:destination="@id/finishImportFragment" />
+
+		<action
+			android:id="@+id/proceed_to_notificationFragment"
+			app:destination="@id/notificationFragment" />
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/notificationFragment"
+		android:name="cz.cleevio.vexl.contacts.notificationFragment.NotificationFragment"
+		android:label="NotificationFragment"
+		tools:layout="@layout/fragment_notification">
 
 		<action
 			android:id="@+id/proceed_to_finishImportFragment"

@@ -138,16 +138,16 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 		animationSet.playSequentially(firstPartAnimation, secondPartAnimation)
 
 		animationSet.addListener(object : Animator.AnimatorListener {
-			override fun onAnimationStart(animation: Animator?) {
+			override fun onAnimationStart(animation: Animator) {
 				binding.slideEffect.isVisible = true
 			}
 
-			override fun onAnimationEnd(animation: Animator?) {
+			override fun onAnimationEnd(animation: Animator) {
 				binding.slideEffect.isVisible = false
 			}
 
-			override fun onAnimationCancel(animation: Animator?) = Unit
-			override fun onAnimationRepeat(animation: Animator?) = Unit
+			override fun onAnimationCancel(animation: Animator) = Unit
+			override fun onAnimationRepeat(animation: Animator) = Unit
 		})
 
 		animationSet.start()
