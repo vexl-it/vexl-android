@@ -68,7 +68,6 @@ class OfferWidget @JvmOverloads constructor(
 
 		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
 
-
 		if (item.userAvatar.isNullOrBlank()) {
 			//either select random drawable
 			if (item.userAvatarId != null) {

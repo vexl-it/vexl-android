@@ -8,9 +8,9 @@ import java.util.*
 fun Int.formatCurrency(currency: String, locale: Locale) =
 	CurrencyUtils.currencyInLocale(currency, locale).format(this)
 
-
 fun Int.toDp(context: Context) = (this * context.resources.displayMetrics.density).toInt()
 
+@Suppress("FunctionMinLength")
 fun Int.x() = TypedValue.applyDimension(
 	TypedValue.COMPLEX_UNIT_DIP,
 	this.toFloat(),

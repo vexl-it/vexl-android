@@ -99,25 +99,28 @@ class PriceRangeWidget @JvmOverloads constructor(
 		currentCurrency = currency
 		when (currency) {
 			Currency.CZK -> {
-				processLimits(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat(), currency)
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_CZK.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_CZK.toFloat()
-				binding.maxInputValue.filters = arrayOf<InputFilter>(MinMaxFilter(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat()))
-				binding.priceRangeSlider.setValues(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat())
+				binding.maxInputValue.filters = arrayOf<InputFilter>(
+					MinMaxFilter(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat())
+				)
+				processLimits(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat(), currency)
 			}
 			Currency.USD -> {
-				processLimits(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat(), currency)
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_USD.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_USD.toFloat()
-				binding.maxInputValue.filters = arrayOf<InputFilter>(MinMaxFilter(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat()))
-				binding.priceRangeSlider.setValues(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat())
+				binding.maxInputValue.filters = arrayOf<InputFilter>(
+					MinMaxFilter(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat())
+				)
+				processLimits(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat(), currency)
 			}
 			Currency.EUR -> {
-				processLimits(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat(), currency)
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_EUR.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_EUR.toFloat()
-				binding.maxInputValue.filters = arrayOf<InputFilter>(MinMaxFilter(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat()))
-				binding.priceRangeSlider.setValues(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat())
+				binding.maxInputValue.filters = arrayOf<InputFilter>(
+					MinMaxFilter(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat())
+				)
+				processLimits(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat(), currency)
 			}
 		}
 	}
@@ -126,13 +129,14 @@ class PriceRangeWidget @JvmOverloads constructor(
 		this.bottomLimit = bottomLimit
 		this.topLimit = topLimit
 
+		binding.maxCurrency.text = currency.getCurrencySymbol(context)
+		binding.minCurrency.text = currency.getCurrencySymbol(context)
+
 		if (binding.minInputValue.text.toString() != bottomLimit.toInt().toString()) {
-			binding.minCurrency.text = currency.getCurrencySymbol(context)
 			binding.minInputValue.setText(bottomLimit.toInt().toString())
 		}
 
 		if (binding.maxInputValue.text.toString() != topLimit.toInt().toString()) {
-			binding.maxCurrency.text = currency.getCurrencySymbol(context)
 			binding.maxInputValue.setText(topLimit.toInt().toString())
 		}
 
@@ -160,7 +164,11 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 	inner class MinMaxFilter(val minValue: Float, val maxValue: Float) : InputFilter {
 
-		override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dStart: Int, dEnd: Int): CharSequence? {
+		override fun filter(
+			source: CharSequence, start: Int,
+			end: Int, dest: Spanned,
+			dStart: Int, dEnd: Int
+		): CharSequence? {
 			try {
 				val input = (dest.toString() + source.toString()).toFloat()
 				return if (isInRange(minValue, maxValue, input)) {
@@ -174,9 +182,8 @@ class PriceRangeWidget @JvmOverloads constructor(
 			return "0"
 		}
 
-		private fun isInRange(a: Float, b: Float, c: Float): Boolean {
-			return if (b > a) c in a..b else c in b..a
-		}
+		private fun isInRange(a: Float, b: Float, c: Float): Boolean =
+			if (b > a) c in a..b else c in b..a
 	}
 
 	private companion object {
