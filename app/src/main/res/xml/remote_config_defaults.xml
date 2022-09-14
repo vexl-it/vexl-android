@@ -2,6 +2,6 @@
 <defaultsMap>
 	<entry>
 		<key>marketplace_locked</key>
-		<value>true</value>
+		<value>false</value>
 	</entry>
 </defaultsMap>
