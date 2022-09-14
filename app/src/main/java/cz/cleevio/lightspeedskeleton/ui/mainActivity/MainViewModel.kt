@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class MainViewModel constructor(
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
@@ -59,7 +58,6 @@ class MainViewModel constructor(
 				)
 			)
 			userWithMessage?.let {
-				Timber.tag("ASDX").d("looking for controller and safe navigating")
 				_navigateToChatDetail.send(userWithMessage)
 			}
 		}
@@ -73,10 +71,10 @@ class MainViewModel constructor(
 			if (offerIds.isNotEmpty()) {
 				offerDeleteSuccess = offerRepository.deleteMyOffers(offerIds).status == Status.Success
 			}
+			//leave also all groups, needs to be called before we delete user from contact-ms
+			groupRepository.leaveAllGroups()
 			val userDelete = userRepository.deleteMe()
 			val contactUserDelete = contactRepository.deleteMyUser()
-			//leave also all groups
-			groupRepository.leaveAllGroups()
 
 			// TODO update when FB user will be available
 			//val contactFacebookDelete = contactRepository.deleteMyFacebookUser()
