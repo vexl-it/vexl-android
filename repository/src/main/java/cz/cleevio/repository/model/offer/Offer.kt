@@ -80,7 +80,8 @@ fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
 	).let { offer ->
 
-		if (cryptoCurrencyValues != null) {
+		// if we have paused offer (active == false), skip trigger code block
+		if (cryptoCurrencyValues != null && offer.active) {
 			val currentCurrencyValue = cryptoCurrencyValues.getPrice(offer.activePriceCurrency)
 			if (offer.activePriceState == PriceTriggerType.PRICE_IS_ABOVE.name) {
 				return@let offer.copy(active = currentCurrencyValue > offer.activePriceValue)
