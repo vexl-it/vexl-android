@@ -687,7 +687,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="faq_screen_seven_subtitle">Vždy se na nás můžete obrátit prostřednictvím e-mailu: support@vexl.it. Nebo se s námi můžete setkat během svého příštího P2P obchodu! 😻</string>
     <string name="faq_screen_seven_subtitle_1">Vždy se na nás můžete obrátit prostřednictvím e-mailu:</string>
     <string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
-    <string name="faq_screen_seven_subtitle_3">Nebo se s námi můžete setkat během dalšího P2P obchodu! 😻</string>
+    <string name="faq_screen_seven_subtitle_3"> Nebo se s námi můžete setkat během dalšího P2P obchodu! 😻</string>
 
     <!-- Permissions -->
     <string name="permission_camera_denied">Přístup ke kameře byl odepřen</string>
@@ -695,8 +695,8 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <!-- Locked Screen -->
     <string name="locked_screen_title">V současnosti vytváříme sociální síť. Importuj své kontakty a pomoz nám šířit Vexl!</string>
     <string name="locked_screen_subtitle">Vytvořil jsi už svou nabídku?</string>
-    <string name="locked_screen_sell">Chci koupit</string>
-    <string name="locked_screen_buy">Chci prodat</string>
+    <string name="locked_screen_sell">Chci prodat</string>
+    <string name="locked_screen_buy">Chci koupit</string>
     <string name="locked_screen_offers">Nabídka</string>
     <string name="locked_groups">Funkce Skupiny je zamčena.</string>
     <string name="locked_screen_contacts_remaining">Zbývajících kontaktů</string>
@@ -706,7 +706,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="intro_continue">Pokračovat</string>
     <string name="intro_first_title">Anonymně\nse spoj\nse svými kontakty.</string>
     <string name="intro_second_title">Podívej se\nna jejich\nnabídky.</string>
-    <string name="intro_third_title">Začnete chatovat,\nodhlate své identity\na obchodujte.</string>
+    <string name="intro_third_title">Začnete chatovat,\odhalte své identity\na obchodujte.</string>
 
     <!-- Error -->
     <string name="error_user_is_blocked">Uživatel je zablokován</string>
@@ -714,4 +714,6 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkuste to znovu později.</string>
     <string name="error_unknown_connection_problem">Problém s připojením. Prosím zkuste to znovu později.</string>
     <string name="error_invalid_data_format">Neplatný formát dat</string>
+
+    <!-- Passcode -->
 </resources>

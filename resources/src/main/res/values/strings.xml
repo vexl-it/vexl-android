@@ -545,6 +545,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="widget_offer_state_active">Active</string>
     <string name="widget_offer_state_inactive">Inactive</string>
     <string name="filter_amount_title">Amount</string>
+    <string name="widget_price_min_title">Min. price</string>
+    <string name="widget_price_max_title">Max. price</string>
     <string name="filter_location_title">Location</string>
     <string name="widget_location_add_new">Another Location</string>
     <string name="widget_payment_cash">Cash</string>
@@ -687,13 +689,13 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="faq_screen_seven_subtitle">You can always reach out to us via email: support@vexl.it. For a private comms, you can also send us an e2ee mail. Or you can meet us during your next P2P trade! 😻</string>
     <string name="faq_screen_seven_subtitle_1">You can always reach out to us via email: </string>
     <string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
-    <string name="faq_screen_seven_subtitle_3">Or you can meet us during your next P2P trade! 😻</string>
+    <string name="faq_screen_seven_subtitle_3"> Or you can meet us during your next P2P trade! 😻</string>
 
     <!-- Permissions -->
     <string name="permission_camera_denied">Camera permission denied</string>
 
     <!-- Locked Screen -->
-    <string name="locked_screen_title">We are currently growing our social network. Import your contacts and help us spread the world!</string>
+    <string name="locked_screen_title">We are currently growing our social network. Import your contacts and help us spread the word!</string>
     <string name="locked_screen_subtitle">Have you already created your offer?</string>
     <string name="locked_screen_sell">I\'m selling</string>
     <string name="locked_screen_buy">I\'m buying</string>
@@ -714,4 +716,6 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="error_unknown_error_occurred">The action could not be completed because an unknown error occurred. Please try again later.</string>
     <string name="error_unknown_connection_problem">Connection problem. Please try again later.</string>
     <string name="error_invalid_data_format">Invalid data format</string>
+
+    <!-- Passcode -->
 </resources>
