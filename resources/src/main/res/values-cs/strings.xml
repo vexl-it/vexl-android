@@ -545,6 +545,8 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="widget_offer_state_active">Aktivní</string>
     <string name="widget_offer_state_inactive">Neaktivní</string>
     <string name="filter_amount_title">Množství</string>
+    <string name="widget_price_min_title">Min. cena</string>
+    <string name="widget_price_max_title">Max. cena</string>
     <string name="filter_location_title">Lokalita</string>
     <string name="widget_location_add_new">Jiná lokalita</string>
     <string name="widget_payment_cash">Hotovost</string>
@@ -645,7 +647,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="chat_message_identity_reveal_reject_received">Tvoje žádost byla zamítnuta.</string>
     <string name="chat_message_identity_reveal_reject">Zamítnul jsi žádost o odhalení tvé identity.</string>
     <string name="chat_message_identity_reveal_approved">Identita odhalena!</string>
-    <string name="chat_identity_reveal_sent">Žádost o odhalení identity odeslána!</string>
+    <string name="chat_message_identity_reveal_sent">Žádost o odhalení identity odeslána!</string>
 
     <!-- Groups -->
     <string name="groups_join_button">Přidat se ke skupině</string>

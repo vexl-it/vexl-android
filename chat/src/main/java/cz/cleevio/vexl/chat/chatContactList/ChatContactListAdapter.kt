@@ -1,5 +1,6 @@
 package cz.cleevio.vexl.chat.chatContactList
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
+import cz.cleevio.core.utils.setIcons
 import cz.cleevio.repository.model.chat.ChatListUser
-import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatContactBinding
-import timber.log.Timber
 import java.text.SimpleDateFormat
 
 class ChatContactListAdapter constructor(
@@ -65,7 +66,18 @@ class ChatContactListAdapter constructor(
 			val prefix = if (item.message.isMine)
 				binding.chatContactName.resources.getString(R.string.chat_message_prefix)
 			else ""
-			binding.chatLastMessage.text = item.message.text?.let { "$prefix${it}" } ?: ""
+			binding.chatLastMessage.text = when (item.message.type) {
+				MessageType.REQUEST_REVEAL -> itemView.resources.getString(R.string.chat_message_identity_reveal_sent)
+				MessageType.APPROVE_REVEAL -> itemView.resources.getString(R.string.chat_message_identity_reveal_approved)
+				MessageType.DISAPPROVE_REVEAL -> itemView.resources.getString(R.string.chat_message_identity_reveal_declined)
+				else -> item.message.text?.let { "$prefix $it" } ?: ""
+			}
+
+			binding.chatLastMessage.setTextColor(itemView.resources.getColor(getTextAndIconColorIfMessageIsRevealIdentity(item.message.type), null))
+			binding.chatLastMessage.compoundDrawableTintList =  ColorStateList.valueOf(itemView.resources.getColor(getTextAndIconColorIfMessageIsRevealIdentity(item.message.type), null))
+
+			binding.chatLastMessage.setIcons(getStartIconIfMessageIsRevealIdentity(item.message.type), null, null, null)
+
 			binding.chatTime.text = SimpleDateFormat.getDateTimeInstance(
 				SimpleDateFormat.SHORT,
 				SimpleDateFormat.SHORT
@@ -75,6 +87,21 @@ class ChatContactListAdapter constructor(
 				chatWithUser(item)
 			}
 		}
+
+		private fun getStartIconIfMessageIsRevealIdentity(messageType: MessageType): Int? =
+			when (messageType) {
+				MessageType.REQUEST_REVEAL -> R.drawable.ic_eye
+				MessageType.APPROVE_REVEAL -> R.drawable.ic_eye_open
+				MessageType.DISAPPROVE_REVEAL -> R.drawable.ic_prohibit
+				else -> null
+			}
+
+		private fun getTextAndIconColorIfMessageIsRevealIdentity(messageType: MessageType): Int =
+			if (messageType == MessageType.REQUEST_REVEAL || messageType == MessageType.APPROVE_REVEAL || messageType == MessageType.DISAPPROVE_REVEAL) {
+				R.color.white
+			} else {
+				R.color.gray_4
+			}
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =

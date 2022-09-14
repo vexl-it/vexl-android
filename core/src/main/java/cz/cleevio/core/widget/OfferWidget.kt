@@ -14,6 +14,7 @@ import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.formatAsPercentage
 import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.model.Currency.Companion.getCurrencySymbol
 import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.repository.model.group.Group
@@ -66,7 +67,15 @@ class OfferWidget @JvmOverloads constructor(
 		binding.card.priceLimit.text =
 			"${DecimalFormat("###,###.#", DecimalFormatSymbols(Locale.US)).format(priceLimit)}k"
 
-		binding.card.priceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
+		if (item.currency == Currency.CZK.name) {
+			binding.card.suffixPriceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
+			binding.card.suffixPriceCurrency.isVisible = true
+			binding.card.prefixPriceCurrency.isVisible = false
+		} else {
+			binding.card.prefixPriceCurrency.text = item.currency.mapStringToCurrency().getCurrencySymbol(context)
+			binding.card.prefixPriceCurrency.isVisible = true
+			binding.card.suffixPriceCurrency.isVisible = false
+		}
 
 		if (item.userAvatar.isNullOrBlank()) {
 			//either select random drawable
