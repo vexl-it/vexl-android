@@ -342,6 +342,15 @@
 		<item name="fontFamily">@font/tt_satoshi_400</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Offer.Widget.PriceRange.Gray" parent="">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/gray_4</item>
+		<item name="lineHeight">22sp</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Offer.Group.Gray" parent="">
 		<item name="android:textSize">18sp</item>
 		<item name="android:textColor">@color/gray_3</item>
@@ -988,6 +997,15 @@
 		<item name="lineHeight">30dp</item>
 		<item name="android:fontFamily">@font/tt_satoshi_600</item>
 		<item name="fontFamily">@font/tt_satoshi_600</item>
+	</style>
+
+	<style name="TextAppearance.Vexl.Widget.PriceRange.Title" parent="TextAppearance.Cleevio.Body2">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="lineHeight">26dp</item>
+		<item name="android:fontFamily">@font/tt_satoshi_500</item>
+		<item name="fontFamily">@font/tt_satoshi_500</item>
+		<item name="android:letterSpacing">-0.02</item>
 	</style>
 
 	<style name="TextAppearance.Vexl.Trigger.Note" parent="TextAppearance.Cleevio.Body2">
