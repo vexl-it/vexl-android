@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.Float.min
 
 const val DEBOUNCE_DELAY = 1200L
 
@@ -61,7 +60,7 @@ class PriceRangeWidget @JvmOverloads constructor(
 			try {
 				_newValues.tryEmit(
 					Pair(
-						min(it.toString().toFloat(), binding.priceRangeSlider.valueTo),
+						it.toString().toFloat().coerceAtMost(binding.priceRangeSlider.valueTo),
 						topLimit
 					)
 				)
@@ -75,7 +74,7 @@ class PriceRangeWidget @JvmOverloads constructor(
 				_newValues.tryEmit(
 					Pair(
 						bottomLimit,
-						min(it.toString().toFloat(), binding.priceRangeSlider.valueTo),
+						it.toString().toFloat().coerceAtMost(binding.priceRangeSlider.valueTo)
 					)
 				)
 			} catch (e: NumberFormatException) {
@@ -133,8 +132,8 @@ class PriceRangeWidget @JvmOverloads constructor(
 		val currentSlider = binding.priceRangeSlider.values
 		if (currentSlider[0] != bottomLimit || currentSlider[1] != topLimit) {
 			binding.priceRangeSlider.setValues(
-				min(bottomLimit, binding.priceRangeSlider.valueTo),
-				min(topLimit, binding.priceRangeSlider.valueTo),
+				bottomLimit.coerceAtMost(binding.priceRangeSlider.valueTo),
+				topLimit.coerceAtMost(binding.priceRangeSlider.valueTo),
 			)
 		}
 	}
