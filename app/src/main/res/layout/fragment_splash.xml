@@ -3,4 +3,13 @@
 	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@drawable/background_splash_screen" />
+	android:background="@drawable/background_splash_screen_gradient">
+
+	<ImageView
+		android:id="@+id/vexl_googles"
+		android:layout_width="200dp"
+		android:layout_height="200dp"
+		android:layout_gravity="center"
+		android:contentDescription="?attr/endIconContentDescription"
+		android:src="@drawable/ic_vexl_googles" />
+</FrameLayout>
