@@ -72,7 +72,6 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 		binding.maxInputValue.doAfterTextChanged {
 			try {
-				Timber.tag("ASDX").d("new Max: ${it.toString().toFloat()}")
 				_newValues.tryEmit(
 					Pair(
 						bottomLimit,
@@ -96,7 +95,6 @@ class PriceRangeWidget @JvmOverloads constructor(
 	}
 
 	fun setupWithCurrency(currency: Currency) {
-		Timber.tag("ASDX").d("setupWithCurrency called")
 		currentCurrency = currency
 		when (currency) {
 			Currency.CZK -> {
