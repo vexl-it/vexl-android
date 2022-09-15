@@ -49,7 +49,7 @@
 	</style>
 
 	<style name="SplashTheme" parent="AppTheme">
-		<item name="android:windowBackground">@drawable/background_splash_screen</item>
+		<item name="android:windowBackground">@drawable/background_splash_screen_gradient</item>
 		<item name="android:windowAnimationStyle">@null</item>
 	</style>
 
@@ -65,7 +65,7 @@
 	</style>
 
 	<style name="Theme.Cleevio.SplashTheme" parent="AppTheme">
-		<item name="android:windowBackground">@drawable/background_splash_screen</item>
+		<item name="android:windowBackground">@drawable/background_splash_screen_gradient</item>
 	</style>
 
 	<style name="ThemeOverlay.Cleevio.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
