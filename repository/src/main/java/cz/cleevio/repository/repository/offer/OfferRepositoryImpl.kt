@@ -283,11 +283,12 @@ class OfferRepositoryImpl constructor(
 			)
 
 			if (offerFilter.feeValue != null) {
-				queryBuilder.append(" AND (feeState in($types) OR feeAmount == $SQL_VALUE_PLACEHOLDER)")
+				queryBuilder.append(" AND (feeState in($types) OR feeAmount <= $SQL_VALUE_PLACEHOLDER)")
 				values.addAll(offerFilter.feeTypes)
 				values.add(offerFilter.feeValue)
 			} else {
 				queryBuilder.append(" AND feeState in($types)")
+				values.addAll(offerFilter.feeTypes)
 			}
 		}
 		if (offerFilter.currency != null) {
