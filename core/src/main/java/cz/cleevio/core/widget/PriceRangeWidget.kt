@@ -1,8 +1,6 @@
 package cz.cleevio.core.widget
 
 import android.content.Context
-import android.text.InputFilter
-import android.text.Spanned
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.widget.doAfterTextChanged
@@ -20,6 +18,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.lang.Float.min
 
 const val DEBOUNCE_DELAY = 1200L
 
@@ -62,7 +61,7 @@ class PriceRangeWidget @JvmOverloads constructor(
 			try {
 				_newValues.tryEmit(
 					Pair(
-						it.toString().toFloat(),
+						min(it.toString().toFloat(), binding.priceRangeSlider.valueTo),
 						topLimit
 					)
 				)
@@ -73,10 +72,11 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 		binding.maxInputValue.doAfterTextChanged {
 			try {
+				Timber.tag("ASDX").d("new Max: ${it.toString().toFloat()}")
 				_newValues.tryEmit(
 					Pair(
 						bottomLimit,
-						it.toString().toFloat()
+						min(it.toString().toFloat(), binding.priceRangeSlider.valueTo),
 					)
 				)
 			} catch (e: NumberFormatException) {
@@ -96,30 +96,22 @@ class PriceRangeWidget @JvmOverloads constructor(
 	}
 
 	fun setupWithCurrency(currency: Currency) {
+		Timber.tag("ASDX").d("setupWithCurrency called")
 		currentCurrency = currency
 		when (currency) {
 			Currency.CZK -> {
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_CZK.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_CZK.toFloat()
-				binding.maxInputValue.filters = arrayOf<InputFilter>(
-					MinMaxFilter(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat())
-				)
 				processLimits(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat(), currency)
 			}
 			Currency.USD -> {
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_USD.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_USD.toFloat()
-				binding.maxInputValue.filters = arrayOf<InputFilter>(
-					MinMaxFilter(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat())
-				)
 				processLimits(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat(), currency)
 			}
 			Currency.EUR -> {
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_EUR.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_EUR.toFloat()
-				binding.maxInputValue.filters = arrayOf<InputFilter>(
-					MinMaxFilter(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat())
-				)
 				processLimits(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat(), currency)
 			}
 		}
@@ -142,7 +134,10 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 		val currentSlider = binding.priceRangeSlider.values
 		if (currentSlider[0] != bottomLimit || currentSlider[1] != topLimit) {
-			binding.priceRangeSlider.setValues(bottomLimit, topLimit)
+			binding.priceRangeSlider.setValues(
+				min(bottomLimit, binding.priceRangeSlider.valueTo),
+				min(topLimit, binding.priceRangeSlider.valueTo),
+			)
 		}
 	}
 
@@ -159,31 +154,6 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 	fun setValues(bottomLimit: Float, topLimit: Float) {
 		processLimits(bottomLimit = bottomLimit, topLimit = topLimit, currentCurrency)
-		binding.priceRangeSlider.setValues(bottomLimit, topLimit)
-	}
-
-	inner class MinMaxFilter(val minValue: Float, val maxValue: Float) : InputFilter {
-
-		override fun filter(
-			source: CharSequence, start: Int,
-			end: Int, dest: Spanned,
-			dStart: Int, dEnd: Int
-		): CharSequence? {
-			try {
-				val input = (dest.toString() + source.toString()).toFloat()
-				return if (isInRange(minValue, maxValue, input)) {
-					null
-				} else {
-					maxValue.toString()
-				}
-			} catch (e: NumberFormatException) {
-				Timber.w(e)
-			}
-			return "0"
-		}
-
-		private fun isInRange(a: Float, b: Float, c: Float): Boolean =
-			if (b > a) c in a..b else c in b..a
 	}
 
 	private companion object {
