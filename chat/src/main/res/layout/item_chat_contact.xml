@@ -53,6 +53,7 @@
 	<TextView
 		android:id="@+id/chat_last_message"
 		android:layout_width="0dp"
+		android:drawablePadding="4dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="12dp"
 		android:layout_marginTop="2dp"
@@ -62,6 +63,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/chat_contact_icon"
 		app:layout_constraintTop_toBottomOf="@+id/chat_contact_name"
-		tools:text="I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep..." />
+		tools:text="I’ll be wearing a red hat, Don’t text me before 9am — I love to sleep..."
+		app:drawableTint="@null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

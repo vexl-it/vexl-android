@@ -647,7 +647,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="chat_message_identity_reveal_reject_received">Your request has been declined.</string>
     <string name="chat_message_identity_reveal_reject">Identity reveal declined.</string>
     <string name="chat_message_identity_reveal_approved">Identity revealed!</string>
-    <string name="chat_identity_reveal_sent">Identity reveal request sent!</string>
+    <string name="chat_message_identity_reveal_sent">Identity reveal request sent!</string>
+    <string name="chat_message_identity_reveal_declined">Declined to reveal identity</string>
 
     <!-- Groups -->
     <string name="groups_join_button">Join new group</string>

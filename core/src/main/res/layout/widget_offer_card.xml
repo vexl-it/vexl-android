@@ -83,30 +83,46 @@
 					android:id="@+id/price_up_to"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:paddingBottom="4dp"
 					android:text="@string/marketplace_detail_up_to"
 					android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro.OfferCard.Numbers"
 					android:textColor="@color/gray_3"
 					android:textSize="12sp"
 					app:layout_constraintBottom_toBottomOf="@id/price_limit"
-					app:layout_constraintEnd_toStartOf="@+id/price_limit"
+					app:layout_constraintEnd_toStartOf="@+id/prefix_price_currency"
 					app:layout_constraintHorizontal_chainStyle="packed"
 					app:layout_constraintStart_toStartOf="parent"
 					app:lineHeight="14.94sp" />
 
 				<TextView
+					android:id="@+id/prefix_price_currency"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:letterSpacing="-0.03"
+					android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro.OfferCard"
+					android:textColor="@color/gray_3"
+					android:textSize="12sp"
+					app:layout_constraintEnd_toStartOf="@id/price_limit"
+					app:layout_constraintStart_toEndOf="@id/price_up_to"
+					app:layout_constraintTop_toTopOf="parent"
+					app:lineHeight="14.94sp"
+					tools:text="Kč" />
+
+				<TextView
 					android:id="@+id/price_limit"
 					android:layout_width="wrap_content"
 					android:layout_height="30dp"
+					android:paddingHorizontal="2dp"
 					android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro.OfferCard.Numbers"
 					android:textColor="@color/gray_3"
-					app:layout_constraintEnd_toStartOf="@id/price_currency"
-					app:layout_constraintStart_toEndOf="@id/price_up_to"
+					app:layout_constraintEnd_toStartOf="@id/suffix_price_currency"
+					app:layout_constraintStart_toEndOf="@id/prefix_price_currency"
 					app:layout_constraintTop_toTopOf="parent"
 					app:lineHeight="28.64sp"
 					tools:text="10k" />
 
 				<TextView
-					android:id="@+id/price_currency"
+					android:id="@+id/suffix_price_currency"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:letterSpacing="-0.03"
