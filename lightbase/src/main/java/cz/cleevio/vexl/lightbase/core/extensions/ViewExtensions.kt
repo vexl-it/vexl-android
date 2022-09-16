@@ -169,6 +169,10 @@ fun Fragment.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {
 	Toast.makeText(this.requireContext(), text, length).show()
 }
 
+fun View.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {
+	Toast.makeText(this.context, text, length).show()
+}
+
 fun View.fadeIn(duration: Long = 300L, offset: Long = 0L) {
 	if (isVisible) return
 

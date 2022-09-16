@@ -487,7 +487,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="marketplace_currency_1_year">1 year</string>
     <string name="marketplace_buy">Buying</string>
     <string name="marketplace_sell">Selling</string>
-    <string name="marketplace_my_offers">Create new offer</string>
+    <string name="marketplace_my_offers">My offers</string>
     <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of a Friend</string>
     <string name="marketplace_detail_user_sell">%s is selling</string>
@@ -649,6 +649,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="chat_message_identity_reveal_approved">Identity revealed!</string>
     <string name="chat_message_identity_reveal_sent">Identity reveal request sent!</string>
     <string name="chat_message_identity_reveal_declined">Declined to reveal identity</string>
+    <string name="chat_text_copied_clipboard">Text copied to clipboard!</string>
 
     <!-- Groups -->
     <string name="groups_join_button">Join new group</string>
