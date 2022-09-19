@@ -1,7 +1,11 @@
 package cz.cleevio.vexl.chat.chatFragment
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,6 +18,7 @@ import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealRejectedBinding
+import cz.cleevio.vexl.lightbase.core.extensions.showToast
 
 class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
 	override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.uuid == newItem.uuid
@@ -78,11 +83,29 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 				binding.sentMessage.text = item.text
 				binding.receivedMessage.isVisible = false
 				binding.sentMessage.isVisible = true
+
+				binding.sentMessage.setOnLongClickListener {
+					copyTextToClipboard(binding.sentMessage)
+					true
+				}
 			} else {
 				binding.receivedMessage.text = item.text
 				binding.receivedMessage.isVisible = true
 				binding.sentMessage.isVisible = false
+
+				binding.receivedMessage.setOnLongClickListener {
+					copyTextToClipboard(binding.receivedMessage)
+					true
+				}
 			}
+		}
+
+		private fun copyTextToClipboard(textView: TextView) {
+			val clipboard: ClipboardManager = textView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+			val clip: ClipData = ClipData.newPlainText("Vexl", textView.text)
+			clipboard.setPrimaryClip(clip)
+
+			textView.showToast(textView.context.getString(R.string.chat_text_copied_clipboard))
 		}
 	}
 

@@ -708,7 +708,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="intro_continue">Pokračovat</string>
     <string name="intro_first_title">Anonymně\nse spoj\nse svými kontakty.</string>
     <string name="intro_second_title">Podívej se\nna jejich\nnabídky.</string>
-    <string name="intro_third_title">Začnete chatovat,\odhalte své identity\na obchodujte.</string>
+    <string name="intro_third_title">Začněte chatovat,\odhalte své identity\na obchodujte.</string>
 
     <!-- Error -->
     <string name="error_user_is_blocked">Uživatel je zablokován</string>
