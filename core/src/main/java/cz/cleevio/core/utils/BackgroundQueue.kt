@@ -29,9 +29,11 @@ class BackgroundQueue constructor(
 	private var job: Job? = null
 
 	fun triggerBackgroundCheck() {
-		coroutineScope.launch {
-			_triggerChannel.send(Unit)
-		}
+		//we should try
+//		coroutineScope.launch {
+//			_triggerChannel.send(Unit)
+//		}
+		encryptOffersForNewContacts()
 	}
 
 	fun encryptOffersForNewContacts() {
@@ -39,6 +41,7 @@ class BackgroundQueue constructor(
 			Timber.w("Lock prevented multiple encryption cycles")
 			return
 		}
+		Timber.tag("NOTIFICATION").d("Start")
 
 		job = coroutineScope.launch {
 			//load keys from DB
@@ -91,6 +94,7 @@ class BackgroundQueue constructor(
 			}
 			//reset lock
 			job = null
+			Timber.tag("NOTIFICATION").d("Done")
 		}
 	}
 }
