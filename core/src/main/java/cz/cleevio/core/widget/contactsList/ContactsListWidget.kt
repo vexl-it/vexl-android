@@ -84,6 +84,7 @@ class ContactsListWidget @JvmOverloads constructor(
 		_contacts = contacts
 		binding.contactsList.isVisible = contacts.isNotEmpty()
 		binding.emptyListInfo.isVisible = contacts.isEmpty()
+		isDeselectAll = _contacts.any { it.markedForUpload }
 		setupDeselectAllBtn()
 	}
 
