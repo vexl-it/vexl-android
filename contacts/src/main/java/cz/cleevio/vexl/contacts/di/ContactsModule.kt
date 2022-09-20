@@ -5,6 +5,7 @@ import cz.cleevio.vexl.contacts.facebookContactsListFragment.FacebookContactsLis
 import cz.cleevio.vexl.contacts.finishImportFragment.FinishImportViewModel
 import cz.cleevio.vexl.contacts.importContactsFragment.ImportContactsViewModel
 import cz.cleevio.vexl.contacts.importFacebookContactsFragment.ImportFacebookContactsViewModel
+import cz.cleevio.vexl.contacts.notificationFragment.NotificationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -46,6 +47,10 @@ val contactsModule = module {
 			get(),
 			get()
 		)
+	}
+
+	viewModel {
+		NotificationViewModel()
 	}
 
 }
