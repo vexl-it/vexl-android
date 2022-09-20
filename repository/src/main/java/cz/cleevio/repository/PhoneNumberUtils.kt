@@ -4,44 +4,37 @@ import android.telephony.TelephonyManager
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.Phonenumber
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import timber.log.Timber
-import java.util.*
 
 class PhoneNumberUtils constructor(
-	val telephonyManager: TelephonyManager
+	val telephonyManager: TelephonyManager,
+	val encryptedPreference: EncryptedPreferenceRepository,
 ) {
 	private val phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
 
-	//alternative is telephonyManager.simCountryIso
-	private val defaultCountryIso = telephonyManager.networkCountryIso
-	private val defaultRegion = "+" + defaultCountryIso.uppercase(Locale.getDefault())
+	private val defaultRegion = phoneUtil.getRegionCodeForCountryCode(
+		//removing "+" character
+		encryptedPreference.userCountryCode.drop(1).toInt()
+	)
 
-	fun isPhoneValid(phoneNumber: String, defaultCountryCode: String): Boolean {
-		return phoneNumber.parsePhoneNumber(phoneUtil, defaultCountryCode)?.let {
+	fun isPhoneValid(phoneNumber: String): Boolean {
+		return phoneNumber.parsePhoneNumber(phoneUtil)?.let {
 			phoneUtil.isValidNumber(it)
 		} ?: false
 	}
 
-	fun getFormattedPhoneNumber(phoneNumber: String, defaultCountryCode: String): String {
-		val parsedPhoneNumber = phoneNumber.parsePhoneNumber(phoneUtil, defaultCountryCode)
+	fun getFormattedPhoneNumber(phoneNumber: String): String {
+		val parsedPhoneNumber = phoneNumber.parsePhoneNumber(phoneUtil)
 		return "+" + parsedPhoneNumber?.countryCode.toString() + parsedPhoneNumber?.nationalNumber.toString()
 	}
 
-	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil, defaultCountryCode: String): Phonenumber.PhoneNumber? {
+	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
 		val number = toValidPhoneNumber(this)
 		return try {
-			val phoneNumber = if (number.length == DEFAULT_PHONE_NUMBER_LENGTH) {
-				// Country code did not recognized, use default region
-				"$defaultCountryCode$number"
-			} else if (number.length == SLOVAK_PHONE_NUMBER_LENGTH && number.startsWith("0")) {
-				// Slovak phone number -> need to remove "0" from start
-				"$defaultCountryCode${number.drop(1)}"
-			} else {
-				this
-			}
-			phoneUtil.parse(phoneNumber, defaultRegion)
+			phoneUtil.parse(number, defaultRegion)
 		} catch (e: NumberParseException) {
-			Timber.e("NumberParseException was thrown: $e")
+			Timber.w("NumberParseException was thrown: $e")
 			null
 		}
 	}
@@ -49,11 +42,8 @@ class PhoneNumberUtils constructor(
 	fun toValidPhoneNumber(phoneNumber: String): String {
 		return phoneNumber
 			.replace("\\s".toRegex(), "")
+			.replace("\\(".toRegex(), "")
+			.replace("\\)".toRegex(), "")
 			.replace("-".toRegex(), "")
-	}
-
-	companion object {
-		const val DEFAULT_PHONE_NUMBER_LENGTH = 9
-		const val SLOVAK_PHONE_NUMBER_LENGTH = 10
 	}
 }
