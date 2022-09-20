@@ -89,7 +89,8 @@ val repoModule = module {
 
 	single {
 		PhoneNumberUtils(
-			telephonyManager = get()
+			telephonyManager = get(),
+			encryptedPreference = get()
 		)
 	}
 }
