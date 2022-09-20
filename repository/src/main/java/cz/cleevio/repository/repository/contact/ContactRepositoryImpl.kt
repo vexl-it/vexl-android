@@ -454,26 +454,36 @@ class ContactRepositoryImpl constructor(
 	)
 
 	override suspend fun getCommonFriends(contactsPublicKeys: Collection<String>): Map<String, List<BaseContact>> {
-		val facebookContacts = contactApi.getCommonContacts(
-			hash = encryptedPreference.facebookHash,
-			signature = encryptedPreference.facebookSignature,
-			commonFriendsRequest = CommonFriendsRequest(
-				publicKeys = contactsPublicKeys
-			)
+		val facebookContacts = tryOnline(
+			request = {
+				contactApi.getCommonContacts(
+					hash = encryptedPreference.facebookHash,
+					signature = encryptedPreference.facebookSignature,
+					commonFriendsRequest = CommonFriendsRequest(
+						publicKeys = contactsPublicKeys
+					)
+				)
+			},
+			mapper = { it }
 		)
 
-		val phoneContacts = contactApi.getCommonContacts(
-			hash = encryptedPreference.hash,
-			signature = encryptedPreference.signature,
-			commonFriendsRequest = CommonFriendsRequest(
-				publicKeys = contactsPublicKeys
-			)
+		val phoneContacts = tryOnline(
+			request = {
+				contactApi.getCommonContacts(
+					hash = encryptedPreference.hash,
+					signature = encryptedPreference.signature,
+					commonFriendsRequest = CommonFriendsRequest(
+						publicKeys = contactsPublicKeys
+					)
+				)
+			},
+			mapper = { it }
 		)
 
 		val commonFriendsMap = mutableMapOf<String, List<BaseContact>>()
 
-		if (phoneContacts.isSuccessful) {
-			phoneContacts.body()?.commonContacts.orEmpty().map { friend ->
+		if (phoneContacts.isSuccess()) {
+			phoneContacts.data?.commonContacts.orEmpty().map { friend ->
 				val contacts = contactDao.getAllPhoneContacts()
 					.map { it.fromDao() }
 					.filter { friend.common.hashes.contains(it.getHashedContact()) }
@@ -481,8 +491,8 @@ class ContactRepositoryImpl constructor(
 			}
 		}
 
-		if (facebookContacts.isSuccessful) {
-			facebookContacts.body()?.commonContacts.orEmpty().map { friend ->
+		if (facebookContacts.isSuccess()) {
+			facebookContacts.data?.commonContacts.orEmpty().map { friend ->
 				val contacts = contactDao.getAllFacebookContacts()
 					.map { it.fromDao() }
 					.filter { friend.common.hashes.contains(it.getHashedContact()) }
