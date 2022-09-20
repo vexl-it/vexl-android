@@ -367,8 +367,9 @@ class OfferRepositoryImpl constructor(
 		if (newOffers.isSuccess()) overwriteOffers(newOffers.data.orEmpty())
 	}
 
-	override suspend fun getMyOffersCount(offerType: String): Int =
-		myOfferDao.getMyOfferCount(offerType)
+	override suspend fun getMyActiveOffersCount(offerType: String): Int {
+		return offerDao.getMyActiveOfferCount(offerType)
+	}
 
 	private suspend fun overwriteOffers(offers: List<Offer>) {
 		val myOfferIds = myOfferDao.listAll().map { it.extId }

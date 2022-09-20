@@ -11,7 +11,7 @@
     <string name="general_start">Spustit</string>
     <string name="general_pause">Pauza</string>
     <string name="general_cancel">Zrušit</string>
-    <string name="general_ok">Ok</string>
+    <string name="general_ok">OK</string>
     <string name="general_back">Zpět</string>
     <string name="general_done">Hotovo</string>
     <string name="general_search">Vyhledat</string>
@@ -340,7 +340,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="verify_phone_info_countdown">Neobdržel jsi kód? Zkus ho poslat znova za %s s</string>
     <string name="verify_phone_info_btn">Neobdržel jsi kód? Zkus ho poslat znova</string>
     <string name="verify_phone_code_sent">Kód byl odeslán!</string>
-    <string name="verify_phone_expired">Verifikace expirovala. Prosím registrujte se znovu</string>
+    <string name="verify_phone_expired">Verifikace expirovala. Prosím registruj se znovu</string>
 
     <!-- Register Name and Avatar -->
     <string name="username_title">Jak ti říkají kamarádi?</string>
@@ -370,7 +370,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="import_contacts_allow">Povolit</string>
     <string name="import_contacts_not_allow">Zakázat</string>
     <string name="import_contacts_title">Propojit s přáteli</string>
-    <string name="import_contacts_subtitle">Kontaky jsou šifrovány (i pro nás).</string>
+    <string name="import_contacts_subtitle">Kontakty jsou šifrovány (i pro nás).</string>
     <string name="import_contacts_request_title">Povolit import kontaktů</string>
     <string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům.\nNemusíš mít obavy, nikdo je neuvidí.</string>
     <string name="import_contacts_secondary_request_title">Opravdu?</string>
@@ -393,7 +393,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_pin">Nastavit PIN / FaceID</string>
     <string name="profile_allow_screenshots">Povolit screenshoty</string>
     <string name="profile_allow_screenshots_description">Zablokovat screenshoty</string>
-    <string name="profile_import_contacts">Importovat kontakty</string>
+    <string name="profile_import_contacts">Manažment kontaktů</string>
     <string name="profile_import_contacts_subtitle">%s přátel</string>
     <string name="profile_import_facebook">Importovat kontakty z Facebooku</string>
     <string name="profile_terms_and_privacy">Podmínky použití a Ochrana soukromí</string>
@@ -402,7 +402,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_request_data">Vyžádat uložená data</string>
     <string name="profile_logout">Smazat účet</string>
     <string name="profile_currency">Měna</string>
-    <string name="profile_logout_info">Nemůžeš se odhlásit? Taková možnost ve Vexlu není - můžeš ale smazat účet. </string>
+    <string name="profile_logout_info">Chceš se odhlásit? Taková možnost ve Vexlu není - můžeš ale smazat účet.</string>
     <string name="profile_vexl_support">Pokud se ti Vexl líbí, budeme rádi za tvůj příspěvek v tvrdé měně.</string>
     <string name="profile_refuse_to_snap_chat">Povolit screenshoty v aplikaci</string>
     <string name="profile_private_settings_title">Soukromý profil</string>
@@ -453,7 +453,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
 
     <!-- Report issue -->
     <string name="user_profile_report_issue_subject">Vexl: Nahlásit problém</string>
-    <string name="user_profile_report_issue_text">Dobrý den, píšu ohledně...</string>
+    <string name="user_profile_report_issue_text">Ahoj! Píšu ohledně...</string>
     <string name="user_profile_report_issue_email">support@vexl.it</string>
     <string name="user_profile_report_issue_error_no_app_found">Emailový klient nenalezen</string>
     <string name="user_profile_report_issue_title">Něco se pokazilo?</string>
@@ -474,11 +474,11 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <!-- Marketplace -->
     <string name="marketplace_currency_bitcoin">Bitcoin</string>
     <string name="marketplace_currency_variation_1_day">%1$s %% dnes</string>
-    <string name="marketplace_currency_variation_1_week">%1$s %% před týdnem</string>
-    <string name="marketplace_currency_variation_1_month">%1$s %% před měsícem</string>
-    <string name="marketplace_currency_variation_3_month">%1$s %% před 3 měsíci</string>
-    <string name="marketplace_currency_variation_6_month">%1$s %% před 6 měsíci</string>
-    <string name="marketplace_currency_variation_1_year">%1$s %% před rokem</string>
+    <string name="marketplace_currency_variation_1_week">%1$s %% za týden</string>
+    <string name="marketplace_currency_variation_1_month">%1$s %% za měsíc</string>
+    <string name="marketplace_currency_variation_3_month">%1$s %% za 3 měsíce</string>
+    <string name="marketplace_currency_variation_6_month">%1$s %% za 6 měsíců</string>
+    <string name="marketplace_currency_variation_1_year">%1$s %% za rok</string>
     <string name="marketplace_currency_1_day">1 den</string>
     <string name="marketplace_currency_1_week">1 týd</string>
     <string name="marketplace_currency_1_month">1 měs</string>
@@ -502,8 +502,8 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="offer_edit_buy_title">Nová nabídka</string>
     <string name="offer_create_sell_title">Nová nabídka</string>
     <string name="offer_create_buy_title">Nová nabídka</string>
-    <string name="offer_to_sell">Selling</string>
-    <string name="offer_to_buy">Buying</string>
+    <string name="offer_to_sell">K prodeji</string>
+    <string name="offer_to_buy">K nákupu</string>
     <string name="offer_active_count">%s aktivních nabídek</string>
     <string name="offer_sort_newest">Seřazeno od nejnovějších</string>
     <string name="offer_sort_oldest">Seřazeno od nejstarších</string>
@@ -517,7 +517,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_missing_offer_payment_method">Chybí způsob platby</string>
     <string name="error_missing_offer_price_trigger">Chybí cenový spouštěč nabídky</string>
     <string name="error_missing_offer_type">Chybí typ sítě</string>
-    <string name="error_missing_offer_friend_level">Chybějící úroveň přátel</string>
+    <string name="error_missing_offer_friend_level">Chybí úroveň přátel</string>
     <string name="error_invalid_offer_delete_trigger">Neplatný čas na smazání nabídky</string>
 
     <!-- Filters -->
@@ -568,7 +568,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="filter_type_title">Typ</string>
     <string name="filter_friend_level_title">Úroveň přítele</string>
     <string name="offer_create_sell_btn">Vytvořit nabídku prodeje</string>
-    <string name="offer_update_sell_btn">Aktualizovat poptávku prodeje</string>
+    <string name="offer_update_sell_btn">Aktualizovat nabídku prodeje</string>
     <string name="offer_create_buy_btn">Vytvořit nabídku nákupu</string>
     <string name="offer_update_buy_btn">Aktualizovat nabídku nákupu</string>
     <string name="widget_location_km">\u00B1 %d km</string>
@@ -598,7 +598,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="chat_message_prefix">já:</string>
 
     <!-- Chat requests -->
-    <string name="chat_request_main_title">%s Žádosti</string>
+    <string name="chat_request_main_title">%s Žádostí</string>
     <string name="chat_request_accept">Přijmout</string>
     <string name="chat_request_decline">Odmítnout</string>
     <string name="chat_request_my_offer">Moje nabídka</string>
@@ -628,7 +628,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="chat_block_user_confirm_nope">Ne</string>
     <string name="chat_block_user_confirm_action">Ano, chci</string>
     <string name="chat_message_conversation_request_accepted">Konverzace zahájena</string>
-    <string name="chat_message_identity_reveal_header">Žádost o odhalení identity  </string>
+    <string name="chat_message_identity_reveal_header">Žádost o odhalení identity</string>
     <string name="chat_message_identity_reveal_subheader">Pojďme si odhalit identity!</string>
     <string name="chat_message_identity_reveal_request_sent">Žádost o odhalení identity odeslána</string>
     <string name="chat_message_identity_reveal_request">Žádost o odhalení identity</string>
@@ -657,9 +657,9 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="groups_camera_denied">Vexl potřebuje přístup k fotoaparátu.</string>
     <string name="groups_enter_code">Vložit kód ručně</string>
     <string name="groups_scan_code">Nascanovat QR pro připojení do skupiny</string>
-    <string name="groups_enter_code_description">Vyplňte aktivační kód níže</string>
+    <string name="groups_enter_code_description">Vyplň aktivační kód níže</string>
     <string name="groups_leave_group_title">Opustit skupinu?</string>
-    <string name="groups_leave_group_description">Už si nebudete moct zobrazit nabídky z této skupiny nebo chatovat s jejími členy.</string>
+    <string name="groups_leave_group_description">Už si nebudeš moct zobrazit nabídky z této skupiny nebo chatovat s jejími členy.</string>
     <string name="groups_leave_group_no">Ne</string>
     <string name="groups_leave_group_yes">Ano, odejít</string>
     <string name="groups_join_title">Chceš se přidat? %s</string>
@@ -676,9 +676,9 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="faq_screen_one_title">Co je Vexl ?</string>
     <string name="faq_screen_one_subtitle">Vexl je platforma kde můžeš domlouvat směnu bitcoinu v rámci své reálné sociální sítě - se svými přáteli a přáteli jejich přátel - a přitom zůstat zcela anonymní, pokud si to přeješ.</string>
     <string name="faq_screen_two_title">Kdo může vidět mé kontakty?</string>
-    <string name="faq_screen_two_subtitle">Lidé, kterým dovolíte vidět tvou identitu, mohou vidět vaše společné přátele. To je vše.</string>
+    <string name="faq_screen_two_subtitle">Lidé, kterým dovolíš vidět tvou identitu, mohou vidět vaše společné přátele. To je vše.</string>
     <string name="faq_screen_three_title">Jak mohu zůstat anonymní a přitom být součástí Vexlu?</string>
-    <string name="faq_screen_three_subtitle">Ostatní účastnící sítě tě uvidí pod tvým Vexl jménem a avatarem, které ti byly přiděleny při registraci. Svou identitu můžeš odhalit pouze pro konkrétní obchod v našem zabezpečeném, end-to-end šifrovaném chatu.</string>
+    <string name="faq_screen_three_subtitle">Ostatní účastníci sítě tě uvidí pod tvým Vexl jménem a avatarem, které ti byly přiděleny při registraci. Svou identitu můžeš odhalit pouze pro konkrétní obchod v našem zabezpečeném, end-to-end šifrovaném chatu.</string>
     <string name="faq_screen_four_title">Jak se mohu ujistit, že osoba, se kterou mluvím, je ta, se kterou chci mluvit?</string>
     <string name="faq_screen_four_subtitle">Jedním z úskalí skutečně anonymních komunikačních systémů, jako je Vexl, je to, že někdy musíte ověřit totožnost osoby, se kterou komunikujete! V takových případech je nejlepší použít zabezpečený sekundární komunikační kanál, aby jsi si s druhou osobou potvrdil, že jste oba ti, za které se vydáváte.</string>
     <string name="faq_screen_five_title">Jak se mohu ujistit, že moje komunikace a obchody jsou soukromé a šifrované?</string>
@@ -686,10 +686,10 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="faq_screen_six_title">Jak můžete zajistit ochranu mých údajů?</string>
     <string name="faq_screen_six_subtitle">Vexl je navržen tak, aby nikdy neshromažďoval ani neukládal žádné citlivé informace. Ke zprávám a dalšímu obsahu nemáme my ani jiné třetí strany přístup, protože jsou vždy šifrovány end-to-end. Naše podmínky poskytování služeb a zásady ochrany osobních údajů jsou k dispozici níže.</string>
     <string name="faq_screen_seven_title">Jak mohu kontaktovat Vexl ?</string>
-    <string name="faq_screen_seven_subtitle">Vždy se na nás můžete obrátit prostřednictvím e-mailu: support@vexl.it. Nebo se s námi můžete setkat během svého příštího P2P obchodu! 😻</string>
-    <string name="faq_screen_seven_subtitle_1">Vždy se na nás můžete obrátit prostřednictvím e-mailu:</string>
+    <string name="faq_screen_seven_subtitle">Vždy se na nás můžeš obrátit prostřednictvím e-mailu: support@vexl.it. Nebo se s námi můžeš setkat během svého příštího P2P obchodu! 😻</string>
+    <string name="faq_screen_seven_subtitle_1">Vždy se na nás můžeš obrátit prostřednictvím e-mailu:</string>
     <string name="faq_screen_seven_subtitle_2">support@vexl.it</string>
-    <string name="faq_screen_seven_subtitle_3"> Nebo se s námi můžete setkat během dalšího P2P obchodu! 😻</string>
+    <string name="faq_screen_seven_subtitle_3"> Nebo se s námi můžeš setkat během dalšího P2P obchodu! 😻</string>
 
     <!-- Permissions -->
     <string name="permission_camera_denied">Přístup ke kameře byl odepřen</string>
@@ -712,9 +712,9 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
 
     <!-- Error -->
     <string name="error_user_is_blocked">Uživatel je zablokován</string>
-    <string name="error_unauthorized">Neoprávněná chyba. Byli jste odhlášeni.</string>
-    <string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkuste to znovu později.</string>
-    <string name="error_unknown_connection_problem">Problém s připojením. Prosím zkuste to znovu později.</string>
+    <string name="error_unauthorized">Neoprávněná chyba. Byl jsi odhlášen.</string>
+    <string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkus to znovu později.</string>
+    <string name="error_unknown_connection_problem">Problém s připojením. Prosím zkus to znovu později.</string>
     <string name="error_invalid_data_format">Neplatný formát dat</string>
 
     <!-- Passcode -->

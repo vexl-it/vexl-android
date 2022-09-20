@@ -38,7 +38,9 @@ class MyOffersViewModel constructor(
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {
-			_offersCount.emit(offerRepository.getMyOffersCount(offerType.name))
+			_offersCount.emit(
+				offerRepository.getMyActiveOffersCount(offerType.name)
+			)
 		}
 	}
 }

@@ -36,6 +36,9 @@ interface OfferDao {
 	@Query("SELECT * FROM OfferEntity WHERE externalOfferId == :offerId")
 	fun getOfferById(offerId: String): OfferWithLocationsAndCommonFriends?
 
+	@Query("SELECT COUNT(offerId) FROM OfferEntity WHERE offerType == :offerType AND isMine == 1 AND active == 1")
+	fun getMyActiveOfferCount(offerType: String): Int
+
 	@Transaction
 	suspend fun replaceAll(offers: List<OfferEntity>) {
 		clearTable()
