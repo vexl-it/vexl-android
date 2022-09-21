@@ -199,4 +199,6 @@ enum class RemoteNotificationType {
 	DISAPPROVE_MESSAGING,
 	DELETE_CHAT,
 	BLOCK_CHAT,
+	GROUP_NEW_MEMBER,
+	NEW_APP_USER,
 }
