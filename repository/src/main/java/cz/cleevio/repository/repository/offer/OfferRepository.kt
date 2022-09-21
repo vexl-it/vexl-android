@@ -57,7 +57,7 @@ interface OfferRepository {
 
 	suspend fun syncOffers()
 
-	suspend fun getMyOffersCount(offerType: String): Int
+	suspend fun getMyActiveOffersCount(offerType: String): Int
 
 	suspend fun getMyOffersWithoutInbox(): List<MyOffer>
 
