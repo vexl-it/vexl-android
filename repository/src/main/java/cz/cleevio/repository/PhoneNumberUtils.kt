@@ -13,12 +13,19 @@ class PhoneNumberUtils constructor(
 ) {
 	private val phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
 
-	private val defaultRegion = phoneUtil.getRegionCodeForCountryCode(
-		//removing "+" character
-		encryptedPreference.userCountryCode.drop(1).toInt()
-	)
+	var defaultRegion: String? = null
+
+	private fun isRegionSet() {
+		if (defaultRegion == null) {
+			defaultRegion = phoneUtil.getRegionCodeForCountryCode(
+				//removing "+" character
+				encryptedPreference.userCountryCode.drop(1).toInt()
+			)
+		}
+	}
 
 	fun isPhoneValid(phoneNumber: String): Boolean {
+		isRegionSet()
 		return phoneNumber.parsePhoneNumber(phoneUtil)?.let {
 			phoneUtil.isValidNumber(it)
 		} ?: false
@@ -30,6 +37,7 @@ class PhoneNumberUtils constructor(
 	}
 
 	private fun String.parsePhoneNumber(phoneUtil: PhoneNumberUtil): Phonenumber.PhoneNumber? {
+		isRegionSet()
 		val number = toValidPhoneNumber(this)
 		return try {
 			phoneUtil.parse(number, defaultRegion)
