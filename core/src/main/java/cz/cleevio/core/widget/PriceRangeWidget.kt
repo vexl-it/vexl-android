@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.slider.RangeSlider
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetPriceRangeBinding
 import cz.cleevio.core.model.PriceRangeValue
@@ -51,16 +52,26 @@ class PriceRangeWidget @JvmOverloads constructor(
 		val initValues = binding.priceRangeSlider.values
 		processLimits(initValues[0], initValues[1], currentCurrency)
 
-		binding.priceRangeSlider.addOnChangeListener { slider, _, _ ->
-			val currentValues = slider.values
-			processLimits(currentValues[0], currentValues[1], currentCurrency)
-		}
+		binding.priceRangeSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+			override fun onStartTrackingTouch(slider: RangeSlider) = Unit
 
-		binding.minInputValue.doAfterTextChanged {
+			override fun onStopTrackingTouch(slider: RangeSlider) {
+				val currentValues = slider.values
+				processLimits(currentValues[0], currentValues[1], currentCurrency)
+			}
+		})
+
+
+		binding.minInputValue.doAfterTextChanged { number ->
 			try {
+				val setValue = if (number.toString().toFloat() > topLimit) {
+					topLimit
+				} else {
+					number.toString().toFloat()
+				}
 				_newValues.tryEmit(
 					Pair(
-						it.toString().toFloat().coerceAtMost(binding.priceRangeSlider.valueTo),
+						setValue.coerceAtMost(binding.priceRangeSlider.valueTo),
 						topLimit
 					)
 				)
@@ -69,12 +80,17 @@ class PriceRangeWidget @JvmOverloads constructor(
 			}
 		}
 
-		binding.maxInputValue.doAfterTextChanged {
+		binding.maxInputValue.doAfterTextChanged { number ->
 			try {
+				val setValue = if (number.toString().toFloat() < bottomLimit) {
+					bottomLimit
+				} else {
+					number.toString().toFloat()
+				}
 				_newValues.tryEmit(
 					Pair(
 						bottomLimit,
-						it.toString().toFloat().coerceAtMost(binding.priceRangeSlider.valueTo)
+						setValue.coerceAtMost(binding.priceRangeSlider.valueTo)
 					)
 				)
 			} catch (e: NumberFormatException) {
@@ -123,10 +139,12 @@ class PriceRangeWidget @JvmOverloads constructor(
 
 		if (binding.minInputValue.text.toString() != bottomLimit.toInt().toString()) {
 			binding.minInputValue.setText(bottomLimit.toInt().toString())
+			binding.minInputValue.setSelection(binding.minInputValue.length())
 		}
 
 		if (binding.maxInputValue.text.toString() != topLimit.toInt().toString()) {
 			binding.maxInputValue.setText(topLimit.toInt().toString())
+			binding.maxInputValue.setSelection(binding.maxInputValue.length())
 		}
 
 		val currentSlider = binding.priceRangeSlider.values
