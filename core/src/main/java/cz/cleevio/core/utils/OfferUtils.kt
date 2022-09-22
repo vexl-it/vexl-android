@@ -27,6 +27,50 @@ object OfferUtils {
 	private val _numberOfAllContacts = MutableStateFlow(-1)
 	val numberOfAllContacts = _numberOfAllContacts.asStateFlow()
 
+	fun fetchContactsPublicKeys(
+		params: OfferParams,
+		contactRepository: ContactRepository,
+		encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	): List<ContactKey> {
+
+		val contactsPublicKeys = when (params.friendLevel.value) {
+			FriendLevel.NONE -> emptyList()
+			FriendLevel.FIRST_DEGREE ->
+				contactRepository.getFirstLevelContactKeys() +
+					contactRepository.getGroupsContactKeys(params.groupUuids)
+			FriendLevel.SECOND_DEGREE ->
+				contactRepository.getFirstLevelContactKeys() +
+					contactRepository.getSecondLevelContactKeys() +
+					contactRepository.getGroupsContactKeys(params.groupUuids)
+			else -> emptyList()
+		}
+			.toMutableList()
+			.also {
+				//also add user's key
+				encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
+					it.add(
+						ContactKey(
+							key = myPublicKey,
+							level = ContactLevel.NOT_SPECIFIED,
+							//fixme: this is just hotfix to have group uuid later, when we try to create additional private-parts
+							groupUuid = params.groupUuids.firstOrNull(),
+							isUpToDate = true
+						)
+					)
+				}
+			}
+			//we need to give keys with group priority, because distinctBy keeps only first element
+			.sortedBy {
+				if (it.groupUuid == null) 1 else 0
+			}
+			.distinctBy {
+				// remove duplicities
+				it.key
+			}
+
+		return contactsPublicKeys
+	}
+
 	suspend fun prepareEncryptedOffers(
 		offerKeys: KeyPair,
 		params: OfferParams,
@@ -101,6 +145,7 @@ object OfferUtils {
 		return encryptedOfferList
 	}
 
+	//encrypt offer from UI (using OfferParams)
 	fun encryptOffer(
 		locationHelper: LocationHelper,
 		params: OfferParams,
@@ -137,6 +182,7 @@ object OfferUtils {
 		)
 	}
 
+	//encrypt offer from backgroundQueue (using already existing Offer)
 	fun encryptOffer(
 		locationHelper: LocationHelper,
 		offer: Offer,

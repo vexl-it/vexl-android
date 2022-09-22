@@ -1,5 +1,6 @@
 package cz.cleevio.cache
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -25,8 +26,10 @@ import cz.cleevio.cache.entity.*
 		ChatUserIdentityEntity::class,
 		CryptoCurrencyEntity::class,
 	],
-	version = 1,
-	// Export is true only if you want to create new json schema for testing purpose
+	version = 2,
+	autoMigrations = [
+		AutoMigration(from = 1, to = 2)
+	],
 	exportSchema = true
 )
 @TypeConverters(

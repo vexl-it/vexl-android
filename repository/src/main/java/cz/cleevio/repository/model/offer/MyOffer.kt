@@ -9,6 +9,8 @@ data class MyOffer constructor(
 	val publicKey: String,
 	val offerType: String,
 	val isInboxCreated: Boolean,
+	//list of public keys for which we have already encrypted my offer
+	val encryptedFor: List<String>,
 )
 
 fun MyOfferEntity.fromCache(): MyOffer = MyOffer(
@@ -17,5 +19,16 @@ fun MyOfferEntity.fromCache(): MyOffer = MyOffer(
 	privateKey = this.privateKey,
 	publicKey = this.publicKey,
 	offerType = this.offerType,
-	isInboxCreated = this.isInboxCreated
+	isInboxCreated = this.isInboxCreated,
+	encryptedFor = this.encryptedForKeys.split(",").map { it.trim() }
+)
+
+fun MyOffer.toCache(): MyOfferEntity = MyOfferEntity(
+	extId = this.offerId,
+	adminId = this.adminId,
+	privateKey = this.privateKey,
+	publicKey = this.publicKey,
+	offerType = this.offerType,
+	isInboxCreated = this.isInboxCreated,
+	encryptedForKeys = this.encryptedFor.joinToString()
 )

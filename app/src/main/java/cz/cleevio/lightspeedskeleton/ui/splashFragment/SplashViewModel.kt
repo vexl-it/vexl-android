@@ -41,7 +41,8 @@ class SplashViewModel constructor(
 						privateKey = myOffer.privateKey,
 						publicKey = myOffer.publicKey,
 						offerType = myOffer.offerType,
-						isInboxCreated = true
+						isInboxCreated = true,
+						encryptedFor = myOffer.encryptedFor
 					)
 				}
 			}

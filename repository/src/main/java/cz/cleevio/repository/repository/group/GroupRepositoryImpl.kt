@@ -123,7 +123,7 @@ class GroupRepositoryImpl constructor(
 				//delete also offers created for members of group you just left
 
 				//get all offers IDs
-				val offers = myOfferDao.listAll().map { it.extId }
+				val offerIds = myOfferDao.listAll().map { it.extId }
 
 				//get all publicKeys for group
 				val groupKeys = contactKeyDao.getKeysByGroup(groupUuid)
@@ -138,7 +138,7 @@ class GroupRepositoryImpl constructor(
 					.map { it.publicKey }
 
 				val result = DeletePrivatePartRequest(
-					adminIds = offers,
+					offerIds = offerIds,
 					publicKeys = validKeys
 				)
 

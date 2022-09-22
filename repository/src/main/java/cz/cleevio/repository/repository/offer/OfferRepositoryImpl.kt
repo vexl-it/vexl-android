@@ -49,7 +49,13 @@ class OfferRepositoryImpl constructor(
 
 	override val sellOfferFilter = MutableStateFlow(OfferFilter())
 
-	override suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair, offerType: String): Resource<Offer> {
+	override suspend fun createOffer(
+		offerList: List<NewOffer>,
+		expiration: Long,
+		offerKeys: KeyPair,
+		offerType: String,
+		encryptedFor: List<String>
+	): Resource<Offer> {
 		//create offer
 		val offerCreateResource = tryOnline(
 			request = {
@@ -73,7 +79,8 @@ class OfferRepositoryImpl constructor(
 				privateKey = offerKeys.privateKey,
 				publicKey = offerKeys.publicKey,
 				offerType = offer.offerType,
-				isInboxCreated = false
+				isInboxCreated = false,
+				encryptedFor = encryptedFor
 			)
 
 			//create inbox
@@ -87,7 +94,8 @@ class OfferRepositoryImpl constructor(
 						privateKey = offerKeys.privateKey,
 						publicKey = offerKeys.publicKey,
 						offerType = offer.offerType,
-						isInboxCreated = true
+						isInboxCreated = true,
+						encryptedFor = encryptedFor
 					)
 				}
 				is Status.Error -> {
@@ -110,7 +118,11 @@ class OfferRepositoryImpl constructor(
 		}
 	}
 
-	override suspend fun createOfferForPublicKeys(offerId: String, offerList: List<NewOffer>): Resource<Unit> {
+	override suspend fun createOfferForPublicKeys(
+		offerId: String,
+		offerList: List<NewOffer>,
+		additionalEncryptedFor: List<String>
+	): Resource<Unit> {
 		return tryOnline(
 			request = {
 				offerApi.postOffersPrivatePart(
@@ -120,11 +132,25 @@ class OfferRepositoryImpl constructor(
 					)
 				)
 			},
-			mapper = { }
+			mapper = { },
+			doOnSuccess = {
+				//update `encryptedFor` field in myOfferDao with contactsPublicKeys
+				val myOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+				myOffer?.let { myOffer ->
+					myOffer.encryptedFor.toMutableSet().addAll(
+						additionalEncryptedFor
+					)
+					myOfferDao.replace(myOffer.toCache())
+				}
+			}
 		)
 	}
 
-	override suspend fun updateOffer(offerId: String, offerList: List<NewOffer>): Resource<Offer> = tryOnline(
+	override suspend fun updateOffer(
+		offerId: String,
+		offerList: List<NewOffer>,
+		additionalEncryptedFor: List<String>
+	): Resource<Offer> = tryOnline(
 		request = {
 			offerApi.putOffers(
 				UpdateOfferRequest(
@@ -135,6 +161,15 @@ class OfferRepositoryImpl constructor(
 		},
 		mapper = { it?.fromNetwork(cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache()) },
 		doOnSuccess = {
+			//update `encryptedFor` field in myOfferDao with contactsPublicKeys
+			val myOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+			myOffer?.let { myOffer ->
+				myOffer.encryptedFor.toMutableSet().addAll(
+					additionalEncryptedFor
+				)
+				myOfferDao.replace(myOffer.toCache())
+			}
+
 			it?.let { offer ->
 				updateOffers(listOf(offer))
 			}
@@ -165,20 +200,34 @@ class OfferRepositoryImpl constructor(
 		listOf(offerId)
 	)
 
-	override suspend fun deleteOfferForPublicKeys(deletePrivatePartRequest: DeletePrivatePartRequest)
-		: Resource<Unit> = tryOnline(
-		request = {
-			offerApi.deleteOffersPrivatePart(
-				deletePrivatePartRequest = deletePrivatePartRequest.copy(adminIds = deletePrivatePartRequest.adminIds.map { offerId ->
-					myOfferDao.getAdminIdByOfferId(offerId)
-				})
-			)
-		},
-		mapper = { },
-		doOnSuccess = {
-			syncOffers()
-		}
-	)
+	override suspend fun deleteOfferForPublicKeys(
+		deletePrivatePartRequest: DeletePrivatePartRequest,
+	): Resource<Unit> {
+		return tryOnline(
+			request = {
+				offerApi.deleteOffersPrivatePart(
+					deletePrivatePartRequest = deletePrivatePartRequest.copy(offerIds = deletePrivatePartRequest.offerIds.map { offerId ->
+						myOfferDao.getAdminIdByOfferId(offerId)
+					})
+				)
+			},
+			mapper = { },
+			doOnSuccess = {
+				//update `encryptedFor` for all my offers
+				deletePrivatePartRequest.offerIds.map { offerId ->
+					val myOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+					myOffer?.let { myOffer ->
+						myOffer.encryptedFor.toMutableSet().removeAll(
+							deletePrivatePartRequest.publicKeys.toSet()
+						)
+						myOfferDao.replace(myOffer.toCache())
+					}
+				}
+
+				syncOffers()
+			}
+		)
+	}
 
 	//NOT USED
 //	override suspend fun refreshOffer(offerId: String): Resource<List<Offer>> = tryOnline(
@@ -197,7 +246,8 @@ class OfferRepositoryImpl constructor(
 		privateKey: String,
 		publicKey: String,
 		offerType: String,
-		isInboxCreated: Boolean
+		isInboxCreated: Boolean,
+		encryptedFor: List<String>
 	): Resource<Unit> {
 		myOfferDao.replace(
 			MyOfferEntity(
@@ -206,7 +256,8 @@ class OfferRepositoryImpl constructor(
 				privateKey = privateKey,
 				publicKey = publicKey,
 				offerType = offerType,
-				isInboxCreated = isInboxCreated
+				isInboxCreated = isInboxCreated,
+				encryptedForKeys = encryptedFor.joinToString()
 			)
 		)
 		return Resource.success(data = Unit)
