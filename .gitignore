@@ -15,4 +15,3 @@ gen/
 local.properties
 secrets.properties
 /.idea/localizerSettings.xml
-/cache/schemas/cz.cleevio.cache.CleevioDatabase/
