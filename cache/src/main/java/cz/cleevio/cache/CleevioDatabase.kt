@@ -27,7 +27,7 @@ import cz.cleevio.cache.entity.*
 	],
 	version = 1,
 	// Export is true only if you want to create new json schema for testing purpose
-	exportSchema = false
+	exportSchema = true
 )
 @TypeConverters(
 	BigDecimalTypeConverter::class,
