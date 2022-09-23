@@ -4,4 +4,8 @@
 		<key>marketplace_locked</key>
 		<value>false</value>
 	</entry>
+	<entry>
+		<key>force_update_screen_showed</key>
+		<value>false</value>
+	</entry>
 </defaultsMap>

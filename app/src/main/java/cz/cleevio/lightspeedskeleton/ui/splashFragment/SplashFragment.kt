@@ -1,10 +1,9 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import android.view.animation.AnimationUtils
-import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.core.utils.repeatScopeOnResume
-import cz.cleevio.core.utils.setExitTransitionZSharedAxis
-import cz.cleevio.core.utils.viewBinding
+import androidx.navigation.fragment.findNavController
+import cz.cleevio.core.RemoteConfigConstants
+import cz.cleevio.core.utils.*
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.FragmentSplashBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -29,18 +28,24 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	override fun bindObservers() {
 		repeatScopeOnResume {
 			viewModel.userFlow.collect { user ->
-				if (user != null && user.finishedOnboarding) {
-					Timber.i("Navigating to marketplace")
-					viewModel.loadMyContactsKeys()
-				} else {
-					// continue to onboarding
-					viewModel.deletePreviousUserKeys()
-
-					Timber.i("Navigating to intro")
-					delay(SPLASH_DELAY)
-					viewModel.navMainGraphModel.navigateToGraph(
-						NavMainGraphModel.NavGraph.Intro
+				if (viewModel.remoteConfig.getBoolean(RemoteConfigConstants.FORCE_UPDATE_SHOWED)) {
+					findNavController().safeNavigateWithTransition(
+						SplashFragmentDirections.actionToForceUpdateFragment()
 					)
+				} else {
+					if (user != null && user.finishedOnboarding) {
+						Timber.i("Navigating to marketplace")
+						viewModel.loadMyContactsKeys()
+					} else {
+						// continue to onboarding
+						viewModel.deletePreviousUserKeys()
+
+						Timber.i("Navigating to intro")
+						delay(SPLASH_DELAY)
+						viewModel.navMainGraphModel.navigateToGraph(
+							NavMainGraphModel.NavGraph.Intro
+						)
+					}
 				}
 			}
 		}

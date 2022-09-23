@@ -22,7 +22,7 @@ class SplashViewModel constructor(
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
 	private val userUtils: UserUtils,
-	remoteConfig: FirebaseRemoteConfig
+	val remoteConfig: FirebaseRemoteConfig
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
