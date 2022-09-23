@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private lateinit var binding: ActivityMainBinding
 	private val viewModel by inject<MainViewModel>()
 	private val errorFlow: NetworkError by inject()
-	private val backgroundQueue: BackgroundQueue by inject()
 
 	private lateinit var navController: NavController
 	private var bottomBarAnimator: ValueAnimator? = null

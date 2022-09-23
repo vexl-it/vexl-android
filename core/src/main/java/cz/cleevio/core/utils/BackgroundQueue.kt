@@ -27,6 +27,7 @@ class BackgroundQueue constructor(
 		reEncryptOffers()
 	}
 
+	@Suppress("StringLiteralDuplication", "LongMethod")
 	fun reEncryptOffers() {
 		if (job?.isActive == true) {
 			Timber.tag("REENCRYPT").w("Lock prevented multiple encryption cycles")

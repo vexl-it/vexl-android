@@ -33,7 +33,6 @@ object OfferUtils {
 		contactRepository: ContactRepository,
 		encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	): List<ContactKey> {
-
 		val contactsPublicKeys = when (friendLevel) {
 			FriendLevel.NONE -> emptyList()
 			FriendLevel.FIRST_DEGREE ->
