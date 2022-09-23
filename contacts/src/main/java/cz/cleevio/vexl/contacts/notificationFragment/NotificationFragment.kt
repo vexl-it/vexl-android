@@ -103,7 +103,7 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 	}
 
 	private fun checkPostNotificationsPermissions() {
-		if (Build.VERSION.SDK_INT >= 33) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 			requestNotificationsPermissions.launch(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
 		} else {
 			continueToNextScreen()
