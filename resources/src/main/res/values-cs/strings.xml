@@ -381,6 +381,28 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="import_contacts_update_button">Aktualizovat</string>
     <string name="import_contacts_back_button">Zpět</string>
 
+    <!-- Notifications permission -->
+
+    <!-- title -->
+
+    <!-- subtitle -->
+
+    <!-- button -->
+
+    <!-- Pop-up text -->
+
+    <!-- Pop-up button allow -->
+
+    <!-- Pop-up button don't allow -->
+
+    <!-- Notifications permission disabled -->
+
+    <!-- title -->
+
+    <!-- subtitle -->
+
+    <!-- button -->
+
     <!-- Errors -->
     <string name="error_username_not_available">Toto uživatelské jméno už někdo používá</string>
     <string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
@@ -393,7 +415,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_pin">Nastavit PIN / FaceID</string>
     <string name="profile_allow_screenshots">Povolit screenshoty</string>
     <string name="profile_allow_screenshots_description">Zablokovat screenshoty</string>
-    <string name="profile_import_contacts">Manažment kontaktů</string>
+    <string name="profile_import_contacts">Správa kontaktů</string>
     <string name="profile_import_contacts_subtitle">%s přátel</string>
     <string name="profile_import_facebook">Importovat kontakty z Facebooku</string>
     <string name="profile_terms_and_privacy">Podmínky použití a Ochrana soukromí</string>
@@ -491,7 +513,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="marketplace_detail_friend_first">Přítel</string>
     <string name="marketplace_detail_friend_second">Přítel přítele</string>
     <string name="marketplace_detail_user_sell">%s prodává</string>
-    <string name="marketplace_detail_user_buy">%s nakupuje</string>
+    <string name="marketplace_detail_user_buy">%s nakupuje </string>
     <string name="marketplace_detail_up_to">do</string>
     <string name="marketplace_detail_payment">Platba</string>
     <string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
@@ -718,4 +740,6 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_invalid_data_format">Neplatný formát dat</string>
 
     <!-- Passcode -->
+
+    <!-- Force update -->
 </resources>

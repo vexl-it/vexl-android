@@ -16,6 +16,7 @@ class NavMainGraphModel {
 		object Contacts : NavGraph()
 		object Main : NavGraph()
 		object Intro : NavGraph()
+		object ForceUpdate : NavGraph()
 		object Marketplace : NavGraph()
 		object Chat : NavGraph()
 		object Profile : NavGraph()

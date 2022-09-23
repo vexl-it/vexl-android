@@ -22,7 +22,7 @@ class SplashViewModel constructor(
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
 	private val userUtils: UserUtils,
-	remoteConfig: FirebaseRemoteConfig
+	private val remoteConfig: FirebaseRemoteConfig
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
@@ -31,8 +31,6 @@ class SplashViewModel constructor(
 	val contactKeysLoaded = _contactKeysLoaded.asSharedFlow()
 
 	init {
-		remoteConfig.fetchAndActivate()
-
 		viewModelScope.launch(Dispatchers.IO) {
 			val offers = offerRepository.getMyOffersWithoutInbox()
 			offers.forEach { myOffer ->

@@ -381,6 +381,28 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="import_contacts_update_button">Aktualizovať</string>
     <string name="import_contacts_back_button">Späť</string>
 
+    <!-- Notifications permission -->
+
+    <!-- title -->
+
+    <!-- subtitle -->
+
+    <!-- button -->
+
+    <!-- Pop-up text -->
+
+    <!-- Pop-up button allow -->
+
+    <!-- Pop-up button don't allow -->
+
+    <!-- Notifications permission disabled -->
+
+    <!-- title -->
+
+    <!-- subtitle -->
+
+    <!-- button -->
+
     <!-- Errors -->
     <string name="error_username_not_available">Toto užívatelské meno už niekto používa</string>
     <string name="error_missing_offer_keys">K tejto ponuke nemáš prístup</string>
@@ -393,7 +415,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_pin">Nastaviť PIN / FaceID</string>
     <string name="profile_allow_screenshots">Povoliť screenshoty</string>
     <string name="profile_allow_screenshots_description">Zablokovať screenshoty</string>
-    <string name="profile_import_contacts">Manažment kontaktov</string>
+    <string name="profile_import_contacts">Správa kontaktov</string>
     <string name="profile_import_contacts_subtitle">%s priateľov</string>
     <string name="profile_import_facebook">Importovať kontakty z Facebooku</string>
     <string name="profile_terms_and_privacy">Podmienky použitia a Ochrana súkromia</string>
@@ -718,4 +740,6 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_invalid_data_format">Neplatný formát dát</string>
 
     <!-- Passcode -->
+
+    <!-- Force update -->
 </resources>

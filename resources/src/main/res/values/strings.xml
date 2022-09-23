@@ -379,6 +379,28 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="import_contacts_update_button">Update</string>
     <string name="import_contacts_back_button">Back</string>
 
+    <!-- Notifications permission -->
+
+    <!-- title -->
+
+    <!-- subtitle -->
+
+    <!-- button -->
+
+    <!-- Pop-up text -->
+
+    <!-- Pop-up button allow -->
+
+    <!-- Pop-up button don't allow -->
+
+    <!-- Notifications permission disabled -->
+
+    <!-- title -->
+
+    <!-- subtitle -->
+
+    <!-- button -->
+
     <!-- Errors -->
     <string name="error_username_not_available">The username is unavailable</string>
     <string name="error_missing_offer_keys">You don\'t have access to this offer.</string>
@@ -393,7 +415,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="profile_pin">Set PIN / FaceID</string>
     <string name="profile_allow_screenshots">Allow Screenshots</string>
     <string name="profile_allow_screenshots_description">Prevent screenshots</string>
-	<string name="profile_import_contacts">Contacts Management</string>
+    <string name="profile_import_contacts">Contacts management</string>
     <string name="profile_import_contacts_subtitle">%s friends</string>
     <string name="profile_import_facebook">Import Facebook contacts</string>
     <string name="profile_terms_and_privacy">Terms of Use and Privacy Policy</string>
@@ -448,12 +470,12 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="user_profile_currency_title">Currency</string>
     <string name="user_profile_currency_czk">Czech crown</string>
     <string name="user_profile_currency_eur">Euro</string>
-	<string name="user_profile_currency_usd">United States dollar</string>
+    <string name="user_profile_currency_usd">United States dollar</string>
     <string name="user_profile_currency_dismissButton">Done</string>
 
     <!-- Report issue -->
     <string name="user_profile_report_issue_subject">Vexl: Submit report</string>
-	<string name="user_profile_report_issue_text">Hi! I\'m contacting you due to ...</string>
+    <string name="user_profile_report_issue_text">Hi! I\'m contacting you due to ...</string>
     <string name="user_profile_report_issue_email">support@vexl.it</string>
     <string name="user_profile_report_issue_error_no_app_found">No email application found</string>
     <string name="user_profile_report_issue_title">Something went wrong?</string>
@@ -464,31 +486,31 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="user_profile_request_data_title">Request your data</string>
     <string name="user_profile_request_data_subtitle">Find out what we know about you. </string>
     <string name="user_profile_request_confirm_button">Download</string>
-	<string name="user_profile_request_dismiss_button">Back</string>
+    <string name="user_profile_request_dismiss_button">Back</string>
 
-	<!-- Menu -->
-	<string name="menu_marketplace">Marketplace</string>
-	<string name="menu_chat">Chat</string>
-	<string name="menu_profile">Profile</string>
+    <!-- Menu -->
+    <string name="menu_marketplace">Marketplace</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_profile">Profile</string>
 
-	<!-- Marketplace -->
-	<string name="marketplace_currency_bitcoin">Bitcoin</string>
-	<string name="marketplace_currency_variation_1_day">%1$s %% today</string>
-	<string name="marketplace_currency_variation_1_week">%1$s %% since last week</string>
-	<string name="marketplace_currency_variation_1_month">%1$s %% since last month</string>
-	<string name="marketplace_currency_variation_3_month">%1$s %% since 3 months ago</string>
-	<string name="marketplace_currency_variation_6_month">%1$s %% since 6 months ago</string>
-	<string name="marketplace_currency_variation_1_year">%1$s %% since last year</string>
-	<string name="marketplace_currency_1_day">1 day</string>
-	<string name="marketplace_currency_1_week">1 week</string>
-	<string name="marketplace_currency_1_month">1 mth</string>
-	<string name="marketplace_currency_3_month">3 mth</string>
-	<string name="marketplace_currency_6_month">6 mth</string>
-	<string name="marketplace_currency_1_year">1 year</string>
-	<string name="marketplace_buy">Buying</string>
-	<string name="marketplace_sell">Selling</string>
-	<string name="marketplace_my_offers">My offers</string>
-	<string name="marketplace_detail_friend_first">Friend</string>
+    <!-- Marketplace -->
+    <string name="marketplace_currency_bitcoin">Bitcoin</string>
+    <string name="marketplace_currency_variation_1_day">%1$s %% today</string>
+    <string name="marketplace_currency_variation_1_week">%1$s %% since last week</string>
+    <string name="marketplace_currency_variation_1_month">%1$s %% since last month</string>
+    <string name="marketplace_currency_variation_3_month">%1$s %% since 3 months ago</string>
+    <string name="marketplace_currency_variation_6_month">%1$s %% since 6 months ago</string>
+    <string name="marketplace_currency_variation_1_year">%1$s %% since last year</string>
+    <string name="marketplace_currency_1_day">1 day</string>
+    <string name="marketplace_currency_1_week">1 week</string>
+    <string name="marketplace_currency_1_month">1 mth</string>
+    <string name="marketplace_currency_3_month">3 mth</string>
+    <string name="marketplace_currency_6_month">6 mth</string>
+    <string name="marketplace_currency_1_year">1 year</string>
+    <string name="marketplace_buy">Buying</string>
+    <string name="marketplace_sell">Selling</string>
+    <string name="marketplace_my_offers">My offers</string>
+    <string name="marketplace_detail_friend_first">Friend</string>
     <string name="marketplace_detail_friend_second">Friend of a Friend</string>
     <string name="marketplace_detail_user_sell">%s is selling</string>
     <string name="marketplace_detail_user_buy">%s is buying</string>
@@ -581,7 +603,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <!-- Offer Request -->
     <string name="request_title">Offer</string>
     <string name="request_title_loading">Sending</string>
-	<string name="request_text_hint">e.g. Let\'s vexl my friend...</string>
+    <string name="request_text_hint">e.g. Let\'s vexl my friend...</string>
     <string name="request_button">Send request</string>
     <string name="request_common_friends">%d common friends</string>
     <string name="request_common_friends_empty_state">You don\'t have common friends</string>
@@ -720,4 +742,9 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="error_invalid_data_format">Invalid data format</string>
 
     <!-- Passcode -->
+
+    <!-- Force update -->
+    <string name="force_update_title">New version available</string>
+    <string name="force_update_subtitle">Download the latest version of Vexl for proper app functionality.</string>
+    <string name="force_update_button">Update now</string>
 </resources>
