@@ -371,51 +371,43 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="import_contacts_not_allow">Zakázat</string>
     <string name="import_contacts_title">Propojit s přáteli</string>
     <string name="import_contacts_subtitle">Kontakty jsou šifrovány (i pro nás).</string>
-    <string name="import_contacts_request_title">Povolit import kontaktů</string>
-    <string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům.\nNemusíš mít obavy, nikdo je neuvidí.</string>
-    <string name="import_contacts_secondary_request_title">Opravdu?</string>
-    <string name="import_contacts_secondary_request_description">Vexl potřebuje tvoje kontakty k tomu, aby tě anonymně spojil s ostatními vexláky.</string>
-    <string name="import_facebook_contacts_title">Propoj s Facebookem a rozšiř svůj dosah!</string>
-    <string name="import_facebook_contacts_import">Import přátel z Facebooku</string>
-    <string name="import_contacts_finish_title">Nastavuji...</string>
-    <string name="import_contacts_update_button">Aktualizovat</string>
-    <string name="import_contacts_back_button">Zpět</string>
+	<string name="import_contacts_request_title">Povolit import kontaktů</string>
+	<string name="import_contacts_request_description">Vexl potřebuje přístup k tvým kontaktům.\nNemusíš mít obavy, nikdo je neuvidí.</string>
+	<string name="import_contacts_secondary_request_title">Opravdu?</string>
+	<string name="import_contacts_secondary_request_description">Vexl potřebuje tvoje kontakty k tomu, aby tě anonymně spojil s ostatními vexláky.</string>
+	<string name="import_facebook_contacts_title">Propoj s Facebookem a rozšiř svůj dosah!</string>
+	<string name="import_facebook_contacts_import">Import přátel z Facebooku</string>
+	<string name="import_contacts_finish_title">Nastavuji...</string>
+	<string name="import_contacts_update_button">Aktualizovat</string>
+	<string name="import_contacts_back_button">Zpět</string>
 
-    <!-- Notifications permission -->
+	<!-- Notifications permission -->
+	<string name="notifications_permission_title">Povolit notifikace</string>
+	<string name="notifications_permission_subtitle">Zapnuté notifikace jsou klíčové pro správné fungování Vexlu.</string>
+	<string name="notifications_permission_enable">Povolit </string>
+	<string name="notifications_permission_dialog_title">Povol notifikace, prosím. Vexl bez nich nebude fungovat jak má. Neboj, nebudeme tě spamovat.
+</string>
+	<string name="notifications_permission_dialog_allow">Povolit</string>
+	<string name="notifications_permission_dialog_dont_allow">Zakázat</string>
 
-    <!-- title -->
+	<!-- Notifications permission disabled -->
+	<string name="notifications_permission_disabled_title">Vypnuté notifikace</string>
+	<string name="notifications_permission_disabled_subtitle">Máš vypnuté notifikace. Povol ich v Nastaveních, Vexl bez nich nebude fungovat jak má. Neboj, nebudeme tě spamovat.</string>
+	<string name="notifications_permission_disabled_button">Jít do Nastavení</string>
 
-    <!-- subtitle -->
+	<!-- Errors -->
+	<string name="error_username_not_available">Toto uživatelské jméno už někdo používá</string>
+	<string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
+	<string name="error_nickname_blank">Nejdřív si vyplň přezdívku.</string>
+	<string name="error_missing_firebase_token">Chybí Firebase token pro doručené zprávy</string>
 
-    <!-- button -->
-
-    <!-- Pop-up text -->
-
-    <!-- Pop-up button allow -->
-
-    <!-- Pop-up button don't allow -->
-
-    <!-- Notifications permission disabled -->
-
-    <!-- title -->
-
-    <!-- subtitle -->
-
-    <!-- button -->
-
-    <!-- Errors -->
-    <string name="error_username_not_available">Toto uživatelské jméno už někdo používá</string>
-    <string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
-    <string name="error_nickname_blank">Nejdřív si vyplň přezdívku.</string>
-    <string name="error_missing_firebase_token">Chybí Firebase token pro doručené zprávy</string>
-
-    <!-- Profile -->
-    <string name="profile_change_picture">Změnit profilový obrázek</string>
-    <string name="profile_edit_name">Upravit jméno</string>
+	<!-- Profile -->
+	<string name="profile_change_picture">Změnit profilový obrázek</string>
+	<string name="profile_edit_name">Upravit jméno</string>
     <string name="profile_pin">Nastavit PIN / FaceID</string>
     <string name="profile_allow_screenshots">Povolit screenshoty</string>
     <string name="profile_allow_screenshots_description">Zablokovat screenshoty</string>
-    <string name="profile_import_contacts">Správa kontaktů</string>
+	<string name="profile_import_contacts">Správa kontaktů</string>
     <string name="profile_import_contacts_subtitle">%s přátel</string>
     <string name="profile_import_facebook">Importovat kontakty z Facebooku</string>
     <string name="profile_terms_and_privacy">Podmínky použití a Ochrana soukromí</string>
@@ -513,7 +505,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="marketplace_detail_friend_first">Přítel</string>
     <string name="marketplace_detail_friend_second">Přítel přítele</string>
     <string name="marketplace_detail_user_sell">%s prodává</string>
-    <string name="marketplace_detail_user_buy">%s nakupuje </string>
+	<string name="marketplace_detail_user_buy">%s nakupuje </string>
     <string name="marketplace_detail_up_to">do</string>
     <string name="marketplace_detail_payment">Platba</string>
     <string name="marketplace_detail_fee">Zahrnuje %1$s %% transakční poplatek</string>
@@ -730,16 +722,16 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="intro_continue">Pokračovat</string>
     <string name="intro_first_title">Anonymně\nse spoj\nse svými kontakty.</string>
     <string name="intro_second_title">Podívej se\nna jejich\nnabídky.</string>
-    <string name="intro_third_title">Začněte chatovat,\odhalte své identity\na obchodujte.</string>
+	<string name="intro_third_title">Začněte chatovat,\odhalte své identity\na obchodujte.</string>
 
-    <!-- Error -->
-    <string name="error_user_is_blocked">Uživatel je zablokován</string>
-    <string name="error_unauthorized">Neoprávněná chyba. Byl jsi odhlášen.</string>
-    <string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkus to znovu později.</string>
-    <string name="error_unknown_connection_problem">Problém s připojením. Prosím zkus to znovu později.</string>
-    <string name="error_invalid_data_format">Neplatný formát dat</string>
+	<!-- Error -->
+	<string name="error_user_is_blocked">Uživatel je zablokován</string>
+	<string name="error_unauthorized">Neoprávněná chyba. Byl jsi odhlášen.</string>
+	<string name="error_unknown_error_occurred">Akci nebylo možné dokončit, protože došlo k neznámé chybě. Prosím zkus to znovu později.</string>
+	<string name="error_unknown_connection_problem">Problém s připojením. Prosím zkus to znovu později.</string>
+	<string name="error_invalid_data_format">Neplatný formát dat</string>
 
-    <!-- Passcode -->
+	<!-- Passcode -->
 
-    <!-- Force update -->
+	<!-- Force update -->
 </resources>

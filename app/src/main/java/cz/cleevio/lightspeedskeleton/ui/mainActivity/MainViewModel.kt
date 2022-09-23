@@ -73,7 +73,7 @@ class MainViewModel constructor(
 	fun logout(onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
 		viewModelScope.launch(Dispatchers.IO) {
 			var offerDeleteSuccess = true
-			val offerIds = offerRepository.getOffers().map { it.offerId }
+			val offerIds = offerRepository.getMyOffers().map { it.offerId }
 			if (offerIds.isNotEmpty()) {
 				offerDeleteSuccess = offerRepository.deleteMyOffers(offerIds).status == Status.Success
 			}

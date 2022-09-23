@@ -29,30 +29,31 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 
 	private val binding by viewBinding(FragmentNotificationBinding::bind)
 	override val viewModel by viewModel<NotificationViewModel>()
-	private var reallowPermissions = false
+	private var reAllowPermissions = false
 
-	private val requestContactsPermissions = registerForActivityResult(
+	private val requestNotificationsPermissions = registerForActivityResult(
 		ActivityResultContracts.RequestMultiplePermissions()
 	) { permissions ->
-		PermissionResolver.resolve(requireActivity(), permissions,
+		PermissionResolver.resolve(
+			requireActivity(), permissions,
 			allGranted = {
-				viewModel.updateHasReadContactPermissions(true)
-				reallowPermissions = false
+				viewModel.updateHasPostNotificationsPermissions(true)
+				reAllowPermissions = false
 			},
 			denied = {
-				viewModel.updateHasReadContactPermissions(false)
-				reallowPermissions = false
+				viewModel.updateHasPostNotificationsPermissions(false)
+				reAllowPermissions = false
 			},
 			permanentlyDenied = {
-				if (reallowPermissions) {
+				if (reAllowPermissions) {
 					startActivity(Intent().apply {
 						action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 						data = Uri.fromParts(PACKAGE, requireContext().packageName, null)
 					})
 				} else {
-					viewModel.updateHasReadContactPermissions(false)
+					viewModel.updateHasPostNotificationsPermissions(false)
 				}
-				reallowPermissions = false
+				reAllowPermissions = false
 			})
 	}
 
@@ -70,13 +71,13 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 
 	private fun showPermissionDeniedDialog() {
 		val builder = MaterialAlertDialogBuilder(requireContext())
-			.setNegativeButton(R.string.import_contacts_not_allow) { dialog, _ ->
+			.setNegativeButton(R.string.notifications_permission_dialog_dont_allow) { dialog, _ ->
 				dialog.dismiss()
 				continueToNextScreen()
 			}
-			.setPositiveButton(R.string.import_contacts_allow) { _, _ ->
-				reallowPermissions = true
-				checkReadContactsPermissions()
+			.setPositiveButton(R.string.notifications_permission_dialog_allow) { _, _ ->
+				reAllowPermissions = true
+				checkPostNotificationsPermissions()
 			}
 		builder.setCustomTitle(
 			TextView(requireContext()).apply {
@@ -84,8 +85,7 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 				setPadding(ImportContactsFragment.DIALOG_PADDING, ImportContactsFragment.DIALOG_PADDING, ImportContactsFragment.DIALOG_PADDING, ImportContactsFragment.DIALOG_PADDING)
 				layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 				isSingleLine = false
-				//todo: fix correct text
-				text = getString(R.string.import_contacts_request_description)
+				text = getString(R.string.notifications_permission_dialog_title)
 				setTextAppearance(R.style.TextAppearance_Cleevio_DialogBody)
 			}
 		)
@@ -102,9 +102,9 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 		}
 	}
 
-	private fun checkReadContactsPermissions() {
+	private fun checkPostNotificationsPermissions() {
 		if (Build.VERSION.SDK_INT >= 33) {
-			requestContactsPermissions.launch(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
+			requestNotificationsPermissions.launch(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
 		} else {
 			continueToNextScreen()
 		}
@@ -114,7 +114,7 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 		super.onResume()
 
 		binding.importBtn.setOnClickListener {
-			checkReadContactsPermissions()
+			checkPostNotificationsPermissions()
 		}
 	}
 
