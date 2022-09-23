@@ -114,9 +114,6 @@ class MainViewModel constructor(
 			remoteConfig.fetchAndActivate().addOnCompleteListener { activatedTask ->
 				if (activatedTask.isSuccessful) {
 					continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.FORCE_UPDATE_SHOWED))
-				} else {
-					Timber.e(activatedTask.exception)
-					continuation.resume(false)
 				}
 			}
 		}
