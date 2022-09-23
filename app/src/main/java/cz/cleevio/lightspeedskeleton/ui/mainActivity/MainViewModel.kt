@@ -1,8 +1,10 @@
 package cz.cleevio.lightspeedskeleton.ui.mainActivity
 
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatListUser
@@ -21,6 +23,9 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class MainViewModel constructor(
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
@@ -29,6 +34,7 @@ class MainViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val groupRepository: GroupRepository,
+	private val remoteConfig: FirebaseRemoteConfig,
 	val navMainGraphModel: NavMainGraphModel
 ) : BaseViewModel() {
 
@@ -102,6 +108,18 @@ class MainViewModel constructor(
 			}
 		}
 	}
+
+	suspend fun checkForUpdate(): Boolean =
+		suspendCoroutine { continuation ->
+			remoteConfig.fetchAndActivate().addOnCompleteListener { activatedTask ->
+				if (activatedTask.isSuccessful) {
+					continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.FORCE_UPDATE_SHOWED))
+				} else {
+					Timber.e(activatedTask.exception)
+					continuation.resume(false)
+				}
+			}
+		}
 
 	companion object {
 		private const val DEBOUNCE_DELAY = 100L

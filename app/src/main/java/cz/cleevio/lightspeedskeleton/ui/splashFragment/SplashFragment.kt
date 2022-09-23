@@ -1,9 +1,10 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import android.view.animation.AnimationUtils
-import androidx.navigation.fragment.findNavController
-import cz.cleevio.core.RemoteConfigConstants
-import cz.cleevio.core.utils.*
+import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.repeatScopeOnResume
+import cz.cleevio.core.utils.setExitTransitionZSharedAxis
+import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.FragmentSplashBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -26,13 +27,6 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	}
 
 	override fun bindObservers() {
-		repeatScopeOnResume {
-			if (viewModel.checkForUpdate()) {
-				viewModel.navMainGraphModel.navigateToGraph(
-					NavMainGraphModel.NavGraph.ForceUpdate
-				)
-			}
-		}
 		repeatScopeOnResume {
 			viewModel.userFlow.collect { user ->
 				if (user != null && user.finishedOnboarding) {

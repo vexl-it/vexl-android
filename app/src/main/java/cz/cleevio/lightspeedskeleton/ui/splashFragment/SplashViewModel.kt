@@ -2,7 +2,6 @@ package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.UserUtils
 import cz.cleevio.network.data.Status
@@ -15,9 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class SplashViewModel constructor(
 	private val userRepository: UserRepository,
@@ -65,23 +61,4 @@ class SplashViewModel constructor(
 			_contactKeysLoaded.emit(success)
 		}
 	}
-
-	suspend fun checkForUpdate(): Boolean =
-		suspendCoroutine { continuation ->
-			remoteConfig.fetch().addOnCompleteListener {
-				if (it.isSuccessful) {
-					remoteConfig.activate().addOnCompleteListener { activatedTask ->
-						if (activatedTask.isSuccessful) {
-							continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.FORCE_UPDATE_SHOWED))
-						} else {
-							Timber.e(activatedTask.exception)
-							continuation.resume(false)
-						}
-					}
-				} else {
-					Timber.e(it.exception)
-					continuation.resume(false)
-				}
-			}
-		}
 }

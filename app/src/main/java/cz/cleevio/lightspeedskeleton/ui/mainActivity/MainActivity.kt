@@ -21,10 +21,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import cz.cleevio.core.utils.BackgroundQueue
-import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.core.utils.safeNavigateWithTransition
-import cz.cleevio.core.utils.setExitTransitionGravityStart
+import cz.cleevio.core.utils.*
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.lightspeedskeleton.notification.RemoteNotificationType
@@ -369,6 +366,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				backgroundQueue.triggerChannel.collect { _ ->
 					backgroundQueue.encryptOffersForNewContacts()
+				}
+			}
+		}
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.RESUMED) {
+				if (viewModel.checkForUpdate()) {
+					viewModel.navMainGraphModel.navigateToGraph(
+						NavMainGraphModel.NavGraph.ForceUpdate
+					)
 				}
 			}
 		}
