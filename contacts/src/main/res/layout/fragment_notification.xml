@@ -59,7 +59,7 @@
 				android:layout_marginBottom="56dp"
 				android:adjustViewBounds="true"
 				android:contentDescription="?content"
-				android:src="@drawable/ic_import_contacts"
+				android:src="@drawable/ic_faq_how_do_i_contact_vexl"
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintBottom_toTopOf="@+id/notification_title"
 				app:layout_constraintEnd_toEndOf="parent"
@@ -72,9 +72,22 @@
 				android:layout_marginBottom="12dp"
 				android:gravity="center"
 				android:paddingHorizontal="32dp"
-				android:text="DEBUG: Allow notification"
+				android:text="@string/notifications_permission_title"
 				android:textAppearance="@style/TextAppearance.Vexl.Facebook.Title"
-				app:layout_constraintTop_toBottomOf="@id/welcome_image"
+				app:layout_constraintBottom_toTopOf="@id/notification_subtitle"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<TextView
+				android:id="@+id/notification_subtitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="38dp"
+				android:drawablePadding="8dp"
+				android:gravity="center"
+				android:text="@string/notifications_permission_subtitle"
+				android:textAlignment="center"
+				android:textAppearance="@style/TextAppearance.Vexl.Facebook.Subtitle"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent" />
@@ -89,7 +102,7 @@
 		android:layout_height="@dimen/bottom_screen_button_height"
 		android:layout_marginHorizontal="8dp"
 		android:layout_marginBottom="8dp"
-		android:text="DEBUG: Continue"
+		android:text="@string/notifications_permission_enable"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent" />

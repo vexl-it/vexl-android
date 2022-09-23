@@ -9,7 +9,7 @@ class NotificationViewModel : BaseViewModel() {
 	private val hasPermissionsChannel = Channel<Boolean>(Channel.CONFLATED)
 	val hasPermissionsEvent = hasPermissionsChannel.receiveAsFlow()
 
-	fun updateHasReadContactPermissions(hasPermissions: Boolean) {
+	fun updateHasPostNotificationsPermissions(hasPermissions: Boolean) {
 		hasPermissionsChannel.trySend(hasPermissions)
 	}
 }

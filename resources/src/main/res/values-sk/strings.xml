@@ -371,51 +371,43 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="import_contacts_not_allow">Zakázať</string>
     <string name="import_contacts_title">Prepojiť s priateľmi</string>
     <string name="import_contacts_subtitle">Kontakty sú šifrované (aj pre nás).</string>
-    <string name="import_contacts_request_title">Povoliť import kontaktov</string>
-    <string name="import_contacts_request_description">Vexl potrebuje prístup k tvojim kontaktom.\nNemusíš mať obavy, nikto ich neuvidí.</string>
-    <string name="import_contacts_secondary_request_title">Naozaj?</string>
-    <string name="import_contacts_secondary_request_description">Vexl potrebuje tvoje kontakty na to, aby ťa anonymne spojil s ostatnými vexlákmi.</string>
-    <string name="import_facebook_contacts_title">Prepoj s Facebookom a rozšír svoj dosah!</string>
-    <string name="import_facebook_contacts_import">Import priateľov z Facebooku</string>
-    <string name="import_contacts_finish_title">Nastavujem...</string>
-    <string name="import_contacts_update_button">Aktualizovať</string>
-    <string name="import_contacts_back_button">Späť</string>
+	<string name="import_contacts_request_title">Povoliť import kontaktov</string>
+	<string name="import_contacts_request_description">Vexl potrebuje prístup k tvojim kontaktom.\nNemusíš mať obavy, nikto ich neuvidí.</string>
+	<string name="import_contacts_secondary_request_title">Naozaj?</string>
+	<string name="import_contacts_secondary_request_description">Vexl potrebuje tvoje kontakty na to, aby ťa anonymne spojil s ostatnými vexlákmi.</string>
+	<string name="import_facebook_contacts_title">Prepoj s Facebookom a rozšír svoj dosah!</string>
+	<string name="import_facebook_contacts_import">Import priateľov z Facebooku</string>
+	<string name="import_contacts_finish_title">Nastavujem...</string>
+	<string name="import_contacts_update_button">Aktualizovať</string>
+	<string name="import_contacts_back_button">Späť</string>
 
-    <!-- Notifications permission -->
+	<!-- Notifications permission -->
+	<string name="notifications_permission_title">Povoliť notifikácie</string>
+	<string name="notifications_permission_subtitle">Zapnuté notifikácie sú kľúčové pre správne fungovanie Vexlu.</string>
+	<string name="notifications_permission_enable">Povoliť</string>
+	<string name="notifications_permission_dialog_title">Povoľ notifikácie, prosím. Vexl bez nich nebude fungovať tak, ako má. Nemusíš mať obavy, nebudeme ťa spamovať.
+</string>
+	<string name="notifications_permission_dialog_allow">Povoliť</string>
+	<string name="notifications_permission_dialog_dont_allow">Zakázať</string>
 
-    <!-- title -->
+	<!-- Notifications permission disabled -->
+	<string name="notifications_permission_disabled_title">Vypnuté notifikace</string>
+	<string name="notifications_permission_disabled_subtitle">Máš vypnuté notifikácie. Povoľ ich v nastaveniach, Vexl bez nich nebude fungovať tak, ako má. Nemusíš mať obavy, nebudeme ťa spamovať.</string>
+	<string name="notifications_permission_disabled_button">Isť do Nastavení</string>
 
-    <!-- subtitle -->
+	<!-- Errors -->
+	<string name="error_username_not_available">Toto užívatelské meno už niekto používa</string>
+	<string name="error_missing_offer_keys">K tejto ponuke nemáš prístup</string>
+	<string name="error_nickname_blank">Najprv si vyplň prezývku.</string>
+	<string name="error_missing_firebase_token">Chýba Firebase token pre doručené správy</string>
 
-    <!-- button -->
-
-    <!-- Pop-up text -->
-
-    <!-- Pop-up button allow -->
-
-    <!-- Pop-up button don't allow -->
-
-    <!-- Notifications permission disabled -->
-
-    <!-- title -->
-
-    <!-- subtitle -->
-
-    <!-- button -->
-
-    <!-- Errors -->
-    <string name="error_username_not_available">Toto užívatelské meno už niekto používa</string>
-    <string name="error_missing_offer_keys">K tejto ponuke nemáš prístup</string>
-    <string name="error_nickname_blank">Najprv si vyplň prezývku.</string>
-    <string name="error_missing_firebase_token">Chýba Firebase token pre doručené správy</string>
-
-    <!-- Profile -->
-    <string name="profile_change_picture">Zmeniť profilový obrázok</string>
-    <string name="profile_edit_name">Upraviť meno</string>
+	<!-- Profile -->
+	<string name="profile_change_picture">Zmeniť profilový obrázok</string>
+	<string name="profile_edit_name">Upraviť meno</string>
     <string name="profile_pin">Nastaviť PIN / FaceID</string>
     <string name="profile_allow_screenshots">Povoliť screenshoty</string>
     <string name="profile_allow_screenshots_description">Zablokovať screenshoty</string>
-    <string name="profile_import_contacts">Správa kontaktov</string>
+	<string name="profile_import_contacts">Správa kontaktov</string>
     <string name="profile_import_contacts_subtitle">%s priateľov</string>
     <string name="profile_import_facebook">Importovať kontakty z Facebooku</string>
     <string name="profile_terms_and_privacy">Podmienky použitia a Ochrana súkromia</string>
@@ -730,16 +722,16 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="intro_continue">Pokračovať</string>
     <string name="intro_first_title">Anonymne\nsa spoj\nso svojimi kontaktmi.</string>
     <string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
-    <string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
+	<string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
 
-    <!-- Error -->
-    <string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
-    <string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
-    <string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
-    <string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
-    <string name="error_invalid_data_format">Neplatný formát dát</string>
+	<!-- Error -->
+	<string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
+	<string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
+	<string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
+	<string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
+	<string name="error_invalid_data_format">Neplatný formát dát</string>
 
-    <!-- Passcode -->
+	<!-- Passcode -->
 
-    <!-- Force update -->
+	<!-- Force update -->
 </resources>

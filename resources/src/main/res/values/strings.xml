@@ -380,26 +380,17 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="import_contacts_back_button">Back</string>
 
     <!-- Notifications permission -->
-
-    <!-- title -->
-
-    <!-- subtitle -->
-
-    <!-- button -->
-
-    <!-- Pop-up text -->
-
-    <!-- Pop-up button allow -->
-
-    <!-- Pop-up button don't allow -->
+    <string name="notifications_permission_title">Allow notifications</string>
+    <string name="notifications_permission_subtitle">Enabling notifications is crucial for Vexl to function correctly.</string>
+    <string name="notifications_permission_enable">Enable</string>
+    <string name="notifications_permission_dialog_title">Please enable notifications, Vexl will not work without them. Don\'t worry, we won\'t spam you.</string>
+    <string name="notifications_permission_dialog_allow">Allow</string>
+    <string name="notifications_permission_dialog_dont_allow">Don\'t allow</string>
 
     <!-- Notifications permission disabled -->
-
-    <!-- title -->
-
-    <!-- subtitle -->
-
-    <!-- button -->
+    <string name="notifications_permission_disabled_title">Notifications disabled</string>
+    <string name="notifications_permission_disabled_subtitle">You have disabled notifications. Please enable them in Settings as Vexl will not work without them. Don\'t worry, we won\'t spam you.</string>
+    <string name="notifications_permission_disabled_button">Go to Settings</string>
 
     <!-- Errors -->
     <string name="error_username_not_available">The username is unavailable</string>
