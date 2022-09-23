@@ -209,6 +209,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							)
 							lastVisitedGraph = R.navigation.nav_intro
 						}
+						NavMainGraphModel.NavGraph.ForceUpdate -> {
+							navController.setGraph(
+								R.navigation.nav_force_update
+							)
+							lastVisitedGraph = R.navigation.nav_force_update
+						}
 						NavMainGraphModel.NavGraph.Onboarding -> {
 							navController.setGraph(
 								R.navigation.nav_onboarding

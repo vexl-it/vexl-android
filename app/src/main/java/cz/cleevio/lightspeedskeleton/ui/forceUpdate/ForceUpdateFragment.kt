@@ -45,6 +45,6 @@ class ForceUpdateFragment : BaseFragment(R.layout.fragment_force_update) {
 	}
 
 	companion object {
-		private const val MARKET_URL = "https://link.vexl.it/join-vexl"
+		private const val MARKET_URL = "market://details?id=it.vexl"
 	}
 }

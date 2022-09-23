@@ -27,25 +27,26 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
 	override fun bindObservers() {
 		repeatScopeOnResume {
+			if (viewModel.checkForUpdate()) {
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.ForceUpdate
+				)
+			}
+		}
+		repeatScopeOnResume {
 			viewModel.userFlow.collect { user ->
-				if (viewModel.remoteConfig.getBoolean(RemoteConfigConstants.FORCE_UPDATE_SHOWED)) {
-					findNavController().safeNavigateWithTransition(
-						SplashFragmentDirections.actionToForceUpdateFragment()
-					)
+				if (user != null && user.finishedOnboarding) {
+					Timber.i("Navigating to marketplace")
+					viewModel.loadMyContactsKeys()
 				} else {
-					if (user != null && user.finishedOnboarding) {
-						Timber.i("Navigating to marketplace")
-						viewModel.loadMyContactsKeys()
-					} else {
-						// continue to onboarding
-						viewModel.deletePreviousUserKeys()
+					// continue to onboarding
+					viewModel.deletePreviousUserKeys()
 
-						Timber.i("Navigating to intro")
-						delay(SPLASH_DELAY)
-						viewModel.navMainGraphModel.navigateToGraph(
-							NavMainGraphModel.NavGraph.Intro
-						)
-					}
+					Timber.i("Navigating to intro")
+					delay(SPLASH_DELAY)
+					viewModel.navMainGraphModel.navigateToGraph(
+						NavMainGraphModel.NavGraph.Intro
+					)
 				}
 			}
 		}
