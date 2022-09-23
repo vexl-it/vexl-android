@@ -6,6 +6,7 @@ data class ContactKey constructor(
 	val key: String,
 	val level: ContactLevel,
 	val groupUuid: String?,
+	//should not be used anymore, should stay here until we have way to change data models
 	val isUpToDate: Boolean
 )
 

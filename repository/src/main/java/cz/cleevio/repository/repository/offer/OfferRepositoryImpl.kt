@@ -133,14 +133,19 @@ class OfferRepositoryImpl constructor(
 				)
 			},
 			mapper = { },
-			doOnSuccess = {
+			doOnSuccess = { _ ->
 				//update `encryptedFor` field in myOfferDao with contactsPublicKeys
-				val myOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
-				myOffer?.let { myOffer ->
-					myOffer.encryptedFor.toMutableSet().addAll(
+				val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+				nullableMyOffer?.let { myOffer ->
+					val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
+					tempEncryptedFor.addAll(
 						additionalEncryptedFor
 					)
-					myOfferDao.replace(myOffer.toCache())
+					myOfferDao.replace(
+						myOffer.copy(
+							encryptedFor = tempEncryptedFor.filter { it.isNotBlank() }.toList()
+						).toCache()
+					)
 				}
 			}
 		)
@@ -160,17 +165,22 @@ class OfferRepositoryImpl constructor(
 			)
 		},
 		mapper = { it?.fromNetwork(cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache()) },
-		doOnSuccess = {
+		doOnSuccess = { nullableOffer ->
 			//update `encryptedFor` field in myOfferDao with contactsPublicKeys
-			val myOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
-			myOffer?.let { myOffer ->
-				myOffer.encryptedFor.toMutableSet().addAll(
+			val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+			nullableMyOffer?.let { myOffer ->
+				val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
+				tempEncryptedFor.addAll(
 					additionalEncryptedFor
 				)
-				myOfferDao.replace(myOffer.toCache())
+				myOfferDao.replace(
+					myOffer.copy(
+						encryptedFor = tempEncryptedFor.filter { it.isNotBlank() }.toList()
+					).toCache()
+				)
 			}
 
-			it?.let { offer ->
+			nullableOffer?.let { offer ->
 				updateOffers(listOf(offer))
 			}
 		}
@@ -180,7 +190,13 @@ class OfferRepositoryImpl constructor(
 		request = {
 			offerApi.getOffersMe()
 		},
-		mapper = { it?.items?.map { item -> item.fromNetwork(cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache()) } }
+		mapper = {
+			it?.items?.map { item ->
+				item.fromNetwork(
+					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache()
+				)
+			}
+		}
 	)
 
 	override suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit> = tryOnline(
@@ -206,21 +222,28 @@ class OfferRepositoryImpl constructor(
 		return tryOnline(
 			request = {
 				offerApi.deleteOffersPrivatePart(
-					deletePrivatePartRequest = deletePrivatePartRequest.copy(offerIds = deletePrivatePartRequest.offerIds.map { offerId ->
-						myOfferDao.getAdminIdByOfferId(offerId)
-					})
+					deletePrivatePartRequest = deletePrivatePartRequest.copy(
+						offerIds = deletePrivatePartRequest.offerIds.map { offerId ->
+							myOfferDao.getAdminIdByOfferId(offerId)
+						}
+					)
 				)
 			},
 			mapper = { },
-			doOnSuccess = {
+			doOnSuccess = { _ ->
 				//update `encryptedFor` for all my offers
 				deletePrivatePartRequest.offerIds.map { offerId ->
-					val myOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
-					myOffer?.let { myOffer ->
-						myOffer.encryptedFor.toMutableSet().removeAll(
+					val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+					nullableMyOffer?.let { myOffer ->
+						val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
+						tempEncryptedFor.removeAll(
 							deletePrivatePartRequest.publicKeys.toSet()
 						)
-						myOfferDao.replace(myOffer.toCache())
+						myOfferDao.replace(
+							myOffer.copy(
+								encryptedFor = tempEncryptedFor.filter { it.isNotBlank() }.toList()
+							).toCache()
+						)
 					}
 				}
 

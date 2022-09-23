@@ -54,11 +54,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private var bottomInsetValue = 0
 	private var lastVisitedGraph: Int? = null
 
-	override fun onResume() {
-		super.onResume()
-		backgroundQueue.encryptOffersForNewContacts()
-	}
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
@@ -358,14 +353,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 						onSuccess = { triggerAppRestart() },
 						onError = { triggerAppRestart() }
 					)
-				}
-			}
-		}
-
-		lifecycleScope.launch {
-			repeatOnLifecycle(Lifecycle.State.STARTED) {
-				backgroundQueue.triggerChannel.collect { _ ->
-					backgroundQueue.encryptOffersForNewContacts()
 				}
 			}
 		}

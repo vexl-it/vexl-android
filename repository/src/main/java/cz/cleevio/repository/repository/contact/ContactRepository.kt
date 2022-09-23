@@ -44,10 +44,6 @@ interface ContactRepository {
 
 	suspend fun getCommonFriends(contactsPublicKeys: Collection<String>): Map<String, List<BaseContact>>
 
-	suspend fun loadNewContacts(): List<ContactKey>
-
-	suspend fun markContactAsProcessed(contact: ContactKey)
-
 	suspend fun addNewContact(contactKey: ContactKey)
 
 	suspend fun clearContactKeyTables()

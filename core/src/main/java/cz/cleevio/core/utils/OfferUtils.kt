@@ -28,20 +28,21 @@ object OfferUtils {
 	val numberOfAllContacts = _numberOfAllContacts.asStateFlow()
 
 	fun fetchContactsPublicKeys(
-		params: OfferParams,
+		friendLevel: FriendLevel,
+		groupUuids: List<String>,
 		contactRepository: ContactRepository,
 		encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	): List<ContactKey> {
 
-		val contactsPublicKeys = when (params.friendLevel.value) {
+		val contactsPublicKeys = when (friendLevel) {
 			FriendLevel.NONE -> emptyList()
 			FriendLevel.FIRST_DEGREE ->
 				contactRepository.getFirstLevelContactKeys() +
-					contactRepository.getGroupsContactKeys(params.groupUuids)
+					contactRepository.getGroupsContactKeys(groupUuids)
 			FriendLevel.SECOND_DEGREE ->
 				contactRepository.getFirstLevelContactKeys() +
 					contactRepository.getSecondLevelContactKeys() +
-					contactRepository.getGroupsContactKeys(params.groupUuids)
+					contactRepository.getGroupsContactKeys(groupUuids)
 			else -> emptyList()
 		}
 			.toMutableList()
@@ -53,7 +54,7 @@ object OfferUtils {
 							key = myPublicKey,
 							level = ContactLevel.NOT_SPECIFIED,
 							//fixme: this is just hotfix to have group uuid later, when we try to create additional private-parts
-							groupUuid = params.groupUuids.firstOrNull(),
+							groupUuid = groupUuids.firstOrNull(),
 							isUpToDate = true
 						)
 					)
