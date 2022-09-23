@@ -2,6 +2,7 @@ package cz.cleevio.onboarding.ui.createAvatarFragment
 
 import android.Manifest
 import android.net.Uri
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -138,7 +139,11 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 					permissionOption = PhotoClickOptions.PICK_FROM_PHOTO_LIBRARY
 					requestCameraPermissions.launch(
 						arrayOf(
-							Manifest.permission.READ_EXTERNAL_STORAGE
+							if (Build.VERSION.SDK_INT >= 33) {
+								Manifest.permission.READ_MEDIA_IMAGES
+							} else {
+								Manifest.permission.READ_EXTERNAL_STORAGE
+							}
 						)
 					)
 				}
@@ -147,7 +152,11 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 					requestCameraPermissions.launch(
 						arrayOf(
 							Manifest.permission.CAMERA,
-							Manifest.permission.READ_EXTERNAL_STORAGE
+							if (Build.VERSION.SDK_INT >= 33) {
+								Manifest.permission.READ_MEDIA_IMAGES
+							} else {
+								Manifest.permission.READ_EXTERNAL_STORAGE
+							}
 						)
 					)
 				}
