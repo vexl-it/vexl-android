@@ -139,7 +139,7 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 					permissionOption = PhotoClickOptions.PICK_FROM_PHOTO_LIBRARY
 					requestCameraPermissions.launch(
 						arrayOf(
-							if (Build.VERSION.SDK_INT >= 33) {
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 								Manifest.permission.READ_MEDIA_IMAGES
 							} else {
 								Manifest.permission.READ_EXTERNAL_STORAGE
@@ -152,7 +152,7 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 					requestCameraPermissions.launch(
 						arrayOf(
 							Manifest.permission.CAMERA,
-							if (Build.VERSION.SDK_INT >= 33) {
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 								Manifest.permission.READ_MEDIA_IMAGES
 							} else {
 								Manifest.permission.READ_EXTERNAL_STORAGE
