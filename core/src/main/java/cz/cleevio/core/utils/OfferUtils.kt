@@ -14,9 +14,7 @@ import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 object OfferUtils {

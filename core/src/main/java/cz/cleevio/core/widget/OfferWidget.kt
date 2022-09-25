@@ -88,7 +88,6 @@ class OfferWidget @JvmOverloads constructor(
 					RandomUtils.selectRandomImage(context)
 				)
 			}
-
 		} else {
 			//or load user avatar from url
 			binding.profileImage.load(

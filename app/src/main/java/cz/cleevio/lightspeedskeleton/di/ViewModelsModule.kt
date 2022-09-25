@@ -26,8 +26,7 @@ val viewModelsModule = module {
 			offerRepository = get(),
 			chatRepository = get(),
 			navMainGraphModel = get(),
-			userUtils = get(),
-			remoteConfig = get()
+			userUtils = get()
 		)
 	}
 }

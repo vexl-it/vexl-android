@@ -61,7 +61,6 @@ class PriceRangeWidget @JvmOverloads constructor(
 			}
 		})
 
-
 		binding.minInputValue.doAfterTextChanged { number ->
 			try {
 				val setValue = if (number.toString().toFloat() > topLimit) {
