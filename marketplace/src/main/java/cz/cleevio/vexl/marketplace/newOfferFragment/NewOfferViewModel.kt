@@ -3,6 +3,7 @@ package cz.cleevio.vexl.marketplace.newOfferFragment
 import androidx.lifecycle.viewModelScope
 import com.cleevio.vexl.cryptography.KeyPairCryptoLib
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.OfferEncryptionData
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.utils.OfferUtils
@@ -36,6 +37,9 @@ class NewOfferViewModel constructor(
 	private val _newOfferRequest = MutableSharedFlow<Resource<Offer>>()
 	val newOfferRequest = _newOfferRequest.asSharedFlow()
 
+	private val _showEncryptingDialog = MutableSharedFlow<OfferEncryptionData>()
+	val showEncryptingDialog = _showEncryptingDialog.asSharedFlow()
+
 	val groups = groupRepository.getGroupsFlow()
 
 	private val _queryForSuggestions = MutableStateFlow<Pair<OfferLocationItem?, String>>(Pair(null, ""))
@@ -61,7 +65,17 @@ class NewOfferViewModel constructor(
 			_newOfferRequest.emit(Resource.loading())
 			val offerKeys = KeyPairCryptoLib.generateKeyPair()
 
-			val encryptedOfferList = OfferUtils.prepareEncryptedOffers(
+			_showEncryptingDialog.emit(
+				OfferEncryptionData(
+					offerKeys = offerKeys,
+					params = params,
+					contactRepository = contactRepository,
+					encryptedPreferenceRepository = encryptedPreferenceRepository,
+					locationHelper = locationHelper
+				)
+			)
+
+			/*val encryptedOfferList = OfferUtils.prepareEncryptedOffers(
 				offerKeys = offerKeys,
 				params = params,
 				contactRepository = contactRepository,
@@ -72,6 +86,8 @@ class NewOfferViewModel constructor(
 			//send all in single request to BE
 			val response = offerRepository.createOffer(encryptedOfferList, params.expiration, offerKeys, offerType = params.offerType)
 			_newOfferRequest.emit(response)
+
+			 */
 		}
 	}
 

@@ -24,6 +24,7 @@ import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentNewOfferBinding
 import cz.cleevio.vexl.marketplace.editOfferFragment.NUMBER_OF_COLUMNS
+import cz.cleevio.vexl.marketplace.encryptingProgressFragment.EncryptingProgressBottomSheetDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
@@ -43,17 +44,29 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			}
 		}
 
-		repeatScopeOnStart {
+		// TODO
+		/*repeatScopeOnStart {
 			viewModel.newOfferRequest.collect { resource ->
-				when (resource.status) {
-					is Status.Success -> {
-						findNavController().popBackStack()
+
+			}
+		}
+
+
+		 */
+		repeatScopeOnStart {
+			viewModel.showEncryptingDialog.collect {
+				// Todo show dialog
+				showBottomDialog(EncryptingProgressBottomSheetDialog(it) { resource ->
+					when (resource.status) {
+						is Status.Success -> {
+							findNavController().popBackStack()
+						}
+						is Status.Error -> {
+							binding.newOfferBtn.isVisible = true
+							binding.progress.isVisible = false
+						}
 					}
-					is Status.Error -> {
-						binding.newOfferBtn.isVisible = true
-						binding.progress.isVisible = false
-					}
-				}
+				})
 			}
 		}
 
@@ -226,6 +239,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			if (params != null) {
 				binding.newOfferBtn.isVisible = false
 				binding.progress.isVisible = true
+				// TODO
 				viewModel.createOffer(params)
 			}
 		}

@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import cz.cleevio.vexl.lightbase.core.baseClasses.BaseBottomSheetDialog
 import lightbase.camera.databinding.BottomSheetPhotoOptionsBinding
 
 class PhotoOptionsBottomSheetDialog : BottomSheetDialogFragment() {
