@@ -11,6 +11,7 @@ data class ContactKeyEntity(
 	val publicKey: String,
 	val contactLevel: ContactLevel,
 	val groupUuid: String? = null,
+	//should not be used anymore, should stay here until we have way to change data models
 	val isUpToDate: Boolean
 )
 

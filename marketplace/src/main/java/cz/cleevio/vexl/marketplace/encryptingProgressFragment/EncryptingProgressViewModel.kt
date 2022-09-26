@@ -1,26 +1,16 @@
 package cz.cleevio.vexl.marketplace.encryptingProgressFragment
 
 import androidx.lifecycle.viewModelScope
-import com.cleevio.vexl.cryptography.KeyPairCryptoLib
-import com.cleevio.vexl.cryptography.model.KeyPair
-import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OfferEncryptionData
-import cz.cleevio.core.model.OfferParams
-import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.utils.OfferUtils
-import cz.cleevio.core.widget.OfferLocationItem
 import cz.cleevio.network.data.Resource
-import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
-import cz.cleevio.repository.repository.contact.ContactRepository
-import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
-import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class EncryptingProgressViewModel constructor(
@@ -37,13 +27,22 @@ class EncryptingProgressViewModel constructor(
 	fun prepareEncryptedOffers() {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerEncryptionData.run {
+				val contactsPublicKeys = OfferUtils.fetchContactsPublicKeys(
+					friendLevel = params.friendLevel.value,
+					groupUuids = params.groupUuids,
+					contactRepository = contactRepository,
+					encryptedPreferenceRepository = encryptedPreferenceRepository,
+					shouldEmitContacts = true
+				)
+
 				_encryptedOfferList.emit(
 					OfferUtils.prepareEncryptedOffers(
 						offerKeys = offerKeys,
 						params = params,
 						contactRepository = contactRepository,
 						encryptedPreferenceRepository = encryptedPreferenceRepository,
-						locationHelper = locationHelper
+						locationHelper = locationHelper,
+						contactsPublicKeys = contactsPublicKeys
 					)
 				)
 			}
@@ -54,8 +53,13 @@ class EncryptingProgressViewModel constructor(
 	fun sendNewOffer(encryptedOfferList: List<NewOffer>) {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerEncryptionData.run {
-				val response = offerRepository.createOffer(encryptedOfferList, params.expiration, offerKeys, offerType = params.offerType)
-
+				val response = offerRepository.createOffer(
+					offerList = encryptedOfferList,
+					expiration = params.expiration,
+					offerKeys = offerKeys,
+					offerType = params.offerType,
+					encryptedFor = contactsPublicKeys.map { it.key }
+				)
 
 				_newOfferRequest.emit(response)
 			}
@@ -68,7 +72,8 @@ class EncryptingProgressViewModel constructor(
 			offerEncryptionData.run {
 				val response = offerRepository.updateOffer(
 					offerId = offerId,
-					encryptedOfferList
+					offerList = encryptedOfferList,
+					additionalEncryptedFor = contactsPublicKeys.map { it.key }
 				)
 				_newOfferRequest.emit(response)
 			}

@@ -36,7 +36,7 @@ class ContactRepositoryImpl constructor(
 	private val contactApi: ContactApi,
 	private val phoneNumberUtils: PhoneNumberUtils,
 	private val encryptedPreference: EncryptedPreferenceRepository,
-	private val notificationDao: NotificationDao,
+	private val notificationDao: NotificationDao
 ) : ContactRepository {
 
 	override fun getPhoneContacts(): List<Contact> = contactDao
@@ -505,12 +505,6 @@ class ContactRepositoryImpl constructor(
 
 		return commonFriendsMap
 	}
-
-	override suspend fun loadNewContacts(): List<ContactKey> = contactKeyDao.getNewContacts().map { it.fromCache() }
-
-	override suspend fun markContactAsProcessed(contact: ContactKey) = contactKeyDao.replace(
-		contact.toCache()
-	)
 
 	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.insert(contactKey.toCache())
 

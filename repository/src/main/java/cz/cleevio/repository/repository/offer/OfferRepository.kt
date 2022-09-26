@@ -15,12 +15,26 @@ interface OfferRepository {
 	val sellOfferFilter: MutableStateFlow<OfferFilter>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
-	suspend fun createOffer(offerList: List<NewOffer>, expiration: Long, offerKeys: KeyPair, offerType: String): Resource<Offer>
+	suspend fun createOffer(
+		offerList: List<NewOffer>,
+		expiration: Long,
+		offerKeys: KeyPair,
+		offerType: String,
+		encryptedFor: List<String>
+	): Resource<Offer>
 
-	suspend fun createOfferForPublicKeys(offerId: String, offerList: List<NewOffer>): Resource<Unit>
+	suspend fun createOfferForPublicKeys(
+		offerId: String,
+		offerList: List<NewOffer>,
+		additionalEncryptedFor: List<String>
+	): Resource<Unit>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
-	suspend fun updateOffer(offerId: String, offerList: List<NewOffer>): Resource<Offer>
+	suspend fun updateOffer(
+		offerId: String,
+		offerList: List<NewOffer>,
+		additionalEncryptedFor: List<String>
+	): Resource<Offer>
 
 	suspend fun loadOffersForMe(): Resource<List<Offer>>
 
@@ -28,7 +42,9 @@ interface OfferRepository {
 
 	suspend fun deleteOfferById(offerId: String): Resource<Unit>
 
-	suspend fun deleteOfferForPublicKeys(deletePrivatePartRequest: DeletePrivatePartRequest): Resource<Unit>
+	suspend fun deleteOfferForPublicKeys(
+		deletePrivatePartRequest: DeletePrivatePartRequest
+	): Resource<Unit>
 
 	////NOT USED
 	//suspend fun refreshOffer(offerId: String): Resource<List<Offer>>
@@ -39,7 +55,8 @@ interface OfferRepository {
 		privateKey: String,
 		publicKey: String,
 		offerType: String,
-		isInboxCreated: Boolean
+		isInboxCreated: Boolean,
+		encryptedFor: List<String>
 	): Resource<Unit>
 
 	suspend fun loadOfferKeysByOfferId(offerId: String): KeyPair?

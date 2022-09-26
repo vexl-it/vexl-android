@@ -47,17 +47,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private lateinit var binding: ActivityMainBinding
 	private val viewModel by inject<MainViewModel>()
 	private val errorFlow: NetworkError by inject()
-	private val backgroundQueue: BackgroundQueue by inject()
 
 	private lateinit var navController: NavController
 	private var bottomBarAnimator: ValueAnimator? = null
 	private var bottomInsetValue = 0
 	private var lastVisitedGraph: Int? = null
-
-	override fun onResume() {
-		super.onResume()
-		backgroundQueue.encryptOffersForNewContacts()
-	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -358,14 +352,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 						onSuccess = { triggerAppRestart() },
 						onError = { triggerAppRestart() }
 					)
-				}
-			}
-		}
-
-		lifecycleScope.launch {
-			repeatOnLifecycle(Lifecycle.State.STARTED) {
-				backgroundQueue.triggerChannel.collect { _ ->
-					backgroundQueue.encryptOffersForNewContacts()
 				}
 			}
 		}
