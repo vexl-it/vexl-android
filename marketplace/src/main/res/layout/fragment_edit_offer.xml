@@ -391,12 +391,11 @@
 
 	<com.google.android.material.progressindicator.CircularProgressIndicator
 		android:id="@+id/progress"
+		style="@style/Widget.LightBase.Dialog.CircleProgressIndicator"
 		android:layout_width="120dp"
 		android:layout_height="120dp"
 		android:layout_marginHorizontal="16dp"
-		android:indeterminate="true"
 		android:visibility="gone"
-		app:indicatorColor="@color/yellow_100"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"

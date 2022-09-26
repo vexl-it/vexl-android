@@ -3,14 +3,13 @@
 
 	<color name="indicatorColorDialogProgressIndicator">#FCCD6C</color>
 	<color name="trackColorDialogProgressIndicator">#957A44</color>
-	<color name="backgroundDialogProgressIndicator">@android:color/white</color>
+	<color name="backgroundDialogProgressIndicator">@android:color/black</color>
 
 	<color name="country_picker_title_text_color">#000000</color>
 	<color name="country_picker_name_text_color">#000000</color>
 	<color name="country_picker_dial_code_text_color">#000000</color>
 	<color name="country_picker_close_icon_tint_color">#000000</color>
 	<color name="country_picker_input_icon_tint_color">#333333</color>
-
 
 	<color name="pin_bubble_color">#1ACFD2D3</color>
 	<color name="pin_filled_color">#33aa99</color>

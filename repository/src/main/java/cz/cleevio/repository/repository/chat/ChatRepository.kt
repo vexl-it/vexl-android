@@ -31,8 +31,11 @@ interface ChatRepository {
 	fun getMessages(inboxPublicKey: String, firstKey: String, secondKey: String): SharedFlow<List<ChatMessage>>
 
 	suspend fun sendMessage(
-		senderPublicKey: String, receiverPublicKey: String, message: ChatMessage,
-		messageType: String
+		senderPublicKey: String,
+		receiverPublicKey: String,
+		message: ChatMessage,
+		messageType: String,
+		storeMessageAlsoWhenFails: Boolean = true
 	): Resource<Unit>
 
 	suspend fun processMessage(message: ChatMessage)
