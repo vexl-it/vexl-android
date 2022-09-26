@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/join_wrapper"
+		style="@style/Widget.Vexl.CardView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHeight_percent=".8"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="16dp"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offer_progress_title_loading"
+				android:textAppearance="@style/TextAppearance.Vexl.EncryptingProgress.Heading"
+				app:layout_constraintTop_toTopOf="parent" />
+
+
+			<com.google.android.material.progressindicator.LinearProgressIndicator
+				android:id="@+id/progress"
+				android:layout_width="match_parent"
+				android:layout_height="4dp"
+				android:layout_marginTop="16dp"
+				android:max="100"
+				app:indicatorColor="@color/black"
+				app:layout_constraintTop_toBottomOf="@id/title"
+				app:showAnimationBehavior="outward"
+				app:trackColor="@color/gray_5"
+				app:trackCornerRadius="36dp" />
+
+			<TextView
+				android:id="@+id/number_of_vexlers"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:textAppearance="@style/TextAppearance.Vexl.EncryptingProgress.Text.Bold"
+				app:layout_constraintEnd_toStartOf="@id/percentage"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/progress" />
+
+			<TextView
+				android:id="@+id/percentage"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:textAppearance="@style/TextAppearance.Vexl.EncryptingProgress.Text"
+				android:textColor="@color/gray_3"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/progress" />
+
+			<TextView
+				android:id="@+id/subtitle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:textAppearance="@style/TextAppearance.Vexl.EncryptingProgress.Subtitle"
+				app:layout_constraintTop_toBottomOf="@id/number_of_vexlers" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

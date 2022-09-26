@@ -27,6 +27,7 @@ import cz.cleevio.vexl.marketplace.LocationSuggestionAdapter
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.SelectGroupAdapter
 import cz.cleevio.vexl.marketplace.databinding.FragmentEditOfferBinding
+import cz.cleevio.vexl.marketplace.encryptingProgressFragment.EncryptingProgressBottomSheetDialog
 import cz.cleevio.vexl.marketplace.newOfferFragment.NewOfferFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -112,6 +113,27 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 				view?.let {
 					viewModel.getDebouncedSuggestions(query, it)
 				}
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.showEncryptingDialog.collect {
+				showBottomDialog(EncryptingProgressBottomSheetDialog(it, isNewOffer = false) { resource ->
+					if (resource.isSuccess()) {
+						findNavController().popBackStack()
+					} else {
+						showProgressIndicator(false)
+						//show error toast
+						resource.errorIdentification.message?.let { messageCode ->
+							if (messageCode != -1) {
+								showSnackbar(
+									view = binding.container,
+									message = getString(messageCode)
+								)
+							}
+						}
+					}
+				})
 			}
 		}
 	}
@@ -274,11 +296,9 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		)
 
 		if (params != null) {
-			showProgressIndicator(true)
 			viewModel.updateOffer(
 				offerId = args.offerId,
-				params = params,
-				onSuccess = { findNavController().popBackStack() }
+				params = params
 			)
 		}
 	}

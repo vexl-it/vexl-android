@@ -1,8 +1,11 @@
 package cz.cleevio.vexl.marketplace.di
 
+import cz.cleevio.core.model.OfferEncryptionData
 import cz.cleevio.core.model.OfferType
+import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.widget.CurrencyPriceChartViewModel
 import cz.cleevio.vexl.marketplace.editOfferFragment.EditOfferViewModel
+import cz.cleevio.vexl.marketplace.encryptingProgressFragment.EncryptingProgressViewModel
 import cz.cleevio.vexl.marketplace.filtersFragment.FiltersViewModel
 import cz.cleevio.vexl.marketplace.marketplaceFragment.MarketplaceViewModel
 import cz.cleevio.vexl.marketplace.marketplaceFragment.NavMarketplaceGraphModel
@@ -51,6 +54,13 @@ val marketplaceModule = module {
 			groupRepository = get(),
 			encryptedPreferenceRepository = get(),
 			locationHelper = get()
+		)
+	}
+
+	viewModel { (offerEncryptionData: OfferEncryptionData) ->
+		EncryptingProgressViewModel(
+			offerEncryptionData = offerEncryptionData,
+			offerRepository = get()
 		)
 	}
 

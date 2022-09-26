@@ -2,6 +2,7 @@ package cz.cleevio.vexl.marketplace.editOfferFragment
 
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.OfferEncryptionData
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.core.utils.OfferUtils
@@ -35,6 +36,9 @@ class EditOfferViewModel constructor(
 
 	private val _errorFlow = MutableSharedFlow<Resource<Any>>()
 	val errorFlow = _errorFlow.asSharedFlow()
+
+	private val _showEncryptingDialog = MutableSharedFlow<OfferEncryptionData>()
+	val showEncryptingDialog = _showEncryptingDialog.asSharedFlow()
 
 	private val _offer = MutableStateFlow<Offer?>(null)
 	val offer = _offer.asStateFlow()
@@ -70,7 +74,7 @@ class EditOfferViewModel constructor(
 		}
 	}
 
-	fun updateOffer(offerId: String, params: OfferParams, onSuccess: () -> Unit) {
+	fun updateOffer(offerId: String, params: OfferParams) {
 		viewModelScope.launch(Dispatchers.IO) {
 
 			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = offerId)
@@ -82,29 +86,16 @@ class EditOfferViewModel constructor(
 				)
 				return@launch
 			}
-			val encryptedOfferList = OfferUtils.prepareEncryptedOffers(
-				offerKeys = offerKeys,
-				params = params,
-				contactRepository = contactRepository,
-				encryptedPreferenceRepository = encryptedPreferenceRepository,
-				locationHelper = locationHelper
+			_showEncryptingDialog.emit(
+				OfferEncryptionData(
+					offerKeys = offerKeys,
+					params = params,
+					contactRepository = contactRepository,
+					encryptedPreferenceRepository = encryptedPreferenceRepository,
+					locationHelper = locationHelper,
+					offerId = offerId
+				)
 			)
-
-			//send all in single request to BE
-			val response = offerRepository.updateOffer(
-				offerId = offerId,
-				encryptedOfferList
-			)
-			when (response.status) {
-				is Status.Success -> {
-					withContext(Dispatchers.Main) {
-						onSuccess()
-					}
-				}
-				is Status.Error -> {
-					_errorFlow.emit(Resource.error(response.errorIdentification))
-				}
-			}
 		}
 	}
 

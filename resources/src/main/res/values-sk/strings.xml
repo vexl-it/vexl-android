@@ -592,6 +592,15 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="currency_eur">EUR</string>
     <string name="currency_czk">CZK</string>
 
+    <!-- Offer Progress -->
+    <string name="offer_progress_title_loading">Encrypting your offer ...</string>
+    <string name="offer_progress_title_complete">Done! Offer posted.</string>
+    <string name="offer_progress_bar_title">for %s vexlers</string>
+    <string name="offer_progress_bar_subtitle">%s done</string>
+    <string name="offer_progress_bar_title_complete">Anonymously delivered to %s vexlers</string>
+    <string name="offer_progress_subtitle">Don’t shut down the app while encrypting. It can take several minutes.</string>
+    <string name="offer_progress_subtitle_complete">Your friends and friends of their friends can now see your offer.</string>
+
     <!-- Offer Request -->
     <string name="request_title">Ponuka</string>
     <string name="request_title_loading">Odosielam</string>
@@ -747,4 +756,6 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="force_update_title">Je dostupná nová verzia Vexlu!</string>
     <string name="force_update_subtitle">Pre správne fungovanie Vexlu je nutné aplikáciu aktualizovať.</string>
     <string name="force_update_button">Aktualizovať</string>
+
+    <!-- Maintenance -->
 </resources>

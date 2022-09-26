@@ -14,10 +14,18 @@ import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 object OfferUtils {
 
 	private const val NO_GROUP = "NONE"
+
+	private val _offerWasEncryptedForNumberOfContacts = MutableStateFlow(0)
+	val offerWasEncryptedForNumberOfContacts = _offerWasEncryptedForNumberOfContacts.asStateFlow()
+
+	private val _numberOfAllContacts = MutableStateFlow(-1)
+	val numberOfAllContacts = _numberOfAllContacts.asStateFlow()
 
 	suspend fun prepareEncryptedOffers(
 		offerKeys: KeyPair,
@@ -42,6 +50,8 @@ object OfferUtils {
 		}
 			.toMutableList()
 			.also {
+				// Send info about number of contacts for which the offer should be encrypted into the bottom sheet dialog
+				_numberOfAllContacts.emit(it.size)
 				//also add user's key
 				encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
 					it.add(
@@ -74,7 +84,7 @@ object OfferUtils {
 		)
 
 		//encrypt in loop for every contact
-		contactsPublicKeys.forEach { contactKey ->
+		contactsPublicKeys.forEachIndexed { index, contactKey ->
 			val encryptedOffer = encryptOffer(
 				locationHelper = locationHelper,
 				params = params,
@@ -84,6 +94,7 @@ object OfferUtils {
 				offerKeys = offerKeys,
 				groupUuid = contactKey.groupUuid
 			)
+			_offerWasEncryptedForNumberOfContacts.emit(index)
 			encryptedOfferList.add(encryptedOffer)
 		}
 
