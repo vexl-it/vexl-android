@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_force_notification_permission"
+	app:startDestination="@id/forceNotificationPermissionFragment"
+	tools:ignore="InvalidNavigation">
+
+	<fragment
+		android:id="@+id/forceNotificationPermissionFragment"
+		android:name="cz.cleevio.lightspeedskeleton.ui.forceNotificationPermission.ForceNotificationPermissionFragment"
+		android:label="ForceUpdateFragment"
+		tools:layout="@layout/fragment_force_update" />
+
+</navigation>
