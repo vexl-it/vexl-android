@@ -21,7 +21,8 @@ import kotlin.math.roundToInt
 
 class EncryptingProgressBottomSheetDialog(
 	private val offerEncryptionData: OfferEncryptionData,
-	val newOfferRequest: (Resource<Offer>) -> Unit
+	val isNewOffer: Boolean,
+	val offerRequest: (Resource<Offer>) -> Unit
 ) : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetDialogEncryptingProgressBinding
@@ -50,7 +51,7 @@ class EncryptingProgressBottomSheetDialog(
 				// Wait a while before closing the dialog
 				delay(ANIMATION_DELAY)
 
-				newOfferRequest(resource)
+				offerRequest(resource)
 				dismiss()
 			}
 		}
@@ -80,7 +81,10 @@ class EncryptingProgressBottomSheetDialog(
 
 		repeatScopeOnStart {
 			viewModel.encryptedOfferList.collect { encryptedOfferList ->
-				viewModel.sendRequest(encryptedOfferList)
+				when (isNewOffer) {
+					true -> viewModel.sendNewOffer(encryptedOfferList)
+					false -> offerEncryptionData.offerId?.let { viewModel.sendUpdatedOffer(encryptedOfferList, offerId = it) }
+				}
 			}
 		}
 	}

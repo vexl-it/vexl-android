@@ -44,19 +44,9 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			}
 		}
 
-		// TODO
-		/*repeatScopeOnStart {
-			viewModel.newOfferRequest.collect { resource ->
-
-			}
-		}
-
-
-		 */
 		repeatScopeOnStart {
 			viewModel.showEncryptingDialog.collect {
-				// Todo show dialog
-				showBottomDialog(EncryptingProgressBottomSheetDialog(it) { resource ->
+				showBottomDialog(EncryptingProgressBottomSheetDialog(it, isNewOffer = true) { resource ->
 					when (resource.status) {
 						is Status.Success -> {
 							findNavController().popBackStack()

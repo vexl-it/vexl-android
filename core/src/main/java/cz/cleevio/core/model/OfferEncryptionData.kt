@@ -10,5 +10,6 @@ data class OfferEncryptionData constructor(
 	val params: OfferParams,
 	val contactRepository: ContactRepository,
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
-	val locationHelper: LocationHelper
+	val locationHelper: LocationHelper,
+	val offerId: String? = null
 )

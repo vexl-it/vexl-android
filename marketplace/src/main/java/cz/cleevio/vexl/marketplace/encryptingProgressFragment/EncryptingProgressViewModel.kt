@@ -50,11 +50,26 @@ class EncryptingProgressViewModel constructor(
 		}
 	}
 
-	fun sendRequest(encryptedOfferList: List<NewOffer>) {
+	//send all in single request to BE
+	fun sendNewOffer(encryptedOfferList: List<NewOffer>) {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerEncryptionData.run {
-				//send all in single request to BE
 				val response = offerRepository.createOffer(encryptedOfferList, params.expiration, offerKeys, offerType = params.offerType)
+
+
+				_newOfferRequest.emit(response)
+			}
+		}
+	}
+
+	//send all in single request to BE
+	fun sendUpdatedOffer(encryptedOfferList: List<NewOffer>, offerId: String) {
+		viewModelScope.launch(Dispatchers.IO) {
+			offerEncryptionData.run {
+				val response = offerRepository.updateOffer(
+					offerId = offerId,
+					encryptedOfferList
+				)
 				_newOfferRequest.emit(response)
 			}
 		}

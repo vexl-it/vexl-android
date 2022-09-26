@@ -34,9 +34,6 @@ class NewOfferViewModel constructor(
 	var isTriggerSectionShowed = true
 	var isAdvancedSectionShowed = true
 
-	private val _newOfferRequest = MutableSharedFlow<Resource<Offer>>()
-	val newOfferRequest = _newOfferRequest.asSharedFlow()
-
 	private val _showEncryptingDialog = MutableSharedFlow<OfferEncryptionData>()
 	val showEncryptingDialog = _showEncryptingDialog.asSharedFlow()
 
@@ -61,8 +58,6 @@ class NewOfferViewModel constructor(
 
 	fun createOffer(params: OfferParams) {
 		viewModelScope.launch(Dispatchers.IO) {
-
-			_newOfferRequest.emit(Resource.loading())
 			val offerKeys = KeyPairCryptoLib.generateKeyPair()
 
 			_showEncryptingDialog.emit(
@@ -74,20 +69,6 @@ class NewOfferViewModel constructor(
 					locationHelper = locationHelper
 				)
 			)
-
-			/*val encryptedOfferList = OfferUtils.prepareEncryptedOffers(
-				offerKeys = offerKeys,
-				params = params,
-				contactRepository = contactRepository,
-				encryptedPreferenceRepository = encryptedPreferenceRepository,
-				locationHelper = locationHelper
-			)
-
-			//send all in single request to BE
-			val response = offerRepository.createOffer(encryptedOfferList, params.expiration, offerKeys, offerType = params.offerType)
-			_newOfferRequest.emit(response)
-
-			 */
 		}
 	}
 
