@@ -1,8 +1,6 @@
 package cz.cleevio.profile.profileFragment
 
 import android.Manifest
-import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -23,7 +21,6 @@ import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
 import cz.cleevio.profile.R
 import cz.cleevio.profile.currencyFragment.CurrencyBottomSheetDialog
 import cz.cleevio.profile.databinding.FragmentProfileBinding
-import cz.cleevio.profile.donateFragment.DonateBottomSheetDialog
 import cz.cleevio.profile.joinFragment.JoinBottomSheetDialog
 import cz.cleevio.profile.profileContactsListFragment.ProfileContactsListFragment
 import cz.cleevio.profile.profileFacebookContactsListFragment.ProfileFacebookContactsListFragment
@@ -42,8 +39,12 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 	override var priceChartWidget: CurrencyPriceChartWidget? = null
 
-	private val requestContactsPermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-		PermissionResolver.resolve(requireActivity(), permissions,
+	private val requestContactsPermissions = registerForActivityResult(
+		ActivityResultContracts.RequestMultiplePermissions()
+	) { permissions ->
+		PermissionResolver.resolve(
+			requireActivity(),
+			permissions,
 			allGranted = {
 				profileViewModel.updateHasReadContactPermissions(true)
 			},
@@ -52,11 +53,13 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			},
 			permanentlyDenied = {
 				profileViewModel.updateHasReadContactPermissions(false)
-			})
+			}
+		)
 	}
 
 	override fun bindObservers() {
 		super.bindObservers()
+
 		repeatScopeOnStart {
 			profileViewModel.userFlow.collect {
 				it?.let { user ->
@@ -66,14 +69,20 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 					if (user.avatar == null) {
 						val anonymousImageIndex = user.anonymousAvatarImageIndex
 						if (anonymousImageIndex != null) {
-							binding.profileUserPhoto.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
+							binding.profileUserPhoto.load(
+								drawableResId = RandomUtils.getRandomImageDrawableId(anonymousImageIndex),
+								imageLoader = ImageLoader.invoke(requireContext())
+							) {
 								crossfade(true)
 								fallback(R.drawable.random_avatar_3)
 								error(R.drawable.random_avatar_3)
 								placeholder(R.drawable.random_avatar_3)
 							}
 						} else {
-							binding.profileUserPhoto.load(R.drawable.random_avatar_3, imageLoader = ImageLoader.invoke(requireContext())) {
+							binding.profileUserPhoto.load(
+								drawableResId = R.drawable.random_avatar_3,
+								imageLoader = ImageLoader.invoke(requireContext())
+							) {
 								crossfade(true)
 								fallback(R.drawable.random_avatar_3)
 								error(R.drawable.random_avatar_3)
@@ -91,7 +100,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				}
 			}
 		}
-
 		repeatScopeOnStart {
 			profileViewModel.contactsNumber.collect {
 				binding.profileContacts.setSubtitle(
@@ -99,7 +107,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				)
 			}
 		}
-
 		repeatScopeOnStart {
 			profileViewModel.hasPermissionsEvent.collect { hasPermission ->
 				if (hasPermission) {
@@ -111,7 +118,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				}
 			}
 		}
-
 		repeatScopeOnStart {
 			profileViewModel.encryptedPreferenceRepository.numberOfImportedContactsFlow.collect { contacts ->
 				binding.profileContacts.setSubtitle(getString(R.string.profile_import_contacts_subtitle, contacts.toString()))
@@ -129,16 +135,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		binding.profileSectionWrapperFive.isVisible = false
 		binding.profileFacebook.isVisible = false
 
-		binding.profileDonate.setOnClickListener {
-			showBottomDialog(
-				DonateBottomSheetDialog {
-					if (it) {
-						startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://pay.satoshilabs.com/apps/2jSjLWx4uVsXcGZNRUSiv9tpzh7X/pos")))
-					}
-				}
-			)
-		}
-
 		binding.profileQrCode.setOnClickListener {
 			showBottomDialog(
 				JoinBottomSheetDialog()
@@ -154,7 +150,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			Toast.makeText(requireContext(), "Profile private settings not implemented", Toast.LENGTH_SHORT)
 				.show()
 		}
-
 		binding.profileGroups.setOnClickListener {
 			if (profileViewModel.remoteConfig.getBoolean(RemoteConfigConstants.MARKETPLACE_LOCKED)) {
 				Toast.makeText(requireContext(), getString(R.string.locked_groups), Toast.LENGTH_SHORT)
@@ -165,33 +160,27 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				)
 			}
 		}
-
 		binding.profileChangePicture.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToEditAvatarFragment()
 			)
 		}
-
 		binding.profileEditName.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToEditNameFragment()
 			)
 		}
-
 		binding.profileContacts.setOnClickListener {
 			checkReadContactsPermissions()
 		}
-
 		binding.profileFacebook.setOnClickListener {
 			showBottomDialog(
 				ProfileFacebookContactsListFragment()
 			)
 		}
-
 		binding.profileSetPin.setOnClickListener {
 			// TODO implement PIN
 		}
-
 		binding.profileSetCurrency.setOnClickListener {
 			showBottomDialog(
 				CurrencyBottomSheetDialog(viewModel.encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency()) {
@@ -200,7 +189,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				}
 			)
 		}
-
 		binding.profileAllowScreenshots.setOnClickListener {
 			binding.profileAllowScreenshots.switch.setOnCheckedChangeListener(null)
 			profileViewModel.updateAllowScreenshotsSettings()
@@ -208,13 +196,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 			setUpAllowScreenshotsSwitch()
 		}
-
 		binding.profileTermsAndConditions.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToTermsFragment()
 			)
 		}
-
 		binding.profileFaq.setOnClickListener {
 			findNavController().safeNavigateWithTransition(
 				ProfileFragmentDirections.actionProfileFragmentToFaqFragment(
@@ -222,19 +208,16 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				)
 			)
 		}
-
 		binding.profileReportIssue.setOnClickListener {
 			showBottomDialog(
 				ReportBottomSheetDialog()
 			)
 		}
-
 		binding.profileRequestData.setOnClickListener {
 			showBottomDialog(
 				RequestDataBottomSheetDialog()
 			)
 		}
-
 		binding.profileLogout.setOnClickListener {
 			showBottomDialog(
 				DeleteAccountBottomSheetDialog {

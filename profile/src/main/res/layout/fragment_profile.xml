@@ -42,21 +42,6 @@
 			android:paddingBottom="100dp">
 
 			<ImageView
-				android:id="@+id/profile_donate"
-				android:layout_width="40dp"
-				android:layout_height="40dp"
-				android:layout_marginStart="12dp"
-				android:layout_marginTop="12dp"
-				android:background="@drawable/ripple_mask_13"
-				android:clickable="true"
-				android:contentDescription="?content"
-				android:focusable="true"
-				android:padding="4dp"
-				android:src="@drawable/ic_profile_donate"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
-
-			<ImageView
 				android:id="@+id/profile_qr_code"
 				android:layout_width="40dp"
 				android:layout_height="40dp"
@@ -82,7 +67,7 @@
 				app:layout_constraintDimensionRatio="1:1"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/profile_donate"
+				app:layout_constraintTop_toBottomOf="@id/profile_qr_code"
 				app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage" />
 
 			<TextView
