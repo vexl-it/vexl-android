@@ -27,11 +27,12 @@ object OfferUtils {
 	private val _numberOfAllContacts = MutableStateFlow(-1)
 	val numberOfAllContacts = _numberOfAllContacts.asStateFlow()
 
-	fun fetchContactsPublicKeys(
+	suspend fun fetchContactsPublicKeys(
 		friendLevel: FriendLevel,
 		groupUuids: List<String>,
 		contactRepository: ContactRepository,
 		encryptedPreferenceRepository: EncryptedPreferenceRepository,
+		shouldEmitContacts: Boolean = false
 	): List<ContactKey> {
 		val contactsPublicKeys = when (friendLevel) {
 			FriendLevel.NONE -> emptyList()
@@ -46,6 +47,10 @@ object OfferUtils {
 		}
 			.toMutableList()
 			.also {
+				// Send info about number of contacts for which the offer should be encrypted into the bottom sheet dialog
+				if (shouldEmitContacts) {
+					_numberOfAllContacts.emit(it.size)
+				}
 				//also add user's key
 				encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
 					it.add(
@@ -76,47 +81,10 @@ object OfferUtils {
 		params: OfferParams,
 		contactRepository: ContactRepository,
 		encryptedPreferenceRepository: EncryptedPreferenceRepository,
-		locationHelper: LocationHelper
+		locationHelper: LocationHelper,
+		contactsPublicKeys: List<ContactKey>
 	): List<NewOffer> {
 		val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
-
-		//load all public keys for specified level of friends
-		val contactsPublicKeys = when (params.friendLevel.value) {
-			FriendLevel.NONE -> emptyList()
-			FriendLevel.FIRST_DEGREE ->
-				contactRepository.getFirstLevelContactKeys() +
-					contactRepository.getGroupsContactKeys(params.groupUuids)
-			FriendLevel.SECOND_DEGREE ->
-				contactRepository.getFirstLevelContactKeys() +
-					contactRepository.getSecondLevelContactKeys() +
-					contactRepository.getGroupsContactKeys(params.groupUuids)
-			else -> emptyList()
-		}
-			.toMutableList()
-			.also {
-				// Send info about number of contacts for which the offer should be encrypted into the bottom sheet dialog
-				_numberOfAllContacts.emit(it.size)
-				//also add user's key
-				encryptedPreferenceRepository.userPublicKey.let { myPublicKey ->
-					it.add(
-						ContactKey(
-							key = myPublicKey,
-							level = ContactLevel.NOT_SPECIFIED,
-							//fixme: this is just hotfix to have group uuid later, when we try to create additional private-parts
-							groupUuid = params.groupUuids.firstOrNull(),
-							isUpToDate = true
-						)
-					)
-				}
-			}
-			//we need to give keys with group priority, because distinctBy keeps only first element
-			.sortedBy {
-				if (it.groupUuid == null) 1 else 0
-			}
-			.distinctBy {
-				// remove duplicities
-				it.key
-			}
 
 		val commonFriends = contactRepository.getCommonFriends(
 			contactsPublicKeys
