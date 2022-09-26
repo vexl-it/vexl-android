@@ -229,7 +229,6 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			if (params != null) {
 				binding.newOfferBtn.isVisible = false
 				binding.progress.isVisible = true
-				// TODO
 				viewModel.createOffer(params)
 			}
 		}

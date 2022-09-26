@@ -296,7 +296,6 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		)
 
 		if (params != null) {
-			//showProgressIndicator(true)
 			viewModel.updateOffer(
 				offerId = args.offerId,
 				params = params

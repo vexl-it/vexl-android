@@ -85,7 +85,6 @@ object OfferUtils {
 
 		//encrypt in loop for every contact
 		contactsPublicKeys.forEachIndexed { index, contactKey ->
-			// todo offer encryption return data
 			val encryptedOffer = encryptOffer(
 				locationHelper = locationHelper,
 				params = params,
