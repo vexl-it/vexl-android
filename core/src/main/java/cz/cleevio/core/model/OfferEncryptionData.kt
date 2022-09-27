@@ -6,6 +6,7 @@ import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.repository.contact.ContactRepository
 
+@Suppress("DataClassShouldBeImmutable")
 data class OfferEncryptionData constructor(
 	val offerKeys: KeyPair,
 	val params: OfferParams,

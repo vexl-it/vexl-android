@@ -14,7 +14,6 @@ import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import kotlinx.coroutines.*
 import timber.log.Timber
 
-
 class PriceRangeWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,

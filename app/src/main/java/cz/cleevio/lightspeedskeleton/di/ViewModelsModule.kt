@@ -1,5 +1,6 @@
 package cz.cleevio.lightspeedskeleton.di
 
+import cz.cleevio.lightspeedskeleton.ui.forceNotificationPermission.ForceNotificationPermissionViewModel
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainViewModel
 import cz.cleevio.lightspeedskeleton.ui.splashFragment.SplashViewModel
 import org.koin.dsl.module
@@ -15,7 +16,8 @@ val viewModelsModule = module {
 			contactRepository = get(),
 			groupRepository = get(),
 			remoteConfig = get(),
-			offerRepository = get()
+			offerRepository = get(),
+			notificationUtils = get()
 		)
 	}
 
@@ -28,6 +30,13 @@ val viewModelsModule = module {
 			navMainGraphModel = get(),
 			userUtils = get(),
 			backgroundQueue = get()
+		)
+	}
+
+	single {
+		ForceNotificationPermissionViewModel(
+			navMainGraphModel = get(),
+			notificationUtils = get(),
 		)
 	}
 }

@@ -18,7 +18,6 @@ import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentVerifyPhoneBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.hideKeyboard
-import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel

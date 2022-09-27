@@ -21,7 +21,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import cz.cleevio.core.utils.*
+import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.core.utils.setExitTransitionGravityStart
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.lightspeedskeleton.notification.RemoteNotificationType
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private var bottomBarAnimator: ValueAnimator? = null
 	private var bottomInsetValue = 0
 	private var lastVisitedGraph: Int? = null
+	private var firstTimeMainScreen = true
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -189,10 +192,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							lastVisitedGraph = R.navigation.nav_contacts
 						}
 						NavMainGraphModel.NavGraph.Main -> {
-							navController.setGraph(
-								R.navigation.nav_bottom_navigation
-							)
-							lastVisitedGraph = R.navigation.nav_bottom_navigation
+							Timber.tag("ASDX").d("checking notifications ${firstTimeMainScreen}")
+							if (firstTimeMainScreen) {
+								checkNotifications()
+							} else {
+								navController.setGraph(
+									R.navigation.nav_bottom_navigation
+								)
+								lastVisitedGraph = R.navigation.nav_bottom_navigation
+							}
 						}
 						NavMainGraphModel.NavGraph.Intro -> {
 							navController.setGraph(
@@ -205,6 +213,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 								R.navigation.nav_force_update
 							)
 							lastVisitedGraph = R.navigation.nav_force_update
+						}
+						NavMainGraphModel.NavGraph.ForceNotificationPermission -> {
+							navController.setGraph(
+								R.navigation.nav_force_notification_permission
+							)
+							lastVisitedGraph = R.navigation.nav_force_notification_permission
 						}
 						NavMainGraphModel.NavGraph.Onboarding -> {
 							navController.setGraph(
@@ -363,6 +377,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 						NavMainGraphModel.NavGraph.ForceUpdate
 					)
 				}
+			}
+		}
+	}
+
+	private fun checkNotifications() {
+		lifecycleScope.launch {
+			firstTimeMainScreen = false
+			if (viewModel.notificationUtils.areNotificationsDisabled()) {
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.ForceNotificationPermission
+				)
+			} else {
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.Main
+				)
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.utils.NavMainGraphModel
+import cz.cleevio.core.utils.NotificationUtils
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -34,7 +35,8 @@ class MainViewModel constructor(
 	private val contactRepository: ContactRepository,
 	private val groupRepository: GroupRepository,
 	private val remoteConfig: FirebaseRemoteConfig,
-	val navMainGraphModel: NavMainGraphModel
+	val navMainGraphModel: NavMainGraphModel,
+	val notificationUtils: NotificationUtils,
 ) : BaseViewModel() {
 
 	val navGraphFlow = navMainGraphModel.navGraphFlow

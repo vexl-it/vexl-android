@@ -6,10 +6,7 @@ import androidx.core.content.ContextCompat
 import coil.ImageLoader
 import coil.util.CoilUtils
 import cz.cleevio.core.R
-import cz.cleevio.core.utils.BackgroundQueue
-import cz.cleevio.core.utils.LocationHelper
-import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.core.utils.UserUtils
+import cz.cleevio.core.utils.*
 import cz.cleevio.core.utils.marketGraph.MarketChartUtils
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -71,6 +68,12 @@ val coreModule = module {
 
 	single {
 		MarketChartUtils(
+			androidContext()
+		)
+	}
+
+	single {
+		NotificationUtils(
 			androidContext()
 		)
 	}
