@@ -7,10 +7,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
+import androidx.core.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -85,7 +82,7 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 					is VerifyPhoneViewModel.CountDownState.Counting -> {
 						binding.verifyPhoneNote.text = getString(
 							R.string.verify_phone_info_countdown,
-							it.timeLeftInMillis.milliseconds.inWholeSeconds
+							it.timeLeftInMillis.milliseconds.inWholeSeconds.toString()
 						)
 						binding.verifyPhoneNote.isEnabled = false
 					}
@@ -128,11 +125,13 @@ class VerifyPhoneFragment : BaseFragment(R.layout.fragment_verify_phone) {
 			binding.container.updatePadding(top = insets.top)
 		}
 
-		val defaultButtonMargin = binding.continueBtn.marginBottom
-		listenForIMEInset(binding.container) { bottomInset ->
-			binding.continueBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-				bottomMargin = bottomInset + defaultButtonMargin
+		ViewCompat.setOnApplyWindowInsetsListener(binding.container) { view, insets ->
+			view.updateLayoutParams {
+				(this as? ViewGroup.MarginLayoutParams)?.updateMargins(
+					bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+				)
 			}
+			insets
 		}
 	}
 
