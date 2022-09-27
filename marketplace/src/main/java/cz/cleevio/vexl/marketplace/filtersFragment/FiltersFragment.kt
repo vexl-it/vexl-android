@@ -8,7 +8,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
-import cz.cleevio.core.model.FeeValue
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
@@ -115,7 +114,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 					null
 				},
 				currency = if (binding.priceRangeWidget.isVisible) {
-					binding.priceRangeWidget.currentCurrency.name
+					binding.priceRangeWidget.getCurrencyName()
 				} else {
 					null
 				},
@@ -178,7 +177,6 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 				setupFilterViews(offerFilter)
 			}
 		}
-
 		repeatScopeOnStart {
 			filterViewModel.groups.collect { groups ->
 				adapter.submitList(groups)

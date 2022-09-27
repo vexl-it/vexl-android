@@ -222,7 +222,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				offerType = args.offerType.name,
 				expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
 				active = true,
-				currency = binding.newOfferRange.currentCurrency.name,
+				currency = binding.newOfferRange.getCurrencyName(),
 				groupUuids = adapter.getSelectedGroupUuids()
 			)
 
