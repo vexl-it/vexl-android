@@ -17,10 +17,7 @@ import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.load
 import cz.cleevio.core.model.OfferType
-import cz.cleevio.core.utils.BuySellColorizer
-import cz.cleevio.core.utils.repeatScopeOnCreate
-import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.*
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.vexl.chat.R
@@ -44,10 +41,10 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	private var isHidingSubmitMessageWrapper: Boolean = false
 	private var imeDefaultInsets: Int? = null
 
-	lateinit var adapter: ChatMessagesAdapter
+	private lateinit var adapter: ChatMessagesAdapter
 
 	//flags
-	var showingDialog = false
+	private var showingDialog = false
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
@@ -144,6 +141,19 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				binding.identityRevealedWrapper.isVisible = revealed
 			}
 		}
+		repeatScopeOnCreate {
+			viewModel.requestIdentityFlow.collect { resource ->
+				showProgress(resource.isLoading())
+				if (resource.isSuccess()) {
+					binding.identityRevealSentWrapper.isVisible = true
+				}
+			}
+		}
+		repeatScopeOnCreate {
+			viewModel.resolveIdentityRevealFlow.collect { resource ->
+				showProgress(resource.isLoading())
+			}
+		}
 	}
 
 	override fun initView() {
@@ -152,23 +162,6 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 
 		setupColoredTitle(name)
-
-		binding.sendMessageButton.setOnClickListener {
-			sendMessage()
-		}
-
-		binding.identityRevealRequestedButton.setOnClickListener {
-			showBottomDialog(
-				RevealIdentityBottomSheetDialog(
-					onApprove = {
-						viewModel.resolveIdentityRevealRequest(true, resources.getInteger(R.integer.anonymize_duration).toLong())
-					},
-					onReject = {
-						viewModel.resolveIdentityRevealRequest(false, resources.getInteger(R.integer.anonymize_duration).toLong())
-					}
-				)
-			)
-		}
 
 		binding.messageEdit.setOnEditorActionListener { _, actionId, _ ->
 			if (actionId == EditorInfo.IME_ACTION_SEND) {
@@ -184,22 +177,34 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			//close this screen
 			findNavController().popBackStack()
 		}
-		binding.myOfferBtn.setOnClickListener {
+		binding.sendMessageButton.setOnClickListener {
+			sendMessage()
+		}
+		binding.identityRevealRequestedButton.setOnClickListener {
+			showBottomDialog(
+				RevealIdentityBottomSheetDialog(
+					onApprove = {
+						viewModel.resolveIdentityRevealRequest(true)
+					},
+					onReject = {
+						viewModel.resolveIdentityRevealRequest(false)
+					}
+				)
+			)
+		}
+		binding.myOfferBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
 			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer!!)) // TODO solve double !
 		}
-		binding.commonFriendsBtn.setOnClickListener {
+		binding.commonFriendsBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
 			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer?.commonFriends.orEmpty()))
 		}
-		binding.revealIdentityBtn.setOnClickListener {
+		binding.revealIdentityBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
 			showBottomDialog(IdentityRequestBottomSheetDialog(
-				senderPublicKey = viewModel.senderPublicKey,
-				receiverPublicKey = viewModel.receiverPublicKey,
-				inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey,
-				onSendSuccess = {
-					binding.identityRevealSentWrapper.isVisible = true
+				onSendRequest = {
+					viewModel.requestIdentityReveal()
 				}
 			))
 		}
@@ -247,6 +252,10 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				}
 			}
 		}
+	}
+
+	override fun showProgress(visible: Boolean) {
+		binding.progressbar.isVisible = visible
 	}
 
 	private fun setupColoredTitle(name: String) {

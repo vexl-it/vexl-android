@@ -1,7 +1,7 @@
 package cz.cleevio.vexl.chat.chatFragment
 
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.network.data.Status
+import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUser
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -10,25 +10,23 @@ import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.map
-import org.commonmark.internal.util.Parsing.isBlank
-import timber.log.Timber
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 
 class ChatViewModel constructor(
-	val chatRepository: ChatRepository,
+	private val chatRepository: ChatRepository,
 	private val userRepository: UserRepository,
 	val communicationRequest: CommunicationRequest
 ) : BaseViewModel() {
 
-	protected var messagePullJob: Job? = null
-
-	val _messageSentSuccessfully = MutableSharedFlow<Boolean>(replay = 1)
-	val messageSentSuccessfully = _messageSentSuccessfully.asSharedFlow()
-
 	private val _identityRevealed = MutableSharedFlow<Boolean>(replay = 1)
 	val identityRevealed = _identityRevealed.asSharedFlow()
+
+	private val _requestIdentityChannel = Channel<Resource<Unit>>()
+	val requestIdentityFlow = _requestIdentityChannel.receiveAsFlow()
+
+	private val _resolveIdentityRevealChannel = Channel<Resource<Unit>>()
+	val resolveIdentityRevealFlow = _resolveIdentityRevealChannel.receiveAsFlow()
 
 	val chatUserIdentity = communicationRequest.let { communicationRequest ->
 		chatRepository.getChatUserIdentityFlow(
@@ -48,7 +46,7 @@ class ChatViewModel constructor(
 			secondKey = message.recipientPublicKey
 		).map {
 			processMessages(it)
-		}
+		}.flowOn(Dispatchers.Default)
 	}
 
 	val hasPendingIdentityRevealRequests = communicationRequest.message.let { message ->
@@ -90,11 +88,10 @@ class ChatViewModel constructor(
 	}
 
 	fun sendMessage(message: String) {
-
+		// TODO maybe show loading during sending of message to UI
 		viewModelScope.launch(Dispatchers.IO) {
 			val messageType = MessageType.MESSAGE
-
-			val result = chatRepository.sendMessage(
+			chatRepository.sendMessage(
 				senderPublicKey = senderPublicKey,
 				receiverPublicKey = receiverPublicKey,
 				message = ChatMessage(
@@ -108,14 +105,12 @@ class ChatViewModel constructor(
 				),
 				messageType = messageType.name
 			)
-
-			_messageSentSuccessfully.emit(result.status == Status.Success)
 		}
 	}
 
-	fun resolveIdentityRevealRequest(approved: Boolean, delay: Long) {
+	fun requestIdentityReveal() {
 		viewModelScope.launch(Dispatchers.IO) {
-			val messageType = if (approved) MessageType.APPROVE_REVEAL else MessageType.DISAPPROVE_REVEAL
+			_requestIdentityChannel.send(Resource.loading())
 
 			val user = userRepository.getUser()?.let {
 				ChatUser(
@@ -123,10 +118,38 @@ class ChatViewModel constructor(
 					image = it.avatar
 				)
 			}
+			val messageType = MessageType.REQUEST_REVEAL
+			val response = chatRepository.sendMessage(
+				senderPublicKey = senderPublicKey,
+				receiverPublicKey = receiverPublicKey,
+				message = ChatMessage(
+					inboxPublicKey = communicationRequest.message.inboxPublicKey,
+					senderPublicKey = senderPublicKey,
+					recipientPublicKey = receiverPublicKey,
+					type = messageType,
+					deanonymizedUser = user,
+					isMine = true,
+					isProcessed = false
+				),
+				messageType = messageType.name,
+				storeMessageAlsoWhenFails = false
+			)
 
-			_identityRevealed.tryEmit(approved)
-			delay(maxOf(0, delay - 150))
+			_requestIdentityChannel.send(response)
+		}
+	}
 
+	fun resolveIdentityRevealRequest(approved: Boolean) {
+		viewModelScope.launch(Dispatchers.IO) {
+			_resolveIdentityRevealChannel.send(Resource.loading())
+
+			val messageType = if (approved) MessageType.APPROVE_REVEAL else MessageType.DISAPPROVE_REVEAL
+			val user = userRepository.getUser()?.let {
+				ChatUser(
+					name = it.username,
+					image = it.avatar
+				)
+			}
 			val response = chatRepository.sendMessage(
 				senderPublicKey = senderPublicKey,
 				receiverPublicKey = receiverPublicKey,
@@ -139,31 +162,32 @@ class ChatViewModel constructor(
 					isMine = true,
 					isProcessed = true
 				),
-				messageType = messageType.name
+				messageType = messageType.name,
+				storeMessageAlsoWhenFails = false
 			)
 
-			when (response.status) {
-				is Status.Success -> {
-					if (approved) {
-						chatRepository.deAnonymizeUser(
-							inboxKey = communicationRequest.message.inboxPublicKey,
-							contactPublicKey = receiverPublicKey,
-							myPublicKey = senderPublicKey
-						)
-					}
-					chatRepository.solveIdentityRevealRequest(
-						inboxPublicKey = communicationRequest.message.inboxPublicKey,
-						firstKey = senderPublicKey,
-						secondKey = receiverPublicKey
+			_resolveIdentityRevealChannel.send(response)
+
+			if (response.isSuccess()) {
+				_identityRevealed.emit(approved)
+				if (approved) {
+					chatRepository.deAnonymizeUser(
+						inboxKey = communicationRequest.message.inboxPublicKey,
+						contactPublicKey = receiverPublicKey,
+						myPublicKey = senderPublicKey
 					)
 				}
-				else -> Unit
+				chatRepository.solveIdentityRevealRequest(
+					inboxPublicKey = communicationRequest.message.inboxPublicKey,
+					firstKey = senderPublicKey,
+					secondKey = receiverPublicKey
+				)
 			}
 		}
 	}
 
 	private fun startMessageRefresh(myInboxPublicKey: String) {
-		messagePullJob = viewModelScope.launch(Dispatchers.IO) {
+		viewModelScope.launch(Dispatchers.IO) {
 			while (isActive) {
 				chatRepository.syncMessages(myInboxPublicKey)
 				delay(MESSAGE_PULL_TIMEOUT)
@@ -171,7 +195,7 @@ class ChatViewModel constructor(
 		}
 	}
 
-	private fun processMessages(originalMessages: List<ChatMessage>): List<ChatMessage> {
+	private suspend fun processMessages(originalMessages: List<ChatMessage>): List<ChatMessage> {
 		val processedMessages = mutableListOf<ChatMessage>()
 		originalMessages.forEach { originalMessage ->
 
@@ -202,7 +226,7 @@ class ChatViewModel constructor(
 
 			// find out if the animation is to be done
 			if (originalMessage.type == MessageType.APPROVE_REVEAL && !originalMessage.isMine && !originalMessage.isProcessed) {
-				_identityRevealed.tryEmit(true)
+				_identityRevealed.emit(true)
 				viewModelScope.launch(Dispatchers.IO) {
 					chatRepository.processMessage(originalMessage)
 				}
@@ -212,7 +236,10 @@ class ChatViewModel constructor(
 		return processedMessages.toList()
 	}
 
-	private fun getNearestRevealIdentityResponse(requestRevealMessage: ChatMessage, messages: List<ChatMessage>): ChatMessage? {
+	private fun getNearestRevealIdentityResponse(
+		requestRevealMessage: ChatMessage,
+		messages: List<ChatMessage>
+	): ChatMessage? {
 		return messages.filter {
 			// filter reveal identity responses
 			it.type == MessageType.APPROVE_REVEAL || it.type == MessageType.DISAPPROVE_REVEAL

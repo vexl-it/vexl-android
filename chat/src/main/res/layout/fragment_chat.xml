@@ -140,6 +140,18 @@
 		tools:itemCount="15"
 		tools:listitem="@layout/item_chat_message" />
 
+	<com.google.android.material.progressindicator.CircularProgressIndicator
+		android:id="@+id/progressbar"
+		style="@style/Widget.LightBase.Dialog.CircleProgressIndicator"
+		android:layout_width="@dimen/size_dialog_progress_indicator"
+		android:layout_height="@dimen/size_dialog_progress_indicator"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible" />
+
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/identity_revealed_wrapper"
 		android:layout_width="match_parent"
@@ -354,11 +366,11 @@
 			android:id="@+id/send_image_button"
 			android:layout_width="45dp"
 			android:layout_height="45dp"
-			android:visibility="gone"
 			android:background="@drawable/background_button_chat_image"
 			android:backgroundTint="@null"
 			android:contentDescription="?content"
 			android:src="@drawable/ic_camera"
+			android:visibility="gone"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@id/message_wrapper"
 			app:layout_constraintStart_toStartOf="parent"

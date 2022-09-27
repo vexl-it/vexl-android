@@ -342,8 +342,11 @@ class ChatRepositoryImpl constructor(
 
 	@Suppress("ReturnCount")
 	override suspend fun sendMessage(
-		senderPublicKey: String, receiverPublicKey: String,
-		message: ChatMessage, messageType: String
+		senderPublicKey: String,
+		receiverPublicKey: String,
+		message: ChatMessage,
+		messageType: String,
+		storeMessageAlsoWhenFails: Boolean
 	): Resource<Unit> {
 		//we don't want to store DELETE_CHAT message, delete other messages instead
 		if (message.type == MessageType.DELETE_CHAT) {
@@ -352,9 +355,9 @@ class ChatRepositoryImpl constructor(
 				firstKey = message.senderPublicKey,
 				secondKey = message.recipientPublicKey
 			)
-		} else {
-			//we save every message into DB before upload to BE
-			//todo: should we add some `uploaded` flag?
+		} else if (storeMessageAlsoWhenFails) {
+			// we save every message into DB before upload to BE
+			// TODO should we add some `uploaded` flag?
 			chatMessageDao.insert(
 				message.toCache()
 			)
@@ -375,6 +378,11 @@ class ChatRepositoryImpl constructor(
 							signedChallenge = signedChallenge
 						)
 					)
+				},
+				doOnSuccess = {
+					if (!storeMessageAlsoWhenFails) {
+						chatMessageDao.insert(message.toCache())
+					}
 				},
 				mapper = { }
 			)
