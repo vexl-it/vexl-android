@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private var bottomBarAnimator: ValueAnimator? = null
 	private var bottomInsetValue = 0
 	private var lastVisitedGraph: Int? = null
-	private var firstTimeMainScreen = true
+
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -192,8 +192,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							lastVisitedGraph = R.navigation.nav_contacts
 						}
 						NavMainGraphModel.NavGraph.Main -> {
-							Timber.tag("ASDX").d("checking notifications ${firstTimeMainScreen}")
-							if (firstTimeMainScreen) {
+							if (viewModel.firstTimeMainScreen) {
 								checkNotifications()
 							} else {
 								navController.setGraph(
@@ -383,7 +382,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
 	private fun checkNotifications() {
 		lifecycleScope.launch {
-			firstTimeMainScreen = false
+			viewModel.firstTimeMainScreen = false
 			if (viewModel.notificationUtils.areNotificationsDisabled()) {
 				viewModel.navMainGraphModel.navigateToGraph(
 					NavMainGraphModel.NavGraph.ForceNotificationPermission
