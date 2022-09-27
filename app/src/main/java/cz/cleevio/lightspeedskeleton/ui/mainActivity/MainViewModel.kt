@@ -45,6 +45,7 @@ class MainViewModel constructor(
 	val navigateToChatDetail = _navigateToChatDetail.receiveAsFlow()
 
 	private val _bottomBarAnimation = MutableStateFlow(false)
+	var firstTimeMainScreen = true
 
 	@OptIn(FlowPreview::class)
 	val bottomBarAnimation = _bottomBarAnimation.asStateFlow()
