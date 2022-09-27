@@ -17,8 +17,6 @@ class PagerAdapter constructor(
 	override fun createFragment(position: Int): Fragment {
 		val fragment = FaqPageFragment()
 
-		// TODO add another illustrations
-
 		when (position) {
 			0 -> fragment.arguments = Bundle().apply {
 				putString(FaqPageFragment.FAQ_TITLE, fragmentActivity.getString(R.string.faq_screen_one_title))

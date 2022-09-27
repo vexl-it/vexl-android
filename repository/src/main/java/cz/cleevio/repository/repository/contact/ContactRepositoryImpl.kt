@@ -318,7 +318,6 @@ class ContactRepositoryImpl constructor(
 			return response
 		}
 
-		// TODO replace all?
 		contactDao.replaceAll(
 			response.data.orEmpty().map { fbContact ->
 				ContactEntity(

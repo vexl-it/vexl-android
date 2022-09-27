@@ -64,9 +64,6 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 							findNavController().popBackStack()
 						}
 					}
-					is Status.Error -> {
-						//todo: handle error?
-					}
 					else -> Unit
 				}
 			}

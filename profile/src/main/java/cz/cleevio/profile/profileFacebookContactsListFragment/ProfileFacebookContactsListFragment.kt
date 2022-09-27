@@ -39,7 +39,6 @@ class ProfileFacebookContactsListFragment : BottomSheetDialogFragment() {
 		}
 		repeatScopeOnStart {
 			viewModel.uploadSuccessful.collect {
-				// fixme: navigate as expected
 				findNavController().popBackStack()
 			}
 		}

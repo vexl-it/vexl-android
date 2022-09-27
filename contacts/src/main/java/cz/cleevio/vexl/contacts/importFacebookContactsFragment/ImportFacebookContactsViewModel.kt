@@ -12,6 +12,7 @@ import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -77,6 +78,18 @@ class ImportFacebookContactsViewModel constructor(
 	private fun isLoggedIntoFacebook(): Boolean {
 		val accessToken = AccessToken.getCurrentAccessToken()
 		return accessToken != null && !accessToken.isExpired
+	}
+
+	fun finishOnboardingAndNavigateToMain() {
+		viewModelScope.launch(Dispatchers.Default) {
+			userRepository.getUser()?.let { user ->
+				userRepository.markUserFinishedOnboarding(user)
+			}
+
+			navMainGraphModel.navigateToGraph(
+				NavMainGraphModel.NavGraph.Main
+			)
+		}
 	}
 
 }

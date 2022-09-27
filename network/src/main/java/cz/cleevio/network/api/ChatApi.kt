@@ -25,12 +25,10 @@ interface ChatApi {
 		@Body inboxRequest: CreateInboxRequest
 	): Response<ResponseBody>
 
-	//todo: fixme
 	//retrieve messages from inbox
 	@PUT("inboxes/messages")
 	suspend fun putInboxesMessages(
 		@Body messageRequest: MessageRequest
-		//todo: should be list inside some other object
 	): Response<MessagesResponse>
 
 	//send a message to inbox

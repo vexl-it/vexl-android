@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class UserEntity constructor(
 	@PrimaryKey(autoGenerate = true) val id: Long = 0,
-	//todo: remove later
+	//todo: remove later - migrate DB
 	val extId: Long = 0,
 	val username: String,
 	val anonymousUsername: String? = null,

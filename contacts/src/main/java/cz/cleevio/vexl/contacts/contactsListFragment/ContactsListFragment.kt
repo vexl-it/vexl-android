@@ -65,10 +65,7 @@ class ContactsListFragment : BaseFragment(R.layout.fragment_contacts_list) {
 				FacebookContactsListFragmentDirections.proceedToNotificationFragment()
 			)
 		} else {
-			findNavController().safeNavigateWithTransition(
-				//ContactsListFragmentDirections.proceedToImportFacebookContactsFragment()
-				FacebookContactsListFragmentDirections.proceedToFinishImportFragment()
-			)
+			viewModel.finishOnboardingAndNavigateToMain()
 		}
 	}
 

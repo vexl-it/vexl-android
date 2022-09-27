@@ -27,6 +27,11 @@ class PaymentMethodIconsWidget @JvmOverloads constructor(
 
 		@Suppress("MagicNumber")
 		when (paymentTypes.size) {
+			0 -> {
+				binding.oneMethodGroup.isVisible = false
+				binding.twoMethodsGroup.isVisible = false
+				binding.threeMethodsGroup.isVisible = false
+			}
 			1 -> {
 				binding.oneMethodFirst.setImageResource(getIcon(paymentTypes[0]))
 				binding.oneMethodGroup.isVisible = true
@@ -43,16 +48,21 @@ class PaymentMethodIconsWidget @JvmOverloads constructor(
 				binding.threeMethodsGroup.isVisible = true
 			}
 			else -> {
-			} //TODO error
+				binding.threeMethodsFirst.setImageResource(getIcon(paymentTypes[0]))
+				binding.threeMethodsSecond.setImageResource(getIcon(paymentTypes[1]))
+				binding.threeMethodsThird.setImageResource(getIcon(paymentTypes[2]))
+				binding.threeMethodsGroup.isVisible = true
+			}
 		}
 	}
 
+	//todo: use enums with name and icon
 	private fun getIcon(paymentType: String): Int {
 		return when (paymentType) {
 			"REVOLUT" -> R.drawable.ic_revolut
 			"BANK" -> R.drawable.ic_bank
 			"CASH" -> R.drawable.ic_cash
-			else -> R.drawable.ic_map_pin // TODO error
+			else -> R.drawable.ic_map_pin
 		}
 	}
 

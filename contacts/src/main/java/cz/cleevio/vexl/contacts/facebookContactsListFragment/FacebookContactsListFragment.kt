@@ -28,9 +28,7 @@ class FacebookContactsListFragment : BaseFragment(R.layout.fragment_facebook_con
 						FacebookContactsListFragmentDirections.proceedToNotificationFragment()
 					)
 				} else {
-					findNavController().navigate(
-						FacebookContactsListFragmentDirections.proceedToFinishImportFragment()
-					)
+					viewModel.finishOnboardingAndNavigateToMain()
 				}
 			}
 		}

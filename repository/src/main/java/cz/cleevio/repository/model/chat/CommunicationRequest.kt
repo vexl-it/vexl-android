@@ -8,7 +8,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CommunicationRequest constructor(
 	val message: ChatMessage,
-	val offer: Offer? = null,
+	val offer: Offer,
 	val group: Group? = null,
-	//Fixme: maybe user later?
 ) : Parcelable

@@ -34,9 +34,7 @@ class ImportFacebookContactsFragment : BaseFragment(R.layout.fragment_import_fac
 		}
 
 		binding.skipImport.setOnClickListener {
-			findNavController().safeNavigateWithTransition(
-				ImportFacebookContactsFragmentDirections.proceedToFinishImportFragment()
-			)
+			viewModel.finishOnboardingAndNavigateToMain()
 		}
 
 		listenForInsets(binding.container) { insets ->

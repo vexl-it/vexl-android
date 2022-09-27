@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 
-// TODO Strings to enums
 @Entity(indices = [Index(value = ["externalOfferId"], unique = true)])
 data class OfferEntity(
 	@PrimaryKey(autoGenerate = true)

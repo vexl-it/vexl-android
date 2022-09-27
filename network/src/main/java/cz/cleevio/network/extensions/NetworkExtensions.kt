@@ -17,9 +17,7 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-const val SUB_CODE_NO_BODY = -1
-
-@Suppress("NestedBlockDepth")
+@Suppress("NestedBlockDepth", "SwallowedException", "LongMethod")
 suspend fun <E, O> tryOnline(
 	doOnSuccess: suspend ((O?) -> Unit) = {},
 	doOnError: suspend ((Int, Int?) -> ErrorIdentification?) = { _, _ -> null },
@@ -48,10 +46,8 @@ suspend fun <E, O> tryOnline(
 							moshi = Moshi.Builder().build()
 						).fromJson(it)
 					}
-				//fixme: hack to prevent crash in case of missing response body
+				//hack to prevent crash in case of missing response body
 			} catch (e: EOFException) {
-				Timber.w(e)
-				//return some constant that means error, fixme: BE is supposed to check why there is no body
 				null
 			}
 

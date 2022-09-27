@@ -18,6 +18,7 @@ import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+// TODO Strings to enums
 @Parcelize
 @Suppress("DataClassShouldBeImmutable")
 data class Offer constructor(

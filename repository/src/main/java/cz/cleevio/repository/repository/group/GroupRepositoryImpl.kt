@@ -104,7 +104,6 @@ class GroupRepositoryImpl constructor(
 		},
 		mapper = { },
 		doOnSuccess = {
-			//TODO: when BE changes, save new group here
 			syncMyGroups()
 		}
 	)
