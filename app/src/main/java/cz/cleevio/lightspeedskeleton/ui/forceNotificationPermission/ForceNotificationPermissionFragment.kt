@@ -70,7 +70,12 @@ class ForceNotificationPermissionFragment : BaseFragment(R.layout.fragment_force
 		builder.setCustomTitle(
 			TextView(requireContext()).apply {
 				maxLines = ImportContactsFragment.MAX_DIALOG_LINES
-				setPadding(ImportContactsFragment.DIALOG_PADDING, ImportContactsFragment.DIALOG_PADDING, ImportContactsFragment.DIALOG_PADDING, ImportContactsFragment.DIALOG_PADDING)
+				setPadding(
+					ImportContactsFragment.DIALOG_PADDING,
+					ImportContactsFragment.DIALOG_PADDING,
+					ImportContactsFragment.DIALOG_PADDING,
+					ImportContactsFragment.DIALOG_PADDING
+				)
 				layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 				isSingleLine = false
 				text = getString(cz.cleevio.vexl.contacts.R.string.notifications_permission_dialog_title)

@@ -67,7 +67,7 @@ class BackgroundQueue constructor(
 					!myOffer.encryptedFor.contains(it.key)
 				}
 
-				Timber.tag("REENCRYPT").d("Missing contacts are ${onlyMissingContacts}")
+				Timber.tag("REENCRYPT").d("Missing contacts are $onlyMissingContacts")
 				//if we have 0 missing contacts, we don't need to continue
 				if (onlyMissingContacts.isEmpty()) {
 					return@forEach
