@@ -62,7 +62,6 @@ class ForceNotificationPermissionFragment : BaseFragment(R.layout.fragment_force
 		val builder = MaterialAlertDialogBuilder(requireContext())
 			.setNegativeButton(cz.cleevio.vexl.contacts.R.string.notifications_permission_dialog_dont_allow) { dialog, _ ->
 				dialog.dismiss()
-				continueToNextScreen()
 			}
 			.setPositiveButton(cz.cleevio.vexl.contacts.R.string.notifications_permission_dialog_allow) { _, _ ->
 				reAllowPermissions = true
@@ -94,6 +93,10 @@ class ForceNotificationPermissionFragment : BaseFragment(R.layout.fragment_force
 			//show system dialog to allow permissions
 			checkPostNotificationsPermissions()
 		}
+
+		binding.close.setOnClickListener {
+			continueToNextScreen()
+		}
 	}
 
 	override fun bindObservers() {
@@ -105,6 +108,14 @@ class ForceNotificationPermissionFragment : BaseFragment(R.layout.fragment_force
 					showPermissionDeniedDialog()
 				}
 			}
+		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+
+		if (!viewModel.notificationUtils.areNotificationsDisabled()) {
+			continueToNextScreen()
 		}
 	}
 

@@ -16,7 +16,8 @@ val viewModelsModule = module {
 			contactRepository = get(),
 			groupRepository = get(),
 			remoteConfig = get(),
-			offerRepository = get()
+			offerRepository = get(),
+			notificationUtils = get()
 		)
 	}
 
@@ -35,6 +36,7 @@ val viewModelsModule = module {
 	single {
 		ForceNotificationPermissionViewModel(
 			navMainGraphModel = get(),
+			notificationUtils = get(),
 		)
 	}
 }

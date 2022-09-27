@@ -1,8 +1,5 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.view.animation.AnimationUtils
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnResume
@@ -33,20 +30,8 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		repeatScopeOnResume {
 			viewModel.userFlow.collect { user ->
 				if (user != null && user.finishedOnboarding) {
-					//check notification permissions
-					//fixme: debug `true`
-					if (true || (
-							Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-								requireContext().checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
-					) {
-						Timber.i("Navigating to notification permission screen")
-						viewModel.navMainGraphModel.navigateToGraph(
-							NavMainGraphModel.NavGraph.ForceNotificationPermission
-						)
-					} else {
-						Timber.i("Navigating to marketplace")
-						viewModel.loadMyContactsKeys()
-					}
+					Timber.i("Navigating to marketplace")
+					viewModel.loadMyContactsKeys()
 				} else {
 					// continue to onboarding
 					viewModel.deletePreviousUserKeys()

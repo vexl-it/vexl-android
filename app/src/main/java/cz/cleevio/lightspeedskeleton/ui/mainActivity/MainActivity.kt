@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private var bottomBarAnimator: ValueAnimator? = null
 	private var bottomInsetValue = 0
 	private var lastVisitedGraph: Int? = null
+	private var firstTimeMainScreen = true
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -191,10 +192,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							lastVisitedGraph = R.navigation.nav_contacts
 						}
 						NavMainGraphModel.NavGraph.Main -> {
-							navController.setGraph(
-								R.navigation.nav_bottom_navigation
-							)
-							lastVisitedGraph = R.navigation.nav_bottom_navigation
+							Timber.tag("ASDX").d("checking notifications ${firstTimeMainScreen}")
+							if (firstTimeMainScreen) {
+								checkNotifications()
+							} else {
+								navController.setGraph(
+									R.navigation.nav_bottom_navigation
+								)
+								lastVisitedGraph = R.navigation.nav_bottom_navigation
+							}
 						}
 						NavMainGraphModel.NavGraph.Intro -> {
 							navController.setGraph(
@@ -371,6 +377,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 						NavMainGraphModel.NavGraph.ForceUpdate
 					)
 				}
+			}
+		}
+	}
+
+	private fun checkNotifications() {
+		lifecycleScope.launch {
+			firstTimeMainScreen = false
+			if (viewModel.notificationUtils.areNotificationsDisabled()) {
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.ForceNotificationPermission
+				)
+			} else {
+				viewModel.navMainGraphModel.navigateToGraph(
+					NavMainGraphModel.NavGraph.Main
+				)
 			}
 		}
 	}
