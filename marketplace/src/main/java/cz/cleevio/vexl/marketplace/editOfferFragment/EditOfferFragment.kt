@@ -291,7 +291,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 			offerType = viewModel.offer.value?.offerType ?: return,
 			expiration = binding.newOfferDeleteTrigger.getValue().toUnixTimestamp(),
 			active = active,
-			currency = binding.amountRange.currentCurrency.name,
+			currency = binding.amountRange.getCurrencyName(),
 			groupUuids = adapter.getSelectedGroupUuids()
 		)
 
