@@ -8,7 +8,7 @@ plugins {
     id 'com.google.firebase.appdistribution'
 }
 
-def buildVersionCode = Integer.parseInt(System.getenv("VERSION_CODE") ?: "1")
+def buildVersionCode = Integer.parseInt(System.getenv("VERSION_CODE") ?: "99999")
 def buildVersionName = System.getenv("VERSION_NAME") ?: "1.0.0"
 def buildUseCrashlytics = System.getenv("USE_CRASHLYTICS") ?: "false"
 def firebaseAppId = System.getenv("FIREBASE_APP_ID") ?: ""
