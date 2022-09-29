@@ -2,6 +2,7 @@ package cz.cleevio.profile.editAvatarFragment
 
 import android.Manifest
 import android.net.Uri
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -188,7 +189,11 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 					permissionOption = PhotoClickOptions.PICK_FROM_PHOTO_LIBRARY
 					requestCameraPermissions.launch(
 						arrayOf(
-							Manifest.permission.READ_EXTERNAL_STORAGE
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+								Manifest.permission.READ_MEDIA_IMAGES
+							} else {
+								Manifest.permission.READ_EXTERNAL_STORAGE
+							}
 						)
 					)
 				}
@@ -197,7 +202,11 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 					requestCameraPermissions.launch(
 						arrayOf(
 							Manifest.permission.CAMERA,
-							Manifest.permission.READ_EXTERNAL_STORAGE
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+								Manifest.permission.READ_MEDIA_IMAGES
+							} else {
+								Manifest.permission.READ_EXTERNAL_STORAGE
+							}
 						)
 					)
 				}
