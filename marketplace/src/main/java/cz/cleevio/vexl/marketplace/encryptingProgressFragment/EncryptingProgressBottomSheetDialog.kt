@@ -28,7 +28,6 @@ class EncryptingProgressBottomSheetDialog(
 	private lateinit var binding: BottomSheetDialogEncryptingProgressBinding
 	val viewModel by viewModel<EncryptingProgressViewModel> { parametersOf(offerEncryptionData) }
 
-	private var isEncryptingDone: Boolean = false
 	var numberOfAllContacts: Int = -1
 
 	override fun onCreateView(
@@ -43,16 +42,15 @@ class EncryptingProgressBottomSheetDialog(
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		updateUi()
+		updateUi(UiState.INIT)
 		viewModel.prepareEncryptedOffers()
 
 		repeatScopeOnStart {
 			viewModel.newOfferRequest.collect { resource ->
-				// Wait a while before closing the dialog
-				delay(ANIMATION_DELAY)
-
+				delay(ENCRYPTION_FINISHED_DELAY)
+				updateUi(UiState.DONE)
+				delay(DONE_DELAY)
 				offerRequest(resource)
-				dismiss()
 			}
 		}
 
@@ -66,9 +64,10 @@ class EncryptingProgressBottomSheetDialog(
 				}
 
 				if (offerWasEncryptedForNumberOfContacts == numberOfAllContacts && offerWasEncryptedForNumberOfContacts != -1) {
-					isEncryptingDone = true
+					updateUi(UiState.ENCRYPTION_FINISHED)
+				} else {
+					updateUi(UiState.INIT)
 				}
-				updateUi()
 			}
 		}
 
@@ -89,42 +88,62 @@ class EncryptingProgressBottomSheetDialog(
 		}
 	}
 
-	private fun updateUi() {
-		if (isEncryptingDone) {
-			binding.title.text = resources.getString(R.string.offer_progress_title_complete)
-			binding.numberOfVexlers.text =
-				resources.getString(
-					R.string.offer_progress_bar_title_complete,
-					"${OfferUtils.numberOfAllContacts.value}"
-				)
-			binding.subtitle.text = resources.getString(R.string.offer_progress_subtitle_complete)
+	private fun updateUi(uiState: UiState) {
+		when (uiState) {
+			UiState.INIT -> {
+				binding.title.text = resources.getString(R.string.offer_progress_title_loading)
+				binding.numberOfVexlers.text =
+					resources.getString(
+						R.string.offer_progress_bar_title,
+						"${OfferUtils.numberOfAllContacts.value}"
+					)
+				binding.percentage.text =
+					resources.getString(
+						R.string.offer_progress_bar_subtitle,
+						if (numberOfAllContacts > 0) {
+							"${(((OfferUtils.offerWasEncryptedForNumberOfContacts.value * 100.0f) / numberOfAllContacts).roundToInt())}%"
+						} else {
+							DEFAULT_PERCENTAGE
+						}
+					)
+				binding.subtitle.text = resources.getString(R.string.offer_progress_subtitle)
 
-			binding.percentage.isVisible = false
-		} else {
-			binding.title.text = resources.getString(R.string.offer_progress_title_loading)
-			binding.numberOfVexlers.text =
-				resources.getString(
-					R.string.offer_progress_bar_title,
-					"${OfferUtils.numberOfAllContacts.value}"
-				)
-			binding.percentage.text =
-				resources.getString(
-					R.string.offer_progress_bar_subtitle,
-					if (numberOfAllContacts > 0) {
-						"${(((OfferUtils.offerWasEncryptedForNumberOfContacts.value * 100.0f) / numberOfAllContacts).roundToInt())}%"
-					} else {
-						DEFAULT_PERCENTAGE
-					}
-				)
-			binding.subtitle.text = resources.getString(R.string.offer_progress_subtitle)
+				binding.percentage.isVisible = true
+			}
+			UiState.ENCRYPTION_FINISHED -> {
+				binding.percentage.text =
+					resources.getString(
+						R.string.offer_progress_bar_subtitle,
+						if (numberOfAllContacts > 0) {
+							"${(((OfferUtils.offerWasEncryptedForNumberOfContacts.value * 100.0f) / numberOfAllContacts).roundToInt())}%"
+						} else {
+							DEFAULT_PERCENTAGE
+						}
+					)
+			}
+			UiState.DONE -> {
+				binding.title.text = resources.getString(R.string.offer_progress_title_complete)
+				binding.numberOfVexlers.text =
+					resources.getString(
+						R.string.offer_progress_bar_title_complete,
+						"${OfferUtils.numberOfAllContacts.value}"
+					)
+				binding.subtitle.text = resources.getString(R.string.offer_progress_subtitle_complete)
 
-
-			binding.percentage.isVisible = true
+				binding.percentage.isVisible = false
+			}
 		}
+	}
+
+	enum class UiState {
+		INIT,
+		ENCRYPTION_FINISHED,
+		DONE
 	}
 
 	companion object {
 		private const val DEFAULT_PERCENTAGE = "0%"
-		private const val ANIMATION_DELAY = 3000L
+		private const val ENCRYPTION_FINISHED_DELAY = 500L
+		private const val DONE_DELAY = 3000L
 	}
 }
