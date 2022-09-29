@@ -38,13 +38,13 @@ class LeaveGroupBottomSheetDialog constructor(
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
-			coroutineScope.launch {
+			coroutineScope.launch(Dispatchers.IO) {
 				val response = groupRepository.leaveGroup(groupUuid)
 				when (response.status) {
 					is Status.Success -> {
-						response.data?.let {
-							if (it.offerIds.isNotEmpty() && it.publicKeys.isNotEmpty()) {
-								offerRepository.deleteOfferForPublicKeys(it)
+						response.data?.let { deleteRequestBody ->
+							if (deleteRequestBody.adminIds.isNotEmpty() && deleteRequestBody.publicKeys.isNotEmpty()) {
+								offerRepository.deleteOfferForPublicKeys(deleteRequestBody)
 							}
 						}
 						withContext(Dispatchers.Main) {
