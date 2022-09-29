@@ -49,7 +49,7 @@
 				android:paddingEnd="8dp"
 				android:paddingBottom="4dp"
 				android:textAppearance="@style/TextAppearance.Vexl.Marketplace.GroupInfo"
-				android:textColor="#530B6E"
+				android:textColor="#FF2781"
 				android:visibility="gone"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/your_offer"
