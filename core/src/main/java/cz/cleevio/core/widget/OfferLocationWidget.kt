@@ -12,6 +12,8 @@ import cz.cleevio.repository.model.offer.Location
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import timber.log.Timber
 
+const val LOCATION_LIMIT = 5
+
 class OfferLocationWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
@@ -114,8 +116,8 @@ class OfferLocationWidget @JvmOverloads constructor(
 		}
 	}
 
-	fun setValues(location: List<Location>, locationButton: LocationButtonSelected) {
-		location.forEachIndexed { index, location ->
+	fun setValues(locations: List<Location>, locationButton: LocationButtonSelected) {
+		locations.take(LOCATION_LIMIT).forEachIndexed { index, location ->
 			val item = items[index]
 			item.setValue(location)
 			item.isVisible = true
