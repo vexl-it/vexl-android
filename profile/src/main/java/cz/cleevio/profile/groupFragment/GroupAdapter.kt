@@ -2,7 +2,6 @@ package cz.cleevio.profile.groupFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +43,6 @@ class GroupAdapter constructor(
 				placeholder(R.drawable.random_avatar_5)
 			}
 
-			binding.leaveBtn.isVisible = false
 			binding.leaveBtn.setOnClickListener {
 				onLeaveGroup(item)
 			}
