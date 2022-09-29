@@ -91,10 +91,7 @@ class EncryptingProgressBottomSheetDialog(
 
 	private fun updateUi() {
 		if (isEncryptingDone) {
-			binding.title.text = resources.getString(
-				R.string.offer_progress_bar_title_complete,
-				"${OfferUtils.numberOfAllContacts.value}"
-			)
+			binding.title.text = resources.getString(R.string.offer_progress_title_complete)
 			binding.numberOfVexlers.text =
 				resources.getString(
 					R.string.offer_progress_bar_title_complete,
@@ -128,6 +125,6 @@ class EncryptingProgressBottomSheetDialog(
 
 	companion object {
 		private const val DEFAULT_PERCENTAGE = "0%"
-		private const val ANIMATION_DELAY = 500L
+		private const val ANIMATION_DELAY = 3000L
 	}
 }
