@@ -48,11 +48,11 @@ class OfferWidget @JvmOverloads constructor(
 			binding.card.groupInfo.text = resources.getString(R.string.offer_widget_groups_info, group.name)
 
 			//todo: later take sticker from group?
-			binding.card.groupSticker.load(R.drawable.ic_sticker) {
+			binding.card.groupSticker.load(R.drawable.sticker_last_shot) {
 				crossfade(true)
-				fallback(R.drawable.ic_sticker)
-				error(R.drawable.ic_sticker)
-				placeholder(R.drawable.ic_sticker)
+				fallback(R.drawable.sticker_last_shot)
+				error(R.drawable.sticker_last_shot)
+				placeholder(R.drawable.sticker_last_shot)
 			}
 		}
 		binding.card.groupInfo.isVisible = group != null
