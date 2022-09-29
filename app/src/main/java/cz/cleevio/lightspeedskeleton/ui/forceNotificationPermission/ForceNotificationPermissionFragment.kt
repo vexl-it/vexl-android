@@ -11,10 +11,12 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
+import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.lightspeedskeleton.BuildConfig
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.FragmentForceNotificationPermissionBinding
 import cz.cleevio.vexl.contacts.importContactsFragment.ImportContactsFragment
@@ -127,8 +129,20 @@ class ForceNotificationPermissionFragment : BaseFragment(R.layout.fragment_force
 	private fun checkPostNotificationsPermissions() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 			requestNotificationsPermissions.launch(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
+		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			val settingsIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+				.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().packageName)
+			startActivity(settingsIntent)
 		} else {
-			continueToNextScreen()
+			val settingsIntent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+			val uri = Uri.fromParts(
+				"package",
+				BuildConfig.APPLICATION_ID, null
+			)
+			settingsIntent.data = uri
+			startActivity(settingsIntent)
 		}
 	}
 
