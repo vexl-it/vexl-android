@@ -222,17 +222,13 @@ class OfferRepositoryImpl constructor(
 		return tryOnline(
 			request = {
 				offerApi.deleteOffersPrivatePart(
-					deletePrivatePartRequest = deletePrivatePartRequest.copy(
-						offerIds = deletePrivatePartRequest.offerIds.map { offerId ->
-							myOfferDao.getAdminIdByOfferId(offerId)
-						}
-					)
+					deletePrivatePartRequest = deletePrivatePartRequest
 				)
 			},
 			mapper = { },
 			doOnSuccess = { _ ->
 				//update `encryptedFor` for all my offers
-				deletePrivatePartRequest.offerIds.map { offerId ->
+				deletePrivatePartRequest.adminIds.map { offerId ->
 					val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
 					nullableMyOffer?.let { myOffer ->
 						val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
