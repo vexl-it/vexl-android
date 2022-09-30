@@ -65,8 +65,8 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 
 		TabLayoutMediator(binding.marketplaceTabLayout, binding.marketplaceViewpager) { tab, position ->
 			when (position) {
-				0 -> tab.setText(R.string.marketplace_buy)
-				1 -> tab.setText(R.string.marketplace_sell)
+				0 -> tab.setText(R.string.marketplace_sell)
+				1 -> tab.setText(R.string.marketplace_buy)
 				else -> tab.text = "Error"
 			}
 
