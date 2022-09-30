@@ -2,7 +2,6 @@ package cz.cleevio.vexl.contacts.di
 
 import cz.cleevio.vexl.contacts.contactsListFragment.ContactsListViewModel
 import cz.cleevio.vexl.contacts.facebookContactsListFragment.FacebookContactsListViewModel
-import cz.cleevio.vexl.contacts.finishImportFragment.FinishImportViewModel
 import cz.cleevio.vexl.contacts.importContactsFragment.ImportContactsViewModel
 import cz.cleevio.vexl.contacts.importFacebookContactsFragment.ImportFacebookContactsViewModel
 import cz.cleevio.vexl.contacts.notificationFragment.NotificationViewModel
@@ -22,6 +21,7 @@ val contactsModule = module {
 		ContactsListViewModel(
 			contactRepository = get(),
 			navMainGraphModel = get(),
+			userRepository = get(),
 			encryptedPreferenceRepository = get()
 		)
 	}
@@ -37,20 +37,16 @@ val contactsModule = module {
 	viewModel {
 		FacebookContactsListViewModel(
 			get(),
-			get()
-		)
-	}
-
-	viewModel {
-		FinishImportViewModel(
-			get(),
 			get(),
 			get()
 		)
 	}
 
 	viewModel {
-		NotificationViewModel()
+		NotificationViewModel(
+			get(),
+			get()
+		)
 	}
 
 }

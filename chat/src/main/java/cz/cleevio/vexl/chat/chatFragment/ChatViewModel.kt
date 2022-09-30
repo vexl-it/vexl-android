@@ -9,9 +9,12 @@ import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class ChatViewModel constructor(
 	private val chatRepository: ChatRepository,
@@ -88,7 +91,6 @@ class ChatViewModel constructor(
 	}
 
 	fun sendMessage(message: String) {
-		// TODO maybe show loading during sending of message to UI
 		viewModelScope.launch(Dispatchers.IO) {
 			val messageType = MessageType.MESSAGE
 			chatRepository.sendMessage(

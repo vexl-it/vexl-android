@@ -79,7 +79,7 @@ sealed class ErrorIdentification constructor(
 					message = R.string.error_user_is_blocked
 				)
 
-				// TODO parse more errors
+				// parse more errors
 				else -> Unknown(code, subcode)
 			}
 		}

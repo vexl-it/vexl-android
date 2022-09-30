@@ -64,7 +64,6 @@ interface ContactApi {
 		@Path(value = "accessToken") accessToken: String
 	): Response<ContactFacebookResponse>
 
-	//todo: delete?
 	@GET("facebook/{facebookId}/token/{accessToken}/new")
 	suspend fun getFacebookTokenNew(
 		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
@@ -72,12 +71,6 @@ interface ContactApi {
 		@Path(value = "facebookId") facebookId: String,
 		@Path(value = "accessToken") accessToken: String
 	): Response<ContactFacebookResponse>
-
-	@POST("../../temp")
-	suspend fun generateContactsTmp(
-		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
-		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
-	): Response<ResponseBody>
 
 	@POST("contacts/common")
 	suspend fun getCommonContacts(

@@ -373,27 +373,6 @@ class OfferRepositoryImpl constructor(
 				)
 			)
 		}
-		/* 	FIXME this query is not working if offer price range match second or other nested conditions then is the first one
-			It is filtered programatically at the bottom of this method
-			Maybe change query from AND/OR to BETWEEN
-
-		if (offerFilter.priceRangeBottomLimit != null && offerFilter.priceRangeTopLimit != null) {
-			queryBuilder.append(" AND (")
-			queryBuilder.append(" (amountTopLimit >= $SQL_VALUE_PLACEHOLDER AND amountTopLimit <= $SQL_VALUE_PLACEHOLDER)")
-			queryBuilder.append(" OR (amountBottomLimit >= $SQL_VALUE_PLACEHOLDER AND amountBottomLimit <= $SQL_VALUE_PLACEHOLDER)")
-			queryBuilder.append(" OR ($SQL_VALUE_PLACEHOLDER >= amountBottomLimit AND $SQL_VALUE_PLACEHOLDER <= amountTopLimit)")
-			queryBuilder.append(" OR ($SQL_VALUE_PLACEHOLDER >= amountBottomLimit AND $SQL_VALUE_PLACEHOLDER <= amountTopLimit)")
-			queryBuilder.append(" )")
-
-			values.add(offerFilter.priceRangeBottomLimit)
-			values.add(offerFilter.priceRangeTopLimit)
-			values.add(offerFilter.priceRangeBottomLimit)
-			values.add(offerFilter.priceRangeTopLimit)
-			values.add(offerFilter.priceRangeBottomLimit)
-			values.add(offerFilter.priceRangeBottomLimit)
-			values.add(offerFilter.priceRangeTopLimit)
-			values.add(offerFilter.priceRangeTopLimit)
-		}*/
 
 		queryBuilder.append(" ORDER BY createdAt DESC, isRequested ASC")
 		val simpleSQLiteQuery = SimpleSQLiteQuery(

@@ -109,6 +109,7 @@ class ChatRepositoryImpl constructor(
 			.map { messages -> messages.map { singleMessage -> singleMessage.fromCache() } }
 			.shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly, replay = 1)
 
+	//TODO: call almost this on app start
 	@Suppress("ReturnCount")
 	override suspend fun saveFirebasePushToken(token: String) {
 		//save token into DB on error
@@ -117,7 +118,6 @@ class ChatRepositoryImpl constructor(
 		val inboxKeys = getMyInboxKeys()
 
 		//update firebase token for each of them
-		//todo: ask BE for EP where we sent list of publicKeys
 		inboxKeys.forEach { inboxKey ->
 			val keyPair = getKeyPairByMyPublicKey(inboxKey) ?: return@forEach
 			val signedChallenge = refreshChallenge(keyPair) ?: return@forEach
@@ -333,11 +333,11 @@ class ChatRepositoryImpl constructor(
 			}
 		)
 
-		keyPairList.forEach {
-			val result = syncMessages(it)
+		val results = keyPairList.map {
+			syncMessages(it)
 		}
 
-		return Resource.success(Unit) // TODO think about the result status
+		return results.firstOrNull { it.isError() } ?: Resource.success(Unit)
 	}
 
 	@Suppress("ReturnCount")
@@ -357,7 +357,7 @@ class ChatRepositoryImpl constructor(
 			)
 		} else if (storeMessageAlsoWhenFails) {
 			// we save every message into DB before upload to BE
-			// TODO should we add some `uploaded` flag?
+			// TODO should we add some `uploaded` flag? Work Manager
 			chatMessageDao.insert(
 				message.toCache()
 			)

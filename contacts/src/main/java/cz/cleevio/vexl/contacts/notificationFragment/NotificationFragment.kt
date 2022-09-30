@@ -10,10 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.updatePadding
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.contacts.R
 import cz.cleevio.vexl.contacts.databinding.FragmentNotificationBinding
@@ -119,8 +117,6 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
 	}
 
 	private fun continueToNextScreen() {
-		findNavController().safeNavigateWithTransition(
-			NotificationFragmentDirections.proceedToFinishImportFragment()
-		)
+		viewModel.finishOnboardingAndNavigateToMain()
 	}
 }

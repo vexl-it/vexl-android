@@ -49,14 +49,13 @@ class ChatRequestViewModel constructor(
 	) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = chatRepository.confirmCommunicationRequest(
-				offerId = communicationRequest.offer?.offerId!!,
+				offerId = communicationRequest.offer.offerId,
 				publicKeyToConfirm = communicationRequest.message.senderPublicKey,
 				message = ChatMessage(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = communicationRequest.message.inboxPublicKey,
-					senderPublicKey = communicationRequest.offer?.offerPublicKey!!,
+					senderPublicKey = communicationRequest.offer.offerPublicKey,
 					text = text,
-					//todo: change to this
 					type = if (approve) MessageType.APPROVE_MESSAGING else MessageType.DISAPPROVE_MESSAGING,
 					recipientPublicKey = communicationRequest.message.senderPublicKey,
 					isMine = true,

@@ -37,7 +37,6 @@ class OfferLocationWidget @JvmOverloads constructor(
 			binding.locationNewFive
 		)
 
-		//todo: handle text color
 		binding.locationRadiogroup.setOnCheckedChangeListener { _, id ->
 			selectedButton = when (id) {
 				R.id.location_in_person -> LocationButtonSelected.IN_PERSON

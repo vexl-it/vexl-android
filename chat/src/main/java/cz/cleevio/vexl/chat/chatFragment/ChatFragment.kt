@@ -194,11 +194,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		binding.myOfferBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
-			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer!!)) // TODO solve double !
+			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer))
 		}
 		binding.commonFriendsBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
-			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer?.commonFriends.orEmpty()))
+			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer.commonFriends.orEmpty()))
 		}
 		binding.revealIdentityBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()

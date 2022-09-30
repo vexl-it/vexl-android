@@ -61,8 +61,6 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		Timber.tag(FIREBASE_TAG).d("publicKey $publicKey")
 		Timber.tag(FIREBASE_TAG).d("connectionLevel $connectionLevel")
 
-		//todo: do some custom stuff here, check notification type, check DB, display or not
-		//there will be more stuff when we implement group functionality
 		inbox?.let { inboxPublicKey ->
 			coroutineScope.launch {
 				chatRepository.syncMessages(inboxPublicKey)
@@ -187,7 +185,6 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	}
 }
 
-// TODO Handle app navigation according to the notification received
 enum class RemoteNotificationType {
 	UNKNOWN,
 	MESSAGE,

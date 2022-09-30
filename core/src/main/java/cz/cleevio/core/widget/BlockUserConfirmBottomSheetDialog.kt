@@ -70,9 +70,6 @@ class BlockUserConfirmBottomSheetDialog(
 								findNavController().popBackStack()
 							}
 						}
-						is Status.Error -> {
-							//todo: handle error?
-						}
 						else -> {
 							//nothing
 						}
