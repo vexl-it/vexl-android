@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.chat.chatRequestFragment
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -33,10 +34,10 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 
 		fun bind(item: CommunicationRequest) {
 			val offer = item.offer
-			val isSell = (offer?.offerType == OfferType.SELL.name && !offer.isMine)
-				|| (offer?.offerType == OfferType.BUY.name && offer.isMine)
+			val isSell = (offer.offerType == OfferType.SELL.name && !offer.isMine)
+				|| (offer.offerType == OfferType.BUY.name && offer.isMine)
 
-			val username = offer?.userName ?: RandomUtils.generateName()
+			val username = offer.userName ?: RandomUtils.generateName()
 			if (isSell) {
 				colorizeTransactionType(
 					binding.userName.resources.getString(R.string.marketplace_detail_user_sell, username),
@@ -52,22 +53,35 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 					R.color.green_100
 				)
 			}
-			binding.userType.text = if (item.offer?.friendLevel == FriendLevel.FIRST_DEGREE.name) {
+			binding.userType.text = if (item.offer.friendLevel == FriendLevel.FIRST_DEGREE.name) {
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_first)
 			} else {
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_second)
 			}
 			binding.requestMessage.text = item.message.text
-			item.offer?.let {
-				binding.offerWidget.bind(item = it, group = item.group)
-			}
-			val offerList = item.offer?.commonFriends.orEmpty().map { it.contact }
+			binding.offerWidget.bind(item = item.offer, group = item.group)
+			val offerList = item.offer.commonFriends.map { it.contact }
 			adapter.submitList(offerList)
 			binding.noneCommonFriends.isVisible = offerList.isEmpty()
 			binding.commonFriendsList.isVisible = offerList.isNotEmpty()
+			binding.arrow.isVisible = offerList.isNotEmpty()
 		}
 
 		fun initAdapter() {
+			// This listener handles removing touch events from parent view when scrolling with the child
+			binding.commonFriendsList.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+				override fun onInterceptTouchEvent(recyclerView: RecyclerView, event: MotionEvent): Boolean {
+					when (event.action) {
+						MotionEvent.ACTION_MOVE -> recyclerView.parent.requestDisallowInterceptTouchEvent(true)
+					}
+					return false
+				}
+
+				override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+				override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+			})
+
+
 			adapter = ChatRequestCommonFriendAdapter()
 			binding.commonFriendsList.adapter = adapter
 		}
