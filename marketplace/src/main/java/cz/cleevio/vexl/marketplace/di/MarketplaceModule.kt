@@ -88,7 +88,8 @@ val marketplaceModule = module {
 		FiltersViewModel(
 			offerType = offerType,
 			offerRepository = get(),
-			groupRepository = get()
+			groupRepository = get(),
+			userRepository = get()
 		)
 	}
 

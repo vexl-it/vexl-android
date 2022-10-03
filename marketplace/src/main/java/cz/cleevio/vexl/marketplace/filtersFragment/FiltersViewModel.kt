@@ -11,6 +11,7 @@ import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.repository.model.offer.OfferFilter
 import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
+import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -24,8 +25,11 @@ import kotlinx.coroutines.launch
 class FiltersViewModel constructor(
 	private val offerType: OfferType,
 	private val offerRepository: OfferRepository,
-	private val groupRepository: GroupRepository
+	private val groupRepository: GroupRepository,
+	private val userRepository: UserRepository,
 ) : BaseViewModel() {
+
+	val userFlow = userRepository.getUserFlow()
 
 	private val _queryForSuggestions =
 		MutableStateFlow<Pair<OfferLocationItem?, String>>(Pair(null, ""))

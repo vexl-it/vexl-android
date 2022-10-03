@@ -144,6 +144,14 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		super.bindObservers()
 
 		repeatScopeOnStart {
+			filterViewModel.userFlow.collect {
+				it?.let { user ->
+					binding.friendLevel.setUserAvatar(user.avatar, user.anonymousAvatarImageIndex)
+				}
+			}
+		}
+
+		repeatScopeOnStart {
 			filterViewModel.suggestions.collect { (offerLocationItem, queries) ->
 				if (queries.isEmpty()) return@collect
 				if (queries.map { it.cityText }.contains(offerLocationItem?.getEditText()?.text.toString())) {
