@@ -2,7 +2,6 @@ package cz.cleevio.vexl.marketplace.marketplaceFragment
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import cz.cleevio.core.model.OfferType
 import cz.cleevio.vexl.marketplace.marketplaceFragment.offers.OffersBuyFragment
 import cz.cleevio.vexl.marketplace.marketplaceFragment.offers.OffersSellFragment
 import timber.log.Timber
@@ -18,11 +17,11 @@ class MarketplacePagerAdapter constructor(
 	override fun createFragment(position: Int): Fragment {
 		return when (position) {
 			0 -> {
-				OffersBuyFragment()
+				OffersSellFragment()
 			}
 
 			1 -> {
-				OffersSellFragment()
+				OffersBuyFragment()
 			}
 
 			else -> {
