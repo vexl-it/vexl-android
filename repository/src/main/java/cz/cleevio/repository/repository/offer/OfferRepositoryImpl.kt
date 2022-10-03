@@ -7,6 +7,7 @@ import cz.cleevio.cache.dao.*
 import cz.cleevio.cache.entity.ChatUserIdentityEntity
 import cz.cleevio.cache.entity.MyOfferEntity
 import cz.cleevio.cache.entity.OfferCommonFriendCrossRef
+import cz.cleevio.cache.entity.ReportedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.LocationApi
 import cz.cleevio.network.api.OfferApi
@@ -35,6 +36,7 @@ class OfferRepositoryImpl constructor(
 	private val myOfferDao: MyOfferDao,
 	private val offerDao: OfferDao,
 	private val requestedOfferDao: RequestedOfferDao,
+	private val reportedOfferDao: ReportedOfferDao,
 	private val locationDao: LocationDao,
 	private val contactDao: ContactDao,
 	private val offerCommonFriendCrossRefDao: OfferCommonFriendCrossRefDao,
@@ -164,7 +166,12 @@ class OfferRepositoryImpl constructor(
 				)
 			)
 		},
-		mapper = { it?.fromNetwork(cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache()) },
+		mapper = {
+			it?.fromNetwork(
+				cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
+				reportedOfferIds = reportedOfferDao.listAllIds()
+			)
+		},
 		doOnSuccess = { nullableOffer ->
 			//update `encryptedFor` field in myOfferDao with contactsPublicKeys
 			val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
@@ -191,9 +198,11 @@ class OfferRepositoryImpl constructor(
 			offerApi.getOffersMe()
 		},
 		mapper = {
+			val reportedOfferIds = reportedOfferDao.listAllIds()
 			it?.items?.map { item ->
 				item.fromNetwork(
-					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache()
+					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
+					reportedOfferIds = reportedOfferIds
 				)
 			}
 		}
@@ -410,7 +419,6 @@ class OfferRepositoryImpl constructor(
 		}
 	}
 
-
 	override suspend fun syncOffers() {
 		val newOffers = getNewOffers()
 		if (newOffers.isSuccess()) overwriteOffers(newOffers.data.orEmpty())
@@ -498,7 +506,15 @@ class OfferRepositoryImpl constructor(
 		request = {
 			offerApi.getModifiedOffers(0, Int.MAX_VALUE, "1970-01-01T00:00:00.000Z")
 		},
-		mapper = { it?.items?.map { item -> item.fromNetwork(cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache()) } }
+		mapper = {
+			val reportedOfferIds = reportedOfferDao.listAllIds()
+			it?.items?.map { item ->
+				item.fromNetwork(
+					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
+					reportedOfferIds = reportedOfferIds
+				)
+			}
+		}
 	)
 
 	override suspend fun getMyOffersWithoutInbox(): List<MyOffer> =
@@ -536,6 +552,7 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun clearOfferTables() {
 		requestedOfferDao.clearTable()
+		reportedOfferDao.clearTable()
 		offerDao.clearTable()
 		offerCommonFriendCrossRefDao.clearTable()
 		myOfferDao.clearTable()
@@ -547,6 +564,23 @@ class OfferRepositoryImpl constructor(
 		return offerDao.getOfferById(offerId = offerId).let {
 			it?.offer?.fromCache(it.locations, it.commonFriends, chatUserDao)
 		}
+	}
+
+	override suspend fun reportOffer(offerId: String): Resource<Unit> {
+		return tryOnline(
+			request = {
+				//todo: this is dummy request, connect to BE when BE ready
+				offerApi.getOffersMe()
+			},
+			mapper = { },
+			doOnSuccess = { _ ->
+				reportedOfferDao.insert(
+					ReportedOfferEntity(offerId = offerId)
+				)
+
+				syncOffers()
+			}
+		)
 	}
 
 	private fun sqlLikeOperator(fieldName: String, data: List<Any>): String {

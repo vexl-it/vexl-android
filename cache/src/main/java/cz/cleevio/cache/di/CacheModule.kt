@@ -65,6 +65,10 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().reportedOfferDao()
+	}
+
+	single {
 		get<CleevioDatabase>().offerCommonFriendCrossRefDao()
 	}
 

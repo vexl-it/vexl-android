@@ -33,6 +33,7 @@ val repoModule = module {
 			locationDao = get(),
 			transactionProvider = get(),
 			requestedOfferDao = get(),
+			reportedOfferDao = get(),
 			contactDao = get(),
 			offerCommonFriendCrossRefDao = get(),
 			chatRepository = get(),
