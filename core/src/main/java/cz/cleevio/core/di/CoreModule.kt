@@ -79,6 +79,10 @@ val coreModule = module {
 	}
 
 	single {
+		LogUtils()
+	}
+
+	single {
 		provideMarkwon(get())
 	}
 }

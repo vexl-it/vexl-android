@@ -29,6 +29,7 @@ import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
@@ -119,6 +120,12 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		repeatScopeOnStart {
 			profileViewModel.encryptedPreferenceRepository.numberOfImportedContactsFlow.collect { contacts ->
 				binding.profileContacts.setSubtitle(getString(R.string.profile_import_contacts_subtitle, contacts.toString()))
+			}
+		}
+
+		repeatScopeOnStart {
+			profileViewModel.logs.collect { logs ->
+				Timber.tag("LOGS").d("$logs")
 			}
 		}
 	}
