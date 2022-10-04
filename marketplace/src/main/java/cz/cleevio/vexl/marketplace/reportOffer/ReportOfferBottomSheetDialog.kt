@@ -37,6 +37,8 @@ class ReportOfferBottomSheetDialog(
 		binding.confirmBtn.setDebouncedOnClickListener {
 			requireDialog().setCancelable(false)
 			requireDialog().setCanceledOnTouchOutside(false)
+			binding.backBtn.setOnClickListener(null)
+			binding.confirmBtn.setOnClickListener(null)
 			viewModel.reportOffer()
 			showProgressIndicator(true)
 		}
