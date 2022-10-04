@@ -45,7 +45,7 @@ class EncryptingProgressBottomSheetDialog(
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)a
+		super.onViewCreated(view, savedInstanceState)
 
 		updateUi(UiState.INIT)
 		viewModel.prepareEncryptedOffers()
