@@ -54,7 +54,7 @@ data class Offer constructor(
 	var userAvatarId: Int? = null,
 ) : Parcelable
 
-fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?): Offer {
+fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?, reportedOfferIds: List<String>): Offer {
 	return Offer(
 		offerId = this.offerId,
 		location = this.location.map { it.decryptedValue.fromNetwork() },
@@ -79,17 +79,26 @@ fun OfferUnifiedResponse.fromNetwork(cryptoCurrencyValues: CryptoCurrencyValues?
 		commonFriends = this.commonFriends.map { CommonFriend(it.decryptedValue) },
 		createdAt = ZonedDateTime.parse(this.createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")),
 		modifiedAt = ZonedDateTime.parse(this.modifiedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
-	).let { offer ->
+	).let { unprocessedOffer ->
 
+		var offer = unprocessedOffer
 		// if we have paused offer (active == false), skip trigger code block
 		if (cryptoCurrencyValues != null && offer.active) {
 			val currentCurrencyValue = cryptoCurrencyValues.getPrice(offer.activePriceCurrency)
 			if (offer.activePriceState == PriceTriggerType.PRICE_IS_ABOVE.name) {
-				return@let offer.copy(active = currentCurrencyValue > offer.activePriceValue)
+				offer = offer.copy(active = currentCurrencyValue > offer.activePriceValue)
 			}
 
 			if (offer.activePriceState == PriceTriggerType.PRICE_IS_BELOW.name) {
-				return@let offer.copy(active = currentCurrencyValue < offer.activePriceValue)
+				offer = offer.copy(active = currentCurrencyValue < offer.activePriceValue)
+			}
+		}
+
+		// if we have paused offer (active == false), skip reported offer block
+		if (offer.active) {
+			//reported offers should not be active
+			if (reportedOfferIds.contains(offer.offerId)) {
+				offer = offer.copy(active = false)
 			}
 		}
 

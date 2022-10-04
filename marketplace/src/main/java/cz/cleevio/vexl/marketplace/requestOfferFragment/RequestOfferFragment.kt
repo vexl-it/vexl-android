@@ -12,12 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.marketplace.R
 import cz.cleevio.vexl.marketplace.databinding.FragmentRequestOfferBinding
+import cz.cleevio.vexl.marketplace.reportOffer.ReportOfferBottomSheetDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -107,6 +109,14 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 					}
 				}
 			}
+		}
+
+		binding.reportOffer.setDebouncedOnClickListener {
+			viewModel.offer.value?.offer?.offerId?.let {
+				showBottomDialog(
+					ReportOfferBottomSheetDialog(it)
+				)
+			} ?: Toast.makeText(requireContext(), getString(R.string.error_no_offer_id_found), Toast.LENGTH_SHORT).show()
 		}
 
 		binding.close.setOnClickListener {

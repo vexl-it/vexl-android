@@ -18,6 +18,7 @@ import cz.cleevio.cache.entity.*
 		OfferEntity::class,
 		OfferCommonFriendCrossRef::class,
 		RequestedOfferEntity::class,
+		ReportedOfferEntity::class,
 		LocationEntity::class,
 		ChatContactEntity::class,
 		ChatMessageEntity::class,
@@ -26,9 +27,10 @@ import cz.cleevio.cache.entity.*
 		ChatUserIdentityEntity::class,
 		CryptoCurrencyEntity::class,
 	],
-	version = 2,
+	version = 3,
 	autoMigrations = [
-		AutoMigration(from = 1, to = 2)
+		AutoMigration(from = 1, to = 2),
+		AutoMigration(from = 2, to = 3),
 	],
 	exportSchema = true
 )
@@ -49,6 +51,7 @@ abstract class CleevioDatabase : RoomDatabase() {
 	abstract fun chatUserDao(): ChatUserDao
 	abstract fun notificationDao(): NotificationDao
 	abstract fun requestedOfferDao(): RequestedOfferDao
+	abstract fun reportedOfferDao(): ReportedOfferDao
 	abstract fun offerCommonFriendCrossRefDao(): OfferCommonFriendCrossRefDao
 	abstract fun groupDao(): GroupDao
 	abstract fun cryptoCurrencyDao(): CryptoCurrencyDao

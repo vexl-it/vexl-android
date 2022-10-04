@@ -760,4 +760,14 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="force_update_button">Update now</string>
 
     <!-- Maintenance -->
+
+    <!-- Report offer -->
+    <string name="report_offer_modal_title">Report offer?</string>
+    <string name="report_offer_modal_subtitle">Do you really want to report this offer? You will never be able to undo this action. Choose wisley.</string>
+    <string name="report_offer_modal_button_yes">Yes, report</string>
+    <string name="report_offer_modal_button_no">Nope</string>
+    <string name="report_offer_confirmation_modal_title">Thank you!</string>
+    <string name="report_offer_confirmation_modal_subtitle">Inappropriate content was anonymously reported.</string>
+    <string name="report_offer_confirmation_modal_button">Continue</string>
+    <string name="error_no_offer_id_found">Report offer failed. No offer with this ID found</string>
 </resources>
