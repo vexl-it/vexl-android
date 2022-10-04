@@ -45,29 +45,11 @@ class ReportOfferBottomSheetDialog(
 		}
 
 		repeatScopeOnStart {
-			viewModel.offerRequest.collect { resource ->
-				when (resource.status) {
-					is Status.Success -> {
-						showProgressIndicator(false)
-						val dialog = ReportOfferConfirmBottomSheetDialog()
-						dismiss()
-						dialog.show(parentFragmentManager, dialog.javaClass.simpleName)
-					}
-					is Status.Error -> {
-						showProgressIndicator(false)
-						//show error toast
-						resource.errorIdentification.message?.let { messageCode ->
-							if (messageCode != -1) {
-								showSnackbar(
-									view = binding.reportOfferWrapper,
-									message = getString(messageCode)
-								)
-							}
-						}
-						dismiss()
-					}
-					else -> Unit
-				}
+			viewModel.offerRequest.collect {
+				showProgressIndicator(false)
+				val dialog = ReportOfferConfirmBottomSheetDialog()
+				dismiss()
+				dialog.show(parentFragmentManager, dialog.javaClass.simpleName)
 			}
 		}
 	}
