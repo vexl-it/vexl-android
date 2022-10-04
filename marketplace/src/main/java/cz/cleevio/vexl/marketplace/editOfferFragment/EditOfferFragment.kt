@@ -13,6 +13,7 @@ import cz.cleevio.core.model.PriceTriggerValue
 import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
 import cz.cleevio.network.data.Status
@@ -265,7 +266,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferLocation.setFragmentManager(parentFragmentManager)
 		binding.newOfferDeleteTrigger.setFragmentManager(parentFragmentManager)
 
-		binding.newOfferBtn.setOnClickListener {
+		binding.newOfferBtn.setDebouncedOnClickListener {
 			updateOffer(true)
 		}
 
