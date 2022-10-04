@@ -1,8 +1,10 @@
 package cz.cleevio.profile.editAvatarFragment
 
 import android.Manifest
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.util.Base64
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -114,21 +116,37 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 			viewModel.userFlow.collect { user ->
 				setAvatarIconsVisibility(isVisible = user?.avatar != null || user?.anonymousAvatarImageIndex != null)
 
-				if (user?.avatar != null) {
-					binding.editAvatarImage.load(user.avatar) {
-						crossfade(true)
-						fallback(R.drawable.ic_profile_avatar_placeholder)
-						error(R.drawable.ic_profile_avatar_placeholder)
-						placeholder(R.drawable.ic_profile_avatar_placeholder)
+				when (user?.avatarBase64 == null) {
+					true -> {
+						if (user?.avatar != null) {
+							binding.editAvatarImage.load(user.avatar) {
+								crossfade(true)
+								fallback(R.drawable.ic_profile_avatar_placeholder)
+								error(R.drawable.ic_profile_avatar_placeholder)
+								placeholder(R.drawable.ic_profile_avatar_placeholder)
+							}
+						} else {
+							val anonymousImageIndex = user?.anonymousAvatarImageIndex
+							if (anonymousImageIndex != null) {
+								binding.editAvatarImage.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
+									crossfade(true)
+									fallback(R.drawable.random_avatar_3)
+									error(R.drawable.random_avatar_3)
+									placeholder(R.drawable.random_avatar_3)
+								}
+							}
+						}
 					}
-				} else {
-					val anonymousImageIndex = user?.anonymousAvatarImageIndex
-					if (anonymousImageIndex != null) {
-						binding.editAvatarImage.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
-							crossfade(true)
-							fallback(R.drawable.random_avatar_3)
-							error(R.drawable.random_avatar_3)
-							placeholder(R.drawable.random_avatar_3)
+					false -> {
+						user?.avatarBase64?.let {
+							val decodedBase64 = Base64.decode(it, Base64.DEFAULT)
+							val decodedBitmap = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.size)
+							binding.editAvatarImage.load(decodedBitmap) {
+								crossfade(true)
+								fallback(R.drawable.ic_profile_avatar_placeholder)
+								error(R.drawable.ic_profile_avatar_placeholder)
+								placeholder(R.drawable.ic_profile_avatar_placeholder)
+							}
 						}
 					}
 				}
@@ -225,6 +243,7 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 	}
 
 	private fun setupPhotoListener() {
+		//todo check update
 		setFragmentResultListener(TakePhotoFragment.RESULT_CAMERA_RESULT) { _, bundle ->
 			viewModel.processTakingPhotoResult(TakePhotoResult.fromBundle(bundle))
 		}

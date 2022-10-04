@@ -76,12 +76,13 @@ class UserRepositoryImpl constructor(
 
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified
 
-	override suspend fun createUser(user: User) {
+	override suspend fun createUser(user: User, avatarBase64: String?) {
 		userDao.deleteAll()
 		userDao.insert(
 			UserEntity(
 				username = user.username,
 				avatar = user.avatar,
+				avatarBase64 = avatarBase64,
 				publicKey = user.publicKey
 			)
 		)
@@ -94,6 +95,7 @@ class UserRepositoryImpl constructor(
 				username = user.username,
 				anonymousUsername = user.anonymousUsername,
 				avatar = user.avatar,
+				avatarBase64 = user.avatarBase64,
 				anonymousAvatarImageIndex = user.anonymousAvatarImageIndex,
 				publicKey = user.publicKey,
 				finishedOnboarding = true
@@ -114,15 +116,16 @@ class UserRepositoryImpl constructor(
 		val user = userDao.getUser() ?: return null
 		return UserProfile(
 			fullname = user.username,
-			photoUrl = user.avatar
+			avatar = user.avatar,
+			avatarBase64 = user.avatarBase64
 		)
 	}
 
-	override suspend fun registerUser(request: UserRequest): Resource<User> {
+	override suspend fun registerUser(request: UserRequest, avatarBase64: String?): Resource<User> {
 		return tryOnline(
 			doOnSuccess = {
 				it?.let {
-					createUser(it)
+					createUser(user = it, avatarBase64 = avatarBase64)
 				}
 			},
 			mapper = {
@@ -141,7 +144,7 @@ class UserRepositoryImpl constructor(
 			doOnSuccess = {
 				it?.let {
 					val isLocalUserOnboarded = userDao.getUser()?.finishedOnboarding == true
-					updateUser(it.copy(finishedOnboarding = isLocalUserOnboarded))
+					updateUser(user = it.copy(finishedOnboarding = isLocalUserOnboarded), avatarBase64 = avatar)
 				}
 			},
 			mapper = {
@@ -149,6 +152,8 @@ class UserRepositoryImpl constructor(
 			},
 			request = {
 				if (avatar != null && avatarImageExtension != null) {
+					// todo do not send base 64 to the BE only URL info should be there
+					// TODO VEX-1132: Even after removing avatar from update request we need to propagate the avatar.data because it contains base64 encoded image
 					userRestApi.putUserMe(
 						UserRequest(
 							username = null,
@@ -198,13 +203,14 @@ class UserRepositoryImpl constructor(
 		}
 	}
 
-	private suspend fun updateUser(user: User) {
+	private suspend fun updateUser(user: User, avatarBase64: String?) {
 		userDao.update(
 			UserEntity(
 				id = getUserId() ?: 0,
 				username = user.username,
 				anonymousUsername = userDao.getUser()?.anonymousUsername,
 				avatar = user.avatar,
+				avatarBase64 = avatarBase64 ?: user.avatarBase64, // If there's new local avatar replace it
 				anonymousAvatarImageIndex = userDao.getUser()?.anonymousAvatarImageIndex,
 				publicKey = user.publicKey,
 				finishedOnboarding = user.finishedOnboarding

@@ -32,7 +32,8 @@ data class ChatMessage constructor(
 @Parcelize
 data class ChatUser constructor(
 	val name: String?,
-	val image: String?
+	val image: String?,
+	val imageBase64: String?
 ) : Parcelable
 
 enum class MessageType {
@@ -112,14 +113,16 @@ fun ChatMessage.toNetwork(receiverPublicKey: String): String {
 fun ChatUser.toNetwork(): ChatUserRequest {
 	return ChatUserRequest(
 		name = this.name,
-		image = this.image
+		image = this.image,
+		imageBase64 = this.imageBase64
 	)
 }
 
 fun ChatUserRequest.fromNetwork(): ChatUser {
 	return ChatUser(
 		name = this.name,
-		image = this.image
+		image = this.image,
+		imageBase64 = this.imageBase64
 	)
 }
 
@@ -138,9 +141,10 @@ fun ChatMessage.toCache(): ChatMessageEntity = ChatMessageEntity(
 	isProcessed = this.isProcessed
 )
 
+// FixMe VEX-1132: Check how to use imageBase64 in the chat message instead of URL image
 fun ChatMessageEntity.fromCache(): ChatMessage {
 	val chatUser = if (this.deAnonName != null && this.deAnonImage != null) {
-		ChatUser(name = this.deAnonName, image = this.deAnonImage)
+		ChatUser(name = this.deAnonName, image = this.deAnonImage, imageBase64 = this.deAnonImage)
 	} else {
 		null
 	}

@@ -14,5 +14,6 @@ data class ChatMessageRequest constructor(
 @JsonClass(generateAdapter = true)
 data class ChatUserRequest constructor(
 	val name: String?,
-	val image: String?
+	val image: String?,
+	val imageBase64: String?
 )
