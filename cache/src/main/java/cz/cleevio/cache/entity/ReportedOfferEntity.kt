@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class ReportedOfferEntity constructor(
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
-	val offerId: String,
+	val offerId: String
 )

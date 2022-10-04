@@ -5,7 +5,7 @@
 	android:layout_height="wrap_content">
 
 	<com.google.android.material.card.MaterialCardView
-		android:id="@+id/common_friends_wrapper"
+		android:id="@+id/delete_chat_wrapper"
 		style="@style/Widget.Vexl.CardView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 		app:layout_constraintEnd_toStartOf="@id/confirm_btn"
 		app:layout_constraintHorizontal_weight="0.5"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/common_friends_wrapper" />
+		app:layout_constraintTop_toBottomOf="@id/delete_chat_wrapper" />
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/confirm_btn"
@@ -87,6 +87,6 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_weight="0.5"
 		app:layout_constraintStart_toEndOf="@id/back_btn"
-		app:layout_constraintTop_toBottomOf="@id/common_friends_wrapper" />
+		app:layout_constraintTop_toBottomOf="@id/delete_chat_wrapper" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

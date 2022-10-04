@@ -12,6 +12,8 @@ import cz.cleevio.vexl.marketplace.marketplaceFragment.NavMarketplaceGraphModel
 import cz.cleevio.vexl.marketplace.marketplaceFragment.offers.OffersViewModel
 import cz.cleevio.vexl.marketplace.myOffersFragment.MyOffersViewModel
 import cz.cleevio.vexl.marketplace.newOfferFragment.NewOfferViewModel
+import cz.cleevio.vexl.marketplace.reportOffer.ReportOfferConfirmViewModel
+import cz.cleevio.vexl.marketplace.reportOffer.ReportOfferViewModel
 import cz.cleevio.vexl.marketplace.requestOfferFragment.RequestOfferViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -98,6 +100,20 @@ val marketplaceModule = module {
 			offerType = offerType,
 			offerRepository = get(),
 			groupRepository = get(),
+		)
+	}
+
+	viewModel { (offerId: String) ->
+		ReportOfferViewModel(
+			offerId = offerId,
+			offerRepository = get()
+		)
+	}
+
+
+	viewModel {
+		ReportOfferConfirmViewModel(
+			navMainGraphModel = get()
 		)
 	}
 

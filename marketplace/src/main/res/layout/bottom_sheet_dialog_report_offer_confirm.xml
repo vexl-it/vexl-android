@@ -5,7 +5,7 @@
 	android:layout_height="wrap_content">
 
 	<com.google.android.material.card.MaterialCardView
-		android:id="@+id/leave_group_wrapper"
+		android:id="@+id/report_offer_thank_you_wrapper"
 		style="@style/Widget.Vexl.CardView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -20,11 +20,12 @@
 			android:layout_margin="16dp">
 
 			<ImageView
-				android:id="@+id/logo"
-				android:layout_width="140dp"
-				android:layout_height="140dp"
-				android:layout_marginTop="48dp"
-				android:src="@drawable/ic_leave_group"
+				android:id="@+id/animation"
+				android:layout_width="match_parent"
+				android:layout_height="220dp"
+				android:background="@android:color/transparent"
+				android:contentDescription="?content"
+				android:src="@drawable/ic_report_offer_confirm"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -33,20 +34,19 @@
 				android:id="@+id/title"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="48dp"
-				android:text="@string/groups_leave_group_title"
+				android:text="@string/report_offer_confirmation_modal_title"
 				android:textAppearance="@style/TextAppearance.Vexl.SubScreenHeading"
 				android:textColor="@color/black"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/logo" />
+				app:layout_constraintTop_toBottomOf="@id/animation" />
 
 			<TextView
-				android:id="@+id/friends_list"
+				android:id="@+id/subtitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="16dp"
-				android:text="@string/groups_leave_group_description"
+				android:text="@string/report_offer_confirmation_modal_subtitle"
 				android:textAppearance="@style/TextAppearance.Vexl.Description"
 				android:textColor="@color/gray_2"
 				app:layout_constraintEnd_toEndOf="parent"
@@ -58,35 +58,17 @@
 	</com.google.android.material.card.MaterialCardView>
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/back_btn"
-		style="@style/Widget.Vexl.Chat.ActionButton.LeaveGroup.Back"
-		android:layout_width="0dp"
+		android:id="@+id/continue_btn"
+		style="@style/Widget.Vexl.Onboarding.BottomButton"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="8dp"
 		android:layout_marginTop="8dp"
 		android:layout_marginEnd="4dp"
 		android:layout_marginBottom="4dp"
-		android:text="@string/groups_leave_group_no"
+		android:text="@string/report_offer_confirmation_modal_button"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/confirm_btn"
 		app:layout_constraintHorizontal_weight="0.5"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/common_friends_wrapper" />
-
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/confirm_btn"
-		style="@style/Widget.Vexl.Chat.ActionButton.LeaveGroup.Leave"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="4dp"
-		android:layout_marginTop="8dp"
-		android:layout_marginEnd="8dp"
-		android:layout_marginBottom="4dp"
-		android:text="@string/groups_leave_group_yes"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_weight="0.5"
-		app:layout_constraintStart_toEndOf="@id/back_btn"
-		app:layout_constraintTop_toBottomOf="@id/common_friends_wrapper" />
+		app:layout_constraintTop_toBottomOf="@id/report_offer_thank_you_wrapper" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
