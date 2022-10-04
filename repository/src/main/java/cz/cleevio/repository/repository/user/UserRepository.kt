@@ -38,6 +38,8 @@ interface UserRepository {
 
 	suspend fun registerUser(request: UserRequest): Resource<User>
 
+	suspend fun saveUsernameAndAvatar(request: UserRequest): Resource<User>
+
 	//----------------------------------
 
 	suspend fun updateUser(

@@ -79,7 +79,9 @@ class AnonymizeUserViewModel constructor(
 				avatar = avatar
 			)
 
+			// todo save into database
 			val registerUserResponse = userRepository.registerUser(request)
+			userRepository.saveUsernameAndAvatar(request)
 
 			if (registerUserResponse.isError()) {
 				_registerUserChannel.send(registerUserResponse)

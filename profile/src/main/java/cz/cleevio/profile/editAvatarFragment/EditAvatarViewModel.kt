@@ -30,6 +30,7 @@ class EditAvatarViewModel constructor(
 			val profileUri = profileImageUri.value
 
 			if (profileUri != null) {
+				// todo only into the DB
 				userRepository.updateUser(
 					avatar = super.getAvatarData(profileUri, contentResolver),
 					avatarImageExtension = IMAGE_EXTENSION
