@@ -18,5 +18,6 @@ data class UserEntity constructor(
 ) {
 	override fun toString(): String =
 		"User(id='$id', username='$username', anonymousUsername='$anonymousUsername', " +
-			"avatar='$avatar', avatarBase64='$avatarBase64', anonymousAvatarImageIndex='$anonymousAvatarImageIndex', finishedOnboarding='$finishedOnboarding')"
+			"avatar='$avatar', avatarBase64='$avatarBase64', anonymousAvatarImageIndex='$anonymousAvatarImageIndex'," +
+			" finishedOnboarding='$finishedOnboarding')"
 }

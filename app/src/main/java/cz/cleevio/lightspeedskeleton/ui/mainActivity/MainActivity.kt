@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private var bottomInsetValue = 0
 	private var lastVisitedGraph: Int? = null
 
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
