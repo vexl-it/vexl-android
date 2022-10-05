@@ -760,4 +760,12 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <!-- Maintenance -->
 
     <!-- Report offer -->
+    <string name="report_offer_modal_title">Najhlásiť nabídku?</string>
+    <string name="report_offer_modal_subtitle">Skutočne chcete nahlásiť túto ponuku? Táto akcia je nevratná.</string>
+    <string name="report_offer_modal_button_yes">Ano, nahlásiť</string>
+    <string name="report_offer_modal_button_no">Nie</string>
+    <string name="report_offer_confirmation_modal_title">Vďaka!</string>
+    <string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah bol anonymne nahlásený.</string>
+    <string name="report_offer_confirmation_modal_button">Pokračovať</string>
+    <string name="error_no_offer_id_found">Akcia zlyhala. ID tejto ponuky neexistuje.</string>
 </resources>
