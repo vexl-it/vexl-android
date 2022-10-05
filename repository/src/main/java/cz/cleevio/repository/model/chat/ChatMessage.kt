@@ -137,14 +137,14 @@ fun ChatMessage.toCache(): ChatMessageEntity = ChatMessageEntity(
 	time = this.time,
 	deAnonName = this.deanonymizedUser?.name,
 	deAnonImage = this.deanonymizedUser?.image,
+	deAnonImageBase64 = this.deanonymizedUser?.imageBase64,
 	isMine = this.isMine,
 	isProcessed = this.isProcessed
 )
 
-// FixMe VEX-1132: Check how to use imageBase64 in the chat message instead of URL image
 fun ChatMessageEntity.fromCache(): ChatMessage {
-	val chatUser = if (this.deAnonName != null && this.deAnonImage != null) {
-		ChatUser(name = this.deAnonName, image = this.deAnonImage, imageBase64 = this.deAnonImage)
+	val chatUser = if (this.deAnonName != null && (this.deAnonImage != null || this.deAnonImageBase64 != null)) {
+		ChatUser(name = this.deAnonName, image = this.deAnonImage, imageBase64 = this.deAnonImageBase64)
 	} else {
 		null
 	}

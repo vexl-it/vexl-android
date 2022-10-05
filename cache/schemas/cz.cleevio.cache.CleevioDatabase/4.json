@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "282d437ce3a2f1105ba35756505361d2",
+    "identityHash": "b928e528157b4080586a964b32941707",
     "entities": [
       {
         "tableName": "UserEntity",
@@ -649,7 +649,7 @@
       },
       {
         "tableName": "ChatMessageEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `extId` TEXT NOT NULL, `inboxPublicKey` TEXT NOT NULL, `senderPublicKey` TEXT NOT NULL, `recipientPublicKey` TEXT NOT NULL, `text` TEXT, `image` TEXT, `type` TEXT NOT NULL, `time` INTEGER NOT NULL, `deAnonName` TEXT, `deAnonImage` TEXT, `isMine` INTEGER NOT NULL, `isProcessed` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `extId` TEXT NOT NULL, `inboxPublicKey` TEXT NOT NULL, `senderPublicKey` TEXT NOT NULL, `recipientPublicKey` TEXT NOT NULL, `text` TEXT, `image` TEXT, `type` TEXT NOT NULL, `time` INTEGER NOT NULL, `deAnonName` TEXT, `deAnonImage` TEXT, `deAnonImageBase64` TEXT, `isMine` INTEGER NOT NULL, `isProcessed` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -714,6 +714,12 @@
           {
             "fieldPath": "deAnonImage",
             "columnName": "deAnonImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "deAnonImageBase64",
+            "columnName": "deAnonImageBase64",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -861,7 +867,7 @@
       },
       {
         "tableName": "ChatUserIdentityEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `contactPublicKey` TEXT NOT NULL, `inboxKey` TEXT NOT NULL, `name` TEXT, `anonymousUsername` TEXT, `avatar` TEXT, `anonymousAvatarImageIndex` INTEGER, `deAnonymized` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `contactPublicKey` TEXT NOT NULL, `inboxKey` TEXT NOT NULL, `name` TEXT, `anonymousUsername` TEXT, `avatar` TEXT, `avatarBase64` TEXT, `anonymousAvatarImageIndex` INTEGER, `deAnonymized` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -896,6 +902,12 @@
           {
             "fieldPath": "avatar",
             "columnName": "avatar",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "avatarBase64",
+            "columnName": "avatarBase64",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -974,7 +986,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '282d437ce3a2f1105ba35756505361d2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b928e528157b4080586a964b32941707')"
     ]
   }
 }

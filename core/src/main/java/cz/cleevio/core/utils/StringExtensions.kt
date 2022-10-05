@@ -1,8 +1,11 @@
 package cz.cleevio.core.utils
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.util.Base64
 import java.text.Normalizer
 import java.util.*
 
@@ -23,6 +26,11 @@ fun String.toValidPhoneNumber(): String {
 
 fun String.isPhoneValid(): Boolean =
 	this.matches("^[+][0-9]{10,13}$".toRegex())
+
+fun String.getBitmap(): Bitmap {
+	val decodedBase64 = Base64.decode(this, Base64.DEFAULT)
+	return BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.size)
+}
 
 @Suppress("DEPRECATION")
 fun fromHtml(text: String): Spanned {

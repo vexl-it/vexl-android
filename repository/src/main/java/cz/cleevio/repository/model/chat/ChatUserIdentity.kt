@@ -9,6 +9,7 @@ data class ChatUserIdentity(
 	val name: String? = null,
 	val anonymousUsername: String? = null,
 	val avatar: String? = null,
+	val avatarBase64: String? = null,
 	val anonymousAvatarImageIndex: Int? = null,
 	val deAnonymized: Boolean
 )
@@ -21,6 +22,7 @@ fun ChatUserIdentityEntity.fromCache(): ChatUserIdentity {
 		name = this.name,
 		anonymousUsername = this.anonymousUsername,
 		avatar = this.avatar,
+		avatarBase64 = this.avatarBase64,
 		anonymousAvatarImageIndex = this.anonymousAvatarImageIndex,
 		deAnonymized = this.deAnonymized
 	)

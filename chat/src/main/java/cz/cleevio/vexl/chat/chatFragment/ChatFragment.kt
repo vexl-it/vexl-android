@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.load
+import coil.loadAny
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.*
@@ -63,13 +64,13 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				val isDeanonymized = chatUserIdentity?.deAnonymized == true
 
 				if (isDeanonymized) {
-					binding.profileImage.load(chatUserIdentity?.avatar) {
+					binding.profileImage.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
 						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
-					binding.identityRevealRequestedIcon.load(chatUserIdentity?.avatar) {
+					binding.identityRevealRequestedIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
 						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
-					binding.identityRevealSentIcon.load(chatUserIdentity?.avatar) {
+					binding.identityRevealSentIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
 						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
 
@@ -97,7 +98,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
 				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
-				binding.revealedProfileIcon.load(chatUserIdentity?.avatar) {
+				binding.revealedProfileIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
 					setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 				}
 			}

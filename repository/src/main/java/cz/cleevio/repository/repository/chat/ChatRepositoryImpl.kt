@@ -261,7 +261,8 @@ class ChatRepositoryImpl constructor(
 										contactPublicKey = message.senderPublicKey, // sender's key, because it's incoming message
 										inboxKey = message.inboxPublicKey,
 										name = user.name!!, // There has to be some name
-										avatar = user.image
+										avatar = user.image,
+										avatarBase64 = user.imageBase64
 									)
 									chatMessageDao.solvePendingIdentityRevealsBySenders(
 										inboxPublicKey = message.inboxPublicKey,
@@ -310,7 +311,8 @@ class ChatRepositoryImpl constructor(
 				contactPublicKey = contactPublicKey,
 				inboxKey = inboxKey,
 				name = message.deAnonName!!,
-				avatar = message.deAnonImage
+				avatar = message.deAnonImage,
+				avatarBase64 = message.deAnonImageBase64
 			)
 		}
 	}

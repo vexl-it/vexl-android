@@ -21,6 +21,7 @@ data class ChatMessageEntity(
 	val time: Long,
 	val deAnonName: String?,
 	val deAnonImage: String?,
+	val deAnonImageBase64: String?,
 	//custom flags
 	val isMine: Boolean,
 	val isProcessed: Boolean

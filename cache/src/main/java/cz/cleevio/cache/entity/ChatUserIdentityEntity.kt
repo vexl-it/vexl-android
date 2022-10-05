@@ -13,6 +13,7 @@ data class ChatUserIdentityEntity(
 	val name: String? = null,
 	val anonymousUsername: String? = null,
 	val avatar: String? = null,
+	val avatarBase64: String? = null,
 	val anonymousAvatarImageIndex: Int? = null,
 	val deAnonymized: Boolean
 )
