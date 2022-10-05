@@ -6,6 +6,7 @@ import com.cleevio.vexl.cryptography.model.KeyPair
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import cz.cleevio.cache.entity.ChatMessageEntity
+import cz.cleevio.network.extensions.convertUrlImageIntoBase64Image
 import cz.cleevio.network.request.chat.ChatMessageRequest
 import cz.cleevio.network.request.chat.ChatUserRequest
 import cz.cleevio.network.response.chat.MessageResponse
@@ -122,7 +123,7 @@ fun ChatUserRequest.fromNetwork(): ChatUser {
 	return ChatUser(
 		name = this.name,
 		image = this.image,
-		imageBase64 = this.imageBase64
+		imageBase64 = convertUrlImageIntoBase64Image(this.image, this.imageBase64)
 	)
 }
 
@@ -137,14 +138,21 @@ fun ChatMessage.toCache(): ChatMessageEntity = ChatMessageEntity(
 	time = this.time,
 	deAnonName = this.deanonymizedUser?.name,
 	deAnonImage = this.deanonymizedUser?.image,
-	deAnonImageBase64 = this.deanonymizedUser?.imageBase64,
+	deAnonImageBase64 = convertUrlImageIntoBase64Image(
+		this.deanonymizedUser?.image,
+		this.deanonymizedUser?.imageBase64
+	),
 	isMine = this.isMine,
 	isProcessed = this.isProcessed
 )
 
 fun ChatMessageEntity.fromCache(): ChatMessage {
 	val chatUser = if (this.deAnonName != null && (this.deAnonImage != null || this.deAnonImageBase64 != null)) {
-		ChatUser(name = this.deAnonName, image = this.deAnonImage, imageBase64 = this.deAnonImageBase64)
+		ChatUser(
+			name = this.deAnonName,
+			image = this.deAnonImage,
+			imageBase64 = convertUrlImageIntoBase64Image(this.deAnonImage, this.deAnonImageBase64)
+		)
 	} else {
 		null
 	}
