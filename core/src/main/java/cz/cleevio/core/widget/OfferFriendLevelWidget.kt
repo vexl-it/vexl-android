@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import coil.ImageLoader
 import coil.load
+import coil.loadAny
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFriendLevelBinding
 import cz.cleevio.core.model.FriendLevelValue
