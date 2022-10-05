@@ -121,6 +121,11 @@ class EncryptingProgressBottomSheetDialog(
 							DEFAULT_PERCENTAGE
 						}
 					)
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+					binding.progress.setProgress(100, true)
+				} else {
+					binding.progress.progress = 100
+				}
 			}
 			UiState.DONE -> {
 				binding.title.text = resources.getString(R.string.offer_progress_title_complete)
