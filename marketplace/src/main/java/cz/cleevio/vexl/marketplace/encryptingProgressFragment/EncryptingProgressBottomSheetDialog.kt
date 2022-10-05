@@ -17,6 +17,7 @@ import cz.cleevio.vexl.marketplace.databinding.BottomSheetDialogEncryptingProgre
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
 import kotlin.math.roundToInt
 
 class EncryptingProgressBottomSheetDialog(
@@ -56,6 +57,7 @@ class EncryptingProgressBottomSheetDialog(
 
 		repeatScopeOnStart {
 			OfferUtils.offerWasEncryptedForNumberOfContacts.collect { offerWasEncryptedForNumberOfContacts ->
+				Timber.d("emitted: $offerWasEncryptedForNumberOfContacts and contacts are: $numberOfAllContacts")
 				val contacts = ((offerWasEncryptedForNumberOfContacts * 100.0f) / numberOfAllContacts).roundToInt()
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 					binding.progress.setProgress(contacts, true)
@@ -89,6 +91,7 @@ class EncryptingProgressBottomSheetDialog(
 	}
 
 	private fun updateUi(uiState: UiState) {
+		Timber.d("updateUi: $uiState")
 		when (uiState) {
 			UiState.INIT -> {
 				binding.title.text = resources.getString(R.string.offer_progress_title_loading)
