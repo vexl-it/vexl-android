@@ -29,7 +29,6 @@ import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.utils.PermissionResolver
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
@@ -122,12 +121,6 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				binding.profileContacts.setSubtitle(getString(R.string.profile_import_contacts_subtitle, contacts.toString()))
 			}
 		}
-
-		repeatScopeOnStart {
-			profileViewModel.logs.collect { logs ->
-				Timber.tag("LOGS").d("$logs")
-			}
-		}
 	}
 
 	override fun initView() {
@@ -216,6 +209,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 		binding.profileReportIssue.setOnClickListener {
 			showBottomDialog(
 				ReportBottomSheetDialog()
+			)
+		}
+		binding.profileInAppLogging.setOnClickListener {
+			findNavController().safeNavigateWithTransition(
+				ProfileFragmentDirections.actionProfileFragmentToLogFragment()
 			)
 		}
 		binding.profileRequestData.setOnClickListener {

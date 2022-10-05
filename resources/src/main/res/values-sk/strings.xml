@@ -748,24 +748,16 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="user_passcode_loader_one">Anonymizing your identity...</string>
     <string name="user_passcode_loader_two">Anonymizing your contact list...</string>
     <string name="user_passcode_loader_three">Securing your profile...</string>
-    <string name="user_passcode_input">Enter your passcode</string>
-    <string name="user_passcode_error_invalid">Wrong passcode</string>
-    <string name="user_passcode_error_not_equal">Passcodes are not the same</string>
+	<string name="user_passcode_input">Enter your passcode</string>
+	<string name="user_passcode_error_invalid">Wrong passcode</string>
+	<string name="user_passcode_error_not_equal">Passcodes are not the same</string>
 
-    <!-- Force update -->
-    <string name="force_update_title">Je dostupná nová verzia Vexlu!</string>
-    <string name="force_update_subtitle">Pre správne fungovanie Vexlu je nutné aplikáciu aktualizovať.</string>
-    <string name="force_update_button">Aktualizovať</string>
+	<!-- Force update -->
+	<string name="force_update_title">Je dostupná nová verzia Vexlu!</string>
+	<string name="force_update_subtitle">Pre správne fungovanie Vexlu je nutné aplikáciu aktualizovať.</string>
+	<string name="force_update_button">Aktualizovať</string>
 
-    <!-- Maintenance -->
+	<!-- Maintenance -->
 
-    <!-- Report offer -->
-    <string name="report_offer_modal_title">Najhlásiť nabídku?</string>
-    <string name="report_offer_modal_subtitle">Skutočne chcete nahlásiť túto ponuku? Táto akcia je nevratná.</string>
-    <string name="report_offer_modal_button_yes">Ano, nahlásiť</string>
-    <string name="report_offer_modal_button_no">Nie</string>
-    <string name="report_offer_confirmation_modal_title">Vďaka!</string>
-    <string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah bol anonymne nahlásený.</string>
-    <string name="report_offer_confirmation_modal_button">Pokračovať</string>
-    <string name="error_no_offer_id_found">Akcia zlyhala. ID tejto ponuky neexistuje.</string>
+	<!-- Report offer -->
 </resources>

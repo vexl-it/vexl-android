@@ -2,9 +2,9 @@ package cz.cleevio.profile.profileFragment
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.utils.LogUtils
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.NetworkError
+import cz.cleevio.network.utils.LogUtils
 import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel

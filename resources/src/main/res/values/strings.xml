@@ -770,5 +770,5 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="report_offer_confirmation_modal_title">Thank you!</string>
     <string name="report_offer_confirmation_modal_subtitle">Inappropriate content was anonymously reported.</string>
     <string name="report_offer_confirmation_modal_button">Continue</string>
-    <string name="error_no_offer_id_found">Report offer failed. No offer with this ID found.</string>
+    <string name="error_no_offer_id_found">Report offer failed. No offer with this ID found</string>
 </resources>

@@ -11,6 +11,8 @@ import cz.cleevio.network.cache.NetworkCacheImpl
 import cz.cleevio.network.interceptors.AuthInterceptor
 import cz.cleevio.network.language.LanguageTracker
 import cz.cleevio.network.language.LanguageTrackerImpl
+import cz.cleevio.network.utils.LogData
+import cz.cleevio.network.utils.LogUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -216,11 +218,17 @@ val networkModule = module {
 	} bind Interceptor::class
 
 	single(named(HTTP_LOGGING_INTERCEPTOR)) {
+		val logUtils: LogUtils = get()
 		val logging = HttpLoggingInterceptor.Logger { message ->
 			Timber.tag("OkHttp").d(message)
+			logUtils.addLog(
+				data = LogData(
+					log = message
+				)
+			)
 		}
 		HttpLoggingInterceptor(logging).apply {
-			level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+			level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC else HttpLoggingInterceptor.Level.NONE
 		}
 	} bind Interceptor::class
 
@@ -238,5 +246,9 @@ val networkModule = module {
 
 	single {
 		NetworkError()
+	}
+
+	single {
+		LogUtils()
 	}
 }

@@ -342,6 +342,16 @@
 						app:layout_constraintTop_toBottomOf="@id/profile_faq"
 						app:title="@string/profile_report_issue" />
 
+					<cz.cleevio.profile.widget.ProfileRowWidget
+						android:id="@+id/profile_in_app_logging"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						app:icon="@drawable/ic_profile_headset"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/profile_report_issue"
+						app:title="@string/profile_logs" />
+
 				</androidx.constraintlayout.widget.ConstraintLayout>
 
 			</com.google.android.material.card.MaterialCardView>
