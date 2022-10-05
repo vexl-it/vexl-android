@@ -10,16 +10,11 @@ import cz.cleevio.network.R
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.response.BaseResponseJsonAdapter
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
-import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.EOFException
 import java.io.IOException
