@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.core.R
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.vexl.marketplace.databinding.ItemRequestOfferCommonFriendBinding
 
@@ -23,10 +24,7 @@ class CommonFriendAdapter
 
 		fun bind(item: BaseContact) {
 			binding.profileImage.load(item.photoUri) {
-				crossfade(true)
-				fallback(R.drawable.random_avatar_2)
-				error(R.drawable.random_avatar_2)
-				placeholder(R.drawable.random_avatar_2)
+				setPlaceholders(R.drawable.random_avatar_2)
 			}
 			binding.name.text = item.name
 		}

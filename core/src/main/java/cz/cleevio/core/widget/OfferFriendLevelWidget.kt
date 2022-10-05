@@ -10,6 +10,7 @@ import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferFriendLevelBinding
 import cz.cleevio.core.model.FriendLevelValue
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
@@ -46,46 +47,24 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 					drawableResId = RandomUtils.getRandomImageDrawableId(anonymousAvatarImageIndex),
 					imageLoader = ImageLoader.invoke(context)
 				) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_3)
-					error(R.drawable.random_avatar_3)
-					placeholder(R.drawable.random_avatar_3)
+					setPlaceholders(R.drawable.random_avatar_3)
 				}
 				binding.secondDegreeAvatar.load(
 					drawableResId = RandomUtils.getRandomImageDrawableId(anonymousAvatarImageIndex),
 					imageLoader = ImageLoader.invoke(context)
 				) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_3)
-					error(R.drawable.random_avatar_3)
-					placeholder(R.drawable.random_avatar_3)
+					setPlaceholders(R.drawable.random_avatar_3)
 				}
 			} else {
-				binding.firstDegreeAvatar.load(R.drawable.random_avatar_3, imageLoader = ImageLoader.invoke(context)) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_3)
-					error(R.drawable.random_avatar_3)
-					placeholder(R.drawable.random_avatar_3)
-				}
-				binding.secondDegreeAvatar.load(R.drawable.random_avatar_3, imageLoader = ImageLoader.invoke(context)) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_3)
-					error(R.drawable.random_avatar_3)
-					placeholder(R.drawable.random_avatar_3)
-				}
+				binding.firstDegreeAvatar.load(R.drawable.random_avatar_3, imageLoader = ImageLoader.invoke(context))
+				binding.secondDegreeAvatar.load(R.drawable.random_avatar_3, imageLoader = ImageLoader.invoke(context))
 			}
 		} else {
 			binding.firstDegreeAvatar.load(avatar) {
-				crossfade(true)
-				fallback(R.drawable.random_avatar_3)
-				error(R.drawable.random_avatar_3)
-				placeholder(R.drawable.random_avatar_3)
+				setPlaceholders(R.drawable.random_avatar_3)
 			}
 			binding.secondDegreeAvatar.load(avatar) {
-				crossfade(true)
-				fallback(R.drawable.random_avatar_3)
-				error(R.drawable.random_avatar_3)
-				placeholder(R.drawable.random_avatar_3)
+				setPlaceholders(R.drawable.random_avatar_3)
 			}
 		}
 	}

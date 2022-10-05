@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.core.R
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.vexl.marketplace.databinding.ItemSelectGroupBinding
 import okhttp3.internal.notifyAll
@@ -45,10 +46,7 @@ class SelectGroupAdapter  : ListAdapter<Group, SelectGroupAdapter.ViewHolder>(ob
 		fun bind(item: Group) {
 			binding.groupName.text = item.name
 			binding.groupLogo.load(item.logoUrl) {
-				crossfade(true)
-				fallback(R.drawable.ic_groups)
-				error(R.drawable.ic_groups)
-				placeholder(R.drawable.ic_groups)
+				setPlaceholders(R.drawable.ic_groups)
 			}
 			binding.groupCheck.isVisible = selectedGroups.contains(item.groupUuid)
 			checkTextColor(item)

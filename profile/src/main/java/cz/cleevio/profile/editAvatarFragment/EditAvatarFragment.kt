@@ -120,19 +120,13 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 					true -> {
 						if (user?.avatar != null) {
 							binding.editAvatarImage.load(user.avatar) {
-								crossfade(true)
-								fallback(R.drawable.ic_profile_avatar_placeholder)
-								error(R.drawable.ic_profile_avatar_placeholder)
-								placeholder(R.drawable.ic_profile_avatar_placeholder)
+								setPlaceholders(R.drawable.ic_profile_avatar_placeholder)
 							}
 						} else {
 							val anonymousImageIndex = user?.anonymousAvatarImageIndex
 							if (anonymousImageIndex != null) {
 								binding.editAvatarImage.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
-									crossfade(true)
-									fallback(R.drawable.random_avatar_3)
-									error(R.drawable.random_avatar_3)
-									placeholder(R.drawable.random_avatar_3)
+									setPlaceholders(R.drawable.random_avatar_3)
 								}
 							}
 						}
@@ -142,10 +136,7 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 							val decodedBase64 = Base64.decode(it, Base64.DEFAULT)
 							val decodedBitmap = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.size)
 							binding.editAvatarImage.load(decodedBitmap) {
-								crossfade(true)
-								fallback(R.drawable.ic_profile_avatar_placeholder)
-								error(R.drawable.ic_profile_avatar_placeholder)
-								placeholder(R.drawable.ic_profile_avatar_placeholder)
+								setPlaceholders(R.drawable.ic_profile_avatar_placeholder)
 							}
 						}
 					}

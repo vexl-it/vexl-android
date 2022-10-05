@@ -10,6 +10,7 @@ import coil.load
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.setIcons
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.R
@@ -32,10 +33,7 @@ class ChatContactListAdapter constructor(
 
 		fun bind(item: ChatListUser) {
 			binding.chatContactIcon.load(item.user?.avatar) {
-				crossfade(true)
-				fallback(R.drawable.random_avatar_2)
-				error(R.drawable.random_avatar_2)
-				placeholder(R.drawable.random_avatar_2)
+				setPlaceholders(R.drawable.random_avatar_2)
 			}
 
 			val isDeanonymized = item.user?.deAnonymized == true

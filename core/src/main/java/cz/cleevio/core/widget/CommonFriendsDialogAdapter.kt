@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.ItemChatCommonFriendBinding
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.model.contact.BaseContact
 
 class CommonFriendsDialogAdapter :
@@ -23,10 +24,7 @@ class CommonFriendsDialogAdapter :
 
 		fun bind(item: BaseContact) {
 			binding.profileImage.load(item.photoUri) {
-				crossfade(true)
-				fallback(R.drawable.random_avatar_1)
-				error(R.drawable.random_avatar_1)
-				placeholder(R.drawable.random_avatar_1)
+				setPlaceholders(R.drawable.random_avatar_1)
 			}
 			binding.name.text = item.name
 			binding.description.text = item.getChatDescription(binding.description.context)

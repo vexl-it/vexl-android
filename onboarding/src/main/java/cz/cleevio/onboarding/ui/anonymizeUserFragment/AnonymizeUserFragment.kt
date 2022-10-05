@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.onboarding.R
 import cz.cleevio.onboarding.databinding.FragmentAnonymizeUserBinding
@@ -40,9 +41,7 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 						binding.anonymizeUserTitle.text = getString(R.string.anonymize_user_title)
 						binding.anonymizeUserName.text = args.username
 						binding.anonymizeUserImage.load(args.avatarUri) {
-							fallback(R.drawable.random_avatar_1)
-							error(R.drawable.random_avatar_1)
-							placeholder(R.drawable.random_avatar_1)
+							setPlaceholders(R.drawable.random_avatar_1)
 						}
 					}
 					is AnonymizeUserViewModel.UIState.Anonymized -> {

@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.repeatScopeOnResume
 import cz.cleevio.core.utils.setDebouncedOnClickListener
-import cz.cleevio.network.data.Status
-import cz.cleevio.vexl.lightbase.core.extensions.showSnackbar
 import cz.cleevio.vexl.marketplace.databinding.BottomSheetDialogReportOfferBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -46,7 +44,7 @@ class ReportOfferBottomSheetDialog(
 			dismiss()
 		}
 
-		repeatScopeOnStart {
+		repeatScopeOnResume {
 			viewModel.offerRequest.collect {
 				showProgressIndicator(false)
 				val dialog = ReportOfferConfirmBottomSheetDialog()
