@@ -14,10 +14,7 @@ import cz.cleevio.network.api.OfferApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
-import cz.cleevio.network.request.offer.CreateOfferPrivatePartRequest
-import cz.cleevio.network.request.offer.CreateOfferRequest
-import cz.cleevio.network.request.offer.DeletePrivatePartRequest
-import cz.cleevio.network.request.offer.UpdateOfferRequest
+import cz.cleevio.network.request.offer.*
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.fromDao
@@ -569,8 +566,9 @@ class OfferRepositoryImpl constructor(
 	override suspend fun reportOffer(offerId: String): Resource<Unit> {
 		return tryOnline(
 			request = {
-				//todo: this is dummy request, connect to BE when BE ready
-				offerApi.getOffersMe()
+				offerApi.postOffersReport(
+					reportOfferRequest = ReportOfferRequest(offerId = offerId)
+				)
 			},
 			mapper = { },
 			doOnSuccess = { _ ->
