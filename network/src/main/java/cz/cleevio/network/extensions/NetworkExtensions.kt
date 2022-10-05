@@ -1,5 +1,6 @@
 package cz.cleevio.network.extensions
 
+import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.BitmapFactory
 import android.util.Base64
