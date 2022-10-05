@@ -24,7 +24,7 @@ interface UserRepository {
 
 	fun isUserVerified(): Boolean
 
-	suspend fun createUser(user: User)
+	suspend fun createUser(user: User, avatarBase64: String?)
 
 	suspend fun markUserFinishedOnboarding(user: User)
 
@@ -36,7 +36,7 @@ interface UserRepository {
 
 	suspend fun getUserFullname(): UserProfile?
 
-	suspend fun registerUser(request: UserRequest): Resource<User>
+	suspend fun registerUser(request: UserRequest, avatarBase64: String?): Resource<User>
 
 	//----------------------------------
 

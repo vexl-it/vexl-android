@@ -36,6 +36,11 @@ class EncryptingProgressBottomSheetDialog(
 		savedInstanceState: Bundle?
 	): View {
 		binding = BottomSheetDialogEncryptingProgressBinding.inflate(layoutInflater, container, false)
+
+		// Disable dismiss dialog with taps elsewhere
+		requireDialog().setCancelable(false)
+		requireDialog().setCanceledOnTouchOutside(false)
+
 		return binding.root
 	}
 

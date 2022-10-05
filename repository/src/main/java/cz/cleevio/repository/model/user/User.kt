@@ -11,6 +11,7 @@ data class User constructor(
 	val username: String,
 	val anonymousUsername: String?,
 	val avatar: String?,
+	val avatarBase64: String?,
 	val anonymousAvatarImageIndex: Int?,
 	val publicKey: String,
 	val finishedOnboarding: Boolean
@@ -21,6 +22,7 @@ fun UserResponse.fromNetwork() = User(
 	username = username,
 	anonymousUsername = null,
 	avatar = avatar,
+	avatarBase64 = null, // Base 64 image won't be ever received from network
 	anonymousAvatarImageIndex = null,
 	publicKey = publicKey,
 	finishedOnboarding = false
@@ -31,6 +33,7 @@ fun UserEntity.fromDao() = User(
 	username = username,
 	anonymousUsername = anonymousUsername,
 	avatar = avatar,
+	avatarBase64 = avatarBase64,
 	anonymousAvatarImageIndex = anonymousAvatarImageIndex,
 	publicKey = publicKey,
 	finishedOnboarding = finishedOnboarding

@@ -26,6 +26,7 @@ class EditNameViewModel constructor(
 	fun editName() {
 		viewModelScope.launch(Dispatchers.IO) {
 			if (newName.isNotBlank()) {
+				// todo only into the DB
 				userRepository.updateUser(
 					username = newName,
 					avatar = null

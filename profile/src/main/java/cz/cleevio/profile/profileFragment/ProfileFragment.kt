@@ -1,6 +1,8 @@
 package cz.cleevio.profile.profileFragment
 
 import android.Manifest
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -15,6 +17,7 @@ import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.OpenedFromScreen
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
@@ -66,35 +69,37 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 					// TODO show anonymous user name if there will be difference for public/private profile
 					binding.profileUserName.text = user.username
 
-					if (user.avatar == null) {
-						val anonymousImageIndex = user.anonymousAvatarImageIndex
-						if (anonymousImageIndex != null) {
-							binding.profileUserPhoto.load(
-								drawableResId = RandomUtils.getRandomImageDrawableId(anonymousImageIndex),
-								imageLoader = ImageLoader.invoke(requireContext())
-							) {
-								crossfade(true)
-								fallback(R.drawable.random_avatar_3)
-								error(R.drawable.random_avatar_3)
-								placeholder(R.drawable.random_avatar_3)
-							}
-						} else {
-							binding.profileUserPhoto.load(
-								drawableResId = R.drawable.random_avatar_3,
-								imageLoader = ImageLoader.invoke(requireContext())
-							) {
-								crossfade(true)
-								fallback(R.drawable.random_avatar_3)
-								error(R.drawable.random_avatar_3)
-								placeholder(R.drawable.random_avatar_3)
+					when (user.avatarBase64 == null) {
+						true -> {
+							if (user.avatar == null) {
+								val anonymousImageIndex = user.anonymousAvatarImageIndex
+								if (anonymousImageIndex != null) {
+									binding.profileUserPhoto.load(
+										drawableResId = RandomUtils.getRandomImageDrawableId(anonymousImageIndex),
+										imageLoader = ImageLoader.invoke(requireContext())
+									) {
+										setPlaceholders(R.drawable.random_avatar_3)
+									}
+								} else {
+									binding.profileUserPhoto.load(
+										drawableResId = R.drawable.random_avatar_3,
+										imageLoader = ImageLoader.invoke(requireContext())
+									) {
+										setPlaceholders(R.drawable.random_avatar_3)
+									}
+								}
+							} else {
+								binding.profileUserPhoto.load(user.avatar) {
+									setPlaceholders(R.drawable.random_avatar_3)
+								}
 							}
 						}
-					} else {
-						binding.profileUserPhoto.load(user.avatar) {
-							crossfade(true)
-							fallback(R.drawable.random_avatar_3)
-							error(R.drawable.random_avatar_3)
-							placeholder(R.drawable.random_avatar_3)
+						false -> {
+							val decodedBase64 = Base64.decode(user.avatarBase64, Base64.DEFAULT)
+							val decodedBitmap = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.size)
+							binding.profileUserPhoto.load(decodedBitmap) {
+								setPlaceholders(R.drawable.random_avatar_3)
+							}
 						}
 					}
 				}

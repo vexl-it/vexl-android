@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.load
+import coil.loadAny
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.*
@@ -63,23 +64,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				val isDeanonymized = chatUserIdentity?.deAnonymized == true
 
 				if (isDeanonymized) {
-					binding.profileImage.load(chatUserIdentity?.avatar) {
-						crossfade(true)
-						fallback(R.drawable.random_avatar_5)
-						error(R.drawable.random_avatar_5)
-						placeholder(R.drawable.random_avatar_5)
+					binding.profileImage.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
-					binding.identityRevealRequestedIcon.load(chatUserIdentity?.avatar) {
-						crossfade(true)
-						fallback(R.drawable.random_avatar_5)
-						error(R.drawable.random_avatar_5)
-						placeholder(R.drawable.random_avatar_5)
+					binding.identityRevealRequestedIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
-					binding.identityRevealSentIcon.load(chatUserIdentity?.avatar) {
-						crossfade(true)
-						fallback(R.drawable.random_avatar_5)
-						error(R.drawable.random_avatar_5)
-						placeholder(R.drawable.random_avatar_5)
+					binding.identityRevealSentIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
 
 					setupColoredTitle(chatUserIdentity?.name ?: "")
@@ -88,38 +80,26 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
 					) {
-						crossfade(true)
-						fallback(R.drawable.random_avatar_5)
-						error(R.drawable.random_avatar_5)
-						placeholder(R.drawable.random_avatar_5)
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
 					binding.identityRevealRequestedIcon.load(
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
 					) {
-						crossfade(true)
-						fallback(R.drawable.random_avatar_5)
-						error(R.drawable.random_avatar_5)
-						placeholder(R.drawable.random_avatar_5)
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
 					binding.identityRevealSentIcon.load(
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
 					) {
-						crossfade(true)
-						fallback(R.drawable.random_avatar_5)
-						error(R.drawable.random_avatar_5)
-						placeholder(R.drawable.random_avatar_5)
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 					}
 
 					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
 				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
-				binding.revealedProfileIcon.load(chatUserIdentity?.avatar) {
-					crossfade(true)
-					fallback(R.drawable.random_avatar_5)
-					error(R.drawable.random_avatar_5)
-					placeholder(R.drawable.random_avatar_5)
+				binding.revealedProfileIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap() ?: chatUserIdentity?.avatar) {
+					setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
 				}
 			}
 		}

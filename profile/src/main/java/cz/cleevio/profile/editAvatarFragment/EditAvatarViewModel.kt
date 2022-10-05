@@ -30,6 +30,7 @@ class EditAvatarViewModel constructor(
 			val profileUri = profileImageUri.value
 
 			if (profileUri != null) {
+				// TODO VEX-1132: Even after removing avatar from register request we need to propagate the avatar because it contains base64 encoded image
 				userRepository.updateUser(
 					avatar = super.getAvatarData(profileUri, contentResolver),
 					avatarImageExtension = IMAGE_EXTENSION

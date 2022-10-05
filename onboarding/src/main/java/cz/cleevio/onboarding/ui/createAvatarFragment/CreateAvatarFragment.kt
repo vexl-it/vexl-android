@@ -166,6 +166,7 @@ class CreateAvatarFragment : BaseFragment(R.layout.fragment_avatar) {
 
 		binding.continueBtn.setOnClickListener {
 			val avatarUri = viewModel.profileImageUri.value?.toString()
+			// TODO VEX-1132: Even after removing avatar from register request we need to propagate the avatarUri
 			findNavController().safeNavigateWithTransition(
 				CreateAvatarFragmentDirections.proceedToAnonymizeUser(
 					username = args.username,

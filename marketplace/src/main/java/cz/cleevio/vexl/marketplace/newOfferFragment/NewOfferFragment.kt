@@ -14,6 +14,7 @@ import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setDebouncedOnClickListener
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.network.data.Status
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -39,7 +40,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect {
 				it?.let { user ->
-					binding.newOfferFriendLevel.setUserAvatar(user.avatar, user.anonymousAvatarImageIndex)
+					binding.newOfferFriendLevel.setUserAvatar(user.avatarBase64 ?: user.avatar, user.anonymousAvatarImageIndex)
 				}
 			}
 		}
@@ -208,7 +209,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			OfferType.BUY -> getString(R.string.offer_create_buy_btn)
 			OfferType.SELL -> getString(R.string.offer_create_sell_btn)
 		}
-		binding.newOfferBtn.setOnClickListener {
+		binding.newOfferBtn.setDebouncedOnClickListener {
 			val params = OfferUtils.isOfferParamsValid(
 				activity = requireActivity(),
 				description = binding.newOfferDescription.text.toString(),

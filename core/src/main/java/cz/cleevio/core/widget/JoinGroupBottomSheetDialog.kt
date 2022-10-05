@@ -12,6 +12,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.BottomSheetDialogJoinGroupBinding
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.repository.group.GroupRepository
 import kotlinx.coroutines.CoroutineScope
@@ -82,10 +83,7 @@ class JoinGroupBottomSheetDialog constructor(
 		binding.title.text = getString(R.string.groups_join_title, groupName)
 		binding.description.text = getString(R.string.groups_join_description, groupName)
 		binding.logo.load(groupLogo) {
-			crossfade(true)
-			fallback(R.drawable.random_avatar_4)
-			error(R.drawable.random_avatar_4)
-			placeholder(R.drawable.random_avatar_4)
+			setPlaceholders(R.drawable.random_avatar_4)
 		}
 	}
 }

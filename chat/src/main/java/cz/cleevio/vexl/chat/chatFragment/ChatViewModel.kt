@@ -117,7 +117,8 @@ class ChatViewModel constructor(
 			val user = userRepository.getUser()?.let {
 				ChatUser(
 					name = it.username,
-					image = it.avatar
+					image = it.avatar,
+					imageBase64 = it.avatarBase64
 				)
 			}
 			val messageType = MessageType.REQUEST_REVEAL
@@ -149,7 +150,8 @@ class ChatViewModel constructor(
 			val user = userRepository.getUser()?.let {
 				ChatUser(
 					name = it.username,
-					image = it.avatar
+					image = it.avatar,
+					imageBase64 = it.avatarBase64
 				)
 			}
 			val response = chatRepository.sendMessage(

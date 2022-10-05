@@ -13,6 +13,7 @@ import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.model.Currency.Companion.getCurrencySymbol
@@ -49,10 +50,7 @@ class OfferWidget @JvmOverloads constructor(
 
 			//todo: later take sticker from group?
 			binding.card.groupSticker.load(R.drawable.sticker_last_shot) {
-				crossfade(true)
-				fallback(R.drawable.sticker_last_shot)
-				error(R.drawable.sticker_last_shot)
-				placeholder(R.drawable.sticker_last_shot)
+				setPlaceholders(R.drawable.sticker_last_shot)
 			}
 		}
 		binding.card.groupInfo.isVisible = group != null

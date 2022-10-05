@@ -6,6 +6,7 @@ import com.cleevio.vexl.cryptography.model.KeyPair
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import cz.cleevio.cache.entity.ChatMessageEntity
+import cz.cleevio.network.extensions.convertUrlImageIntoBase64Image
 import cz.cleevio.network.request.chat.ChatMessageRequest
 import cz.cleevio.network.request.chat.ChatUserRequest
 import cz.cleevio.network.response.chat.MessageResponse
@@ -32,7 +33,8 @@ data class ChatMessage constructor(
 @Parcelize
 data class ChatUser constructor(
 	val name: String?,
-	val image: String?
+	val image: String?,
+	val imageBase64: String?
 ) : Parcelable
 
 enum class MessageType {
@@ -112,14 +114,16 @@ fun ChatMessage.toNetwork(receiverPublicKey: String): String {
 fun ChatUser.toNetwork(): ChatUserRequest {
 	return ChatUserRequest(
 		name = this.name,
-		image = this.image
+		image = this.image,
+		imageBase64 = convertUrlImageIntoBase64Image(this.image, this.imageBase64)
 	)
 }
 
 fun ChatUserRequest.fromNetwork(): ChatUser {
 	return ChatUser(
 		name = this.name,
-		image = this.image
+		image = this.image,
+		imageBase64 = convertUrlImageIntoBase64Image(this.image, this.imageBase64)
 	)
 }
 
@@ -134,13 +138,21 @@ fun ChatMessage.toCache(): ChatMessageEntity = ChatMessageEntity(
 	time = this.time,
 	deAnonName = this.deanonymizedUser?.name,
 	deAnonImage = this.deanonymizedUser?.image,
+	deAnonImageBase64 = convertUrlImageIntoBase64Image(
+		this.deanonymizedUser?.image,
+		this.deanonymizedUser?.imageBase64
+	),
 	isMine = this.isMine,
 	isProcessed = this.isProcessed
 )
 
 fun ChatMessageEntity.fromCache(): ChatMessage {
-	val chatUser = if (this.deAnonName != null && this.deAnonImage != null) {
-		ChatUser(name = this.deAnonName, image = this.deAnonImage)
+	val chatUser = if (this.deAnonName != null && (this.deAnonImage != null || this.deAnonImageBase64 != null)) {
+		ChatUser(
+			name = this.deAnonName,
+			image = this.deAnonImage,
+			imageBase64 = convertUrlImageIntoBase64Image(this.deAnonImage, this.deAnonImageBase64)
+		)
 	} else {
 		null
 	}

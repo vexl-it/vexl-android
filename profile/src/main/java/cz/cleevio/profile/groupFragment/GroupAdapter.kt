@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import cz.cleevio.core.R
+import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.profile.databinding.ItemGroupBinding
 import cz.cleevio.repository.model.group.Group
 
@@ -37,10 +38,7 @@ class GroupAdapter constructor(
 				R.string.groups_item_members, item.memberCount.toString()
 			)
 			binding.groupLogo.load(item.logoUrl) {
-				crossfade(true)
-				fallback(R.drawable.random_avatar_5)
-				error(R.drawable.random_avatar_5)
-				placeholder(R.drawable.random_avatar_5)
+				setPlaceholders(R.drawable.random_avatar_5)
 			}
 
 			binding.leaveBtn.setOnClickListener {

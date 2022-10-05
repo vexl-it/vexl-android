@@ -146,7 +146,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		repeatScopeOnStart {
 			filterViewModel.userFlow.collect {
 				it?.let { user ->
-					binding.friendLevel.setUserAvatar(user.avatar, user.anonymousAvatarImageIndex)
+					binding.friendLevel.setUserAvatar(user.avatarBase64 ?: user.avatar, user.anonymousAvatarImageIndex)
 				}
 			}
 		}

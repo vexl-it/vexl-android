@@ -79,7 +79,9 @@ class AnonymizeUserViewModel constructor(
 				avatar = avatar
 			)
 
-			val registerUserResponse = userRepository.registerUser(request)
+			// TODO VEX-1132: Avatar in the request is encoded as base64
+			//  but once the request response will be removed there won't be any source for the avatarBase64 data
+			val registerUserResponse = userRepository.registerUser(request, avatarBase64 = avatar?.data)
 
 			if (registerUserResponse.isError()) {
 				_registerUserChannel.send(registerUserResponse)
