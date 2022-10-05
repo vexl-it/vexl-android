@@ -115,7 +115,7 @@ fun ChatUser.toNetwork(): ChatUserRequest {
 	return ChatUserRequest(
 		name = this.name,
 		image = this.image,
-		imageBase64 = this.imageBase64
+		imageBase64 = convertUrlImageIntoBase64Image(this.image, this.imageBase64)
 	)
 }
 

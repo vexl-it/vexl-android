@@ -60,10 +60,10 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 				binding.secondDegreeAvatar.load(R.drawable.random_avatar_3, imageLoader = ImageLoader.invoke(context))
 			}
 		} else {
-			binding.firstDegreeAvatar.load(avatar) {
+			binding.firstDegreeAvatar.loadAny(avatar) {
 				setPlaceholders(R.drawable.random_avatar_3)
 			}
-			binding.secondDegreeAvatar.load(avatar) {
+			binding.secondDegreeAvatar.loadAny(avatar) {
 				setPlaceholders(R.drawable.random_avatar_3)
 			}
 		}

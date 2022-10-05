@@ -111,18 +111,15 @@ fun convertUrlImageIntoBase64Image(
 	var base64Image = originalBase64Image
 
 	if (originalUrlImage != null && originalBase64Image == null) {
-		val request: Request = Request.Builder().url(URL(originalUrlImage)).get().build()
-		OkHttpClient().newCall(request).enqueue(object : Callback {
-			override fun onFailure(call: Call, e: IOException) = Unit
-			override fun onResponse(call: Call, response: okhttp3.Response) {
-				val inputStream = response.body?.byteStream()
-				val bitmap = BitmapFactory.decodeStream(BufferedInputStream(inputStream))
-
-				val baos = ByteArrayOutputStream()
-				bitmap.compress(compressFormat, bitmapCompressQuality, baos)
-				base64Image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT or Base64.NO_WRAP)
-			}
-		})
+		try {
+			val url = URL(originalUrlImage)
+			val image: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+			val baos = ByteArrayOutputStream()
+			image.compress(compressFormat, bitmapCompressQuality, baos)
+			base64Image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT or Base64.NO_WRAP)
+		} catch (e: IOException) {
+			Timber.e(e)
+		}
 	}
 	return base64Image
 }
