@@ -13,6 +13,8 @@ import cz.cleevio.core.utils.BackgroundQueue
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
+import cz.cleevio.network.utils.LogData
+import cz.cleevio.network.utils.LogUtils
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -31,6 +33,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	private val groupRepository: GroupRepository by inject()
 	private val contactRepository: ContactRepository by inject()
 	private val backgroundQueue: BackgroundQueue by inject()
+	private val logUtils: LogUtils by inject()
 
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -60,6 +63,12 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		Timber.tag(FIREBASE_TAG).d("$inbox")
 		Timber.tag(FIREBASE_TAG).d("publicKey $publicKey")
 		Timber.tag(FIREBASE_TAG).d("connectionLevel $connectionLevel")
+
+		logUtils.addLog(
+			data = LogData(
+				log = "Notification received: ${type}"
+			)
+		)
 
 		inbox?.let { inboxPublicKey ->
 			coroutineScope.launch {
