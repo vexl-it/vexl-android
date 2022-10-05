@@ -47,6 +47,7 @@ class EncryptingProgressBottomSheetDialog(
 
 		repeatScopeOnStart {
 			viewModel.newOfferRequest.collect { resource ->
+				updateUi(UiState.ENCRYPTION_FINISHED)
 				delay(ENCRYPTION_FINISHED_DELAY)
 				updateUi(UiState.DONE)
 				delay(DONE_DELAY)
@@ -115,11 +116,16 @@ class EncryptingProgressBottomSheetDialog(
 					resources.getString(
 						R.string.offer_progress_bar_subtitle,
 						if (numberOfAllContacts > 0) {
-							"${(((OfferUtils.offerWasEncryptedForNumberOfContacts.value * 100.0f) / numberOfAllContacts).roundToInt())}%"
+							"100%"
 						} else {
 							DEFAULT_PERCENTAGE
 						}
 					)
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+					binding.progress.setProgress(100, true)
+				} else {
+					binding.progress.progress = 100
+				}
 			}
 			UiState.DONE -> {
 				binding.title.text = resources.getString(R.string.offer_progress_title_complete)
