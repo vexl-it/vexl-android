@@ -20,6 +20,7 @@
 
 	<application
 		android:name=".CleevioApp"
+		android:allowNativeHeapPointerTagging="false"
 		android:allowBackup="false"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
