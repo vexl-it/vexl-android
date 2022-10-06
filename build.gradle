@@ -31,10 +31,10 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.3'
-        classpath "com.google.gms:google-services:4.3.10"
+        classpath "com.google.gms:google-services:4.3.14"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation"
-        classpath 'com.google.firebase:firebase-appdistribution-gradle:3.0.1'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
+        classpath 'com.google.firebase:firebase-appdistribution-gradle:3.0.3'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
         classpath "com.google.firebase:perf-plugin:1.4.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.insert-koin:koin-gradle-plugin:$koin"
@@ -67,12 +67,6 @@ detekt {
             "pin/src/main/java",
             "resources/src/main/java"
     )
-
-    reports {
-        html.enabled = true
-        xml.enabled = false
-        txt.enabled = false
-    }
 }
 
 allprojects {
