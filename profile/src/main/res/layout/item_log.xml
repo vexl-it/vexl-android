@@ -7,12 +7,24 @@
 	xmlns:tools="http://schemas.android.com/tools">
 
 	<TextView
+		android:id="@+id/log_timestamp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:lines="1"
+		android:textAppearance="@style/TextAppearance.Vexl.Logs.Timestamp"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		tools:text="16:15:23" />
+
+	<TextView
 		android:id="@+id/log_text"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
 		android:textColor="@color/white"
+		android:textAppearance="@style/TextAppearance.Vexl.Logs.Text"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintStart_toEndOf="@id/log_timestamp"
 		app:layout_constraintEnd_toEndOf="parent"
 		tools:text="-- 500 https://user.vexl.devel.cleevio.io/api/v1/cryptocurrencies/bitcoin/market_chart" />
 

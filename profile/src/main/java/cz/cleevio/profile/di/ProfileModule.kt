@@ -75,6 +75,7 @@ val profileModule = module {
 	viewModel {
 		LogViewModel(
 			logUtils = get(),
+			encryptedPreferenceRepository = get()
 		)
 	}
 }

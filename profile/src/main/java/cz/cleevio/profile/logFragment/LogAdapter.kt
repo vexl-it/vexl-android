@@ -30,7 +30,7 @@ class LogAdapter : ListAdapter<LogData, LogAdapter.ViewHolder>(object : DiffUtil
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: LogData) {
-
+			binding.logTimestamp.text = item.timestampDisplay
 			binding.logText.text = item.log
 		}
 	}

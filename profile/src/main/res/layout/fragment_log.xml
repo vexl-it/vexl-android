@@ -18,6 +18,7 @@
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<LinearLayout
+		android:id="@+id/title_wrapper"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="20dp"
@@ -33,7 +34,7 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:layout_weight="1"
-			android:textAppearance="@style/TextAppearance.Vexl.Description.Welcome"
+			android:textAppearance="@style/TextAppearance.Vexl.Logs.Title"
 			android:text="@string/logs_title" />
 
 		<com.google.android.material.switchmaterial.SwitchMaterial
@@ -44,17 +45,28 @@
 			android:layout_gravity="center_vertical" />
 	</LinearLayout>
 
+	<View
+		android:id="@+id/divider"
+		android:layout_width="0dp"
+		android:layout_height="1dp"
+		android:background="@color/white_opacity_15"
+		android:layout_marginTop="12dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/title_wrapper" />
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/recycler"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginHorizontal="8dp"
 		android:paddingTop="16dp"
+		android:paddingBottom="8dp"
 		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 		app:layout_constraintBottom_toTopOf="@+id/logs_continue_btn"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/close"
+		app:layout_constraintTop_toBottomOf="@+id/divider"
 		tools:itemCount="10"
 		tools:listitem="@layout/item_log" />
 
@@ -65,7 +77,6 @@
 		android:layout_height="@dimen/bottom_screen_button_height"
 		android:layout_marginHorizontal="8dp"
 		android:layout_marginBottom="8dp"
-		android:enabled="false"
 		android:text="@string/logs_button"
 		android:textAppearance="@style/TextAppearance.Vexl.Onboarding.Continue"
 		app:layout_constraintBottom_toBottomOf="parent"

@@ -228,7 +228,7 @@ val networkModule = module {
 			)
 		}
 		HttpLoggingInterceptor(logging).apply {
-			level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC else HttpLoggingInterceptor.Level.NONE
+			level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
 		}
 	} bind Interceptor::class
 

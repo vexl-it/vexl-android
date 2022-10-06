@@ -730,14 +730,14 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="intro_skip">Preskočiť</string>
     <string name="intro_continue">Pokračovať</string>
     <string name="intro_first_title">Anonymne\nsa spoj\nso svojimi kontaktmi.</string>
-    <string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
-    <string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
+	<string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
+	<string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
 
-    <!-- Error -->
-    <string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
-    <string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
-    <string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
-    <string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
+	<!-- Error -->
+	<string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
+	<string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
+	<string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
+	<string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
 	<string name="error_invalid_data_format">Neplatný formát dát</string>
 
 	<!-- Passcode -->
