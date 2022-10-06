@@ -27,22 +27,13 @@ class EncryptingProgressViewModel constructor(
 	fun prepareEncryptedOffers() {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerEncryptionData.run {
-				val contactsPublicKeys = OfferUtils.fetchContactsPublicKeys(
-					friendLevel = params.friendLevel.value,
-					groupUuids = params.groupUuids,
-					contactRepository = contactRepository,
-					encryptedPreferenceRepository = encryptedPreferenceRepository,
-					shouldEmitContacts = true
-				)
-
 				_encryptedOfferList.emit(
 					OfferUtils.prepareEncryptedOffers(
 						offerKeys = offerKeys,
 						params = params,
-						contactRepository = contactRepository,
-						encryptedPreferenceRepository = encryptedPreferenceRepository,
 						locationHelper = locationHelper,
-						contactsPublicKeys = contactsPublicKeys
+						contactsPublicKeys = contactsPublicKeys,
+						commonFriends = commonFriends
 					)
 				)
 			}

@@ -9,6 +9,8 @@ import cz.cleevio.core.utils.LocationHelper
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.contact.BaseContact
+import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.group.GroupRepository
@@ -35,7 +37,8 @@ class EditOfferViewModel constructor(
 	userRepository,
 	contactRepository,
 	offerRepository,
-	groupRepository
+	groupRepository,
+	encryptedPreferenceRepository
 ) {
 
 	private val _errorFlow = MutableSharedFlow<Resource<Any>>()
@@ -54,7 +57,7 @@ class EditOfferViewModel constructor(
 		}
 	}
 
-	fun updateOffer(offerId: String, params: OfferParams) {
+	fun updateOffer(offerId: String, params: OfferParams, contactKeys: List<ContactKey>, commonFriends: Map<String, List<BaseContact>>) {
 		viewModelScope.launch(Dispatchers.IO) {
 
 			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = offerId)
@@ -66,14 +69,17 @@ class EditOfferViewModel constructor(
 				)
 				return@launch
 			}
-			_showEncryptingDialog.emit(
+
+			showEncryptingDialog.emit(
 				OfferEncryptionData(
 					offerKeys = offerKeys,
 					params = params,
 					contactRepository = contactRepository,
 					encryptedPreferenceRepository = encryptedPreferenceRepository,
 					locationHelper = locationHelper,
-					offerId = offerId
+					offerId = offerId,
+					contactsPublicKeys = contactKeys,
+					commonFriends = commonFriends
 				)
 			)
 		}

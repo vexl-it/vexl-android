@@ -115,7 +115,25 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		}
 
 		repeatScopeOnStart {
-			viewModel.showEncryptingDialog.collect {
+			viewModel.contactsPublicKeys.collect { (_, contactKeys) ->
+				viewModel.fetchCommonFriends(contactKeys)
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.contactKeysAndCommonFriends.collect { (params, contactKeys, commonFriends) ->
+				viewModel.updateOffer(
+					offerId = args.offerId,
+					params = params,
+					contactKeys = contactKeys,
+					commonFriends = commonFriends
+				)
+				showProgressIndicator(false)
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.showEncryptingDialogFlow.collect {
 				showBottomDialog(EncryptingProgressBottomSheetDialog(it, isNewOffer = false) { resource ->
 					if (resource.isSuccess()) {
 						findNavController().popBackStack()
@@ -276,6 +294,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 	}
 
 	private fun updateOffer(active: Boolean) {
+		showProgressIndicator(true)
 		val params = OfferUtils.isOfferParamsValid(
 			activity = requireActivity(),
 			description = binding.newOfferDescription.text.toString(),
@@ -294,10 +313,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		)
 
 		if (params != null) {
-			viewModel.updateOffer(
-				offerId = args.offerId,
-				params = params
-			)
+			viewModel.fetchContactsPublicKeys(params)
 		}
 	}
 

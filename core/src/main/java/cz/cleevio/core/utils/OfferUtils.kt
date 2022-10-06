@@ -82,23 +82,13 @@ object OfferUtils {
 	suspend fun prepareEncryptedOffers(
 		offerKeys: KeyPair,
 		params: OfferParams,
-		contactRepository: ContactRepository,
-		encryptedPreferenceRepository: EncryptedPreferenceRepository,
 		locationHelper: LocationHelper,
-		contactsPublicKeys: List<ContactKey>
+		contactsPublicKeys: List<ContactKey>,
+		commonFriends: Map<String, List<BaseContact>>
 	): List<NewOffer> {
 		val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
 
-		val commonFriends = contactRepository.getCommonFriends(
-			contactsPublicKeys
-				.map { it.key }
-				.filter {
-					// we don't want to get common friends for our offer
-					it != encryptedPreferenceRepository.userPublicKey
-				}
-		)
-
-		contactsPublicKeys.asyncAll { contactKey ->
+		contactsPublicKeys.asyncAll { index, contactKey ->
 			val encryptedOffer = encryptOffer(
 				locationHelper = locationHelper,
 				params = params,

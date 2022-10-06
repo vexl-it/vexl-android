@@ -7,6 +7,8 @@ import cz.cleevio.core.base.BaseOfferViewModel
 import cz.cleevio.core.model.OfferEncryptionData
 import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.utils.LocationHelper
+import cz.cleevio.repository.model.contact.BaseContact
+import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
@@ -25,23 +27,26 @@ class NewOfferViewModel constructor(
 	userRepository,
 	contactRepository,
 	offerRepository,
-	groupRepository
+	groupRepository,
+	encryptedPreferenceRepository
 ) {
 
 	var isTriggerSectionShowed = true
 	var isAdvancedSectionShowed = true
 
-	fun createOffer(params: OfferParams) {
+	fun createOffer(params: OfferParams, contactKeys: List<ContactKey>, commonFriends: Map<String, List<BaseContact>>) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val offerKeys = KeyPairCryptoLib.generateKeyPair()
 
-			super._showEncryptingDialog.emit(
+			super.showEncryptingDialog.emit(
 				OfferEncryptionData(
 					offerKeys = offerKeys,
 					params = params,
 					contactRepository = contactRepository,
 					encryptedPreferenceRepository = encryptedPreferenceRepository,
-					locationHelper = locationHelper
+					locationHelper = locationHelper,
+					contactsPublicKeys = contactKeys,
+					commonFriends = commonFriends
 				)
 			)
 		}
