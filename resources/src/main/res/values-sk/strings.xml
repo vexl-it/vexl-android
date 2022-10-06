@@ -730,42 +730,44 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="intro_skip">Preskočiť</string>
     <string name="intro_continue">Pokračovať</string>
     <string name="intro_first_title">Anonymne\nsa spoj\nso svojimi kontaktmi.</string>
-    <string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
-    <string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
+	<string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
+	<string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
 
-    <!-- Error -->
-    <string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
-    <string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
-    <string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
-    <string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
-    <string name="error_invalid_data_format">Neplatný formát dát</string>
+	<!-- Error -->
+	<string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
+	<string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
+	<string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
+	<string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
+	<string name="error_invalid_data_format">Neplatný formát dát</string>
 
-    <!-- Passcode -->
-    <string name="user_passcode_initial_title">Setup your\nnew passcode</string>
-    <string name="user_passcode_initial_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
-    <string name="user_passcode_confirm_title">Repeat your\nnew passcode</string>
-    <string name="user_passcode_confirm_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
-    <string name="user_passcode_loader_one">Anonymizing your identity...</string>
-    <string name="user_passcode_loader_two">Anonymizing your contact list...</string>
-    <string name="user_passcode_loader_three">Securing your profile...</string>
-    <string name="user_passcode_input">Enter your passcode</string>
-    <string name="user_passcode_error_invalid">Wrong passcode</string>
-    <string name="user_passcode_error_not_equal">Passcodes are not the same</string>
+	<!-- Passcode -->
+	<string name="user_passcode_initial_title">Setup your\nnew passcode</string>
+	<string name="user_passcode_initial_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
+	<string name="user_passcode_confirm_title">Repeat your\nnew passcode</string>
+	<string name="user_passcode_confirm_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
+	<string name="user_passcode_loader_one">Anonymizing your identity...</string>
+	<string name="user_passcode_loader_two">Anonymizing your contact list...</string>
+	<string name="user_passcode_loader_three">Securing your profile...</string>
+	<string name="user_passcode_input">Enter your passcode</string>
+	<string name="user_passcode_error_invalid">Wrong passcode</string>
+	<string name="user_passcode_error_not_equal">Passcodes are not the same</string>
 
-    <!-- Force update -->
-    <string name="force_update_title">Je dostupná nová verzia Vexlu!</string>
-    <string name="force_update_subtitle">Pre správne fungovanie Vexlu je nutné aplikáciu aktualizovať.</string>
-    <string name="force_update_button">Aktualizovať</string>
+	<!-- Force update -->
+	<string name="force_update_title">Je dostupná nová verzia Vexlu!</string>
+	<string name="force_update_subtitle">Pre správne fungovanie Vexlu je nutné aplikáciu aktualizovať.</string>
+	<string name="force_update_button">Aktualizovať</string>
 
-    <!-- Maintenance -->
+	<!-- Maintenance -->
 
-    <!-- Report offer -->
-    <string name="report_offer_modal_title">Najhlásiť nabídku?</string>
-    <string name="report_offer_modal_subtitle">Skutočne chcete nahlásiť túto ponuku? Táto akcia je nevratná.</string>
-    <string name="report_offer_modal_button_yes">Ano, nahlásiť</string>
-    <string name="report_offer_modal_button_no">Nie</string>
-    <string name="report_offer_confirmation_modal_title">Vďaka!</string>
-    <string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah bol anonymne nahlásený.</string>
-    <string name="report_offer_confirmation_modal_button">Pokračovať</string>
-    <string name="error_no_offer_id_found">Akcia zlyhala. ID tejto ponuky neexistuje.</string>
+	<!-- Report offer -->
+	<string name="report_offer_modal_title">Najhlásiť nabídku?</string>
+	<string name="report_offer_modal_subtitle">Skutočne chcete nahlásiť túto ponuku? Táto akcia je nevratná.</string>
+	<string name="report_offer_modal_button_yes">Ano, nahlásiť</string>
+	<string name="report_offer_modal_button_no">Nie</string>
+	<string name="report_offer_confirmation_modal_title">Vďaka!</string>
+	<string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah bol anonymne nahlásený.</string>
+	<string name="report_offer_confirmation_modal_button">Pokračovať</string>
+	<string name="error_no_offer_id_found">Akcia zlyhala. ID tejto ponuky sa nenašlo.</string>
+
+	<!-- Logs -->
 </resources>

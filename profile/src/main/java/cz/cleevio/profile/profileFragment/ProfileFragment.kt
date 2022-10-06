@@ -211,6 +211,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				ReportBottomSheetDialog()
 			)
 		}
+		binding.profileInAppLogging.setOnClickListener {
+			findNavController().safeNavigateWithTransition(
+				ProfileFragmentDirections.actionProfileFragmentToLogFragment()
+			)
+		}
 		binding.profileRequestData.setOnClickListener {
 			showBottomDialog(
 				RequestDataBottomSheetDialog()

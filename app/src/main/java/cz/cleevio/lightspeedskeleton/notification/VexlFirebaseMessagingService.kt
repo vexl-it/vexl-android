@@ -13,6 +13,8 @@ import cz.cleevio.core.utils.BackgroundQueue
 import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.ui.mainActivity.MainActivity
+import cz.cleevio.network.utils.LogData
+import cz.cleevio.network.utils.LogUtils
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -31,6 +33,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 	private val groupRepository: GroupRepository by inject()
 	private val contactRepository: ContactRepository by inject()
 	private val backgroundQueue: BackgroundQueue by inject()
+	private val logUtils: LogUtils by inject()
 
 	private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -42,6 +45,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		}
 	}
 
+	@Suppress("LongMethod")
 	override fun onMessageReceived(remoteMessage: RemoteMessage) {
 		val title = remoteMessage.data[NOTIFICATION_TITLE]
 		val message = remoteMessage.data[NOTIFICATION_BODY]
@@ -54,12 +58,18 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		//extra into for notification about new contact
 		//publicKey is that contact publicKey
 		//connectionLevel is that contact level
-		val publicKey = remoteMessage.data[PUBLIC_KEY]
+		val nullablePublicKey = remoteMessage.data[PUBLIC_KEY]
 		val connectionLevel = remoteMessage.data[CONNECTION_LEVEL]
 
 		Timber.tag(FIREBASE_TAG).d("$inbox")
-		Timber.tag(FIREBASE_TAG).d("publicKey $publicKey")
+		Timber.tag(FIREBASE_TAG).d("publicKey $nullablePublicKey")
 		Timber.tag(FIREBASE_TAG).d("connectionLevel $connectionLevel")
+
+		logUtils.addLog(
+			data = LogData(
+				log = "Notification received: $type"
+			)
+		)
 
 		inbox?.let { inboxPublicKey ->
 			coroutineScope.launch {
@@ -75,7 +85,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 			}
 		}
 
-		publicKey?.let { publicKey ->
+		nullablePublicKey?.let { publicKey ->
 			coroutineScope.launch {
 				val level = when (connectionLevel) {
 					FriendLevel.FIRST_DEGREE.name -> {
@@ -171,7 +181,6 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		const val FIREBASE_TAG = "FIREBASE"
 		const val CHANNEL_ID = R.string.channel_chat_id
 		const val NOTIFICATION_TYPE = "type"
-		const val NOTIFICATION_LOG_MESSAGE = "log_message"
 		private const val NOTIFICATION_TITLE = "title"
 		private const val NOTIFICATION_BODY = "body"
 		const val NOTIFICATION_INBOX = "inbox"

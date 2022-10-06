@@ -39,6 +39,11 @@
 				app:argType="boolean" />
 
 		</action>
+
+		<action
+			android:id="@+id/action_profileFragment_to_logFragment"
+			app:destination="@id/logFragment" />
+
 	</fragment>
 
 	<fragment
@@ -91,6 +96,12 @@
 			android:id="@+id/proceed_to_takePhotoFragment"
 			app:destination="@id/nav_camera" />
 	</fragment>
+
+	<fragment
+		android:id="@+id/logFragment"
+		android:name="cz.cleevio.profile.logFragment.LogFragment"
+		android:label="LogFragment"
+		tools:layout="@layout/fragment_log" />
 
 	<dialog
 		android:id="@+id/photoOptionsBottomSheetDialog"

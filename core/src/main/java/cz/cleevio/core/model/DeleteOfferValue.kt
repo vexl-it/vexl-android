@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit
 const val DAY = 1L
 const val WEEK = 7L
 const val MONTH = 30L
+const val TO_SECONDS = 1000L
 
 data class DeleteOfferValue(
 	val type: DeleteTimeframe,
@@ -19,5 +20,5 @@ fun DeleteOfferValue.toUnixTimestamp(): Long {
 		DeleteTimeframe.WEEKS -> TimeUnit.DAYS.toMillis(WEEK)
 		DeleteTimeframe.MONTHS -> TimeUnit.DAYS.toMillis(MONTH)
 	}
-	return System.currentTimeMillis() + modifier * value
+	return System.currentTimeMillis() / TO_SECONDS + modifier * value
 }

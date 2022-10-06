@@ -412,7 +412,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="profile_terms_and_privacy">Terms of Use and Privacy Policy</string>
     <string name="profile_faq">FAQs</string>
     <string name="profile_report_issue">Report issue</string>
-    <string name="profile_logs">Logs</string>
+    <string name="profile_logs">In-app logs</string>
     <string name="profile_request_data">Request known data</string>
     <string name="profile_logout">Delete account</string>
     <string name="profile_currency">Currency</string>
@@ -771,4 +771,9 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="report_offer_confirmation_modal_subtitle">Inappropriate content was anonymously reported.</string>
     <string name="report_offer_confirmation_modal_button">Continue</string>
     <string name="error_no_offer_id_found">Report offer failed. No offer with this ID found.</string>
+
+    <!-- Logs -->
+    <string name="logs_title">Logs</string>
+    <string name="logs_button">Copy all to clipboard</string>
+    <string name="logs_text_copied_clipboard">Logs copied to clipboard!</string>
 </resources>

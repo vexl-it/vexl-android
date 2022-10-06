@@ -4,6 +4,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.NetworkError
+import cz.cleevio.network.utils.LogUtils
 import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
@@ -17,10 +18,12 @@ class ProfileViewModel constructor(
 	val remoteConfig: FirebaseRemoteConfig,
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	val navMainGraphModel: NavMainGraphModel,
+	val logUtils: LogUtils,
 	val networkError: NetworkError
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
+	val logs = logUtils.logFlow
 
 	val areScreenshotsAllowed
 		get() = encryptedPreferenceRepository.areScreenshotsAllowed
