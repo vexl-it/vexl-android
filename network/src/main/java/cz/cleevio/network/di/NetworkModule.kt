@@ -238,17 +238,13 @@ val networkModule = module {
 		)
 	} bind Interceptor::class
 
-//	single(named(LOGOUT_INTERCEPTOR)) {
-//		LogoutInterceptor(
-//			networkError = get()
-//		)
-//	} bind Interceptor::class
-
 	single {
 		NetworkError()
 	}
 
 	single {
-		LogUtils()
+		LogUtils(
+			encryptedPreferenceRepository = get()
+		)
 	}
 }

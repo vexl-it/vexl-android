@@ -110,6 +110,12 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putLongToEP(KEY_GROUP_CODE, value)
 		}
 
+	override var logsEnabled: Boolean
+		get() = getBooleanFromEP(KEY_LOGS_ENABLED, false)
+		set(value) {
+			putBooleanToEP(KEY_LOGS_ENABLED, value)
+		}
+
 	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 	override val selectedCurrencyFlow: MutableStateFlow<String> = MutableStateFlow(selectedCurrency)
 	override val numberOfImportedContactsFlow: MutableStateFlow<Int> = MutableStateFlow(numberOfImportedContacts)
@@ -167,5 +173,6 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val ARE_SCREENSHOTS_ALLOWED = "are_screenshots_allowed"
 		private const val NUMBER_OF_CONTACTS_IMPORTED = "number_of_contacts_imported"
 		private const val KEY_GROUP_CODE = "group_code"
+		private const val KEY_LOGS_ENABLED = "logs_enabled"
 	}
 }

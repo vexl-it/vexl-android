@@ -750,14 +750,24 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="user_passcode_loader_three">Securing your profile...</string>
     <string name="user_passcode_input">Enter your passcode</string>
     <string name="user_passcode_error_invalid">Wrong passcode</string>
-    <string name="user_passcode_error_not_equal">Passcodes are not the same</string>
+	<string name="user_passcode_error_not_equal">Passcodes are not the same</string>
 
-    <!-- Force update -->
-    <string name="force_update_title">Je dostupná nová verze Vexlu!</string>
-    <string name="force_update_subtitle">Pro správné fungování Vexlu je nutné aplikaci aktualizovat.</string>
-    <string name="force_update_button">Aktualizovat</string>
+	<!-- Force update -->
+	<string name="force_update_title">Je dostupná nová verze Vexlu!</string>
+	<string name="force_update_subtitle">Pro správné fungování Vexlu je nutné aplikaci aktualizovat.</string>
+	<string name="force_update_button">Aktualizovat</string>
 
-    <!-- Maintenance -->
+	<!-- Maintenance -->
 
-    <!-- Report offer -->
+	<!-- Report offer -->
+	<string name="report_offer_modal_title">Nahlásit nabídku?</string>
+	<string name="report_offer_modal_subtitle">Skutečně chcete nahlásit tuhle nabídku? </string>
+	<string name="report_offer_modal_button_yes">Ano, nahlásit</string>
+	<string name="report_offer_modal_button_no">Ne</string>
+	<string name="report_offer_confirmation_modal_title">Díky!</string>
+	<string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah byl anonymně nahlášen.</string>
+	<string name="report_offer_confirmation_modal_button">Pokračovat</string>
+	<string name="error_no_offer_id_found">Akce zlyhala. ID nabídky se nenašlo.</string>
+
+	<!-- Logs -->
 </resources>

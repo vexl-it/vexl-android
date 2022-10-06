@@ -1,23 +1,21 @@
 package cz.cleevio.network.utils
 
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 const val LOG_CAPACITY_LIMIT = 100
 
-class LogUtils {
-
-	//val xxx = BlockingQueue
-	//private val logs: MutableList<LogData> = mutableListOf()
-	//private val logsQ: Queue<LogData> = LinkedList<LogData>()
-
+class LogUtils constructor(
+	val encryptedPreferenceRepository: EncryptedPreferenceRepository
+) {
 	private val _logFlow = MutableSharedFlow<LogData>(replay = LOG_CAPACITY_LIMIT)
 	val logFlow = _logFlow.asSharedFlow()
 
 	fun addLog(data: LogData) {
-//		logs.add(data)
-		_logFlow.tryEmit(data)
-//		logsQ.add(data)
+		if (encryptedPreferenceRepository.logsEnabled) {
+			_logFlow.tryEmit(data)
+		}
 	}
 }
 

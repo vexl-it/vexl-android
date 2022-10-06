@@ -45,6 +45,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		}
 	}
 
+	@Suppress("LongMethod")
 	override fun onMessageReceived(remoteMessage: RemoteMessage) {
 		val title = remoteMessage.data[NOTIFICATION_TITLE]
 		val message = remoteMessage.data[NOTIFICATION_BODY]
@@ -57,16 +58,16 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		//extra into for notification about new contact
 		//publicKey is that contact publicKey
 		//connectionLevel is that contact level
-		val publicKey = remoteMessage.data[PUBLIC_KEY]
+		val nullablePublicKey = remoteMessage.data[PUBLIC_KEY]
 		val connectionLevel = remoteMessage.data[CONNECTION_LEVEL]
 
 		Timber.tag(FIREBASE_TAG).d("$inbox")
-		Timber.tag(FIREBASE_TAG).d("publicKey $publicKey")
+		Timber.tag(FIREBASE_TAG).d("publicKey $nullablePublicKey")
 		Timber.tag(FIREBASE_TAG).d("connectionLevel $connectionLevel")
 
 		logUtils.addLog(
 			data = LogData(
-				log = "Notification received: ${type}"
+				log = "Notification received: $type"
 			)
 		)
 
@@ -84,7 +85,7 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 			}
 		}
 
-		publicKey?.let { publicKey ->
+		nullablePublicKey?.let { publicKey ->
 			coroutineScope.launch {
 				val level = when (connectionLevel) {
 					FriendLevel.FIRST_DEGREE.name -> {
@@ -180,7 +181,6 @@ class VexlFirebaseMessagingService : FirebaseMessagingService(), KoinComponent {
 		const val FIREBASE_TAG = "FIREBASE"
 		const val CHANNEL_ID = R.string.channel_chat_id
 		const val NOTIFICATION_TYPE = "type"
-		const val NOTIFICATION_LOG_MESSAGE = "log_message"
 		private const val NOTIFICATION_TITLE = "title"
 		private const val NOTIFICATION_BODY = "body"
 		const val NOTIFICATION_INBOX = "inbox"
