@@ -41,7 +41,7 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 		isMultichoiceEnabled = isEnabled
 	}
 
-	fun setUserAvatar(avatar: String?, anonymousAvatarImageIndex: Int?) {
+	fun setUserAvatar(avatar: Any?, anonymousAvatarImageIndex: Int?) {
 		if (avatar == null) {
 			if (anonymousAvatarImageIndex != null) {
 				binding.firstDegreeAvatar.load(

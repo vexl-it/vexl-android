@@ -11,10 +11,7 @@ import cz.cleevio.core.model.FeeValue
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.PriceTriggerValue
 import cz.cleevio.core.model.toUnixTimestamp
-import cz.cleevio.core.utils.OfferUtils
-import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.setDebouncedOnClickListener
-import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.*
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.Currency
@@ -47,7 +44,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect {
 				it?.let { user ->
-					binding.newOfferFriendLevel.setUserAvatar(user.avatarBase64 ?: user.avatar, user.anonymousAvatarImageIndex)
+					binding.newOfferFriendLevel.setUserAvatar(user.avatarBase64?.getBitmap() ?: user.avatar, user.anonymousAvatarImageIndex)
 				}
 			}
 		}

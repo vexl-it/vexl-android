@@ -132,12 +132,8 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 						}
 					}
 					false -> {
-						user?.avatarBase64?.let {
-							val decodedBase64 = Base64.decode(it, Base64.DEFAULT)
-							val decodedBitmap = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.size)
-							binding.editAvatarImage.load(decodedBitmap) {
-								setPlaceholders(R.drawable.ic_profile_avatar_placeholder)
-							}
+						binding.editAvatarImage.load(user?.avatarBase64?.getBitmap()) {
+							setPlaceholders(R.drawable.ic_profile_avatar_placeholder)
 						}
 					}
 				}

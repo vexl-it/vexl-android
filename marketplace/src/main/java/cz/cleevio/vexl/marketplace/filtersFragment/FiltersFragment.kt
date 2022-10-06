@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionManager
 import cz.cleevio.core.base.BaseGraphFragment
+import cz.cleevio.core.utils.getBitmap
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
@@ -146,7 +147,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		repeatScopeOnStart {
 			filterViewModel.userFlow.collect {
 				it?.let { user ->
-					binding.friendLevel.setUserAvatar(user.avatarBase64 ?: user.avatar, user.anonymousAvatarImageIndex)
+					binding.friendLevel.setUserAvatar(user.avatarBase64?.getBitmap() ?: user.avatar, user.anonymousAvatarImageIndex)
 				}
 			}
 		}

@@ -1,8 +1,6 @@
 package cz.cleevio.profile.profileFragment
 
 import android.Manifest
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -15,10 +13,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.base.BaseGraphFragment
 import cz.cleevio.core.model.OpenedFromScreen
-import cz.cleevio.core.utils.repeatScopeOnStart
-import cz.cleevio.core.utils.safeNavigateWithTransition
-import cz.cleevio.core.utils.setPlaceholders
-import cz.cleevio.core.utils.viewBinding
+import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
 import cz.cleevio.core.widget.DeleteAccountBottomSheetDialog
 import cz.cleevio.profile.R
@@ -95,9 +90,7 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 							}
 						}
 						false -> {
-							val decodedBase64 = Base64.decode(user.avatarBase64, Base64.DEFAULT)
-							val decodedBitmap = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.size)
-							binding.profileUserPhoto.load(decodedBitmap) {
+							binding.profileUserPhoto.load(user.avatarBase64?.getBitmap()) {
 								setPlaceholders(R.drawable.random_avatar_3)
 							}
 						}
