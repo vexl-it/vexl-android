@@ -3,7 +3,7 @@ buildscript {
     ext.build_tools_version = "33.0.0"
     ext.min_sdk_version = 23
     ext.target_sdk_version = 33
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.6.20'
 
     ext.corountines = "1.6.1"
     ext.fragment = "1.4.1"
