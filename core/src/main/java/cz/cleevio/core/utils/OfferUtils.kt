@@ -14,15 +14,18 @@ import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.contact.ContactRepository
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 
 object OfferUtils {
 
 	private const val NO_GROUP = "NONE"
 
-	private val _offerWasEncryptedForNumberOfContacts = MutableStateFlow(0)
-	val offerWasEncryptedForNumberOfContacts = _offerWasEncryptedForNumberOfContacts.asStateFlow()
+	//sending just events, receiver is supposed to keep count, if count needed
+	private val _offerWasEncrypted = Channel<Unit>(Channel.CONFLATED)
+	val offerWasEncrypted = _offerWasEncrypted.receiveAsFlow()
 
 	private val _numberOfAllContacts = MutableStateFlow(-1)
 	val numberOfAllContacts = _numberOfAllContacts.asStateFlow()
@@ -95,8 +98,7 @@ object OfferUtils {
 				}
 		)
 
-		//encrypt in loop for every contact
-		contactsPublicKeys.forEachIndexed { index, contactKey ->
+		contactsPublicKeys.asyncAll { contactKey ->
 			val encryptedOffer = encryptOffer(
 				locationHelper = locationHelper,
 				params = params,
@@ -106,7 +108,7 @@ object OfferUtils {
 				offerKeys = offerKeys,
 				groupUuid = contactKey.groupUuid
 			)
-			_offerWasEncryptedForNumberOfContacts.emit(index)
+			_offerWasEncrypted.send(Unit)
 			encryptedOfferList.add(encryptedOffer)
 		}
 
@@ -251,14 +253,6 @@ object OfferUtils {
 			Toast.makeText(
 				activity,
 				activity.getString(R.string.error_missing_offer_friend_level),
-				Toast.LENGTH_SHORT
-			).show()
-			return null
-		}
-		if (expiration < System.currentTimeMillis()) {
-			Toast.makeText(
-				activity,
-				activity.getString(R.string.error_invalid_offer_delete_trigger),
 				Toast.LENGTH_SHORT
 			).show()
 			return null

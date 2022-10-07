@@ -29,6 +29,7 @@ class EncryptingProgressBottomSheetDialog(
 	val viewModel by viewModel<EncryptingProgressViewModel> { parametersOf(offerEncryptionData) }
 
 	var numberOfAllContacts: Int = -1
+	var numberOfEncryptedOffers: Int = -1
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -61,15 +62,16 @@ class EncryptingProgressBottomSheetDialog(
 		}
 
 		repeatScopeOnStart {
-			OfferUtils.offerWasEncryptedForNumberOfContacts.collect { offerWasEncryptedForNumberOfContacts ->
-				val contacts = ((offerWasEncryptedForNumberOfContacts * 100.0f) / numberOfAllContacts).roundToInt()
+			OfferUtils.offerWasEncrypted.collect { _ ->
+				numberOfEncryptedOffers++
+				val contacts = ((numberOfEncryptedOffers * 100.0f) / numberOfAllContacts).roundToInt()
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 					binding.progress.setProgress(contacts, true)
 				} else {
 					binding.progress.progress = contacts
 				}
 
-				if (offerWasEncryptedForNumberOfContacts == numberOfAllContacts && offerWasEncryptedForNumberOfContacts != -1) {
+				if (numberOfEncryptedOffers == numberOfAllContacts && numberOfEncryptedOffers != -1) {
 					updateUi(UiState.ENCRYPTION_FINISHED)
 				} else {
 					updateUi(UiState.INIT)
@@ -107,7 +109,7 @@ class EncryptingProgressBottomSheetDialog(
 					resources.getString(
 						R.string.offer_progress_bar_subtitle,
 						if (numberOfAllContacts > 0) {
-							"${(((OfferUtils.offerWasEncryptedForNumberOfContacts.value * 100.0f) / numberOfAllContacts).roundToInt())}%"
+							"${(((numberOfEncryptedOffers * 100.0f) / numberOfAllContacts).roundToInt())}%"
 						} else {
 							DEFAULT_PERCENTAGE
 						}
