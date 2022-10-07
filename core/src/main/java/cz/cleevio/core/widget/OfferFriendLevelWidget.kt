@@ -27,6 +27,7 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 
 	init {
 		setupUI()
+		handleFriendLevelSelection(FriendLevel.SECOND_DEGREE)
 
 		binding.friendFirstDegreeWrapper.setOnClickListener {
 			handleFriendLevelSelection(FriendLevel.FIRST_DEGREE)
@@ -150,8 +151,7 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 	fun getMultichoiceFriendLevels(): Set<FriendLevel> = selectedFriendLevels
 
 	fun reset() {
-		selectedFriendLevels = mutableSetOf()
-		redrawWithSelection(FriendLevel.NONE)
+		setValues(setOf(FriendLevel.SECOND_DEGREE))
 	}
 
 	fun setValues(levels: Set<FriendLevel>) {
