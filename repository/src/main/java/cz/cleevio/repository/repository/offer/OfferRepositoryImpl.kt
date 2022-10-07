@@ -576,7 +576,8 @@ class OfferRepositoryImpl constructor(
 					ReportedOfferEntity(offerId = offerId)
 				)
 
-				syncOffers()
+				//delete offer from local DB, it will be disabled on next offers sync
+				offerDao.deleteOffersById(listOf(offerId))
 			}
 		)
 	}
