@@ -152,7 +152,7 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 
 	fun reset() {
 		selectedFriendLevels = mutableSetOf()
-		redrawWithSelection(FriendLevel.NONE)
+		redrawWithSelection(FriendLevel.SECOND_DEGREE)
 	}
 
 	fun setValues(levels: Set<FriendLevel>) {
