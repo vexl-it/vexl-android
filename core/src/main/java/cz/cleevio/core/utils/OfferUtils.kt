@@ -88,7 +88,7 @@ object OfferUtils {
 	): List<NewOffer> {
 		val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
 
-		contactsPublicKeys.asyncAll { index, contactKey ->
+		contactsPublicKeys.asyncAll { contactKey ->
 			val encryptedOffer = encryptOffer(
 				locationHelper = locationHelper,
 				params = params,
