@@ -84,7 +84,7 @@ class BackgroundQueue constructor(
 
 				Timber.tag("REENCRYPT").d("commonFriends done")
 
-				val encryptedOffers: List<NewOffer> = onlyMissingContacts.map { contactKey ->
+				val encryptedOffers: List<NewOffer> = onlyMissingContacts.asyncAll { contactKey ->
 					OfferUtils.encryptOffer(
 						locationHelper = locationHelper,
 						offer = offer,
@@ -94,7 +94,7 @@ class BackgroundQueue constructor(
 						offerKeys = KeyPair(myOffer.privateKey, myOffer.publicKey),
 						groupUuid = contactKey.groupUuid
 					)
-				}
+				}.toList()
 
 				Timber.tag("REENCRYPT").d("encryptedOffers count is ${encryptedOffers.size}")
 
