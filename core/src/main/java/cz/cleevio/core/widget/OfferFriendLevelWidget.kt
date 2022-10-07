@@ -27,6 +27,7 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 
 	init {
 		setupUI()
+		handleFriendLevelSelection(FriendLevel.SECOND_DEGREE)
 
 		binding.friendFirstDegreeWrapper.setOnClickListener {
 			handleFriendLevelSelection(FriendLevel.FIRST_DEGREE)
