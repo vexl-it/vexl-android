@@ -43,7 +43,20 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		}
 
 		repeatScopeOnStart {
-			viewModel.showEncryptingDialog.collect {
+			viewModel.contactsPublicKeys.collect { (_, contactKeys) ->
+				viewModel.fetchCommonFriends(contactKeys)
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.contactKeysAndCommonFriends.collect { (params, contactKeys, commonFriends) ->
+				viewModel.createOffer(params, contactKeys, commonFriends)
+				binding.progress.isVisible = false
+			}
+		}
+
+		repeatScopeOnStart {
+			viewModel.showEncryptingDialogFlow.collect {
 				showBottomDialog(EncryptingProgressBottomSheetDialog(it, isNewOffer = true) { resource ->
 					when (resource.status) {
 						is Status.Success -> {
@@ -227,7 +240,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			if (params != null) {
 				binding.newOfferBtn.isVisible = false
 				binding.progress.isVisible = true
-				viewModel.createOffer(params)
+				viewModel.fetchContactsPublicKeys(params)
 			}
 		}
 
