@@ -67,57 +67,8 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		binding.commonFriendsList.adapter = commonFriendsAdapter
 
 		viewModel.loadOfferById(args.offerId)
-
-		binding.requestOfferBtn.setOnClickListener {
-			val offerPublicKey = viewModel.offer.value?.offer?.offerPublicKey
-			val offerId = viewModel.offer.value?.offer?.offerId
-			val messageText = binding.requestText.text.toString()
-
-			if (offerPublicKey.isNullOrBlank() || offerId.isNullOrBlank()) {
-				if (offerPublicKey.isNullOrBlank()) {
-					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(
-							requireActivity(),
-							getString(R.string.error_missing_offer_public_key),
-							Toast.LENGTH_SHORT
-						).show()
-					}
-				}
-				if (offerId.isNullOrBlank()) {
-					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(
-							requireActivity(),
-							getString(R.string.error_missing_offer_id),
-							Toast.LENGTH_SHORT
-						).show()
-					}
-				}
-			} else {
-				viewModel.sendRequest(
-					text = messageText.ifBlank { null },
-					offerPublicKey = offerPublicKey,
-					offerId = offerId
-				) {
-					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(
-							requireContext(),
-							getString(R.string.offer_request_sent_successfully),
-							Toast.LENGTH_SHORT
-						).show()
-						delay(POP_BACKSTACK_DELAY)
-						findNavController().popBackStack()
-					}
-				}
-			}
-		}
-
-		binding.reportOffer.setDebouncedOnClickListener {
-			viewModel.offer.value?.offer?.offerId?.let {
-				showBottomDialog(
-					ReportOfferBottomSheetDialog(it)
-				)
-			} ?: Toast.makeText(requireContext(), getString(R.string.error_no_offer_id_found), Toast.LENGTH_SHORT).show()
-		}
+		setReportOfferListener()
+		setRequestOfferListener()
 
 		binding.close.setOnClickListener {
 			findNavController().popBackStack()
@@ -172,6 +123,65 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		binding.requestTextWrapper.isVisible = true
 		binding.requestOfferBtn.isVisible = true
 		binding.close.isVisible = true
+	}
+
+	private fun setReportOfferListener() {
+		binding.reportOffer.setDebouncedOnClickListener {
+			binding.requestOfferBtn.setOnClickListener(null)
+			viewModel.offer.value?.offer?.offerId?.let {
+				showBottomDialog(
+					ReportOfferBottomSheetDialog(it)
+				)
+			} ?: Toast.makeText(requireContext(), getString(R.string.error_no_offer_id_found), Toast.LENGTH_SHORT).show()
+			setRequestOfferListener()
+		}
+	}
+
+	private fun setRequestOfferListener() {
+		binding.requestOfferBtn.setDebouncedOnClickListener {
+			binding.reportOffer.setOnClickListener(null)
+			val offerPublicKey = viewModel.offer.value?.offer?.offerPublicKey
+			val offerId = viewModel.offer.value?.offer?.offerId
+			val messageText = binding.requestText.text.toString()
+
+			if (offerPublicKey.isNullOrBlank() || offerId.isNullOrBlank()) {
+				if (offerPublicKey.isNullOrBlank()) {
+					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+						Toast.makeText(
+							requireActivity(),
+							getString(R.string.error_missing_offer_public_key),
+							Toast.LENGTH_SHORT
+						).show()
+					}
+				}
+				if (offerId.isNullOrBlank()) {
+					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+						Toast.makeText(
+							requireActivity(),
+							getString(R.string.error_missing_offer_id),
+							Toast.LENGTH_SHORT
+						).show()
+					}
+				}
+			} else {
+				viewModel.sendRequest(
+					text = messageText.ifBlank { null },
+					offerPublicKey = offerPublicKey,
+					offerId = offerId
+				) {
+					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+						Toast.makeText(
+							requireContext(),
+							getString(R.string.offer_request_sent_successfully),
+							Toast.LENGTH_SHORT
+						).show()
+						delay(POP_BACKSTACK_DELAY)
+						findNavController().popBackStack()
+					}
+				}
+			}
+			setReportOfferListener()
+		}
 	}
 
 	private companion object {
