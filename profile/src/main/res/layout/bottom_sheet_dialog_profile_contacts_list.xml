@@ -70,11 +70,8 @@
 
 	<com.google.android.material.progressindicator.CircularProgressIndicator
 		android:id="@+id/progress"
-		android:layout_width="120dp"
-		android:layout_height="120dp"
-		android:layout_gravity="center"
+		style="@style/Widget.Vexl.CircleProgress"
 		android:layout_marginHorizontal="16dp"
-		android:indeterminate="true"
 		app:indicatorColor="@color/yellow_100"
 		app:showDelay="500"
 		tools:visibility="visible" />
