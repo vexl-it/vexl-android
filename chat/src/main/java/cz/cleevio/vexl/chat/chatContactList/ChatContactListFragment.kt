@@ -51,6 +51,11 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 				)
 			}
 		}
+		repeatScopeOnStart {
+			chatContactListViewModel.refreshDone.collect { offers ->
+				binding.swipeRefresh.isRefreshing = false
+			}
+		}
 	}
 
 	override fun initView() {
@@ -106,6 +111,10 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 
 		binding.lockedBuyBtn.setOnClickListener {
 			chatContactListViewModel.goToMyOfferList(OfferType.BUY)
+		}
+
+		binding.swipeRefresh.setOnRefreshListener {
+			chatContactListViewModel.syncMessages()
 		}
 	}
 
