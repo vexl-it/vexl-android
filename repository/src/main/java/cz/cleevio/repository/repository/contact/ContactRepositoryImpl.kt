@@ -85,7 +85,7 @@ class ContactRepositoryImpl constructor(
 		if (cursor != null && cursor.count > 0) {
 			while (cursor.moveToNext()) {
 				val id = cursor.getLong(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
-				val name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME))
+				val name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)) ?: ""
 				val photo = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.PHOTO_URI))
 				val emailOrMobile = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Data.DATA1))
 				val hasPhone = cursor.getInt(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.HAS_PHONE_NUMBER))
