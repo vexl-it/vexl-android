@@ -31,6 +31,9 @@ class ChatViewModel constructor(
 	private val _resolveIdentityRevealChannel = Channel<Resource<Unit>>()
 	val resolveIdentityRevealFlow = _resolveIdentityRevealChannel.receiveAsFlow()
 
+	private val _animationChannel = Channel<Unit>()
+	val animationChannel = _animationChannel.receiveAsFlow()
+
 	val chatUserIdentity = communicationRequest.let { communicationRequest ->
 		chatRepository.getChatUserIdentityFlow(
 			inboxKey = communicationRequest.message.inboxPublicKey,
@@ -254,6 +257,10 @@ class ChatViewModel constructor(
 			// and get nearest by time
 			it.time
 		}
+	}
+
+	suspend fun animationDone() {
+		_animationChannel.send(Unit)
 	}
 
 	companion object {
