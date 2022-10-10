@@ -85,7 +85,7 @@ class ProfileContactsListFragment constructor(
 
 	private fun initView() {
 		listenForInsets(binding.container) { insets ->
-			binding.contactsListWidget.updatePadding(
+			binding.container.updatePadding(
 				bottom = insets.bottomWithIME
 			)
 		}

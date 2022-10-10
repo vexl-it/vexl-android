@@ -115,6 +115,7 @@
 	</style>
 
 	<style name="Widget.Cleevio.TextInput.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="android:theme">@style/AppTheme</item>
 		<item name="android:textColorHighlight">@color/yellow_100</item>
 	</style>
 
@@ -550,6 +551,7 @@
 	</style>
 
 	<style name="Widget.Vexl.CloseButton" parent="">
+		<item name="android:theme">@style/AppTheme</item>
 		<item name="android:padding">7dp</item>
 		<item name="android:background">@drawable/background_button_gray_13</item>
 		<item name="android:foreground">@drawable/ripple_mask_13</item>
@@ -639,6 +641,7 @@
 	</style>
 
 	<style name="Widget.Vexl.SearchView" parent="Widget.AppCompat.SearchView">
+		<item name="android:theme">@style/AppTheme</item>
 		<item name="android:textColorPrimary">@color/text_primary</item>
 		<item name="android:textColorHint">@color/text_secondary</item>
 		<item name="android:tint">@color/primary</item>
