@@ -399,6 +399,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="error_missing_firebase_token">Firebase token for Inbox is missing</string>
     <string name="error_missing_keypair">The action could not be completed because of missing key pair</string>
     <string name="error_missing_challenge">The action could not be completed because of missing signed challenge</string>
+    <string name="error_offer_not_found">Offer not found</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Change profile picture</string>

@@ -413,6 +413,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_terms_and_privacy">Podmienky použitia a Ochrana súkromia</string>
     <string name="profile_faq">Často kladené otázky</string>
     <string name="profile_report_issue">Nahlásiť problém</string>
+    <string name="profile_logs">In-app logs</string>
     <string name="profile_request_data">Vyžiadať uložené dáta</string>
     <string name="profile_logout">Vymazať účet</string>
     <string name="profile_currency">Mena</string>
@@ -720,16 +721,16 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <!-- Locked Screen -->
     <string name="locked_screen_title">V súčasnosti vytvárame sociálnu sieť. Importuj svoje kontakty a pomôž nám šířiť Vexl!</string>
     <string name="locked_screen_subtitle">Vytvoril si už svoju ponuku?</string>
-    <string name="locked_screen_sell">Chcem predať</string>
-    <string name="locked_screen_buy">Chcem kúpiť</string>
-    <string name="locked_screen_offers">Ponuka</string>
-    <string name="locked_groups">Funkcia Skupiny je zamknutá.</string>
-    <string name="locked_screen_contacts_remaining">Zostávajúcich kontaktov</string>
+	<string name="locked_screen_sell">Chcem predať</string>
+	<string name="locked_screen_buy">Chcem kúpiť</string>
+	<string name="locked_screen_offers">Ponuka</string>
+	<string name="locked_groups">Funkcia Skupiny je zamknutá.</string>
+	<string name="locked_screen_contacts_remaining">Zostávajúcich kontaktov</string>
 
-    <!-- Intro -->
-    <string name="intro_skip">Preskočiť</string>
-    <string name="intro_continue">Pokračovať</string>
-    <string name="intro_first_title">Anonymne\nsa spoj\nso svojimi kontaktmi.</string>
+	<!-- Intro -->
+	<string name="intro_skip">Preskočiť</string>
+	<string name="intro_continue">Pokračovať</string>
+	<string name="intro_first_title">Anonymne\nsa spoj\nso svojimi kontaktmi.</string>
 	<string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
 	<string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
 
@@ -760,7 +761,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
 	<!-- Maintenance -->
 
 	<!-- Report offer -->
-	<string name="report_offer_modal_title">Najhlásiť nabídku?</string>
+	<string name="report_offer_modal_title">Nahlásiť ponuku?</string>
 	<string name="report_offer_modal_subtitle">Skutočne chcete nahlásiť túto ponuku? Táto akcia je nevratná.</string>
 	<string name="report_offer_modal_button_yes">Ano, nahlásiť</string>
 	<string name="report_offer_modal_button_no">Nie</string>
@@ -770,4 +771,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
 	<string name="error_no_offer_id_found">Akcia zlyhala. ID tejto ponuky sa nenašlo.</string>
 
 	<!-- Logs -->
+	<string name="logs_title">Logs</string>
+	<string name="logs_button">Copy all to clipboard</string>
+	<string name="logs_text_copied_clipboard">Logs copied to clipboard!</string>
 </resources>
