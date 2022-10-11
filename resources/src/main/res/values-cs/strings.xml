@@ -400,6 +400,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_missing_offer_keys">K této nabídce nemáš přístup</string>
     <string name="error_nickname_blank">Nejdřív si vyplň přezdívku.</string>
     <string name="error_missing_firebase_token">Chybí Firebase token pro doručené zprávy</string>
+    <string name="error_offer_not_found">Nabídka nebyla nalezena</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Změnit profilový obrázek</string>
@@ -413,7 +414,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_terms_and_privacy">Podmínky použití a Ochrana soukromí</string>
     <string name="profile_faq">Často kladené otázky</string>
     <string name="profile_report_issue">Nahlásit problém</string>
-	<string name="profile_logs">In-app logs</string>
+    <string name="profile_logs">Aplikační logy</string>
     <string name="profile_request_data">Vyžádat uložená data</string>
     <string name="profile_logout">Smazat účet</string>
     <string name="profile_currency">Měna</string>
@@ -594,13 +595,13 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="currency_czk">CZK</string>
 
     <!-- Offer Progress -->
-    <string name="offer_progress_title_loading">Encrypting your offer ...</string>
-    <string name="offer_progress_title_complete">Done! Offer posted.</string>
-    <string name="offer_progress_bar_title">for %s vexlers</string>
-    <string name="offer_progress_bar_subtitle">%s done</string>
-    <string name="offer_progress_bar_title_complete">Anonymously delivered to %s vexlers</string>
-    <string name="offer_progress_subtitle">Don’t shut down the app while encrypting. It can take several minutes.</string>
-    <string name="offer_progress_subtitle_complete">Your friends and friends of their friends can now see your offer.</string>
+    <string name="offer_progress_title_loading">Tvoje nabídka se šifruje ...</string>
+    <string name="offer_progress_title_complete">Hotovo! Nabídka odeslaná.</string>
+    <string name="offer_progress_bar_title">pro %s vexláků</string>
+    <string name="offer_progress_bar_subtitle">%s hotovo</string>
+    <string name="offer_progress_bar_title_complete">Anonymně doručeno pro %s vexláků</string>
+    <string name="offer_progress_subtitle">Nevypínej aplikaci během šifrování. Může to trvat několik minut.</string>
+    <string name="offer_progress_subtitle_complete">Přátelé a přátelé jejich přátel můžou od teď vidět tvou nabídku.</string>
 
     <!-- Offer Request -->
     <string name="request_title">Nabídka</string>
@@ -742,16 +743,16 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_invalid_data_format">Neplatný formát dat</string>
 
     <!-- Passcode -->
-    <string name="user_passcode_initial_title">Setup your\nnew passcode</string>
-    <string name="user_passcode_initial_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
-    <string name="user_passcode_confirm_title">Repeat your\nnew passcode</string>
-    <string name="user_passcode_confirm_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
-    <string name="user_passcode_loader_one">Anonymizing your identity...</string>
-    <string name="user_passcode_loader_two">Anonymizing your contact list...</string>
-    <string name="user_passcode_loader_three">Securing your profile...</string>
-    <string name="user_passcode_input">Enter your passcode</string>
-    <string name="user_passcode_error_invalid">Wrong passcode</string>
-    <string name="user_passcode_error_not_equal">Passcodes are not the same</string>
+    <string name="user_passcode_initial_title">Nastav si nový\npřístupový kód</string>
+    <string name="user_passcode_initial_subtitle">Bez přístupového kódu nebude mít nikdo\npřístup k vašemu Vexl nebo nastavení soukromí v aplikaci.</string>
+    <string name="user_passcode_confirm_title">Zopakuj svůj\nnový přístupový kód</string>
+    <string name="user_passcode_confirm_subtitle">Bez přístupového kódu nebude mít nikdo\npřístup k vašemu Vexl nebo nastavení soukromí v aplikaci.</string>
+    <string name="user_passcode_loader_one">Anonymizace tvojí identity...</string>
+    <string name="user_passcode_loader_two">Anonymizace tvého seznamu kontaktů...</string>
+    <string name="user_passcode_loader_three">Zabezpečení tvého profilu...</string>
+    <string name="user_passcode_input">Zadej přístupový kód</string>
+    <string name="user_passcode_error_invalid">Špatný přístupový kód</string>
+    <string name="user_passcode_error_not_equal">Přístupové kódy se neshodují</string>
 
     <!-- Force update -->
     <string name="force_update_title">Je dostupná nová verze Vexlu!</string>
@@ -759,19 +760,23 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="force_update_button">Aktualizovat</string>
 
     <!-- Maintenance -->
+    <string name="lock_maintenance_title">Údržba marketplacu</string>
+    <string name="lock_maintenance_subtitle">Aplikace Vexl je v údržbě. Vraťte se prosím později.</string>
 
     <!-- Report offer -->
-	<string name="report_offer_modal_title">Nahlásit nabídku?</string>
-	<string name="report_offer_modal_subtitle">Skutečně chcete nahlásit tuhle nabídku? </string>
-	<string name="report_offer_modal_button_yes">Ano, nahlásit</string>
-	<string name="report_offer_modal_button_no">Ne</string>
-	<string name="report_offer_confirmation_modal_title">Díky!</string>
-	<string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah byl anonymně nahlášen.</string>
-	<string name="report_offer_confirmation_modal_button">Pokračovat</string>
-	<string name="error_no_offer_id_found">Akce zlyhala. ID nabídky se nenašlo.</string>
+    <string name="report_offer_modal_title">Nahlásit nabídku?</string>
+    <string name="report_offer_modal_subtitle">Skutečně chcete nahlásit tuhle nabídku? </string>
+    <string name="report_offer_modal_button_yes">Ano, nahlásit</string>
+    <string name="report_offer_modal_button_no">Ne</string>
+    <string name="report_offer_confirmation_modal_title">Díky!</string>
+    <string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah byl anonymně nahlášen.</string>
+    <string name="report_offer_confirmation_modal_button">Pokračovat</string>
+    <string name="error_no_offer_id_found">Akce zlyhala. ID nabídky se nenašlo.</string>
 
-	<!-- Logs -->
-	<string name="logs_title">Logs</string>
-	<string name="logs_button">Copy all to clipboard</string>
-	<string name="logs_text_copied_clipboard">Logs copied to clipboard!</string>
+    <!-- Logs -->
+    <string name="logs_title">Logy</string>
+    <string name="logs_button">Zkopírovat vše do schránky</string>
+    <string name="logs_text_copied_clipboard">Protokoly zkopírované do schránky</string>
+
+    <!-- Social media -->
 </resources>

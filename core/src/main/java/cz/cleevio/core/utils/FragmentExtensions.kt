@@ -87,6 +87,22 @@ fun Fragment.sendEmailToSupport(
 	}
 }
 
+fun Fragment.openWeb(
+	url: String?
+) {
+	val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+	try {
+		startActivity(intent)
+	} catch (e: ActivityNotFoundException) {
+		Timber.e(e)
+		(this as BaseFragment).showToast(
+			text = getString(R.string.error_invalid_url),
+			length = Toast.LENGTH_LONG
+		)
+	}
+}
+
 fun Fragment.setExitTransitionGravityStart() {
 	exitTransition = Slide(Gravity.START).apply {
 		interpolator = DecelerateInterpolator()

@@ -400,6 +400,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_missing_offer_keys">K tejto ponuke nemáš prístup</string>
     <string name="error_nickname_blank">Najprv si vyplň prezývku.</string>
     <string name="error_missing_firebase_token">Chýba Firebase token pre doručené správy</string>
+    <string name="error_offer_not_found">Ponuka nebola nájdená</string>
 
     <!-- Profile -->
     <string name="profile_change_picture">Zmeniť profilový obrázok</string>
@@ -413,7 +414,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_terms_and_privacy">Podmienky použitia a Ochrana súkromia</string>
     <string name="profile_faq">Často kladené otázky</string>
     <string name="profile_report_issue">Nahlásiť problém</string>
-    <string name="profile_logs">In-app logs</string>
+    <string name="profile_logs">Logy aplikácie</string>
     <string name="profile_request_data">Vyžiadať uložené dáta</string>
     <string name="profile_logout">Vymazať účet</string>
     <string name="profile_currency">Mena</string>
@@ -594,13 +595,13 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="currency_czk">CZK</string>
 
     <!-- Offer Progress -->
-    <string name="offer_progress_title_loading">Encrypting your offer ...</string>
-    <string name="offer_progress_title_complete">Done! Offer posted.</string>
-    <string name="offer_progress_bar_title">for %s vexlers</string>
-    <string name="offer_progress_bar_subtitle">%s done</string>
-    <string name="offer_progress_bar_title_complete">Anonymously delivered to %s vexlers</string>
-    <string name="offer_progress_subtitle">Don’t shut down the app while encrypting. It can take several minutes.</string>
-    <string name="offer_progress_subtitle_complete">Your friends and friends of their friends can now see your offer.</string>
+    <string name="offer_progress_title_loading">Tvoja ponuka sa šifruje ...</string>
+    <string name="offer_progress_title_complete">Hotovo! Ponuka odoslaná.</string>
+    <string name="offer_progress_bar_title">pre %s vexlákov</string>
+    <string name="offer_progress_bar_subtitle">%s hotovo</string>
+    <string name="offer_progress_bar_title_complete">Anonymne doručené pre %s vexlákov</string>
+    <string name="offer_progress_subtitle">Nevypínaj aplikáciu počas šifrovania. Môže to trvať niekoľko minút.</string>
+    <string name="offer_progress_subtitle_complete">Priatelia a priatelia ich priateľov môžu odteraz vidieť tvoju ponuku.</string>
 
     <!-- Offer Request -->
     <string name="request_title">Ponuka</string>
@@ -716,62 +717,66 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="faq_screen_seven_subtitle_3">Alebo sa s nami môžeš stretnúť počas svojho budúceho P2P obchodu! 😻</string>
 
     <!-- Permissions -->
-    <string name="permission_camera_denied">Prístup ku kamere bol odopredný</string>
+    <string name="permission_camera_denied">Prístup ku kamere bol odopretý</string>
 
     <!-- Locked Screen -->
     <string name="locked_screen_title">V súčasnosti vytvárame sociálnu sieť. Importuj svoje kontakty a pomôž nám šířiť Vexl!</string>
     <string name="locked_screen_subtitle">Vytvoril si už svoju ponuku?</string>
-	<string name="locked_screen_sell">Chcem predať</string>
-	<string name="locked_screen_buy">Chcem kúpiť</string>
-	<string name="locked_screen_offers">Ponuka</string>
-	<string name="locked_groups">Funkcia Skupiny je zamknutá.</string>
-	<string name="locked_screen_contacts_remaining">Zostávajúcich kontaktov</string>
+    <string name="locked_screen_sell">Chcem predať</string>
+    <string name="locked_screen_buy">Chcem kúpiť</string>
+    <string name="locked_screen_offers">Ponuka</string>
+    <string name="locked_groups">Funkcia Skupiny je zamknutá.</string>
+    <string name="locked_screen_contacts_remaining">Zostávajúcich kontaktov</string>
 
-	<!-- Intro -->
-	<string name="intro_skip">Preskočiť</string>
-	<string name="intro_continue">Pokračovať</string>
-	<string name="intro_first_title">Anonymne\nsa spoj\nso svojimi kontaktmi.</string>
-	<string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
-	<string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
+    <!-- Intro -->
+    <string name="intro_skip">Preskočiť</string>
+    <string name="intro_continue">Pokračovať</string>
+    <string name="intro_first_title">Anonymne\nsa spoj\nso svojimi kontaktmi.</string>
+    <string name="intro_second_title">Pozri sa\nna ich\nponuky.</string>
+    <string name="intro_third_title">Začnite chatovat,\odhaľte svoje identity\na obchodujte.</string>
 
-	<!-- Error -->
-	<string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
-	<string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
-	<string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
-	<string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
-	<string name="error_invalid_data_format">Neplatný formát dát</string>
+    <!-- Error -->
+    <string name="error_user_is_blocked">Užívateľ je zablokovaný</string>
+    <string name="error_unauthorized">Neoprávnená chyba. Bol si odhlásený.</string>
+    <string name="error_unknown_error_occurred">Akciu nebolo možné dokončiť, protože došlo k neznámej chybe. Skús to neskôr znovu prosím.</string>
+    <string name="error_unknown_connection_problem">Problém s pripojením. Skús to neskôr znovu prosím.</string>
+    <string name="error_invalid_data_format">Neplatný formát dát</string>
 
-	<!-- Passcode -->
-	<string name="user_passcode_initial_title">Setup your\nnew passcode</string>
-	<string name="user_passcode_initial_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
-	<string name="user_passcode_confirm_title">Repeat your\nnew passcode</string>
-	<string name="user_passcode_confirm_subtitle">Without passcode, nobody will be able to\naccess your Vexl or Privacy Settings in app.</string>
-	<string name="user_passcode_loader_one">Anonymizing your identity...</string>
-	<string name="user_passcode_loader_two">Anonymizing your contact list...</string>
-	<string name="user_passcode_loader_three">Securing your profile...</string>
-	<string name="user_passcode_input">Enter your passcode</string>
-	<string name="user_passcode_error_invalid">Wrong passcode</string>
-	<string name="user_passcode_error_not_equal">Passcodes are not the same</string>
+    <!-- Passcode -->
+    <string name="user_passcode_initial_title">Nastav si nový\nprístupový kód</string>
+    <string name="user_passcode_initial_subtitle">Bez prístupového kódu nebude mať nikto\nprístup k nastaveniam Vexl alebo súkromia v aplikácii.</string>
+    <string name="user_passcode_confirm_title">Zopakuj svoj\nnový prístupový kód</string>
+    <string name="user_passcode_confirm_subtitle">Bez prístupového kódu nebude mať nikto\nprístup k nastaveniam Vexl alebo súkromia v aplikácii.</string>
+    <string name="user_passcode_loader_one">Anonymizácia tvojej identity...</string>
+    <string name="user_passcode_loader_two">Anonymizácia tvojho zoznamu kontaktov...</string>
+    <string name="user_passcode_loader_three">Zabezpečenie tvojho profilu...</string>
+    <string name="user_passcode_input">Zadaj prístupový kód</string>
+    <string name="user_passcode_error_invalid">Zlý prístupový kód</string>
+    <string name="user_passcode_error_not_equal">Prístupové kódy sa nezhodujú</string>
 
-	<!-- Force update -->
-	<string name="force_update_title">Je dostupná nová verzia Vexlu!</string>
-	<string name="force_update_subtitle">Pre správne fungovanie Vexlu je nutné aplikáciu aktualizovať.</string>
-	<string name="force_update_button">Aktualizovať</string>
+    <!-- Force update -->
+    <string name="force_update_title">Je dostupná nová verzia Vexlu!</string>
+    <string name="force_update_subtitle">Pre správne fungovanie Vexlu je nutné aplikáciu aktualizovať.</string>
+    <string name="force_update_button">Aktualizovať</string>
 
-	<!-- Maintenance -->
+    <!-- Maintenance -->
+    <string name="lock_maintenance_title">Údržba marketplacu</string>
+    <string name="lock_maintenance_subtitle">Aplikácia Vexl je v údržbe. Vráťte sa, prosím, neskôr.</string>
 
-	<!-- Report offer -->
-	<string name="report_offer_modal_title">Nahlásiť ponuku?</string>
-	<string name="report_offer_modal_subtitle">Skutočne chcete nahlásiť túto ponuku? Táto akcia je nevratná.</string>
-	<string name="report_offer_modal_button_yes">Ano, nahlásiť</string>
-	<string name="report_offer_modal_button_no">Nie</string>
-	<string name="report_offer_confirmation_modal_title">Vďaka!</string>
-	<string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah bol anonymne nahlásený.</string>
-	<string name="report_offer_confirmation_modal_button">Pokračovať</string>
-	<string name="error_no_offer_id_found">Akcia zlyhala. ID tejto ponuky sa nenašlo.</string>
+    <!-- Report offer -->
+    <string name="report_offer_modal_title">Nahlásiť ponuku?</string>
+    <string name="report_offer_modal_subtitle">Skutočne chcete nahlásiť túto ponuku? Táto akcia je nevratná.</string>
+    <string name="report_offer_modal_button_yes">Ano, nahlásiť</string>
+    <string name="report_offer_modal_button_no">Nie</string>
+    <string name="report_offer_confirmation_modal_title">Vďaka!</string>
+    <string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah bol anonymne nahlásený.</string>
+    <string name="report_offer_confirmation_modal_button">Pokračovať</string>
+    <string name="error_no_offer_id_found">Akcia zlyhala. ID tejto ponuky sa nenašlo.</string>
 
-	<!-- Logs -->
-	<string name="logs_title">Logs</string>
-	<string name="logs_button">Copy all to clipboard</string>
-	<string name="logs_text_copied_clipboard">Logs copied to clipboard!</string>
+    <!-- Logs -->
+    <string name="logs_title">Logy</string>
+    <string name="logs_button">Skopírovať všetko do schránky</string>
+    <string name="logs_text_copied_clipboard">Protokoly skopírované do schránky</string>
+
+    <!-- Social media -->
 </resources>
