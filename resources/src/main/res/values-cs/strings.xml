@@ -392,7 +392,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
 
     <!-- Notifications permission disabled -->
     <string name="notifications_permission_disabled_title">Vypnuté notifikace</string>
-    <string name="notifications_permission_disabled_subtitle">Máš vypnuté notifikace. Povol ich v Nastaveních, Vexl bez nich nebude fungovat jak má. Neboj, nebudeme tě spamovat.</string>
+    <string name="notifications_permission_disabled_subtitle">Máš vypnuté notifikace. Povol je v Nastavení, Vexl bez nich nebude fungovat jak má. Neboj, nebudeme tě spamovat.</string>
     <string name="notifications_permission_disabled_button">Jít do Nastavení</string>
 
     <!-- Errors -->
@@ -413,6 +413,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_terms_and_privacy">Podmínky použití a Ochrana soukromí</string>
     <string name="profile_faq">Často kladené otázky</string>
     <string name="profile_report_issue">Nahlásit problém</string>
+	<string name="profile_logs">In-app logs</string>
     <string name="profile_request_data">Vyžádat uložená data</string>
     <string name="profile_logout">Smazat účet</string>
     <string name="profile_currency">Měna</string>
@@ -760,14 +761,17 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <!-- Maintenance -->
 
     <!-- Report offer -->
-    <string name="report_offer_modal_title">Nahlásit nabídku?</string>
-    <string name="report_offer_modal_subtitle">Skutečně chcete nahlásit tuhle nabídku? </string>
-    <string name="report_offer_modal_button_yes">Ano, nahlásit</string>
-    <string name="report_offer_modal_button_no">Ne</string>
-    <string name="report_offer_confirmation_modal_title">Díky!</string>
-    <string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah byl anonymně nahlášen.</string>
-    <string name="report_offer_confirmation_modal_button">Pokračovat</string>
-    <string name="error_no_offer_id_found">Akce zlyhala. ID nabídky se nenašlo.</string>
+	<string name="report_offer_modal_title">Nahlásit nabídku?</string>
+	<string name="report_offer_modal_subtitle">Skutečně chcete nahlásit tuhle nabídku? </string>
+	<string name="report_offer_modal_button_yes">Ano, nahlásit</string>
+	<string name="report_offer_modal_button_no">Ne</string>
+	<string name="report_offer_confirmation_modal_title">Díky!</string>
+	<string name="report_offer_confirmation_modal_subtitle">Nevhodný obsah byl anonymně nahlášen.</string>
+	<string name="report_offer_confirmation_modal_button">Pokračovat</string>
+	<string name="error_no_offer_id_found">Akce zlyhala. ID nabídky se nenašlo.</string>
 
-    <!-- Logs -->
+	<!-- Logs -->
+	<string name="logs_title">Logs</string>
+	<string name="logs_button">Copy all to clipboard</string>
+	<string name="logs_text_copied_clipboard">Logs copied to clipboard!</string>
 </resources>

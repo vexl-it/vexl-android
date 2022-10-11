@@ -134,6 +134,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				showProgress(resource.isLoading())
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.animationChannel.collect {
+				binding.slideEffect.isVisible = false
+			}
+		}
 	}
 
 	override fun initView() {
@@ -299,7 +304,10 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			}
 
 			override fun onAnimationEnd(animation: Animator) {
-				binding.slideEffect.isVisible = false
+				//was crashing if user closed screen fast (?)
+				lifecycleScope.launch {
+					viewModel.animationDone()
+				}
 			}
 
 			override fun onAnimationCancel(animation: Animator) = Unit

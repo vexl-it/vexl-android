@@ -11,10 +11,12 @@ import cz.cleevio.cache.entity.ReportedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.LocationApi
 import cz.cleevio.network.api.OfferApi
+import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.offer.*
+import cz.cleevio.repository.R
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.fromDao
@@ -122,73 +124,85 @@ class OfferRepositoryImpl constructor(
 		offerList: List<NewOffer>,
 		additionalEncryptedFor: List<String>
 	): Resource<Unit> {
-		return tryOnline(
-			request = {
-				offerApi.postOffersPrivatePart(
-					CreateOfferPrivatePartRequest(
-						privateParts = offerList.map { it.toNetwork() },
-						adminId = myOfferDao.getAdminIdByOfferId(offerId)
+		val adminId = myOfferDao.getAdminIdByOfferId(offerId)
+		return if (adminId != null) {
+			tryOnline(
+				request = {
+					offerApi.postOffersPrivatePart(
+						CreateOfferPrivatePartRequest(
+							privateParts = offerList.map { it.toNetwork() },
+							adminId = adminId
+						)
 					)
-				)
-			},
-			mapper = { },
-			doOnSuccess = { _ ->
-				//update `encryptedFor` field in myOfferDao with contactsPublicKeys
-				val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
-				nullableMyOffer?.let { myOffer ->
-					val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
-					tempEncryptedFor.addAll(
-						additionalEncryptedFor
-					)
-					myOfferDao.replace(
-						myOffer.copy(
-							encryptedFor = tempEncryptedFor.filter { it.isNotBlank() }.toList()
-						).toCache()
-					)
+				},
+				mapper = { },
+				doOnSuccess = { _ ->
+					//update `encryptedFor` field in myOfferDao with contactsPublicKeys
+					val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+					nullableMyOffer?.let { myOffer ->
+						val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
+						tempEncryptedFor.addAll(
+							additionalEncryptedFor
+						)
+						myOfferDao.replace(
+							myOffer.copy(
+								encryptedFor = tempEncryptedFor.filter { it.isNotBlank() }.toList()
+							).toCache()
+						)
+					}
 				}
-			}
-		)
+			)
+		} else {
+			Resource.error(ErrorIdentification.MessageError(message = R.string.error_offer_not_found))
+		}
 	}
 
 	override suspend fun updateOffer(
 		offerId: String,
 		offerList: List<NewOffer>,
 		additionalEncryptedFor: List<String>
-	): Resource<Offer> = tryOnline(
-		request = {
-			offerApi.putOffers(
-				UpdateOfferRequest(
-					adminId = myOfferDao.getAdminIdByOfferId(offerId),
-					offerPrivateCreateList = offerList.map { it.toNetwork() }
-				)
-			)
-		},
-		mapper = {
-			it?.fromNetwork(
-				cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
-				reportedOfferIds = reportedOfferDao.listAllIds()
-			)
-		},
-		doOnSuccess = { nullableOffer ->
-			//update `encryptedFor` field in myOfferDao with contactsPublicKeys
-			val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
-			nullableMyOffer?.let { myOffer ->
-				val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
-				tempEncryptedFor.addAll(
-					additionalEncryptedFor
-				)
-				myOfferDao.replace(
-					myOffer.copy(
-						encryptedFor = tempEncryptedFor.filter { it.isNotBlank() }.toList()
-					).toCache()
-				)
-			}
+	): Resource<Offer> {
+		val adminId = myOfferDao.getAdminIdByOfferId(offerId)
+		return if (adminId != null) {
+			tryOnline(
+				request = {
+					offerApi.putOffers(
+						UpdateOfferRequest(
+							adminId = adminId,
+							offerPrivateCreateList = offerList.map { it.toNetwork() }
+						)
+					)
+				},
+				mapper = {
+					it?.fromNetwork(
+						cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
+						reportedOfferIds = reportedOfferDao.listAllIds()
+					)
+				},
+				doOnSuccess = { nullableOffer ->
+					//update `encryptedFor` field in myOfferDao with contactsPublicKeys
+					val nullableMyOffer = myOfferDao.getMyOfferById(offerId)?.fromCache()
+					nullableMyOffer?.let { myOffer ->
+						val tempEncryptedFor = myOffer.encryptedFor.toMutableSet()
+						tempEncryptedFor.addAll(
+							additionalEncryptedFor
+						)
+						myOfferDao.replace(
+							myOffer.copy(
+								encryptedFor = tempEncryptedFor.filter { it.isNotBlank() }.toList()
+							).toCache()
+						)
+					}
 
-			nullableOffer?.let { offer ->
-				updateOffers(listOf(offer))
-			}
+					nullableOffer?.let { offer ->
+						updateOffers(listOf(offer))
+					}
+				}
+			)
+		} else {
+			Resource.error(ErrorIdentification.MessageError(message = R.string.error_offer_not_found))
 		}
-	)
+	}
 
 	override suspend fun loadOffersForMe(): Resource<List<Offer>> = tryOnline(
 		request = {
