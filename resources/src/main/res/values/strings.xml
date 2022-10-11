@@ -422,6 +422,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="profile_refuse_to_snap_chat">Allow in-app screenshots</string>
     <string name="profile_private_settings_title">Private settings</string>
     <string name="profile_private_settings_subtitle">Unlock to access your private profile.</string>
+    <string name="profile_app_version">Vexl App Version %s</string>
 
     <!-- Profile Edit Name -->
     <string name="profile_edit_name_title">Edit name</string>

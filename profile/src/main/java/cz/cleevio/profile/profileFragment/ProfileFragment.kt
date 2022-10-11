@@ -139,6 +139,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 			)
 		}
 
+		context?.packageManager?.getPackageInfo(context?.packageName ?: "", 0)?.versionName?.let {
+			binding.profileAppVersion.isVisible = true
+			binding.profileAppVersion.text = getString(R.string.profile_app_version, it)
+		}
+
 		priceChartWidget?.onLayoutChanged = {
 			TransitionManager.beginDelayedTransition(binding.container)
 		}
