@@ -6,6 +6,7 @@ import cz.cleevio.core.model.OfferEncryptionData
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.offer.NewOffer
+import cz.cleevio.repository.model.offer.NewOfferV2
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
@@ -23,7 +24,7 @@ class EncryptingProgressViewModel constructor(
 	private val _newOfferRequest = MutableSharedFlow<Resource<Offer>>()
 	val newOfferRequest = _newOfferRequest.asSharedFlow()
 
-	private val _encryptedOfferList = MutableSharedFlow<List<NewOffer>>()
+	private val _encryptedOfferList = MutableSharedFlow<List<NewOfferV2>>()
 	val encryptedOfferList = _encryptedOfferList.asSharedFlow()
 
 	fun prepareEncryptedOffers() {
@@ -43,15 +44,16 @@ class EncryptingProgressViewModel constructor(
 	}
 
 	//send all in single request to BE
-	fun sendNewOffer(encryptedOfferList: List<NewOffer>) {
+	fun sendNewOffer(offer: NewOfferV2) {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerEncryptionData.run {
 				val response = offerRepository.createOffer(
-					offerList = encryptedOfferList,
+					offerList = offer.privateParts,
 					expiration = params.expiration,
 					offerKeys = offerKeys,
 					offerType = params.offerType,
-					encryptedFor = contactsPublicKeys.map { it.key }
+					encryptedFor = contactsPublicKeys.map { it.key },
+					payloadPublic = offer.payloadPublic
 				)
 				encryptedPreferenceRepository.isOfferEncrypted = true
 				_newOfferRequest.emit(response)

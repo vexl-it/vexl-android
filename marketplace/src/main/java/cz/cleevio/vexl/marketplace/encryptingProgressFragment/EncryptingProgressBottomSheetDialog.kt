@@ -90,9 +90,9 @@ class EncryptingProgressBottomSheetDialog(
 		}
 
 		repeatScopeOnStart {
-			viewModel.encryptedOfferList.collect { encryptedOfferList ->
+			viewModel.encryptedOfferList.collect { newOffer ->
 				when (isNewOffer) {
-					true -> viewModel.sendNewOffer(encryptedOfferList)
+					true -> viewModel.sendNewOffer(newOffer)
 					false -> offerEncryptionData.offerId?.let { viewModel.sendUpdatedOffer(encryptedOfferList, offerId = it) }
 				}
 			}

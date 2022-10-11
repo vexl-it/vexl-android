@@ -11,11 +11,13 @@ import cz.cleevio.cache.entity.ReportedOfferEntity
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.LocationApi
 import cz.cleevio.network.api.OfferApi
+import cz.cleevio.network.api.OfferApiV2
 import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.offer.*
+import cz.cleevio.network.response.offer.v2.OfferCreateRequestV2
 import cz.cleevio.repository.R
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.fromCache
@@ -31,6 +33,7 @@ import java.text.Normalizer
 
 class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
+	private val offerApiV2: OfferApiV2,
 	private val locationApi: LocationApi,
 	private val myOfferDao: MyOfferDao,
 	private val offerDao: OfferDao,
@@ -51,18 +54,20 @@ class OfferRepositoryImpl constructor(
 	override val sellOfferFilter = MutableStateFlow(OfferFilter())
 
 	override suspend fun createOffer(
-		offerList: List<NewOffer>,
+		offerList: List<NewOfferPrivateV2>,
 		expiration: Long,
 		offerKeys: KeyPair,
 		offerType: String,
-		encryptedFor: List<String>
+		encryptedFor: List<String>,
+		payloadPublic: String,
 	): Resource<Offer> {
 		//create offer
 		val offerCreateResource = tryOnline(
 			request = {
-				offerApi.postOffers(
-					CreateOfferRequest(
-						offerPrivateList = offerList.map { it.toNetwork() },
+				offerApiV2.postOffers(
+					OfferCreateRequestV2(
+						payloadPublic = payloadPublic,
+						offerPrivateList = offerList.map { it.toNetworkV2() },
 						expiration = expiration,
 						offerType = offerType
 					)

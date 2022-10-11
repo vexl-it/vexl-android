@@ -16,11 +16,12 @@ interface OfferRepository {
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
 	suspend fun createOffer(
-		offerList: List<NewOffer>,
+		offerList: List<NewOfferPrivateV2>,
 		expiration: Long,
 		offerKeys: KeyPair,
 		offerType: String,
-		encryptedFor: List<String>
+		encryptedFor: List<String>,
+		payloadPublic: String,
 	): Resource<Offer>
 
 	suspend fun createOfferForPublicKeys(
