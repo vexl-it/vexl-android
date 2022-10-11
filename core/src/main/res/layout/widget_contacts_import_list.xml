@@ -53,6 +53,7 @@
 					android:id="@+id/contacts_barrier"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:theme="@style/AppTheme"
 					app:barrierDirection="bottom"
 					app:constraint_referenced_ids="search_name_input, deselect_all_btn" />
 
@@ -80,6 +81,7 @@
 				android:layout_weight="1"
 				android:background="@color/white"
 				android:paddingBottom="8dp"
+				android:theme="@style/AppTheme"
 				app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 				tools:listitem="@layout/item_contact" />
 
