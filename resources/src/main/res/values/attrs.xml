@@ -3,6 +3,7 @@
 	<declare-styleable name="ProfileRow">
 		<attr name="title" format="string" />
 		<attr name="text_color" format="reference" />
+		<attr name="text_for_highlight" format="reference" />
 		<attr name="subtitle" format="string" />
 		<attr name="icon" format="reference" />
 		<attr name="icon_color" format="reference" />

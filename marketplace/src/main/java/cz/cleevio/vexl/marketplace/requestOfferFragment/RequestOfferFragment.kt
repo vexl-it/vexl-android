@@ -101,8 +101,7 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 		}
 
 		val buttonMargin = binding.requestOfferBtn.marginBottom
-		listenForIMEInset(binding.container)
-		{ insets ->
+		listenForIMEInset(binding.container) { insets ->
 			binding.requestOfferBtn.updateLayoutParams<ViewGroup.MarginLayoutParams> {
 				bottomMargin = insets + buttonMargin
 			}

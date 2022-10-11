@@ -221,7 +221,16 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				RequestDataBottomSheetDialog()
 			)
 		}
-		binding.profileLogout.setOnClickListener {
+		binding.profileTwitter.setDebouncedOnClickListener {
+			openWeb(TWITTER)
+		}
+		binding.profileMedium.setDebouncedOnClickListener {
+			openWeb(MEDIUM)
+		}
+		binding.profileVexlIt.setDebouncedOnClickListener {
+			openWeb(VEXL_IT)
+		}
+		binding.profileLogout.setDebouncedOnClickListener {
 			showBottomDialog(
 				DeleteAccountBottomSheetDialog {
 					if (it) {
@@ -269,5 +278,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				checkReadContactsPermissions()
 			}
 			.show()
+	}
+
+	companion object {
+		private const val TWITTER = "https://twitter.com/vexl"
+		private const val MEDIUM = "https://blog.vexl.it"
+		private const val VEXL_IT = "https://vexl.it"
 	}
 }

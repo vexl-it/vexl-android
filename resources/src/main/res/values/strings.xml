@@ -762,6 +762,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="force_update_button">Update now</string>
 
     <!-- Maintenance -->
+    <string name="lock_maintenance_title">Marketplace maintenance</string>
+    <string name="lock_maintenance_subtitle">Vexl app is in maintenance. Come back later, please.</string>
 
     <!-- Report offer -->
     <string name="report_offer_modal_title">Report offer?</string>
@@ -776,5 +778,14 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <!-- Logs -->
     <string name="logs_title">Logs</string>
     <string name="logs_button">Copy all to clipboard</string>
-    <string name="logs_text_copied_clipboard">Logs copied to clipboard!</string>
+    <string name="logs_text_copied_clipboard">Logs copied to clipboard</string>
+
+    <!-- Social media -->
+    <string name="profile_twitter">Follow us on Twitter</string>
+    <string name="twitter">Twitter</string>
+    <string name="profile_medium">Read more on Medium</string>
+    <string name="medium">Medium</string>
+    <string name="profile_vexl_it">Learn more on Vexl.it</string>
+    <string name="vexl_it">Vexl.it</string>
+    <string name="error_invalid_url">Invalid URL</string>
 </resources>
