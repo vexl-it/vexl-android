@@ -193,7 +193,7 @@ class PriceRangeWidget @JvmOverloads constructor(
 		private const val BOTTOM_LIMIT_USD = 0L
 		private const val TOP_LIMIT_USD = 10_000L
 		private const val DEBOUNCE_DELAY = 800L
-		private const val STEP_SIZE_CZK = 100f
+		private const val STEP_SIZE_CZK = 1000f
 		private const val STEP_SIZE_EUR = 50f
 		private const val STEP_SIZE_USD = 50f
 	}
