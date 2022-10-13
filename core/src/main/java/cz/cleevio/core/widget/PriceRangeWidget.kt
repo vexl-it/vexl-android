@@ -167,12 +167,22 @@ class PriceRangeWidget @JvmOverloads constructor(
 			if (currentSlider[0] != bottomLimit || currentSlider[1] != topLimit) {
 				binding.priceRangeSlider.clearOnChangeListeners()
 				binding.priceRangeSlider.setValues(
-					bottomLimit.coerceAtMost(binding.priceRangeSlider.valueTo),
-					topLimit.coerceAtMost(binding.priceRangeSlider.valueTo)
+					normalizeRangeSliderInput(bottomLimit).coerceAtMost(binding.priceRangeSlider.valueTo),
+					normalizeRangeSliderInput(topLimit).coerceAtMost(binding.priceRangeSlider.valueTo)
 				)
 				setupPriceRangeListener()
 			}
 		}
+	}
+
+	private fun normalizeRangeSliderInput(input: Float): Float {
+		val stepSize = when (currentCurrency) {
+			Currency.USD -> STEP_SIZE_USD
+			Currency.EUR -> STEP_SIZE_EUR
+			Currency.CZK -> STEP_SIZE_CZK
+		}
+
+		return input.div(stepSize).toInt() * stepSize
 	}
 
 	private companion object {
