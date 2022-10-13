@@ -53,18 +53,21 @@ class PriceRangeWidget @JvmOverloads constructor(
 			Currency.CZK -> {
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_CZK.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_CZK.toFloat()
+				binding.priceRangeSlider.stepSize = STEP_SIZE_CZK
 				setupPriceRangeListener()
 				processLimits(BOTTOM_LIMIT_CZK.toFloat(), TOP_LIMIT_CZK.toFloat())
 			}
 			Currency.USD -> {
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_USD.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_USD.toFloat()
+				binding.priceRangeSlider.stepSize = STEP_SIZE_USD
 				setupPriceRangeListener()
 				processLimits(BOTTOM_LIMIT_USD.toFloat(), TOP_LIMIT_USD.toFloat())
 			}
 			Currency.EUR -> {
 				binding.priceRangeSlider.valueFrom = BOTTOM_LIMIT_EUR.toFloat()
 				binding.priceRangeSlider.valueTo = TOP_LIMIT_EUR.toFloat()
+				binding.priceRangeSlider.stepSize = STEP_SIZE_EUR
 				setupPriceRangeListener()
 				processLimits(BOTTOM_LIMIT_EUR.toFloat(), TOP_LIMIT_EUR.toFloat())
 			}
@@ -164,12 +167,22 @@ class PriceRangeWidget @JvmOverloads constructor(
 			if (currentSlider[0] != bottomLimit || currentSlider[1] != topLimit) {
 				binding.priceRangeSlider.clearOnChangeListeners()
 				binding.priceRangeSlider.setValues(
-					bottomLimit.coerceAtMost(binding.priceRangeSlider.valueTo),
-					topLimit.coerceAtMost(binding.priceRangeSlider.valueTo)
+					normalizeRangeSliderInput(bottomLimit).coerceAtMost(binding.priceRangeSlider.valueTo),
+					normalizeRangeSliderInput(topLimit).coerceAtMost(binding.priceRangeSlider.valueTo)
 				)
 				setupPriceRangeListener()
 			}
 		}
+	}
+
+	private fun normalizeRangeSliderInput(input: Float): Float {
+		val stepSize = when (currentCurrency) {
+			Currency.USD -> STEP_SIZE_USD
+			Currency.EUR -> STEP_SIZE_EUR
+			Currency.CZK -> STEP_SIZE_CZK
+		}
+
+		return input.div(stepSize).toInt() * stepSize
 	}
 
 	private companion object {
@@ -180,5 +193,8 @@ class PriceRangeWidget @JvmOverloads constructor(
 		private const val BOTTOM_LIMIT_USD = 0L
 		private const val TOP_LIMIT_USD = 10_000L
 		private const val DEBOUNCE_DELAY = 800L
+		private const val STEP_SIZE_CZK = 1000f
+		private const val STEP_SIZE_EUR = 50f
+		private const val STEP_SIZE_USD = 50f
 	}
 }
