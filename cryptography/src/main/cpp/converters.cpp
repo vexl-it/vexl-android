@@ -55,7 +55,7 @@ char *byteArrayToChar(JNIEnv *env, jbyteArray array, jint arrayLen) {
     char *nullTerminatedString = (char *) malloc(arrayLen + 1);
     memcpy(nullTerminatedString, weirdTerminatedString, arrayLen);
     nullTerminatedString[arrayLen] = 0;
-    free((void *) weirdTerminatedString);
+    env->ReleaseByteArrayElements(array, (jbyte *) weirdTerminatedString, 0);
     return nullTerminatedString;
 }
 
