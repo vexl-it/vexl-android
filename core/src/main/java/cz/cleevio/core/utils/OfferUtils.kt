@@ -85,7 +85,6 @@ class OfferUtils(
 		commonFriends: Map<String, List<BaseContact>>,
 		symmetricalKey: String
 	): NewOfferV2 {
-
 		//encrypt public part
 		val publicPayload = NewOfferV2PublicPayload(
 			offerPublicKey = offerKeys.publicKey,
@@ -164,7 +163,6 @@ class OfferUtils(
 		friendLevel: Set<ContactLevel>,
 		symmetricKey: String
 	): NewOfferPrivateV2 {
-
 		//encrypt private part
 		val privatePayload = NewOfferV2PrivatePayload(
 			commonFriends = commonFriends.map { friend -> friend.getHashedContact() },

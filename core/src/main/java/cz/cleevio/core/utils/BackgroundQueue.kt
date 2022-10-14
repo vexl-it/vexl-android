@@ -15,7 +15,6 @@ class BackgroundQueue constructor(
 	private val offerRepository: OfferRepository,
 	private val contactRepository: ContactRepository,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
-	private val locationHelper: LocationHelper,
 	private val offerUtils: OfferUtils
 ) : KoinComponent {
 

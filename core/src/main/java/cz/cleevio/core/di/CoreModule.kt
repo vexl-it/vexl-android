@@ -44,9 +44,8 @@ val coreModule = module {
 	single {
 		BackgroundQueue(
 			offerRepository = get(),
-			encryptedPreferenceRepository = get(),
 			contactRepository = get(),
-			locationHelper = get(),
+			encryptedPreferenceRepository = get(),
 			offerUtils = get()
 		)
 	}
