@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.model.OfferEncryptionData
-import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.offer.Offer
@@ -49,7 +48,7 @@ class EncryptingProgressBottomSheetDialog(
 		super.onViewCreated(view, savedInstanceState)
 
 		updateUi(UiState.INIT)
-		viewModel.prepareEncryptedOffers()
+		viewModel.prepareEncryptedOfferV2()
 
 		repeatScopeOnStart {
 			viewModel.newOfferRequest.collect { resource ->
@@ -62,7 +61,7 @@ class EncryptingProgressBottomSheetDialog(
 		}
 
 		repeatScopeOnStart {
-			OfferUtils.offerWasEncrypted.collect { _ ->
+			viewModel.offerUtils.offerWasEncrypted.collect { _ ->
 				numberOfEncryptedOffers++
 				// When user does not have any contacts imported app should not crash
 				if (numberOfAllContacts != 0) {
@@ -83,7 +82,7 @@ class EncryptingProgressBottomSheetDialog(
 		}
 
 		repeatScopeOnStart {
-			OfferUtils.numberOfAllContacts.collect { numberOfAllContacts ->
+			viewModel.offerUtils.numberOfAllContacts.collect { numberOfAllContacts ->
 				this.numberOfAllContacts = numberOfAllContacts
 				binding.numberOfVexlers.text = resources.getString(R.string.offer_progress_bar_title, "$numberOfAllContacts")
 			}
@@ -93,7 +92,7 @@ class EncryptingProgressBottomSheetDialog(
 			viewModel.encryptedOfferList.collect { newOffer ->
 				when (isNewOffer) {
 					true -> viewModel.sendNewOffer(newOffer)
-					false -> offerEncryptionData.offerId?.let { viewModel.sendUpdatedOffer(encryptedOfferList, offerId = it) }
+					false -> offerEncryptionData.offerId?.let { viewModel.sendUpdatedOffer(newOffer, offerId = it) }
 				}
 			}
 		}
@@ -111,7 +110,7 @@ class EncryptingProgressBottomSheetDialog(
 				binding.numberOfVexlers.text =
 					resources.getString(
 						R.string.offer_progress_bar_title,
-						"${OfferUtils.numberOfAllContacts.value}"
+						"${viewModel.offerUtils.numberOfAllContacts.value}"
 					)
 				binding.percentage.text =
 					resources.getString(
@@ -147,7 +146,7 @@ class EncryptingProgressBottomSheetDialog(
 				binding.numberOfVexlers.text =
 					resources.getString(
 						R.string.offer_progress_bar_title_complete,
-						"${OfferUtils.numberOfAllContacts.value}"
+						"${viewModel.offerUtils.numberOfAllContacts.value}"
 					)
 				binding.subtitle.text = resources.getString(R.string.offer_progress_subtitle_complete)
 

@@ -2,6 +2,7 @@ package cz.cleevio.repository.repository.offer
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.cleevio.vexl.cryptography.model.KeyPair
+import com.squareup.moshi.Moshi
 import cz.cleevio.cache.TransactionProvider
 import cz.cleevio.cache.dao.*
 import cz.cleevio.cache.entity.ChatUserIdentityEntity
@@ -16,14 +17,19 @@ import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
-import cz.cleevio.network.request.offer.*
+import cz.cleevio.network.request.offer.DeletePrivatePartRequest
+import cz.cleevio.network.request.offer.ReportOfferRequest
+import cz.cleevio.network.response.offer.v2.CreateOfferPrivatePartRequestV2
 import cz.cleevio.network.response.offer.v2.OfferCreateRequestV2
+import cz.cleevio.network.response.offer.v2.UpdateOfferRequestV2
 import cz.cleevio.repository.R
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.fromDao
 import cz.cleevio.repository.model.currency.fromCache
 import cz.cleevio.repository.model.offer.*
+import cz.cleevio.repository.model.offer.v2.NewOfferPrivateV2
+import cz.cleevio.repository.model.offer.v2.toNetworkV2
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,6 +53,7 @@ class OfferRepositoryImpl constructor(
 	private val cryptoCurrencyDao: CryptoCurrencyDao,
 	private val chatUserDao: ChatUserDao,
 	private val encryptedPreference: EncryptedPreferenceRepository,
+	private val moshi: Moshi,
 ) : OfferRepository {
 
 	override val buyOfferFilter = MutableStateFlow(OfferFilter())
@@ -60,6 +67,8 @@ class OfferRepositoryImpl constructor(
 		offerType: String,
 		encryptedFor: List<String>,
 		payloadPublic: String,
+		symmetricalKey: String,
+		friendLevel: String,
 	): Resource<Offer> {
 		//create offer
 		val offerCreateResource = tryOnline(
@@ -77,7 +86,7 @@ class OfferRepositoryImpl constructor(
 			mapper = { it }
 		)
 
-		offerCreateResource.data?.fromNetworkToAdmin()?.let { offer ->
+		offerCreateResource.data?.fromNetworkToAdmin(offerType)?.let { offer ->
 			//save keys and info into my offers
 			saveMyOfferIdAndKeys(
 				offerId = offer.offerId,
@@ -86,7 +95,9 @@ class OfferRepositoryImpl constructor(
 				publicKey = offerKeys.publicKey,
 				offerType = offer.offerType,
 				isInboxCreated = false,
-				encryptedFor = encryptedFor
+				encryptedFor = encryptedFor,
+				symmetricalKey = symmetricalKey,
+				friendLevel = friendLevel
 			)
 
 			//create inbox
@@ -101,7 +112,9 @@ class OfferRepositoryImpl constructor(
 						publicKey = offerKeys.publicKey,
 						offerType = offer.offerType,
 						isInboxCreated = true,
-						encryptedFor = encryptedFor
+						encryptedFor = encryptedFor,
+						symmetricalKey = symmetricalKey,
+						friendLevel = friendLevel
 					)
 				}
 				is Status.Error -> {
@@ -112,13 +125,13 @@ class OfferRepositoryImpl constructor(
 			}
 		}
 
-		offerCreateResource.data?.fromNetwork()?.let { offer ->
+		offerCreateResource.data?.fromNetwork(moshi = moshi)?.let { offer ->
 			//save offer into DB
 			updateOffers(listOf(offer))
 		}
 
 		return if (offerCreateResource.status == Status.Success) {
-			Resource.success(data = offerCreateResource.data?.fromNetwork())
+			Resource.success(data = offerCreateResource.data?.fromNetwork(moshi))
 		} else {
 			Resource.error(offerCreateResource.errorIdentification)
 		}
@@ -126,16 +139,16 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun createOfferForPublicKeys(
 		offerId: String,
-		offerList: List<NewOffer>,
+		offerList: List<NewOfferPrivateV2>,
 		additionalEncryptedFor: List<String>
 	): Resource<Unit> {
 		val adminId = myOfferDao.getAdminIdByOfferId(offerId)
 		return if (adminId != null) {
 			tryOnline(
 				request = {
-					offerApi.postOffersPrivatePart(
-						CreateOfferPrivatePartRequest(
-							privateParts = offerList.map { it.toNetwork() },
+					offerApiV2.postOffersPrivatePart(
+						CreateOfferPrivatePartRequestV2(
+							offerPrivateList = offerList.map { it.toNetworkV2() },
 							adminId = adminId
 						)
 					)
@@ -164,22 +177,25 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun updateOffer(
 		offerId: String,
-		offerList: List<NewOffer>,
-		additionalEncryptedFor: List<String>
+		offerList: List<NewOfferPrivateV2>,
+		additionalEncryptedFor: List<String>,
+		payloadPublic: String,
 	): Resource<Offer> {
 		val adminId = myOfferDao.getAdminIdByOfferId(offerId)
 		return if (adminId != null) {
 			tryOnline(
 				request = {
-					offerApi.putOffers(
-						UpdateOfferRequest(
+					offerApiV2.putOffers(
+						UpdateOfferRequestV2(
 							adminId = adminId,
-							offerPrivateCreateList = offerList.map { it.toNetwork() }
+							payloadPublic = payloadPublic,
+							offerPrivateList = offerList.map { it.toNetworkV2() }
 						)
 					)
 				},
 				mapper = {
 					it?.fromNetwork(
+						moshi = moshi,
 						cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
 						reportedOfferIds = reportedOfferDao.listAllIds()
 					)
@@ -211,12 +227,13 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun loadOffersForMe(): Resource<List<Offer>> = tryOnline(
 		request = {
-			offerApi.getOffersMe()
+			offerApiV2.getOffersMe()
 		},
 		mapper = {
 			val reportedOfferIds = reportedOfferDao.listAllIds()
-			it?.items?.map { item ->
+			it?.offers?.map { item ->
 				item.fromNetwork(
+					moshi = moshi,
 					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
 					reportedOfferIds = reportedOfferIds
 				)
@@ -273,17 +290,6 @@ class OfferRepositoryImpl constructor(
 		)
 	}
 
-	//NOT USED
-//	override suspend fun refreshOffer(offerId: String): Resource<List<Offer>> = tryOnline(
-//		request = { offerApi.getOffersId(listOf(offerId)) },
-//		mapper = { items -> items?.map { item -> item.fromNetwork() } ?: emptyList() },
-//		doOnSuccess = {
-//			it?.let { offers ->
-//				updateOffers(offers)
-//			}
-//		}
-//	)
-
 	override suspend fun saveMyOfferIdAndKeys(
 		offerId: String,
 		adminId: String,
@@ -291,7 +297,9 @@ class OfferRepositoryImpl constructor(
 		publicKey: String,
 		offerType: String,
 		isInboxCreated: Boolean,
-		encryptedFor: List<String>
+		encryptedFor: List<String>,
+		symmetricalKey: String,
+		friendLevel: String
 	): Resource<Unit> {
 		myOfferDao.replace(
 			MyOfferEntity(
@@ -301,7 +309,9 @@ class OfferRepositoryImpl constructor(
 				publicKey = publicKey,
 				offerType = offerType,
 				isInboxCreated = isInboxCreated,
-				encryptedForKeys = encryptedFor.joinToString()
+				encryptedForKeys = encryptedFor.joinToString(),
+				symmetricalKey = symmetricalKey,
+				friendLevel = friendLevel
 			)
 		)
 		return Resource.success(data = Unit)
@@ -311,6 +321,13 @@ class OfferRepositoryImpl constructor(
 		val entity = myOfferDao.getMyOfferById(offerId)
 		return entity?.let {
 			KeyPair(privateKey = entity.privateKey, publicKey = entity.publicKey)
+		}
+	}
+
+	override suspend fun loadSymmetricalKeyByOfferId(offerId: String): String? {
+		val entity = myOfferDao.getMyOfferById(offerId)
+		return entity?.let {
+			entity.symmetricalKey
 		}
 	}
 
@@ -520,12 +537,13 @@ class OfferRepositoryImpl constructor(
 
 	private suspend fun getNewOffers(): Resource<List<Offer>> = tryOnline(
 		request = {
-			offerApi.getModifiedOffers(0, Int.MAX_VALUE, "1970-01-01T00:00:00.000Z")
+			offerApiV2.getModifiedOffers("1970-01-01T00:00:00.000Z")
 		},
 		mapper = {
 			val reportedOfferIds = reportedOfferDao.listAllIds()
-			it?.items?.map { item ->
+			it?.offers?.map { item ->
 				item.fromNetwork(
+					moshi = moshi,
 					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
 					reportedOfferIds = reportedOfferIds
 				)

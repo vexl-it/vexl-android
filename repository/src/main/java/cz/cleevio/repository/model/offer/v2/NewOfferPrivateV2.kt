@@ -1,4 +1,4 @@
-package cz.cleevio.repository.model.offer
+package cz.cleevio.repository.model.offer.v2
 
 import cz.cleevio.network.response.offer.v2.OfferPrivateCreateV2
 

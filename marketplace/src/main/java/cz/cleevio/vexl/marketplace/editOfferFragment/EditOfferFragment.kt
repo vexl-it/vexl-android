@@ -11,10 +11,14 @@ import cz.cleevio.core.model.FeeValue
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.PriceTriggerValue
 import cz.cleevio.core.model.toUnixTimestamp
-import cz.cleevio.core.utils.*
+import cz.cleevio.core.utils.getBitmap
+import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setDebouncedOnClickListener
+import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.*
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.Currency
+import cz.cleevio.repository.model.offer.MyOffer
 import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.model.offer.PriceTriggerType
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -28,7 +32,6 @@ import cz.cleevio.vexl.marketplace.databinding.FragmentEditOfferBinding
 import cz.cleevio.vexl.marketplace.encryptingProgressFragment.EncryptingProgressBottomSheetDialog
 import cz.cleevio.vexl.marketplace.newOfferFragment.NewOfferFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 const val NUMBER_OF_COLUMNS = 2
 
@@ -87,9 +90,11 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		}
 
 		repeatScopeOnStart {
-			viewModel.offer.collect {
-				it?.let { offer ->
-					setupOffer(offer)
+			viewModel.offerAndMyOffer.collect { offerAndMyOffer ->
+				val offer = offerAndMyOffer.first
+				val myOffer = offerAndMyOffer.second
+				if (offer != null && myOffer != null) {
+					setupOffer(offer, myOffer)
 				}
 			}
 		}
@@ -166,8 +171,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		}
 	}
 
-	private fun setupOffer(offer: Offer) {
-		Timber.tag("OFFER").d("$offer")
+	private fun setupOffer(offer: Offer, myOffer: MyOffer) {
 		binding.newOfferTitle.setTypeAndTitle(
 			when (OfferType.valueOf(offer.offerType)) {
 				OfferType.BUY -> getString(R.string.offer_edit_buy_title)
@@ -220,7 +224,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 		binding.newOfferBtcNetwork.setValues(offer.btcNetwork.map { btcNetwork ->
 			BtcNetworkButtonSelected.valueOf(btcNetwork)
 		})
-		binding.newOfferFriendLevel.setValues(setOf(FriendLevel.valueOf(offer.friendLevel)))
+		binding.newOfferFriendLevel.setValues(setOf(FriendLevel.valueOf(myOffer.friendLevel)))
 
 		binding.newOfferBtn.text = when (OfferType.valueOf(offer.offerType)) {
 			OfferType.BUY -> getString(R.string.offer_update_buy_btn)
@@ -308,7 +312,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 
 	private fun updateOffer(active: Boolean) {
 		showProgressIndicator(true)
-		val params = OfferUtils.isOfferParamsValid(
+		val params = viewModel.offerUtils.isOfferParamsValid(
 			activity = requireActivity(),
 			description = binding.newOfferDescription.text.toString(),
 			location = binding.newOfferLocation.getLocationValue(),

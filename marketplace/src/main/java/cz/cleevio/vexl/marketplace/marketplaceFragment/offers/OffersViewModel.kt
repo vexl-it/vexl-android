@@ -25,7 +25,7 @@ class OffersViewModel constructor(
 			groupRepository.getGroupsFlow()
 		) { offers, groups ->
 			offers.map { item ->
-				OfferWithGroup(offer = item, group = groups.firstOrNull { it.groupUuid == item.groupUuid })
+				OfferWithGroup(offer = item, group = groups.firstOrNull { item.groupUuids.contains(it.groupUuid) })
 			}.sortedBy {
 				if (it.offer.isRequested) return@sortedBy 1
 
@@ -40,7 +40,7 @@ class OffersViewModel constructor(
 			groupRepository.getGroupsFlow()
 		) { offers, groups ->
 			offers.map { item ->
-				OfferWithGroup(offer = item, group = groups.firstOrNull { it.groupUuid == item.groupUuid })
+				OfferWithGroup(offer = item, group = groups.firstOrNull { item.groupUuids.contains(it.groupUuid) })
 			}.sortedBy {
 				if (it.offer.isRequested) return@sortedBy 1
 

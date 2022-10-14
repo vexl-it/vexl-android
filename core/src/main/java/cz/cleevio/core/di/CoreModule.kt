@@ -46,7 +46,8 @@ val coreModule = module {
 			offerRepository = get(),
 			encryptedPreferenceRepository = get(),
 			contactRepository = get(),
-			locationHelper = get()
+			locationHelper = get(),
+			offerUtils = get()
 		)
 	}
 
@@ -80,6 +81,16 @@ val coreModule = module {
 
 	single {
 		provideMarkwon(get())
+	}
+
+	single {
+		OfferUtils(
+			moshi = get(),
+		)
+	}
+
+	single {
+		EncryptionUtils()
 	}
 }
 

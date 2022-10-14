@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.util.*
 
 
@@ -71,7 +70,7 @@ class RequestOfferViewModel constructor(
 			offerRepository.getOffersFlow().collect { offers ->
 				_offer.emit(
 					offers.firstOrNull { it.offerId == offerId }?.let {
-						OfferWithGroup(it, groupRepository.findGroupByUuidInDB(it.groupUuid))
+						OfferWithGroup(it, groupRepository.findGroupByUuidInDB(it.groupUuids.firstOrNull() ?: ""))
 					}
 				)
 			}

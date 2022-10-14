@@ -34,7 +34,8 @@ class MyOfferBottomSheetDialog(
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		coroutineScope.launch {
-			val group = groupRepository.findGroupByUuidInDB(groupUuid = offer.groupUuid)
+			//TODO: add support for multiple groups
+			val group = groupRepository.findGroupByUuidInDB(groupUuid = offer.groupUuids.first())
 			withContext(Dispatchers.Main) {
 				binding.offerWidget.bind(
 					item = offer,

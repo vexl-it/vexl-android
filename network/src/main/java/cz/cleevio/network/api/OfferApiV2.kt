@@ -32,8 +32,6 @@ interface OfferApiV2 {
 
 	@GET("offers/me/modified/")
 	suspend fun getModifiedOffers(
-		@Query("page") page: Int,
-		@Query("limit") limit: Int,
 		@Query("modifiedAt") modifiedAt: String
 	): Response<OffersUnifiedResponseV2>
 }

@@ -16,5 +16,6 @@ data class OfferEncryptionData constructor(
 	val locationHelper: LocationHelper,
 	val offerId: String? = null,
 	var contactsPublicKeys: List<ContactKey> = listOf(),
-	var commonFriends: Map<String, List<BaseContact>> = mapOf()
+	var commonFriends: Map<String, List<BaseContact>> = mapOf(),
+	val symmetricalKey: String
 )

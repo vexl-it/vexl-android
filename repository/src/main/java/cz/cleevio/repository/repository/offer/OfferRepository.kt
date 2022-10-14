@@ -3,7 +3,11 @@ package cz.cleevio.repository.repository.offer
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.request.offer.DeletePrivatePartRequest
-import cz.cleevio.repository.model.offer.*
+import cz.cleevio.repository.model.offer.LocationSuggestion
+import cz.cleevio.repository.model.offer.MyOffer
+import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.model.offer.OfferFilter
+import cz.cleevio.repository.model.offer.v2.NewOfferPrivateV2
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -15,6 +19,7 @@ interface OfferRepository {
 	val sellOfferFilter: MutableStateFlow<OfferFilter>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
+	@Suppress("LongParameterList")
 	suspend fun createOffer(
 		offerList: List<NewOfferPrivateV2>,
 		expiration: Long,
@@ -22,19 +27,22 @@ interface OfferRepository {
 		offerType: String,
 		encryptedFor: List<String>,
 		payloadPublic: String,
+		symmetricalKey: String,
+		friendLevel: String,
 	): Resource<Offer>
 
 	suspend fun createOfferForPublicKeys(
 		offerId: String,
-		offerList: List<NewOffer>,
+		offerList: List<NewOfferPrivateV2>,
 		additionalEncryptedFor: List<String>
 	): Resource<Unit>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
 	suspend fun updateOffer(
 		offerId: String,
-		offerList: List<NewOffer>,
-		additionalEncryptedFor: List<String>
+		offerList: List<NewOfferPrivateV2>,
+		additionalEncryptedFor: List<String>,
+		payloadPublic: String,
 	): Resource<Offer>
 
 	suspend fun loadOffersForMe(): Resource<List<Offer>>
@@ -47,9 +55,7 @@ interface OfferRepository {
 		deletePrivatePartRequest: DeletePrivatePartRequest
 	): Resource<Unit>
 
-	////NOT USED
-	//suspend fun refreshOffer(offerId: String): Resource<List<Offer>>
-
+	@Suppress("LongParameterList")
 	suspend fun saveMyOfferIdAndKeys(
 		offerId: String,
 		adminId: String,
@@ -57,10 +63,14 @@ interface OfferRepository {
 		publicKey: String,
 		offerType: String,
 		isInboxCreated: Boolean,
-		encryptedFor: List<String>
+		encryptedFor: List<String>,
+		symmetricalKey: String,
+		friendLevel: String
 	): Resource<Unit>
 
 	suspend fun loadOfferKeysByOfferId(offerId: String): KeyPair?
+
+	suspend fun loadSymmetricalKeyByOfferId(offerId: String): String?
 
 	suspend fun getOffers(): List<Offer>
 

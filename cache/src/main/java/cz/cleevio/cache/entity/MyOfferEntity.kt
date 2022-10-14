@@ -18,4 +18,9 @@ data class MyOfferEntity(
 	//version 2
 	@ColumnInfo(defaultValue = "")
 	val encryptedForKeys: String,
+	//version 5
+	@ColumnInfo(defaultValue = "")
+	val symmetricalKey: String,
+	@ColumnInfo(defaultValue = "FIRST_DEGREE")
+	val friendLevel: String,
 )

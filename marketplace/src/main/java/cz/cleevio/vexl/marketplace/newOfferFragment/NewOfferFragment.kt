@@ -12,7 +12,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
-import cz.cleevio.core.utils.*
+import cz.cleevio.core.utils.getBitmap
+import cz.cleevio.core.utils.repeatScopeOnStart
+import cz.cleevio.core.utils.setDebouncedOnClickListener
+import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -234,7 +237,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			OfferType.SELL -> getString(R.string.offer_create_sell_btn)
 		}
 		binding.newOfferBtn.setDebouncedOnClickListener {
-			val params = OfferUtils.isOfferParamsValid(
+			val params = viewModel.offerUtils.isOfferParamsValid(
 				activity = requireActivity(),
 				description = binding.newOfferDescription.text.toString(),
 				location = binding.newOfferLocation.getLocationValue(),

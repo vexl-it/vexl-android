@@ -29,7 +29,7 @@ class MyOffersViewModel constructor(
 			offerRepository.getOffersSortedByDateOfCreationFlow(offerType.name)
 				.map { list ->
 						list.map {
-							OfferWithGroup(offer = it, group = groupRepository.findGroupByUuidInDB(it.groupUuid))
+							OfferWithGroup(offer = it, group = groupRepository.findGroupByUuidInDB(it.groupUuids.firstOrNull() ?: ""))
 						}
 				}
 				.collect {
