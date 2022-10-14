@@ -170,11 +170,11 @@ class OfferUtils(
 			symetricKey = symmetricKey
 		)
 		val privatePayloadJson = moshi.adapter(NewOfferV2PrivatePayload::class.java).toJson(privatePayload)
-		val encryptedPublicPayload = eciesEncrypt(privatePayloadJson, contactKey)
+		val encryptedPrivatePayload = eciesEncrypt(privatePayloadJson, contactKey)
 
 		return NewOfferPrivateV2(
 			userPublicKey = contactKey,
-			payloadPrivate = encryptedPublicPayload
+			payloadPrivate = encryptedPrivatePayload
 		)
 	}
 
