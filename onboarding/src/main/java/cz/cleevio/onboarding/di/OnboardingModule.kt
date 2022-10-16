@@ -7,6 +7,8 @@ import cz.cleevio.onboarding.ui.phoneDoneFragment.PhoneDoneViewModel
 import cz.cleevio.onboarding.ui.termsFragment.TermsViewModel
 import cz.cleevio.onboarding.ui.verifyPhoneFragment.VerifyPhoneViewModel
 import cz.cleevio.onboarding.ui.welcomeFragment.WelcomeViewModel
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -23,7 +25,8 @@ val onboardingModule = module {
 	viewModel {
 		InitPhoneViewModel(
 			encryptedPreferences = get(),
-			userRepository = get()
+			userRepository = get(),
+			phoneNumberUtil = get()
 		)
 	}
 
@@ -60,5 +63,10 @@ val onboardingModule = module {
 			encryptedPreference = get(),
 			imageHelper = get()
 		)
+	}
+
+
+	single {
+		PhoneNumberUtil.createInstance(androidContext())
 	}
 }

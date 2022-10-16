@@ -22,7 +22,6 @@ import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import cz.cleevio.vexl.lightbase.core.extensions.showToast
 import io.michaelrocks.libphonenumber.android.NumberParseException
-import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -31,7 +30,6 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 	override val viewModel by viewModel<InitPhoneViewModel>()
 	private val binding by viewBinding(FragmentInitPhoneBinding::bind)
 
-	private lateinit var phoneNumberUtil: PhoneNumberUtil
 	private var textWatcher: TextWatcher? = null
 
 	override fun bindObservers() {
@@ -56,8 +54,6 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 	}
 
 	override fun initView() {
-		phoneNumberUtil = PhoneNumberUtil.createInstance(requireContext())
-
 		binding.close.setOnClickListener {
 			findNavController().popBackStack()
 		}
@@ -73,7 +69,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			}
 
 			binding.root.hideKeyboard()
-			val countryCode = "+${phoneNumberUtil.getCountryCodeForRegion(getCountryIsoCode(phoneNumber))}"
+			val countryCode = "+${viewModel.phoneNumberUtil.getCountryCodeForRegion(getCountryIsoCode(phoneNumber))}"
 			viewModel.sendPhoneNumber(countryCode = countryCode, phoneNumber = phoneNumber)
 		}
 
@@ -122,7 +118,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		val sb = SpannableStringBuilder(newPhoneNumber)
 		sb.setSpan(
 			ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.gray_4)),
-			0, phoneNumberUtil.getCountryCodeForRegion(countryIsoCode).toString().length + 1,
+			0, viewModel.phoneNumberUtil.getCountryCodeForRegion(countryIsoCode).toString().length + 1,
 			Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
 		)
 
@@ -140,7 +136,7 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 		val validatedNumber = if (number.startsWith("+")) number else "+$number"
 
 		val phoneNumber = try {
-			phoneNumberUtil.parse(validatedNumber, null)
+			viewModel.phoneNumberUtil.parse(validatedNumber, null)
 		} catch (e: NumberParseException) {
 			// Do nothing with the exception.
 			// It's OK not to propagate it due to the number validation is triggered after each symbol.
@@ -149,14 +145,14 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			null
 		} ?: return null
 
-		return phoneNumberUtil.getRegionCodeForCountryCode(phoneNumber.countryCode)
+		return viewModel.phoneNumberUtil.getRegionCodeForCountryCode(phoneNumber.countryCode)
 	}
 
 	private fun setDefaultCountryCode() {
 		val sb = SpannableStringBuilder(PREFILLED_PREFIX)
 		sb.setSpan(
 			ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.gray_4)),
-			0, phoneNumberUtil.getCountryCodeForRegion(DEFAULT_COUNTRY_ISO_CODE).toString().length + 1,
+			0, viewModel.phoneNumberUtil.getCountryCodeForRegion(DEFAULT_COUNTRY_ISO_CODE).toString().length + 1,
 			Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
 		)
 		binding.initPhoneInput.text = sb
