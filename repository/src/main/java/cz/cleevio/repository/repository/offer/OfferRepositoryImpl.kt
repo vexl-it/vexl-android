@@ -578,22 +578,23 @@ class OfferRepositoryImpl constructor(
 	}
 
 	override suspend fun reportOffer(offerId: String): Resource<Unit> {
-		return tryOnline(
+		val response = tryOnline(
 			request = {
 				offerApi.postOffersReport(
 					reportOfferRequest = ReportOfferRequest(offerId = offerId)
 				)
 			},
-			mapper = { },
-			doOnSuccess = { _ ->
-				reportedOfferDao.insert(
-					ReportedOfferEntity(offerId = offerId)
-				)
-
-				//delete offer from local DB, it will be disabled on next offers sync
-				offerDao.deleteOffersById(listOf(offerId))
-			}
+			mapper = { }
 		)
+
+		reportedOfferDao.insert(
+			ReportedOfferEntity(offerId = offerId)
+		)
+
+		//delete offer from local DB, it will be disabled on next offers sync
+		offerDao.deleteOffersById(listOf(offerId))
+
+		return response
 	}
 
 	private fun sqlLikeOperator(fieldName: String, data: List<Any>): String {
