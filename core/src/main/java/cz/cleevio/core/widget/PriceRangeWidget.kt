@@ -5,28 +5,33 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.widget.doAfterTextChanged
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetPriceRangeBinding
 import cz.cleevio.core.model.PriceRangeValue
 import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.model.Currency.Companion.getCurrencySymbol
+import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import kotlinx.coroutines.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import timber.log.Timber
 
 class PriceRangeWidget @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr), KoinComponent {
 
 	private var binding: WidgetPriceRangeBinding = WidgetPriceRangeBinding.inflate(layoutInflater, this)
 	private val coroutineScope = CoroutineScope(Dispatchers.Main)
 	private var bottomLimitJob: Job? = null
 	private var topLimitJob: Job? = null
 	private var processLimitsJob: Job? = null
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository by inject()
 
-	private var currentCurrency = Currency.USD
+	private var currentCurrency = encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency()
 	private var bottomLimit: Float = 0.0f
 	private var topLimit: Float = 0.0f
 
@@ -36,12 +41,11 @@ class PriceRangeWidget @JvmOverloads constructor(
 	init {
 		binding.priceRangeSlider.setCustomThumbDrawable(R.drawable.ic_picker)
 
-		setupWithCurrency(currentCurrency)
 		setupBottomLimitInputListener()
 		setupTopLimitInputListener()
-		setupPriceRangeListener()
 	}
 
+	// Info: Method must be used when you initialize the price range widget in fragment
 	fun setupWithCurrency(currency: Currency) {
 		currentCurrency = currency
 		val symbol = currency.getCurrencySymbol(context)

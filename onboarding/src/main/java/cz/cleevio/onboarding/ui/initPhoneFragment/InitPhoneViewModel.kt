@@ -5,9 +5,11 @@ import com.cleevio.vexl.cryptography.KeyPairCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.Currency
 import cz.cleevio.repository.model.user.ConfirmPhone
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -16,7 +18,8 @@ import timber.log.Timber
 
 class InitPhoneViewModel constructor(
 	private val encryptedPreferences: EncryptedPreferenceRepository,
-	private val userRepository: UserRepository
+	private val userRepository: UserRepository,
+	val phoneNumberUtil: PhoneNumberUtil
 ) : BaseViewModel() {
 
 	private val _phoneNumberSuccess = Channel<InitPhoneSuccess>(Channel.CONFLATED)
@@ -29,7 +32,7 @@ class InitPhoneViewModel constructor(
 		loadKeys()
 	}
 
-	fun sendPhoneNumber(countryCode: String, phoneNumber: String) {
+	fun sendPhoneNumber(countryCode: String, phoneNumber: String, isoCode: String?) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_loading.send(true)
 			val response = userRepository.authStepOne(phoneNumber)
@@ -40,6 +43,7 @@ class InitPhoneViewModel constructor(
 				is Status.Success -> response.data?.let { confirmPhone ->
 					encryptedPreferences.userCountryCode = countryCode
 					encryptedPreferences.userPhoneNumber = phoneNumber
+					encryptedPreferences.selectedCurrency = Currency.getCurrencyFromIsoCode(isoCode)
 					_phoneNumberSuccess.send(
 						InitPhoneSuccess(
 							phoneNumber = phoneNumber,
@@ -47,6 +51,7 @@ class InitPhoneViewModel constructor(
 						)
 					)
 				}
+				else -> Unit
 			}
 		}
 	}

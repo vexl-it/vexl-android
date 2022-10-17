@@ -14,6 +14,7 @@ import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.model.toUnixTimestamp
 import cz.cleevio.core.utils.*
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
 import cz.cleevio.vexl.lightbase.core.extensions.dpValueToPx
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
@@ -112,6 +113,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 	}
 
 	override fun initView() {
+		binding.newOfferRange.setupWithCurrency(viewModel.encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency())
 		viewModel.loadMyContactsKeys()
 
 		adapter = SelectGroupAdapter()

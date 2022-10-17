@@ -78,7 +78,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		}
 
 	override var selectedCurrency: String
-		get() = getStringFromEP(KEY_SELECTED_CURRENCY, "USD")
+		get() = getStringFromEP(KEY_SELECTED_CURRENCY, "EUR")
 		set(value) {
 			putStringToEP(KEY_SELECTED_CURRENCY, value)
 			selectedCurrencyFlow.tryEmit(value)

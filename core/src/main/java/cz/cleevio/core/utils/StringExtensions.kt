@@ -21,6 +21,8 @@ fun String.toDoubleOrNullable(): Double? =
 fun String.toValidPhoneNumber(): String {
 	return this
 		.replace("\\s".toRegex(), "")
+		.replace("\\(".toRegex(), "")
+		.replace("\\)".toRegex(), "")
 		.replace("-".toRegex(), "")
 }
 

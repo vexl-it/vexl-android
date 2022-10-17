@@ -4,11 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.RadioGroup
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetCurrencyBinding
 import cz.cleevio.repository.model.Currency
+import cz.cleevio.repository.model.Currency.Companion.mapStringToCurrency
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class CurrencyWidget @JvmOverloads constructor(
 	context: Context,
@@ -20,6 +23,7 @@ class CurrencyWidget @JvmOverloads constructor(
 
 	var onCurrencyPicked: ((Currency) -> Unit)? = null
 
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository by inject()
 	private var onCheckedChangeListener: RadioGroup.OnCheckedChangeListener? = null
 
 	init {
@@ -49,7 +53,7 @@ class CurrencyWidget @JvmOverloads constructor(
 			}
 		}
 
-		binding.currencyRadiogroup.setOnCheckedChangeListener(onCheckedChangeListener)
+		selectCurrencyManually(encryptedPreferenceRepository.selectedCurrency.mapStringToCurrency())
 	}
 
 	fun reset() {

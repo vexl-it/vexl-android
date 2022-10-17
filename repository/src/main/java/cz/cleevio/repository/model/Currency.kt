@@ -23,5 +23,10 @@ enum class Currency {
 			USD -> context.resources.getString(R.string.general_usd_sign)
 			EUR -> context.resources.getString(R.string.general_eur_sign)
 		}
+
+		fun getCurrencyFromIsoCode(isoCode: String?): String = when (isoCode) {
+			"CZ" -> CZK.name
+			else -> EUR.name
+		}
 	}
 }

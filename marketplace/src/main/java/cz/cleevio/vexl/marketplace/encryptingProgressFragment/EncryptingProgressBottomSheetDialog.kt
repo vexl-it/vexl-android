@@ -64,11 +64,14 @@ class EncryptingProgressBottomSheetDialog(
 		repeatScopeOnStart {
 			OfferUtils.offerWasEncrypted.collect { _ ->
 				numberOfEncryptedOffers++
-				val contacts = ((numberOfEncryptedOffers * 100.0f) / numberOfAllContacts).roundToInt()
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-					binding.progress.setProgress(contacts, true)
-				} else {
-					binding.progress.progress = contacts
+				// When user does not have any contacts imported app should not crash
+				if (numberOfAllContacts != 0) {
+					val contacts = ((numberOfEncryptedOffers * 100.0f) / numberOfAllContacts).roundToInt()
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+						binding.progress.setProgress(contacts, true)
+					} else {
+						binding.progress.progress = contacts
+					}
 				}
 
 				if (numberOfEncryptedOffers == numberOfAllContacts && numberOfEncryptedOffers != -1) {
