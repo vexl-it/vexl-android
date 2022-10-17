@@ -32,7 +32,7 @@ class InitPhoneViewModel constructor(
 		loadKeys()
 	}
 
-	fun sendPhoneNumber(countryCode: String, phoneNumber: String) {
+	fun sendPhoneNumber(countryCode: String, phoneNumber: String, isoCode: String?) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_loading.send(true)
 			val response = userRepository.authStepOne(phoneNumber)
@@ -43,12 +43,7 @@ class InitPhoneViewModel constructor(
 				is Status.Success -> response.data?.let { confirmPhone ->
 					encryptedPreferences.userCountryCode = countryCode
 					encryptedPreferences.userPhoneNumber = phoneNumber
-					encryptedPreferences.selectedCurrency =
-						if (countryCode == CZ_PREFIX) {
-							Currency.CZK.name
-						} else {
-							Currency.EUR.name
-						}
+					encryptedPreferences.selectedCurrency = Currency.getCurrencyFromIsoCode(isoCode)
 					_phoneNumberSuccess.send(
 						InitPhoneSuccess(
 							phoneNumber = phoneNumber,
@@ -75,10 +70,6 @@ class InitPhoneViewModel constructor(
 	private fun saveKeys(keys: KeyPair) {
 		encryptedPreferences.userPrivateKey = keys.privateKey
 		encryptedPreferences.userPublicKey = keys.publicKey
-	}
-
-	companion object {
-		private const val CZ_PREFIX = "+420"
 	}
 }
 

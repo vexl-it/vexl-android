@@ -69,8 +69,9 @@ class InitPhoneFragment : BaseFragment(R.layout.fragment_init_phone) {
 			}
 
 			binding.root.hideKeyboard()
-			val countryCode = "+${viewModel.phoneNumberUtil.getCountryCodeForRegion(getCountryIsoCode(phoneNumber))}"
-			viewModel.sendPhoneNumber(countryCode = countryCode, phoneNumber = phoneNumber)
+			val isoCode = getCountryIsoCode(phoneNumber)
+			val countryCode = "+${viewModel.phoneNumberUtil.getCountryCodeForRegion(isoCode)}"
+			viewModel.sendPhoneNumber(countryCode = countryCode, phoneNumber = phoneNumber, isoCode = isoCode)
 		}
 
 		textWatcher = object : TextWatcher {
