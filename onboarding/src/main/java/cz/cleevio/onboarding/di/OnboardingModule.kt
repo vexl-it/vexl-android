@@ -65,7 +65,6 @@ val onboardingModule = module {
 		)
 	}
 
-
 	single {
 		PhoneNumberUtil.createInstance(androidContext())
 	}
