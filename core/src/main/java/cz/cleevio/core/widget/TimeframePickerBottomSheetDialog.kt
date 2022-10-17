@@ -30,6 +30,11 @@ class TimeframePickerBottomSheetDialog : BottomSheetDialogFragment() {
 		setUpViews()
 	}
 
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
+
 	private fun setUpViews() {
 		binding.timeframeRadiogroup.setOnCheckedChangeListener { _, id ->
 			selectedValue = when (id) {

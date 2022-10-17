@@ -32,4 +32,9 @@ class IdentityRequestBottomSheetDialog constructor(
 			dismiss()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

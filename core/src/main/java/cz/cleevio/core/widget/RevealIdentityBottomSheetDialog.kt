@@ -34,4 +34,9 @@ class RevealIdentityBottomSheetDialog(
 			dismiss()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

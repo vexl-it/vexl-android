@@ -54,6 +54,11 @@ class ReportOfferBottomSheetDialog(
 		}
 	}
 
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
+
 	private fun showProgressIndicator(show: Boolean) {
 		binding.progress.isVisible = show
 	}

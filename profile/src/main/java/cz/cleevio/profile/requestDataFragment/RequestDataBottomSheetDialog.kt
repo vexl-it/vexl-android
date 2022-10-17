@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import cz.cleevio.core.databinding.BottomSheetDialogJoinBinding
-import cz.cleevio.core.databinding.BottomSheetDialogReportBinding
 import cz.cleevio.core.databinding.BottomSheetDialogRequestDataBinding
-import cz.cleevio.core.utils.sendEmailToSupport
 import cz.cleevio.core.utils.setDebouncedOnClickListener
 
 class RequestDataBottomSheetDialog : BottomSheetDialogFragment() {
@@ -42,5 +39,10 @@ class RequestDataBottomSheetDialog : BottomSheetDialogFragment() {
 		binding.confirmBtn.setOnClickListener {
 			dismiss()
 		}
+	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
 	}
 }
