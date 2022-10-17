@@ -73,6 +73,11 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 		}
 	}
 
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
+
 	override fun onDismiss(dialog: DialogInterface) {
 		super.onDismiss(dialog)
 

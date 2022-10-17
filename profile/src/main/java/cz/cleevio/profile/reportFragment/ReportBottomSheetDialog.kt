@@ -37,4 +37,9 @@ class ReportBottomSheetDialog : BottomSheetDialogFragment() {
 			dismiss()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

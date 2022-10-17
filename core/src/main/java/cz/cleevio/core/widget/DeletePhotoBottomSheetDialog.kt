@@ -33,4 +33,9 @@ class DeletePhotoBottomSheetDialog(
 			dismiss()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

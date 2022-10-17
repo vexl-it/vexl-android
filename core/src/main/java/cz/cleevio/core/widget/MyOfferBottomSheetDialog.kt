@@ -47,4 +47,9 @@ class MyOfferBottomSheetDialog(
 			dismiss()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

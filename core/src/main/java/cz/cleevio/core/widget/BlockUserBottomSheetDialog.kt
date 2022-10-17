@@ -41,4 +41,9 @@ class BlockUserBottomSheetDialog(
 			dismiss()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

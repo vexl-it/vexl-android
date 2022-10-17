@@ -29,4 +29,9 @@ class ReportOfferConfirmBottomSheetDialog : BottomSheetDialogFragment() {
 			viewModel.navigateToMarketPlace()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

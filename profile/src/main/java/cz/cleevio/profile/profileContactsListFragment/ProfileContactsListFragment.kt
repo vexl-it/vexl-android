@@ -41,6 +41,11 @@ class ProfileContactsListFragment constructor(
 		bindObservers()
 	}
 
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
+
 	private fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.contactsToBeShowed.collect {

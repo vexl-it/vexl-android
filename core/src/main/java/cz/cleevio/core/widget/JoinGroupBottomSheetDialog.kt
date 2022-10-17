@@ -86,4 +86,9 @@ class JoinGroupBottomSheetDialog constructor(
 			setPlaceholders(R.drawable.random_avatar_4)
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

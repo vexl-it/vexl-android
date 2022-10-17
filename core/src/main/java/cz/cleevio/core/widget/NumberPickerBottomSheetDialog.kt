@@ -28,6 +28,11 @@ class NumberPickerBottomSheetDialog : BottomSheetDialogFragment() {
 		setUpViews()
 	}
 
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
+
 	private fun setUpViews() {
 		binding.numberPicker.maxValue = MAX_NUMBER_FOR_RADIUS
 		binding.numberPicker.minValue = 0

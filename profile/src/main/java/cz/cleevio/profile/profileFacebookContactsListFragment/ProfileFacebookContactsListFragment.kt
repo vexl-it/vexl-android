@@ -31,6 +31,11 @@ class ProfileFacebookContactsListFragment : BottomSheetDialogFragment() {
 		bindObservers()
 	}
 
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
+
 	private fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.notSyncedContacts.collect {

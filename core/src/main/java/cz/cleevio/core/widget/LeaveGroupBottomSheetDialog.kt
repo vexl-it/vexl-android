@@ -59,4 +59,9 @@ class LeaveGroupBottomSheetDialog constructor(
 		}
 		//TODO: we need correct vector icon
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }

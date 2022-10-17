@@ -14,7 +14,7 @@ class PhotoOptionsBottomSheetDialog : BottomSheetDialogFragment() {
 
 	private lateinit var binding: BottomSheetPhotoOptionsBinding
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		binding = BottomSheetPhotoOptionsBinding.inflate(layoutInflater, container, false)
 
 		binding.close.setOnClickListener { dismiss() }
@@ -40,6 +40,11 @@ class PhotoOptionsBottomSheetDialog : BottomSheetDialogFragment() {
 		}
 
 		return binding.root
+	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
 	}
 
 	companion object {

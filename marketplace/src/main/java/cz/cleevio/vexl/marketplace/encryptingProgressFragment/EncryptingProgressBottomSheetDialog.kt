@@ -99,6 +99,11 @@ class EncryptingProgressBottomSheetDialog(
 		}
 	}
 
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
+
 	private fun updateUi(uiState: UiState) {
 		when (uiState) {
 			UiState.INIT -> {

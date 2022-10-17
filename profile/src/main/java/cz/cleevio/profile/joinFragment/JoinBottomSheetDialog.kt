@@ -26,4 +26,9 @@ class JoinBottomSheetDialog : BottomSheetDialogFragment() {
 			dismiss()
 		}
 	}
+
+	override fun onStop() {
+		dismiss()
+		super.onStop()
+	}
 }
