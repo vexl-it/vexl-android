@@ -43,7 +43,7 @@ class BlockUserBottomSheetDialog(
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 }

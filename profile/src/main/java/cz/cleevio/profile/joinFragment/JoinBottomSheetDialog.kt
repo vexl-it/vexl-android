@@ -28,7 +28,7 @@ class JoinBottomSheetDialog : BottomSheetDialogFragment() {
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 }

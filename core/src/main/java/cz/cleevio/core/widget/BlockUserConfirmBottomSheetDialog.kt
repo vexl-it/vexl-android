@@ -83,7 +83,7 @@ class BlockUserConfirmBottomSheetDialog(
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 

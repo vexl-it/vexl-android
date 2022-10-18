@@ -54,7 +54,7 @@ class CurrencyBottomSheetDialog(
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 }

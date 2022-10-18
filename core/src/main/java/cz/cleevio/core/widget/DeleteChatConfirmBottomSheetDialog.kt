@@ -74,7 +74,7 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 
