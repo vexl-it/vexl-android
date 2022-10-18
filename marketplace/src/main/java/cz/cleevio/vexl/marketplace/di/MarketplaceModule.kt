@@ -61,6 +61,7 @@ val marketplaceModule = module {
 	viewModel { (offerEncryptionData: OfferEncryptionData) ->
 		EncryptingProgressViewModel(
 			offerEncryptionData = offerEncryptionData,
+			encryptedPreferenceRepository = get(),
 			offerRepository = get()
 		)
 	}

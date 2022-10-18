@@ -1,6 +1,7 @@
 package cz.cleevio.vexl.marketplace.encryptingProgressFragment
 
 import androidx.lifecycle.viewModelScope
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OfferEncryptionData
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.network.data.Resource
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 
 class EncryptingProgressViewModel constructor(
 	val offerEncryptionData: OfferEncryptionData,
+	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	private val offerRepository: OfferRepository
 ) : BaseViewModel() {
 
@@ -51,7 +53,7 @@ class EncryptingProgressViewModel constructor(
 					offerType = params.offerType,
 					encryptedFor = contactsPublicKeys.map { it.key }
 				)
-
+				encryptedPreferenceRepository.isOfferEncrypted = true
 				_newOfferRequest.emit(response)
 			}
 		}
@@ -66,6 +68,7 @@ class EncryptingProgressViewModel constructor(
 					offerList = encryptedOfferList,
 					additionalEncryptedFor = contactsPublicKeys.map { it.key }
 				)
+				encryptedPreferenceRepository.isOfferEncrypted = true
 				_newOfferRequest.emit(response)
 			}
 		}

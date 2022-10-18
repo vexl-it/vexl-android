@@ -34,6 +34,17 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 	private val args by navArgs<NewOfferFragmentArgs>()
 	lateinit var adapter: SelectGroupAdapter
 
+	override fun onResume() {
+		super.onResume()
+
+		if (viewModel.encryptedPreferenceRepository.isOfferEncrypted) {
+			findNavController().popBackStack()
+			viewModel.encryptedPreferenceRepository.isOfferEncrypted = false
+		} else {
+			showProgressIndicator(false)
+		}
+	}
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect {
@@ -64,9 +75,9 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 							findNavController().popBackStack()
 						}
 						is Status.Error -> {
-							binding.newOfferBtn.isVisible = true
-							binding.progress.isVisible = false
+							showProgressIndicator(false)
 						}
+						else -> Unit
 					}
 				})
 			}
@@ -240,8 +251,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 			)
 
 			if (params != null) {
-				binding.newOfferBtn.isVisible = false
-				binding.progress.isVisible = true
+				showProgressIndicator(true)
 				viewModel.fetchContactsPublicKeys(params)
 			}
 		}
@@ -252,6 +262,11 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 				bottom = insets.bottomWithIME
 			)
 		}
+	}
+
+	private fun showProgressIndicator(isVisible: Boolean) {
+		binding.newOfferBtn.isVisible = !isVisible
+		binding.progress.isVisible = isVisible
 	}
 
 	companion object {
