@@ -9,6 +9,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -126,65 +127,72 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 
 	private fun setReportOfferListener() {
 		binding.reportOffer.setDebouncedOnClickListener {
-			binding.requestOfferBtn.setOnClickListener(null)
-			viewModel.offer.value?.offer?.offerId?.let {
-				showBottomDialog(
-					ReportOfferBottomSheetDialog(it)
-				)
-			} ?: Toast.makeText(requireContext(), getString(R.string.error_no_offer_id_found), Toast.LENGTH_SHORT).show()
-			setRequestOfferListener()
+			viewModel.viewModelScope.launch {
+				binding.requestOfferBtn.setOnClickListener(null)
+				viewModel.offer.value?.offer?.offerId?.let {
+					showBottomDialog(
+						ReportOfferBottomSheetDialog(it)
+					)
+				} ?: Toast.makeText(requireContext(), getString(R.string.error_no_offer_id_found), Toast.LENGTH_SHORT).show()
+				delay(BUTTON_DELAY)
+				setRequestOfferListener()
+			}
 		}
 	}
 
 	private fun setRequestOfferListener() {
 		binding.requestOfferBtn.setDebouncedOnClickListener {
-			binding.reportOffer.setOnClickListener(null)
-			val offerPublicKey = viewModel.offer.value?.offer?.offerPublicKey
-			val offerId = viewModel.offer.value?.offer?.offerId
-			val messageText = binding.requestText.text.toString()
+			viewModel.viewModelScope.launch {
+				binding.reportOffer.setOnClickListener(null)
+				val offerPublicKey = viewModel.offer.value?.offer?.offerPublicKey
+				val offerId = viewModel.offer.value?.offer?.offerId
+				val messageText = binding.requestText.text.toString()
 
-			if (offerPublicKey.isNullOrBlank() || offerId.isNullOrBlank()) {
-				if (offerPublicKey.isNullOrBlank()) {
-					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(
-							requireActivity(),
-							getString(R.string.error_missing_offer_public_key),
-							Toast.LENGTH_SHORT
-						).show()
+				if (offerPublicKey.isNullOrBlank() || offerId.isNullOrBlank()) {
+					if (offerPublicKey.isNullOrBlank()) {
+						viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+							Toast.makeText(
+								requireActivity(),
+								getString(R.string.error_missing_offer_public_key),
+								Toast.LENGTH_SHORT
+							).show()
+						}
+					}
+					if (offerId.isNullOrBlank()) {
+						viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+							Toast.makeText(
+								requireActivity(),
+								getString(R.string.error_missing_offer_id),
+								Toast.LENGTH_SHORT
+							).show()
+						}
+					}
+				} else {
+					viewModel.sendRequest(
+						text = messageText.ifBlank { null },
+						offerPublicKey = offerPublicKey,
+						offerId = offerId
+					) {
+						viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+							Toast.makeText(
+								requireContext(),
+								getString(R.string.offer_request_sent_successfully),
+								Toast.LENGTH_SHORT
+							).show()
+							delay(POP_BACKSTACK_DELAY)
+							findNavController().popBackStack()
+						}
 					}
 				}
-				if (offerId.isNullOrBlank()) {
-					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(
-							requireActivity(),
-							getString(R.string.error_missing_offer_id),
-							Toast.LENGTH_SHORT
-						).show()
-					}
-				}
-			} else {
-				viewModel.sendRequest(
-					text = messageText.ifBlank { null },
-					offerPublicKey = offerPublicKey,
-					offerId = offerId
-				) {
-					viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-						Toast.makeText(
-							requireContext(),
-							getString(R.string.offer_request_sent_successfully),
-							Toast.LENGTH_SHORT
-						).show()
-						delay(POP_BACKSTACK_DELAY)
-						findNavController().popBackStack()
-					}
-				}
+				delay(BUTTON_DELAY)
+				setReportOfferListener()
 			}
-			setReportOfferListener()
 		}
 	}
 
 	private companion object {
 		private const val SCROLL_TO_BOTTOM_DELAY = 300L
 		private const val POP_BACKSTACK_DELAY = 1500L
+		private const val BUTTON_DELAY = 1000L
 	}
 }

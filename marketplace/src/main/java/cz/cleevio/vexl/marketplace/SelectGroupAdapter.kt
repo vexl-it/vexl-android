@@ -45,7 +45,7 @@ class SelectGroupAdapter  : ListAdapter<Group, SelectGroupAdapter.ViewHolder>(ob
 
 		fun bind(item: Group) {
 			binding.groupName.text = item.name
-			binding.groupLogo.load(item.logoUrl) {
+			binding.groupLogo.load("https://cdn.vexl.cz/contact-ms/d4312b7b-93b4-4fbc-901a-47eaef356973.jpg") {
 				setPlaceholders(R.drawable.ic_groups)
 			}
 			binding.groupCheck.isVisible = selectedGroups.contains(item.groupUuid)
