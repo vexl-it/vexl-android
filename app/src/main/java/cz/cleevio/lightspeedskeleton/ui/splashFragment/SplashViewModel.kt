@@ -1,19 +1,27 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import androidx.lifecycle.viewModelScope
-import cz.cleevio.core.utils.BackgroundQueue
-import cz.cleevio.core.utils.NavMainGraphModel
-import cz.cleevio.core.utils.UserUtils
+import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
+import cz.cleevio.core.model.OfferEncryptionData
+import cz.cleevio.core.utils.*
+import cz.cleevio.core.widget.FriendLevel
+import cz.cleevio.network.data.ErrorIdentification
+import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.model.offer.MyOffer
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
+import cz.cleevio.vexl.marketplace.R
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SplashViewModel constructor(
 	private val userRepository: UserRepository,
@@ -22,7 +30,11 @@ class SplashViewModel constructor(
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
 	private val userUtils: UserUtils,
-	private val backgroundQueue: BackgroundQueue
+	private val backgroundQueue: BackgroundQueue,
+	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	val offerUtils: OfferUtils,
+	val locationHelper: LocationHelper,
+	val encryptionUtils: EncryptionUtils,
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
@@ -30,7 +42,24 @@ class SplashViewModel constructor(
 	private val _contactKeysLoaded = MutableSharedFlow<Boolean>(replay = 1)
 	val contactKeysLoaded = _contactKeysLoaded.asSharedFlow()
 
+	private val _errorFlow = MutableSharedFlow<Resource<Any>>()
+	val errorFlow = _errorFlow.asSharedFlow()
+
+	//Int is index of handled offer
+	private val _skipMigrationOnError = Channel<Int>(Channel.CONFLATED)
+	val skipMigrationOnError = _skipMigrationOnError.receiveAsFlow()
+
+	//Pair<Index, Data>
+	private val showEncryptingDialog = MutableSharedFlow<Pair<Int, OfferEncryptionData>>()
+	val showEncryptingDialogFlow = showEncryptingDialog.asSharedFlow()
+
+	var myOffers: List<MyOffer> = listOf()
+
 	init {
+		viewModelScope.launch(Dispatchers.IO) {
+			myOffers = offerRepository.getMyOffers()
+		}
+
 		viewModelScope.launch(Dispatchers.IO) {
 			val offers = offerRepository.getMyOffersWithoutInbox()
 			offers.forEach { myOffer ->
@@ -63,6 +92,75 @@ class SplashViewModel constructor(
 			val success = contactRepository.syncMyContactsKeys()
 			backgroundQueue.reEncryptOffers()
 			_contactKeysLoaded.emit(success)
+		}
+	}
+
+	fun migrateOfferToV2(myOffer: MyOffer, index: Int) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = myOffer.offerId)
+			val symmetricalKey = encryptionUtils.generateAesSymmetricalKey()
+			Timber.tag("ASDX").d("symmetricalKey: $symmetricalKey")
+
+			if (offerKeys == null) {
+				_errorFlow.emit(
+					Resource.error(
+						ErrorIdentification.MessageError(message = R.string.error_missing_offer_keys)
+					)
+				)
+				offerRepository.deleteBrokenMyOffersFromDB(listOf(myOffer.offerId))
+				_skipMigrationOnError.send(index)
+				return@launch
+			}
+
+			val offer = offerRepository.getOfferById(myOffer.offerId)
+			if (offer == null) {
+				_errorFlow.emit(
+					Resource.error(
+						ErrorIdentification.MessageError(message = R.string.error_offer_not_found)
+					)
+				)
+				offerRepository.deleteBrokenMyOffersFromDB(listOf(myOffer.offerId))
+				_skipMigrationOnError.send(index)
+				return@launch
+			}
+
+			val contactKeys = offerUtils.fetchContactsPublicKeysV2(
+				friendLevel = FriendLevel.valueOf(offer.friendLevel.first()),
+				groupUuids = offer.groupUuids,
+				contactRepository = contactRepository,
+				encryptedPreferenceRepository = encryptedPreferenceRepository
+			)
+
+			val commonFriends = contactRepository.getCommonFriends(
+				contactKeys
+					.distinctBy { it.key }
+					.map { it.key }
+					.filter {
+						// we don't want to get common friends for our offer
+						it != encryptedPreferenceRepository.userPublicKey
+					}
+			)
+
+			//this needs to be creation of offer, update will not work
+			showEncryptingDialog.emit(
+				Pair(
+					first = index,
+					second = OfferEncryptionData(
+						offerKeys = offerKeys,
+						offer = offer,
+						contactRepository = contactRepository,
+						encryptedPreferenceRepository = encryptedPreferenceRepository,
+						locationHelper = locationHelper,
+						offerId = myOffer.offerId,
+						contactsPublicKeys = contactKeys,
+						commonFriends = commonFriends,
+						symmetricalKey = symmetricalKey,
+						friendLevel = myOffer.friendLevel,
+						offerType = myOffer.offerType,
+						expiration = 0
+					)
+				)
+			)
 		}
 	}
 }

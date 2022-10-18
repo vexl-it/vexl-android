@@ -13,6 +13,7 @@ import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
+import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.model.offer.v2.NewOfferPrivateV2
 import cz.cleevio.repository.model.offer.v2.NewOfferV2
 import cz.cleevio.repository.model.offer.v2.NewOfferV2PrivatePayload
@@ -106,6 +107,52 @@ class OfferUtils(
 			activePriceCurrency = params.priceTrigger.currency,
 			active = params.active.toString(),
 			groupUuids = params.groupUuids
+		)
+		val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).toJson(publicPayload)
+		val encryptedPublicPayload = AesCryptoLib.encrypt(symmetricalKey, publicPayloadJson)
+
+		val encryptedPrivatePayloadList = encryptAllPrivatePayloads(
+			contactsPublicKeys = contactsPublicKeys,
+			commonFriends = commonFriends,
+			symmetricalKey = symmetricalKey
+		)
+
+		return NewOfferV2(
+			privateParts = encryptedPrivatePayloadList,
+			payloadPublic = encryptedPublicPayload
+		)
+	}
+
+	//encrypt offer from backgroundQueue (using already existing Offer)
+	suspend fun prepareEncryptedOfferV2(
+		offerKeys: KeyPair,
+		offer: Offer,
+		locationHelper: LocationHelper,
+		contactsPublicKeys: List<ContactKey>,
+		commonFriends: Map<String, List<BaseContact>>,
+		symmetricalKey: String
+	): NewOfferV2 {
+		//encrypt public part
+		val publicPayload = NewOfferV2PublicPayload(
+			offerPublicKey = offerKeys.publicKey,
+			location = offer.location.map {
+				locationHelper.locationToJsonString(it)
+			},
+			offerDescription = offer.offerDescription,
+			amountBottomLimit = offer.amountBottomLimit.toString(),
+			amountTopLimit = offer.amountTopLimit.toString(),
+			feeState = offer.feeState,
+			feeAmount = offer.feeAmount.toString(),
+			locationState = offer.locationState,
+			paymentMethod = offer.paymentMethod,
+			btcNetwork = offer.btcNetwork,
+			currency = offer.currency,
+			offerType = offer.offerType,
+			activePriceState = offer.activePriceState,
+			activePriceValue = offer.activePriceValue.toString(),
+			activePriceCurrency = offer.activePriceCurrency,
+			active = offer.active.toString(),
+			groupUuids = offer.groupUuids
 		)
 		val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).toJson(publicPayload)
 		val encryptedPublicPayload = AesCryptoLib.encrypt(symmetricalKey, publicPayloadJson)

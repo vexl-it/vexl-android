@@ -3,6 +3,7 @@ package cz.cleevio.vexl.marketplace.encryptingProgressFragment
 import androidx.lifecycle.viewModelScope
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OfferEncryptionData
+import cz.cleevio.core.model.OfferParams
 import cz.cleevio.core.utils.OfferUtils
 import cz.cleevio.network.data.Resource
 import cz.cleevio.repository.model.offer.Offer
@@ -31,14 +32,25 @@ class EncryptingProgressViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			offerEncryptionData.run {
 				_encryptedOfferList.emit(
-					offerUtils.prepareEncryptedOfferV2(
-						offerKeys = offerKeys,
-						params = params,
-						locationHelper = locationHelper,
-						contactsPublicKeys = contactsPublicKeys,
-						commonFriends = commonFriends,
-						symmetricalKey = symmetricalKey
-					)
+					if (offer == null && params != null) {
+						offerUtils.prepareEncryptedOfferV2(
+							offerKeys = offerKeys,
+							params = params as OfferParams,
+							locationHelper = locationHelper,
+							contactsPublicKeys = contactsPublicKeys,
+							commonFriends = commonFriends,
+							symmetricalKey = symmetricalKey
+						)
+					} else {
+						offerUtils.prepareEncryptedOfferV2(
+							offerKeys = offerKeys,
+							offer = offer as Offer,
+							locationHelper = locationHelper,
+							contactsPublicKeys = contactsPublicKeys,
+							commonFriends = commonFriends,
+							symmetricalKey = symmetricalKey
+						)
+					}
 				)
 			}
 		}
@@ -50,13 +62,13 @@ class EncryptingProgressViewModel constructor(
 			offerEncryptionData.run {
 				val response = offerRepository.createOffer(
 					offerList = offer.privateParts,
-					expiration = params.expiration,
+					expiration = expiration,
 					offerKeys = offerKeys,
-					offerType = params.offerType,
+					offerType = offerType,
 					encryptedFor = contactsPublicKeys.map { it.key },
 					payloadPublic = offer.payloadPublic,
 					symmetricalKey = symmetricalKey,
-					friendLevel = params.friendLevel.value.name
+					friendLevel = friendLevel
 				)
 				encryptedPreferenceRepository.isOfferEncrypted = true
 				_newOfferRequest.emit(response)

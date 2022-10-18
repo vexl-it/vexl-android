@@ -55,7 +55,10 @@ class NewOfferViewModel constructor(
 					locationHelper = locationHelper,
 					contactsPublicKeys = contactKeys,
 					commonFriends = commonFriends,
-					symmetricalKey = symmetricalKey
+					symmetricalKey = symmetricalKey,
+					friendLevel = params.friendLevel.value.name,
+					offerType = params.offerType,
+					expiration = params.expiration,
 				)
 			)
 		}

@@ -49,7 +49,9 @@ interface OfferRepository {
 
 	suspend fun deleteMyOffers(offerIds: List<String>): Resource<Unit>
 
-	suspend fun deleteOfferById(offerId: String): Resource<Unit>
+	suspend fun deleteMyOfferById(offerId: String): Resource<Unit>
+
+	suspend fun deleteBrokenMyOffersFromDB(offerIds: List<String>)
 
 	suspend fun deleteOfferForPublicKeys(
 		deletePrivatePartRequest: DeletePrivatePartRequest
@@ -98,4 +100,7 @@ interface OfferRepository {
 	suspend fun getOfferById(offerId: String): Offer?
 
 	suspend fun reportOffer(offerId: String): Resource<Unit>
+
+	//not used right now, could be helpful later
+	suspend fun forceReEncrypt()
 }

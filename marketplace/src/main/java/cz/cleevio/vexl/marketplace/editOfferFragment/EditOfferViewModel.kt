@@ -107,7 +107,7 @@ class EditOfferViewModel constructor(
 
 	fun deleteOffer(offerId: String, onSuccess: () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val response = offerRepository.deleteOfferById(offerId)
+			val response = offerRepository.deleteMyOfferById(offerId)
 			when (response.status) {
 				is Status.Success -> {
 					withContext(Dispatchers.Main) {

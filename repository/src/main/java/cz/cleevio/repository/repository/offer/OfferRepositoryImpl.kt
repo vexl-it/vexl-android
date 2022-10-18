@@ -254,9 +254,13 @@ class OfferRepositoryImpl constructor(
 		}
 	)
 
-	override suspend fun deleteOfferById(offerId: String): Resource<Unit> = deleteMyOffers(
+	override suspend fun deleteMyOfferById(offerId: String): Resource<Unit> = deleteMyOffers(
 		listOf(offerId)
 	)
+
+	override suspend fun deleteBrokenMyOffersFromDB(offerIds: List<String>) {
+		myOfferDao.deleteMyOffersById(offerIds)
+	}
 
 	override suspend fun deleteOfferForPublicKeys(
 		deletePrivatePartRequest: DeletePrivatePartRequest,
@@ -618,6 +622,12 @@ class OfferRepositoryImpl constructor(
 		offerDao.deleteOffersById(listOf(offerId))
 
 		return response
+	}
+
+	override suspend fun forceReEncrypt() {
+		//get all and change
+		val cleared = myOfferDao.listAll().map { it.copy(encryptedForKeys = "") }
+		myOfferDao.replaceAll(cleared)
 	}
 
 	private fun sqlLikeOperator(fieldName: String, data: List<Any>): String {
