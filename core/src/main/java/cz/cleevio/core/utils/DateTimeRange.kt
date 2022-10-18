@@ -39,3 +39,5 @@ fun getChartTimeRange(dateTimeRange: DateTimeRange?): Pair<String, String> {
 		return Pair(fromDate.toString(), nowInSeconds.toString())
 	} ?: return Pair("0", "0")
 }
+
+fun getOfferExpiration(): Long = DAY_IN_SECONDS * DAYS_IN_MONTH

@@ -1,6 +1,9 @@
 package cz.cleevio.network.api
 
-import cz.cleevio.network.request.offer.*
+import cz.cleevio.network.request.offer.CreateOfferRequest
+import cz.cleevio.network.request.offer.DeletePrivatePartRequest
+import cz.cleevio.network.request.offer.ReportOfferRequest
+import cz.cleevio.network.request.offer.UpdateOfferRequest
 import cz.cleevio.network.response.BasePagedResponse
 import cz.cleevio.network.response.offer.OfferUnifiedAdminResponse
 import cz.cleevio.network.response.offer.OfferUnifiedResponse
@@ -43,11 +46,6 @@ interface OfferApi {
 	@HTTP(method = "DELETE", path = "offers/private-part", hasBody = true)
 	suspend fun deleteOffersPrivatePart(
 		@Body deletePrivatePartRequest: DeletePrivatePartRequest
-	): Response<ResponseBody>
-
-	@POST("offers/private-part")
-	suspend fun postOffersPrivatePart(
-		@Body createOfferPrivatePartRequest: CreateOfferPrivatePartRequest
 	): Response<ResponseBody>
 
 	@POST("offers/report")

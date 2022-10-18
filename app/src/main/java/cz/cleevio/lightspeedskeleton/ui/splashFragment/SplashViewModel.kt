@@ -30,7 +30,7 @@ class SplashViewModel constructor(
 	private val offerRepository: OfferRepository,
 	private val chatRepository: ChatRepository,
 	private val userUtils: UserUtils,
-	private val backgroundQueue: BackgroundQueue,
+	val backgroundQueue: BackgroundQueue,
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	val offerUtils: OfferUtils,
 	val locationHelper: LocationHelper,
@@ -90,7 +90,6 @@ class SplashViewModel constructor(
 	fun loadMyContactsKeys() {
 		viewModelScope.launch(Dispatchers.IO) {
 			val success = contactRepository.syncMyContactsKeys()
-			backgroundQueue.reEncryptOffers()
 			_contactKeysLoaded.emit(success)
 		}
 	}
@@ -128,7 +127,8 @@ class SplashViewModel constructor(
 				friendLevel = FriendLevel.valueOf(offer.friendLevel.first()),
 				groupUuids = offer.groupUuids,
 				contactRepository = contactRepository,
-				encryptedPreferenceRepository = encryptedPreferenceRepository
+				encryptedPreferenceRepository = encryptedPreferenceRepository,
+				shouldEmitContacts = true
 			)
 
 			val commonFriends = contactRepository.getCommonFriends(
@@ -155,12 +155,18 @@ class SplashViewModel constructor(
 						contactsPublicKeys = contactKeys,
 						commonFriends = commonFriends,
 						symmetricalKey = symmetricalKey,
-						friendLevel = myOffer.friendLevel,
+						friendLevel = offer.friendLevel.first(),
 						offerType = myOffer.offerType,
-						expiration = 0
+						expiration = (System.currentTimeMillis() / 1000) + getOfferExpiration()
 					)
 				)
 			)
+		}
+	}
+
+	fun deleteMigratedOfferFromDB(offerId: String) {
+		viewModelScope.launch(Dispatchers.IO) {
+			offerRepository.deleteBrokenMyOffersFromDB(listOf(offerId))
 		}
 	}
 }

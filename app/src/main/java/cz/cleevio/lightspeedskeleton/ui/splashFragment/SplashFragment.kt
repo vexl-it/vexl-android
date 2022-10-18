@@ -62,9 +62,13 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			viewModel.showEncryptingDialogFlow.collect {
 				//show encrypt dialog
 				showBottomDialog(EncryptingProgressBottomSheetDialog(it.second, isNewOffer = true) { resource ->
-					//finally continue to Marketplace
+					//delete just migrated offer from local DB
+					viewModel.deleteMigratedOfferFromDB(viewModel.myOffers[it.first].offerId)
+
+					//check if we have more offers to migrate
 					val nextIndex = it.first.inc()
 					if (nextIndex >= viewModel.myOffers.size) {
+						//finally continue to Marketplace
 						continueToMarketplace()
 					} else {
 						//migrate my next offer
@@ -104,7 +108,12 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	}
 
 	private fun continueToMarketplace() {
+		//mark migration from V1 as done
 		viewModel.encryptedPreferenceRepository.hasOfferV2 = true
+
+		//reencrypt only when done migrating
+		viewModel.backgroundQueue.reEncryptOffers()
+
 		lifecycleScope.launch {
 			viewModel.navMainGraphModel.navigateToGraph(
 				NavMainGraphModel.NavGraph.Main
