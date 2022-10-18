@@ -40,6 +40,17 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 	private val args by navArgs<EditOfferFragmentArgs>()
 	lateinit var adapter: SelectGroupAdapter
 
+	override fun onResume() {
+		super.onResume()
+
+		if (viewModel.encryptedPreferenceRepository.isOfferEncrypted) {
+			findNavController().popBackStack()
+			viewModel.encryptedPreferenceRepository.isOfferEncrypted = false
+		} else {
+			showProgressIndicator(false)
+		}
+	}
+
 	override fun bindObservers() {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect {

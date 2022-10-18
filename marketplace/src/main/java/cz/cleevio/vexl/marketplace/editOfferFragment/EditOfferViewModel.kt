@@ -31,7 +31,7 @@ class EditOfferViewModel constructor(
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
 	private val groupRepository: GroupRepository,
-	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	private val locationHelper: LocationHelper
 ) : BaseOfferViewModel(
 	userRepository,
