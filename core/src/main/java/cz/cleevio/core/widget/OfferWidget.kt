@@ -308,8 +308,10 @@ class OfferWidget @JvmOverloads constructor(
 				ContextCompat.getColor(context, R.color.gray_1),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			)
+			binding.profileImage.setBackgroundColor(resources.getColor(R.color.gray_1, null))
 		} else {
 			binding.profileImage.clearColorFilter()
+			binding.profileImage.setBackgroundColor(resources.getColor(R.color.white, null))
 		}
 
 		binding.requestBtn.isEnabled = !isRequested
