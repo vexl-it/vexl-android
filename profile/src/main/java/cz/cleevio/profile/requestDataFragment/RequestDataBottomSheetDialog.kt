@@ -42,7 +42,7 @@ class RequestDataBottomSheetDialog : BottomSheetDialogFragment() {
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 }

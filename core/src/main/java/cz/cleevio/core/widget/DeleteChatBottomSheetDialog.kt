@@ -43,7 +43,7 @@ class DeleteChatBottomSheetDialog(
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 }

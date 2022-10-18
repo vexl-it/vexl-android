@@ -42,7 +42,7 @@ class ProfileContactsListFragment constructor(
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 

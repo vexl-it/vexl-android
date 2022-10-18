@@ -49,7 +49,7 @@ class MyOfferBottomSheetDialog(
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 }

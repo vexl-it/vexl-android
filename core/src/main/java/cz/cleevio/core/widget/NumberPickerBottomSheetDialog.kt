@@ -29,7 +29,7 @@ class NumberPickerBottomSheetDialog : BottomSheetDialogFragment() {
 	}
 
 	override fun onStop() {
-		dismiss()
+		dismissAllowingStateLoss()
 		super.onStop()
 	}
 
