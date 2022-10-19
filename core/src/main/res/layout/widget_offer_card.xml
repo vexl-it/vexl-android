@@ -86,8 +86,9 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:paddingStart="2dp"
-					android:paddingEnd="2dp"
-					android:paddingBottom="4dp"
+					android:paddingEnd="4dp"
+					app:layout_goneMarginEnd="4dp"
+					android:paddingBottom="3.5dp"
 					android:text="@string/marketplace_detail_up_to"
 					android:textAppearance="@style/TextAppearance.Vexl.DescriptionMicro.OfferCard.Numbers"
 					android:textColor="@color/gray_3"
@@ -123,7 +124,6 @@
 					app:layout_constraintEnd_toStartOf="@id/suffix_price_currency"
 					app:layout_constraintStart_toEndOf="@id/prefix_price_currency"
 					app:layout_constraintTop_toTopOf="parent"
-					app:lineHeight="28.64sp"
 					tools:text="10k" />
 
 				<TextView
