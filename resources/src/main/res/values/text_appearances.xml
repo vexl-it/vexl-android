@@ -464,7 +464,7 @@
 		<item name="android:letterSpacing">-0.03</item>
 	</style>
 
-	<style name="TextAppearance.Vexl.DescriptionMicro.OfferCard.Numbers" parent="TextAppearance.Vexl.Description">
+	<style name="TextAppearance.Vexl.DescriptionMicro.OfferCard.Numbers" parent="">
 		<item name="android:textSize">23sp</item>
 		<item name="lineHeight">28.64sp</item>
 		<item name="android:letterSpacing">-0.04</item>
