@@ -148,6 +148,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 				showBottomDialog(EncryptingProgressBottomSheetDialog(it, isNewOffer = false) { resource ->
 					if (resource.isSuccess()) {
 						findNavController().popBackStack()
+						viewModel.encryptedPreferenceRepository.isOfferEncrypted = false
 					} else {
 						showProgressIndicator(false)
 						//show error toast
@@ -182,6 +183,7 @@ class EditOfferFragment : BaseFragment(R.layout.fragment_edit_offer) {
 					offerId = offer.offerId,
 					onSuccess = {
 						findNavController().popBackStack()
+						viewModel.encryptedPreferenceRepository.isOfferEncrypted = false
 					}
 				)
 			},
