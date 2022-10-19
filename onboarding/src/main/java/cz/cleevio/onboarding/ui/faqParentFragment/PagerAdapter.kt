@@ -56,7 +56,7 @@ class PagerAdapter constructor(
 						CONTACT_SUBTITLE,
 						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_1),
 						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_2),
-						fragmentActivity.getString(R.string.faq_screen_seven_subtitle_3)
+						". ${fragmentActivity.getString(R.string.faq_screen_seven_subtitle_3)}"
 					).replace(IOS_NEW_LINE, ANDROID_NEW_LINE)
 				)
 				putInt(FaqPageFragment.FAQ_RESOURCE_ID, R.drawable.ic_faq_how_do_i_contact_vexl)
@@ -69,7 +69,7 @@ class PagerAdapter constructor(
 
 	companion object {
 		private const val NUMBER_OF_PAGES = 7
-		private const val CONTACT_SUBTITLE = "%s <font color='#101010'><b>%s</b></font> %s"
+		private const val CONTACT_SUBTITLE = "%s <font color='#101010'><b>%s</b></font>%s"
 		private const val IOS_NEW_LINE = "\n"
 		private const val ANDROID_NEW_LINE = "<br>"
 	}
