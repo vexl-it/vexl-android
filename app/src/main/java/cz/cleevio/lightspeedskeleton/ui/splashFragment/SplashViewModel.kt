@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+const val TO_SECONDS = 1000L
+
 class SplashViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
@@ -157,7 +159,7 @@ class SplashViewModel constructor(
 						symmetricalKey = symmetricalKey,
 						friendLevel = offer.friendLevel.first(),
 						offerType = myOffer.offerType,
-						expiration = (System.currentTimeMillis() / 1000) + getOfferExpiration()
+						expiration = System.currentTimeMillis() / TO_SECONDS + getOfferExpiration()
 					)
 				)
 			)

@@ -26,6 +26,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 
 const val NO_GROUP = "NONE"
 
+//increment when changing payload data model
+const val PUBLIC_PAYLOAD_VERSION_PREFIX = "0"
+
 class OfferUtils(
 	private val moshi: Moshi
 ) {
@@ -119,7 +122,7 @@ class OfferUtils(
 
 		return NewOfferV2(
 			privateParts = encryptedPrivatePayloadList,
-			payloadPublic = encryptedPublicPayload
+			payloadPublic = PUBLIC_PAYLOAD_VERSION_PREFIX + encryptedPublicPayload
 		)
 	}
 
@@ -165,7 +168,7 @@ class OfferUtils(
 
 		return NewOfferV2(
 			privateParts = encryptedPrivatePayloadList,
-			payloadPublic = encryptedPublicPayload
+			payloadPublic = PUBLIC_PAYLOAD_VERSION_PREFIX + encryptedPublicPayload
 		)
 	}
 

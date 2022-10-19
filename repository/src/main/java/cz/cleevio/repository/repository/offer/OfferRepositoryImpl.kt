@@ -125,13 +125,27 @@ class OfferRepositoryImpl constructor(
 			}
 		}
 
-		offerCreateResource.data?.fromNetwork(moshi = moshi)?.let { offer ->
+		offerCreateResource.data?.fromNetwork(
+			moshi = moshi,
+			keyPair = KeyPair(
+				privateKey = encryptedPreference.userPrivateKey,
+				publicKey = encryptedPreference.userPublicKey
+			)
+		)?.let { offer ->
 			//save offer into DB
 			updateOffers(listOf(offer))
 		}
 
 		return if (offerCreateResource.status == Status.Success) {
-			Resource.success(data = offerCreateResource.data?.fromNetwork(moshi))
+			Resource.success(
+				data = offerCreateResource.data?.fromNetwork(
+					moshi = moshi,
+					keyPair = KeyPair(
+						privateKey = encryptedPreference.userPrivateKey,
+						publicKey = encryptedPreference.userPublicKey
+					)
+				)
+			)
 		} else {
 			Resource.error(offerCreateResource.errorIdentification)
 		}
@@ -197,7 +211,11 @@ class OfferRepositoryImpl constructor(
 					it?.fromNetwork(
 						moshi = moshi,
 						cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
-						reportedOfferIds = reportedOfferDao.listAllIds()
+						reportedOfferIds = reportedOfferDao.listAllIds(),
+						keyPair = KeyPair(
+							privateKey = encryptedPreference.userPrivateKey,
+							publicKey = encryptedPreference.userPublicKey
+						)
 					)
 				},
 				doOnSuccess = { nullableOffer ->
@@ -231,11 +249,15 @@ class OfferRepositoryImpl constructor(
 		},
 		mapper = {
 			val reportedOfferIds = reportedOfferDao.listAllIds()
-			it?.offers?.map { item ->
+			it?.offers?.mapNotNull { item ->
 				item.fromNetwork(
 					moshi = moshi,
 					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
-					reportedOfferIds = reportedOfferIds
+					reportedOfferIds = reportedOfferIds,
+					keyPair = KeyPair(
+						privateKey = encryptedPreference.userPrivateKey,
+						publicKey = encryptedPreference.userPublicKey
+					)
 				)
 			}
 		}
@@ -545,11 +567,15 @@ class OfferRepositoryImpl constructor(
 		},
 		mapper = {
 			val reportedOfferIds = reportedOfferDao.listAllIds()
-			it?.offers?.map { item ->
+			it?.offers?.mapNotNull { item ->
 				item.fromNetwork(
 					moshi = moshi,
 					cryptoCurrencyValues = cryptoCurrencyDao.getCryptoCurrency()?.fromCache(),
-					reportedOfferIds = reportedOfferIds
+					reportedOfferIds = reportedOfferIds,
+					keyPair = KeyPair(
+						privateKey = encryptedPreference.userPrivateKey,
+						publicKey = encryptedPreference.userPublicKey
+					)
 				)
 			}
 		}

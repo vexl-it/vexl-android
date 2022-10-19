@@ -2,6 +2,8 @@ package cz.cleevio.repository.model.offer
 
 import android.os.Parcelable
 import com.cleevio.vexl.cryptography.AesCryptoLib
+import com.cleevio.vexl.cryptography.EciesCryptoLib
+import com.cleevio.vexl.cryptography.model.KeyPair
 import com.squareup.moshi.Moshi
 import cz.cleevio.cache.dao.ChatUserDao
 import cz.cleevio.cache.entity.ContactEntity
@@ -59,12 +61,33 @@ data class Offer constructor(
 	var userAvatarId: Int? = null,
 ) : Parcelable
 
-fun OfferUnifiedResponseV2.fromNetwork(moshi: Moshi, cryptoCurrencyValues: CryptoCurrencyValues?, reportedOfferIds: List<String>): Offer {
-	val locationAdapter = moshi.adapter(Location::class.java)
-	val privatePayloadJson = moshi.adapter(NewOfferV2PrivatePayload::class.java).fromJson(this.privatePayload.decryptedValue)!!
+@Suppress("LongMethod", "ReturnCount")
+fun OfferUnifiedResponseV2.fromNetwork(moshi: Moshi, cryptoCurrencyValues: CryptoCurrencyValues?, reportedOfferIds: List<String>, keyPair: KeyPair): Offer? {
+	val privatePayloadVersion = this.privatePayload.substring(0, 1)
+	val privatePayloadData = this.privatePayload.substring(1)
+	val privatePayloadJson = when (privatePayloadVersion) {
+		"0" -> {
+			val decrypted = EciesCryptoLib.decrypt(keyPair, privatePayloadData)
+			moshi.adapter(NewOfferV2PrivatePayload::class.java).fromJson(decrypted)!!
+		}
+		else -> {
+			return null
+		}
+	}
 
-	val publicPayloadDecrypted = AesCryptoLib.decrypt(privatePayloadJson.symetricKey, this.publicPayload)
+	val publicPayloadVersion = this.publicPayload.substring(0, 1)
+	val publicPayloadData = this.publicPayload.substring(1)
+	val publicPayloadDecrypted = when (publicPayloadVersion) {
+		"0" -> {
+			AesCryptoLib.decrypt(privatePayloadJson.symetricKey, publicPayloadData)
+		}
+		else -> {
+			return null
+		}
+	}
+
 	val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).fromJson(publicPayloadDecrypted)!!
+	val locationAdapter = moshi.adapter(Location::class.java)
 
 	return Offer(
 		offerId = this.offerId,
@@ -116,12 +139,33 @@ fun OfferUnifiedResponseV2.fromNetwork(moshi: Moshi, cryptoCurrencyValues: Crypt
 	}
 }
 
-fun OfferUnifiedAdminResponseV2.fromNetwork(moshi: Moshi): Offer {
-	val locationAdapter = moshi.adapter(Location::class.java)
-	val privatePayloadJson = moshi.adapter(NewOfferV2PrivatePayload::class.java).fromJson(this.privatePayload.decryptedValue)!!
+@Suppress("ReturnCount")
+fun OfferUnifiedAdminResponseV2.fromNetwork(moshi: Moshi, keyPair: KeyPair): Offer? {
+	val privatePayloadVersion = this.privatePayload.substring(0, 1)
+	val privatePayloadData = this.privatePayload.substring(1)
+	val privatePayloadJson = when (privatePayloadVersion) {
+		"0" -> {
+			val decrypted = EciesCryptoLib.decrypt(keyPair, privatePayloadData)
+			moshi.adapter(NewOfferV2PrivatePayload::class.java).fromJson(decrypted)!!
+		}
+		else -> {
+			return null
+		}
+	}
 
-	val publicPayloadDecrypted = AesCryptoLib.decrypt(privatePayloadJson.symetricKey, this.publicPayload)
+	val publicPayloadVersion = this.publicPayload.substring(0, 1)
+	val publicPayloadData = this.publicPayload.substring(1)
+	val publicPayloadDecrypted = when (publicPayloadVersion) {
+		"0" -> {
+			AesCryptoLib.decrypt(privatePayloadJson.symetricKey, publicPayloadData)
+		}
+		else -> {
+			return null
+		}
+	}
+
 	val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).fromJson(publicPayloadDecrypted)!!
+	val locationAdapter = moshi.adapter(Location::class.java)
 
 	return Offer(
 		offerId = this.offerId,
