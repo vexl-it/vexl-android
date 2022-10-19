@@ -26,15 +26,15 @@ interface UserDao : BaseDao<UserEntity> {
 
 	@Query(
 		"UPDATE UserEntity " +
-		"SET anonymousAvatarImageIndex = :anonymousAvatarImageIndex, " +
-		"anonymousUsername = :anonymousUsername " +
-		"WHERE id == :userId "
+			"SET anonymousAvatarImageIndex = :anonymousAvatarImageIndex, " +
+			"anonymousUsername = :anonymousUsername " +
+			"WHERE id == :userId "
 	)
 	suspend fun updateAnonymousInfo(userId: Long, anonymousUsername: String, anonymousAvatarImageIndex: Int)
 
 	@Query(
 		"UPDATE UserEntity " +
-			"SET avatar = null " +
+			"SET avatar = null, avatarBase64 = null " +
 			"WHERE id == :userId "
 	)
 	suspend fun deleteUserAvatar(userId: Long)
