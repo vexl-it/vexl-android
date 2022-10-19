@@ -73,6 +73,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 					when (resource.status) {
 						is Status.Success -> {
 							findNavController().popBackStack()
+							viewModel.encryptedPreferenceRepository.isOfferEncrypted = false
 						}
 						is Status.Error -> {
 							showProgressIndicator(false)
