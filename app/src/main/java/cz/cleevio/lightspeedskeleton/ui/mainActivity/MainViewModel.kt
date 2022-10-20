@@ -120,6 +120,15 @@ class MainViewModel constructor(
 			}
 		}
 
+	suspend fun checkFromMaintenance(): Boolean =
+		suspendCoroutine { continuation ->
+			remoteConfig.fetchAndActivate().addOnCompleteListener { activatedTask ->
+				if (activatedTask.isSuccessful) {
+					continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.MAINTENANCE_SCREEN_SHOWED))
+				}
+			}
+		}
+
 	companion object {
 		private const val DEBOUNCE_DELAY = 100L
 	}

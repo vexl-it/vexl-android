@@ -789,4 +789,8 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="profile_vexl_it">Learn more on Vexl.it</string>
     <string name="vexl_it">Vexl.it</string>
     <string name="error_invalid_url">Invalid URL</string>
+
+    <!-- Maintenance -->
+    <string name="maintenance_title">Marketplace maintenance</string>
+    <string name="maintenance_subtitle">Vexl app is in maintenance.\nCome back later, please.</string>
 </resources>

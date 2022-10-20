@@ -423,6 +423,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="profile_refuse_to_snap_chat">Povolit screenshoty v aplikaci</string>
     <string name="profile_private_settings_title">Soukromý profil</string>
     <string name="profile_private_settings_subtitle">Odemkni pro přístup do soukromého profilu.</string>
+    <string name="profile_app_version">Vexl App Version %s</string>
 
     <!-- Profile Edit Name -->
     <string name="profile_edit_name_title">Upravit jméno</string>
@@ -779,4 +780,13 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="logs_text_copied_clipboard">Protokoly zkopírované do schránky</string>
 
     <!-- Social media -->
+    <string name="profile_twitter">Follow us on Twitter</string>
+    <string name="twitter">Twitter</string>
+    <string name="profile_medium">Read more on Medium</string>
+    <string name="medium">Medium</string>
+    <string name="profile_vexl_it">Learn more on Vexl.it</string>
+    <string name="vexl_it">Vexl.it</string>
+    <string name="error_invalid_url">Invalid URL</string>
+
+    <!-- Maintenance -->
 </resources>

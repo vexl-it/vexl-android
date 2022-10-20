@@ -11,6 +11,8 @@
 
 	<include app:graph="@navigation/nav_force_update" />
 
+	<include app:graph="@navigation/nav_maintenance" />
+
 	<include app:graph="@navigation/nav_onboarding" />
 
 	<include app:graph="@navigation/nav_onboarding_identity" />
@@ -35,6 +37,12 @@
 		<action
 			android:id="@+id/action_to_force_update"
 			app:destination="@+id/nav_force_update"
+			app:popUpTo="@id/nav_main"
+			app:popUpToInclusive="true" />
+
+		<action
+			android:id="@+id/action_to_maintenance"
+			app:destination="@+id/nav_maintenance"
 			app:popUpTo="@id/nav_main"
 			app:popUpToInclusive="true" />
 
