@@ -44,9 +44,9 @@ val coreModule = module {
 	single {
 		BackgroundQueue(
 			offerRepository = get(),
-			encryptedPreferenceRepository = get(),
 			contactRepository = get(),
-			locationHelper = get()
+			encryptedPreferenceRepository = get(),
+			offerUtils = get()
 		)
 	}
 
@@ -80,6 +80,16 @@ val coreModule = module {
 
 	single {
 		provideMarkwon(get())
+	}
+
+	single {
+		OfferUtils(
+			moshi = get(),
+		)
+	}
+
+	single {
+		EncryptionUtils()
 	}
 }
 

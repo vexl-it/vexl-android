@@ -560,7 +560,7 @@ class ChatRepositoryImpl constructor(
 						CommunicationRequest(
 							message = message,
 							offer = offer,
-							group = groupDao.getOneByUuid(offer.groupUuid)?.fromEntity()
+							group = groupDao.getOneByUuid(offer.groupUuids.firstOrNull() ?: "")?.fromEntity()
 						)
 					)
 				}

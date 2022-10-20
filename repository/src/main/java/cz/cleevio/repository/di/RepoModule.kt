@@ -28,6 +28,7 @@ val repoModule = module {
 	single<OfferRepository> {
 		OfferRepositoryImpl(
 			offerApi = get(),
+			offerApiV2 = get(),
 			myOfferDao = get(),
 			offerDao = get(),
 			locationDao = get(),
@@ -41,6 +42,7 @@ val repoModule = module {
 			cryptoCurrencyDao = get(),
 			chatUserDao = get(),
 			encryptedPreference = get(),
+			moshi = get(),
 		)
 	}
 

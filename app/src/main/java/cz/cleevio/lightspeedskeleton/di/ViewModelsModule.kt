@@ -29,7 +29,11 @@ val viewModelsModule = module {
 			chatRepository = get(),
 			navMainGraphModel = get(),
 			userUtils = get(),
-			backgroundQueue = get()
+			backgroundQueue = get(),
+			encryptedPreferenceRepository = get(),
+			offerUtils = get(),
+			locationHelper = get(),
+			encryptionUtils = get()
 		)
 	}
 

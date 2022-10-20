@@ -24,7 +24,8 @@ abstract class BaseOfferViewModel constructor(
 	private val contactRepository: ContactRepository,
 	private val offerRepository: OfferRepository,
 	private val groupRepository: GroupRepository,
-	private val encryptedPreferenceRepository: EncryptedPreferenceRepository
+	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
+	private val offerUtils: OfferUtils
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()
@@ -83,7 +84,7 @@ abstract class BaseOfferViewModel constructor(
 			_contactsPublicKeys.emit(
 				Pair(
 					params,
-					OfferUtils.fetchContactsPublicKeys(
+					offerUtils.fetchContactsPublicKeysV2(
 						friendLevel = params.friendLevel.value,
 						groupUuids = params.groupUuids,
 						contactRepository = contactRepository,
@@ -100,6 +101,7 @@ abstract class BaseOfferViewModel constructor(
 			_commonFriends.emit(
 				contactRepository.getCommonFriends(
 					contactsPublicKeys
+						.distinctBy { it.key }
 						.map { it.key }
 						.filter {
 							// we don't want to get common friends for our offer

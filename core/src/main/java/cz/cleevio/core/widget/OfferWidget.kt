@@ -176,10 +176,10 @@ class OfferWidget @JvmOverloads constructor(
 				group != null -> {
 					resources.getString(R.string.offer_widget_groups, group.name)
 				}
-				item.friendLevel == FriendLevel.FIRST_DEGREE.name -> {
+				item.friendLevel.contains(FriendLevel.FIRST_DEGREE.name) -> {
 					resources.getString(R.string.marketplace_detail_friend_first)
 				}
-				item.friendLevel == FriendLevel.SECOND_DEGREE.name -> {
+				item.friendLevel.contains(FriendLevel.SECOND_DEGREE.name) -> {
 					resources.getString(R.string.marketplace_detail_friend_second)
 				}
 				//fallback

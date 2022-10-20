@@ -122,6 +122,12 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putBooleanToEP(KEY_IS_OFFER_ENCRYPTED, value)
 		}
 
+	override var hasOfferV2: Boolean
+		get() = getBooleanFromEP(KEY_OFFER_V2, false)
+		set(value) {
+			putBooleanToEP(KEY_OFFER_V2, value)
+		}
+
 	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 	override val selectedCurrencyFlow: MutableStateFlow<String> = MutableStateFlow(selectedCurrency)
 	override val numberOfImportedContactsFlow: MutableStateFlow<Int> = MutableStateFlow(numberOfImportedContacts)
@@ -181,5 +187,6 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_GROUP_CODE = "group_code"
 		private const val KEY_LOGS_ENABLED = "logs_enabled"
 		private const val KEY_IS_OFFER_ENCRYPTED = "is_offer_encrypted"
+		private const val KEY_OFFER_V2 = "offer_v2"
 	}
 }

@@ -2,8 +2,10 @@ package cz.cleevio.core.utils
 
 import android.app.Activity
 import android.widget.Toast
+import com.cleevio.vexl.cryptography.AesCryptoLib
 import com.cleevio.vexl.cryptography.EciesCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
+import com.squareup.moshi.Moshi
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.model.*
@@ -11,18 +13,25 @@ import cz.cleevio.core.widget.FriendLevel
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
-import cz.cleevio.repository.model.offer.NewOffer
 import cz.cleevio.repository.model.offer.Offer
+import cz.cleevio.repository.model.offer.v2.NewOfferPrivateV2
+import cz.cleevio.repository.model.offer.v2.NewOfferV2
+import cz.cleevio.repository.model.offer.v2.NewOfferV2PrivatePayload
+import cz.cleevio.repository.model.offer.v2.NewOfferV2PublicPayload
 import cz.cleevio.repository.repository.contact.ContactRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 
-object OfferUtils {
+const val NO_GROUP = "NONE"
 
-	private const val NO_GROUP = "NONE"
+//increment when changing payload data model
+const val PUBLIC_PAYLOAD_VERSION_PREFIX = "0"
 
+class OfferUtils(
+	private val moshi: Moshi
+) {
 	//sending just events, receiver is supposed to keep count, if count needed
 	private val _offerWasEncrypted = Channel<Unit>(Channel.CONFLATED)
 	val offerWasEncrypted = _offerWasEncrypted.receiveAsFlow()
@@ -30,7 +39,7 @@ object OfferUtils {
 	private val _numberOfAllContacts = MutableStateFlow(-1)
 	val numberOfAllContacts = _numberOfAllContacts.asStateFlow()
 
-	suspend fun fetchContactsPublicKeys(
+	suspend fun fetchContactsPublicKeysV2(
 		friendLevel: FriendLevel,
 		groupUuids: List<String>,
 		contactRepository: ContactRepository,
@@ -67,122 +76,162 @@ object OfferUtils {
 					)
 				}
 			}
-			//we need to give keys with group priority, because distinctBy keeps only first element
-			.sortedBy {
-				if (it.groupUuid == null) 1 else 0
-			}
-			.distinctBy {
-				// remove duplicities
-				it.key
-			}
 
+		//keep duplicities
 		return contactsPublicKeys
 	}
 
-	suspend fun prepareEncryptedOffers(
+	suspend fun prepareEncryptedOfferV2(
 		offerKeys: KeyPair,
 		params: OfferParams,
 		locationHelper: LocationHelper,
 		contactsPublicKeys: List<ContactKey>,
-		commonFriends: Map<String, List<BaseContact>>
-	): List<NewOffer> {
-		val encryptedOfferList: MutableList<NewOffer> = mutableListOf()
-
-		contactsPublicKeys.asyncAll { contactKey ->
-			val encryptedOffer = encryptOffer(
-				locationHelper = locationHelper,
-				params = params,
-				// orEmpty should not happen, list in map is not nullable
-				commonFriends = commonFriends[contactKey.key].orEmpty(),
-				contactKey = contactKey.key,
-				offerKeys = offerKeys,
-				groupUuid = contactKey.groupUuid
-			)
-			_offerWasEncrypted.send(Unit)
-			encryptedOfferList.add(encryptedOffer)
-		}
-
-		return encryptedOfferList
-	}
-
-	//encrypt offer from UI (using OfferParams)
-	fun encryptOffer(
-		locationHelper: LocationHelper,
-		params: OfferParams,
-		commonFriends: List<BaseContact>,
-		contactKey: String,
-		offerKeys: KeyPair,
-		groupUuid: String?,
-	): NewOffer {
-		return NewOffer(
+		commonFriends: Map<String, List<BaseContact>>,
+		symmetricalKey: String
+	): NewOfferV2 {
+		//encrypt public part
+		val publicPayload = NewOfferV2PublicPayload(
+			offerPublicKey = offerKeys.publicKey,
 			location = params.location.values.map {
-				eciesEncrypt(locationHelper.locationToJsonString(it), contactKey)
+				locationHelper.locationToJsonString(it)
 			},
-			userPublicKey = contactKey,
-			offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey),
-			feeState = eciesEncrypt(params.fee.type.name, contactKey),
-			feeAmount = eciesEncrypt(params.fee.value.toString(), contactKey),
-			offerDescription = eciesEncrypt(params.description, contactKey),
-			amountBottomLimit = eciesEncrypt(params.priceRange.bottomLimit.toString(), contactKey),
-			amountTopLimit = eciesEncrypt(params.priceRange.topLimit.toString(), contactKey),
-			locationState = eciesEncrypt(params.location.type.name, contactKey),
-			paymentMethod = params.paymentMethod.value.map { eciesEncrypt(it.name, contactKey) },
-			btcNetwork = params.btcNetwork.value.map { eciesEncrypt(it.name, contactKey) },
-			friendLevel = eciesEncrypt(params.friendLevel.value.name, contactKey),
-			offerType = eciesEncrypt(params.offerType, contactKey),
-			activePriceState = eciesEncrypt(params.priceTrigger.type.name, contactKey),
-			activePriceValue = eciesEncrypt(params.priceTrigger.value.toString(), contactKey),
-			activePriceCurrency = eciesEncrypt(params.priceTrigger.currency, contactKey),
-			active = eciesEncrypt(params.active.toString(), contactKey),
-			groupUuid = eciesEncrypt(groupUuid ?: NO_GROUP, contactKey),
-			currency = eciesEncrypt(params.currency, contactKey),
-			commonFriends = commonFriends.map { friend ->
-				eciesEncrypt(friend.getHashedContact(), contactKey)
-			}
+			offerDescription = params.description,
+			amountBottomLimit = params.priceRange.bottomLimit.toString(),
+			amountTopLimit = params.priceRange.topLimit.toString(),
+			feeState = params.fee.type.name,
+			feeAmount = params.fee.value.toString(),
+			locationState = params.location.type.name,
+			paymentMethod = params.paymentMethod.value.map { it.name },
+			btcNetwork = params.btcNetwork.value.map { it.name },
+			currency = params.currency,
+			offerType = params.offerType,
+			activePriceState = params.priceTrigger.type.name,
+			activePriceValue = params.priceTrigger.value.toString(),
+			activePriceCurrency = params.priceTrigger.currency,
+			active = params.active.toString(),
+			groupUuids = params.groupUuids
+		)
+		val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).toJson(publicPayload)
+		val encryptedPublicPayload = AesCryptoLib.encrypt(symmetricalKey, publicPayloadJson)
+
+		val encryptedPrivatePayloadList = encryptAllPrivatePayloads(
+			contactsPublicKeys = contactsPublicKeys,
+			commonFriends = commonFriends,
+			symmetricalKey = symmetricalKey
+		)
+
+		return NewOfferV2(
+			privateParts = encryptedPrivatePayloadList,
+			payloadPublic = PUBLIC_PAYLOAD_VERSION_PREFIX + encryptedPublicPayload
 		)
 	}
 
 	//encrypt offer from backgroundQueue (using already existing Offer)
-	fun encryptOffer(
-		locationHelper: LocationHelper,
-		offer: Offer,
-		commonFriends: List<BaseContact>,
-		contactKey: String,
+	suspend fun prepareEncryptedOfferV2(
 		offerKeys: KeyPair,
-		groupUuid: String?,
-	): NewOffer {
-		return NewOffer(
+		offer: Offer,
+		locationHelper: LocationHelper,
+		contactsPublicKeys: List<ContactKey>,
+		commonFriends: Map<String, List<BaseContact>>,
+		symmetricalKey: String
+	): NewOfferV2 {
+		//encrypt public part
+		val publicPayload = NewOfferV2PublicPayload(
+			offerPublicKey = offerKeys.publicKey,
 			location = offer.location.map {
-				eciesEncrypt(locationHelper.locationToJsonString(it), contactKey)
+				locationHelper.locationToJsonString(it)
 			},
-			userPublicKey = contactKey,
-			offerPublicKey = eciesEncrypt(offerKeys.publicKey, contactKey),
-			feeState = eciesEncrypt(offer.feeState, contactKey),
-			feeAmount = eciesEncrypt(offer.feeAmount.toString(), contactKey),
-			offerDescription = eciesEncrypt(offer.offerDescription, contactKey),
-			amountBottomLimit = eciesEncrypt(offer.amountBottomLimit.toString(), contactKey),
-			amountTopLimit = eciesEncrypt(offer.amountTopLimit.toString(), contactKey),
-			locationState = eciesEncrypt(offer.locationState, contactKey),
-			paymentMethod = offer.paymentMethod.map { eciesEncrypt(it, contactKey) },
-			btcNetwork = offer.btcNetwork.map { eciesEncrypt(it, contactKey) },
-			friendLevel = eciesEncrypt(offer.friendLevel, contactKey),
-			offerType = eciesEncrypt(offer.offerType, contactKey),
-			activePriceState = eciesEncrypt(offer.activePriceState, contactKey),
-			activePriceValue = eciesEncrypt(offer.activePriceValue.toString(), contactKey),
-			activePriceCurrency = eciesEncrypt(offer.activePriceCurrency, contactKey),
-			active = eciesEncrypt(offer.active.toString(), contactKey),
-			groupUuid = eciesEncrypt(groupUuid ?: NO_GROUP, contactKey),
-			currency = eciesEncrypt(offer.currency, contactKey),
-			commonFriends = commonFriends.map { friend ->
-				eciesEncrypt(friend.getHashedContact(), contactKey)
+			offerDescription = offer.offerDescription,
+			amountBottomLimit = offer.amountBottomLimit.toString(),
+			amountTopLimit = offer.amountTopLimit.toString(),
+			feeState = offer.feeState,
+			feeAmount = offer.feeAmount.toString(),
+			locationState = offer.locationState,
+			paymentMethod = offer.paymentMethod,
+			btcNetwork = offer.btcNetwork,
+			currency = offer.currency,
+			offerType = offer.offerType,
+			activePriceState = offer.activePriceState,
+			activePriceValue = offer.activePriceValue.toString(),
+			activePriceCurrency = offer.activePriceCurrency,
+			active = offer.active.toString(),
+			groupUuids = offer.groupUuids
+		)
+		val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).toJson(publicPayload)
+		val encryptedPublicPayload = AesCryptoLib.encrypt(symmetricalKey, publicPayloadJson)
+
+		val encryptedPrivatePayloadList = encryptAllPrivatePayloads(
+			contactsPublicKeys = contactsPublicKeys,
+			commonFriends = commonFriends,
+			symmetricalKey = symmetricalKey
+		)
+
+		return NewOfferV2(
+			privateParts = encryptedPrivatePayloadList,
+			payloadPublic = PUBLIC_PAYLOAD_VERSION_PREFIX + encryptedPublicPayload
+		)
+	}
+
+	suspend fun encryptAllPrivatePayloads(
+		contactsPublicKeys: List<ContactKey>,
+		commonFriends: Map<String, List<BaseContact>>,
+		symmetricalKey: String
+	): List<NewOfferPrivateV2> {
+		//encrypt private parts
+		val encryptedPrivatePayloadList: MutableList<NewOfferPrivateV2> = mutableListOf()
+
+		val contactLevelMap: MutableMap<String, Set<ContactLevel>> = mutableMapOf()
+		//we need to handle duplicities in list
+		contactsPublicKeys.forEach {
+			val existingLevel = contactLevelMap[it.key]?.toMutableSet() ?: mutableSetOf()
+			existingLevel.add(it.level)
+			contactLevelMap.replace(it.key, existingLevel)
+		}
+
+		contactsPublicKeys
+			//remove duplicities
+			.distinctBy { it.key }
+			//encrypt for all
+			.asyncAll { contactKey ->
+				val encryptedOffer = encryptOfferPrivatePayload(
+					contactKey = contactKey.key,
+					// orEmpty should not happen, list in map is not nullable
+					commonFriends = commonFriends[contactKey.key].orEmpty(),
+					friendLevel = contactLevelMap[contactKey.key].orEmpty(),
+					symmetricKey = symmetricalKey,
+				)
+				_offerWasEncrypted.send(Unit)
+				encryptedPrivatePayloadList.add(encryptedOffer)
 			}
+
+		return encryptedPrivatePayloadList
+	}
+
+	fun encryptOfferPrivatePayload(
+		contactKey: String,
+		commonFriends: List<BaseContact>,
+		friendLevel: Set<ContactLevel>,
+		symmetricKey: String
+	): NewOfferPrivateV2 {
+		//encrypt private part
+		val privatePayload = NewOfferV2PrivatePayload(
+			commonFriends = commonFriends.map { friend -> friend.getHashedContact() },
+			friendLevel = friendLevel.map { it.name },
+			symetricKey = symmetricKey
+		)
+		val privatePayloadJson = moshi.adapter(NewOfferV2PrivatePayload::class.java).toJson(privatePayload)
+		val encryptedPrivatePayload = eciesEncrypt(privatePayloadJson, contactKey)
+
+		return NewOfferPrivateV2(
+			userPublicKey = contactKey,
+			payloadPrivate = encryptedPrivatePayload
 		)
 	}
 
 	private fun eciesEncrypt(data: String, contactKey: String): String =
 		EciesCryptoLib.encrypt(contactKey, data)
 
-	@Suppress("ReturnCount")
+	@Suppress("ReturnCount", "LongMethod", "LongParameterList")
 	fun isOfferParamsValid(
 		activity: Activity,
 		description: String,

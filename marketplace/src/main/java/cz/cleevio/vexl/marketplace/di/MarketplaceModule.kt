@@ -54,7 +54,9 @@ val marketplaceModule = module {
 			contactRepository = get(),
 			groupRepository = get(),
 			encryptedPreferenceRepository = get(),
-			locationHelper = get()
+			locationHelper = get(),
+			offerUtils = get(),
+			encryptionUtils = get(),
 		)
 	}
 
@@ -62,7 +64,8 @@ val marketplaceModule = module {
 		EncryptingProgressViewModel(
 			offerEncryptionData = offerEncryptionData,
 			encryptedPreferenceRepository = get(),
-			offerRepository = get()
+			offerRepository = get(),
+			offerUtils = get()
 		)
 	}
 
@@ -83,6 +86,7 @@ val marketplaceModule = module {
 			encryptedPreferenceRepository = get(),
 			locationHelper = get(),
 			groupRepository = get(),
+			offerUtils = get()
 		)
 	}
 

@@ -53,7 +53,7 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 					R.color.green_100
 				)
 			}
-			binding.userType.text = if (item.offer.friendLevel == FriendLevel.FIRST_DEGREE.name) {
+			binding.userType.text = if (item.offer.friendLevel.contains(FriendLevel.FIRST_DEGREE.name)) {
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_first)
 			} else {
 				binding.userType.resources.getString(R.string.marketplace_detail_friend_second)

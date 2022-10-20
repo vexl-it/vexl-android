@@ -97,6 +97,18 @@ val networkModule = module {
 	single {
 		provideRetrofit(
 			scope = this,
+			interceptors = listOf(
+				get(named(AUTH_INTERCEPTOR)),
+				get(named(NETWORK_INTERCEPTOR)),
+				get(named(HTTP_LOGGING_INTERCEPTOR))
+			),
+			baseUrl = BuildConfig.OFFER_API_V2_BASE_URL
+		).create(OfferApiV2::class.java)
+	}
+
+	single {
+		provideRetrofit(
+			scope = this,
 			baseUrl = BuildConfig.MAPY_CZ_URL,
 			interceptors = listOf(
 				get(named(HTTP_LOGGING_INTERCEPTOR))
