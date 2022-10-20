@@ -28,7 +28,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 	}
 
 	override fun bindObservers() {
-		repeatScopeOnResume {
+		repeatScopeOnCreate {
 			viewModel.userFlow.collect { user ->
 				if (user != null && user.finishedOnboarding) {
 					Timber.i("Navigating to marketplace")
@@ -46,7 +46,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			}
 		}
 
-		repeatScopeOnResume {
+		repeatScopeOnCreate {
 			viewModel.contactKeysLoaded.collect {
 				//now we need to check, if user uses old v1 offer model and has some own offers
 				if (viewModel.encryptedPreferenceRepository.hasOfferV2 || viewModel.myOffers.isEmpty()) {
@@ -58,7 +58,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			}
 		}
 
-		repeatScopeOnStart {
+		repeatScopeOnCreate {
 			viewModel.showEncryptingDialogFlow.collect {
 				//show encrypt dialog
 				showBottomDialog(EncryptingProgressBottomSheetDialog(it.second, isNewOffer = true) { resource ->
@@ -78,6 +78,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 				})
 			}
 		}
+
 		repeatScopeOnResume {
 			viewModel.errorFlow.collect { resource ->
 				if (resource.status is Status.Error) {
@@ -92,7 +93,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			}
 		}
 
-		repeatScopeOnResume {
+		repeatScopeOnCreate {
 			//we don't have all data for offer migration to v2 and BE has already deleted all data, so no luck, offer is dead
 			viewModel.skipMigrationOnError.collect { brokenOfferIndex ->
 				val nextIndex = brokenOfferIndex.inc()
@@ -107,7 +108,17 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		}
 	}
 
+	override fun onResume() {
+		super.onResume()
+
+		if (viewModel.encryptedPreferenceRepository.isOfferEncrypted) {
+			continueToMarketplace()
+		}
+	}
+
 	private fun continueToMarketplace() {
+		//reset encryption dialog flag
+		viewModel.encryptedPreferenceRepository.isOfferEncrypted = false
 		//mark migration from V1 as done
 		viewModel.encryptedPreferenceRepository.hasOfferV2 = true
 
