@@ -69,15 +69,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		bindObservers()
 		setupGroupDeepLinks()
 
-		lastVisitedGraph = savedInstanceState?.getInt(LAST_VISITED_GRAPH, R.navigation.nav_main)
-
-		val startedBefore = savedInstanceState?.getBoolean(ACTIVITY_STARTED_BEFORE) ?: false
-		if (startedBefore) {
-			navController.restoreState(savedInstanceState?.getBundle(GRAPH_STATE))
-			navController.setGraph(lastVisitedGraph ?: R.navigation.nav_main)
-		} else {
-			navController.setGraph(R.navigation.nav_main)
-		}
+		setLastVisitedGraph(savedInstanceState)
 
 		resolveNotificationIntent(this.intent)
 	}
@@ -125,6 +117,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 				}
 			}
 		}
+	}
+
+	override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+		super.onRestoreInstanceState(savedInstanceState)
+
+		setLastVisitedGraph(savedInstanceState)
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {
@@ -460,6 +458,18 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			})
 		}
 		bottomBarAnimator?.start()
+	}
+
+	private fun setLastVisitedGraph(savedInstanceState: Bundle?) {
+		lastVisitedGraph = savedInstanceState?.getInt(LAST_VISITED_GRAPH, R.navigation.nav_main)
+
+		val startedBefore = savedInstanceState?.getBoolean(ACTIVITY_STARTED_BEFORE) ?: false
+		if (startedBefore) {
+			navController.restoreState(savedInstanceState?.getBundle(GRAPH_STATE))
+			navController.setGraph(lastVisitedGraph ?: R.navigation.nav_main)
+		} else {
+			navController.setGraph(R.navigation.nav_main)
+		}
 	}
 
 	companion object {
