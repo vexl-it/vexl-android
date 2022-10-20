@@ -210,6 +210,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 							)
 							lastVisitedGraph = R.navigation.nav_force_update
 						}
+						NavMainGraphModel.NavGraph.Maintenance -> {
+							navController.setGraph(
+								R.navigation.nav_maintenance
+							)
+							lastVisitedGraph = R.navigation.nav_maintenance
+						}
 						NavMainGraphModel.NavGraph.ForceNotificationPermission -> {
 							navController.setGraph(
 								R.navigation.nav_force_notification_permission
@@ -370,6 +376,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 				if (viewModel.checkForUpdate()) {
 					viewModel.navMainGraphModel.navigateToGraph(
 						NavMainGraphModel.NavGraph.ForceUpdate
+					)
+				}
+			}
+		}
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.RESUMED) {
+				if (viewModel.checkFromMaintenance()) {
+					viewModel.navMainGraphModel.navigateToGraph(
+						NavMainGraphModel.NavGraph.Maintenance
 					)
 				}
 			}
