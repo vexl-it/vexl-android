@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class MarketplaceViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel,
@@ -34,22 +33,6 @@ class MarketplaceViewModel constructor(
 	fun syncOffers() {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.syncOffers()
-		}
-	}
-
-	//just debug to see if avatar link works
-	fun loadMe() {
-		viewModelScope.launch(Dispatchers.IO) {
-			val response = userRepository.getUserMe()
-			when (response.status) {
-				is Status.Success -> {
-					//print link
-					Timber.tag("USER").d("${response.data}")
-				}
-				is Status.Error -> {
-
-				}
-			}
 		}
 	}
 

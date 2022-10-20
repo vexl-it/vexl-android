@@ -53,7 +53,6 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 
 		binding.swipeRefresh.setOnRefreshListener {
 			marketplaceViewModel.syncOffers()
-			marketplaceViewModel.loadMe()
 			binding.swipeRefresh.isRefreshing = false
 		}
 
@@ -73,7 +72,6 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 		}.attach()
 
 		marketplaceViewModel.syncOffers()
-		marketplaceViewModel.loadMe()
 	}
 
 	override fun bindObservers() {

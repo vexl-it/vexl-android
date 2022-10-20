@@ -81,7 +81,6 @@ class MainViewModel constructor(
 			}
 			//leave also all groups, needs to be called before we delete user from contact-ms
 			groupRepository.leaveAllGroups()
-			val userDelete = userRepository.deleteMe()
 			val contactUserDelete = contactRepository.deleteMyUser()
 
 			// TODO update when FB user will be available
@@ -94,8 +93,7 @@ class MainViewModel constructor(
 			contactRepository.clearContactKeyTables()
 			encryptedPreferenceRepository.clearPreferences()
 
-			if (userDelete.status is Status.Success &&
-				contactUserDelete.status is Status.Success &&
+			if (contactUserDelete.status is Status.Success &&
 				// TODO update when FB user will be available
 				//contactFacebookDelete.status is Status.Success &&
 				offerDeleteSuccess

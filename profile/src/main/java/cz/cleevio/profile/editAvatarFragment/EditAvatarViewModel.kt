@@ -30,13 +30,10 @@ class EditAvatarViewModel constructor(
 			val profileUri = profileImageUri.value
 
 			if (profileUri != null) {
-				// TODO VEX-1132: Even after removing avatar from register request we need to propagate the avatar because it contains base64 encoded image
 				userRepository.updateUser(
-					avatar = super.getAvatarData(profileUri, contentResolver),
-					avatarImageExtension = IMAGE_EXTENSION
-				).let {
-					_wasSuccessful.send(it.isSuccess())
-				}
+					avatar = super.getAvatarData(profileUri, contentResolver)
+				)
+				_wasSuccessful.send(true)
 			} else {
 				_wasSuccessful.send(false)
 			}
@@ -45,9 +42,8 @@ class EditAvatarViewModel constructor(
 
 	fun deleteAvatar() {
 		viewModelScope.launch(Dispatchers.IO) {
-			userRepository.deleteAvatar().let {
-				_wasSuccessful.send(true)
-			}
+			userRepository.deleteAvatar()
+			_wasSuccessful.send(true)
 		}
 	}
 }

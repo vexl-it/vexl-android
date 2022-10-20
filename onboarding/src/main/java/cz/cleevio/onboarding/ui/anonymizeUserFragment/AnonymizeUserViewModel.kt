@@ -10,8 +10,8 @@ import cz.cleevio.core.base.BaseAvatarViewModel
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.request.user.UserAvatar
-import cz.cleevio.network.request.user.UserRequest
 import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.user.User
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
@@ -74,19 +74,17 @@ class AnonymizeUserViewModel constructor(
 				)
 			} else null
 
-			val request = UserRequest(
+			val user = User(
+				id = null,
 				username = username,
-				avatar = avatar
+				anonymousUsername = null,
+				avatar = null,
+				avatarBase64 = avatar?.data,
+				anonymousAvatarImageIndex = null,
+				publicKey = encryptedPreference.userPublicKey,
+				finishedOnboarding = false
 			)
-
-			// TODO VEX-1132: Avatar in the request is encoded as base64
-			//  but once the request response will be removed there won't be any source for the avatarBase64 data
-			val registerUserResponse = userRepository.registerUser(request, avatarBase64 = avatar?.data)
-
-			if (registerUserResponse.isError()) {
-				_registerUserChannel.send(registerUserResponse)
-				return@launch
-			}
+			userRepository.createUser(user)
 
 			//create inbox for user
 			val inboxResponse = chatRepository.createInbox(

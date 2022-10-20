@@ -26,13 +26,11 @@ class EditNameViewModel constructor(
 	fun editName() {
 		viewModelScope.launch(Dispatchers.IO) {
 			if (newName.isNotBlank()) {
-				// todo only into the DB
 				userRepository.updateUser(
 					username = newName,
-					avatar = null
-				).let {
-					_wasSuccessful.send(it)
-				}
+				)
+				_wasSuccessful.send(Resource.success())
+
 			} else {
 				_wasSuccessful.send(
 					Resource.error(

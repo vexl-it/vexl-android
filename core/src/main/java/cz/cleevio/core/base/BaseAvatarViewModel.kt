@@ -46,6 +46,7 @@ abstract class BaseAvatarViewModel constructor(
 		}
 	}
 
+	//return Base64 representation of image
 	protected fun getAvatarData(avatarUri: Uri, contentResolver: ContentResolver): String {
 		val bitmap = getBitmap(avatarUri, contentResolver)
 

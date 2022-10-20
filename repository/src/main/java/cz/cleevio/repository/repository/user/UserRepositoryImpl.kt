@@ -6,7 +6,9 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.UserApi
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.extensions.tryOnline
-import cz.cleevio.network.request.user.*
+import cz.cleevio.network.request.user.ConfirmChallengeRequest
+import cz.cleevio.network.request.user.ConfirmCodeRequest
+import cz.cleevio.network.request.user.ConfirmPhoneRequest
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.*
 import kotlinx.coroutines.flow.Flow
@@ -76,13 +78,13 @@ class UserRepositoryImpl constructor(
 
 	override fun isUserVerified(): Boolean = encryptedPreference.isUserVerified
 
-	override suspend fun createUser(user: User, avatarBase64: String?) {
+	override suspend fun createUser(user: User) {
 		userDao.deleteAll()
 		userDao.insert(
 			UserEntity(
 				username = user.username,
-				avatar = user.avatar,
-				avatarBase64 = avatarBase64,
+				avatar = null,
+				avatarBase64 = user.avatarBase64,
 				publicKey = user.publicKey
 			)
 		)
@@ -94,7 +96,7 @@ class UserRepositoryImpl constructor(
 				id = user.id ?: 1,
 				username = user.username,
 				anonymousUsername = user.anonymousUsername,
-				avatar = user.avatar,
+				avatar = null,
 				avatarBase64 = user.avatarBase64,
 				anonymousAvatarImageIndex = user.anonymousAvatarImageIndex,
 				publicKey = user.publicKey,
@@ -107,11 +109,6 @@ class UserRepositoryImpl constructor(
 
 	override suspend fun getUser(): User? = userDao.getUser()?.fromDao()
 
-	override suspend fun getUserMe(): Resource<User?> = tryOnline(
-		request = { userRestApi.getUserMe() },
-		mapper = { it?.fromNetwork() }
-	)
-
 	override suspend fun getUserFullname(): UserProfile? {
 		val user = userDao.getUser() ?: return null
 		return UserProfile(
@@ -121,73 +118,25 @@ class UserRepositoryImpl constructor(
 		)
 	}
 
-	override suspend fun registerUser(request: UserRequest, avatarBase64: String?): Resource<User> {
-		return tryOnline(
-			doOnSuccess = {
-				it?.let {
-					createUser(user = it, avatarBase64 = avatarBase64)
-				}
-			},
-			mapper = {
-				it?.fromNetwork()
-			},
-			request = {
-				userRestApi.postUser(request)
-			}
-		)
-	}
-
 	override suspend fun updateUser(
-		username: String?, avatar: String?, avatarImageExtension: String?
-	): Resource<User> {
-		return tryOnline(
-			doOnSuccess = {
-				it?.let {
-					val isLocalUserOnboarded = userDao.getUser()?.finishedOnboarding == true
-					updateUser(user = it.copy(finishedOnboarding = isLocalUserOnboarded), avatarBase64 = avatar)
-				}
-			},
-			mapper = {
-				it?.fromNetwork()
-			},
-			request = {
-				if (avatar != null && avatarImageExtension != null) {
-					// todo do not send base 64 to the BE only URL info should be there
-					// TODO VEX-1132: Even after removing avatar from update request we need to propagate the avatar.data because it contains base64 encoded image
-					userRestApi.putUserMe(
-						UserRequest(
-							username = null,
-							avatar = UserAvatar(
-								data = avatar,
-								extension = avatarImageExtension
-							)
-						)
-					)
-				} else {
-					userRestApi.putUserMe(
-						UserRequest(
-							username = username ?: getUser()?.username ?: "",
-							avatar = null
-						)
-					)
-				}
-			}
-		)
+		username: String?, avatar: String?
+	) {
+		val currentUserData = userDao.getUser()?.fromDao() ?: return
+		if (username != null) {
+			updateUser(user = currentUserData.copy(username = username))
+		} else {
+			updateUser(user = currentUserData.copy(avatarBase64 = avatar))
+		}
 	}
 
-	override suspend fun deleteAvatar(): Resource<Unit> = tryOnline(
-		doOnSuccess = { deleteUserAvatar() },
-		request = { userRestApi.deleteAvatar() },
-		mapper = { }
-	)
+	override suspend fun deleteAvatar() {
+		userDao.getUser()?.id?.let {
+			userDao.deleteUserAvatar(it)
+		}
+	}
 
 	override suspend fun deleteLocalUser() =
 		userDao.deleteAll()
-
-	override suspend fun deleteMe(): Resource<Unit> = tryOnline(
-		request = { userRestApi.deleteUserMe() },
-		mapper = { }
-	)
 
 	override suspend fun storeAnonymousUserData(anonymousUsername: String, anonymousAvatarImageIndex: Int) {
 		userDao.getUser()?.id?.let {
@@ -197,20 +146,14 @@ class UserRepositoryImpl constructor(
 
 	}
 
-	private suspend fun deleteUserAvatar() {
-		userDao.getUser()?.id?.let {
-			userDao.deleteUserAvatar(it)
-		}
-	}
-
-	private suspend fun updateUser(user: User, avatarBase64: String?) {
+	private suspend fun updateUser(user: User) {
 		userDao.update(
 			UserEntity(
 				id = getUserId() ?: 0,
 				username = user.username,
 				anonymousUsername = userDao.getUser()?.anonymousUsername,
-				avatar = user.avatar,
-				avatarBase64 = avatarBase64 ?: userDao.getUser()?.avatarBase64, // If there's new local avatar replace it
+				avatar = null,
+				avatarBase64 = user.avatarBase64 ?: userDao.getUser()?.avatarBase64, // If there's new local avatar replace it
 				anonymousAvatarImageIndex = userDao.getUser()?.anonymousAvatarImageIndex,
 				publicKey = user.publicKey,
 				finishedOnboarding = user.finishedOnboarding

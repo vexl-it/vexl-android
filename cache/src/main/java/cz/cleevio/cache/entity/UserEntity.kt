@@ -10,6 +10,7 @@ data class UserEntity constructor(
 	val extId: Long = 0,
 	val username: String,
 	val anonymousUsername: String? = null,
+	@Deprecated("Avatar url is not used anymore, use avatarBase64")
 	val avatar: String?,
 	val avatarBase64: String?,
 	val anonymousAvatarImageIndex: Int? = null,
