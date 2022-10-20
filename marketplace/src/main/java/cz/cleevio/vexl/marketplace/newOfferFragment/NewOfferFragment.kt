@@ -52,7 +52,7 @@ class NewOfferFragment : BaseFragment(R.layout.fragment_new_offer) {
 		repeatScopeOnStart {
 			viewModel.userFlow.collect {
 				it?.let { user ->
-					binding.newOfferFriendLevel.setUserAvatar(user.avatarBase64?.getBitmap() ?: user.avatar, user.anonymousAvatarImageIndex)
+					binding.newOfferFriendLevel.setUserAvatar(user.avatarBase64?.getBitmap(), user.anonymousAvatarImageIndex)
 				}
 			}
 		}

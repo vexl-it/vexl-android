@@ -66,25 +66,19 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 
 					when (user.avatarBase64 == null) {
 						true -> {
-							if (user.avatar == null) {
-								val anonymousImageIndex = user.anonymousAvatarImageIndex
-								if (anonymousImageIndex != null) {
-									binding.profileUserPhoto.load(
-										drawableResId = RandomUtils.getRandomImageDrawableId(anonymousImageIndex),
-										imageLoader = ImageLoader.invoke(requireContext())
-									) {
-										setPlaceholders(R.drawable.random_avatar_3)
-									}
-								} else {
-									binding.profileUserPhoto.load(
-										drawableResId = R.drawable.random_avatar_3,
-										imageLoader = ImageLoader.invoke(requireContext())
-									) {
-										setPlaceholders(R.drawable.random_avatar_3)
-									}
+							val anonymousImageIndex = user.anonymousAvatarImageIndex
+							if (anonymousImageIndex != null) {
+								binding.profileUserPhoto.load(
+									drawableResId = RandomUtils.getRandomImageDrawableId(anonymousImageIndex),
+									imageLoader = ImageLoader.invoke(requireContext())
+								) {
+									setPlaceholders(R.drawable.random_avatar_3)
 								}
 							} else {
-								binding.profileUserPhoto.load(user.avatar) {
+								binding.profileUserPhoto.load(
+									drawableResId = R.drawable.random_avatar_3,
+									imageLoader = ImageLoader.invoke(requireContext())
+								) {
 									setPlaceholders(R.drawable.random_avatar_3)
 								}
 							}

@@ -1,10 +1,8 @@
 package cz.cleevio.profile.editAvatarFragment
 
 import android.Manifest
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import android.util.Base64
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -114,20 +112,14 @@ class EditAvatarFragment : BaseFragment(R.layout.fragment_edit_avatar) {
 
 		repeatScopeOnCreate {
 			viewModel.userFlow.collect { user ->
-				setAvatarIconsVisibility(isVisible = user?.avatar != null || user?.anonymousAvatarImageIndex != null)
+				setAvatarIconsVisibility(isVisible = user?.avatarBase64 != null || user?.anonymousAvatarImageIndex != null)
 
 				when (user?.avatarBase64 == null) {
 					true -> {
-						if (user?.avatar != null) {
-							binding.editAvatarImage.load(user.avatar) {
-								setPlaceholders(R.drawable.ic_profile_avatar_placeholder)
-							}
-						} else {
-							val anonymousImageIndex = user?.anonymousAvatarImageIndex
-							if (anonymousImageIndex != null) {
-								binding.editAvatarImage.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
-									setPlaceholders(R.drawable.random_avatar_3)
-								}
+						val anonymousImageIndex = user?.anonymousAvatarImageIndex
+						if (anonymousImageIndex != null) {
+							binding.editAvatarImage.load(RandomUtils.getRandomImageDrawableId(anonymousImageIndex), imageLoader = ImageLoader.invoke(requireContext())) {
+								setPlaceholders(R.drawable.random_avatar_3)
 							}
 						}
 					}

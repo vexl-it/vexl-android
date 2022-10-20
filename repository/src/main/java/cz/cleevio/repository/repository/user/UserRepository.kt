@@ -1,7 +1,6 @@
 package cz.cleevio.repository.repository.user
 
 import cz.cleevio.network.data.Resource
-import cz.cleevio.network.request.user.UserRequest
 import cz.cleevio.repository.model.UserProfile
 import cz.cleevio.repository.model.user.ConfirmCode
 import cz.cleevio.repository.model.user.ConfirmPhone
@@ -24,7 +23,7 @@ interface UserRepository {
 
 	fun isUserVerified(): Boolean
 
-	suspend fun createUser(user: User, avatarBase64: String?)
+	suspend fun createUser(user: User)
 
 	suspend fun markUserFinishedOnboarding(user: User)
 
@@ -32,23 +31,16 @@ interface UserRepository {
 
 	suspend fun getUser(): User?
 
-	suspend fun getUserMe(): Resource<User?>
-
 	suspend fun getUserFullname(): UserProfile?
-
-	suspend fun registerUser(request: UserRequest, avatarBase64: String?): Resource<User>
-
 	//----------------------------------
 
 	suspend fun updateUser(
-		username: String? = null, avatar: String? = null, avatarImageExtension: String? = null
-	): Resource<User>
+		username: String? = null, avatar: String? = null
+	)
 
-	suspend fun deleteAvatar(): Resource<Unit>
+	suspend fun deleteAvatar()
 
 	suspend fun deleteLocalUser()
-
-	suspend fun deleteMe(): Resource<Unit>
 
 	suspend fun storeAnonymousUserData(anonymousUsername: String, anonymousAvatarImageIndex: Int)
 }
