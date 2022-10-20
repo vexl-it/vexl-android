@@ -210,7 +210,7 @@ class UserRepositoryImpl constructor(
 				username = user.username,
 				anonymousUsername = userDao.getUser()?.anonymousUsername,
 				avatar = user.avatar,
-				avatarBase64 = avatarBase64 ?: user.avatarBase64, // If there's new local avatar replace it
+				avatarBase64 = avatarBase64 ?: userDao.getUser()?.avatarBase64, // If there's new local avatar replace it
 				anonymousAvatarImageIndex = userDao.getUser()?.anonymousAvatarImageIndex,
 				publicKey = user.publicKey,
 				finishedOnboarding = user.finishedOnboarding
