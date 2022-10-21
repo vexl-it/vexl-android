@@ -187,4 +187,3 @@ fun FriendLevel.toContactLevel(): ContactLevel {
 		FriendLevel.NONE -> ContactLevel.NOT_SPECIFIED
 	}
 }
-
