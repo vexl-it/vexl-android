@@ -324,5 +324,5 @@ private fun Offer.fillUserInfo(chatUserIdentity: ChatUserIdentity) {
 		chatUserIdentity.name
 	}
 	this.userAvatarId = RandomUtils.getRandomImageDrawableId(chatUserIdentity.anonymousAvatarImageIndex ?: 0)
-	this.userAvatar = chatUserIdentity.avatar
+	this.userAvatar = chatUserIdentity.avatarBase64
 }

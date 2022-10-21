@@ -14,6 +14,7 @@ data class ChatMessageRequest constructor(
 @JsonClass(generateAdapter = true)
 data class ChatUserRequest constructor(
 	val name: String?,
-	val image: String?,
+	@Deprecated("Avatar url is not used anymore, use imageBase64")
+	val image: String? = null,
 	val imageBase64: String?
 )

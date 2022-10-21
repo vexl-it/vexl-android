@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import coil.loadAny
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
@@ -34,7 +33,7 @@ class ChatContactListAdapter constructor(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatListUser) {
-			binding.chatContactIcon.loadAny(item.user?.avatarBase64?.getBitmap() ?: item.user?.avatar) {
+			binding.chatContactIcon.loadAny(item.user?.avatarBase64?.getBitmap()) {
 				setPlaceholders(R.drawable.random_avatar_2)
 			}
 

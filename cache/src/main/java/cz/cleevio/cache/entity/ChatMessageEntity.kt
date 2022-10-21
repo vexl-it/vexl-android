@@ -20,7 +20,8 @@ data class ChatMessageEntity(
 	val type: String,
 	val time: Long,
 	val deAnonName: String?,
-	val deAnonImage: String?,
+	@Deprecated("Avatar url is not used anymore, use avatarBase64")
+	val deAnonImage: String? = null,
 	val deAnonImageBase64: String?,
 	//custom flags
 	val isMine: Boolean,

@@ -120,7 +120,6 @@ class ChatViewModel constructor(
 			val user = userRepository.getUser()?.let {
 				ChatUser(
 					name = it.username,
-					image = null,
 					imageBase64 = it.avatarBase64
 				)
 			}
@@ -153,7 +152,6 @@ class ChatViewModel constructor(
 			val user = userRepository.getUser()?.let {
 				ChatUser(
 					name = it.username,
-					image = null,
 					imageBase64 = it.avatarBase64
 				)
 			}

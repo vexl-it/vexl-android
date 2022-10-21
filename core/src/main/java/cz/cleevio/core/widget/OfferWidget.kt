@@ -8,11 +8,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import coil.load
+import coil.loadAny
 import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferBinding
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.formatAsPercentage
+import cz.cleevio.core.utils.getBitmap
 import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.Currency
@@ -87,10 +89,11 @@ class OfferWidget @JvmOverloads constructor(
 				)
 			}
 		} else {
-			//or load user avatar from url
-			binding.profileImage.load(
-				item.userAvatar
-			)
+			//or load user avatar from base64
+			binding.profileImage.loadAny(item.userAvatar?.getBitmap()) {
+				setPlaceholders(R.drawable.random_avatar_5)
+			}
+
 		}
 		val generatedUsername = item.userName ?: RandomUtils.generateName()
 
