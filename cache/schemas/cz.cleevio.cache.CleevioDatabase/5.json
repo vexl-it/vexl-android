@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "e73ec500e1b8eb165544939de9c4b573",
+    "identityHash": "c3a8dcad5af51860145c6c6863870bbe",
     "entities": [
       {
         "tableName": "UserEntity",
@@ -197,7 +197,7 @@
       },
       {
         "tableName": "MyOfferEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `extId` TEXT NOT NULL, `adminId` TEXT NOT NULL, `privateKey` TEXT NOT NULL, `publicKey` TEXT NOT NULL, `offerType` TEXT NOT NULL, `isInboxCreated` INTEGER NOT NULL, `encryptedForKeys` TEXT NOT NULL DEFAULT '', `symmetricalKey` TEXT NOT NULL DEFAULT '', `friendLevel` TEXT NOT NULL DEFAULT 'FIRST_DEGREE')",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `extId` TEXT NOT NULL, `adminId` TEXT NOT NULL, `privateKey` TEXT NOT NULL, `publicKey` TEXT NOT NULL, `offerType` TEXT NOT NULL, `isInboxCreated` INTEGER NOT NULL, `encryptedForKeys` TEXT NOT NULL DEFAULT '', `symmetricalKey` TEXT NOT NULL DEFAULT '', `friendLevel` TEXT NOT NULL DEFAULT 'FIRST_DEGREE', `version` INTEGER NOT NULL DEFAULT 1)",
         "fields": [
           {
             "fieldPath": "id",
@@ -261,6 +261,13 @@
             "affinity": "TEXT",
             "notNull": true,
             "defaultValue": "'FIRST_DEGREE'"
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
           }
         ],
         "primaryKey": {
@@ -1000,7 +1007,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e73ec500e1b8eb165544939de9c4b573')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c3a8dcad5af51860145c6c6863870bbe')"
     ]
   }
 }

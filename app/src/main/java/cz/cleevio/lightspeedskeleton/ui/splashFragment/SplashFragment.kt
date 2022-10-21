@@ -49,11 +49,11 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		repeatScopeOnCreate {
 			viewModel.contactKeysLoaded.collect {
 				//now we need to check, if user uses old v1 offer model and has some own offers
-				if (viewModel.encryptedPreferenceRepository.hasOfferV2 || viewModel.myOffers.isEmpty()) {
+				if (viewModel.encryptedPreferenceRepository.hasOfferV2 || viewModel.myOffersV1.isEmpty()) {
 					continueToMarketplace()
 				} else {
 					//migrate v1 offers to v2 offers
-					viewModel.migrateOfferToV2(viewModel.myOffers.first(), 0)
+					viewModel.migrateOfferToV2(viewModel.myOffersV1.first(), 0)
 				}
 			}
 		}
@@ -63,16 +63,16 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 				//show encrypt dialog
 				showBottomDialog(EncryptingProgressBottomSheetDialog(it.second, isNewOffer = true) { resource ->
 					//delete just migrated offer from local DB
-					viewModel.deleteMigratedOfferFromDB(viewModel.myOffers[it.first].offerId)
+					viewModel.deleteMigratedOfferFromDB(viewModel.myOffersV1[it.first].offerId)
 
 					//check if we have more offers to migrate
 					val nextIndex = it.first.inc()
-					if (nextIndex >= viewModel.myOffers.size) {
+					if (nextIndex >= viewModel.myOffersV1.size) {
 						//finally continue to Marketplace
 						continueToMarketplace()
 					} else {
 						//migrate my next offer
-						val nextMyOffer = viewModel.myOffers[nextIndex]
+						val nextMyOffer = viewModel.myOffersV1[nextIndex]
 						viewModel.migrateOfferToV2(nextMyOffer, nextIndex)
 					}
 				})
@@ -97,11 +97,11 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 			//we don't have all data for offer migration to v2 and BE has already deleted all data, so no luck, offer is dead
 			viewModel.skipMigrationOnError.collect { brokenOfferIndex ->
 				val nextIndex = brokenOfferIndex.inc()
-				if (nextIndex >= viewModel.myOffers.size) {
+				if (nextIndex >= viewModel.myOffersV1.size) {
 					continueToMarketplace()
 				} else {
 					//try to migrate my next offer
-					val nextMyOffer = viewModel.myOffers[nextIndex]
+					val nextMyOffer = viewModel.myOffersV1[nextIndex]
 					viewModel.migrateOfferToV2(nextMyOffer, nextIndex)
 				}
 			}

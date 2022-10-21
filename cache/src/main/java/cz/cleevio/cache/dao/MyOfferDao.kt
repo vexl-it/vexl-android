@@ -15,6 +15,9 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 	@Query("SELECT * FROM MyOfferEntity")
 	suspend fun listAll(): List<MyOfferEntity>
 
+	@Query("SELECT * FROM MyOfferEntity WHERE version == :version")
+	suspend fun listByVersion(version: Long): List<MyOfferEntity>
+
 	@Query("SELECT * FROM MyOfferEntity where extId = :offerId LIMIT 1")
 	suspend fun getMyOfferById(offerId: String): MyOfferEntity?
 

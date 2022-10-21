@@ -55,11 +55,11 @@ class SplashViewModel constructor(
 	private val showEncryptingDialog = MutableSharedFlow<Pair<Int, OfferEncryptionData>>()
 	val showEncryptingDialogFlow = showEncryptingDialog.asSharedFlow()
 
-	var myOffers: List<MyOffer> = listOf()
+	var myOffersV1: List<MyOffer> = listOf()
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			myOffers = offerRepository.getMyOffers()
+			myOffersV1 = offerRepository.getMyOffers(version = 1)
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {

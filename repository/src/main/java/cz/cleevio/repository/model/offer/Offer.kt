@@ -42,6 +42,8 @@ data class Offer constructor(
 	val locationState: String,
 	val paymentMethod: List<String>,
 	val btcNetwork: List<String>,
+	//possible values are from ContactLevel enum
+	//	NONE, FIRST_DEGREE, SECOND_DEGREE, GROUP
 	val friendLevel: List<String>,
 	val offerType: String,
 	val activePriceState: String,
