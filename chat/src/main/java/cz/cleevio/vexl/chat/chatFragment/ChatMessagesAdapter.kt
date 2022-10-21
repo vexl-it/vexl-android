@@ -120,14 +120,14 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 			itemView.context.let { context ->
 				when (item.type) {
 					MessageType.REQUEST_REVEAL -> {
-						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap() ?: _chatUserIdentity?.avatar) {
+						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap()) {
 							setPlaceholders(R.drawable.random_avatar_5)
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_header)
 						binding.identityRevealDescription.text = context.getString(R.string.chat_message_identity_reveal_subheader)
 					}
 					MessageType.APPROVE_REVEAL -> {
-						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap() ?: _chatUserIdentity?.avatar) {
+						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap()) {
 							setPlaceholders(R.drawable.random_avatar_6)
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_approved)

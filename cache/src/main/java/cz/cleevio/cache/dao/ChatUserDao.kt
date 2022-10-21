@@ -10,11 +10,11 @@ interface ChatUserDao : BaseDao<ChatUserIdentityEntity> {
 
 	@Query(
 		"UPDATE ChatUserIdentityEntity " +
-			"SET name=:name, avatar=:avatar, avatarBase64=:avatarBase64, deAnonymized=1 " +
+			"SET name=:name, avatarBase64=:avatarBase64, deAnonymized=1 " +
 			"WHERE contactPublicKey=:contactPublicKey " +
 			" AND inboxKey=:inboxKey"
 	)
-	fun deAnonymizeUser(name: String, avatar: String?, avatarBase64: String?, contactPublicKey: String, inboxKey: String)
+	fun deAnonymizeUser(name: String, avatarBase64: String?, contactPublicKey: String, inboxKey: String)
 
 	@Query(
 		"SELECT * " +
