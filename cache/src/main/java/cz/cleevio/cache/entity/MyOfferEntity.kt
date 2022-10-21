@@ -15,12 +15,12 @@ data class MyOfferEntity(
 	val publicKey: String,
 	val offerType: String,
 	val isInboxCreated: Boolean,
-	//version 2
 	@ColumnInfo(defaultValue = "")
 	val encryptedForKeys: String,
-	//version 5
 	@ColumnInfo(defaultValue = "")
 	val symmetricalKey: String,
 	@ColumnInfo(defaultValue = "FIRST_DEGREE")
 	val friendLevel: String,
+	@ColumnInfo(defaultValue = "1")
+	val version: Long,
 )

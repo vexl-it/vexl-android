@@ -10,6 +10,7 @@ import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.R
 import cz.cleevio.core.model.*
 import cz.cleevio.core.widget.FriendLevel
+import cz.cleevio.core.widget.toFriendLevel
 import cz.cleevio.repository.model.contact.BaseContact
 import cz.cleevio.repository.model.contact.ContactKey
 import cz.cleevio.repository.model.contact.ContactLevel
@@ -126,7 +127,7 @@ class OfferUtils(
 		)
 	}
 
-	//encrypt offer from backgroundQueue (using already existing Offer)
+	//encrypt offer from backgroundQueue or from migration (using already existing Offer)
 	suspend fun prepareEncryptedOfferV2(
 		offerKeys: KeyPair,
 		offer: Offer,
@@ -180,12 +181,14 @@ class OfferUtils(
 		//encrypt private parts
 		val encryptedPrivatePayloadList: MutableList<NewOfferPrivateV2> = mutableListOf()
 
-		val contactLevelMap: MutableMap<String, Set<ContactLevel>> = mutableMapOf()
+		val contactLevelMap: MutableMap<String, Set<FriendLevel>> = mutableMapOf()
 		//we need to handle duplicities in list
 		contactsPublicKeys.forEach {
 			val existingLevel = contactLevelMap[it.key]?.toMutableSet() ?: mutableSetOf()
-			existingLevel.add(it.level)
-			contactLevelMap.replace(it.key, existingLevel)
+			existingLevel.add(
+				it.level.toFriendLevel()
+			)
+			contactLevelMap[it.key] = existingLevel
 		}
 
 		contactsPublicKeys
@@ -210,7 +213,7 @@ class OfferUtils(
 	fun encryptOfferPrivatePayload(
 		contactKey: String,
 		commonFriends: List<BaseContact>,
-		friendLevel: Set<ContactLevel>,
+		friendLevel: Set<FriendLevel>,
 		symmetricKey: String
 	): NewOfferPrivateV2 {
 		//encrypt private part

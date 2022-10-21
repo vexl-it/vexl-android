@@ -2,6 +2,8 @@ package cz.cleevio.repository.model.offer
 
 import cz.cleevio.cache.entity.MyOfferEntity
 
+const val MY_OFFER_VERSION = 2L
+
 data class MyOffer constructor(
 	val offerId: String,
 	val adminId: String,
@@ -15,6 +17,7 @@ data class MyOffer constructor(
 	val symmetricalKey: String,
 	//friend level selected in UI
 	val friendLevel: String,
+	val version: Long,
 )
 
 fun MyOfferEntity.fromCache(): MyOffer = MyOffer(
@@ -27,6 +30,7 @@ fun MyOfferEntity.fromCache(): MyOffer = MyOffer(
 	encryptedFor = this.encryptedForKeys.split(",").map { it.trim() },
 	symmetricalKey = this.symmetricalKey,
 	friendLevel = this.friendLevel,
+	version = this.version,
 )
 
 fun MyOffer.toCache(): MyOfferEntity = MyOfferEntity(
@@ -39,4 +43,5 @@ fun MyOffer.toCache(): MyOfferEntity = MyOfferEntity(
 	encryptedForKeys = this.encryptedFor.joinToString(),
 	symmetricalKey = this.symmetricalKey,
 	friendLevel = this.friendLevel,
+	version = this.version,
 )

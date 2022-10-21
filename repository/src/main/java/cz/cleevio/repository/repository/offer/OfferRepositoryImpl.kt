@@ -337,7 +337,8 @@ class OfferRepositoryImpl constructor(
 				isInboxCreated = isInboxCreated,
 				encryptedForKeys = encryptedFor.joinToString(),
 				symmetricalKey = symmetricalKey,
-				friendLevel = friendLevel
+				friendLevel = friendLevel,
+				version = MY_OFFER_VERSION
 			)
 		)
 		return Resource.success(data = Unit)
@@ -585,9 +586,19 @@ class OfferRepositoryImpl constructor(
 		myOfferDao.getMyOffersWithoutInbox()
 			.map { it.fromCache() }
 
-	override suspend fun getMyOffers(): List<MyOffer> =
-		myOfferDao.listAll()
-			.map { it.fromCache() }
+	override suspend fun getMyOffers(version: Long?): List<MyOffer> {
+		return when (version) {
+			null -> {
+				myOfferDao.listAll()
+					.map { it.fromCache() }
+			}
+			else -> {
+				myOfferDao.listByVersion(version)
+					.map { it.fromCache() }
+			}
+		}
+	}
+
 
 	override suspend fun getLocationSuggestions(
 		count: Int, query: String, language: String

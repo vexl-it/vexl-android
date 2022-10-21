@@ -13,6 +13,7 @@ import cz.cleevio.core.databinding.WidgetOfferFriendLevelBinding
 import cz.cleevio.core.model.FriendLevelValue
 import cz.cleevio.core.utils.setPlaceholders
 import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.contact.ContactLevel
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
 
 class OfferFriendLevelWidget @JvmOverloads constructor(
@@ -166,5 +167,23 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 }
 
 enum class FriendLevel {
-	NONE, FIRST_DEGREE, SECOND_DEGREE
+	NONE, FIRST_DEGREE, SECOND_DEGREE, GROUP
+}
+
+fun ContactLevel.toFriendLevel(): FriendLevel {
+	return when (this) {
+		ContactLevel.FIRST -> FriendLevel.FIRST_DEGREE
+		ContactLevel.SECOND -> FriendLevel.SECOND_DEGREE
+		ContactLevel.GROUP -> FriendLevel.GROUP
+		ContactLevel.NOT_SPECIFIED -> FriendLevel.NONE
+	}
+}
+
+fun FriendLevel.toContactLevel(): ContactLevel {
+	return when (this) {
+		FriendLevel.FIRST_DEGREE -> ContactLevel.FIRST
+		FriendLevel.SECOND_DEGREE -> ContactLevel.SECOND
+		FriendLevel.GROUP -> ContactLevel.GROUP
+		FriendLevel.NONE -> ContactLevel.NOT_SPECIFIED
+	}
 }
