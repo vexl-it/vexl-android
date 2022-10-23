@@ -28,6 +28,8 @@ import cz.cleevio.lightspeedskeleton.R
 import cz.cleevio.lightspeedskeleton.databinding.ActivityMainBinding
 import cz.cleevio.lightspeedskeleton.notification.RemoteNotificationType
 import cz.cleevio.lightspeedskeleton.notification.VexlFirebaseMessagingService
+import cz.cleevio.lightspeedskeleton.ui.checkForMaintenance
+import cz.cleevio.lightspeedskeleton.ui.checkForUpdate
 import cz.cleevio.network.NetworkError
 import cz.cleevio.profile.profileFragment.ProfileFragment
 import cz.cleevio.repository.model.chat.CommunicationRequest
@@ -373,17 +375,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.RESUMED) {
-				if (viewModel.checkForUpdate()) {
+				if (checkForUpdate(viewModel.remoteConfig)) {
 					viewModel.navMainGraphModel.navigateToGraph(
 						NavMainGraphModel.NavGraph.ForceUpdate
 					)
-				}
-			}
-		}
-
-		lifecycleScope.launch {
-			repeatOnLifecycle(Lifecycle.State.RESUMED) {
-				if (viewModel.checkFromMaintenance()) {
+				} else if (checkForMaintenance(viewModel.remoteConfig)) {
 					viewModel.navMainGraphModel.navigateToGraph(
 						NavMainGraphModel.NavGraph.Maintenance
 					)

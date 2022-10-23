@@ -34,7 +34,7 @@ class MainViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val groupRepository: GroupRepository,
-	private val remoteConfig: FirebaseRemoteConfig,
+	val remoteConfig: FirebaseRemoteConfig,
 	val navMainGraphModel: NavMainGraphModel,
 	val notificationUtils: NotificationUtils,
 ) : BaseViewModel() {
@@ -108,24 +108,6 @@ class MainViewModel constructor(
 			}
 		}
 	}
-
-	suspend fun checkForUpdate(): Boolean =
-		suspendCoroutine { continuation ->
-			remoteConfig.fetchAndActivate().addOnCompleteListener { activatedTask ->
-				if (activatedTask.isSuccessful) {
-					continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.FORCE_UPDATE_SHOWED))
-				}
-			}
-		}
-
-	suspend fun checkFromMaintenance(): Boolean =
-		suspendCoroutine { continuation ->
-			remoteConfig.fetchAndActivate().addOnCompleteListener { activatedTask ->
-				if (activatedTask.isSuccessful) {
-					continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.MAINTENANCE_SCREEN_SHOWED))
-				}
-			}
-		}
 
 	companion object {
 		private const val DEBOUNCE_DELAY = 100L
