@@ -220,7 +220,7 @@ class OfferUtils(
 		val privatePayload = NewOfferV2PrivatePayload(
 			commonFriends = commonFriends.map { friend -> friend.getHashedContact() },
 			friendLevel = friendLevel.map { it.name },
-			symetricKey = symmetricKey
+			symmetricKey = symmetricKey
 		)
 		val privatePayloadJson = moshi.adapter(NewOfferV2PrivatePayload::class.java).toJson(privatePayload)
 		val encryptedPrivatePayload = eciesEncrypt(privatePayloadJson, contactKey)
