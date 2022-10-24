@@ -11,5 +11,5 @@ data class ChatEntity(
 	val id: Long = 0,
 	val publicKey: String,
 	val privateKey: String,
-
-	)
+	val offerId: String
+)

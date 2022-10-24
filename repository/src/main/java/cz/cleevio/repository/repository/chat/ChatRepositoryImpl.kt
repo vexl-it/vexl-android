@@ -190,7 +190,11 @@ class ChatRepositoryImpl constructor(
 							)
 						)
 					},
-					mapper = { }
+					mapper = { },
+					doOnSuccess = {
+						//create inbox in local DB?
+
+					}
 				)
 			} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))

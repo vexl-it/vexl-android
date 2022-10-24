@@ -26,6 +26,7 @@ import cz.cleevio.cache.entity.*
 		GroupEntity::class,
 		ChatUserIdentityEntity::class,
 		CryptoCurrencyEntity::class,
+		ChatEntity::class,
 	],
 	version = 7,
 	autoMigrations = [
@@ -59,4 +60,5 @@ abstract class CleevioDatabase : RoomDatabase() {
 	abstract fun offerCommonFriendCrossRefDao(): OfferCommonFriendCrossRefDao
 	abstract fun groupDao(): GroupDao
 	abstract fun cryptoCurrencyDao(): CryptoCurrencyDao
+	abstract fun chatDao(): ChatDao
 }
