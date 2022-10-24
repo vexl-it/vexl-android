@@ -1,6 +1,7 @@
 package cz.cleevio.lightspeedskeleton.ui.splashFragment
 
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.core.model.OfferEncryptionData
 import cz.cleevio.core.utils.*
@@ -37,6 +38,7 @@ class SplashViewModel constructor(
 	val offerUtils: OfferUtils,
 	val locationHelper: LocationHelper,
 	val encryptionUtils: EncryptionUtils,
+	val remoteConfig: FirebaseRemoteConfig
 ) : BaseViewModel() {
 
 	val userFlow = userRepository.getUserFlow()

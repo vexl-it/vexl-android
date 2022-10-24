@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.NotificationUtils
 import cz.cleevio.network.data.Status
@@ -24,8 +23,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class MainViewModel constructor(
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
@@ -34,7 +31,7 @@ class MainViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
 	private val groupRepository: GroupRepository,
-	private val remoteConfig: FirebaseRemoteConfig,
+	val remoteConfig: FirebaseRemoteConfig,
 	val navMainGraphModel: NavMainGraphModel,
 	val notificationUtils: NotificationUtils,
 ) : BaseViewModel() {
@@ -108,24 +105,6 @@ class MainViewModel constructor(
 			}
 		}
 	}
-
-	suspend fun checkForUpdate(): Boolean =
-		suspendCoroutine { continuation ->
-			remoteConfig.fetchAndActivate().addOnCompleteListener { activatedTask ->
-				if (activatedTask.isSuccessful) {
-					continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.FORCE_UPDATE_SHOWED))
-				}
-			}
-		}
-
-	suspend fun checkFromMaintenance(): Boolean =
-		suspendCoroutine { continuation ->
-			remoteConfig.fetchAndActivate().addOnCompleteListener { activatedTask ->
-				if (activatedTask.isSuccessful) {
-					continuation.resume(remoteConfig.getBoolean(RemoteConfigConstants.MAINTENANCE_SCREEN_SHOWED))
-				}
-			}
-		}
 
 	companion object {
 		private const val DEBOUNCE_DELAY = 100L

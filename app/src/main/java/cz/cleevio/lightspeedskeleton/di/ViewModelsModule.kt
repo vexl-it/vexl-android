@@ -33,7 +33,8 @@ val viewModelsModule = module {
 			encryptedPreferenceRepository = get(),
 			offerUtils = get(),
 			locationHelper = get(),
-			encryptionUtils = get()
+			encryptionUtils = get(),
+			remoteConfig = get()
 		)
 	}
 
