@@ -7,5 +7,5 @@ import com.squareup.moshi.JsonClass
 data class NewOfferV2PrivatePayload constructor(
 	val commonFriends: List<String>,
 	val friendLevel: List<String>,
-	val symetricKey: String
+	val symmetricKey: String
 )

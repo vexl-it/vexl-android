@@ -81,7 +81,7 @@ fun OfferUnifiedResponseV2.fromNetwork(moshi: Moshi, cryptoCurrencyValues: Crypt
 	val publicPayloadData = this.publicPayload.substring(1)
 	val publicPayloadDecrypted = when (publicPayloadVersion) {
 		"0" -> {
-			AesCryptoLib.decrypt(privatePayloadJson.symetricKey, publicPayloadData)
+			AesCryptoLib.decrypt(privatePayloadJson.symmetricKey, publicPayloadData)
 		}
 		else -> {
 			return null
@@ -159,7 +159,7 @@ fun OfferUnifiedAdminResponseV2.fromNetwork(moshi: Moshi, keyPair: KeyPair): Off
 	val publicPayloadData = this.publicPayload.substring(1)
 	val publicPayloadDecrypted = when (publicPayloadVersion) {
 		"0" -> {
-			AesCryptoLib.decrypt(privatePayloadJson.symetricKey, publicPayloadData)
+			AesCryptoLib.decrypt(privatePayloadJson.symmetricKey, publicPayloadData)
 		}
 		else -> {
 			return null
