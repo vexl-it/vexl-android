@@ -8,12 +8,10 @@ import android.widget.AutoCompleteTextView
 import android.widget.FrameLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentManager
-import cz.cleevio.core.R
 import cz.cleevio.core.databinding.WidgetOfferLocationItemBinding
 import cz.cleevio.repository.model.offer.Location
 import cz.cleevio.repository.model.offer.LocationSuggestion
 import cz.cleevio.vexl.lightbase.core.extensions.layoutInflater
-import java.math.BigDecimal
 
 class OfferLocationItem @JvmOverloads constructor(
 	context: Context,
@@ -24,7 +22,6 @@ class OfferLocationItem @JvmOverloads constructor(
 	private lateinit var binding: WidgetOfferLocationItemBinding
 	private var onCloseListener: ((OfferLocationItem) -> Unit)? = null
 
-	private var radius: Int = 0
 	private var location: Location? = null
 	private var fragmentManager: FragmentManager? = null
 
@@ -47,26 +44,6 @@ class OfferLocationItem @JvmOverloads constructor(
 		binding.locationItemText.doAfterTextChanged {
 			onTextChanged?.invoke(it.toString(), this)
 		}
-
-		binding.locationItemRadius.setOnClickListener {
-			fragmentManager?.let { manager ->
-				val bottomSheetDialog = NumberPickerBottomSheetDialog()
-				bottomSheetDialog.setInitialValue(radius)
-				bottomSheetDialog.setOnDoneListener { result ->
-					radius = result
-					this.location?.radius = BigDecimal(radius)
-					updateRadiusText(radius)
-					bottomSheetDialog.dismiss()
-				}
-				bottomSheetDialog.show(manager, "NumberPickerBottomSheetDialog")
-			}
-		}
-
-		updateRadiusText(radius)
-	}
-
-	private fun updateRadiusText(radius: Int) {
-		binding.locationItemRadius.text = context.getString(R.string.widget_location_km, radius)
 	}
 
 	private fun setupUI() {
@@ -82,11 +59,7 @@ class OfferLocationItem @JvmOverloads constructor(
 
 	fun getValue(): String = binding.locationItemText.text.toString()
 
-	private fun getRadius(): Int = radius
-
 	fun reset() {
-		radius = 0
-		updateRadiusText(radius)
 		binding.locationItemText.setText("")
 	}
 
@@ -97,9 +70,7 @@ class OfferLocationItem @JvmOverloads constructor(
 	}
 
 	fun setValue(location: Location) {
-		radius = location.radius.toInt()
 		this.location = location
-		updateRadiusText(radius)
 		binding.locationItemText.setText(location.city)
 	}
 
@@ -107,7 +78,6 @@ class OfferLocationItem @JvmOverloads constructor(
 		this.location = Location(
 			longitude = suggestion.longitude,
 			latitude = suggestion.latitude,
-			radius = BigDecimal(getRadius()),
 			city = suggestion.cityText
 		)
 	}

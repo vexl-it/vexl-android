@@ -7,6 +7,5 @@ import java.math.BigDecimal
 data class LocationResponse constructor(
 	val latitude: BigDecimal,
 	val longitude: BigDecimal,
-	val radius: BigDecimal?,
 	val city: String?
 )
