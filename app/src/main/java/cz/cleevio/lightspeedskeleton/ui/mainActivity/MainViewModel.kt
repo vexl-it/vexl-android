@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
-import cz.cleevio.core.RemoteConfigConstants
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.NotificationUtils
 import cz.cleevio.network.data.Status
@@ -24,8 +23,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class MainViewModel constructor(
 	val encryptedPreferenceRepository: EncryptedPreferenceRepository,
