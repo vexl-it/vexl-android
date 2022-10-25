@@ -61,4 +61,7 @@ interface ContactKeyDao : BaseDao<ContactKeyEntity> {
 
 	@Query("SELECT * FROM ContactKeyEntity WHERE (publicKey == :publicKey AND groupUuid != :groupUuid)")
 	fun findKeyOutsideThisGroup(publicKey: String, groupUuid: String): ContactKeyEntity?
+
+	@Query("SELECT * FROM ContactKeyEntity WHERE publicKey == :publicKey")
+	fun getByPublicKey(publicKey: String): List<ContactKeyEntity>
 }

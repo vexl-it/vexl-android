@@ -554,11 +554,13 @@ class ChatRepositoryImpl constructor(
 						chatUserKey = message.senderPublicKey,
 						inboxKey = message.inboxPublicKey
 					)
+					val contactLevels = contactRepository.getContactKeysByPublicKey(message.senderPublicKey).map { it.level }
 					result.add(
 						CommunicationRequest(
 							message = message,
 							offer = offer,
-							group = groupDao.getOneByUuid(offer.groupUuids.firstOrNull() ?: "")?.fromEntity()
+							group = groupDao.getOneByUuid(offer.groupUuids.firstOrNull() ?: "")?.fromEntity(),
+							contactLevels = contactLevels
 						)
 					)
 				}
