@@ -426,6 +426,10 @@ class ContactRepositoryImpl constructor(
 		return listOfList.flatten()
 	}
 
+	override fun getContactKeysByPublicKey(publicKey: String): List<ContactKey> {
+		return contactKeyDao.getByPublicKey(publicKey).map { it.fromCache() }
+	}
+
 	private suspend fun loadMyContactsKeys(
 		page: Int,
 		limit: Int,

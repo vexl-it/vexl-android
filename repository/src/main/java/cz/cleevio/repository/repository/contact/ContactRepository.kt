@@ -30,6 +30,8 @@ interface ContactRepository {
 
 	fun getGroupsContactKeys(groupUuids: List<String>): List<ContactKey>
 
+	fun getContactKeysByPublicKey(publicKey: String): List<ContactKey>
+
 	suspend fun deleteMyUser(): Resource<Unit>
 
 	suspend fun deleteMyFacebookUser(): Resource<Unit>

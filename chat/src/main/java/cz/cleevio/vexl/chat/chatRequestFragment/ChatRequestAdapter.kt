@@ -11,6 +11,7 @@ import cz.cleevio.core.R
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.widget.FriendLevel
+import cz.cleevio.core.widget.toFriendLevel
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.databinding.ItemChatRequestBinding
@@ -53,10 +54,22 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 					R.color.green_100
 				)
 			}
-			binding.userType.text = if (item.offer.friendLevel.contains(FriendLevel.FIRST_DEGREE.name)) {
-				binding.userType.resources.getString(R.string.marketplace_detail_friend_first)
-			} else {
-				binding.userType.resources.getString(R.string.marketplace_detail_friend_second)
+
+			val friendLevels = item.contactLevels.map { it.toFriendLevel() }
+			binding.userType.text = when {
+				friendLevels.contains(FriendLevel.GROUP) && item.group != null -> {
+					binding.userType.resources.getString(R.string.offer_widget_groups, item.group?.name)
+				}
+				friendLevels.contains(FriendLevel.FIRST_DEGREE) -> {
+					binding.userType.resources.getString(R.string.marketplace_detail_friend_first)
+				}
+				friendLevels.contains(FriendLevel.SECOND_DEGREE) -> {
+					binding.userType.resources.getString(R.string.marketplace_detail_friend_second)
+				}
+				//fallback
+				else -> {
+					""
+				}
 			}
 			binding.requestMessage.text = item.message.text
 			binding.offerWidget.bind(item = item.offer, group = item.group)
