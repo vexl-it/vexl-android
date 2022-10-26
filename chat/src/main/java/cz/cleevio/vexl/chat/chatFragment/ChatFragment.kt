@@ -193,6 +193,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				)
 			)
 		}
+		binding.myOfferBtn.isVisible = args.communicationRequest.offer != null
 		binding.myOfferBtn.text = if (args.communicationRequest.offer.isMine) {
 			getString(R.string.chat_btns_my_offer)
 		} else {
@@ -200,18 +201,22 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		binding.myOfferBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
-			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer))
+			args.communicationRequest.offer?.let {
+				showBottomDialog(MyOfferBottomSheetDialog(it))
+			}
 		}
+		binding.commonFriendsBtn.isVisible = args.communicationRequest.offer != null
 		binding.commonFriendsBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
-			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer.commonFriends.orEmpty()))
+			showBottomDialog(CommonFriendsBottomSheetDialog(args.communicationRequest.offer?.commonFriends.orEmpty()))
 		}
 		binding.revealIdentityBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
-			showBottomDialog(IdentityRequestBottomSheetDialog(
-				onSendRequest = {
-					viewModel.requestIdentityReveal()
-				}
+			showBottomDialog(
+				IdentityRequestBottomSheetDialog(
+					onSendRequest = {
+						viewModel.requestIdentityReveal()
+					}
 			))
 		}
 		binding.revealRequestButton.setOnClickListener {
@@ -266,23 +271,27 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	private fun setupColoredTitle(name: String) {
 		val offer = args.communicationRequest.offer
-		val isSell = (offer?.offerType == OfferType.SELL.name && !offer.isMine)
-			|| (offer?.offerType == OfferType.BUY.name && offer.isMine)
+		if (offer != null) {
+			val isSell = (offer.offerType == OfferType.SELL.name && !offer.isMine)
+				|| (offer.offerType == OfferType.BUY.name && offer.isMine)
 
-		if (isSell) {
-			BuySellColorizer.colorizeTransactionType(
-				getString(R.string.marketplace_detail_user_sell, name),
-				name,
-				binding.username,
-				R.color.pink_100
-			)
+			if (isSell) {
+				BuySellColorizer.colorizeTransactionType(
+					getString(R.string.marketplace_detail_user_sell, name),
+					name,
+					binding.username,
+					R.color.pink_100
+				)
+			} else {
+				BuySellColorizer.colorizeTransactionType(
+					getString(R.string.marketplace_detail_user_buy, name),
+					name,
+					binding.username,
+					R.color.green_100
+				)
+			}
 		} else {
-			BuySellColorizer.colorizeTransactionType(
-				getString(R.string.marketplace_detail_user_buy, name),
-				name,
-				binding.username,
-				R.color.green_100
-			)
+			binding.username.text = name
 		}
 	}
 

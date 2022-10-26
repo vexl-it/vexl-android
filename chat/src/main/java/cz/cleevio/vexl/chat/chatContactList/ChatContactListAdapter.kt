@@ -13,6 +13,7 @@ import cz.cleevio.core.utils.setIcons
 import cz.cleevio.core.utils.setUserAvatar
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.MessageType
+import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatContactBinding
 import java.text.SimpleDateFormat
@@ -41,27 +42,33 @@ class ChatContactListAdapter constructor(
 
 			val isDeanonymized = item.user?.deAnonymized == true
 
-			val isSell = (item.offer.offerType == OfferType.SELL.name && !item.offer.isMine)
-				|| (item.offer.offerType == OfferType.BUY.name && item.offer.isMine)
+			val username = if (isDeanonymized) item.user?.name ?: "" else item.user?.anonymousUsername ?: ""
+			if (item.offer != null) {
+				val offer = item.offer as Offer
+				val isSell = (offer.offerType == OfferType.SELL.name && !offer.isMine)
+					|| (offer.offerType == OfferType.BUY.name && offer.isMine)
 
-			if (isSell) {
-				colorizeTransactionType(
-					binding.chatContactName.resources.getString(
-						cz.cleevio.core.R.string.marketplace_detail_user_sell, if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
-					),
-					if (isDeanonymized) item.user?.name ?: "" else item.user?.anonymousUsername ?: "",
-					binding.chatContactName,
-					R.color.pink_100
-				)
+				if (isSell) {
+					colorizeTransactionType(
+						binding.chatContactName.resources.getString(
+							cz.cleevio.core.R.string.marketplace_detail_user_sell, if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
+						),
+						userName = username,
+						nameTv = binding.chatContactName,
+						R.color.pink_100
+					)
+				} else {
+					colorizeTransactionType(
+						binding.chatContactName.resources.getString(
+							cz.cleevio.core.R.string.marketplace_detail_user_buy, if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
+						),
+						userName = username,
+						nameTv = binding.chatContactName,
+						R.color.green_100
+					)
+				}
 			} else {
-				colorizeTransactionType(
-					binding.chatContactName.resources.getString(
-						cz.cleevio.core.R.string.marketplace_detail_user_buy, if (isDeanonymized) item.user?.name else item.user?.anonymousUsername
-					),
-					if (isDeanonymized) item.user?.name ?: "" else item.user?.anonymousUsername ?: "",
-					binding.chatContactName,
-					R.color.green_100
-				)
+				binding.chatContactName.text = username
 			}
 
 			val prefix = if (item.message.isMine)

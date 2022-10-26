@@ -6,5 +6,5 @@ data class ChatListUser constructor(
 	val message: ChatMessage,
 	//maybe User later?
 	val user: ChatUserIdentity?,
-	val offer: Offer
+	val offer: Offer?
 )

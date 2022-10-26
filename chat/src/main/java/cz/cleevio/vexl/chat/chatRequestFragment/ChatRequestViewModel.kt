@@ -6,6 +6,7 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.repository.model.chat.MessageType
+import cz.cleevio.repository.model.offer.Offer
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -48,13 +49,14 @@ class ChatRequestViewModel constructor(
 		text: String = ""
 	) {
 		viewModelScope.launch(Dispatchers.IO) {
+			val offer = communicationRequest.offer as Offer
 			val response = chatRepository.confirmCommunicationRequest(
-				offerId = communicationRequest.offer.offerId,
+				offerId = offer.offerId,
 				publicKeyToConfirm = communicationRequest.message.senderPublicKey,
 				message = ChatMessage(
 					uuid = UUID.randomUUID().toString(),
 					inboxPublicKey = communicationRequest.message.inboxPublicKey,
-					senderPublicKey = communicationRequest.offer.offerPublicKey,
+					senderPublicKey = offer.offerPublicKey,
 					text = text,
 					type = if (approve) MessageType.APPROVE_MESSAGING else MessageType.DISAPPROVE_MESSAGING,
 					recipientPublicKey = communicationRequest.message.senderPublicKey,

@@ -24,9 +24,6 @@ interface MyOfferDao : BaseDao<MyOfferEntity> {
 	@Query("SELECT * FROM MyOfferEntity where publicKey = :publicKey LIMIT 1")
 	suspend fun getMyOfferByPublicKey(publicKey: String): MyOfferEntity?
 
-	@Query("SELECT publicKey FROM MyOfferEntity")
-	suspend fun getAllOfferPublicKeys(): List<String>
-
 	@Query("SELECT publicKey, privateKey FROM MyOfferEntity")
 	suspend fun getAllOfferKeys(): List<MyOfferKeyPair>
 

@@ -35,24 +35,26 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 
 		fun bind(item: CommunicationRequest) {
 			val offer = item.offer
-			val isSell = (offer.offerType == OfferType.SELL.name && !offer.isMine)
-				|| (offer.offerType == OfferType.BUY.name && offer.isMine)
+			offer?.let {
+				val isSell = (offer.offerType == OfferType.SELL.name && !offer.isMine)
+					|| (offer.offerType == OfferType.BUY.name && offer.isMine)
 
-			val username = offer.userName ?: RandomUtils.generateName()
-			if (isSell) {
-				colorizeTransactionType(
-					binding.userName.resources.getString(R.string.marketplace_detail_user_sell, username),
-					username,
-					binding.userName,
-					R.color.pink_100
-				)
-			} else {
-				colorizeTransactionType(
-					binding.userName.resources.getString(R.string.marketplace_detail_user_buy, username),
-					username,
-					binding.userName,
-					R.color.green_100
-				)
+				val username = offer.userName ?: RandomUtils.generateName()
+				if (isSell) {
+					colorizeTransactionType(
+						binding.userName.resources.getString(R.string.marketplace_detail_user_sell, username),
+						username,
+						binding.userName,
+						R.color.pink_100
+					)
+				} else {
+					colorizeTransactionType(
+						binding.userName.resources.getString(R.string.marketplace_detail_user_buy, username),
+						username,
+						binding.userName,
+						R.color.green_100
+					)
+				}
 			}
 
 			val friendLevels = item.contactLevels.map { it.toFriendLevel() }
@@ -76,13 +78,19 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 			} else {
 				item.message.text
 			}
-			binding.offerWidget.bind(item = item.offer, group = item.group)
-			val offerList = item.offer.commonFriends.map { it.contact }
-			adapter.submitList(offerList)
-			binding.noneCommonFriends.isVisible = offerList.isEmpty()
-			binding.commonFriendsList.isVisible = offerList.isNotEmpty()
-			binding.arrow.isVisible = offerList.isNotEmpty()
+			item.offer?.let {
+				binding.offerWidget.bind(item = it, group = item.group)
+			}
+
+			item.offer?.commonFriends?.let { commonFriends ->
+				val offerList = commonFriends.map { it.contact }
+				adapter.submitList(offerList)
+				binding.noneCommonFriends.isVisible = offerList.isEmpty()
+				binding.commonFriendsList.isVisible = offerList.isNotEmpty()
+				binding.arrow.isVisible = offerList.isNotEmpty()
+			}
 		}
+
 
 		fun initAdapter() {
 			// This listener handles removing touch events from parent view when scrolling with the child

@@ -5,7 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(indices = [Index(value = ["publicKey"], unique = true)])
-data class ChatEntity(
+data class InboxEntity(
 	//----- metadata -----
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
