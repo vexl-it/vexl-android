@@ -9,7 +9,10 @@ data class ChatEntity(
 	//----- metadata -----
 	@PrimaryKey(autoGenerate = true)
 	val id: Long = 0,
+	//InboxType enum
+	val inboxType: String,
 	val publicKey: String,
 	val privateKey: String,
-	val offerId: String
+	//if type is InboxType.OFFER
+	val offerId: String?
 )

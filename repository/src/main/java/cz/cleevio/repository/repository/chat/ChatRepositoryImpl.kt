@@ -3,10 +3,7 @@ package cz.cleevio.repository.repository.chat
 import com.cleevio.vexl.cryptography.EcdsaCryptoLib
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.dao.*
-import cz.cleevio.cache.entity.ChatUserIdentityEntity
-import cz.cleevio.cache.entity.MessageKeyPair
-import cz.cleevio.cache.entity.NotificationEntity
-import cz.cleevio.cache.entity.RequestedOfferEntity
+import cz.cleevio.cache.entity.*
 import cz.cleevio.cache.preferences.EncryptedPreferenceRepository
 import cz.cleevio.network.api.ChatApi
 import cz.cleevio.network.api.ContactApi
@@ -42,7 +39,8 @@ class ChatRepositoryImpl constructor(
 	private val userDao: UserDao,
 	private val encryptedPreferenceRepository: EncryptedPreferenceRepository,
 	private val contactRepository: ContactRepository,
-	private val groupDao: GroupDao
+	private val groupDao: GroupDao,
+	private val chatDao: ChatDao,
 ) : ChatRepository {
 
 	override val chatUsers: MutableSharedFlow<List<ChatListUser>> = MutableSharedFlow()
@@ -175,7 +173,7 @@ class ChatRepositoryImpl constructor(
 		notificationDao.replace(NotificationEntity(token = token, uploaded = true))
 	}
 
-	override suspend fun createInbox(publicKey: String): Resource<Unit> {
+	override suspend fun createInbox(publicKey: String, offerId: String?): Resource<Unit> {
 		val keyPair = findKeyPairByPublicKey(publicKey)
 			?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_keypair))
 		return notificationDao.getOne()?.let { notificationDataStorage ->
@@ -192,12 +190,32 @@ class ChatRepositoryImpl constructor(
 					},
 					mapper = { },
 					doOnSuccess = {
-						//create inbox in local DB?
-
+						//create inbox in local DB
+						val chatEntity = ChatEntity(
+							inboxType = getInboxType(offerId).name,
+							publicKey = keyPair.publicKey,
+							privateKey = keyPair.privateKey,
+							offerId = offerId
+						)
+						chatDao.replace(chatEntity)
 					}
 				)
 			} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_firebase_token))
+	}
+
+	private fun getInboxType(offerId: String?): InboxType {
+		return when {
+			offerId != null -> {
+				InboxType.OFFER
+			}
+			offerId == null -> {
+				InboxType.PERSONAL
+			}
+			else -> {
+				InboxType.UNKNOWN
+			}
+		}
 	}
 
 	override suspend fun syncMessages(inboxPublicKey: String): Resource<Unit> {
