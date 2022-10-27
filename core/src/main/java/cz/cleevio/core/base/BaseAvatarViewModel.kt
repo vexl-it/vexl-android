@@ -17,6 +17,10 @@ import lightbase.camera.ui.takePhotoFragment.TakePhotoResult
 import lightbase.camera.utils.ImageHelper
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.lang.Integer.max
+import kotlin.math.roundToInt
+
+const val SIZE_LIMIT = 1024f
 
 abstract class BaseAvatarViewModel constructor(
 	val navMainGraphModel: NavMainGraphModel,
@@ -48,7 +52,18 @@ abstract class BaseAvatarViewModel constructor(
 
 	//return Base64 representation of image
 	protected fun getAvatarData(avatarUri: Uri, contentResolver: ContentResolver): String {
-		val bitmap = getBitmap(avatarUri, contentResolver)
+		var bitmap = getBitmap(avatarUri, contentResolver)
+
+		val biggerSize = max(bitmap.width, bitmap.height).toFloat()
+		if (biggerSize > SIZE_LIMIT) {
+			val ratio: Float = SIZE_LIMIT / biggerSize
+			bitmap = Bitmap.createScaledBitmap(
+				bitmap,
+				(bitmap.width.toFloat() * ratio).roundToInt(),
+				(bitmap.height.toFloat() * ratio).roundToInt(),
+				false
+			)
+		}
 
 		val baos = ByteArrayOutputStream()
 		bitmap.compress(COMPRESS_FORMAT, BITMAP_COMPRESS_QUALITY, baos)
