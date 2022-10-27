@@ -21,6 +21,7 @@ interface EncryptedPreferenceRepository {
 	var logsEnabled: Boolean
 	var isOfferEncrypted: Boolean
 	var hasOfferV2: Boolean
+	var hasConvertedAvatarToSmallerSize: Boolean
 
 	val areScreenshotsAllowedFlow: MutableStateFlow<Boolean>
 	val selectedCurrencyFlow: MutableStateFlow<String>

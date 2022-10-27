@@ -128,6 +128,12 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putBooleanToEP(KEY_OFFER_V2, value)
 		}
 
+	override var hasConvertedAvatarToSmallerSize: Boolean
+		get() = getBooleanFromEP(KEY_HAS_CONVERTED_AVATAR, false)
+		set(value) {
+			putBooleanToEP(KEY_HAS_CONVERTED_AVATAR, value)
+		}
+
 	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 	override val selectedCurrencyFlow: MutableStateFlow<String> = MutableStateFlow(selectedCurrency)
 	override val numberOfImportedContactsFlow: MutableStateFlow<Int> = MutableStateFlow(numberOfImportedContacts)
@@ -188,5 +194,6 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_LOGS_ENABLED = "logs_enabled"
 		private const val KEY_IS_OFFER_ENCRYPTED = "is_offer_encrypted"
 		private const val KEY_OFFER_V2 = "offer_v2"
+		private const val KEY_HAS_CONVERTED_AVATAR = "has_converted_avatar"
 	}
 }
