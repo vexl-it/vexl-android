@@ -91,6 +91,13 @@ val coreModule = module {
 	single {
 		EncryptionUtils()
 	}
+
+	single {
+		TempUtils(
+			userRepository = get(),
+			encryptedPreferenceRepository = get()
+		)
+	}
 }
 
 private fun provideMarkwon(context: Context) = Markwon.builder(context)

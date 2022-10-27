@@ -17,7 +17,8 @@ val viewModelsModule = module {
 			groupRepository = get(),
 			remoteConfig = get(),
 			offerRepository = get(),
-			notificationUtils = get()
+			notificationUtils = get(),
+			tempUtils = get()
 		)
 	}
 

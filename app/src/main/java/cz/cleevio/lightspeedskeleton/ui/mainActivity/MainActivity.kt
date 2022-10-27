@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		setLastVisitedGraph(savedInstanceState)
 
 		resolveNotificationIntent(this.intent)
+
+		if (!viewModel.encryptedPreferenceRepository.hasConvertedAvatarToSmallerSize) {
+			viewModel.convertAvatarToSmallerSize()
+		}
 	}
 
 	override fun onNewIntent(intent: android.content.Intent?) {
