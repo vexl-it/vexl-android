@@ -20,6 +20,7 @@ import cz.cleevio.repository.model.currency.CryptoCurrencyValues
 import cz.cleevio.repository.model.offer.v2.NewOfferV2PrivatePayload
 import cz.cleevio.repository.model.offer.v2.NewOfferV2PublicPayload
 import kotlinx.parcelize.Parcelize
+import timber.log.Timber
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -70,6 +71,7 @@ fun OfferUnifiedResponseV2.fromNetwork(moshi: Moshi, cryptoCurrencyValues: Crypt
 	val privatePayloadJson = when (privatePayloadVersion) {
 		"0" -> {
 			val decrypted = EciesCryptoLib.decrypt(keyPair, privatePayloadData)
+			Timber.tag("CRASH").d("privatePayloadData decrypted: ${decrypted}")
 			moshi.adapter(NewOfferV2PrivatePayload::class.java).fromJson(decrypted)!!
 		}
 		else -> {
@@ -88,6 +90,7 @@ fun OfferUnifiedResponseV2.fromNetwork(moshi: Moshi, cryptoCurrencyValues: Crypt
 		}
 	}
 
+	Timber.tag("CRASH").d("publicPayloadDecrypted: ${publicPayloadDecrypted}")
 	val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).fromJson(publicPayloadDecrypted)!!
 	val locationAdapter = moshi.adapter(Location::class.java)
 
@@ -148,6 +151,7 @@ fun OfferUnifiedAdminResponseV2.fromNetwork(moshi: Moshi, keyPair: KeyPair): Off
 	val privatePayloadJson = when (privatePayloadVersion) {
 		"0" -> {
 			val decrypted = EciesCryptoLib.decrypt(keyPair, privatePayloadData)
+			Timber.tag("CRASH").d("privatePayloadData decrypted: ${decrypted}")
 			moshi.adapter(NewOfferV2PrivatePayload::class.java).fromJson(decrypted)!!
 		}
 		else -> {
@@ -166,6 +170,7 @@ fun OfferUnifiedAdminResponseV2.fromNetwork(moshi: Moshi, keyPair: KeyPair): Off
 		}
 	}
 
+	Timber.tag("CRASH").d("publicPayloadDecrypted: ${publicPayloadDecrypted}")
 	val publicPayloadJson = moshi.adapter(NewOfferV2PublicPayload::class.java).fromJson(publicPayloadDecrypted)!!
 	val locationAdapter = moshi.adapter(Location::class.java)
 
