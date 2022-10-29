@@ -25,6 +25,7 @@
 #endif
 
 #include "common/Log.h"
+#include "common/Constants.h"
 #include "common/OpenSSLHelper.h"
 #include "model/Curve.h"
 #include "model/KeyPair.h"
