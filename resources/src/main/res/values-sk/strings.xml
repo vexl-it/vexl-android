@@ -512,6 +512,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="marketplace_detail_up_to">do</string>
     <string name="marketplace_detail_payment">Platba</string>
     <string name="marketplace_detail_fee">Zahrňuje %1$s %% transakčný poplatok</string>
+    <string name="offer_empty_message">%s poslal žiadosť</string>
     <string name="offer_request">Žiadosť</string>
     <string name="offer_requested">Žiadosť zaslána</string>
     <string name="offer_your_offer">Tvoja ponuka</string>
@@ -780,13 +781,13 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="logs_text_copied_clipboard">Protokoly skopírované do schránky</string>
 
     <!-- Social media -->
-    <string name="profile_twitter">Follow us on Twitter</string>
+    <string name="profile_twitter">Sleduj nás na Twitteri</string>
     <string name="twitter">Twitter</string>
-    <string name="profile_medium">Read more on Medium</string>
+    <string name="profile_medium">Čítaj viac na Medium</string>
     <string name="medium">Medium</string>
-    <string name="profile_vexl_it">Learn more on Vexl.it</string>
+    <string name="profile_vexl_it">Dozveď sa viac na Vexl.it</string>
     <string name="vexl_it">Vexl.it</string>
-    <string name="error_invalid_url">Invalid URL</string>
+    <string name="error_invalid_url">Neplatné URL</string>
 
     <!-- Maintenance -->
 </resources>

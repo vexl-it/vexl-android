@@ -71,7 +71,11 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 					""
 				}
 			}
-			binding.requestMessage.text = item.message.text
+			binding.requestMessage.text = if (item.message.text.isNullOrEmpty()) {
+				itemView.resources.getString(R.string.offer_empty_message, username)
+			} else {
+				item.message.text
+			}
 			binding.offerWidget.bind(item = item.offer, group = item.group)
 			val offerList = item.offer.commonFriends.map { it.contact }
 			adapter.submitList(offerList)

@@ -333,7 +333,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="init_phone_hint">Phone number</string>
     <string name="init_phone_length_not_valid">Phone number is invalid</string>
     <string name="verify_phone_title">We\'ve just sent you a verification code.</string>
-    <string name="verify_phone_subtitle">Enter it bellow to verify %s</string>
+    <string name="verify_phone_subtitle">Enter it below to verify %s</string>
     <string name="verify_phone_hint">Activation code</string>
     <string name="verify_phone_info_countdown">Didn’t receive a code? Resend in %s s</string>
     <string name="verify_phone_info_btn">Didn’t receive a code? Click here to try again.</string>
@@ -511,6 +511,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="marketplace_detail_up_to">Up to</string>
     <string name="marketplace_detail_payment">Payment</string>
     <string name="marketplace_detail_fee">Includes %1$s %% transaction fee</string>
+    <string name="offer_empty_message">%s sent you a request</string>
     <string name="offer_request">Request</string>
     <string name="offer_requested">Requested</string>
     <string name="offer_your_offer">Your offer</string>
