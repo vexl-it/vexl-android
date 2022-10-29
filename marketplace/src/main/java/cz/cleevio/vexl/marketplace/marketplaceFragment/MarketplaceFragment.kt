@@ -94,21 +94,25 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 			marketplaceViewModel.navMarketplaceGraphFlow.collect {
 				when (it) {
 					is NavMarketplaceGraphModel.NavGraph.Filters -> {
-						findNavController().navigate(
+						findNavController().popBackStack(R.id.marketplaceFragment, false)
+						findNavController().safeNavigateWithTransition(
 							MarketplaceFragmentDirections.proceedToFiltersFragment(it.type)
 						)
 					}
 					is NavMarketplaceGraphModel.NavGraph.MyOffer -> {
+						findNavController().popBackStack(R.id.marketplaceFragment, false)
 						findNavController().safeNavigateWithTransition(
 							MarketplaceFragmentDirections.proceedToMyOffersFragment(it.type)
 						)
 					}
 					is NavMarketplaceGraphModel.NavGraph.NewOffer -> {
+						findNavController().popBackStack(R.id.marketplaceFragment, false)
 						findNavController().safeNavigateWithTransition(
 							MarketplaceFragmentDirections.proceedToNewOfferFragment(it.type)
 						)
 					}
 					is NavMarketplaceGraphModel.NavGraph.RequestOffer -> {
+						findNavController().popBackStack(R.id.marketplaceFragment, false)
 						findNavController().safeNavigateWithTransition(
 							MarketplaceFragmentDirections.proceedToRequestOfferFragment(it.offerId)
 						)
