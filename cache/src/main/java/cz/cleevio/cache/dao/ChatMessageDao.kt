@@ -38,7 +38,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"WHERE " +
 			"inboxPublicKey = :inboxPublicKey " +
 			" AND NOT (type == 'REQUEST_MESSAGING')" +
-			" AND NOT (type == 'DISAPPROVE_MESSAGING' AND isMine=1)" +
+			" AND NOT (type == 'DISAPPROVE_MESSAGING')" +
 			"GROUP BY senderPublicKey, recipientPublicKey"
 	)
 	fun getAllContactKeys(inboxPublicKey: String): List<MessageKeyPair>
