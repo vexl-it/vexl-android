@@ -54,6 +54,7 @@ class OfferRepositoryImpl constructor(
 	private val chatUserDao: ChatUserDao,
 	private val encryptedPreference: EncryptedPreferenceRepository,
 	private val moshi: Moshi,
+	private val chatMessageDao: ChatMessageDao,
 ) : OfferRepository {
 
 	override val buyOfferFilter = MutableStateFlow(OfferFilter())
@@ -490,14 +491,16 @@ class OfferRepositoryImpl constructor(
 
 	private suspend fun overwriteOffers(offers: List<Offer>) {
 		val myOfferIds = myOfferDao.listAll().map { it.extId }
-		val requestedOffersIds = requestedOfferDao.listAll().map { it.offerId }
+		val requestedOffersPublicKeys = chatMessageDao.getAllRequestedInboxPublicKeys(
+			encryptedPreference.userPublicKey
+		)
 		transactionProvider.runAsTransaction {
 			offerCommonFriendCrossRefDao.clearTable()
 			locationDao.clearTable()
 			offerDao.clearTable()
 			offers.forEach { offer ->
 				offer.isMine = myOfferIds.contains(offer.offerId)
-				offer.isRequested = requestedOffersIds.contains(offer.offerId)
+				offer.isRequested = requestedOffersPublicKeys.contains(offer.offerPublicKey)
 				val offerId = offerDao.insertOffer(offer.toCache())
 				locationDao.insertLocations(offer.location.map {
 					it.toCache(offerId)
