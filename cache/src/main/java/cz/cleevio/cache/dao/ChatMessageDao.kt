@@ -133,4 +133,11 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 
 	@Query("SELECT * FROM ChatMessageEntity")
 	fun listAllFlow(): Flow<List<ChatMessageEntity>>
+
+	@Query(
+		"SELECT recipientPublicKey FROM ChatMessageEntity " +
+			"WHERE senderPublicKey == :userPublicKey " +
+			"AND type == 'REQUEST_MESSAGING'"
+	)
+	fun getAllRequestedInboxPublicKeys(userPublicKey: String): List<String>
 }
