@@ -24,7 +24,7 @@ class CommonFriendAdapter
 
 		fun bind(item: BaseContact) {
 			binding.profileImage.load(item.photoUri) {
-				setPlaceholders(R.drawable.random_avatar_2)
+				setPlaceholders(R.drawable.random_avatar_3)
 			}
 			binding.name.text = item.name
 		}

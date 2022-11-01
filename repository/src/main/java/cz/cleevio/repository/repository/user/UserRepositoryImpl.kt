@@ -83,8 +83,10 @@ class UserRepositoryImpl constructor(
 		userDao.insert(
 			UserEntity(
 				username = user.username,
+				anonymousUsername = user.anonymousUsername,
 				avatar = null,
 				avatarBase64 = user.avatarBase64,
+				anonymousAvatarImageIndex = user.anonymousAvatarImageIndex,
 				publicKey = user.publicKey
 			)
 		)
@@ -137,14 +139,6 @@ class UserRepositoryImpl constructor(
 
 	override suspend fun deleteLocalUser() =
 		userDao.deleteAll()
-
-	override suspend fun storeAnonymousUserData(anonymousUsername: String, anonymousAvatarImageIndex: Int) {
-		userDao.getUser()?.id?.let {
-			Timber.d("user: ${userDao.getUser()}")
-			userDao.updateAnonymousInfo(it, anonymousUsername, anonymousAvatarImageIndex)
-		} ?: Timber.d("user: No user found")
-
-	}
 
 	private suspend fun updateUser(user: User) {
 		userDao.update(

@@ -91,7 +91,7 @@ class OfferWidget @JvmOverloads constructor(
 		} else {
 			//or load user avatar from base64
 			binding.profileImage.loadAny(item.userAvatar?.getBitmap()) {
-				setPlaceholders(R.drawable.random_avatar_5)
+				setPlaceholders(R.drawable.random_avatar_3)
 			}
 		}
 		val generatedUsername = item.userName ?: RandomUtils.generateName()

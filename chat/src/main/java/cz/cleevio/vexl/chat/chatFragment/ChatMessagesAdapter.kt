@@ -10,9 +10,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.loadAny
 import cz.cleevio.core.utils.getBitmap
-import cz.cleevio.core.utils.setPlaceholders
+import cz.cleevio.core.utils.setUserAvatar
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.MessageType
@@ -120,16 +119,22 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 			itemView.context.let { context ->
 				when (item.type) {
 					MessageType.REQUEST_REVEAL -> {
-						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap()) {
-							setPlaceholders(R.drawable.random_avatar_5)
-						}
+						setUserAvatar(
+							binding.chatContactIcon,
+							_chatUserIdentity?.avatarBase64?.getBitmap(),
+							_chatUserIdentity?.anonymousAvatarImageIndex,
+							itemView.context
+						)
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_header)
 						binding.identityRevealDescription.text = context.getString(R.string.chat_message_identity_reveal_subheader)
 					}
 					MessageType.APPROVE_REVEAL -> {
-						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap()) {
-							setPlaceholders(R.drawable.random_avatar_6)
-						}
+						setUserAvatar(
+							binding.chatContactIcon,
+							_chatUserIdentity?.avatarBase64?.getBitmap(),
+							_chatUserIdentity?.anonymousAvatarImageIndex,
+							itemView.context
+						)
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_approved)
 						binding.identityRevealDescription.text = _chatUserIdentity?.name
 					}

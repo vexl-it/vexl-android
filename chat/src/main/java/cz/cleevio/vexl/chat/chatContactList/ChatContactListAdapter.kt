@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.loadAny
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.BuySellColorizer.colorizeTransactionType
 import cz.cleevio.core.utils.getBitmap
 import cz.cleevio.core.utils.setIcons
-import cz.cleevio.core.utils.setPlaceholders
+import cz.cleevio.core.utils.setUserAvatar
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.R
@@ -33,9 +32,12 @@ class ChatContactListAdapter constructor(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatListUser) {
-			binding.chatContactIcon.loadAny(item.user?.avatarBase64?.getBitmap()) {
-				setPlaceholders(R.drawable.random_avatar_2)
-			}
+			setUserAvatar(
+				binding.chatContactIcon,
+				item.user?.avatarBase64?.getBitmap(),
+				item.user?.anonymousAvatarImageIndex,
+				itemView.context
+			)
 
 			val isDeanonymized = item.user?.deAnonymized == true
 
@@ -73,7 +75,7 @@ class ChatContactListAdapter constructor(
 			}
 
 			binding.chatLastMessage.setTextColor(itemView.resources.getColor(getTextAndIconColorIfMessageIsRevealIdentity(item.message.type), null))
-			binding.chatLastMessage.compoundDrawableTintList =  ColorStateList.valueOf(itemView.resources.getColor(getTextAndIconColorIfMessageIsRevealIdentity(item.message.type), null))
+			binding.chatLastMessage.compoundDrawableTintList = ColorStateList.valueOf(itemView.resources.getColor(getTextAndIconColorIfMessageIsRevealIdentity(item.message.type), null))
 
 			binding.chatLastMessage.setIcons(getStartIconIfMessageIsRevealIdentity(item.message.type), null, null, null)
 

@@ -22,7 +22,7 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="@id/chat_contact_name"
 		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.ProfileImage.Small"
-		tools:src="@drawable/random_avatar_1" />
+		tools:src="@drawable/random_avatar_3" />
 
 	<TextView
 		android:id="@+id/chat_contact_name"

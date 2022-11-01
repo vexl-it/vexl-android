@@ -64,15 +64,26 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				val isDeanonymized = chatUserIdentity?.deAnonymized == true
 
 				if (isDeanonymized) {
-					binding.profileImage.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
-					}
-					binding.identityRevealRequestedIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
-					}
-					binding.identityRevealSentIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
-					}
+					val bitmap = chatUserIdentity?.avatarBase64?.getBitmap()
+					val index = chatUserIdentity?.anonymousAvatarImageIndex
+					setUserAvatar(
+						binding.profileImage,
+						bitmap,
+						index,
+						requireContext()
+					)
+					setUserAvatar(
+						binding.identityRevealRequestedIcon,
+						bitmap,
+						index,
+						requireContext()
+					)
+					setUserAvatar(
+						binding.identityRevealSentIcon,
+						bitmap,
+						index,
+						requireContext()
+					)
 
 					setupColoredTitle(chatUserIdentity?.name ?: "")
 				} else {
@@ -80,27 +91,30 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
 					) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
 					}
 					binding.identityRevealRequestedIcon.load(
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
 					) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
 					}
 					binding.identityRevealSentIcon.load(
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
 					) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
 					}
 
 					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
 				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
-				binding.revealedProfileIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-					setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_5)
-				}
+				setUserAvatar(
+					binding.revealedProfileIcon,
+					chatUserIdentity?.avatarBase64?.getBitmap(),
+					chatUserIdentity?.anonymousAvatarImageIndex,
+					requireContext()
+				)
 			}
 		}
 		repeatScopeOnStart {

@@ -28,8 +28,7 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 
 	init {
 		setupUI()
-		// TODO later: commented out VEX-1117 because it should not be in this build
-		// handleFriendLevelSelection(FriendLevel.SECOND_DEGREE)
+		handleFriendLevelSelection(FriendLevel.SECOND_DEGREE)
 
 		binding.friendFirstDegreeWrapper.setOnClickListener {
 			handleFriendLevelSelection(FriendLevel.FIRST_DEGREE)
@@ -153,9 +152,7 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 	fun getMultichoiceFriendLevels(): Set<FriendLevel> = selectedFriendLevels
 
 	fun reset() {
-		// TODO later: commented out VEX-1117 because it should not be in this build
-		// setValues(setOf(FriendLevel.SECOND_DEGREE))
-		setValues(setOf(FriendLevel.NONE))
+		setValues(setOf(FriendLevel.SECOND_DEGREE))
 	}
 
 	fun setValues(levels: Set<FriendLevel>) {

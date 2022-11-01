@@ -61,7 +61,7 @@ data class Offer constructor(
 	var isRequested: Boolean = false,
 	var userName: String? = null,
 	var userAvatar: String? = null,
-	var userAvatarId: Int? = null,
+	var userAvatarId: Int? = null
 ) : Parcelable
 
 @Suppress("LongMethod", "ReturnCount")
