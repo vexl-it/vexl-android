@@ -24,7 +24,7 @@ class CommonFriendsDialogAdapter :
 
 		fun bind(item: BaseContact) {
 			binding.profileImage.load(item.photoUri) {
-				setPlaceholders(R.drawable.random_avatar_1)
+				setPlaceholders(R.drawable.random_avatar_3)
 			}
 			binding.name.text = item.name
 			binding.description.text = item.getChatDescription(binding.description.context)

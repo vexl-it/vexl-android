@@ -41,7 +41,7 @@ class AnonymizeUserFragment : BaseFragment(R.layout.fragment_anonymize_user) {
 						binding.anonymizeUserTitle.text = getString(R.string.anonymize_user_title)
 						binding.anonymizeUserName.text = args.username
 						binding.anonymizeUserImage.load(args.avatarUri) {
-							setPlaceholders(R.drawable.random_avatar_1)
+							setPlaceholders(R.drawable.random_avatar_3)
 						}
 					}
 					is AnonymizeUserViewModel.UIState.Anonymized -> {

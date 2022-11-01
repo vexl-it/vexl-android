@@ -83,7 +83,7 @@ class JoinGroupBottomSheetDialog constructor(
 		binding.title.text = getString(R.string.groups_join_title, groupName)
 		binding.description.text = getString(R.string.groups_join_description, groupName)
 		binding.logo.load(groupLogo) {
-			setPlaceholders(R.drawable.random_avatar_4)
+			setPlaceholders(R.drawable.random_avatar_3)
 		}
 	}
 

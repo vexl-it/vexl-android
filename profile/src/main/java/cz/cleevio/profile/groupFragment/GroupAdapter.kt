@@ -38,7 +38,7 @@ class GroupAdapter constructor(
 				R.string.groups_item_members, item.memberCount.toString()
 			)
 			binding.groupLogo.load(item.logoUrl) {
-				setPlaceholders(R.drawable.random_avatar_5)
+				setPlaceholders(R.drawable.random_avatar_3)
 			}
 
 			binding.leaveBtn.setOnClickListener {

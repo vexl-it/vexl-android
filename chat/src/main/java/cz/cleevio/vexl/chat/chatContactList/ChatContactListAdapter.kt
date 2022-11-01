@@ -34,7 +34,7 @@ class ChatContactListAdapter constructor(
 
 		fun bind(item: ChatListUser) {
 			binding.chatContactIcon.loadAny(item.user?.avatarBase64?.getBitmap()) {
-				setPlaceholders(R.drawable.random_avatar_2)
+				setPlaceholders(R.drawable.random_avatar_3)
 			}
 
 			val isDeanonymized = item.user?.deAnonymized == true

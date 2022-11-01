@@ -121,14 +121,14 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 				when (item.type) {
 					MessageType.REQUEST_REVEAL -> {
 						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap()) {
-							setPlaceholders(R.drawable.random_avatar_5)
+							setPlaceholders(R.drawable.random_avatar_3)
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_header)
 						binding.identityRevealDescription.text = context.getString(R.string.chat_message_identity_reveal_subheader)
 					}
 					MessageType.APPROVE_REVEAL -> {
 						binding.chatContactIcon.loadAny(_chatUserIdentity?.avatarBase64?.getBitmap()) {
-							setPlaceholders(R.drawable.random_avatar_6)
+							setPlaceholders(R.drawable.random_avatar_3)
 						}
 						binding.identityRevealHeading.text = context.getString(R.string.chat_message_identity_reveal_approved)
 						binding.identityRevealDescription.text = _chatUserIdentity?.name
