@@ -64,15 +64,26 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				val isDeanonymized = chatUserIdentity?.deAnonymized == true
 
 				if (isDeanonymized) {
-					binding.profileImage.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
-					}
-					binding.identityRevealRequestedIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
-					}
-					binding.identityRevealSentIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
-					}
+					val bitmap = chatUserIdentity?.avatarBase64?.getBitmap()
+					val index = chatUserIdentity?.anonymousAvatarImageIndex
+					setUserAvatar(
+						binding.profileImage,
+						bitmap,
+						index,
+						requireContext()
+					)
+					setUserAvatar(
+						binding.identityRevealRequestedIcon,
+						bitmap,
+						index,
+						requireContext()
+					)
+					setUserAvatar(
+						binding.identityRevealSentIcon,
+						bitmap,
+						index,
+						requireContext()
+					)
 
 					setupColoredTitle(chatUserIdentity?.name ?: "")
 				} else {
@@ -98,9 +109,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
 				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
-				binding.revealedProfileIcon.loadAny(chatUserIdentity?.avatarBase64?.getBitmap()) {
-					setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
-				}
+				setUserAvatar(
+					binding.revealedProfileIcon,
+					chatUserIdentity?.avatarBase64?.getBitmap(),
+					chatUserIdentity?.anonymousAvatarImageIndex,
+					requireContext()
+				)
 			}
 		}
 		repeatScopeOnStart {

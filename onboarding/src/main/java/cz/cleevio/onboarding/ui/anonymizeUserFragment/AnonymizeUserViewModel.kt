@@ -39,21 +39,20 @@ class AnonymizeUserViewModel constructor(
 	val registerUserFlow = _registerUserChannel.receiveAsFlow()
 
 	val currentUser = userRepository.getUserFlow()
+	var anonymousUsername: String? = null
+	var anonymousAvatarIndex: Int = 0
 
 	fun anonymizeUser(context: Context) {
 		viewModelScope.launch(Dispatchers.Default) {
-			val randomImageIndex = RandomUtils.getAvatarIndex()
-			val newName = RandomUtils.generateName()
-			val newAvatar = RandomUtils.selectRandomImage(context, RandomUtils.getRandomImageDrawableId(randomImageIndex))
-			userRepository.storeAnonymousUserData(
-				newName,
-				randomImageIndex
-			)
+			anonymousUsername = RandomUtils.generateName()
+			anonymousAvatarIndex = RandomUtils.getAvatarIndex()
+			val newAvatar = RandomUtils.selectRandomImage(context, RandomUtils.getRandomImageDrawableId(anonymousAvatarIndex))
+
 			//wait until animation is covering the ui
 			delay(DELAY)
 			_uiState.emit(
 				UIState.Anonymized(
-					NameWithAvatar(newName, newAvatar)
+					NameWithAvatar(anonymousUsername, newAvatar)
 				)
 			)
 		}
@@ -77,10 +76,10 @@ class AnonymizeUserViewModel constructor(
 			val user = User(
 				id = null,
 				username = username,
-				anonymousUsername = null,
+				anonymousUsername = anonymousUsername,
 				avatar = null,
 				avatarBase64 = avatar?.data,
-				anonymousAvatarImageIndex = null,
+				anonymousAvatarImageIndex = anonymousAvatarIndex,
 				publicKey = encryptedPreference.userPublicKey,
 				finishedOnboarding = false
 			)
@@ -100,7 +99,7 @@ class AnonymizeUserViewModel constructor(
 	}
 
 	data class NameWithAvatar constructor(
-		val name: String,
+		val name: String?,
 		val avatar: Drawable?
 	)
 
