@@ -3,6 +3,7 @@ package cz.cleevio.repository.repository.chat
 import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.network.data.Resource
+import cz.cleevio.network.response.chat.MessageResponse
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
@@ -35,8 +36,7 @@ interface ChatRepository {
 		receiverPublicKey: String,
 		message: ChatMessage,
 		messageType: String,
-		storeMessageAlsoWhenFails: Boolean = true
-	): Resource<Unit>
+	): Resource<MessageResponse>
 
 	suspend fun processMessage(message: ChatMessage)
 
@@ -46,7 +46,7 @@ interface ChatRepository {
 		publicKey: String,
 		offerId: String,
 		message: ChatMessage
-	): Resource<Unit>
+	): Resource<MessageResponse>
 
 	suspend fun confirmCommunicationRequest(
 		offerId: String,
@@ -54,7 +54,7 @@ interface ChatRepository {
 		message: ChatMessage,
 		originalRequestMessage: ChatMessage,
 		approve: Boolean
-	): Resource<Unit>
+	): Resource<MessageResponse>
 
 	suspend fun deleteInbox(publicKey: String): Resource<Unit>
 

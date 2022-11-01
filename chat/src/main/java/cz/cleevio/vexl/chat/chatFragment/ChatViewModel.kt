@@ -25,10 +25,10 @@ class ChatViewModel constructor(
 	private val _identityRevealed = MutableSharedFlow<Boolean>(replay = 1)
 	val identityRevealed = _identityRevealed.asSharedFlow()
 
-	private val _requestIdentityChannel = Channel<Resource<Unit>>()
+	private val _requestIdentityChannel = Channel<Resource<Any>>()
 	val requestIdentityFlow = _requestIdentityChannel.receiveAsFlow()
 
-	private val _resolveIdentityRevealChannel = Channel<Resource<Unit>>()
+	private val _resolveIdentityRevealChannel = Channel<Resource<Any>>()
 	val resolveIdentityRevealFlow = _resolveIdentityRevealChannel.receiveAsFlow()
 
 	private val _animationChannel = Channel<Unit>()
@@ -137,10 +137,9 @@ class ChatViewModel constructor(
 					isProcessed = false
 				),
 				messageType = messageType.name,
-				storeMessageAlsoWhenFails = false
 			)
 
-			_requestIdentityChannel.send(response)
+			_requestIdentityChannel.send(response as Resource<Any>)
 		}
 	}
 
@@ -167,11 +166,10 @@ class ChatViewModel constructor(
 					isMine = true,
 					isProcessed = true
 				),
-				messageType = messageType.name,
-				storeMessageAlsoWhenFails = false
+				messageType = messageType.name
 			)
 
-			_resolveIdentityRevealChannel.send(response)
+			_resolveIdentityRevealChannel.send(response as Resource<Any>)
 
 			if (response.isSuccess()) {
 				_identityRevealed.emit(approved)

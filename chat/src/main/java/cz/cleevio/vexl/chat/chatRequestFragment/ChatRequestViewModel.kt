@@ -21,7 +21,7 @@ class ChatRequestViewModel constructor(
 	private val _usersRequestingChat = MutableSharedFlow<List<CommunicationRequest>>(replay = 1)
 	val usersRequestingChat = _usersRequestingChat.asSharedFlow()
 
-	private val _communicationRequestResponse = MutableSharedFlow<Pair<CommunicationRequest, Resource<Unit>>>(replay = 1)
+	private val _communicationRequestResponse = MutableSharedFlow<Pair<CommunicationRequest, Resource<Any>>>(replay = 1)
 	val communicationRequestResponse = _communicationRequestResponse.asSharedFlow()
 
 	init {
@@ -70,7 +70,7 @@ class ChatRequestViewModel constructor(
 
 			if (approve) {
 				_communicationRequestResponse.emit(
-					Pair(communicationRequest, response)
+					Pair(communicationRequest, response as Resource<Any>)
 				)
 			} else {
 				//reload data, old message should be processed

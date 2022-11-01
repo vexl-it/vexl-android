@@ -17,6 +17,8 @@ import java.util.*
 @Parcelize
 data class ChatMessage constructor(
 	val uuid: String = UUID.randomUUID().toString(),
+	//default ID until we have ID from BE
+	val id: Long = 0,
 	val inboxPublicKey: String,
 	val senderPublicKey: String,
 	val recipientPublicKey: String,
@@ -62,9 +64,10 @@ fun MessageResponse.fromNetwork(inboxKeyPair: KeyPair): ChatMessage {
 		recipientPublicKey = inboxKeyPair.publicKey,
 		inboxPublicKey = inboxKeyPair.publicKey,
 		senderPublicKey = senderPublicKey,
-		messageType = this.messageType
+		messageType = this.messageType,
+		id = this.id
 	) ?: ChatMessage(
-		uuid = "broken", type = MessageType.BROKEN, time = System.currentTimeMillis(),
+		uuid = "broken", id = 0, type = MessageType.BROKEN, time = System.currentTimeMillis(),
 		inboxPublicKey = "", senderPublicKey = "", recipientPublicKey = "",
 		isMine = false, isProcessed = false
 	)
@@ -74,10 +77,12 @@ fun ChatMessageRequest.fromNetwork(
 	recipientPublicKey: String,
 	inboxPublicKey: String,
 	senderPublicKey: String,
-	messageType: String
+	messageType: String,
+	id: Long
 ): ChatMessage {
 	return ChatMessage(
 		uuid = this.uuid,
+		id = id,
 		inboxPublicKey = inboxPublicKey,
 		senderPublicKey = senderPublicKey,
 		recipientPublicKey = recipientPublicKey,
@@ -126,6 +131,7 @@ fun ChatUserRequest.fromNetwork(): ChatUser {
 
 fun ChatMessage.toCache(): ChatMessageEntity = ChatMessageEntity(
 	extId = this.uuid,
+	sortingIdFromBE = this.id,
 	inboxPublicKey = this.inboxPublicKey,
 	senderPublicKey = this.senderPublicKey,
 	recipientPublicKey = this.recipientPublicKey,
@@ -151,6 +157,7 @@ fun ChatMessageEntity.fromCache(): ChatMessage {
 
 	return ChatMessage(
 		uuid = this.extId,
+		id = this.sortingIdFromBE,
 		inboxPublicKey = this.inboxPublicKey,
 		senderPublicKey = this.senderPublicKey,
 		recipientPublicKey = this.recipientPublicKey,
