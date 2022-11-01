@@ -15,7 +15,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"WHERE inboxPublicKey == :inboxPublicKey" +
 			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
-			"ORDER BY time"
+			"ORDER BY sortingIdFromBE, time"
 	)
 	fun listAllBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): Flow<List<ChatMessageEntity>>
 
@@ -25,7 +25,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"WHERE inboxPublicKey == :inboxPublicKey" +
 			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
-			"ORDER BY time DESC " +
+			"ORDER BY sortingIdFromBE DESC, time DESC " +
 			"LIMIT 1"
 	)
 	fun getLatestBySenders(inboxPublicKey: String, firstKey: String, secondKey: String): ChatMessageEntity?
@@ -50,7 +50,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"WHERE type == 'REQUEST_MESSAGING' " +
 			"AND isMine == 0 " +
 			"AND isProcessed == 0 " +
-			"ORDER BY time"
+			"ORDER BY sortingIdFromBE, time"
 	)
 	fun listAllPendingCommunicationMessages(): List<ChatMessageEntity>
 
@@ -64,7 +64,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
 			"AND isMine == 0 " +
 			"AND isProcessed == 0 " +
-			"ORDER BY time"
+			"ORDER BY sortingIdFromBE, time"
 	)
 	fun listPendingIdentityRevealsBySenders(
 		inboxPublicKey: String,
@@ -84,7 +84,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"	(type == 'REQUEST_REVEAL' AND isProcessed = 0) " +
 			"   OR type == 'APPROVE_REVEAL'" +
 			" )" +
-			"ORDER BY time DESC"
+			"ORDER BY sortingIdFromBE DESC, time DESC"
 	)
 	fun listPendingAndApprovedIdentityReveals(
 		inboxPublicKey: String,
@@ -99,7 +99,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 			"AND inboxPublicKey == :inboxPublicKey " +
 			" AND (senderPublicKey == :userPublicKey AND recipientPublicKey == :myPublicKey) " +
 			"AND isProcessed == 0 AND isMine = 0 " +
-			"ORDER BY time DESC " +
+			"ORDER BY sortingIdFromBE DESC, time DESC " +
 			"LIMIT 1"
 	)
 	fun getLastRequestRevealMessageByUser(

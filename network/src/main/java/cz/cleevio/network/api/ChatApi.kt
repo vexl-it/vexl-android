@@ -3,6 +3,7 @@ package cz.cleevio.network.api
 import cz.cleevio.network.request.chat.*
 import cz.cleevio.network.response.chat.ChallengeCreatedResponse
 import cz.cleevio.network.response.chat.InboxResponse
+import cz.cleevio.network.response.chat.MessageResponse
 import cz.cleevio.network.response.chat.MessagesResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -35,7 +36,7 @@ interface ChatApi {
 	@POST("inboxes/messages")
 	suspend fun postInboxesMessages(
 		@Body sendMessageRequest: SendMessageRequest
-	): Response<ResponseBody>
+	): Response<MessageResponse>
 
 	//block/unblock sender
 	@PUT("inboxes/block")
@@ -47,13 +48,13 @@ interface ChatApi {
 	@POST("inboxes/approval/request")
 	suspend fun postInboxesApprovalRequest(
 		@Body approvalRequest: ApprovalRequest
-	): Response<ResponseBody>
+	): Response<MessageResponse>
 
 	//approve communication request
 	@POST("inboxes/approval/confirm")
 	suspend fun postInboxesApprovalConfirm(
 		@Body approvalRequest: ApprovalConfirmRequest
-	): Response<ResponseBody>
+	): Response<MessageResponse>
 
 	//delete whole inbox
 	@HTTP(method = "DELETE", path = "inboxes", hasBody = true)

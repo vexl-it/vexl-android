@@ -9,6 +9,7 @@ data class MessagesResponse constructor(
 
 @JsonClass(generateAdapter = true)
 data class MessageResponse constructor(
+	val id: Long,
 	val message: String,
 	val senderPublicKey: String,
 	// MESSAGE, REQUEST_REVEAL, APPROVE_REVEAL, DECLINE_REVEAL,

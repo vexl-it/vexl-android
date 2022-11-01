@@ -1,5 +1,6 @@
 package cz.cleevio.cache.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -23,6 +24,8 @@ data class ChatMessageEntity(
 	@Deprecated("Avatar url is not used anymore, use avatarBase64")
 	val deAnonImage: String? = null,
 	val deAnonImageBase64: String?,
+	@ColumnInfo(defaultValue = "-1")
+	val sortingIdFromBE: Long,
 	//custom flags
 	val isMine: Boolean,
 	val isProcessed: Boolean

@@ -16,6 +16,7 @@ import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.chat.*
 import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
+import cz.cleevio.network.response.chat.MessageResponse
 import cz.cleevio.repository.R
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.*
@@ -345,21 +346,14 @@ class ChatRepositoryImpl constructor(
 		senderPublicKey: String,
 		receiverPublicKey: String,
 		message: ChatMessage,
-		messageType: String,
-		storeMessageAlsoWhenFails: Boolean
-	): Resource<Unit> {
+		messageType: String
+	): Resource<MessageResponse> {
 		//we don't want to store DELETE_CHAT message, delete other messages instead
 		if (message.type == MessageType.DELETE_CHAT) {
 			chatMessageDao.deleteByKeys(
 				inboxPublicKey = message.inboxPublicKey,
 				firstKey = message.senderPublicKey,
 				secondKey = message.recipientPublicKey
-			)
-		} else if (storeMessageAlsoWhenFails) {
-			// we save every message into DB before upload to BE
-			// TODO should we add some `uploaded` flag? Work Manager
-			chatMessageDao.insert(
-				message.toCache()
 			)
 		}
 
@@ -380,11 +374,13 @@ class ChatRepositoryImpl constructor(
 					)
 				},
 				doOnSuccess = {
-					if (!storeMessageAlsoWhenFails) {
-						chatMessageDao.insert(message.toCache())
-					}
+					val messageWithId = it?.let {
+						message.copy(id = it.id)
+					} ?: message
+
+					chatMessageDao.replace(messageWithId.toCache())
 				},
-				mapper = { }
+				mapper = { it }
 			)
 		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}
@@ -438,10 +434,7 @@ class ChatRepositoryImpl constructor(
 		publicKey: String,
 		offerId: String,
 		message: ChatMessage
-	): Resource<Unit> {
-		chatMessageDao.insert(
-			message.toCache()
-		)
+	): Resource<MessageResponse> {
 		return tryOnline(
 			request = {
 				chatApi.postInboxesApprovalRequest(
@@ -451,8 +444,14 @@ class ChatRepositoryImpl constructor(
 					)
 				)
 			},
-			mapper = { },
+			mapper = { it },
 			doOnSuccess = {
+				val messageWithId = it?.let {
+					message.copy(id = it.id)
+				} ?: message
+
+				chatMessageDao.insert(messageWithId.toCache())
+
 				requestedOfferDao.replace(RequestedOfferEntity(offerId = offerId))
 				//trigger
 				val offer = offerDao.getOfferById(offerId = offerId)
@@ -469,7 +468,7 @@ class ChatRepositoryImpl constructor(
 		message: ChatMessage,
 		originalRequestMessage: ChatMessage,
 		approve: Boolean
-	): Resource<Unit> {
+	): Resource<MessageResponse> {
 		val myOfferKeyPair = myOfferDao.getOfferKeysByExtId(offerId)
 		val senderKeyPair = KeyPair(
 			privateKey = myOfferKeyPair.privateKey,
@@ -477,9 +476,6 @@ class ChatRepositoryImpl constructor(
 		)
 
 		return refreshChallenge(senderKeyPair)?.let { signatureChallenge ->
-			chatMessageDao.insert(
-				message.toCache()
-			)
 			val confirmResponse = tryOnline(
 				request = {
 					chatApi.postInboxesApprovalConfirm(
@@ -492,9 +488,13 @@ class ChatRepositoryImpl constructor(
 						)
 					)
 				},
-				mapper = { },
+				mapper = { it },
 				doOnSuccess = {
-					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
+					val messageWithId = it?.let {
+						message.copy(id = it.id)
+					} ?: message
+
+					chatMessageDao.replace(messageWithId.copy(isProcessed = true).toCache())
 					// create anonymous identity
 				}
 			)
