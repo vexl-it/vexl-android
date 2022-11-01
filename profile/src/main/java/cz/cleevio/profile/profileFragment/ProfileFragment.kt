@@ -1,6 +1,7 @@
 package cz.cleevio.profile.profileFragment
 
 import android.Manifest
+import android.telephony.PhoneNumberUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -63,6 +64,11 @@ class ProfileFragment : BaseGraphFragment(R.layout.fragment_profile) {
 				it?.let { user ->
 					// TODO show anonymous user name if there will be difference for public/private profile
 					binding.profileUserName.text = user.username
+					val formattedNumber: String = PhoneNumberUtils.formatNumber(
+						viewModel.encryptedPreferenceRepository.userPhoneNumber,
+						viewModel.encryptedPreferenceRepository.userCountryCode
+					)
+					binding.profilePhoneNumber.text = formattedNumber
 
 					when (user.avatarBase64 == null) {
 						true -> {
