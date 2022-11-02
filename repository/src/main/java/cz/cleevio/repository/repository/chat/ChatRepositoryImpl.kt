@@ -494,8 +494,10 @@ class ChatRepositoryImpl constructor(
 						message.copy(id = it.id)
 					} ?: message
 
-					chatMessageDao.replace(messageWithId.copy(isProcessed = true).toCache())
-					// create anonymous identity
+					//save your confirm/deny message into DB
+					chatMessageDao.replace(messageWithId.toCache())
+					//mark original REQUEST_MESSAGING message as processed
+					chatMessageDao.replace(originalRequestMessage.copy(isProcessed = true).toCache())
 				}
 			)
 
