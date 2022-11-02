@@ -35,11 +35,10 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 
 		fun bind(item: CommunicationRequest) {
 			val offer = item.offer
+			val username = offer?.userName ?: RandomUtils.generateName()
 			offer?.let {
 				val isSell = (offer.offerType == OfferType.SELL.name && !offer.isMine)
 					|| (offer.offerType == OfferType.BUY.name && offer.isMine)
-
-				val username = offer.userName ?: RandomUtils.generateName()
 				if (isSell) {
 					colorizeTransactionType(
 						binding.userName.resources.getString(R.string.marketplace_detail_user_sell, username),
