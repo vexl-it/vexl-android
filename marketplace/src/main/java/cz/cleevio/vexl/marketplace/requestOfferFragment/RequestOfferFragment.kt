@@ -141,7 +141,7 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 	}
 
 	private fun setRequestOfferListener() {
-		binding.requestOfferBtn.setDebouncedOnClickListener {
+		binding.requestOfferBtn.setDebouncedOnClickListener(delay = BUTTON_DELAY) {
 			viewModel.viewModelScope.launch {
 				binding.reportOffer.setOnClickListener(null)
 				val offerPublicKey = viewModel.offer.value?.offer?.offerPublicKey
@@ -192,7 +192,7 @@ class RequestOfferFragment : BaseFragment(R.layout.fragment_request_offer) {
 
 	private companion object {
 		private const val SCROLL_TO_BOTTOM_DELAY = 300L
-		private const val POP_BACKSTACK_DELAY = 1500L
-		private const val BUTTON_DELAY = 1000L
+		private const val POP_BACKSTACK_DELAY = 1000L
+		private const val BUTTON_DELAY = 2000L
 	}
 }
