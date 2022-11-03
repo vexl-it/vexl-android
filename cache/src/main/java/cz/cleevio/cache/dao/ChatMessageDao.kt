@@ -126,6 +126,7 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		"DELETE " +
 			"FROM ChatMessageEntity " +
 			"WHERE inboxPublicKey == :inboxPublicKey" +
+			" AND type != 'REQUEST_MESSAGING'" +
 			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey)" +
 			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) "
 	)

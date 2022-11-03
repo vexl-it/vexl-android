@@ -16,11 +16,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.load
-import coil.loadAny
 import cz.cleevio.core.model.OfferType
 import cz.cleevio.core.utils.*
 import cz.cleevio.core.widget.*
 import cz.cleevio.repository.RandomUtils
+import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
@@ -53,7 +53,9 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				adapter.submitList(messages)
 				binding.chatRv.smoothScrollToPosition(max(messages.size - 1, 0))
 
-				if (messages.isEmpty() && !showingDialog) {
+				val noneOrOnlyRequestMessage = messages.isEmpty() ||
+					(messages.size == 1 && messages.firstOrNull { it.type == MessageType.REQUEST_MESSAGING } != null)
+				if (noneOrOnlyRequestMessage && !showingDialog) {
 					findNavController().popBackStack()
 				}
 			}
