@@ -374,11 +374,13 @@ class ChatRepositoryImpl constructor(
 					)
 				},
 				doOnSuccess = {
-					val messageWithId = it?.let {
-						message.copy(id = it.id)
-					} ?: message
+					if (message.type != MessageType.DELETE_CHAT) {
+						val messageWithId = it?.let {
+							message.copy(id = it.id)
+						} ?: message
 
-					chatMessageDao.replace(messageWithId.toCache())
+						chatMessageDao.replace(messageWithId.toCache())
+					}
 				},
 				mapper = { it }
 			)
