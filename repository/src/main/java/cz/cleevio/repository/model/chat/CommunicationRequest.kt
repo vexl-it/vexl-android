@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CommunicationRequest constructor(
 	val message: ChatMessage,
-	val offer: Offer,
+	val offer: Offer?,
 	val group: Group? = null,
 	//need to display correct FriendLevel in UI
 	val contactLevels: List<ContactLevel> = listOf()

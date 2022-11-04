@@ -81,6 +81,10 @@ val cacheModule = module {
 	}
 
 	single {
+		get<CleevioDatabase>().inboxDao()
+	}
+
+	single {
 		TransactionProvider(get())
 	}
 

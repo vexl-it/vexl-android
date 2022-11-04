@@ -78,7 +78,8 @@ val repoModule = module {
 			chatUserDao = get(),
 			userDao = get(),
 			contactRepository = get(),
-			groupDao = get()
+			groupDao = get(),
+			inboxDao = get(),
 		)
 	}
 
