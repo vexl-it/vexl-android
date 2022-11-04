@@ -631,6 +631,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
 
     <!-- Chat messaging -->
     <string name="chat_btns_reveal_identity">Reveal identity</string>
+    <string name="chat_btns_offer">Offer</string>
     <string name="chat_btns_my_offer">My offer</string>
     <string name="chat_btns_common_friends">Common friends</string>
     <string name="chat_common_friends_facebook_contact">Via Facebook</string>
