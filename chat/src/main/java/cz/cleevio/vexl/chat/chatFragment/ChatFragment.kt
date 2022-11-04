@@ -194,17 +194,18 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			)
 		}
 		binding.myOfferBtn.isVisible = args.communicationRequest.offer != null
-		binding.myOfferBtn.text = if (args.communicationRequest.offer.isMine) {
-			getString(R.string.chat_btns_my_offer)
-		} else {
-			getString(R.string.chat_btns_offer)
-		}
-		binding.myOfferBtn.setDebouncedOnClickListener {
-			hideSubmitMessageWrapper()
-			args.communicationRequest.offer?.let {
-				showBottomDialog(MyOfferBottomSheetDialog(it))
+		args.communicationRequest.offer?.let { offer ->
+			binding.myOfferBtn.setDebouncedOnClickListener {
+				hideSubmitMessageWrapper()
+				showBottomDialog(MyOfferBottomSheetDialog(offer))
+			}
+			binding.myOfferBtn.text = if (offer.isMine) {
+				getString(R.string.chat_btns_my_offer)
+			} else {
+				getString(R.string.chat_btns_offer)
 			}
 		}
+
 		binding.commonFriendsBtn.isVisible = args.communicationRequest.offer != null
 		binding.commonFriendsBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
