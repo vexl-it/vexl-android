@@ -193,6 +193,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				)
 			)
 		}
+		binding.myOfferBtn.text = if (args.communicationRequest.offer.isMine) {
+			getString(R.string.chat_btns_my_offer)
+		} else {
+			getString(R.string.chat_btns_offer)
+		}
 		binding.myOfferBtn.setDebouncedOnClickListener {
 			hideSubmitMessageWrapper()
 			showBottomDialog(MyOfferBottomSheetDialog(args.communicationRequest.offer))

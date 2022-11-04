@@ -632,6 +632,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
 
     <!-- Chat messaging -->
     <string name="chat_btns_reveal_identity">Odhaliť identitu</string>
+    <string name="chat_btns_offer">Ponuka</string>
     <string name="chat_btns_my_offer">Moja ponuka</string>
     <string name="chat_btns_common_friends">Spoloční priatelia</string>
     <string name="chat_common_friends_facebook_contact">Cez Facebook</string>
