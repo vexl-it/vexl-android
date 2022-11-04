@@ -29,8 +29,12 @@ class OffersAdapter(
 				mode = offerMode,
 				group = item.group
 			)
-			binding.offerWidget.setOnClickListener {
-				requestOffer(item.offer.offerId)
+			if (item.offer.isRequested) {
+				binding.offerWidget.setOnClickListener(null)
+			} else {
+				binding.offerWidget.setOnClickListener {
+					requestOffer(item.offer.offerId)
+				}
 			}
 		}
 	}

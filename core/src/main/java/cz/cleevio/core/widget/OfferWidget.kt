@@ -205,6 +205,7 @@ class OfferWidget @JvmOverloads constructor(
 				binding.requestBtn.isVisible = true
 				binding.editBtn.isVisible = false
 
+				binding.requestBtn.isEnabled = !item.isRequested
 				binding.requestBtn.isVisible = requestOffer != null
 				binding.requestBtn.text = if (item.isRequested) {
 					context.getString(R.string.offer_requested)
@@ -315,8 +316,6 @@ class OfferWidget @JvmOverloads constructor(
 			binding.profileImage.clearColorFilter()
 			binding.profileImage.setBackgroundColor(resources.getColor(R.color.white, null))
 		}
-
-		binding.requestBtn.isEnabled = !isRequested
 	}
 
 	enum class Mode {
