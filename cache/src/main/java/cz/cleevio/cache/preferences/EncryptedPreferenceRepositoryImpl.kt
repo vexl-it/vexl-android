@@ -3,7 +3,6 @@ package cz.cleevio.cache.preferences
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import cz.cleevio.cache.BuildConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Suppress("Unused")
@@ -91,7 +90,7 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		}
 
 	override var areScreenshotsAllowed: Boolean
-		get() = getBooleanFromEP(ARE_SCREENSHOTS_ALLOWED, BuildConfig.FLAVOR == "development")
+		get() = getBooleanFromEP(ARE_SCREENSHOTS_ALLOWED, true)
 		set(value) {
 			putBooleanToEP(ARE_SCREENSHOTS_ALLOWED, value)
 			areScreenshotsAllowedFlow.tryEmit(value)
