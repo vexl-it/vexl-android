@@ -22,9 +22,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 const val TO_SECONDS = 1000L
 
+@Suppress("StringLiteralDuplication", "LongMethod", "MaxLineLength")
 class SplashViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
@@ -57,6 +59,7 @@ class SplashViewModel constructor(
 	val showEncryptingDialogFlow = showEncryptingDialog.asSharedFlow()
 
 	var myOffersV1: List<MyOffer> = listOf()
+	private var migrationInProgress: Boolean = false
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -98,7 +101,14 @@ class SplashViewModel constructor(
 	}
 
 	fun migrateOfferToV2(myOffer: MyOffer, index: Int) {
+		if (migrationInProgress) {
+			Timber.tag("REENCRYPT_MIGRATION").w("Lock prevented multiple migration cycles")
+			return
+		}
+		migrationInProgress = true
+
 		viewModelScope.launch(Dispatchers.IO) {
+			Timber.tag("REENCRYPT_MIGRATION").d("migrateOfferToV2 called")
 			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = myOffer.offerId)
 			val symmetricalKey = encryptionUtils.generateAesSymmetricalKey()
 
@@ -124,6 +134,7 @@ class SplashViewModel constructor(
 				_skipMigrationOnError.send(index)
 				return@launch
 			}
+			Timber.tag("REENCRYPT_MIGRATION").d("we have all keys and offer data")
 
 			val contactKeys = offerUtils.fetchContactsPublicKeysV2(
 				friendLevel = FriendLevel.valueOf(offer.friendLevel.first()),
@@ -132,6 +143,7 @@ class SplashViewModel constructor(
 				encryptedPreferenceRepository = encryptedPreferenceRepository,
 				shouldEmitContacts = true
 			)
+			Timber.tag("REENCRYPT_MIGRATION").d("contactKeys for offer loaded")
 
 			val commonFriends = contactRepository.getCommonFriends(
 				contactKeys
@@ -142,6 +154,7 @@ class SplashViewModel constructor(
 						it != encryptedPreferenceRepository.userPublicKey
 					}
 			)
+			Timber.tag("REENCRYPT_MIGRATION").d("commonFriends for offer loaded")
 
 			//this needs to be creation of offer, update will not work
 			showEncryptingDialog.emit(
@@ -170,5 +183,9 @@ class SplashViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.deleteBrokenMyOffersFromDB(listOf(offerId))
 		}
+	}
+
+	fun migrationDone() {
+		migrationInProgress = false
 	}
 }
