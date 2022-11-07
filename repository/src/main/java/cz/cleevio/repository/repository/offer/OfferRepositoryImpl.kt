@@ -102,7 +102,7 @@ class OfferRepositoryImpl constructor(
 			)
 
 			//create inbox
-			val inboxResponse = chatRepository.createInbox(offerKeys.publicKey)
+			val inboxResponse = chatRepository.createInbox(offerKeys.publicKey, offer.offerId)
 			when (inboxResponse.status) {
 				is Status.Success -> {
 					//update info in my offers

@@ -78,6 +78,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		if (!viewModel.encryptedPreferenceRepository.hasConvertedAvatarToSmallerSize) {
 			viewModel.convertAvatarToSmallerSize()
 		}
+
+		if (!viewModel.encryptedPreferenceRepository.hasCreatedInternalInboxesForOffers) {
+			viewModel.createInboxesForOffers()
+		}
 	}
 
 	override fun onNewIntent(intent: android.content.Intent?) {
