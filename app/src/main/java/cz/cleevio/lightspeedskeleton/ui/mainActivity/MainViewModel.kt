@@ -114,6 +114,12 @@ class MainViewModel constructor(
 		}
 	}
 
+	fun createInboxesForOffers() {
+		viewModelScope.launch(Dispatchers.IO) {
+			chatRepository.createInboxesForMeAndOffers()
+		}
+	}
+
 	companion object {
 		private const val DEBOUNCE_DELAY = 100L
 	}

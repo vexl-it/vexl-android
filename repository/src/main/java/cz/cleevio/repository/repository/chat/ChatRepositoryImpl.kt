@@ -827,4 +827,29 @@ class ChatRepositoryImpl constructor(
 
 		return null
 	}
+
+	override suspend fun createInboxesForMeAndOffers() {
+		//personal inbox
+		val personalInbox = InboxEntity(
+			inboxType = InboxType.PERSONAL.name,
+			publicKey = encryptedPreferenceRepository.userPublicKey,
+			privateKey = encryptedPreferenceRepository.userPrivateKey,
+			offerId = null
+		)
+		inboxDao.replace(personalInbox)
+
+		//offer inboxes
+		val myOffers = myOfferDao.listAll()
+		myOffers.forEach { myOffer ->
+			val inboxEntity = InboxEntity(
+				inboxType = InboxType.OFFER.name,
+				publicKey = myOffer.publicKey,
+				privateKey = myOffer.privateKey,
+				offerId = myOffer.extId
+			)
+			inboxDao.replace(inboxEntity)
+		}
+
+		encryptedPreferenceRepository.hasCreatedInternalInboxesForOffers = true
+	}
 }

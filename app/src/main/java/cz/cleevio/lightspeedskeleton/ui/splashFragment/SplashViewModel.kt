@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 const val TO_SECONDS = 1000L
 
@@ -67,7 +66,7 @@ class SplashViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val offers = offerRepository.getMyOffersWithoutInbox()
 			offers.forEach { myOffer ->
-				val inboxResponse = chatRepository.createInbox(myOffer.publicKey)
+				val inboxResponse = chatRepository.createInbox(myOffer.publicKey, myOffer.offerId)
 				if (inboxResponse.status is Status.Success) {
 					offerRepository.saveMyOfferIdAndKeys(
 						offerId = myOffer.offerId,
@@ -102,7 +101,6 @@ class SplashViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = myOffer.offerId)
 			val symmetricalKey = encryptionUtils.generateAesSymmetricalKey()
-			Timber.tag("ASDX").d("symmetricalKey: $symmetricalKey")
 
 			if (offerKeys == null) {
 				_errorFlow.emit(

@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class InitPhoneViewModel constructor(
 	private val encryptedPreferences: EncryptedPreferenceRepository,
@@ -36,7 +35,6 @@ class InitPhoneViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_loading.send(true)
 			val response = userRepository.authStepOne(phoneNumber)
-			Timber.tag("ASDX").d("${response.data}")
 			_loading.send(false)
 
 			when (response.status) {

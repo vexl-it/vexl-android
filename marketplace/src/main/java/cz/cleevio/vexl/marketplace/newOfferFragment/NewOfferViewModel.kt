@@ -17,7 +17,6 @@ import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class NewOfferViewModel constructor(
 	private val userRepository: UserRepository,
@@ -44,7 +43,6 @@ class NewOfferViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val offerKeys = KeyPairCryptoLib.generateKeyPair()
 			val symmetricalKey = encryptionUtils.generateAesSymmetricalKey()
-			Timber.tag("ASDX").d("symmetricalKey: $symmetricalKey")
 
 			super.showEncryptingDialog.emit(
 				OfferEncryptionData(
