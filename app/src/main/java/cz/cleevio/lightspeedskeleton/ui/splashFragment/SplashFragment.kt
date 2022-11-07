@@ -17,6 +17,7 @@ import timber.log.Timber
 
 const val SPLASH_DELAY = 500L
 
+@Suppress("StringLiteralDuplication", "LongMethod", "MaxLineLength")
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
 	private val binding by viewBinding(FragmentSplashBinding::bind)

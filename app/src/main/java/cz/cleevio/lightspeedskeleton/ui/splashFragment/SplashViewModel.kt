@@ -26,6 +26,7 @@ import timber.log.Timber
 
 const val TO_SECONDS = 1000L
 
+@Suppress("StringLiteralDuplication", "LongMethod", "MaxLineLength")
 class SplashViewModel constructor(
 	private val userRepository: UserRepository,
 	private val contactRepository: ContactRepository,
