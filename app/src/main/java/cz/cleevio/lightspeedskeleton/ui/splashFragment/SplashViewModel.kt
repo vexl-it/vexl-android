@@ -59,6 +59,7 @@ class SplashViewModel constructor(
 	val showEncryptingDialogFlow = showEncryptingDialog.asSharedFlow()
 
 	var myOffersV1: List<MyOffer> = listOf()
+	private var migrationInProgress: Boolean = false
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -100,6 +101,12 @@ class SplashViewModel constructor(
 	}
 
 	fun migrateOfferToV2(myOffer: MyOffer, index: Int) {
+		if (migrationInProgress) {
+			Timber.tag("REENCRYPT_MIGRATION").w("Lock prevented multiple migration cycles")
+			return
+		}
+		migrationInProgress = true
+
 		viewModelScope.launch(Dispatchers.IO) {
 			Timber.tag("REENCRYPT_MIGRATION").d("migrateOfferToV2 called")
 			val offerKeys = offerRepository.loadOfferKeysByOfferId(offerId = myOffer.offerId)
@@ -176,5 +183,9 @@ class SplashViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.deleteBrokenMyOffersFromDB(listOf(offerId))
 		}
+	}
+
+	fun migrationDone() {
+		migrationInProgress = false
 	}
 }

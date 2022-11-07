@@ -81,6 +81,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 				Timber.tag("REENCRYPT_MIGRATION").d("showBottomDialog for offer index: ${it.first}")
 				//show encrypt dialog
 				showBottomDialog(EncryptingProgressBottomSheetDialog(it.second, isNewOffer = true) { resource ->
+					viewModel.migrationDone()
 
 					if (resource.status == Status.Success) {
 						Timber.tag("REENCRYPT_MIGRATION").d("migration was success for offer index: ${it.first}")
@@ -126,6 +127,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		repeatScopeOnCreate {
 			//we don't have all data for offer migration to v2 and BE has already deleted all data, so no luck, offer is dead
 			viewModel.skipMigrationOnError.collect { brokenOfferIndex ->
+				viewModel.migrationDone()
 				Timber.tag("REENCRYPT_MIGRATION").d("skipMigrationOnError: $brokenOfferIndex")
 				val nextIndex = brokenOfferIndex.inc()
 				Timber.tag("REENCRYPT_MIGRATION").d("skipMigrationOnError nextIndex is $nextIndex, size is ${viewModel.myOffersV1.size}")
