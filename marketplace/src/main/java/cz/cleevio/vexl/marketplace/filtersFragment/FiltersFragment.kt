@@ -95,6 +95,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		}
 
 		binding.friendLevel.isMultichoiceEnabled(true)
+		binding.friendLevel.setValues(setOf(FriendLevel.NONE))
 
 		binding.applyBtn.setOnClickListener {
 			filterViewModel.saveOfferFilter(
@@ -132,7 +133,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		binding.filterLocation.reset()
 		binding.paymentMethod.reset()
 		binding.networkType.reset()
-		binding.friendLevel.reset()
+		binding.friendLevel.resetFromFilters()
 		binding.filterOfferFee.isVisible = false
 		binding.amountTitle.isVisible = false
 		binding.priceRangeWidget.isVisible = false

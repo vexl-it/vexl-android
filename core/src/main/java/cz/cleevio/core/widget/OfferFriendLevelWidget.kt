@@ -155,6 +155,10 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 		setValues(setOf(FriendLevel.SECOND_DEGREE))
 	}
 
+	fun resetFromFilters() {
+		setValues(setOf(FriendLevel.NONE))
+	}
+
 	fun setValues(levels: Set<FriendLevel>) {
 		selectedFriendLevels = levels.toMutableSet()
 		levels.forEach { level ->
