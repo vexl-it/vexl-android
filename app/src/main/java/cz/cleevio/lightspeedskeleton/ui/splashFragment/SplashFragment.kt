@@ -94,7 +94,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
 					//check if we have more offers to migrate
 					val nextIndex = it.first.inc()
-					Timber.tag("REENCRYPT_MIGRATION").d("nextIndex is ${nextIndex}, size is ${viewModel.myOffersV1.size}")
+					Timber.tag("REENCRYPT_MIGRATION").d("nextIndex is $nextIndex, size is ${viewModel.myOffersV1.size}")
 					if (nextIndex >= viewModel.myOffersV1.size) {
 						//finally continue to Marketplace
 						Timber.tag("REENCRYPT_MIGRATION").d("all done, go to marketplace")
@@ -126,9 +126,9 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 		repeatScopeOnCreate {
 			//we don't have all data for offer migration to v2 and BE has already deleted all data, so no luck, offer is dead
 			viewModel.skipMigrationOnError.collect { brokenOfferIndex ->
-				Timber.tag("REENCRYPT_MIGRATION").d("skipMigrationOnError: ${brokenOfferIndex}")
+				Timber.tag("REENCRYPT_MIGRATION").d("skipMigrationOnError: $brokenOfferIndex")
 				val nextIndex = brokenOfferIndex.inc()
-				Timber.tag("REENCRYPT_MIGRATION").d("skipMigrationOnError nextIndex is ${nextIndex}, size is ${viewModel.myOffersV1.size}")
+				Timber.tag("REENCRYPT_MIGRATION").d("skipMigrationOnError nextIndex is $nextIndex, size is ${viewModel.myOffersV1.size}")
 				if (nextIndex >= viewModel.myOffersV1.size) {
 					continueToMarketplace()
 				} else {
