@@ -21,7 +21,7 @@ interface OfferRepository {
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
 	@Suppress("LongParameterList")
 	suspend fun createOffer(
-		offerList: List<NewOfferPrivateV2>,
+		offerList: List<NewOfferPrivateV2?>,
 		expiration: Long,
 		offerKeys: KeyPair,
 		offerType: String,
