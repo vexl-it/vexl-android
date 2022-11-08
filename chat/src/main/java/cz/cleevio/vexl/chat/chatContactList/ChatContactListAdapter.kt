@@ -3,6 +3,7 @@ package cz.cleevio.vexl.chat.chatContactList
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,8 @@ import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.ItemChatContactBinding
 import java.text.SimpleDateFormat
 
+const val NUMBER_OF_FOOTERS = 1
+
 class ChatContactListAdapter constructor(
 	val chatWithUser: (ChatListUser) -> Unit
 ) : ListAdapter<ChatListUser, ChatContactListAdapter.ViewHolder>(object : DiffUtil.ItemCallback<ChatListUser>() {
@@ -28,11 +31,34 @@ class ChatContactListAdapter constructor(
 		oldItem == newItem
 }) {
 
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+		ViewHolder(
+			ItemChatContactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+		)
+
+	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+		if (position == itemCount - NUMBER_OF_FOOTERS) {
+			holder.bindFooter()
+		} else {
+			holder.bind(getItem(position))
+		}
+	}
+
+	override fun getItemCount(): Int {
+		return if (super.getItemCount() <= 0) {
+			0
+		} else {
+			super.getItemCount() + NUMBER_OF_FOOTERS
+		}
+	}
+
 	inner class ViewHolder constructor(
 		private val binding: ItemChatContactBinding
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatListUser) {
+			setFooterVisibility(false)
+
 			setUserAvatar(
 				binding.chatContactIcon,
 				item.user?.avatarBase64?.getBitmap(),
@@ -110,14 +136,18 @@ class ChatContactListAdapter constructor(
 			} else {
 				R.color.gray_4
 			}
-	}
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-		ViewHolder(
-			ItemChatContactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-		)
+		fun bindFooter() {
+			setFooterVisibility(true)
+		}
 
-	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		holder.bind(getItem(position))
+		private fun setFooterVisibility(visible: Boolean) {
+			binding.footer.isVisible = visible
+
+			binding.chatContactIcon.isVisible = !visible
+			binding.chatTime.isVisible = !visible
+			binding.chatContactName.isVisible = !visible
+			binding.chatLastMessage.isVisible = !visible
+		}
 	}
 }
