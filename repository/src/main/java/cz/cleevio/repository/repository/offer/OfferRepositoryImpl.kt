@@ -62,7 +62,7 @@ class OfferRepositoryImpl constructor(
 	override val sellOfferFilter = MutableStateFlow(OfferFilter())
 
 	override suspend fun createOffer(
-		offerList: List<NewOfferPrivateV2>,
+		offerList: List<NewOfferPrivateV2?>,
 		expiration: Long,
 		offerKeys: KeyPair,
 		offerType: String,
@@ -77,7 +77,7 @@ class OfferRepositoryImpl constructor(
 				offerApiV2.postOffers(
 					OfferCreateRequestV2(
 						payloadPublic = payloadPublic,
-						offerPrivateList = offerList.map { it.toNetworkV2() },
+						offerPrivateList = offerList.filterNotNull().map { it.toNetworkV2() },
 						expiration = expiration,
 						offerType = offerType
 					)
