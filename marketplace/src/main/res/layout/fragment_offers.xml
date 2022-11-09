@@ -63,6 +63,17 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
+	<com.google.android.material.progressindicator.CircularProgressIndicator
+		android:id="@+id/progressbar"
+		style="@style/Widget.LightBase.Dialog.CircleProgressIndicator"
+		android:layout_width="38dp"
+		android:layout_height="38dp"
+		android:visibility="gone"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/filters_wrapper"
+		app:layout_constraintBottom_toBottomOf="@+id/filters_wrapper" />
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/offer_list"
 		android:layout_width="match_parent"

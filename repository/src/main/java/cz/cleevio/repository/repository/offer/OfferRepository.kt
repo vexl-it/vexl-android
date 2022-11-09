@@ -18,6 +18,8 @@ interface OfferRepository {
 
 	val sellOfferFilter: MutableStateFlow<OfferFilter>
 
+	val isOfferSyncInProgress: MutableStateFlow<Boolean>
+
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
 	@Suppress("LongParameterList")
 	suspend fun createOffer(
