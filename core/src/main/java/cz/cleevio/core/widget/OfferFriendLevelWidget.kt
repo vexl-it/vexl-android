@@ -156,7 +156,8 @@ class OfferFriendLevelWidget @JvmOverloads constructor(
 	}
 
 	fun resetFromFilters() {
-		setValues(setOf(FriendLevel.NONE))
+		setValues(setOf())
+		redrawWithSelection(FriendLevel.NONE)
 	}
 
 	fun setValues(levels: Set<FriendLevel>) {

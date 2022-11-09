@@ -95,7 +95,7 @@ class FiltersFragment : BaseGraphFragment(R.layout.fragment_filters) {
 		}
 
 		binding.friendLevel.isMultichoiceEnabled(true)
-		binding.friendLevel.setValues(setOf(FriendLevel.NONE))
+		binding.friendLevel.resetFromFilters()
 
 		binding.applyBtn.setOnClickListener {
 			filterViewModel.saveOfferFilter(

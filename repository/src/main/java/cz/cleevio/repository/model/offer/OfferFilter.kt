@@ -14,6 +14,7 @@ data class OfferFilter constructor(
 	val groupUuids: List<String>? = null
 ) {
 
+	@Suppress("ReturnCount")
 	fun isOfferMatchPriceRange(minOffer: Float, maxOffer: Float): Boolean {
 		val minFilter = priceRangeBottomLimit ?: return true
 		val maxFilter = priceRangeTopLimit ?: return true
@@ -23,6 +24,7 @@ data class OfferFilter constructor(
 			|| (maxFilter in minOffer..maxOffer)
 	}
 
+	@Suppress("ReturnCount")
 	fun isOfferLocationInRadius(offerLocations: List<Location>): Boolean {
 		if (locations.isNullOrEmpty()) return true
 		if (offerLocations.isEmpty()) return false
