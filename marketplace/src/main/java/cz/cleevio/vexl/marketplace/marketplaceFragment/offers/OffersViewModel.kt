@@ -49,6 +49,8 @@ class OffersViewModel constructor(
 		}
 	}.flowOn(Dispatchers.Default)
 
+	val isOfferSyncInProgress = offerRepository.isOfferSyncInProgress
+
 	private val _myOffersCount = MutableSharedFlow<Int>(replay = 1)
 	val myOffersCount = _myOffersCount.asSharedFlow()
 

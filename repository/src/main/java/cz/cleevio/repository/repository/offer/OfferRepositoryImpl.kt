@@ -61,6 +61,8 @@ class OfferRepositoryImpl constructor(
 
 	override val sellOfferFilter = MutableStateFlow(OfferFilter())
 
+	override val isOfferSyncInProgress = MutableStateFlow(false)
+
 	override suspend fun createOffer(
 		offerList: List<NewOfferPrivateV2?>,
 		expiration: Long,
@@ -481,8 +483,10 @@ class OfferRepositoryImpl constructor(
 	}
 
 	override suspend fun syncOffers() {
+		isOfferSyncInProgress.emit(true)
 		val newOffers = getNewOffers()
 		if (newOffers.isSuccess()) overwriteOffers(newOffers.data.orEmpty())
+		isOfferSyncInProgress.emit(false)
 	}
 
 	override suspend fun getMyActiveOffersCount(offerType: String): Int {

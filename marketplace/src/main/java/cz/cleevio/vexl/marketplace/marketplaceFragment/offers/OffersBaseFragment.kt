@@ -50,6 +50,11 @@ sealed class OffersBaseFragment : BaseFragment(R.layout.fragment_offers) {
 				processMyOffersButtons(myOffersCount > 0)
 			}
 		}
+		repeatScopeOnResume {
+			viewModel.isOfferSyncInProgress.collect { showProgress ->
+				binding.progressbar.isVisible = showProgress
+			}
+		}
 	}
 
 	override fun initView() {
