@@ -14,6 +14,7 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.ImageLoader
 import coil.load
 import cz.cleevio.core.model.OfferType
@@ -51,7 +52,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.messages.collect { messages ->
 				adapter.submitList(messages)
-				binding.chatRv.smoothScrollToPosition(max(messages.size - 1, 0))
+
+				//autoscroll should be enabled only when user is scrolled to the bottom of the chat, seeing latest message
+				val layoutManager: LinearLayoutManager = binding.chatRv.layoutManager as LinearLayoutManager
+				if (layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount - 1) {
+					binding.chatRv.smoothScrollToPosition(max(messages.size - 1, 0))
+				}
 
 				val noneOrOnlyRequestMessage = messages.isEmpty() ||
 					(messages.size == 1 && messages.firstOrNull { it.type == MessageType.REQUEST_MESSAGING } != null)
@@ -262,6 +268,10 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				binding.submitMessageWrapper.updateLayoutParams<ViewGroup.MarginLayoutParams> {
 					bottomMargin = insets
 				}
+			}
+
+			binding.chatRv.post {
+				binding.chatRv.smoothScrollToPosition(max(adapter.itemCount - 1, 0))
 			}
 		}
 	}
