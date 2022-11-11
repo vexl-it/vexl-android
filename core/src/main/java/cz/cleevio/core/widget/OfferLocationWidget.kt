@@ -39,10 +39,17 @@ class OfferLocationWidget @JvmOverloads constructor(
 
 		binding.locationRadiogroup.setOnCheckedChangeListener { _, id ->
 			selectedButton = when (id) {
-				R.id.location_in_person -> LocationButtonSelected.IN_PERSON
-				R.id.location_online -> LocationButtonSelected.ONLINE
+				R.id.location_in_person -> {
+					binding.locationAlert.isVisible = false
+					LocationButtonSelected.IN_PERSON
+				}
+				R.id.location_online -> {
+					binding.locationAlert.isVisible = true
+					LocationButtonSelected.ONLINE
+				}
 				else -> {
 					Timber.e("Unknown radio ID! '$id'")
+					binding.locationAlert.isVisible = false
 					LocationButtonSelected.NONE
 				}
 			}
@@ -133,15 +140,18 @@ class OfferLocationWidget @JvmOverloads constructor(
 			LocationButtonSelected.NONE -> {
 				binding.locationInPerson.isChecked = false
 				binding.locationOnline.isChecked = false
+				binding.locationAlert.isVisible = false
 				binding.locationRadiogroup.clearCheck()
 			}
 			LocationButtonSelected.ONLINE -> {
 				binding.locationInPerson.isChecked = false
 				binding.locationOnline.isChecked = true
+				binding.locationAlert.isVisible = true
 			}
 			LocationButtonSelected.IN_PERSON -> {
 				binding.locationInPerson.isChecked = true
 				binding.locationOnline.isChecked = false
+				binding.locationAlert.isVisible = false
 			}
 		}
 	}

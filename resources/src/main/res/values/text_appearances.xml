@@ -1056,6 +1056,16 @@
 		<item name="fontFamily">@font/tt_satoshi_500</item>
 	</style>
 
+	<style name="TextAppearance.Vexl.Location.Alert" parent="TextAppearance.MaterialComponents.Button">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/pink_100</item>
+		<item name="lineHeight">18dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:letterSpacing">-0.02</item>
+		<item name="android:fontFamily">@font/tt_satoshi_400</item>
+		<item name="fontFamily">@font/tt_satoshi_400</item>
+	</style>
+
 	<style name="TextAppearance.Vexl.Trigger.Delete.Item" parent="TextAppearance.Cleevio.Body2">
 		<item name="android:textSize">24sp</item>
 		<item name="android:textColor">@color/yellow_100</item>
