@@ -590,7 +590,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="offer_update_buy_btn">Update buy offer</string>
     <string name="widget_location_km">\u00B1 %d km</string>
     <string name="widget_location_hint">City</string>
-    <string name="widget_location_warning">Meeting in person is safer than online. Better double–check the counterparty. Watch out for scammers.</string>
+    <string name="widget_location_warning">Online payments are risky. Double–check the counterparty and beware of scammers!</string>
     <string name="create_create_offer">Create offer</string>
     <string name="currency_usd">USD</string>
     <string name="currency_eur">EUR</string>
