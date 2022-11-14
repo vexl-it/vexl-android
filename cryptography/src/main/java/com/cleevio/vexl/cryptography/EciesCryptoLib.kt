@@ -8,7 +8,7 @@ object EciesCryptoLib : BaseCryptoLib() {
 
 	external fun init()
 
-	fun encrypt(publicKey: String, message: String): String {
+	fun encrypt(publicKey: String, message: String): String? {
 
 		val publicKeyArray = publicKey.toByteArray(StandardCharsets.UTF_8)
 		val messageArray = message.toByteArray(StandardCharsets.UTF_8)
@@ -18,7 +18,7 @@ object EciesCryptoLib : BaseCryptoLib() {
 			messageArray, messageArray.size
 		)
 
-		return result.commonToUtf8String()
+		return result?.commonToUtf8String()
 	}
 
 	fun decrypt(keyPair: KeyPair, encodedMessage: String): String {
@@ -39,7 +39,7 @@ object EciesCryptoLib : BaseCryptoLib() {
 	private external fun encrypt(
 		publicKey: ByteArray, publicKeyLen: Int,
 		message: ByteArray, messageLen: Int
-	): ByteArray
+	): ByteArray?
 
 	private external fun decrypt(
 		publicKey: ByteArray, publicKeyLen: Int,

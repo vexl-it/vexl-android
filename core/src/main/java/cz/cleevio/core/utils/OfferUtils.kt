@@ -203,8 +203,10 @@ class OfferUtils(
 					friendLevel = contactLevelMap[contactKey.key].orEmpty(),
 					symmetricKey = symmetricalKey,
 				)
-				_offerWasEncrypted.send(Unit)
-				encryptedPrivatePayloadList.add(encryptedOffer)
+				encryptedOffer?.let {
+					_offerWasEncrypted.send(Unit)
+					encryptedPrivatePayloadList.add(encryptedOffer)
+				}
 			}
 
 		return encryptedPrivatePayloadList
@@ -215,7 +217,7 @@ class OfferUtils(
 		commonFriends: List<BaseContact>,
 		friendLevel: Set<FriendLevel>,
 		symmetricKey: String
-	): NewOfferPrivateV2 {
+	): NewOfferPrivateV2? {
 		//encrypt private part
 		val privatePayload = NewOfferV2PrivatePayload(
 			commonFriends = commonFriends.map { friend -> friend.getHashedContact() },
@@ -225,13 +227,15 @@ class OfferUtils(
 		val privatePayloadJson = moshi.adapter(NewOfferV2PrivatePayload::class.java).toJson(privatePayload)
 		val encryptedPrivatePayload = eciesEncrypt(privatePayloadJson, contactKey)
 
-		return NewOfferPrivateV2(
-			userPublicKey = contactKey,
-			payloadPrivate = encryptedPrivatePayload
-		)
+		return encryptedPrivatePayload?.let {
+			NewOfferPrivateV2(
+				userPublicKey = contactKey,
+				payloadPrivate = encryptedPrivatePayload
+			)
+		}
 	}
 
-	private fun eciesEncrypt(data: String, contactKey: String): String =
+	private fun eciesEncrypt(data: String, contactKey: String): String? =
 		EciesCryptoLib.encrypt(contactKey, data)
 
 	@Suppress("ReturnCount", "LongMethod", "LongParameterList")
