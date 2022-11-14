@@ -800,7 +800,9 @@ class ChatRepositoryImpl constructor(
 	}
 
 	override suspend fun deleteMessage(communicationRequest: CommunicationRequest) {
-		chatMessageDao.delete(communicationRequest.message.toCache())
+		communicationRequest.message?.toCache()?.let {
+			chatMessageDao.delete(it)
+		}
 	}
 
 	override suspend fun getKeyPairByMyPublicKey(myPublicKey: String): KeyPair? {

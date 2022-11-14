@@ -11,6 +11,8 @@ import cz.cleevio.core.utils.repeatScopeOnStart
 import cz.cleevio.core.utils.safeNavigateWithTransition
 import cz.cleevio.core.utils.viewBinding
 import cz.cleevio.core.widget.CurrencyPriceChartWidget
+import cz.cleevio.repository.model.chat.ChatListUser
+import cz.cleevio.repository.model.chat.ChatListUserType
 import cz.cleevio.repository.model.chat.CommunicationRequest
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatContactListBinding
@@ -32,7 +34,20 @@ class ChatContactListFragment : BaseGraphFragment(R.layout.fragment_chat_contact
 
 		repeatScopeOnStart {
 			chatContactListViewModel.usersChattedWith.collect { offers ->
-				adapter.submitList(offers)
+				if (offers.isNotEmpty()) {
+					val offersWithFooter = offers.toMutableList()
+					offersWithFooter.add(
+						ChatListUser(
+							type = ChatListUserType.FOOTER,
+							message = null,
+							user = null,
+							offer = null
+						)
+					)
+					adapter.submitList(offersWithFooter)
+				} else {
+					adapter.submitList(offers)
+				}
 			}
 		}
 		repeatScopeOnStart {
