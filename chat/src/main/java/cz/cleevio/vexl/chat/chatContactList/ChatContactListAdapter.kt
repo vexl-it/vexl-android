@@ -140,6 +140,8 @@ class ChatContactListAdapter constructor(
 			binding.chatTime.isVisible = !visible
 			binding.chatContactName.isVisible = !visible
 			binding.chatLastMessage.isVisible = !visible
+
+			binding.container.isClickable = !visible
 		}
 	}
 }
