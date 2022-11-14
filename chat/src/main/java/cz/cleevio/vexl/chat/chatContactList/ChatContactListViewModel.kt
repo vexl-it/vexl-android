@@ -73,7 +73,7 @@ class ChatContactListViewModel constructor(
 					FilterType.SELLERS -> hasOffer && !isBuyers
 				}
 			}.sortedByDescending {
-				it.message.time
+				it.message?.time
 			}
 		)
 	}

@@ -50,7 +50,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 	override fun bindObservers() {
 		repeatScopeOnStart {
-			viewModel.messages.collect { messages ->
+			viewModel.messages?.collect { messages ->
 				adapter.submitList(messages)
 
 				//autoscroll should be enabled only when user is scrolled to the bottom of the chat, seeing latest message
@@ -67,7 +67,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			}
 		}
 		repeatScopeOnStart {
-			viewModel.chatUserIdentity.collect { chatUserIdentity ->
+			viewModel.chatUserIdentity?.collect { chatUserIdentity ->
 				adapter.updateChatUserIdentity(chatUserIdentity)
 				val isDeanonymized = chatUserIdentity?.deAnonymized == true
 
@@ -126,12 +126,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			}
 		}
 		repeatScopeOnStart {
-			viewModel.hasPendingIdentityRevealRequests.collect { pending ->
+			viewModel.hasPendingIdentityRevealRequests?.collect { pending ->
 				binding.identityRevealRequestedWrapper.isVisible = pending
 			}
 		}
 		repeatScopeOnStart {
-			viewModel.canRequestIdentity.collect { canRequestIdentity ->
+			viewModel.canRequestIdentity?.collect { canRequestIdentity ->
 				binding.revealIdentityBtn.isVisible = canRequestIdentity
 			}
 		}
@@ -164,7 +164,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 	}
 
 	override fun initView() {
-		val name = args.communicationRequest.message.deanonymizedUser?.name ?: run {
+		val name = args.communicationRequest.message?.deanonymizedUser?.name ?: run {
 			getString(R.string.marketplace_detail_friend_first)
 		}
 
@@ -232,24 +232,28 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		binding.deleteChatBtn.setOnClickListener {
 			showingDialog = true
 			hideSubmitMessageWrapper()
-			showBottomDialog(
-				DeleteChatBottomSheetDialog(
-					senderPublicKey = viewModel.senderPublicKey,
-					receiverPublicKey = viewModel.receiverPublicKey,
-					inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey
-				) { showingDialog = false }
-			)
+			viewModel.communicationRequest.message?.inboxPublicKey?.let { inboxPublicKey ->
+				showBottomDialog(
+					DeleteChatBottomSheetDialog(
+						senderPublicKey = viewModel.senderPublicKey,
+						receiverPublicKey = viewModel.receiverPublicKey,
+						inboxPublicKey = inboxPublicKey
+					) { showingDialog = false }
+				)
+			}
 		}
 		binding.blockUserBtn.setOnClickListener {
 			showingDialog = true
 			hideSubmitMessageWrapper()
-			showBottomDialog(
-				BlockUserBottomSheetDialog(
-					senderPublicKey = viewModel.senderPublicKey,
-					publicKeyToBlock = viewModel.receiverPublicKey,
-					inboxPublicKey = viewModel.communicationRequest.message.inboxPublicKey
-				) { showingDialog = false }
-			)
+			viewModel.communicationRequest.message?.inboxPublicKey?.let { inboxPublicKey ->
+				showBottomDialog(
+					BlockUserBottomSheetDialog(
+						senderPublicKey = viewModel.senderPublicKey,
+						publicKeyToBlock = viewModel.receiverPublicKey,
+						inboxPublicKey = inboxPublicKey
+					) { showingDialog = false }
+				)
+			}
 		}
 		binding.identityRevealedButton.setOnClickListener {
 			binding.identityRevealedWrapper.isVisible = false

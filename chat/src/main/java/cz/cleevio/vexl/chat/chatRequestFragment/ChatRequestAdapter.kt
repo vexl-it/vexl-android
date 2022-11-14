@@ -19,7 +19,7 @@ import cz.cleevio.vexl.chat.databinding.ItemChatRequestBinding
 class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.ViewHolder>(
 	object : DiffUtil.ItemCallback<CommunicationRequest>() {
 		override fun areItemsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean =
-			oldItem.message.uuid == newItem.message.uuid
+			oldItem.message?.uuid == newItem.message?.uuid
 
 		override fun areContentsTheSame(oldItem: CommunicationRequest, newItem: CommunicationRequest): Boolean =
 			oldItem == newItem
@@ -72,11 +72,14 @@ class ChatRequestAdapter : ListAdapter<CommunicationRequest, ChatRequestAdapter.
 					""
 				}
 			}
-			binding.requestMessage.text = if (item.message.text.isNullOrEmpty()) {
-				itemView.resources.getString(R.string.offer_empty_message, username)
-			} else {
-				item.message.text
+			item.message?.let { message ->
+				binding.requestMessage.text = if (message.text.isNullOrEmpty()) {
+					itemView.resources.getString(R.string.offer_empty_message, username)
+				} else {
+					message.text
+				}
 			}
+
 			item.offer?.let {
 				binding.offerWidget.bind(item = it, group = item.group)
 			}

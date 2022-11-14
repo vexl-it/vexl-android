@@ -49,36 +49,37 @@ class ChatRequestViewModel constructor(
 		text: String = ""
 	) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val offer = communicationRequest.offer as Offer
-			val response = chatRepository.confirmCommunicationRequest(
-				offerId = offer.offerId,
-				publicKeyToConfirm = communicationRequest.message.senderPublicKey,
-				message = ChatMessage(
-					uuid = UUID.randomUUID().toString(),
-					inboxPublicKey = communicationRequest.message.inboxPublicKey,
-					senderPublicKey = offer.offerPublicKey,
-					text = text,
-					type = if (approve) MessageType.APPROVE_MESSAGING else MessageType.DISAPPROVE_MESSAGING,
-					recipientPublicKey = communicationRequest.message.senderPublicKey,
-					isMine = true,
-					isProcessed = false
-				),
-				originalRequestMessage = communicationRequest.message,
-				approve = approve
-			)
-			if (response.status == Status.Success) {
-				chatRepository.deleteMessage(communicationRequest)
-			}
-
-			if (approve) {
-				_communicationRequestResponse.emit(
-					Pair(communicationRequest, response as Resource<Any>)
+			communicationRequest.message?.let { message ->
+				val offer = communicationRequest.offer as Offer
+				val response = chatRepository.confirmCommunicationRequest(
+					offerId = offer.offerId,
+					publicKeyToConfirm = message.senderPublicKey,
+					message = ChatMessage(
+						uuid = UUID.randomUUID().toString(),
+						inboxPublicKey = message.inboxPublicKey,
+						senderPublicKey = offer.offerPublicKey,
+						text = text,
+						type = if (approve) MessageType.APPROVE_MESSAGING else MessageType.DISAPPROVE_MESSAGING,
+						recipientPublicKey = message.senderPublicKey,
+						isMine = true,
+						isProcessed = false
+					),
+					originalRequestMessage = message,
+					approve = approve
 				)
-			} else {
-				//reload data, old message should be processed
-				loadCommunicationRequests()
+				if (response.status == Status.Success) {
+					chatRepository.deleteMessage(communicationRequest)
+				}
+
+				if (approve) {
+					_communicationRequestResponse.emit(
+						Pair(communicationRequest, response as Resource<Any>)
+					)
+				} else {
+					//reload data, old message should be processed
+					loadCommunicationRequests()
+				}
 			}
 		}
 	}
-
 }

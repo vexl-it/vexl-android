@@ -35,17 +35,19 @@ class ChatViewModel constructor(
 	val animationChannel = _animationChannel.receiveAsFlow()
 
 	val chatUserIdentity = communicationRequest.let { communicationRequest ->
-		chatRepository.getChatUserIdentityFlow(
-			inboxKey = communicationRequest.message.inboxPublicKey,
-			contactPublicKey = if (communicationRequest.message.isMine) {
-				communicationRequest.message.recipientPublicKey
-			} else {
-				communicationRequest.message.senderPublicKey
-			}
-		)
+		communicationRequest.message?.let { message ->
+			chatRepository.getChatUserIdentityFlow(
+				inboxKey = message.inboxPublicKey,
+				contactPublicKey = if (message.isMine) {
+					message.recipientPublicKey
+				} else {
+					message.senderPublicKey
+				}
+			)
+		}
 	}
 
-	val messages = communicationRequest.message.let { message ->
+	val messages = communicationRequest.message?.let { message ->
 		chatRepository.getMessages(
 			inboxPublicKey = message.inboxPublicKey,
 			firstKey = message.senderPublicKey,
@@ -55,7 +57,7 @@ class ChatViewModel constructor(
 		}.flowOn(Dispatchers.Default)
 	}
 
-	val hasPendingIdentityRevealRequests = communicationRequest.message.let { message ->
+	val hasPendingIdentityRevealRequests = communicationRequest.message?.let { message ->
 		chatRepository.getPendingIdentityRequest(
 			inboxPublicKey = message.inboxPublicKey,
 			firstKey = message.senderPublicKey,
@@ -63,7 +65,7 @@ class ChatViewModel constructor(
 		)
 	}
 
-	val canRequestIdentity = communicationRequest.message.let { message ->
+	val canRequestIdentity = communicationRequest.message?.let { message ->
 		chatRepository.canRequestIdentity(
 			inboxPublicKey = message.inboxPublicKey,
 			firstKey = message.senderPublicKey,
@@ -81,110 +83,116 @@ class ChatViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			val myInboxKeys = chatRepository.getMyInboxKeys()
 
-			if (myInboxKeys.contains(communicationRequest.message.senderPublicKey)) {
-				senderPublicKey = communicationRequest.message.senderPublicKey
-				receiverPublicKey = communicationRequest.message.recipientPublicKey
-			} else {
-				senderPublicKey = communicationRequest.message.recipientPublicKey
-				receiverPublicKey = communicationRequest.message.senderPublicKey
-			}
+			communicationRequest.message?.let { message ->
+				if (myInboxKeys.contains(message.senderPublicKey)) {
+					senderPublicKey = message.senderPublicKey
+					receiverPublicKey = message.recipientPublicKey
+				} else {
+					senderPublicKey = message.recipientPublicKey
+					receiverPublicKey = message.senderPublicKey
+				}
 
-			startMessageRefresh(myInboxPublicKey = senderPublicKey)
+				startMessageRefresh(myInboxPublicKey = senderPublicKey)
+			}
 		}
 	}
 
 	fun sendMessage(message: String) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val messageType = MessageType.MESSAGE
-			chatRepository.sendMessage(
-				senderPublicKey = senderPublicKey,
-				receiverPublicKey = receiverPublicKey,
-				message = ChatMessage(
-					inboxPublicKey = communicationRequest.message.inboxPublicKey,
+			communicationRequest.message?.let {
+				val messageType = MessageType.MESSAGE
+				chatRepository.sendMessage(
 					senderPublicKey = senderPublicKey,
-					recipientPublicKey = receiverPublicKey,
-					text = message,
-					type = messageType,
-					isMine = true,
-					isProcessed = false
-				),
-				messageType = messageType.name
-			)
+					receiverPublicKey = receiverPublicKey,
+					message = ChatMessage(
+						inboxPublicKey = it.inboxPublicKey,
+						senderPublicKey = senderPublicKey,
+						recipientPublicKey = receiverPublicKey,
+						text = message,
+						type = messageType,
+						isMine = true,
+						isProcessed = false
+					),
+					messageType = messageType.name
+				)
+			}
 		}
 	}
 
 	fun requestIdentityReveal() {
 		viewModelScope.launch(Dispatchers.IO) {
-			_requestIdentityChannel.send(Resource.loading())
-
-			val user = userRepository.getUser()?.let {
-				ChatUser(
-					name = it.username,
-					imageBase64 = it.avatarBase64
-				)
-			}
-			val messageType = MessageType.REQUEST_REVEAL
-			val response = chatRepository.sendMessage(
-				senderPublicKey = senderPublicKey,
-				receiverPublicKey = receiverPublicKey,
-				message = ChatMessage(
-					inboxPublicKey = communicationRequest.message.inboxPublicKey,
+			communicationRequest.message?.let {
+				_requestIdentityChannel.send(Resource.loading())
+				val user = userRepository.getUser()?.let {
+					ChatUser(
+						name = it.username,
+						imageBase64 = it.avatarBase64
+					)
+				}
+				val messageType = MessageType.REQUEST_REVEAL
+				val response = chatRepository.sendMessage(
 					senderPublicKey = senderPublicKey,
-					recipientPublicKey = receiverPublicKey,
-					type = messageType,
-					deanonymizedUser = user,
-					isMine = true,
-					isProcessed = false
-				),
-				messageType = messageType.name,
-			)
-
-			_requestIdentityChannel.send(response as Resource<Any>)
+					receiverPublicKey = receiverPublicKey,
+					message = ChatMessage(
+						inboxPublicKey = it.inboxPublicKey,
+						senderPublicKey = senderPublicKey,
+						recipientPublicKey = receiverPublicKey,
+						type = messageType,
+						deanonymizedUser = user,
+						isMine = true,
+						isProcessed = false
+					),
+					messageType = messageType.name,
+				)
+				_requestIdentityChannel.send(response as Resource<Any>)
+			}
 		}
 	}
 
 	fun resolveIdentityRevealRequest(approved: Boolean) {
 		viewModelScope.launch(Dispatchers.IO) {
-			_resolveIdentityRevealChannel.send(Resource.loading())
+			communicationRequest.message?.let {
+				_resolveIdentityRevealChannel.send(Resource.loading())
 
-			val messageType = if (approved) MessageType.APPROVE_REVEAL else MessageType.DISAPPROVE_REVEAL
-			val user = userRepository.getUser()?.let {
-				ChatUser(
-					name = it.username,
-					imageBase64 = it.avatarBase64
-				)
-			}
-			val response = chatRepository.sendMessage(
-				senderPublicKey = senderPublicKey,
-				receiverPublicKey = receiverPublicKey,
-				message = ChatMessage(
-					inboxPublicKey = communicationRequest.message.inboxPublicKey,
-					senderPublicKey = senderPublicKey,
-					recipientPublicKey = receiverPublicKey,
-					type = messageType,
-					deanonymizedUser = user,
-					isMine = true,
-					isProcessed = true
-				),
-				messageType = messageType.name
-			)
-
-			_resolveIdentityRevealChannel.send(response as Resource<Any>)
-
-			if (response.isSuccess()) {
-				_identityRevealed.emit(approved)
-				if (approved) {
-					chatRepository.deAnonymizeUser(
-						inboxKey = communicationRequest.message.inboxPublicKey,
-						contactPublicKey = receiverPublicKey,
-						myPublicKey = senderPublicKey
+				val messageType = if (approved) MessageType.APPROVE_REVEAL else MessageType.DISAPPROVE_REVEAL
+				val user = userRepository.getUser()?.let {
+					ChatUser(
+						name = it.username,
+						imageBase64 = it.avatarBase64
 					)
 				}
-				chatRepository.solveIdentityRevealRequest(
-					inboxPublicKey = communicationRequest.message.inboxPublicKey,
-					firstKey = senderPublicKey,
-					secondKey = receiverPublicKey
+				val response = chatRepository.sendMessage(
+					senderPublicKey = senderPublicKey,
+					receiverPublicKey = receiverPublicKey,
+					message = ChatMessage(
+						inboxPublicKey = it.inboxPublicKey,
+						senderPublicKey = senderPublicKey,
+						recipientPublicKey = receiverPublicKey,
+						type = messageType,
+						deanonymizedUser = user,
+						isMine = true,
+						isProcessed = true
+					),
+					messageType = messageType.name
 				)
+
+				_resolveIdentityRevealChannel.send(response as Resource<Any>)
+
+				if (response.isSuccess()) {
+					_identityRevealed.emit(approved)
+					if (approved) {
+						chatRepository.deAnonymizeUser(
+							inboxKey = it.inboxPublicKey,
+							contactPublicKey = receiverPublicKey,
+							myPublicKey = senderPublicKey
+						)
+					}
+					chatRepository.solveIdentityRevealRequest(
+						inboxPublicKey = it.inboxPublicKey,
+						firstKey = senderPublicKey,
+						secondKey = receiverPublicKey
+					)
+				}
 			}
 		}
 	}
