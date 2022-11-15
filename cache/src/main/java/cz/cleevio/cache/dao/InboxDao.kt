@@ -12,4 +12,7 @@ interface InboxDao : BaseDao<InboxEntity> {
 
 	@Query("SELECT * FROM InboxEntity WHERE publicKey == :publicKey")
 	fun getInboxByPublicKey(publicKey: String): InboxEntity?
+
+	@Query("DELETE FROM InboxEntity")
+	fun clearTable()
 }

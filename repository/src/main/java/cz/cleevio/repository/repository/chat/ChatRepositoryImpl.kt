@@ -750,6 +750,7 @@ class ChatRepositoryImpl constructor(
 
 	override suspend fun clearChatTables() {
 		chatUserDao.clearTable()
+		inboxDao.clearTable()
 		chatMessageDao.deleteAll()
 	}
 
