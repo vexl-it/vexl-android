@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	private var bottomBarAnimator: ValueAnimator? = null
 	private var bottomInsetValue = 0
 	private var lastVisitedGraph: Int? = null
+	private var graphSetInOnCreate: Boolean = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		setupGroupDeepLinks()
 
 		setLastVisitedGraph(savedInstanceState)
+		graphSetInOnCreate = true
 
 		resolveNotificationIntent(this.intent)
 
@@ -133,7 +135,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	override fun onRestoreInstanceState(savedInstanceState: Bundle) {
 		super.onRestoreInstanceState(savedInstanceState)
 
-		setLastVisitedGraph(savedInstanceState)
+		if (!graphSetInOnCreate) {
+			setLastVisitedGraph(savedInstanceState)
+		}
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {
@@ -144,6 +148,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 		lastVisitedGraph?.let {
 			outState.putInt(LAST_VISITED_GRAPH, it)
 		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+
+		//reset flag
+		graphSetInOnCreate = false
 	}
 
 	private fun setupBottomNavigationBar() {
