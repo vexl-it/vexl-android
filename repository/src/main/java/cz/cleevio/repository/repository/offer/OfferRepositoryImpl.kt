@@ -658,7 +658,7 @@ class OfferRepositoryImpl constructor(
 			mapper = { }
 		)
 
-		reportedOfferDao.insert(
+		reportedOfferDao.replace(
 			ReportedOfferEntity(offerId = offerId)
 		)
 
