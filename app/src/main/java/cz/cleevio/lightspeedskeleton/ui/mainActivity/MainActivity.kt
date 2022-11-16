@@ -440,6 +440,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 	}
 
 	override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+		FirebaseCrashlytics.getInstance().log("Destination: ${destination.label}")
 		when (destination.label) {
 			MarketplaceFragment::class.java.simpleName,
 			ChatContactListFragment::class.java.simpleName,
