@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.BitmapFactory
 import android.util.Base64
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
 import cz.cleevio.network.NetworkError
@@ -36,6 +37,7 @@ suspend fun <E, O> tryOnline(
 	var error: ErrorIdentification? = null
 	return try {
 		val response = request()
+		FirebaseCrashlytics.getInstance().log("Response: ${response.raw()}")
 		if (response.isSuccessful) {
 			val mappedResponse = mapResource(
 				Resource.success(response.body()),
