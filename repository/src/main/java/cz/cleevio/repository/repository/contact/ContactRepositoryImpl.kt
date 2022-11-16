@@ -509,7 +509,7 @@ class ContactRepositoryImpl constructor(
 		return commonFriendsMap
 	}
 
-	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.insert(contactKey.toCache())
+	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.replace(contactKey.toCache())
 
 	override suspend fun clearContactKeyTables() {
 		contactKeyDao.clearTable()
