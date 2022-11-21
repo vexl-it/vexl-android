@@ -190,7 +190,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			}
 			.addOnFailureListener(this) { exception ->
 				Timber.e(exception)
-				FirebaseCrashlytics.getInstance().recordException(IllegalStateException("Dynamic link failure"))
+				FirebaseCrashlytics.getInstance().recordException(
+					IllegalStateException("Dynamic link failure: $exception")
+				)
 			}
 	}
 
