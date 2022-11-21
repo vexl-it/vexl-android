@@ -35,14 +35,14 @@ interface OfferRepository {
 
 	suspend fun createOfferForPublicKeys(
 		offerId: String,
-		offerList: List<NewOfferPrivateV2>,
+		offerList: List<NewOfferPrivateV2?>,
 		additionalEncryptedFor: List<String>
 	): Resource<Unit>
 
 	//you have to supply list of encrypted offers. 1 for each of your contacts, encrypted with contact's key
 	suspend fun updateOffer(
 		offerId: String,
-		offerList: List<NewOfferPrivateV2>,
+		offerList: List<NewOfferPrivateV2?>,
 		additionalEncryptedFor: List<String>,
 		payloadPublic: String,
 	): Resource<Offer>
