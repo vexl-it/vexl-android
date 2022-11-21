@@ -156,7 +156,7 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun createOfferForPublicKeys(
 		offerId: String,
-		offerList: List<NewOfferPrivateV2>,
+		offerList: List<NewOfferPrivateV2?>,
 		additionalEncryptedFor: List<String>
 	): Resource<Unit> {
 		val adminId = myOfferDao.getAdminIdByOfferId(offerId)
@@ -165,7 +165,7 @@ class OfferRepositoryImpl constructor(
 				request = {
 					offerApiV2.postOffersPrivatePart(
 						CreateOfferPrivatePartRequestV2(
-							offerPrivateList = offerList.map { it.toNetworkV2() },
+							offerPrivateList = offerList.filterNotNull().map { it.toNetworkV2() },
 							adminId = adminId
 						)
 					)
@@ -194,7 +194,7 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun updateOffer(
 		offerId: String,
-		offerList: List<NewOfferPrivateV2>,
+		offerList: List<NewOfferPrivateV2?>,
 		additionalEncryptedFor: List<String>,
 		payloadPublic: String,
 	): Resource<Offer> {
@@ -206,7 +206,7 @@ class OfferRepositoryImpl constructor(
 						UpdateOfferRequestV2(
 							adminId = adminId,
 							payloadPublic = payloadPublic,
-							offerPrivateList = offerList.map { it.toNetworkV2() }
+							offerPrivateList = offerList.filterNotNull().map { it.toNetworkV2() }
 						)
 					)
 				},
