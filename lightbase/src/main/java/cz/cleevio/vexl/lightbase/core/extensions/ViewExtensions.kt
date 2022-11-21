@@ -29,6 +29,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -235,7 +236,7 @@ fun FragmentActivity.listenForIMEInset(view: View, callback: (Int) -> Unit) {
 	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 		listenForIMEInsetImpl30(view, callback)
 	} else {
-		listenForIMEInsetImpl(view, callback)
+		listenForIMEInsetImpl(view = view, callback = callback)
 	}
 }
 
@@ -269,7 +270,7 @@ private fun Fragment.listenForIMEInsetImpl30(view: View, callback: (Int) -> Unit
 	requireActivity().listenForIMEInsetImpl30(view, callback)
 }
 
-private fun FragmentActivity.listenForIMEInsetImpl(view: View, callback: (Int) -> Unit) {
+private fun FragmentActivity.listenForIMEInsetImpl(fragment: Fragment? = null, view: View, callback: (Int) -> Unit) {
 	var startingPoint = 0
 	ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
 		val insetFromBottomWithIME = max(
@@ -280,17 +281,17 @@ private fun FragmentActivity.listenForIMEInsetImpl(view: View, callback: (Int) -
 		if (startingPoint == insetFromBottomWithIME) return@setOnApplyWindowInsetsListener insets
 
 		callback.invoke(insetFromBottomWithIME)
-		animateInset(startingPoint, insetFromBottomWithIME, callback)
+		animateInset(fragment, startingPoint, insetFromBottomWithIME, callback)
 		startingPoint = insetFromBottomWithIME
 		insets
 	}
 }
 
 private fun Fragment.listenForIMEInsetImpl(view: View, callback: (Int) -> Unit) {
-	requireActivity().listenForIMEInsetImpl(view, callback)
+	requireActivity().listenForIMEInsetImpl(this, view, callback)
 }
 
-private fun animateInset(baseMargin: Int, insetFromBottomWithIME: Int, callback: (Int) -> Unit) {
+private fun animateInset(fragment: Fragment?, baseMargin: Int, insetFromBottomWithIME: Int, callback: (Int) -> Unit) {
 	if (baseMargin == 0) {
 		callback.invoke(insetFromBottomWithIME)
 		return
@@ -300,7 +301,11 @@ private fun animateInset(baseMargin: Int, insetFromBottomWithIME: Int, callback:
 		it.duration = 250L
 		it.interpolator = DecelerateInterpolator()
 		it.addUpdateListener { animator ->
-			callback.invoke(animator.animatedValue as Int)
+			if (fragment?.lifecycle?.currentState?.isAtLeast(Lifecycle.State.RESUMED) == true) {
+				callback.invoke(animator.animatedValue as Int)
+			} else {
+				animator.cancel()
+			}
 		}
 	}
 	animator.start()
