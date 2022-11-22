@@ -23,6 +23,7 @@ interface EncryptedPreferenceRepository {
 	var hasOfferV2: Boolean
 	var hasConvertedAvatarToSmallerSize: Boolean
 	var hasCreatedInternalInboxesForOffers: Boolean
+	var offersRefreshedAt: Long
 
 	val areScreenshotsAllowedFlow: MutableStateFlow<Boolean>
 	val selectedCurrencyFlow: MutableStateFlow<String>

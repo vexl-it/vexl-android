@@ -1,5 +1,6 @@
 package cz.cleevio.cache.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -10,6 +11,9 @@ import java.time.ZonedDateTime
 data class OfferEntity(
 	@PrimaryKey(autoGenerate = true)
 	val offerId: Long = 0,
+	// id field should be used only for ordering offers
+	@ColumnInfo(defaultValue = "-1")
+	val id: Long,
 	val externalOfferId: String,
 	val userPublicKey: String,
 	val offerPublicKey: String,

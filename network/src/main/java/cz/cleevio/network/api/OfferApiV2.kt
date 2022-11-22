@@ -34,4 +34,9 @@ interface OfferApiV2 {
 	suspend fun getModifiedOffers(
 		@Query("modifiedAt") modifiedAt: String
 	): Response<OffersUnifiedResponseV2>
+
+	@POST("offers/refresh")
+	suspend fun postOffersRefresh(
+		@Body offersRefreshRequest: OffersRefreshRequest
+	): Response<ResponseBody>
 }

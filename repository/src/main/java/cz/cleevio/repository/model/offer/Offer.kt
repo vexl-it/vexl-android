@@ -30,6 +30,8 @@ import java.time.format.DateTimeFormatter
 @Suppress("DataClassShouldBeImmutable")
 data class Offer constructor(
 	val databaseId: Long = 0,
+	// id field should be used only for ordering offers
+	val id: Long,
 	val offerId: String,
 	val location: List<Location>,
 	//deprecated?
@@ -96,6 +98,7 @@ fun OfferUnifiedResponseV2.fromNetwork(moshi: Moshi, cryptoCurrencyValues: Crypt
 
 	return Offer(
 		offerId = this.offerId,
+		id = this.id,
 		location = publicPayloadJson.location.map { locationAdapter.fromJson(it)!! },
 		offerPublicKey = publicPayloadJson.offerPublicKey,
 		offerDescription = publicPayloadJson.offerDescription,
@@ -176,6 +179,7 @@ fun OfferUnifiedAdminResponseV2.fromNetwork(moshi: Moshi, keyPair: KeyPair): Off
 
 	return Offer(
 		offerId = this.offerId,
+		id = this.id,
 		location = publicPayloadJson.location.map { locationAdapter.fromJson(it)!! },
 		offerPublicKey = publicPayloadJson.offerPublicKey,
 		offerDescription = publicPayloadJson.offerDescription,
@@ -203,6 +207,7 @@ fun OfferUnifiedAdminResponseV2.fromNetwork(moshi: Moshi, keyPair: KeyPair): Off
 fun OfferEntity.fromCache(locations: List<LocationEntity>, commonFriends: List<ContactEntity>, chatUserDao: ChatUserDao): Offer {
 	val offer = Offer(
 		databaseId = this.offerId,
+		id = this.id,
 		offerId = this.externalOfferId,
 		location = locations.map { it.fromCache() },
 		userPublicKey = this.userPublicKey,
@@ -251,6 +256,7 @@ fun OfferEntity.fromCacheWithoutFriendsMapping(
 ): Offer {
 	val offer = Offer(
 		databaseId = this.offerId,
+		id = this.id,
 		offerId = this.externalOfferId,
 		location = locations.map { it.fromCache() },
 		userPublicKey = this.userPublicKey,
@@ -295,6 +301,7 @@ fun OfferEntity.fromCacheWithoutFriendsMapping(
 fun Offer.toCache(): OfferEntity {
 	return OfferEntity(
 		offerId = this.databaseId,
+		id = this.id,
 		externalOfferId = this.offerId,
 		userPublicKey = this.userPublicKey,
 		offerPublicKey = this.offerPublicKey,
