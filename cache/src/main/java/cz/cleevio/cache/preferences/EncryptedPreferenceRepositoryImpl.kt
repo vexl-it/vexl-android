@@ -139,6 +139,12 @@ class EncryptedPreferenceRepositoryImpl constructor(
 			putBooleanToEP(KEY_HAS_CREATED_INBOXES, value)
 		}
 
+	override var offersRefreshedAt: Long
+		get() = getLongFromEP(KEY_OFFERS_REFRESHED_AT, 0L)
+		set(value) {
+			putLongToEP(KEY_OFFERS_REFRESHED_AT, value)
+		}
+
 	override val areScreenshotsAllowedFlow: MutableStateFlow<Boolean> = MutableStateFlow(areScreenshotsAllowed)
 	override val selectedCurrencyFlow: MutableStateFlow<String> = MutableStateFlow(selectedCurrency)
 	override val numberOfImportedContactsFlow: MutableStateFlow<Int> = MutableStateFlow(numberOfImportedContacts)
@@ -201,5 +207,6 @@ class EncryptedPreferenceRepositoryImpl constructor(
 		private const val KEY_OFFER_V2 = "offer_v2"
 		private const val KEY_HAS_CONVERTED_AVATAR = "has_converted_avatar"
 		private const val KEY_HAS_CREATED_INBOXES = "has_created_inboxes"
+		private const val KEY_OFFERS_REFRESHED_AT = "offers_refreshed_at"
 	}
 }

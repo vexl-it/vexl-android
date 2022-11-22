@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class OfferUnifiedAdminResponseV2 constructor(
+	val id: Long,
 	val offerId: String,
 	val publicPayload: String,
 	val privatePayload: String,

@@ -105,4 +105,6 @@ interface OfferRepository {
 
 	//not used right now, could be helpful later
 	suspend fun forceReEncrypt()
+
+	suspend fun refreshOffers(): Resource<Unit>
 }

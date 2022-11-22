@@ -63,4 +63,10 @@ class MarketplaceViewModel constructor(
 			}
 		}
 	}
+
+	fun refreshOffers() {
+		viewModelScope.launch(Dispatchers.IO) {
+			offerRepository.refreshOffers()
+		}
+	}
 }
