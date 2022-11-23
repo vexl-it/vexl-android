@@ -67,7 +67,7 @@ class OffersViewModel constructor(
 
 	fun checkMyOffersCount(offerType: OfferType) {
 		viewModelScope.launch(Dispatchers.IO) {
-			val myOfferCount = offerRepository.getMyActiveOffersCount(offerType.name)
+			val myOfferCount = offerRepository.getMyOffersCount(offerType.name)
 			_myOffersCount.emit(myOfferCount)
 		}
 	}

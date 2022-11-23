@@ -37,7 +37,10 @@ interface OfferDao {
 	fun getOfferById(offerId: String): OfferWithLocationsAndCommonFriends?
 
 	@Query("SELECT COUNT(offerId) FROM OfferEntity WHERE offerType == :offerType AND isMine == 1 AND active == 1")
-	fun getMyActiveOfferCount(offerType: String): Int
+	fun getMyActiveOffersCount(offerType: String): Int
+
+	@Query("SELECT COUNT(offerId) FROM OfferEntity WHERE offerType == :offerType AND isMine == 1")
+	fun getMyOffersCount(offerType: String): Int
 
 	@Transaction
 	suspend fun replaceAll(offers: List<OfferEntity>) {
