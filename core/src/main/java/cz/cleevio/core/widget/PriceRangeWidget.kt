@@ -103,12 +103,18 @@ class PriceRangeWidget @JvmOverloads constructor(
 	}
 
 	private fun setupBottomLimitInputListener() {
-		bottomLimitTextWatcher = binding.minInputValue.doAfterTextChanged { number ->
+		bottomLimitTextWatcher = binding.minInputValue.doAfterTextChanged { text ->
 			try {
-				val setValue = if (number.toString().toFloat() > topLimit) {
+				val number = if (text.isNullOrEmpty()) {
+					0.0f
+				} else {
+					text.toString().toFloat()
+				}
+
+				val setValue = if (number > topLimit) {
 					topLimit
 				} else {
-					number.toString().toFloat()
+					number
 				}
 
 				bottomLimitJob?.cancel()
@@ -126,12 +132,18 @@ class PriceRangeWidget @JvmOverloads constructor(
 	}
 
 	private fun setupTopLimitInputListener() {
-		topLimitTextWatcher = binding.maxInputValue.doAfterTextChanged { number ->
+		topLimitTextWatcher = binding.maxInputValue.doAfterTextChanged { text ->
 			try {
-				val setValue = if (number.toString().toFloat() < bottomLimit) {
+				val number = if (text.isNullOrEmpty()) {
+					0.0f
+				} else {
+					text.toString().toFloat()
+				}
+
+				val setValue = if (number < bottomLimit) {
 					bottomLimit
 				} else {
-					number.toString().toFloat()
+					number
 				}
 				topLimitJob?.cancel()
 				topLimitJob = coroutineScope.launch {
