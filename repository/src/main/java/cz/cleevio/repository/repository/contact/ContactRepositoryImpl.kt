@@ -515,7 +515,7 @@ class ContactRepositoryImpl constructor(
 	override suspend fun refreshUser(): Resource<Unit> {
 		val oneDay = TimeUnit.DAYS.toMillis(DAY)
 		//if we have not refreshed in more than 1 day
-		return if (System.currentTimeMillis() > encryptedPreference.offersRefreshedAt + oneDay) {
+		return if (System.currentTimeMillis() > encryptedPreference.usersRefreshedAt + oneDay) {
 			//check if user has any offers
 			val offersAlive = myOfferDao.listAll().isNotEmpty()
 			tryOnline(
@@ -530,7 +530,7 @@ class ContactRepositoryImpl constructor(
 				},
 				mapper = { },
 				doOnSuccess = {
-					encryptedPreference.offersRefreshedAt = System.currentTimeMillis()
+					encryptedPreference.usersRefreshedAt = System.currentTimeMillis()
 				}
 			)
 		} else {
