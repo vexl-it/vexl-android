@@ -54,7 +54,8 @@ val repoModule = module {
 			contactApi = get(),
 			phoneNumberUtils = get(),
 			encryptedPreference = get(),
-			notificationDao = get()
+			notificationDao = get(),
+			myOfferDao = get(),
 		)
 	}
 

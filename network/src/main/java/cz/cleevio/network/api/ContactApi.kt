@@ -78,4 +78,11 @@ interface ContactApi {
 		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
 		@Body commonFriendsRequest: CommonFriendsRequest
 	): Response<CommonFriendsResponse>
+
+	@POST("users/refresh")
+	suspend fun postUsersRefresh(
+		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
+		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
+		@Body refreshUserRequest: RefreshUserRequest
+	): Response<ResponseBody>
 }

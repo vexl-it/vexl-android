@@ -48,5 +48,7 @@ interface ContactRepository {
 
 	suspend fun addNewContact(contactKey: ContactKey)
 
+	suspend fun refreshUser(): Resource<Unit>
+
 	suspend fun clearContactKeyTables()
 }

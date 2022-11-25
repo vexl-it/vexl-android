@@ -34,7 +34,8 @@ val marketplaceModule = module {
 			chatRepository = get(),
 			groupRepository = get(),
 			encryptedPreference = get(),
-			navMarketplaceGraphModel = get()
+			navMarketplaceGraphModel = get(),
+			contactRepository = get()
 		)
 	}
 

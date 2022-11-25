@@ -6,6 +6,7 @@ import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.group.Group
 import cz.cleevio.repository.repository.chat.ChatRepository
+import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.group.GroupRepository
 import cz.cleevio.repository.repository.offer.OfferRepository
 import cz.cleevio.repository.repository.user.UserRepository
@@ -21,6 +22,7 @@ class MarketplaceViewModel constructor(
 	val userRepository: UserRepository,
 	val chatRepository: ChatRepository,
 	val groupRepository: GroupRepository,
+	val contactRepository: ContactRepository,
 	val encryptedPreference: EncryptedPreferenceRepository,
 	private val navMarketplaceGraphModel: NavMarketplaceGraphModel
 ) : BaseViewModel() {
@@ -67,6 +69,12 @@ class MarketplaceViewModel constructor(
 	fun refreshOffers() {
 		viewModelScope.launch(Dispatchers.IO) {
 			offerRepository.refreshOffers()
+		}
+	}
+
+	fun refreshUser() {
+		viewModelScope.launch(Dispatchers.IO) {
+			contactRepository.refreshUser()
 		}
 	}
 }
