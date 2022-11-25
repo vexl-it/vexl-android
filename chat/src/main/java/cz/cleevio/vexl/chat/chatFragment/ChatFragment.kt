@@ -64,6 +64,8 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				if (noneOrOnlyRequestMessage && !showingDialog) {
 					findNavController().popBackStack()
 				}
+
+				binding.submitMessageWrapper.isVisible = !(messages.any { it.type == MessageType.DELETE_CHAT })
 			}
 		}
 		repeatScopeOnStart {
@@ -177,7 +179,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			false
 		}
 
-		adapter = ChatMessagesAdapter()
+		adapter = ChatMessagesAdapter(
+			deleteChat = { chatMessage ->
+				viewModel.deleteChat(chatMessage)
+			}
+		)
 		binding.chatRv.adapter = adapter
 
 		binding.close.setOnClickListener {

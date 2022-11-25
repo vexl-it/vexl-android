@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_height="wrap_content"
+	android:layout_margin="8dp">
+
+	<TextView
+		android:id="@+id/chat_delete_message"
+		style="@style/Widget.Cleevio.Chat.ReceivedMessage"
+		android:layout_width="0dp"
+		android:textAppearance="@style/TextAppearance.Vexl.Chat.NotMe"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:text="WE NEED DESIGN. THIS IS DELETE_CHAT"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintWidth_max="wrap"
+		app:layout_constraintWidth_percent="0.8"
+		tools:text="This is message from request. Bla bla buy some Bitcoins but first you must reveal identity!"
+		tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

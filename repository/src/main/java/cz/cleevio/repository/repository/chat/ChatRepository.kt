@@ -96,4 +96,6 @@ interface ChatRepository {
 
 	//should be called only once, when migrating from `1.0.9` up
 	suspend fun createInboxesForMeAndOffers()
+
+	suspend fun deleteChat(deleteMessage: ChatMessage)
 }

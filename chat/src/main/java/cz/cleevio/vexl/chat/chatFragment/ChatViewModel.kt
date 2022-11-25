@@ -263,6 +263,12 @@ class ChatViewModel constructor(
 		}
 	}
 
+	fun deleteChat(chatMessage: ChatMessage) {
+		viewModelScope.launch(Dispatchers.IO) {
+			chatRepository.deleteChat(chatMessage)
+		}
+	}
+
 	suspend fun animationDone() {
 		_animationChannel.send(Unit)
 	}

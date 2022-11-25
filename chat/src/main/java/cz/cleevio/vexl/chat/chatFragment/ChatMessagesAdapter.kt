@@ -16,12 +16,15 @@ import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.R
+import cz.cleevio.vexl.chat.databinding.ItemChatDeleteChatBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealRejectedBinding
 import cz.cleevio.vexl.lightbase.core.extensions.showToast
 
-class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
+class ChatMessagesAdapter(
+	val deleteChat: (ChatMessage) -> Unit
+) : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ChatMessage>() {
 	override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.uuid == newItem.uuid
 
 	override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem == newItem
@@ -45,6 +48,11 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 			MessageType.DISAPPROVE_REVEAL -> {
 				RejectedIdentityViewHolder(
 					ItemChatMessageIdentityRevealRejectedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+				)
+			}
+			MessageType.DELETE_CHAT -> {
+				DeleteChatViewHolder(
+					ItemChatDeleteChatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 				)
 			}
 			else -> {
@@ -154,6 +162,19 @@ class ChatMessagesAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(ob
 				binding.identityRevealDescription.resources.getText(R.string.chat_message_identity_reveal_reject)
 			} else {
 				binding.identityRevealDescription.resources.getText(R.string.chat_message_identity_reveal_reject_received)
+			}
+		}
+	}
+
+	inner class DeleteChatViewHolder constructor(
+		private val binding: ItemChatDeleteChatBinding
+	) : RecyclerView.ViewHolder(binding.root) {
+
+		fun bind(item: ChatMessage) {
+			//TODO: when we have design
+
+			binding.chatDeleteMessage.setOnClickListener {
+				deleteChat(item)
 			}
 		}
 	}
