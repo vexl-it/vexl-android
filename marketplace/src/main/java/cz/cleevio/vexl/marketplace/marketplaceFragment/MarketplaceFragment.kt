@@ -33,6 +33,7 @@ class MarketplaceFragment : BaseGraphFragment(R.layout.fragment_marketplace) {
 		super.onResume()
 		viewModel.syncMarketData()
 		marketplaceViewModel.refreshOffers()
+		marketplaceViewModel.refreshUser()
 	}
 
 	override fun onStart() {

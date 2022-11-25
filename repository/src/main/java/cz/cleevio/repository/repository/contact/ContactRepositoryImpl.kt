@@ -8,6 +8,7 @@ import android.util.Patterns
 import com.cleevio.vexl.cryptography.HmacCryptoLib
 import cz.cleevio.cache.dao.ContactDao
 import cz.cleevio.cache.dao.ContactKeyDao
+import cz.cleevio.cache.dao.MyOfferDao
 import cz.cleevio.cache.dao.NotificationDao
 import cz.cleevio.cache.entity.ContactEntity
 import cz.cleevio.cache.entity.ContactKeyEntity
@@ -18,17 +19,16 @@ import cz.cleevio.network.data.ErrorIdentification
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.data.Status
 import cz.cleevio.network.extensions.tryOnline
-import cz.cleevio.network.request.contact.CommonFriendsRequest
-import cz.cleevio.network.request.contact.ContactRequest
-import cz.cleevio.network.request.contact.CreateUserRequest
-import cz.cleevio.network.request.contact.DeleteContactRequest
+import cz.cleevio.network.request.contact.*
 import cz.cleevio.network.response.contact.ContactLevelApi
 import cz.cleevio.repository.BuildConfig
 import cz.cleevio.repository.BuildConfig.HMAC_PASSWORD
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.contact.*
+import cz.cleevio.repository.repository.offer.DAY
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
@@ -36,7 +36,8 @@ class ContactRepositoryImpl constructor(
 	private val contactApi: ContactApi,
 	private val phoneNumberUtils: PhoneNumberUtils,
 	private val encryptedPreference: EncryptedPreferenceRepository,
-	private val notificationDao: NotificationDao
+	private val notificationDao: NotificationDao,
+	private val myOfferDao: MyOfferDao,
 ) : ContactRepository {
 
 	override fun getPhoneContacts(): List<Contact> = contactDao
@@ -510,6 +511,32 @@ class ContactRepositoryImpl constructor(
 	}
 
 	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.replace(contactKey.toCache())
+
+	override suspend fun refreshUser(): Resource<Unit> {
+		val oneDay = TimeUnit.DAYS.toMillis(DAY)
+		//if we have not refreshed in more than 1 day
+		return if (System.currentTimeMillis() > encryptedPreference.usersRefreshedAt + oneDay) {
+			//check if user has any offers
+			val offersAlive = myOfferDao.listAll().isNotEmpty()
+			tryOnline(
+				request = {
+					contactApi.postUsersRefresh(
+						hash = encryptedPreference.hash,
+						signature = encryptedPreference.signature,
+						refreshUserRequest = RefreshUserRequest(
+							offersAlive = offersAlive
+						)
+					)
+				},
+				mapper = { },
+				doOnSuccess = {
+					encryptedPreference.usersRefreshedAt = System.currentTimeMillis()
+				}
+			)
+		} else {
+			Resource.success(Unit)
+		}
+	}
 
 	override suspend fun clearContactKeyTables() {
 		contactKeyDao.clearTable()
