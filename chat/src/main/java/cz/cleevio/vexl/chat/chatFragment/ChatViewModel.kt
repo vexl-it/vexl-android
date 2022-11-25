@@ -34,6 +34,9 @@ class ChatViewModel constructor(
 	private val _animationChannel = Channel<Unit>()
 	val animationChannel = _animationChannel.receiveAsFlow()
 
+	private val _deleteChatFinished = Channel<Unit>()
+	val deleteChatFinished = _deleteChatFinished.receiveAsFlow()
+
 	val chatUserIdentity = communicationRequest.let { communicationRequest ->
 		communicationRequest.message?.let { message ->
 			chatRepository.getChatUserIdentityFlow(
@@ -266,6 +269,7 @@ class ChatViewModel constructor(
 	fun deleteChat(chatMessage: ChatMessage) {
 		viewModelScope.launch(Dispatchers.IO) {
 			chatRepository.deleteChat(chatMessage)
+			_deleteChatFinished.send(Unit)
 		}
 	}
 

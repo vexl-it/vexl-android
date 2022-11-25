@@ -163,6 +163,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				binding.slideEffect.isVisible = false
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.deleteChatFinished.collect {
+				findNavController().popBackStack()
+			}
+		}
 	}
 
 	override fun initView() {

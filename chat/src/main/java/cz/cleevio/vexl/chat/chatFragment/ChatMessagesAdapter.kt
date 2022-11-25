@@ -71,6 +71,8 @@ class ChatMessagesAdapter(
 				holder.bind(getItem(position))
 			is RejectedIdentityViewHolder ->
 				holder.bind(getItem(position))
+			is DeleteChatViewHolder ->
+				holder.bind(getItem(position))
 		}
 	}
 
@@ -173,7 +175,7 @@ class ChatMessagesAdapter(
 		fun bind(item: ChatMessage) {
 			//TODO: when we have design
 
-			binding.chatDeleteMessage.setOnClickListener {
+			binding.container.setOnClickListener {
 				deleteChat(item)
 			}
 		}
