@@ -26,9 +26,7 @@ import cz.cleevio.repository.BuildConfig.HMAC_PASSWORD
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.contact.*
-import cz.cleevio.repository.repository.offer.DAY
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 class ContactRepositoryImpl constructor(
 	private val contactDao: ContactDao,
@@ -513,29 +511,23 @@ class ContactRepositoryImpl constructor(
 	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.replace(contactKey.toCache())
 
 	override suspend fun refreshUser(): Resource<Unit> {
-		val oneDay = TimeUnit.DAYS.toMillis(DAY)
-		//if we have not refreshed in more than 1 day
-		return if (System.currentTimeMillis() > encryptedPreference.usersRefreshedAt + oneDay) {
-			//check if user has any offers
-			val offersAlive = myOfferDao.listAll().isNotEmpty()
-			tryOnline(
-				request = {
-					contactApi.postUsersRefresh(
-						hash = encryptedPreference.hash,
-						signature = encryptedPreference.signature,
-						refreshUserRequest = RefreshUserRequest(
-							offersAlive = offersAlive
-						)
+		//check if user has any offers
+		val offersAlive = myOfferDao.listAll().isNotEmpty()
+		return tryOnline(
+			request = {
+				contactApi.postUsersRefresh(
+					hash = encryptedPreference.hash,
+					signature = encryptedPreference.signature,
+					refreshUserRequest = RefreshUserRequest(
+						offersAlive = offersAlive
 					)
-				},
-				mapper = { },
-				doOnSuccess = {
-					encryptedPreference.usersRefreshedAt = System.currentTimeMillis()
-				}
-			)
-		} else {
-			Resource.success(Unit)
-		}
+				)
+			},
+			mapper = { },
+			doOnSuccess = {
+				encryptedPreference.usersRefreshedAt = System.currentTimeMillis()
+			}
+		)
 	}
 
 	override suspend fun clearContactKeyTables() {

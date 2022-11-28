@@ -110,6 +110,7 @@ class EditOfferViewModel constructor(
 			val response = offerRepository.deleteMyOfferById(offerId)
 			when (response.status) {
 				is Status.Success -> {
+					contactRepository.refreshUser()
 					withContext(Dispatchers.Main) {
 						onSuccess()
 					}
