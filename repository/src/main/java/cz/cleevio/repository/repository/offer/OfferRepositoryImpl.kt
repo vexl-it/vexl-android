@@ -40,6 +40,7 @@ import java.text.Normalizer
 import java.util.concurrent.TimeUnit
 
 const val DAY = 1L
+const val IS_REFRESH_DISABLED = true
 
 class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
@@ -683,6 +684,9 @@ class OfferRepositoryImpl constructor(
 	}
 
 	override suspend fun refreshOffers(): Resource<Unit> {
+		if (IS_REFRESH_DISABLED) {
+			return Resource.success(Unit)
+		}
 		val adminIds = myOfferDao.listAll().map { it.adminId }
 		val oneDay = TimeUnit.DAYS.toMillis(DAY)
 		//if we have not refreshed in more than 1 day
