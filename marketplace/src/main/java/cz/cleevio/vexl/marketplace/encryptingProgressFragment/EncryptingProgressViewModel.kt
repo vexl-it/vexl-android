@@ -70,6 +70,9 @@ class EncryptingProgressViewModel constructor(
 					symmetricalKey = symmetricalKey,
 					friendLevel = friendLevel
 				)
+				if (response.isSuccess()) {
+					contactRepository.refreshUser()
+				}
 				encryptedPreferenceRepository.isOfferEncrypted = true
 				_newOfferRequest.emit(response)
 			}
