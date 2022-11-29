@@ -37,9 +37,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import java.math.BigDecimal
 import java.text.Normalizer
-import java.util.concurrent.TimeUnit
-
-const val DAY = 1L
 
 class OfferRepositoryImpl constructor(
 	private val offerApi: OfferApi,
@@ -684,9 +681,8 @@ class OfferRepositoryImpl constructor(
 
 	override suspend fun refreshOffers(): Resource<Unit> {
 		val adminIds = myOfferDao.listAll().map { it.adminId }
-		val oneDay = TimeUnit.DAYS.toMillis(DAY)
 		//if we have not refreshed in more than 1 day
-		return if (adminIds.isNotEmpty() && System.currentTimeMillis() > encryptedPreference.offersRefreshedAt + oneDay) {
+		return if (adminIds.isNotEmpty()) {
 			tryOnline(
 				request = {
 					offerApiV2.postOffersRefresh(
