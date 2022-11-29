@@ -26,7 +26,6 @@ import cz.cleevio.repository.BuildConfig.HMAC_PASSWORD
 import cz.cleevio.repository.PhoneNumberUtils
 import cz.cleevio.repository.R
 import cz.cleevio.repository.model.contact.*
-import cz.cleevio.repository.repository.offer.IS_REFRESH_DISABLED
 import timber.log.Timber
 
 class ContactRepositoryImpl constructor(
@@ -512,9 +511,6 @@ class ContactRepositoryImpl constructor(
 	override suspend fun addNewContact(contactKey: ContactKey) = contactKeyDao.replace(contactKey.toCache())
 
 	override suspend fun refreshUser(): Resource<Unit> {
-		if (IS_REFRESH_DISABLED) {
-			return Resource.success(Unit)
-		}
 		//check if user has any offers
 		val offersAlive = myOfferDao.listAll().isNotEmpty()
 		return tryOnline(
