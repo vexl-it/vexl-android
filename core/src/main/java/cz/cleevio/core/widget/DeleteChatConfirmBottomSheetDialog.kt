@@ -39,6 +39,7 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 		return binding.root
 	}
 
+	@Suppress("UseIfInsteadOfWhen")
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {

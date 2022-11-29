@@ -1,7 +1,6 @@
 package cz.cleevio.core.base
 
 import androidx.lifecycle.viewModelScope
-import com.facebook.AccessToken
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.contact.BaseContact
@@ -27,14 +26,15 @@ open class BaseFacebookContactsListViewModel constructor(
 	val uploadSuccessful = _uploadSuccessful.asSharedFlow()
 
 	fun loadNotSyncedFacebookContacts() {
-		AccessToken.getCurrentAccessToken()?.let {
-			loadNotSyncedFacebookContacts(
-				it.userId,
-				it.token
-			)
-		}
+//		AccessToken.getCurrentAccessToken()?.let {
+//			loadNotSyncedFacebookContacts(
+//				it.userId,
+//				it.token
+//			)
+//		}
 	}
 
+	@Suppress("UnusedPrivateMember")
 	private fun loadNotSyncedFacebookContacts(facebookId: String, accessToken: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.syncFacebookContacts(facebookId, accessToken)

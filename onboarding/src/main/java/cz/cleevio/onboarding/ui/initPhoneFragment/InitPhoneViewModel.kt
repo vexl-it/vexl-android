@@ -31,6 +31,7 @@ class InitPhoneViewModel constructor(
 		loadKeys()
 	}
 
+	@Suppress("UseIfInsteadOfWhen")
 	fun sendPhoneNumber(countryCode: String, phoneNumber: String, isoCode: String?) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_loading.send(true)

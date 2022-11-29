@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
-import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cz.cleevio.core.utils.NavMainGraphModel
 import cz.cleevio.core.utils.repeatScopeOnStart
@@ -132,7 +131,7 @@ class ForceNotificationPermissionFragment : BaseFragment(R.layout.fragment_force
 		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			val settingsIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
 				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-				.putExtra(Settings.EXTRA_APP_PACKAGE, getApplicationContext().packageName)
+				.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
 			startActivity(settingsIntent)
 		} else {
 			val settingsIntent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
