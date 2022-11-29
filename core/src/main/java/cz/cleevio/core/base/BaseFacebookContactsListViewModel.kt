@@ -34,6 +34,7 @@ open class BaseFacebookContactsListViewModel constructor(
 //		}
 	}
 
+	@Suppress("UnusedPrivateMember")
 	private fun loadNotSyncedFacebookContacts(facebookId: String, accessToken: String) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val response = contactRepository.syncFacebookContacts(facebookId, accessToken)
