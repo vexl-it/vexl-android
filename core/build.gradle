@@ -60,11 +60,10 @@ dependencies {
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
     api "androidx.navigation:navigation-fragment-ktx:$navigation"
     api "androidx.navigation:navigation-ui-ktx:$navigation"
+    api "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
 
     api "com.google.android.material:material:$material"
     api "com.jakewharton.timber:timber:$timber"
-
-    api 'com.facebook.android:facebook-android-sdk:13.1.0'
 
     api "io.insert-koin:koin-core:$koin"
     api "io.insert-koin:koin-android:$koin"
