@@ -127,7 +127,7 @@ class SplashViewModel constructor(
 			if (offer == null) {
 				_errorFlow.emit(
 					Resource.error(
-						ErrorIdentification.MessageError(message = R.string.error_offer_not_found)
+						ErrorIdentification.MessageError()
 					)
 				)
 				offerRepository.deleteBrokenMyOffersFromDB(listOf(myOffer.offerId))
