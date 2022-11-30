@@ -72,6 +72,42 @@ interface ChatMessageDao : BaseDao<ChatMessageEntity> {
 		secondKey: String
 	): Flow<List<ChatMessageEntity>>
 
+	@Suppress("FunctionMaxLength")
+	@Query(
+		"SELECT * " +
+			"FROM ChatMessageEntity " +
+			"WHERE type == 'DELETE_CHAT' " +
+			"AND inboxPublicKey == :inboxPublicKey " +
+			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
+			"AND isMine == 0 " +
+			"AND isProcessed == 0 " +
+			"ORDER BY sortingIdFromBE, time"
+	)
+	fun listPendingDeleteChatBySendersFlow(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<List<ChatMessageEntity>>
+
+	@Suppress("FunctionMaxLength")
+	@Query(
+		"SELECT * " +
+			"FROM ChatMessageEntity " +
+			"WHERE type == 'DELETE_CHAT' " +
+			"AND inboxPublicKey == :inboxPublicKey " +
+			" AND ((senderPublicKey == :firstKey AND recipientPublicKey == :secondKey) " +
+			" OR (senderPublicKey == :secondKey AND recipientPublicKey == :firstKey)) " +
+			"AND isMine == 0 " +
+			"AND isProcessed == 0 " +
+			"ORDER BY sortingIdFromBE, time"
+	)
+	fun listPendingDeleteChatBySenders(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): List<ChatMessageEntity>
+
 	@Query(
 		"SELECT * " +
 			"FROM ChatMessageEntity " +

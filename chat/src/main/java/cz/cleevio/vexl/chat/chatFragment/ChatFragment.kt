@@ -89,6 +89,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 						requireContext()
 					)
 					setUserAvatar(
+						binding.chatDeleteRequestedIcon,
+						bitmap,
+						index,
+						requireContext()
+					)
+					setUserAvatar(
 						binding.identityRevealSentIcon,
 						bitmap,
 						index,
@@ -109,6 +115,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					) {
 						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
 					}
+					binding.chatDeleteRequestedIcon.load(
+						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
+						imageLoader = ImageLoader.invoke(requireContext())
+					) {
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
+					}
 					binding.identityRevealSentIcon.load(
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
@@ -119,6 +131,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
 				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
+				binding.chatDeleteRequestedTitle.text = getString(R.string.chat_delete_title, chatUserIdentity?.name ?: "")
 				setUserAvatar(
 					binding.revealedProfileIcon,
 					chatUserIdentity?.avatarBase64?.getBitmap(),
@@ -130,6 +143,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.hasPendingIdentityRevealRequests?.collect { pending ->
 				binding.identityRevealRequestedWrapper.isVisible = pending
+			}
+		}
+		repeatScopeOnStart {
+			viewModel.hasPendingDeleteChatRequests?.collect { pending ->
+				binding.chatDeleteRequestedWrapper.isVisible = pending
 			}
 		}
 		repeatScopeOnStart {
@@ -235,10 +253,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					onSendRequest = {
 						viewModel.requestIdentityReveal()
 					}
-			))
+				))
 		}
 		binding.revealRequestButton.setOnClickListener {
 			binding.identityRevealSentWrapper.isVisible = false
+		}
+		binding.chatDeleteRequestedButton.setOnClickListener {
+			binding.chatDeleteRequestedWrapper.isVisible = false
+			viewModel.deleteChat()
 		}
 		binding.deleteChatBtn.setOnClickListener {
 			showingDialog = true

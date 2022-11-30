@@ -9,20 +9,53 @@
 	android:clickable="true"
 	android:focusable="true">
 
-	<TextView
-		android:id="@+id/chat_delete_message"
-		style="@style/Widget.Cleevio.Chat.ReceivedMessage"
-		android:layout_width="0dp"
-		android:textAppearance="@style/TextAppearance.Vexl.Chat.NotMe"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
-		android:text="WE NEED DESIGN. THIS IS DELETE_CHAT"
-		app:layout_constraintBottom_toBottomOf="parent"
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/delete_chat_icon"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:background="@color/white"
+		android:scaleType="centerCrop"
+		android:src="@drawable/ic_default_avatar"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintWidth_max="wrap"
-		app:layout_constraintWidth_percent="0.8"
-		tools:text="This is message from request. Bla bla buy some Bitcoins but first you must reveal identity!"
-		tools:visibility="visible" />
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cleevio.Vexl.AvatarImage" />
+
+	<View
+		android:id="@+id/start_divider"
+		style="@style/Widget.Cleevio.Chat.RevealIdentity.HorizontalDivider"
+		android:layout_width="0dp"
+		android:layout_height="1dp"
+		android:layout_marginEnd="12dp"
+		app:layout_constraintBottom_toBottomOf="@id/delete_chat_heading"
+		app:layout_constraintEnd_toStartOf="@id/delete_chat_heading"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@id/delete_chat_heading" />
+
+	<TextView
+		android:id="@+id/delete_chat_heading"
+		style="@style/Widget.Cleevio.Chat.RevealIdentity.Heading"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="10dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/delete_chat_icon"
+		app:layout_constraintBottom_toBottomOf="parent"
+		tools:text="Marta left the chat" />
+
+	<View
+		android:id="@+id/end_divider"
+		style="@style/Widget.Cleevio.Chat.RevealIdentity.HorizontalDivider"
+		android:layout_width="0dp"
+		android:layout_height="1dp"
+		android:layout_marginStart="12dp"
+		app:layout_constraintBottom_toBottomOf="@id/delete_chat_heading"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/delete_chat_heading"
+		app:layout_constraintTop_toTopOf="@id/delete_chat_heading" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

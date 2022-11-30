@@ -78,6 +78,18 @@ interface ChatRepository {
 		secondKey: String
 	): Flow<Boolean>
 
+	fun hasPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean>
+
+	fun getPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): List<ChatMessage>
+
 	fun canRequestIdentity(
 		inboxPublicKey: String,
 		firstKey: String,

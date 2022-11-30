@@ -774,6 +774,34 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
+	override fun hasPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean> {
+		return chatMessageDao.listPendingDeleteChatBySendersFlow(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.isNotEmpty()
+		}
+	}
+
+	override fun getPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): List<ChatMessage> {
+		return chatMessageDao.listPendingDeleteChatBySenders(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.fromCache()
+		}
+	}
+
 	override fun canRequestIdentity(
 		inboxPublicKey: String,
 		firstKey: String,

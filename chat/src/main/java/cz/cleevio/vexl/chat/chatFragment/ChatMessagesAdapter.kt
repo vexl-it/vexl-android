@@ -173,8 +173,17 @@ class ChatMessagesAdapter(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(item: ChatMessage) {
-			//TODO: when we have design
+			setUserAvatar(
+				binding.deleteChatIcon,
+				_chatUserIdentity?.avatarBase64?.getBitmap(),
+				_chatUserIdentity?.anonymousAvatarImageIndex,
+				itemView.context
+			)
+			binding.deleteChatHeading.text = itemView.context.getString(
+				R.string.chat_delete_title, _chatUserIdentity?.name ?: ""
+			)
 
+			//maybe remove this?
 			binding.container.setOnClickListener {
 				deleteChat(item)
 			}

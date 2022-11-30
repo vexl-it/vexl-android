@@ -68,6 +68,14 @@ class ChatViewModel constructor(
 		)
 	}
 
+	val hasPendingDeleteChatRequests = communicationRequest.message?.let { message ->
+		chatRepository.hasPendingDeleteChatRequest(
+			inboxPublicKey = message.inboxPublicKey,
+			firstKey = message.senderPublicKey,
+			secondKey = message.recipientPublicKey
+		)
+	}
+
 	val canRequestIdentity = communicationRequest.message?.let { message ->
 		chatRepository.canRequestIdentity(
 			inboxPublicKey = message.inboxPublicKey,
@@ -263,6 +271,21 @@ class ChatViewModel constructor(
 		}.minByOrNull {
 			// and get nearest by time
 			it.time
+		}
+	}
+
+	fun deleteChat() {
+		viewModelScope.launch(Dispatchers.IO) {
+			val messages = communicationRequest.message?.let { message ->
+				chatRepository.getPendingDeleteChatRequest(
+					inboxPublicKey = message.inboxPublicKey,
+					firstKey = message.senderPublicKey,
+					secondKey = message.recipientPublicKey
+				)
+			}
+			messages?.firstOrNull()?.let {
+				deleteChat(it)
+			}
 		}
 	}
 
