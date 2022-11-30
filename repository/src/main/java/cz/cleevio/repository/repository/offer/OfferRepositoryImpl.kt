@@ -23,7 +23,6 @@ import cz.cleevio.network.response.offer.v2.CreateOfferPrivatePartRequestV2
 import cz.cleevio.network.response.offer.v2.OfferCreateRequestV2
 import cz.cleevio.network.response.offer.v2.OffersRefreshRequest
 import cz.cleevio.network.response.offer.v2.UpdateOfferRequestV2
-import cz.cleevio.repository.R
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.fromCache
 import cz.cleevio.repository.model.contact.fromDao
@@ -189,7 +188,7 @@ class OfferRepositoryImpl constructor(
 				}
 			)
 		} else {
-			Resource.error(ErrorIdentification.MessageError(message = R.string.error_offer_not_found))
+			Resource.error(ErrorIdentification.MessageError())
 		}
 	}
 
@@ -243,7 +242,7 @@ class OfferRepositoryImpl constructor(
 				}
 			)
 		} else {
-			Resource.error(ErrorIdentification.MessageError(message = R.string.error_offer_not_found))
+			Resource.error(ErrorIdentification.MessageError())
 		}
 	}
 
