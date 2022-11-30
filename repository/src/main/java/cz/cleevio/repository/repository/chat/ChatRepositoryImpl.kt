@@ -260,16 +260,16 @@ class ChatRepositoryImpl constructor(
 						}
 
 						//special handling for DELETE_CHAT
-						messages
-							?.filter { it.type == MessageType.DELETE_CHAT }
-							?.forEach { deleteMessage ->
-								//delete all messages from and for this user
-								chatMessageDao.deleteByKeys(
-									inboxPublicKey = deleteMessage.inboxPublicKey,
-									firstKey = deleteMessage.senderPublicKey,
-									secondKey = deleteMessage.recipientPublicKey
-								)
-							}
+//						messages
+//							?.filter { it.type == MessageType.DELETE_CHAT }
+//							?.forEach { deleteMessage ->
+//								//delete all messages from and for this user
+//								chatMessageDao.deleteByKeys(
+//									inboxPublicKey = deleteMessage.inboxPublicKey,
+//									firstKey = deleteMessage.senderPublicKey,
+//									secondKey = deleteMessage.recipientPublicKey
+//								)
+//							}
 
 						//special handling for REQUEST_MESSAGING - create anonymized user for the other user
 						messages
@@ -774,6 +774,34 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
+	override fun hasPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean> {
+		return chatMessageDao.listPendingDeleteChatBySendersFlow(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.isNotEmpty()
+		}
+	}
+
+	override fun getPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): List<ChatMessage> {
+		return chatMessageDao.listPendingDeleteChatBySenders(
+			inboxPublicKey = inboxPublicKey,
+			firstKey = firstKey,
+			secondKey = secondKey
+		).map {
+			it.fromCache()
+		}
+	}
+
 	override fun canRequestIdentity(
 		inboxPublicKey: String,
 		firstKey: String,
@@ -856,5 +884,17 @@ class ChatRepositoryImpl constructor(
 		}
 
 		encryptedPreferenceRepository.hasCreatedInternalInboxesForOffers = true
+	}
+
+	override suspend fun deleteChat(deleteMessage: ChatMessage) {
+		//extra check for correct message type, could work with any message type
+		if (deleteMessage.type == MessageType.DELETE_CHAT) {
+			//delete all messages from and for this user
+			chatMessageDao.deleteByKeys(
+				inboxPublicKey = deleteMessage.inboxPublicKey,
+				firstKey = deleteMessage.senderPublicKey,
+				secondKey = deleteMessage.recipientPublicKey
+			)
+		}
 	}
 }

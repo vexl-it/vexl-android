@@ -78,6 +78,18 @@ interface ChatRepository {
 		secondKey: String
 	): Flow<Boolean>
 
+	fun hasPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): Flow<Boolean>
+
+	fun getPendingDeleteChatRequest(
+		inboxPublicKey: String,
+		firstKey: String,
+		secondKey: String
+	): List<ChatMessage>
+
 	fun canRequestIdentity(
 		inboxPublicKey: String,
 		firstKey: String,
@@ -96,4 +108,6 @@ interface ChatRepository {
 
 	//should be called only once, when migrating from `1.0.9` up
 	suspend fun createInboxesForMeAndOffers()
+
+	suspend fun deleteChat(deleteMessage: ChatMessage)
 }

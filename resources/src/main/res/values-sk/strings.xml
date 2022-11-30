@@ -792,4 +792,8 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="error_invalid_url">Neplatné URL</string>
 
     <!-- Maintenance -->
+
+    <!-- Offer deletion notification -->
+    <string name="notification_title">Už sme o tebe dlho nepočuli, vexlák!</string>
+    <string name="notification_body">Poď si zavexlovať! Inak bude tvoja ponuka zmazaná kvôli neaktivite.</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.cleevio.vexl.cryptography.model.KeyPair
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogDeleteChatConfirmBinding
 import cz.cleevio.network.data.Status
@@ -44,7 +45,7 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 		super.onViewCreated(view, savedInstanceState)
 		binding.confirmBtn.setOnClickListener {
 			coroutineScope.launch {
-				val response = chatRepository.sendMessage(
+				chatRepository.sendMessage(
 					senderPublicKey = senderPublicKey,
 					receiverPublicKey = receiverPublicKey,
 					message = ChatMessage(
@@ -58,14 +59,21 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 					),
 					messageType = MessageType.DELETE_CHAT.name
 				)
-				when (response.status) {
-					is Status.Success -> {
-						withContext(Dispatchers.Main) {
-							dismiss()
-							findNavController().popBackStack()
+
+				val result: KeyPair? = chatRepository.getKeyPairByMyPublicKey(senderPublicKey)
+				result?.let { senderKeyPair ->
+					val response = chatRepository.changeUserBlock(senderKeyPair, receiverPublicKey, true)
+					when (response.status) {
+						is Status.Success -> {
+							withContext(Dispatchers.Main) {
+								dismiss()
+								findNavController().popBackStack()
+							}
+						}
+						else -> {
+							//nothing
 						}
 					}
-					else -> Unit
 				}
 			}
 		}

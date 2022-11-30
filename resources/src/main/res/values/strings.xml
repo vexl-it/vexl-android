@@ -623,6 +623,9 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="chat_filter_buyers">Buyers</string>
     <string name="chat_filter_sellers">Sellers</string>
     <string name="chat_message_prefix">me:</string>
+    <string name="chat_delete_title">%1$s left the chat</string>
+    <string name="chat_delete_subtitle">Leave too?</string>
+    <string name="chat_delete_button">Leave the chat</string>
 
     <!-- Chat requests -->
     <string name="chat_request_main_title">%s Requests</string>
@@ -796,4 +799,9 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <!-- Maintenance -->
     <string name="maintenance_title">Marketplace maintenance</string>
     <string name="maintenance_subtitle">Vexl app is in maintenance.\nCome back later, please.</string>
+
+    <!-- Offer deletion notification -->
+    <string name="notification_title">Long time no see! </string>
+    <string name="notification_body">Come and vexl! Otherwise your offer will be removed due to inactivity.
+</string>
 </resources>

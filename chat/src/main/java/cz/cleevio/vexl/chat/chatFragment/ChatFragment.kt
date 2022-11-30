@@ -64,6 +64,8 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				if (noneOrOnlyRequestMessage && !showingDialog) {
 					findNavController().popBackStack()
 				}
+
+				binding.submitMessageWrapper.isVisible = !(messages.any { it.type == MessageType.DELETE_CHAT })
 			}
 		}
 		repeatScopeOnStart {
@@ -82,6 +84,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					)
 					setUserAvatar(
 						binding.identityRevealRequestedIcon,
+						bitmap,
+						index,
+						requireContext()
+					)
+					setUserAvatar(
+						binding.chatDeleteRequestedIcon,
 						bitmap,
 						index,
 						requireContext()
@@ -107,6 +115,12 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					) {
 						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
 					}
+					binding.chatDeleteRequestedIcon.load(
+						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
+						imageLoader = ImageLoader.invoke(requireContext())
+					) {
+						setPlaceholders(cz.cleevio.core.R.drawable.random_avatar_3)
+					}
 					binding.identityRevealSentIcon.load(
 						RandomUtils.getRandomImageDrawableId(chatUserIdentity?.anonymousAvatarImageIndex ?: 0),
 						imageLoader = ImageLoader.invoke(requireContext())
@@ -117,6 +131,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
 				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
+				binding.chatDeleteRequestedTitle.text = getString(R.string.chat_delete_title, chatUserIdentity?.name ?: "")
 				setUserAvatar(
 					binding.revealedProfileIcon,
 					chatUserIdentity?.avatarBase64?.getBitmap(),
@@ -128,6 +143,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		repeatScopeOnStart {
 			viewModel.hasPendingIdentityRevealRequests?.collect { pending ->
 				binding.identityRevealRequestedWrapper.isVisible = pending
+			}
+		}
+		repeatScopeOnStart {
+			viewModel.hasPendingDeleteChatRequests?.collect { pending ->
+				binding.chatDeleteRequestedWrapper.isVisible = pending
 			}
 		}
 		repeatScopeOnStart {
@@ -161,6 +181,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 				binding.slideEffect.isVisible = false
 			}
 		}
+		repeatScopeOnStart {
+			viewModel.deleteChatFinished.collect {
+				findNavController().popBackStack()
+			}
+		}
 	}
 
 	override fun initView() {
@@ -177,7 +202,11 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 			false
 		}
 
-		adapter = ChatMessagesAdapter()
+		adapter = ChatMessagesAdapter(
+			deleteChat = { chatMessage ->
+				viewModel.deleteChat(chatMessage)
+			}
+		)
 		binding.chatRv.adapter = adapter
 
 		binding.close.setOnClickListener {
@@ -224,10 +253,14 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					onSendRequest = {
 						viewModel.requestIdentityReveal()
 					}
-			))
+				))
 		}
 		binding.revealRequestButton.setOnClickListener {
 			binding.identityRevealSentWrapper.isVisible = false
+		}
+		binding.chatDeleteRequestedButton.setOnClickListener {
+			binding.chatDeleteRequestedWrapper.isVisible = false
+			viewModel.deleteChat()
 		}
 		binding.deleteChatBtn.setOnClickListener {
 			showingDialog = true

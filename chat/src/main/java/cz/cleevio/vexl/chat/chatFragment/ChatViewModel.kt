@@ -34,6 +34,9 @@ class ChatViewModel constructor(
 	private val _animationChannel = Channel<Unit>()
 	val animationChannel = _animationChannel.receiveAsFlow()
 
+	private val _deleteChatFinished = Channel<Unit>()
+	val deleteChatFinished = _deleteChatFinished.receiveAsFlow()
+
 	val chatUserIdentity = communicationRequest.let { communicationRequest ->
 		communicationRequest.message?.let { message ->
 			chatRepository.getChatUserIdentityFlow(
@@ -59,6 +62,14 @@ class ChatViewModel constructor(
 
 	val hasPendingIdentityRevealRequests = communicationRequest.message?.let { message ->
 		chatRepository.getPendingIdentityRequest(
+			inboxPublicKey = message.inboxPublicKey,
+			firstKey = message.senderPublicKey,
+			secondKey = message.recipientPublicKey
+		)
+	}
+
+	val hasPendingDeleteChatRequests = communicationRequest.message?.let { message ->
+		chatRepository.hasPendingDeleteChatRequest(
 			inboxPublicKey = message.inboxPublicKey,
 			firstKey = message.senderPublicKey,
 			secondKey = message.recipientPublicKey
@@ -260,6 +271,28 @@ class ChatViewModel constructor(
 		}.minByOrNull {
 			// and get nearest by time
 			it.time
+		}
+	}
+
+	fun deleteChat() {
+		viewModelScope.launch(Dispatchers.IO) {
+			val messages = communicationRequest.message?.let { message ->
+				chatRepository.getPendingDeleteChatRequest(
+					inboxPublicKey = message.inboxPublicKey,
+					firstKey = message.senderPublicKey,
+					secondKey = message.recipientPublicKey
+				)
+			}
+			messages?.firstOrNull()?.let {
+				deleteChat(it)
+			}
+		}
+	}
+
+	fun deleteChat(chatMessage: ChatMessage) {
+		viewModelScope.launch(Dispatchers.IO) {
+			chatRepository.deleteChat(chatMessage)
+			_deleteChatFinished.send(Unit)
 		}
 	}
 
