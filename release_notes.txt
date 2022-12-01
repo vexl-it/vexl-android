@@ -1,19 +1,7 @@
 ### Requires uninstall: NO
 
 ### Improvements
-*Automatic re-encryption of offers #22 #46
-*Lock screen for new version of the app #61
-*Show progress-bar when (re)encrypting offers #32
-*Notifications permission in onboarding #26
-*Actively check if notifications are enabled and working on startup + in onboarding #56
-*Add timeout or wait for response on identity reveal request #59
-*Remove donation link from the app #24
 
 ### Fix
-*Re-encryption of offers for newcomers doesn’t work as expected #46
-*Price range jumps randomly in Edit offer #51
-*Handle unsuccessful sending of answer for identity reveal request
-*Delete profile - make the card smaller to remove blank space
-*Confirm SMS code - Button is not fully visible
 
 ### Known issues
