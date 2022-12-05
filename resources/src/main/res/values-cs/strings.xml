@@ -794,6 +794,6 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <!-- Maintenance -->
 
     <!-- Offer deletion notification -->
-    <string name="notification_title">Už jsme o tobě dlouho neslyšeli Vexláku!</string>
-    <string name="notification_body">Pojď si zavexlit! Jinak tvoje nabídky budou smazány pro tvoji neaktivitu.</string>
+    <string name="notification_title">Tvoje nabídka bude brzy deaktivována.</string>
+    <string name="notification_body">Už jsme o tobě dlouho neslyšeli! Otevři appku, jinak budou tvoje nabídky kvůli neaktivitě deaktivovány.</string>
 </resources>

@@ -611,7 +611,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="request_text_hint">e.g. Let\'s vexl my friend...</string>
     <string name="request_button">Send request</string>
     <string name="request_common_friends">%d common friends</string>
-    <string name="request_common_friends_empty_state">You don\'t have common friends</string>
+    <string name="request_common_friends_empty_state">You have no common friends</string>
     <string name="error_missing_offer_public_key">Missing public key</string>
     <string name="error_missing_offer_request_message">Missing request message</string>
     <string name="error_missing_offer_id">Missing offer ID</string>
@@ -801,7 +801,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="maintenance_subtitle">Vexl app is in maintenance.\nCome back later, please.</string>
 
     <!-- Offer deletion notification -->
-    <string name="notification_title">Long time no see! </string>
-    <string name="notification_body">Come and vexl! Otherwise your offer will be removed due to inactivity.
+    <string name="notification_title">Your offer will be deactivated soon.</string>
+    <string name="notification_body">Long time no see! Open the app, otherwise your offers will be deactivated due to inactivity.
 </string>
 </resources>

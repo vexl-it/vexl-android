@@ -110,7 +110,7 @@
 				android:id="@+id/common_friends_empty"
 				style="@style/Widget.Vexl.CardView"
 				android:layout_width="match_parent"
-				android:layout_height="74dp"
+				android:layout_height="50dp"
 				android:layout_marginHorizontal="8dp"
 				android:layout_marginTop="16dp"
 				app:cardBackgroundColor="@color/gray_1"
@@ -120,13 +120,16 @@
 
 				<androidx.constraintlayout.widget.ConstraintLayout
 					android:layout_width="match_parent"
-					android:layout_height="match_parent">
+					android:layout_height="match_parent"
+					android:layout_margin="17dp">
 
 					<TextView
-						android:layout_width="wrap_content"
+						android:layout_width="0dp"
 						android:layout_height="wrap_content"
+						android:drawablePadding="9dp"
 						android:text="@string/request_common_friends_empty_state"
 						android:textAppearance="@style/TextAppearance.Vexl.Marketplace.Request.Friends"
+						app:drawableStartCompat="@drawable/ic_info_common_friends"
 						app:layout_constraintBottom_toBottomOf="parent"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toStartOf="parent"
