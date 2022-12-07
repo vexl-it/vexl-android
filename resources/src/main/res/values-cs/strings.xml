@@ -624,6 +624,9 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="chat_filter_buyers">Kupující</string>
     <string name="chat_filter_sellers">Prodávající</string>
     <string name="chat_message_prefix">já:</string>
+    <string name="chat_delete_title">%1$s odešel z chatu</string>
+    <string name="chat_delete_subtitle">Chcete odejít taky?</string>
+    <string name="chat_delete_button">Odejít z chatu</string>
 
     <!-- Chat requests -->
     <string name="chat_request_main_title">%s Žádostí</string>
@@ -636,6 +639,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="chat_btns_offer">Nabídka</string>
     <string name="chat_btns_my_offer">Moje nabídka</string>
     <string name="chat_btns_common_friends">Společní přátelé</string>
+    <string name="chat_btns_common_friends_empty_title">Nemáte žádné společné přátele, zatím.</string>
     <string name="chat_common_friends_facebook_contact">Přes Facebook</string>
     <string name="chat_btns_delete_chat">Vymazat chat</string>
     <string name="chat_btns_block_user">Zablokovat uživatele</string>
