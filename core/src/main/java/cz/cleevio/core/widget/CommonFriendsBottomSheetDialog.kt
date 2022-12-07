@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogCommonFriendsBinding
 import cz.cleevio.repository.model.contact.CommonFriend
@@ -34,6 +35,8 @@ class CommonFriendsBottomSheetDialog(
 		binding.gotItBtn.setOnClickListener {
 			dismiss()
 		}
+		binding.emptyList.isVisible = commonFriends.isEmpty()
+		binding.commonFriendsList.isVisible = commonFriends.isNotEmpty()
 	}
 
 	override fun onStop() {
