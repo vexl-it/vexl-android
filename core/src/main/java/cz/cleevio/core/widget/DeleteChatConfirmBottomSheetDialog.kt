@@ -15,6 +15,7 @@ import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import cz.cleevio.repository.R
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
@@ -52,7 +53,7 @@ class DeleteChatConfirmBottomSheetDialog constructor(
 						inboxPublicKey = inboxPublicKey,
 						senderPublicKey = senderPublicKey,
 						recipientPublicKey = receiverPublicKey,
-						text = "TODO: need text?",
+						text = getString(R.string.chat_delete_subtitle),
 						type = MessageType.DELETE_CHAT,
 						isMine = true,
 						isProcessed = false

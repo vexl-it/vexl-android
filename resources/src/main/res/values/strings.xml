@@ -624,7 +624,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="chat_filter_sellers">Sellers</string>
     <string name="chat_message_prefix">me:</string>
     <string name="chat_delete_title">%1$s left the chat</string>
-    <string name="chat_delete_subtitle">Leave too?</string>
+    <string name="chat_delete_subtitle">Left chat</string>
     <string name="chat_delete_button">Leave the chat</string>
 
     <!-- Chat requests -->
