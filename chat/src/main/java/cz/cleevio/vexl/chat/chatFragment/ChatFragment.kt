@@ -131,7 +131,8 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 					setupColoredTitle(chatUserIdentity?.anonymousUsername ?: "")
 				}
 				binding.identityRevealedName.text = chatUserIdentity?.name
-				binding.chatDeleteRequestedTitle.text = getString(R.string.chat_delete_title, chatUserIdentity?.name ?: "")
+				binding.chatDeleteRequestedTitle.text = chatUserIdentity?.name ?: chatUserIdentity?.anonymousUsername
+				binding.chatDeleteRequestedDescription.text = getString(R.string.chat_delete_subtitle)
 				setUserAvatar(
 					binding.revealedProfileIcon,
 					chatUserIdentity?.avatarBase64?.getBitmap(),
