@@ -9,6 +9,8 @@ import cz.cleevio.core.utils.NotificationUtils
 import cz.cleevio.core.utils.TempUtils
 import cz.cleevio.network.data.Status
 import cz.cleevio.repository.model.chat.ChatListUser
+import cz.cleevio.repository.model.chat.ChatMessage
+import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
 import cz.cleevio.repository.repository.contact.ContactRepository
 import cz.cleevio.repository.repository.group.GroupRepository
@@ -18,10 +20,7 @@ import cz.cleevio.vexl.lightbase.core.baseClasses.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -71,13 +70,58 @@ class MainViewModel constructor(
 	}
 
 	@Suppress("ComplexCondition")
-	fun logout(onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
+	fun logout(deleteChatMessage: String, onSuccess: () -> Unit = {}, onError: () -> Unit = {}) {
 		viewModelScope.launch(Dispatchers.IO) {
 			var offerDeleteSuccess = true
 			val offerIds = offerRepository.getMyOffers().map { it.offerId }
 			if (offerIds.isNotEmpty()) {
 				offerDeleteSuccess = offerRepository.deleteMyOffers(offerIds).status == Status.Success
 			}
+
+			val inboxesKeys = chatRepository.getMyInboxKeys()
+
+			val messages: MutableMap<String, List<ChatMessage>> = mutableMapOf()
+
+			val senderPublicKeyList = chatRepository.chatUsers.distinctBy {
+				it.message?.senderPublicKey
+			}.map { it.message?.senderPublicKey }
+
+			senderPublicKeyList.filterNotNull().forEach { key ->
+				val messagesForOneInbox = chatRepository.chatUsers.filter {
+					it.message?.senderPublicKey == key
+				}.mapNotNull {
+					it.message?.let { message ->
+						if (message.isMine) {
+							ChatMessage(
+								inboxPublicKey = message.inboxPublicKey,
+								senderPublicKey = message.senderPublicKey,
+								recipientPublicKey = message.recipientPublicKey,
+								text = deleteChatMessage,
+								type = MessageType.DELETE_CHAT,
+								isMine = true,
+								isProcessed = false
+							)
+						} else {
+							ChatMessage(
+								inboxPublicKey = message.senderPublicKey,
+								senderPublicKey = message.recipientPublicKey,
+								recipientPublicKey = message.senderPublicKey,
+								text = deleteChatMessage,
+								type = MessageType.DELETE_CHAT,
+								isMine = true,
+								isProcessed = false
+							)
+						}
+					}
+				}
+
+				messages[key] = messagesForOneInbox
+			}
+
+			chatRepository.sendMessageBatch(messages, inboxesKeys)
+
+			chatRepository.deleteAllInboxes(inboxesKeys)
+
 			//leave also all groups, needs to be called before we delete user from contact-ms
 			groupRepository.leaveAllGroups()
 			val contactUserDelete = contactRepository.deleteMyUser()

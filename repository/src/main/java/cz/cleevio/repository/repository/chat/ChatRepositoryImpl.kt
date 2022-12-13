@@ -14,6 +14,7 @@ import cz.cleevio.network.extensions.tryOnline
 import cz.cleevio.network.request.chat.*
 import cz.cleevio.network.request.contact.FirebaseTokenUpdateRequest
 import cz.cleevio.network.response.chat.MessageResponse
+import cz.cleevio.network.response.chat.MessagesResponse
 import cz.cleevio.repository.R
 import cz.cleevio.repository.RandomUtils
 import cz.cleevio.repository.model.chat.*
@@ -43,7 +44,8 @@ class ChatRepositoryImpl constructor(
 	private val inboxDao: InboxDao,
 ) : ChatRepository {
 
-	override val chatUsers: MutableSharedFlow<List<ChatListUser>> = MutableSharedFlow()
+	override val chatUsersFlow: MutableSharedFlow<List<ChatListUser>> = MutableSharedFlow()
+	override var chatUsers: List<ChatListUser> = emptyList()
 
 	private suspend fun refreshChallenge(keyPair: KeyPair): SignedChallengeRequest? {
 		val challenge = tryOnline(
@@ -63,6 +65,45 @@ class ChatRepositoryImpl constructor(
 						challenge = chatChallenge.challenge,
 						signature = signature
 					)
+				}
+			}
+			else -> {
+				//challenge failed somehow
+				null
+			}
+		}
+	}
+
+	private suspend fun refreshChallengeBatch(keyPairs: List<KeyPair>): List<SignedChallengeBatchRequest>? {
+		val response = tryOnline(
+			request = { chatApi.postChallengeBatch(challengeRequest = CreateChallengeBatchRequest(keyPairs.map { it.publicKey })) },
+			mapper = { it }
+		)
+		//solve challenge
+		return when (response.status) {
+			is Status.Success -> {
+				return response.data?.let { chatChallenges ->
+					val signedChallenges = mutableListOf<SignedChallengeBatchRequest>()
+
+					chatChallenges.challenges.forEach { signedChallenge ->
+						val keyPair = getKeyPairByMyPublicKey(signedChallenge.publicKey) ?: return@forEach
+
+						val signature = EcdsaCryptoLib.sign(
+							keyPair, signedChallenge.challenge
+						)
+
+						signedChallenges.add(
+							SignedChallengeBatchRequest(
+								publicKey = signedChallenge.publicKey,
+								signedChallenge = SignedChallengeRequest(
+									challenge = signedChallenge.challenge,
+									signature = signature
+								)
+							)
+						)
+					}
+
+					signedChallenges
 				}
 			}
 			else -> {
@@ -433,6 +474,74 @@ class ChatRepositoryImpl constructor(
 		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}
 
+	@Suppress("ReturnCount")
+	override suspend fun sendMessageBatch(
+		messages: Map<String, List<ChatMessage>>, // sender public key, Value
+		inboxKeys: List<String>
+	): Resource<MessagesResponse> {
+
+		//we don't want to store DELETE_CHAT message, delete other messages instead
+		messages.values.forEach {
+			it.forEach {
+				if (it.type == MessageType.DELETE_CHAT) {
+					chatMessageDao.deleteByKeys(
+						inboxPublicKey = it.inboxPublicKey,
+						firstKey = it.senderPublicKey,
+						secondKey = it.recipientPublicKey
+					)
+				}
+			}
+		}
+
+		val keyPairs = inboxKeys.map { getKeyPairByMyPublicKey(it) }
+
+		refreshChallengeBatch(keyPairs.filterNotNull())?.let { signedChallenge ->
+
+			val messagesList = mutableListOf<SendMessageBatchRequest>()
+
+			signedChallenge.forEach { challenge ->
+				val message = SendMessageBatchRequest(
+					senderPublicKey = challenge.publicKey,
+					messages = messages[challenge.publicKey]?.map {
+						BatchMessage(
+							it.recipientPublicKey,
+							message = it.toNetwork(it.recipientPublicKey),
+							it.type.name
+						)
+					} ?: emptyList(),
+					challenge.signedChallenge
+				)
+
+				messagesList.add(message)
+			}
+
+			return tryOnline(
+				request = {
+					chatApi.postInboxesMessageBatch(
+						sendMessageBatchRequestList = SendMessageBatchRequestList(
+							data = messagesList
+						)
+					)
+				},
+				doOnSuccess = { messageResponse ->
+					/*
+					messageResponse?.messages?.forEach {
+						if (it.messageType != MessageType.DELETE_CHAT.name) {
+							val messageWithId = it?.let {
+								message.copy(id = it.id)
+							} ?: message
+
+								it.copy(id = it.id)
+							chatMessageDao.replace(messageWithId.toCache())
+						}
+					}
+					 */
+				},
+				mapper = { MessagesResponse(it.orEmpty()) }
+			)
+		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
+	}
+
 	override suspend fun processMessage(message: ChatMessage) {
 		chatMessageDao.replace(
 			message.copy(isProcessed = true).toCache()
@@ -571,6 +680,28 @@ class ChatRepositoryImpl constructor(
 		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}
 
+	override suspend fun deleteAllInboxes(publicKeys: List<String>): Resource<Unit> {
+		val keyPairs = publicKeys.map { getKeyPairByMyPublicKey(it) }
+
+		return refreshChallengeBatch(keyPairs.filterNotNull())?.let { signatureChallenge ->
+			tryOnline(
+				request = {
+					chatApi.deleteInboxesBatch(
+						DeletionBatchRequest(
+							dataForRemoval = signatureChallenge.map {
+								DeletionRequest(
+									it.publicKey,
+									it.signedChallenge
+								)
+							}
+						)
+					)
+				},
+				mapper = { }
+			)
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
+	}
+
 	override suspend fun loadCommunicationRequests(): List<CommunicationRequest> {
 		val result: MutableList<CommunicationRequest> = mutableListOf()
 		//get all communication requests
@@ -696,7 +827,8 @@ class ChatRepositoryImpl constructor(
 			}
 		}
 
-		chatUsers.emit(result.toList())
+		chatUsersFlow.emit(result.toList())
+		chatUsers = result.toList()
 	}
 
 	override suspend fun getOneChatUser(messageKeyPair: MessageKeyPair): ChatListUser? {

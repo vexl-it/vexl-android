@@ -388,6 +388,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				errorFlow.logout.collect { error ->
 					viewModel.logout(
+						getString(cz.cleevio.repository.R.string.chat_delete_subtitle),
 						onSuccess = { triggerAppRestart() },
 						onError = { triggerAppRestart() }
 					)

@@ -4,6 +4,7 @@ import com.cleevio.vexl.cryptography.model.KeyPair
 import cz.cleevio.cache.entity.MessageKeyPair
 import cz.cleevio.network.data.Resource
 import cz.cleevio.network.response.chat.MessageResponse
+import cz.cleevio.network.response.chat.MessagesResponse
 import cz.cleevio.repository.model.chat.ChatListUser
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.ChatUserIdentity
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.SharedFlow
 
 interface ChatRepository {
 
-	val chatUsers: MutableSharedFlow<List<ChatListUser>>
+	val chatUsersFlow: MutableSharedFlow<List<ChatListUser>>
+	var chatUsers: List<ChatListUser>
 
 	suspend fun saveFirebasePushToken(token: String)
 
@@ -38,6 +40,11 @@ interface ChatRepository {
 		messageType: String,
 	): Resource<MessageResponse>
 
+	suspend fun sendMessageBatch(
+		messages: Map<String, List<ChatMessage>>, // sender public key, V
+		inboxKeys: List<String>
+	): Resource<MessagesResponse>
+
 	suspend fun processMessage(message: ChatMessage)
 
 	suspend fun changeUserBlock(senderKeyPair: KeyPair, publicKeyToBlock: String, block: Boolean): Resource<Unit>
@@ -57,6 +64,8 @@ interface ChatRepository {
 	): Resource<MessageResponse>
 
 	suspend fun deleteInbox(publicKey: String): Resource<Unit>
+
+	suspend fun deleteAllInboxes(publicKeys: List<String>): Resource<Unit>
 
 	suspend fun loadCommunicationRequests(): List<CommunicationRequest>
 

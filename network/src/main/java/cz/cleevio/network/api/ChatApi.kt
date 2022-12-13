@@ -38,6 +38,12 @@ interface ChatApi {
 		@Body sendMessageRequest: SendMessageRequest
 	): Response<MessageResponse>
 
+	//send a message batch to inboxes
+	@POST("inboxes/messages/batch")
+	suspend fun postInboxesMessageBatch(
+		@Body sendMessageBatchRequestList: SendMessageBatchRequestList
+	): Response<List<MessageResponse>>
+
 	//block/unblock sender
 	@PUT("inboxes/block")
 	suspend fun putInboxesBlock(
@@ -62,6 +68,12 @@ interface ChatApi {
 		@Body deletionRequest: DeletionRequest
 	): Response<ResponseBody>
 
+	//delete inboxes batch
+	@HTTP(method = "DELETE", path = "inboxes/batch", hasBody = true)
+	suspend fun deleteInboxesBatch(
+		@Body deletionRequest: DeletionBatchRequest
+	): Response<ResponseBody>
+
 	//delete pulled messages
 	@HTTP(method = "DELETE", path = "inboxes/messages", hasBody = true)
 	suspend fun deleteInboxesMessages(
@@ -73,4 +85,10 @@ interface ChatApi {
 	suspend fun postChallenge(
 		@Body challengeRequest: CreateChallengeRequest
 	): Response<ChallengeCreatedResponse>
+
+	//create a new challenges batch
+	@POST("challenges/batch")
+	suspend fun postChallengeBatch(
+		@Body challengeRequest: CreateChallengeBatchRequest
+	): Response<ChallengeBatchResponse>
 }

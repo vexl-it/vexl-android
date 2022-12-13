@@ -36,7 +36,7 @@ class ChatContactListViewModel constructor(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			chatRepository.chatUsers.collect {
+			chatRepository.chatUsersFlow.collect {
 				usersChattedWithList = it
 				emitUsers()
 				_showRefreshIndicator.emit(false)

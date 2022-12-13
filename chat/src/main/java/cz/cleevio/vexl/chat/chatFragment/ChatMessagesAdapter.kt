@@ -20,6 +20,7 @@ import cz.cleevio.vexl.chat.databinding.ItemChatDeleteChatBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealBinding
 import cz.cleevio.vexl.chat.databinding.ItemChatMessageIdentityRevealRejectedBinding
+import cz.cleevio.vexl.lightbase.core.extensions.hideKeyboard
 import cz.cleevio.vexl.lightbase.core.extensions.showToast
 
 class ChatMessagesAdapter(
@@ -182,6 +183,7 @@ class ChatMessagesAdapter(
 			binding.deleteChatHeading.text = itemView.context.getString(
 				R.string.chat_delete_title, _chatUserIdentity?.name ?: ""
 			)
+			binding.container.hideKeyboard()
 
 			//maybe remove this?
 			binding.container.setOnClickListener {
