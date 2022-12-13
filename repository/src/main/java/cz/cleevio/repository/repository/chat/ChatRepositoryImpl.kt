@@ -537,7 +537,7 @@ class ChatRepositoryImpl constructor(
 					}
 					 */
 				},
-				mapper = { it }
+				mapper = { MessagesResponse(it.orEmpty()) }
 			)
 		} ?: return Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
 	}

@@ -42,7 +42,7 @@ interface ChatApi {
 	@POST("inboxes/messages/batch")
 	suspend fun postInboxesMessageBatch(
 		@Body sendMessageBatchRequestList: SendMessageBatchRequestList
-	): Response<MessagesResponse>
+	): Response<List<MessageResponse>>
 
 	//block/unblock sender
 	@PUT("inboxes/block")
