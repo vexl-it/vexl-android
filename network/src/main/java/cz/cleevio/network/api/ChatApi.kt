@@ -40,9 +40,9 @@ interface ChatApi {
 
 	//send a message batch to inboxes
 	@POST("inboxes/messages/batch")
-	suspend fun postMessageBatch(
+	suspend fun postInboxesMessageBatch(
 		@Body sendMessageBatchRequestList: SendMessageBatchRequestList
-	): Response<List<MessageResponse>>
+	): Response<MessagesResponse>
 
 	//block/unblock sender
 	@PUT("inboxes/block")
