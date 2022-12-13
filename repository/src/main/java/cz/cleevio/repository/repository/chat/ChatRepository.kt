@@ -58,6 +58,8 @@ interface ChatRepository {
 
 	suspend fun deleteInbox(publicKey: String): Resource<Unit>
 
+	suspend fun deleteAllInboxes(publicKeys: List<String>): Resource<Unit>
+
 	suspend fun loadCommunicationRequests(): List<CommunicationRequest>
 
 	suspend fun startEmittingChatUsers()

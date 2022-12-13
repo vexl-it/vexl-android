@@ -72,6 +72,45 @@ class ChatRepositoryImpl constructor(
 		}
 	}
 
+	private suspend fun refreshChallengeBatch(keyPairs: List<KeyPair>): List<SignedChallengeBatchRequest>? {
+		val response = tryOnline(
+			request = { chatApi.postChallengeBatch(challengeRequest = CreateChallengeBatchRequest(keyPairs.map { it.publicKey })) },
+			mapper = { it }
+		)
+		//solve challenge
+		return when (response.status) {
+			is Status.Success -> {
+				return response.data?.let { chatChallenges ->
+					val signedChallenges = mutableListOf<SignedChallengeBatchRequest>()
+
+					chatChallenges.challenges.forEach { signedChallenge ->
+						val keyPair = getKeyPairByMyPublicKey(signedChallenge.publicKey) ?: return@forEach
+
+						val signature = EcdsaCryptoLib.sign(
+							keyPair, signedChallenge.challenge
+						)
+
+						signedChallenges.add(
+							SignedChallengeBatchRequest(
+								publicKey = signedChallenge.publicKey,
+								signedChallenge = SignedChallengeRequest(
+									challenge = signedChallenge.challenge,
+									signature = signature
+								)
+							)
+						)
+					}
+
+					signedChallenges
+				}
+			}
+			else -> {
+				//challenge failed somehow
+				null
+			}
+		}
+	}
+
 	override suspend fun getMyInboxKeys(): List<String> {
 		//get all offer inbox keys
 		val offerKeys = myOfferDao.getAllOfferKeys().map { it.publicKey }.toMutableSet()
@@ -563,6 +602,28 @@ class ChatRepositoryImpl constructor(
 						DeletionRequest(
 							publicKey = publicKey,
 							signedChallenge = signatureChallenge
+						)
+					)
+				},
+				mapper = { }
+			)
+		} ?: Resource.error(ErrorIdentification.MessageError(message = R.string.error_missing_challenge))
+	}
+
+	override suspend fun deleteAllInboxes(publicKeys: List<String>): Resource<Unit> {
+		val keyPairs = publicKeys.map { getKeyPairByMyPublicKey(it) }
+
+		return refreshChallengeBatch(keyPairs.filterNotNull())?.let { signatureChallenge ->
+			tryOnline(
+				request = {
+					chatApi.deleteInboxesBatch(
+						DeletionBatchRequest(
+							dataForRemoval = signatureChallenge.map {
+								DeletionRequest(
+									it.publicKey,
+									it.signedChallenge
+								)
+							}
 						)
 					)
 				},
