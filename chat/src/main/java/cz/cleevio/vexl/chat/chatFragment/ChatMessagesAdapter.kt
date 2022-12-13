@@ -181,9 +181,8 @@ class ChatMessagesAdapter(
 				itemView.context
 			)
 			binding.deleteChatHeading.text = itemView.context.getString(
-				R.string.chat_delete_title, _chatUserIdentity?.name ?: ""
+				R.string.chat_delete_title, _chatUserIdentity?.name ?: _chatUserIdentity?.anonymousUsername
 			)
-			binding.container.hideKeyboard()
 
 			//maybe remove this?
 			binding.container.setOnClickListener {

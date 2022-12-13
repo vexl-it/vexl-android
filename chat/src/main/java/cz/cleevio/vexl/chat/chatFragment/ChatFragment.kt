@@ -25,6 +25,7 @@ import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.vexl.chat.R
 import cz.cleevio.vexl.chat.databinding.FragmentChatBinding
 import cz.cleevio.vexl.lightbase.core.baseClasses.BaseFragment
+import cz.cleevio.vexl.lightbase.core.extensions.hideKeyboard
 import cz.cleevio.vexl.lightbase.core.extensions.listenForIMEInset
 import cz.cleevio.vexl.lightbase.core.extensions.listenForInsets
 import kotlinx.coroutines.delay
@@ -148,6 +149,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 		}
 		repeatScopeOnStart {
 			viewModel.hasPendingDeleteChatRequests?.collect { pending ->
+				binding.submitMessageWrapper.hideKeyboard()
 				binding.chatDeleteRequestedWrapper.isVisible = pending
 			}
 		}
@@ -205,6 +207,7 @@ class ChatFragment : BaseFragment(R.layout.fragment_chat) {
 
 		adapter = ChatMessagesAdapter(
 			deleteChat = { chatMessage ->
+				binding.submitMessageWrapper.hideKeyboard()
 				viewModel.deleteChat(chatMessage)
 			}
 		)
