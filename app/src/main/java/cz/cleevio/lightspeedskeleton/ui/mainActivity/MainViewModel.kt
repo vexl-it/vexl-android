@@ -83,17 +83,17 @@ class MainViewModel constructor(
 			val messages: MutableMap<String, List<ChatMessage>> = mutableMapOf()
 
 			val senderPublicKeyList = chatRepository.chatUsers.distinctBy {
-				it.message?.senderPublicKey
-			}.map { it.message?.senderPublicKey }
+				it.user?.inboxKey
+			}.map { it.user?.inboxKey }
 
 			senderPublicKeyList.filterNotNull().forEach { key ->
 				val messagesForOneInbox = chatRepository.chatUsers.filter {
-					it.message?.senderPublicKey == key
+					it.user?.inboxKey == key
 				}.mapNotNull {
 					it.message?.let { message ->
 						if (message.isMine) {
 							ChatMessage(
-								inboxPublicKey = message.inboxPublicKey,
+								inboxPublicKey = it.user?.inboxKey ?: "",
 								senderPublicKey = message.senderPublicKey,
 								recipientPublicKey = message.recipientPublicKey,
 								text = deleteChatMessage,
@@ -103,7 +103,7 @@ class MainViewModel constructor(
 							)
 						} else {
 							ChatMessage(
-								inboxPublicKey = message.senderPublicKey,
+								inboxPublicKey = it.user?.inboxKey ?: "",
 								senderPublicKey = message.recipientPublicKey,
 								recipientPublicKey = message.senderPublicKey,
 								text = deleteChatMessage,
