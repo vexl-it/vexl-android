@@ -682,6 +682,7 @@ We reserve the right to amend and update this Privacy Policy at any time. In the
     <string name="chat_message_identity_reveal_sent">Identity reveal request sent!</string>
     <string name="chat_message_identity_reveal_declined">Declined to reveal identity</string>
     <string name="chat_text_copied_clipboard">Text copied to clipboard!</string>
+    <string name="chat_message_block_user">You were blocked</string>
 
     <!-- Groups -->
     <string name="groups_join_button">Join new group</string>

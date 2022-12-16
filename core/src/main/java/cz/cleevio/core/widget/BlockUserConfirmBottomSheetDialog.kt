@@ -10,6 +10,7 @@ import com.cleevio.vexl.cryptography.model.KeyPair
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.cleevio.core.databinding.BottomSheetDialogBlockUserConfirmBinding
 import cz.cleevio.network.data.Status
+import cz.cleevio.repository.R
 import cz.cleevio.repository.model.chat.ChatMessage
 import cz.cleevio.repository.model.chat.MessageType
 import cz.cleevio.repository.repository.chat.ChatRepository
@@ -53,7 +54,7 @@ class BlockUserConfirmBottomSheetDialog(
 						inboxPublicKey = inboxPublicKey,
 						senderPublicKey = senderPublicKey,
 						recipientPublicKey = publicKeyToBlock,
-						text = "TODO: need text?",
+						text = getString(R.string.chat_message_block_user),
 						type = MessageType.DELETE_CHAT,
 						isMine = true,
 						isProcessed = false
