@@ -681,6 +681,7 @@ Vyhrazujeme si právo tyto Zásady ochrany osobních údajů kdykoli změnit a a
     <string name="chat_message_identity_reveal_reject">Zamítnul jsi žádost o odhalení tvé identity</string>
     <string name="chat_message_identity_reveal_approved">Identita odhalená!</string>
     <string name="chat_message_identity_reveal_sent">Žiadosť o odhalenie identity odoslaná</string>
+    <string name="chat_message_block_user">Bol si zablokovaný</string>
 
     <!-- Groups -->
     <string name="groups_join_button">Pridať sa k skupine</string>
