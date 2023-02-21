@@ -44,7 +44,22 @@ open class BaseContactsListViewModel constructor(
 		upload and delete
 	}
 
-	//get all contacts from phone as input
+	private fun skipCheckingAndJustDisplayAllContactsChecked(localContacts: List<Contact>) {
+		viewModelScope.launch(Dispatchers.IO) {
+			_progressFlow.emit(true)
+			contactsToBeShowedList = localContacts.map {it.copy(markedForUpload = true)}
+
+			Timber.tag("ContactSync").d("All done, emitting contacts")
+
+			emitContacts(contactsToBeShowedList)
+			_progressFlow.emit(false)
+		}
+	}
+
+	/**
+	 * get all contacts from phone as input
+	 */
+	@Deprecated("This sends all contacts to server. We don't want that")
 	private fun checkNotSyncedContacts(localContacts: List<Contact>) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
@@ -56,16 +71,15 @@ open class BaseContactsListViewModel constructor(
 				}
 
 			//BE returns list of contacts that user didn't import previously
-			Timber.tag("ContactSync").d("Checking all contacts with the API")
+			Timber.tag("ContactSync").d("Checking all contacts with the API ${localContacts.joinToString(",")}")
 			val contacts = contactRepository.checkAllContacts(
 				//send only hashed phone numbers as identifiers
 				hashedContacts.map { it.hashedPhoneNumber }
 			)
+			//val contacts = hashedContacts.map {it.hashedPhoneNumber}
 
 			Timber.tag("ContactSync").d("Checking done, we have ${contacts.data?.size} not synced contacts")
 
-			// now we take list all contacts from phone and keep
-			// only contacts that BE returned (keeping only NOT imported contacts)
 			contacts.data?.let { notSyncedPhoneNumbers ->
 				val newList = ArrayList<Contact>()
 
@@ -105,7 +119,9 @@ open class BaseContactsListViewModel constructor(
 					if (openedFromScreen == OpenedFromScreen.ONBOARDING) {
 						skipCheckingAndJustDisplayAllContacts(localContacts)
 					} else {
-						checkNotSyncedContacts(localContacts)
+						//checkNotSyncedContacts(localContacts)
+						// We don't want to be sending all contacts to server
+						skipCheckingAndJustDisplayAllContactsChecked(localContacts)
 					}
 				}
 			} else {
