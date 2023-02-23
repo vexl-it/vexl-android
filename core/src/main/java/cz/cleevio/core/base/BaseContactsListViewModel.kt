@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -35,14 +34,8 @@ open class BaseContactsListViewModel constructor(
 	val progressFlow = _progressFlow.asSharedFlow()
 
 	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
-	private val _deleteSuccessful = MutableSharedFlow<Boolean>(replay = 1)
 
-	val successful: Flow<Boolean> = combine(
-		_uploadSuccessful,
-		_deleteSuccessful
-	) { upload, delete ->
-		upload and delete
-	}
+	val successful: Flow<Boolean> = _uploadSuccessful
 
 	private fun skipCheckingAndJustDisplayAllContactsChecked(localContacts: List<Contact>) {
 		viewModelScope.launch(Dispatchers.IO) {
@@ -162,25 +155,6 @@ open class BaseContactsListViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
 			val contactsToBeUploaded = contactsToBeShowedList.filter { it.markedForUpload }
-			val contactsToBeDeleted = contactsToBeShowedList.filter { !it.markedForUpload }
-			if (contactsToBeDeleted.isNotEmpty()) {
-				val deleteResponse = contactRepository.deleteContacts(contactsToBeDeleted)
-				when (deleteResponse.status) {
-					is Status.Success -> {
-						_deleteSuccessful.emit(true)
-						// Added due to if we try to import empty list of contacts it fails
-						// but if we deleted all of them we need to propagate the number of imported contacts into the profile section
-						// Otherwise if there was nothing to delete, it's a bug and the number should not be propagated
-						if (contactsToBeUploaded.isEmpty() && contactsToBeDeleted.isNotEmpty()) {
-							encryptedPreferenceRepository.numberOfImportedContacts = 0
-						}
-					}
-					is Status.Error -> _deleteSuccessful.emit(false)
-					else -> Unit
-				}
-			} else {
-				_deleteSuccessful.emit(true)
-			}
 
 			val uploadResponse = contactRepository.uploadAllMissingContacts(contactsToBeUploaded)
 
