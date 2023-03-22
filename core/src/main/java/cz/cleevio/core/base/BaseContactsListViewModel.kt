@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -35,16 +34,25 @@ open class BaseContactsListViewModel constructor(
 	val progressFlow = _progressFlow.asSharedFlow()
 
 	private val _uploadSuccessful = MutableSharedFlow<Boolean>(replay = 1)
-	private val _deleteSuccessful = MutableSharedFlow<Boolean>(replay = 1)
 
-	val successful: Flow<Boolean> = combine(
-		_uploadSuccessful,
-		_deleteSuccessful
-	) { upload, delete ->
-		upload and delete
+	val successful: Flow<Boolean> = _uploadSuccessful
+
+	private fun skipCheckingAndJustDisplayAllContactsChecked(localContacts: List<Contact>) {
+		viewModelScope.launch(Dispatchers.IO) {
+			_progressFlow.emit(true)
+			contactsToBeShowedList = localContacts.map {it.copy(markedForUpload = true)}
+
+			Timber.tag("ContactSync").d("All done, emitting contacts")
+
+			emitContacts(contactsToBeShowedList)
+			_progressFlow.emit(false)
+		}
 	}
 
-	//get all contacts from phone as input
+	/**
+	 * get all contacts from phone as input
+	 */
+	@Deprecated("This sends all contacts to server. We don't want that")
 	private fun checkNotSyncedContacts(localContacts: List<Contact>) {
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
@@ -56,16 +64,15 @@ open class BaseContactsListViewModel constructor(
 				}
 
 			//BE returns list of contacts that user didn't import previously
-			Timber.tag("ContactSync").d("Checking all contacts with the API")
+			Timber.tag("ContactSync").d("Checking all contacts with the API ${localContacts.joinToString(",")}")
 			val contacts = contactRepository.checkAllContacts(
 				//send only hashed phone numbers as identifiers
 				hashedContacts.map { it.hashedPhoneNumber }
 			)
+			//val contacts = hashedContacts.map {it.hashedPhoneNumber}
 
 			Timber.tag("ContactSync").d("Checking done, we have ${contacts.data?.size} not synced contacts")
 
-			// now we take list all contacts from phone and keep
-			// only contacts that BE returned (keeping only NOT imported contacts)
 			contacts.data?.let { notSyncedPhoneNumbers ->
 				val newList = ArrayList<Contact>()
 
@@ -105,7 +112,9 @@ open class BaseContactsListViewModel constructor(
 					if (openedFromScreen == OpenedFromScreen.ONBOARDING) {
 						skipCheckingAndJustDisplayAllContacts(localContacts)
 					} else {
-						checkNotSyncedContacts(localContacts)
+						//checkNotSyncedContacts(localContacts)
+						// We don't want to be sending all contacts to server
+						skipCheckingAndJustDisplayAllContactsChecked(localContacts)
 					}
 				}
 			} else {
@@ -146,25 +155,6 @@ open class BaseContactsListViewModel constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_progressFlow.emit(true)
 			val contactsToBeUploaded = contactsToBeShowedList.filter { it.markedForUpload }
-			val contactsToBeDeleted = contactsToBeShowedList.filter { !it.markedForUpload }
-			if (contactsToBeDeleted.isNotEmpty()) {
-				val deleteResponse = contactRepository.deleteContacts(contactsToBeDeleted)
-				when (deleteResponse.status) {
-					is Status.Success -> {
-						_deleteSuccessful.emit(true)
-						// Added due to if we try to import empty list of contacts it fails
-						// but if we deleted all of them we need to propagate the number of imported contacts into the profile section
-						// Otherwise if there was nothing to delete, it's a bug and the number should not be propagated
-						if (contactsToBeUploaded.isEmpty() && contactsToBeDeleted.isNotEmpty()) {
-							encryptedPreferenceRepository.numberOfImportedContacts = 0
-						}
-					}
-					is Status.Error -> _deleteSuccessful.emit(false)
-					else -> Unit
-				}
-			} else {
-				_deleteSuccessful.emit(true)
-			}
 
 			val uploadResponse = contactRepository.uploadAllMissingContacts(contactsToBeUploaded)
 

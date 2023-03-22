@@ -505,8 +505,13 @@ class OfferRepositoryImpl constructor(
 		transactionProvider.runAsTransaction {
 			offerCommonFriendCrossRefDao.clearTable()
 			locationDao.clearTable()
+
+			val myOffers = offerDao.getMyOffers().map { it.offer.fromCache(it.locations, it.commonFriends, chatUserDao) }
+
+			val newOffersWithMyOffers = (myOffers + offers).toSet()
+
 			offerDao.clearTable()
-			offers.forEach { offer ->
+			newOffersWithMyOffers.forEach { offer ->
 				offer.isMine = myOfferIds.contains(offer.offerId)
 				offer.isRequested = requestedOffersPublicKeys.contains(offer.offerPublicKey)
 				val offerId = offerDao.insertOffer(offer.toCache())

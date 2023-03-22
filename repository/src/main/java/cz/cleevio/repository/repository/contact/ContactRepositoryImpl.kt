@@ -185,7 +185,7 @@ class ContactRepositoryImpl constructor(
 		Timber.tag("ContactSync").d("Hashing is DONE")
 		return tryOnline(
 			//send identifiers to BE
-			request = { contactApi.postContactImport(contactImportRequest = ContactRequest(identifiers)) },
+			request = { contactApi.postContactImportReplace(contactImportRequest = ContactRequest(identifiers)) },
 			mapper = { it?.fromNetwork() },
 			doOnSuccess = {
 				//save contacts to DB including the hashed number

@@ -22,6 +22,13 @@ interface ContactApi {
 		@Body contactImportRequest: ContactRequest
 	): Response<ContactImportResponse>
 
+	@POST("contacts/import/replace")
+	suspend fun postContactImportReplace(
+		@Header(AuthInterceptor.HEADER_HASH) hash: String? = null,
+		@Header(AuthInterceptor.HEADER_SIGNATURE) signature: String? = null,
+		@Body contactImportRequest: ContactRequest
+	): Response<ContactImportResponse>
+
 	@GET("contacts/me")
 	suspend fun getContactsMe(
 		@Query("page") page: Int,
